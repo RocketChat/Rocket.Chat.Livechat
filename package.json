@@ -8,7 +8,8 @@
     "serve": "preact build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src",
-    "test": "jest ./tests"
+    "test": "jest ./tests",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "eslintConfig": {
     "extends": "eslint-config-synacor"
@@ -23,11 +24,12 @@
     "if-env": "^1.0.0",
     "jest": "^21.2.1",
     "preact-cli": "^2.1.0",
-    "preact-render-spy": "^1.2.1"
+    "preact-render-spy": "^1.2.1",
+    "preact-compat": "^3.18.2",
+    "@storybook/react": "^3.4.10"
   },
   "dependencies": {
     "preact": "^8.2.6",
-    "preact-compat": "^3.17.0",
     "preact-router": "^2.5.7"
   },
   "jest": {
