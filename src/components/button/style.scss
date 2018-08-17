@@ -1,0 +1,72 @@
+@import '~styles/colors';
+@import '~styles/sizes';
+
+
+@mixin state($color) {
+	border-color: $color;
+	background: $color;
+	&.outline {
+		color: $color;
+	}
+}
+
+.group {
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.button {
+	transition: color .3s, background .3s;
+
+	border: $default-border solid;
+
+	height: 44px;
+	border-radius: $default-border-radius;
+
+	@include state($color-dark-blue);
+
+	color: white;
+	font-size: 14px;
+
+	white-space: nowrap;
+	text-decoration: none;
+
+	padding: 0.25rem 20px;
+	margin: 0.25rem;
+
+	cursor: pointer;
+
+	// COLORS
+	&.danger {
+		@include state($color-dark-red);
+	}
+
+	// STYLE
+	&.outline {
+		background: none;
+	}
+
+	&.stack {
+		flex-shrink: 0;
+		width: 100%;
+	}
+
+	&.small {
+		height: 30px;
+		padding: 0.25rem 10px;
+	}
+
+	// STATES
+
+	&.disabled {
+		opacity: .5;
+		cursor: not-allowed;
+	}
+
+
+	&:active {
+		opacity: .9;
+		transform: translateY(1px);
+	}
+}

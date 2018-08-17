@@ -7,7 +7,8 @@ module.exports = (baseConfig, env, defaultConfig) => {
 	defaultConfig.resolve.alias = {
 		...defaultConfig.resolve.alias,
 		'react': 'preact-compat',
-		'react-dom': 'preact-compat'
+		'react-dom': 'preact-compat',
+		'styles': path.join(__dirname, '../src/style')
 	};
 
 	defaultConfig.resolve.extensions.push('.css');
@@ -35,7 +36,11 @@ module.exports = (baseConfig, env, defaultConfig) => {
 					modules: true,
 					localIdentName: "[local]___[hash:base64:5]"
 				}
-			}
+			}, {
+				loader: "sass-loader", options: {
+					sourceMap: true
+				}
+			},
 		]
 	})
 
