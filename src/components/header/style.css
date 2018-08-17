@@ -1,18 +1,18 @@
 .header {
 	width: 100%;
 	height: 56px;
-	padding: 0;
+	padding: 0 15px;
 	background: #175CC4;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	display: flex;
     justify-content: space-between;
-    align-items: center;
+	align-items: center;
+	flex: 0 0 auto;
 }
 
 .header h1 {
 	float: left;
 	margin: 0;
-	padding: 0 15px;
 	font-size: 14px;
 	font-weight: 500;
 	color: #FFF;
