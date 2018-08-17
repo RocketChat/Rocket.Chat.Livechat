@@ -4,7 +4,7 @@ import style from './style';
 export default class Profile extends Component {
 	state = {
 		time: Date.now(),
-		count: 10
+		count: 10,
 	};
 
 	// update the current time
@@ -13,7 +13,7 @@ export default class Profile extends Component {
 	};
 
 	increment = () => {
-		this.setState({ count: this.state.count+1 });
+		this.setState({ count: this.state.count + 1 });
 	};
 
 	// gets called when this route is navigated to

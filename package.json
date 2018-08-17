@@ -10,9 +10,6 @@
     "lint": "eslint src",
     "test": "jest ./tests"
   },
-  "eslintConfig": {
-    "extends": "eslint-config-synacor"
-  },
   "eslintIgnore": [
     "build/*"
   ],
