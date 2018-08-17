@@ -1,11 +1,12 @@
 .footer {
 	width: 100%;
 	color: #9EA2A8;
-	padding: 8px 17px;
+	padding: 0 15px;
 	display: flex;
     justify-content: space-between;
 	align-items: center;
 	font-size: 10px;
+	flex: 0 0 auto;
 }
 
 .footer h1 {
