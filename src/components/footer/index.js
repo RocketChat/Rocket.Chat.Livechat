@@ -2,9 +2,9 @@ import { h } from 'preact';
 import style from './style';
 
 const Header = ({ children }) => (
-	<header class={style.header}>
+	<footer class={style.footer}>
 		<h1>{children}</h1>
-	</header>
+	</footer>
 );
 
 export default Header;
