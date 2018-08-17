@@ -1,29 +1,26 @@
-.header {
+.footer {
 	width: 100%;
-	height: 56px;
-	padding: 0;
-	background: #175CC4;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	color: #9EA2A8;
+	padding: 8px 17px;
 	display: flex;
     justify-content: space-between;
-    align-items: center;
+	align-items: center;
+	font-size: 10px;
 }
 
-.header h1 {
-	float: left;
-	margin: 0;
-	padding: 0 15px;
-	font-size: 14px;
+.footer h1 {
+	font-size: 10px;
 	font-weight: 500;
-	color: #FFF;
+	flex: 1 1 100%;
+    text-align: end;
 }
 
-.header nav {
+.footer nav {
 	float: right;
 	font-size: 100%;
 }
 
-.header nav a {
+.footer nav a {
 	display: inline-block;
 	height: 56px;
 	line-height: 56px;
@@ -36,11 +33,11 @@
 	will-change: background-color;
 }
 
-.header nav a:hover,
-.header nav a:active {
+.footer nav a:hover,
+.footer nav a:active {
 	background: rgba(0,0,0,0.2);
 }
 
-.header nav a.active {
+.footer nav a.active {
 	background: rgba(0,0,0,0.4);
 }
