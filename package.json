@@ -31,6 +31,7 @@
     "node-sass": "^4.9.3",
     "preact": "^8.2.6",
     "preact-router": "^2.5.7",
+    "rc-tooltip": "^3.7.2",
     "sass-loader": "^7.1.0"
   },
   "jest": {

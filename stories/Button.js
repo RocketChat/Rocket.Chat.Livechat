@@ -18,7 +18,6 @@ storiesOf('Button', module).add('Disabled Danger Button outline', () => c(<Butto
 storiesOf('Button', module).add('Stack Button ', () => c(<Button stack onClick={action('clicked')}>{text}</Button>));
 storiesOf('Button', module).add('Small Button ', () => c(<Button small onClick={action('clicked')}>{text}</Button>));
 
-
 storiesOf('Group Buttons', module).add('Buttons ', () => c(<Group>
 	<Button onClick={action('clicked')}>{text}</Button>
 	<Button onClick={action('clicked')}>{text}</Button>

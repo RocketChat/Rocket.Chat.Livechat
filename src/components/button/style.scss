@@ -1,5 +1,5 @@
 @import '~styles/colors';
-@import '~styles/sizes';
+@import '~styles/variables';
 
 
 @mixin state($color) {
@@ -11,20 +11,28 @@
 }
 
 .group {
+	display: flex;
 	flex-direction: row;
 	align-items: center;
 	flex-wrap: wrap;
+	margin: -.25rem;
+
+	.button {
+		margin: .25rem;
+		flex-grow: 1;
+	}
+
 }
 
 .button {
-	transition: color .3s, background .3s;
+	transition: color $default-time-animation, background $default-time-animation, trasform $default-time-animation;
 
 	border: $default-border solid;
 
-	height: 44px;
+	height: $form-item-height;
 	border-radius: $default-border-radius;
 
-	@include state($color-dark-blue);
+	@include state($color-blue);
 
 	color: white;
 	font-size: 14px;
@@ -33,7 +41,6 @@
 	text-decoration: none;
 
 	padding: 0.25rem 20px;
-	margin: 0.25rem;
 
 	cursor: pointer;
 
@@ -48,12 +55,11 @@
 	}
 
 	&.stack {
-		flex-shrink: 0;
 		width: 100%;
 	}
 
 	&.small {
-		height: 30px;
+		height: $form-item-height-small;
 		padding: 0.25rem 10px;
 	}
 
@@ -67,6 +73,6 @@
 
 	&:active {
 		opacity: .9;
-		transform: translateY(1px);
+		transform: translateY(2px);
 	}
 }
