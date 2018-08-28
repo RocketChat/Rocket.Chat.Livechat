@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { setOptions } from '@storybook/addon-options';
-import '../src/style';
+import '../src/styles';
 
 function importAll(r) {
 	r.keys().forEach((key) => r(key));
