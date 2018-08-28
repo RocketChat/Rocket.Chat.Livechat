@@ -1,3 +1,5 @@
+@import 'grid';
+
 html, body {
 	height: 100%;
 	width: 100%;
@@ -20,48 +22,3 @@ html, body {
 	flex-direction: column;
 	height: 100%;
 }
-
-
-//----- Extends
-%clearfix:after {
-	display:block;
-	clear:both;
-	content:'';
-}
-
-//----- Grid System
-$grid-spacing:3%;
-
-.row {
-	@extend %clearfix;
-
-	& + & {
-		margin-top:$grid-spacing;
-	}
-}
-
-[class^="col-"] {
-	float:left;
-	margin-right:$grid-spacing;
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;
-	box-sizing:border-box;
-
-	&:last-child {
-		margin-right:0%;
-	}
-}
-
-//----- Columns (Automatic)
-.col-1 { width:(100% / 12) - ($grid-spacing * 11 / 12); }
-.col-2 { width:(100% / 6) - ($grid-spacing * 10 / 12); }
-.col-3 { width:(100% / 4) - ($grid-spacing * 9 / 12); }
-.col-4 { width:(100% / 3) - ($grid-spacing * 8 / 12); }
-.col-5 { width:(100% / 2.4) - ($grid-spacing * 7 / 12); }
-.col-6 { width:(100% / 2) - ($grid-spacing * 6 / 12); }
-.col-7 { width:(100% / 1.714285714285714) - ($grid-spacing * 5 / 12); }
-.col-8 { width:(100% / 1.5) - ($grid-spacing * 4 / 12); }
-.col-9 { width:(100% / 1.333333333333333) - ($grid-spacing * 3 / 12); }
-.col-10 { width:(100% / 1.2) - ($grid-spacing * 2 / 12); }
-.col-11 { width:(100% / 1.090909090909091) - ($grid-spacing * 1 / 12); }
-.col-12 { width:100%; }

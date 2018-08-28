@@ -1,7 +1,6 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
-
 @mixin state($color) {
 	border-color: $color;
 	background: $color;
@@ -25,6 +24,8 @@
 }
 
 .button {
+	position: relative;
+
 	transition: color $default-time-animation, background $default-time-animation, trasform $default-time-animation;
 
 	border: $default-border solid;
