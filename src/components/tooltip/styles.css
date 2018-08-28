@@ -1,8 +1,6 @@
 .tooltip {
   position: relative;
   display: inline-block;
-  width: 100px;
-  height: 32px;
   padding: 8px 12px;
   margin: 8px;
   border-radius: 2px 2px 2px 2px;
