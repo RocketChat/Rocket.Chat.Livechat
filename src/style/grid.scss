@@ -1,0 +1,45 @@
+//----- Grid System
+@import "helpers";
+
+//----- Extends
+%clearfix:after {
+	display:block;
+	clear:both;
+	content:'';
+}
+
+$grid-spacing: 3%;
+
+.row {
+	@extend %clearfix;
+
+	& + & {
+		margin-top:$grid-spacing;
+	}
+}
+
+[class^="col-"] {
+	float:left;
+	margin-right:$grid-spacing;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+
+	&:last-child {
+		margin-right:0%;
+	}
+}
+
+$cols: 12;
+
+@for $i from 1 through $cols {
+  .col-#{$i}, %col-#{$i} { width:(100% / ($cols / $i)) - ($grid-spacing * ($cols - $i) / $cols); }
+}
+
+@each $breakpoint, $value in ($breakpoints) {
+  @include md($breakpoint) {
+    @for $i from 1 through $cols {
+     .col-#{$breakpoint}-#{$i}, %col-#{$breakpoint}-#{$i} { width:(100% / ($cols / $i)) - ($grid-spacing * ($cols - $i) / $cols); }
+    }
+  }
+}

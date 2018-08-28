@@ -1,8 +1,8 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import c from './helper/center';
-import Button, { Group } from '../src/components/button';
+import c from '../../../stories/helper/center';
+import Button, { Group } from './';
 
 const text = 'Powered by Rocket.Chat';
 storiesOf('Button', module).add('Simple Button', () => c(<Button onClick={action('clicked')}>{ text }</Button>));

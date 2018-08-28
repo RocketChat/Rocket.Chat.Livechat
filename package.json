@@ -29,6 +29,7 @@
     "style-loader": "^0.22.1"
   },
   "dependencies": {
+    "@storybook/addon-options": "^3.4.10",
     "node-sass": "^4.9.3",
     "preact": "^8.2.6",
     "preact-router": "^2.5.7",
