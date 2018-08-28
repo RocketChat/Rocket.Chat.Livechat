@@ -16,6 +16,8 @@
   ],
   "devDependencies": {
     "@storybook/addon-centered": "^3.4.10",
+    "@storybook/addon-knobs": "^3.4.10",
+    "@storybook/addon-options": "^3.4.10",
     "@storybook/addon-viewport": "^3.4.10",
     "@storybook/react": "^3.4.10",
     "css-loader": "^1.0.0",
