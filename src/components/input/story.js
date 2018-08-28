@@ -1,9 +1,9 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import c from './helper/center';
-import Input, { Label, Item, Description, Error, Form } from '../src/components/input';
-import Button, { Group } from '../src/components/button';
+import c from '../../../stories/helper/center';
+import Input, { Label, Item, Description, Error, Form } from './';
+import Button, { Group } from '../button';
 
 const text = 'Powered by Rocket.Chat';
 storiesOf('Form', module).add('Simple Input', () => c(<Input onClick={action('clicked')} onFocus={action('focus')} onInput={action('input')}>{text}</Input>));

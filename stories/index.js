@@ -1,8 +1,13 @@
 import { h } from 'preact';
-
+import { setOptions } from '@storybook/addon-options';
 import '../src/style';
-import './Button';
-import './Header';
-import './Footer';
-import './Input';
-import './Tooltip';
+
+function importAll(r) {
+	r.keys().forEach((key) => r(key));
+}
+
+setOptions({
+	hierarchySeparator: '\\.',
+});
+
+importAll(require.context('../src', true, /story$/));
