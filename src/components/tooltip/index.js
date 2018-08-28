@@ -1,8 +1,6 @@
 import { h } from 'preact';
-import styles from './styles';
+import styles from './styles.scss';
 import { createClassName } from '../helpers';
-
-console.log(styles);
 
 const Tooltip = ({ children, arrowhead, ...props }) => (
 	<div className={createClassName(styles, 'tooltip', { arrowhead })} {...props}>

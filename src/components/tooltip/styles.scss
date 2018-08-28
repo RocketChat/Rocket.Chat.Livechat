@@ -1,0 +1,60 @@
+$background-color: #1f2329;
+$text-color: #ffffff;
+$shadow: 0 0 0.125rem 0 rgba(47, 52, 61, 0.08),
+  0 0 0.75rem 0 rgba(47, 52, 61, 0.12);
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem;
+  border-radius: 0.125rem;
+  background-color: $background-color;
+  box-shadow: $shadow;
+  color: $text-color;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1rem;
+  text-align: center;
+
+  &--arrowhead {
+    &::before {
+      content: "";
+      position: absolute;
+      border: 0.3125rem solid $background-color;
+    }
+
+    &-top::before {
+      left: calc(50% - 0.3125rem);
+      bottom: 100%;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-top-color: transparent;
+    }
+
+    &-bottom::before {
+      left: calc(50% - 0.3125rem);
+      top: 100%;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+    }
+
+    &-left::before {
+      right: 100%;
+      top: calc(50% - 0.3125rem);
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+
+    &-right::before {
+      left: 100%;
+      top: calc(50% - 0.3125rem);
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      border-right-color: transparent;
+    }
+  }
+}
