@@ -1,0 +1,70 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 32px;
+  padding: 8px 12px;
+  margin: 8px;
+  border-radius: 2px 2px 2px 2px;
+  background: #1F2329;
+  box-shadow: 0 0 2px 0 rgba(47,52,61,0.08), 0 0 12px 0 rgba(47,52,61,0.12);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 16px;
+  text-align: center;
+}
+
+.tooltip.tooltip--arrowhead {
+}
+
+.tooltip.tooltip--arrowhead::before {
+  content: "";
+  position: absolute;
+  border: 5px solid #1F2329;
+}
+
+.tooltip.tooltip--arrowhead-top {
+}
+
+.tooltip.tooltip--arrowhead-top::before {
+  left: calc(50% - 5px);
+  bottom: 100%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+.tooltip.tooltip--arrowhead-bottom {
+}
+
+.tooltip.tooltip--arrowhead-bottom::before {
+  left: calc(50% - 5px);
+  top: 100%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.tooltip.tooltip--arrowhead-left {
+}
+
+.tooltip.tooltip--arrowhead-left::before {
+  right: 100%;
+  top: calc(50% - 5px);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.tooltip.tooltip--arrowhead-right {
+}
+
+.tooltip.tooltip--arrowhead-right::before {
+  left: 100%;
+  top: calc(50% - 5px);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
