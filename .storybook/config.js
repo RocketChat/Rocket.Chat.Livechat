@@ -1,5 +1,4 @@
-import { configure, addDecorator } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { configure } from '@storybook/react';
 import { setOptions } from '@storybook/addon-options';
 
 setOptions({
@@ -10,9 +9,8 @@ setOptions({
 });
 
 function loadStories() {
-	addDecorator(withKnobs);
 	require('../stories/index.js');
-	const req = require.context('../src/components', true, /(story|stories)\.js$/);
+	const req = require.context('../src', true, /(stories|story)\.js$/);
 	req.keys().forEach(filename => req(filename));
 }
 
