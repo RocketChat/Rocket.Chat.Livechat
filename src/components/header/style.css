@@ -5,7 +5,7 @@
 	background: #175CC4;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	display: flex;
-    justify-content: space-between;
+	justify-content: space-between;
 	align-items: center;
 	flex: 0 0 auto;
 }
