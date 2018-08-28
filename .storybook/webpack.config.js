@@ -8,7 +8,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		...defaultConfig.resolve.alias,
 		'react': 'preact-compat',
 		'react-dom': 'preact-compat',
-		'styles': path.join(__dirname, '../src/style')
+		'styles': path.join(__dirname, '../src/styles')
 	};
 
 	defaultConfig.resolve.extensions.push('.css');
