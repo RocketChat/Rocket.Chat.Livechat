@@ -1,0 +1,79 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+@mixin state($color) {
+	border-color: $color;
+	background: $color;
+	&.outline {
+		color: $color;
+	}
+}
+
+.group {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: -.25rem;
+
+	.button {
+		margin: .25rem;
+		flex-grow: 1;
+	}
+
+}
+
+.button {
+	position: relative;
+
+	transition: color $default-time-animation, background $default-time-animation, trasform $default-time-animation;
+
+	border: $default-border solid;
+
+	height: $form-item-height;
+	border-radius: $default-border-radius;
+
+	@include state($color-blue);
+
+	color: white;
+	font-size: 14px;
+
+	white-space: nowrap;
+	text-decoration: none;
+
+	padding: 0.25rem 20px;
+
+	cursor: pointer;
+
+	// COLORS
+	&.danger {
+		@include state($color-dark-red);
+	}
+
+	// STYLE
+	&.outline {
+		background: none;
+	}
+
+	&.stack {
+		width: 100%;
+	}
+
+	&.small {
+		height: $form-item-height-small;
+		padding: 0.25rem 10px;
+	}
+
+	// STATES
+
+	&.disabled {
+		opacity: .5;
+		cursor: not-allowed;
+	}
+
+
+	&:active {
+		opacity: .9;
+		transform: translateY(2px);
+	}
+}

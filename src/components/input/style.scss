@@ -1,0 +1,71 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+.input {
+	transition: border-color $default-time-animation, color $default-time-animation;
+	outline: none;
+	font-size: 14px;
+	font-weight: 500;
+	border-radius: $default-border;
+	padding: 0 10px;
+	height: $form-item-height;
+	border: $default-border solid $bg-color-grey;
+	color: $color-text-dark;
+
+	&.small {
+		height: $form-item-height-small;
+	}
+
+	&.error {
+		border-color: $color-red;
+		color: $color-red;
+	}
+
+	&:focus {
+		border-color: $bg-color-dark;
+		color: $color-text-dark;
+	}
+}
+
+.label {
+	height: 16px;
+	color: #2F343D;
+	font-size: $form-input-label-font-size;
+	font-weight: 600;
+	text-align: left;
+	letter-spacing: 0;
+	margin: 5px 0;
+
+		&.error {
+		border-color: $color-red;
+		color: $color-red;
+	}
+}
+
+.description {
+	height: 20px;
+	color: #9EA2A8;
+	font-size: $form-input-description-font-size;
+	font-weight: 500;
+	margin-top: 8px;
+
+	&.error {
+		color: $color-red;
+	}
+}
+
+
+.formGroup {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: $form-item-margin-bottom;
+	width: 100%;
+
+	&.inline {
+		flex-direction: row;
+		align-items: center;
+		.label + .input {
+			margin-left: 16px;
+		}
+	}
+}

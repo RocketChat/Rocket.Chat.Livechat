@@ -29,8 +29,11 @@
     "style-loader": "^0.22.1"
   },
   "dependencies": {
+    "node-sass": "^4.9.3",
     "preact": "^8.2.6",
-    "preact-router": "^2.5.7"
+    "preact-router": "^2.5.7",
+    "sass-loader": "^7.1.0",
+    "storybook-addon-jsx": "^5.4.0"
   },
   "jest": {
     "verbose": true,
