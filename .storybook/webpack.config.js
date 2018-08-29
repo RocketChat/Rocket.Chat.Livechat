@@ -45,5 +45,19 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		]
 	})
 
+	const { include, exclude, test, ...loader } = defaultConfig.module.rules[0];
+	defaultConfig.module.rules[0] = {
+		test,
+		include,
+		exclude,
+		use: [
+			{ ...loader },
+			{
+				loader: "preact-i18nline/webpack-loader"
+			},
+		]
+	}
+
+
 	return defaultConfig;
 };
