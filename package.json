@@ -15,6 +15,9 @@
     "build/*"
   ],
   "devDependencies": {
+    "@storybook/addon-centered": "^3.4.10",
+    "@storybook/addon-knobs": "^3.4.10",
+    "@storybook/addon-options": "^3.4.10",
     "@storybook/addon-viewport": "^3.4.10",
     "@storybook/react": "^3.4.10",
     "css-loader": "^1.0.0",
@@ -23,9 +26,11 @@
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
     "jest": "^21.2.1",
+    "node-sass": "^4.9.3",
     "preact-cli": "^2.1.0",
     "preact-compat": "^3.18.2",
     "preact-render-spy": "^1.2.1",
+    "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1"
   },
   "dependencies": {
