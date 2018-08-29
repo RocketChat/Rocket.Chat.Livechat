@@ -3,15 +3,23 @@
 
 
 .composer {
+    transition: all .3s;
     border: $default-border solid $color-text-light;
     border-radius: $default-border-radius;
     padding: 12px;
     display: flex;
     align-items: flex-end;
+    background: $bg-color-white;
+    width: 100%;
+
+    &:focus-within {
+        border-color: $color-text-grey;
+    }
 }
 
 .icon {
     padding: 0 12px;
+    flex: 0 0;
 }
 
 .input {

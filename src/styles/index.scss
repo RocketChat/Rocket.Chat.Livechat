@@ -19,7 +19,7 @@ html, body {
 }
 
 *::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 
   &-thumb {
 	background: $color-text-grey;
@@ -27,8 +27,8 @@ html, body {
   }
 
   &-track {
-	background: $color-text-light;
-	border-radius: 5px;
+		background: $color-text-light;
+		border-radius: 5px;
   }
 }
 
