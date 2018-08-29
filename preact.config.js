@@ -6,12 +6,7 @@
  * @param {object} env - options passed to CLI.
  * @param {WebpackConfigHelpers} helpers - object with useful helpers when working with config.
  **/
-<<<<<<< HEAD
 export default function(config) {
-=======
-export default function(config, env, helpers) {
-	console.log(config);
->>>>>>> composer
 	config.resolve.alias.styles = './src/styles';
 	return config;
 }

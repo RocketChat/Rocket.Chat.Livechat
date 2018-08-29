@@ -1,6 +1,6 @@
 
 const webpack  = require('webpack');
-const path = require("path");
+const path = require('path');
 
 module.exports = (baseConfig, env, defaultConfig) => {
 	// we are extending the base alias config here, adding preact as an alias
@@ -8,11 +8,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		...defaultConfig.resolve.alias,
 		'react': 'preact-compat',
 		'react-dom': 'preact-compat',
-<<<<<<< HEAD
 		'styles': path.join(__dirname, '../src/styles')
-=======
-		'styles': path.join(__dirname, '../src/style')
->>>>>>> composer
 	};
 
 	defaultConfig.resolve.extensions.push('.css');
@@ -31,17 +27,18 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		test: /\.(s?css|sass)$/,
 		use: [
 			{
-				loader: "style-loader"
+				loader: 'style-loader'
 			},
 			{
-				loader: "css-loader",
+				loader: 'css-loader',
 				options: {
 					sourceMap: true,
 					modules: true,
-					localIdentName: "[local]___[hash:base64:5]"
+					localIdentName: '[local]___[hash:base64:5]'
 				}
-			}, {
-				loader: "sass-loader", options: {
+			},
+			{
+				loader: 'sass-loader', options: {
 					sourceMap: true
 				}
 			},
