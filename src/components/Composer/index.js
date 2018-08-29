@@ -5,7 +5,7 @@ const getStyles = (style, name, classes) => [style[name], ...Object.entries(styl
 const Composer = ({ pre, post, placeholder, ...args }) => (
 	<div {...args} className={getStyles(style, 'composer', {})}>
 		{ pre }
-		<div placeholder={placeholder} className={getStyles(style, 'input', {})} contenteditable>asd</div>
+		<div placeholder={placeholder} className={getStyles(style, 'input', {})} contenteditable />
 		{ post }
 	</div>);
 
