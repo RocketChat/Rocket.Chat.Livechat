@@ -2,7 +2,7 @@
 .footer {
 	width: 100%;
 	color: #9EA2A8;
-	padding: 0 15px;
+	padding: 4px 8px;
 	display: flex;
     justify-content: space-between;
 	align-items: center;
@@ -17,7 +17,7 @@
 	flex: 1 1 100%;
 	text-align: end;
 	width: 100%;
-
+	margin: 0;
 }
 
 .container nav {
