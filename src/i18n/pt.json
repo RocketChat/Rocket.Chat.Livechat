@@ -1,0 +1,10 @@
+{
+  "pt": {
+    "children_b5b50b1": "%{children}",
+    "click_me_clicked_count_times_e2f836ad": "*Click Me* %{} Clicked %{count} times.",
+    "home_351838cd": "Home",
+    "profile_user_f5c94dd": "Profile: %{user}",
+    "this_is_the_home_component_787e9e91": "This is the Home component.",
+    "this_is_the_user_profile_for_a_user_named_user_88765ee4": "This is the user profile for a user named %{user}."
+  }
+}

@@ -8,7 +8,8 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		...defaultConfig.resolve.alias,
 		'react': 'preact-compat',
 		'react-dom': 'preact-compat',
-		'styles': path.join(__dirname, '../src/styles')
+		'styles': path.join(__dirname, '../src/styles'),
+		'autoI18n': path.resolve(__dirname, '../src/i18n')
 	};
 
 	defaultConfig.resolve.extensions.push('.css');
@@ -19,7 +20,8 @@ module.exports = (baseConfig, env, defaultConfig) => {
 	defaultConfig.plugins.push(
 		new webpack.ProvidePlugin({
 			Component: ['preact', 'Component'],
-			React: ['preact-compat']
+			React: ['preact-compat'],
+			I18n: ['autoI18n', 'default']
 		})
 	);
 
@@ -44,6 +46,20 @@ module.exports = (baseConfig, env, defaultConfig) => {
 			},
 		]
 	})
+
+	const { include, exclude, test, ...loader } = defaultConfig.module.rules[0];
+	defaultConfig.module.rules[0] = {
+		test,
+		include,
+		exclude,
+		use: [
+			{ ...loader },
+			{
+				loader: "preact-i18nline/webpack-loader"
+			},
+		]
+	}
+
 
 	return defaultConfig;
 };

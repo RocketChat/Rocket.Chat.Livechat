@@ -1,27 +1,31 @@
+.container,
 .footer {
 	width: 100%;
 	color: #9EA2A8;
-	padding: 0 15px;
+	padding: 4px 8px;
 	display: flex;
     justify-content: space-between;
 	align-items: center;
 	font-size: 10px;
 	flex: 0 0 auto;
+	flex-direction: column;
 }
 
-.footer h1 {
+.powered {
 	font-size: 10px;
 	font-weight: 500;
 	flex: 1 1 100%;
-    text-align: end;
+	text-align: end;
+	width: 100%;
+	margin: 0;
 }
 
-.footer nav {
+.container nav {
 	float: right;
 	font-size: 100%;
 }
 
-.footer nav a {
+.container nav a {
 	display: inline-block;
 	height: 56px;
 	line-height: 56px;
@@ -34,11 +38,11 @@
 	will-change: background-color;
 }
 
-.footer nav a:hover,
-.footer nav a:active {
+.container nav a:hover,
+.container nav a:active {
 	background: rgba(0,0,0,0.2);
 }
 
-.footer nav a.active {
+.container nav a.active {
 	background: rgba(0,0,0,0.4);
 }
