@@ -10,5 +10,4 @@ const Footer = ({ children }) => (
 );
 
 export const Powered = () => <h3 class={style.powered}>Powered by Rocket.Chat</h3>;
-
 export default Footer;

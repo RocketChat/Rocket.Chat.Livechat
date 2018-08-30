@@ -9,11 +9,24 @@
     "dev": "preact watch",
     "lint": "eslint src",
     "test": "jest ./tests",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+		"storybook": "start-storybook -p 9001 -c .storybook",
+		"i18n": "i18nline synch"
   },
   "eslintIgnore": [
     "build/*"
-  ],
+	],
+	"i18n" :{
+		"autoTranslateTags": [
+			"h1",
+			"h2",
+			"h3",
+			"h4",
+			"h5",
+			"h6",
+			"p"
+		],
+		"ignorePatterns": ["story.js"]
+	},
   "devDependencies": {
     "@storybook/addon-centered": "^3.4.10",
     "@storybook/addon-knobs": "^3.4.10",
@@ -35,8 +48,10 @@
   },
   "dependencies": {
     "@storybook/addon-options": "^3.4.10",
+    "i18nline": "^2.0.1",
     "node-sass": "^4.9.3",
     "preact": "^8.2.6",
+    "preact-i18nline": "^2.0.0",
     "preact-router": "^2.5.7",
     "sass-loader": "^7.1.0",
     "storybook-addon-jsx": "^5.4.0"

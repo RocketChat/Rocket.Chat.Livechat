@@ -21,7 +21,10 @@ npm run test
 # run the storybook
 npm run storybook
 ```
-
+### before commit run
+```bash
+npm run i18n
+```
 ## Screens:
 ![image](https://user-images.githubusercontent.com/5263975/44279585-497b2980-a228-11e8-81a2-36bc3389549e.png)
 ![image](https://user-images.githubusercontent.com/5263975/44279599-5730af00-a228-11e8-8873-553ef53ee25a.png)
