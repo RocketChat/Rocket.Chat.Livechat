@@ -1,0 +1,42 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+// TODO we found 3 sizes between rocket.chat and rocket.chat.livechat 20, 32 and 38
+
+%normal {
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+}
+
+%small {
+    &.small {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+%large {
+    &.large {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+
+.image {
+    @extend %normal;
+    @extend %small;
+    @extend %large;
+}
+
+.wrapper {
+    @extend %normal;
+    background-color: $bg-color-grey;
+    background-image: url(./placeholder.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    @extend %small;
+    @extend %large;
+}

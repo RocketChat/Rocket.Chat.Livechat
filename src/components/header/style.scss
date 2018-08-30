@@ -1,21 +1,41 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+
+$header-padding: 16px;
 .header {
 	width: 100%;
 	height: 56px;
-	padding: 0 15px;
-	background: #175CC4;
+	padding: 0 $header-padding;
+	background: $color-dark-blue;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex: 0 0 auto;
+	color: $bg-color-white;
+	font-size: 16px;
+}
+
+.content {
+	flex: 1 1 auto;
+    margin: 0 $header-padding;
+}
+
+.subTitle {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.title {
+	font-size: 16px;
+	font-weight: 500;
 }
 
 .header h1 {
 	float: left;
 	margin: 0;
-	font-size: 14px;
 	font-weight: 500;
-	color: #FFF;
 }
 
 .header nav {
