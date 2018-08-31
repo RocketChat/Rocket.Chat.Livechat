@@ -17,50 +17,63 @@ $shadow: 0 0 0.125rem 0 rgba(47, 52, 61, 0.08),
   letter-spacing: 0;
   line-height: 1rem;
   text-align: center;
+  white-space: nowrap;
   opacity: 1;
   transition: opacity 100ms linear;
+  user-select: none;
 
   &--hidden {
     opacity: 0;
   }
 
-  &--tail {
-    &::before {
-      content: "";
-      position: absolute;
-      border: 0.3125rem solid $background-color;
+  &--placement {
+    @mixin tail {
+      &::before {
+        content: "";
+        position: absolute;
+        border: 0.3125rem solid $background-color;
+        @content;
+      }
     }
 
-    &-top::before {
-      left: calc(50% - 0.3125rem);
-      bottom: 100%;
-      border-left-color: transparent;
-      border-right-color: transparent;
-      border-top-color: transparent;
+    &-left {
+      @include tail {
+        left: 100%;
+        top: calc(50% - 0.3125rem);
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+      }
     }
 
-    &-bottom::before {
-      left: calc(50% - 0.3125rem);
-      top: 100%;
-      border-left-color: transparent;
-      border-right-color: transparent;
-      border-bottom-color: transparent;
+    &-right {
+      @include tail {
+        right: 100%;
+        top: calc(50% - 0.3125rem);
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+      }
     }
 
-    &-left::before {
-      right: 100%;
-      top: calc(50% - 0.3125rem);
-      border-top-color: transparent;
-      border-bottom-color: transparent;
-      border-left-color: transparent;
+    &-top {
+      @include tail {
+        left: calc(50% - 0.3125rem);
+        top: 100%;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+      }
     }
 
-    &-right::before {
-      left: 100%;
-      top: calc(50% - 0.3125rem);
-      border-top-color: transparent;
-      border-bottom-color: transparent;
-      border-right-color: transparent;
+    &-bottom {
+      @include tail {
+        left: calc(50% - 0.3125rem);
+        bottom: 100%;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-top-color: transparent;
+      }
     }
   }
 }

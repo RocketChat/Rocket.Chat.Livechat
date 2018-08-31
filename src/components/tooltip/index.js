@@ -2,8 +2,8 @@ import { h } from 'preact';
 import styles from './styles';
 import { createClassName } from '../helpers';
 
-const Tooltip = ({ children, hidden, tail, ...props }) => (
-	<div className={createClassName(styles, 'tooltip', { hidden, tail })} {...props}>
+const Tooltip = ({ children, hidden, placement, ...props }) => (
+	<div className={createClassName(styles, 'tooltip', { hidden, placement })} {...props}>
 		{children}
 	</div>
 );
