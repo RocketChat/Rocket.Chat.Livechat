@@ -1,14 +1,25 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
-import { Tooltip } from './index';
+import { withKnobs, boolean, text } from '@storybook/addon-knobs/react';
 
-const tooltipText = 'Tooltip text';
+import Tooltip from './index';
 
-storiesOf('Tooltip', module)
+const tooltipText = 'A simple tool tip';
+const tooltipHidden = false;
+
+storiesOf('Components|Tooltip', module)
 	.addDecorator(centered)
-	.add('without arrowhead', () => <Tooltip>{tooltipText}</Tooltip>)
-	.add('with arrowhead on top', () => <Tooltip arrowhead="top">{tooltipText}</Tooltip>)
-	.add('with arrowhead on bottom', () => <Tooltip arrowhead="bottom">{tooltipText}</Tooltip>)
-	.add('with arrowhead on left', () => <Tooltip arrowhead="left">{tooltipText}</Tooltip>)
-	.add('with arrowhead on right', () => <Tooltip arrowhead="right">{tooltipText}</Tooltip>);
+	.addDecorator(withKnobs)
+	.add('Tooltip without tail', () => (
+		<Tooltip hidden={boolean('Hidden', tooltipHidden)}>{text('Text', tooltipText)}</Tooltip>
+	))
+	.add('Tooltips with tail', () => (
+		<div style={{ display: 'flex', flexDirection: 'column' }}>
+			<Tooltip tail="left" hidden={boolean('Hidden', tooltipHidden)}>{text('Text', tooltipText)}</Tooltip>
+			<Tooltip tail="top" hidden={boolean('Hidden', tooltipHidden)}>{text('Text', tooltipText)}</Tooltip>
+			<Tooltip tail="right" hidden={boolean('Hidden', tooltipHidden)}>{text('Text', tooltipText)}</Tooltip>
+			<Tooltip tail="bottom" hidden={boolean('Hidden', tooltipHidden)}>{text('Text', tooltipText)}</Tooltip>
+		</div>
+	))
+;

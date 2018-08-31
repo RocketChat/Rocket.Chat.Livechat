@@ -17,8 +17,14 @@ $shadow: 0 0 0.125rem 0 rgba(47, 52, 61, 0.08),
   letter-spacing: 0;
   line-height: 1rem;
   text-align: center;
+  opacity: 1;
+  transition: opacity 100ms linear;
 
-  &--arrowhead {
+  &--hidden {
+    opacity: 0;
+  }
+
+  &--tail {
     &::before {
       content: "";
       position: absolute;
