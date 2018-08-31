@@ -9,24 +9,26 @@
     "dev": "preact watch",
     "lint": "eslint src",
     "test": "jest ./tests",
-		"storybook": "start-storybook -p 9001 -c .storybook",
-		"i18n": "i18nline synch"
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "i18n": "i18nline synch"
   },
   "eslintIgnore": [
     "build/*"
-	],
-	"i18n" :{
-		"autoTranslateTags": [
-			"h1",
-			"h2",
-			"h3",
-			"h4",
-			"h5",
-			"h6",
-			"p"
-		],
-		"ignorePatterns": ["story.js"]
-	},
+  ],
+  "i18n": {
+    "autoTranslateTags": [
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      "p"
+    ],
+    "ignorePatterns": [
+      "story.js"
+    ]
+  },
   "devDependencies": {
     "@storybook/addon-centered": "^3.4.10",
     "@storybook/addon-knobs": "^3.4.10",

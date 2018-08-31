@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
-import { withKnobs, boolean, select, text } from '@storybook/addon-knobs/react';
+import { withKnobs, boolean, text } from '@storybook/addon-knobs/react';
 
 import Tooltip from './index';
 
@@ -11,7 +11,7 @@ const tooltipHidden = false;
 storiesOf('Components|Tooltip', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('Tooltip placements', () => (
+	.add('Inline tooltips', () => (
 		<div style={{ display: 'flex', flexDirection: 'column' }}>
 			<Tooltip hidden={boolean('Hidden', tooltipHidden)}>{text('Text', tooltipText)}</Tooltip>
 			<Tooltip hidden={boolean('Hidden', tooltipHidden)} placement="left">{text('Text', tooltipText)}</Tooltip>

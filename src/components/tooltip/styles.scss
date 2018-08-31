@@ -1,28 +1,32 @@
-$background-color: #1f2329;
-$text-color: #ffffff;
-$shadow: 0 0 0.125rem 0 rgba(47, 52, 61, 0.08),
-  0 0 0.75rem 0 rgba(47, 52, 61, 0.12);
+@import '~styles/colors';
+@import '~styles/variables';
 
 .tooltip {
   position: relative;
-  display: inline-block;
   padding: 0.5rem 0.75rem;
   margin: 0.5rem;
-  border-radius: 0.125rem;
-  background-color: $background-color;
-  box-shadow: $shadow;
-  color: $text-color;
+  border-radius: $default-border-radius;
+
+  background-color: $bg-color-darker;
+  box-shadow: 0 0 0.125rem 0 rgba($bg-color-dark, 0.08),
+    0 0 0.75rem 0 rgba($bg-color-dark, 0.12);
+
+  color: $color-text-lighter;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1rem;
   text-align: center;
   white-space: nowrap;
-  opacity: 1;
-  transition: opacity 100ms linear;
   user-select: none;
 
+  display: inline-block;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity $default-time-animation;
+
   &--hidden {
+    visibility: hidden;
     opacity: 0;
   }
 
@@ -31,7 +35,7 @@ $shadow: 0 0 0.125rem 0 rgba(47, 52, 61, 0.08),
       &::before {
         content: "";
         position: absolute;
-        border: 0.3125rem solid $background-color;
+        border: 0.3125rem solid $bg-color-darker;
         @content;
       }
     }
