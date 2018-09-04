@@ -9,6 +9,7 @@
     "dev": "preact watch",
     "lint": "eslint src",
     "test": "jest ./tests",
+    "coverage": "jest --coverage",
 		"storybook": "start-storybook -p 9001 -c .storybook",
 		"i18n": "i18nline synch"
   },
