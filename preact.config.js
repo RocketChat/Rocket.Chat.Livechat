@@ -1,11 +1,4 @@
-/**
- * Function that mutates original webpack config.
- * Supports asynchronous changes when promise is returned.
- *
- * @param {object} config - original webpack config.
- * @param {object} env - options passed to CLI.
- * @param {WebpackConfigHelpers} helpers - object with useful helpers when working with config.
- **/
+const webpackOverride = require('./webpackOverride.config');
 
 export default (config, env, helpers) => {
 	// Use Preact CLI's helpers object to get the babel-loader
@@ -22,6 +15,6 @@ export default (config, env, helpers) => {
 	];
 	// remove the old loader options
 	delete babel.options;
-	config.resolve.alias.styles = './src/styles';
+	config = webpackOverride(config);
 	return config;
 };
