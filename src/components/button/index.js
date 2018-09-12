@@ -1,10 +1,9 @@
 import { h } from 'preact';
-import style from './style';
-
-const getStyles = (style, name, classes) => [style[name], ...Object.entries(style).filter(([key]) => classes[key]).map(([, value]) => value)].join(' ');
+import { createClassName } from '../helpers';
+import styles from './styles';
 
 const Button = ({ children, disabled, outline, danger, stack, small, ...args }) => (
-	<button {...args} disabled={disabled} className={getStyles(style, 'button', {
+	<button {...args} disabled={disabled} className={createClassName(styles, 'button', {
 		disabled,
 		outline,
 		danger,
@@ -16,4 +15,4 @@ const Button = ({ children, disabled, outline, danger, stack, small, ...args }) 
 
 export default Button;
 
-export const Group = ({ children }) => <div className={style.group}>{ children }</div>;
+export const Group = ({ children }) => <div className={styles.group}>{ children }</div>;
