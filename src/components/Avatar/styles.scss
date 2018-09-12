@@ -1,0 +1,36 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+$avatar-size-small: 20px;
+$avatar-size-medium: 32px;
+$avatar-size-large: 38px;
+
+.avatar {
+    background-color: $bg-color-grey;
+    background-image: url(./placeholder.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    border-radius: 2px;
+    overflow: hidden;
+
+    width: $avatar-size-medium;
+    height: $avatar-size-medium;
+
+    &--small {
+        width: 20px;
+        height: 20px;
+    }
+
+    &--large {
+        width: 38px;
+        height: 38px;
+    }
+
+    & &-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
