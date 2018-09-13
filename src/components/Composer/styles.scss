@@ -15,26 +15,27 @@
     &:focus-within {
         border-color: $color-text-grey;
     }
+
+    & &__input {
+        font-size: 14px;
+        font-weight: 500;
+        border:none;
+        outline:none;
+        max-height: 150px;
+        flex: 1 1 auto;
+        resize: none;
+        word-wrap: break-word;
+        overflow-y: auto;
+
+        &:empty:before {
+            content: attr(placeholder);
+            display: block; /* For Firefox */
+            color: $color-text-light;
+        }
+    }
 }
 
 .icon {
     padding: 0 12px;
     flex: 0 0;
-}
-
-.input {
-    font-size: 14px;
-    font-weight: 500;
-    border:none;
-    outline:none;
-    max-height: 150px;
-    flex: 1 1 auto;
-    resize: none;
-    word-wrap: break-word;
-    overflow-y: auto;
-    &:empty:before {
-        content: attr(placeholder);
-        display: block; /* For Firefox */
-        color: $color-text-light;
-    }
 }
