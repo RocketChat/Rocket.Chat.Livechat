@@ -38,7 +38,7 @@ export default class Profile extends Component {
 
 				<p>
 					<button onClick={this.increment}>Click Me</button>
-					{' '}
+					' '
 					Clicked {count} times.
 				</p>
 			</div>
