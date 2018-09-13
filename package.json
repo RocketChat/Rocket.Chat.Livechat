@@ -56,8 +56,7 @@
     "preact": "^8.2.6",
     "preact-i18nline": "^2.0.0",
     "preact-router": "^2.5.7",
-    "sass-loader": "^7.1.0",
-    "storybook-addon-jsx": "^5.4.0"
+    "sass-loader": "^7.1.0"
   },
   "jest": {
     "verbose": true,
