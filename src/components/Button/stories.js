@@ -1,47 +1,117 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 
 import Button, { Group } from '.';
 
-const text = 'Powered by Rocket.Chat';
+const buttonText = 'Powered by Rocket.Chat';
 
 storiesOf('Components|Button', module)
 	.addDecorator(centered)
-	.add('Normal button', () => <Button onClick={action('clicked')}>{text}</Button>)
-	.add('Disabled button', () => <Button disabled onClick={action('clicked')}>{text}</Button>)
-	.add('Outline button', () => <Button outline onClick={action('clicked')}>{text}</Button>)
-	.add('Disabled outline button', () => <Button disabled outline onClick={action('clicked')}>{text}</Button>)
-	.add('Danger button', () => <Button danger onClick={action('clicked')}>{text}</Button>)
-	.add('Disabled danger button', () => <Button disabled danger onClick={action('clicked')}>{text}</Button>)
-	.add('Danger outline button', () => <Button outline danger onClick={action('clicked')}>{text}</Button>)
-	.add('Disabled danger outline button', () => <Button disabled outline danger onClick={action('clicked')}>{text}</Button>)
-	.add('Stack button', () => <Button stack onClick={action('clicked')}>{text}</Button>)
-	.add('Small button', () => <Button small onClick={action('clicked')}>{text}</Button>);
+	.addDecorator(withKnobs)
+	.add('normal', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			danger={boolean('danger', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
+	))
+	.add('disabled', () => (
+		<Button
+			disabled={boolean('disabled', true)}
+			outline={boolean('outline', false)}
+			danger={boolean('danger', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
+	))
+	.add('outline', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', true)}
+			danger={boolean('danger', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
+	))
+	.add('danger', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			danger={boolean('danger', true)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
+	))
+	.add('stack', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			danger={boolean('danger', false)}
+			stack={boolean('stack', true)}
+			small={boolean('small', false)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
+	))
+	.add('small', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			danger={boolean('danger', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', true)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
+	));
 
 storiesOf('Components|Button/Group', module)
 	.addDecorator(centered)
-	.add('Normal buttons', () => (<Group>
-		<Button onClick={action('clicked')}>{text}</Button>
-		<Button onClick={action('clicked')}>{text}</Button>
-		<Button onClick={action('clicked')}>{text}</Button>
-	</Group>))
-	.add('Mixed buttons ', () => (<Group>
-		<Button danger small onClick={action('clicked')}>{text}</Button>
-		<Button onClick={action('clicked')}>{text}</Button>
-		<Button small outline onClick={action('clicked')}>{text}</Button>
-	</Group>))
-	.add('Small buttons', () => (<Group>
-		<Button small onClick={action('clicked')}>{text}</Button>
-		<Button small onClick={action('clicked')}>{text}</Button>
-		<Button small onClick={action('clicked')}>{text}</Button>
-	</Group>))
-	.add('Stack buttons', () => (<Group>
-		<Button small onClick={action('clicked')}>{text}</Button>
-		<Button small onClick={action('clicked')}>{text}</Button>
-		<Button stack onClick={action('clicked')}>{text}</Button>
-		<Button danger onClick={action('clicked')}>{text}</Button>
-		<Button small onClick={action('clicked')}>{text}</Button>
-		<Button small onClick={action('clicked')}>{text}</Button>
-	</Group>));
+	.addDecorator(withKnobs)
+	.add('with buttons of same size', () => (
+		<Group>
+			<Button>{text('button text 1', 'Yes')}</Button>
+			<Button outline>{text('button text 2', 'Cancel')}</Button>
+			<Button danger>{text('button text 3', 'No')}</Button>
+		</Group>
+	))
+	.add('with buttons of different sizes', () => (
+		<Group>
+			<Button small>{text('button text 1', 'Yes')}</Button>
+			<Button outline>{text('button text 2', 'Cancel')}</Button>
+			<Button small danger>{text('button text 3', 'No')}</Button>
+		</Group>
+	))
+	.add('with only small buttons', () => (
+		<Group>
+			<Button small>{text('button text 1', 'Yes')}</Button>
+			<Button small outline>{text('button text 2', 'Cancel')}</Button>
+			<Button small danger>{text('button text 3', 'No')}</Button>
+		</Group>
+	))
+	.add('with stacked buttons', () => (
+		<Group>
+			<Button small outline>Rename</Button>
+			<Button small outline>Share</Button>
+			<Button stack danger>Delete</Button>
+		</Group>
+	));
