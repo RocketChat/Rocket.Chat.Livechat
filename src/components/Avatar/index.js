@@ -9,7 +9,7 @@ const Avatar = ({ small, large, src, description, ...args }) => (
 		className={createClassName(styles, 'avatar', { small, large })}
 		{...args}
 	>
-		{src && <img alt={description} className={createClassName(styles, 'avatar-image')} src={src} />}
+		{src && <img alt={description} className={createClassName(styles, 'avatar__image')} src={src} />}
 	</div>
 );
 
