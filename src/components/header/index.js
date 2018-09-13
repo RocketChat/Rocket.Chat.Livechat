@@ -1,14 +1,14 @@
 import { h } from 'preact';
-import style from './style';
+import styles from './styles';
 
 const Header = ({ children, ...args }) => (
-	<header {...args} class={style.header}>
+	<header {...args} class={styles.header}>
 		{children}
 	</header>
 );
 
 
-export const Content = ({ children }) => <div class={style.content}>{children}</div>;
-export const Title = ({ children }) => <div class={style.title}>{children}</div>;
-export const SubTitle = ({ children }) => <div class={style.subTitle}>{children}</div>;
+export const Content = ({ children }) => <div class={styles.content}>{children}</div>;
+export const Title = ({ children }) => <div class={styles.title}>{children}</div>;
+export const SubTitle = ({ children }) => <div class={styles.subTitle}>{children}</div>;
 export default Header;
