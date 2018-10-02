@@ -2,6 +2,8 @@
 @import '~styles/variables';
 
 .tooltip {
+  --tail-size: 0.3125rem;
+
   position: relative;
   padding: 0.5rem 0.75rem;
   margin: 0.5rem;
@@ -35,7 +37,7 @@
       &::before {
         content: "";
         position: absolute;
-        border: 0.3125rem solid $bg-color-darker;
+        border: var(--tail-size) solid $bg-color-darker;
         @content;
       }
     }
@@ -43,7 +45,7 @@
     &-left {
       @include tail {
         left: 100%;
-        top: calc(50% - 0.3125rem);
+        top: calc(50% - var(--tail-size));
         border-top-color: transparent;
         border-bottom-color: transparent;
         border-right-color: transparent;
@@ -53,7 +55,7 @@
     &-right {
       @include tail {
         right: 100%;
-        top: calc(50% - 0.3125rem);
+        top: calc(50% - var(--tail-size));
         border-top-color: transparent;
         border-bottom-color: transparent;
         border-left-color: transparent;
@@ -62,7 +64,7 @@
 
     &-top {
       @include tail {
-        left: calc(50% - 0.3125rem);
+        left: calc(50% - var(--tail-size));
         top: 100%;
         border-left-color: transparent;
         border-right-color: transparent;
@@ -72,7 +74,7 @@
 
     &-bottom {
       @include tail {
-        left: calc(50% - 0.3125rem);
+        left: calc(50% - var(--tail-size));
         bottom: 100%;
         border-left-color: transparent;
         border-right-color: transparent;
@@ -91,19 +93,19 @@
 
       &--placement {
         &-left {
-          transform: translate(-100%, -50%) translateX(-0.3125rem);
+          transform: translate(-100%, -50%) translateX(calc(-1 * var(--tail-size)));
         }
 
         &-top {
-          transform: translate(-50%, -100%) translateY(-0.3125rem);
+          transform: translate(-50%, -100%) translateY(calc(-1 * var(--tail-size)));
         }
 
         &-right {
-          transform: translate(0%, -50%) translateX(0.3125rem);
+          transform: translate(0%, -50%) translateX(var(--tail-size));
         }
 
         &-bottom {
-          transform: translate(-50%, 0%) translateY(0.3125rem);
+          transform: translate(-50%, 0%) translateY(var(--tail-size));
         }
       }
     }
