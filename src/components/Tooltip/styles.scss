@@ -80,4 +80,32 @@
       }
     }
   }
+
+  &__placeholder {
+    position: 'relative';
+
+    .tooltip {
+      position: absolute;
+      margin: 0;
+      transform: translate(-50%, -50%);
+
+      &--placement {
+        &-left {
+          transform: translate(-100%, -50%) translateX(-0.3125rem);
+        }
+
+        &-top {
+          transform: translate(-50%, -100%) translateY(-0.3125rem);
+        }
+
+        &-right {
+          transform: translate(0%, -50%) translateX(0.3125rem);
+        }
+
+        &-bottom {
+          transform: translate(-50%, 0%) translateY(0.3125rem);
+        }
+      }
+    }
+  }
 }

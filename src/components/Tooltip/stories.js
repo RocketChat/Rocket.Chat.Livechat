@@ -3,7 +3,7 @@ import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
-import Tooltip from '.';
+import Tooltip, { Placeholder } from '.';
 
 const tooltipText = 'A simple tool tip';
 const tooltipHidden = false;
@@ -14,7 +14,7 @@ storiesOf('Components|Tooltip', module)
 	.add('inline', () => (
 		<Tooltip
 			hidden={boolean('hidden', tooltipHidden)}
-			placement={select('placement', [null, 'left', 'top', 'right', 'bottom' ])}
+			placement={select('placement', [null, 'left', 'top', 'right', 'bottom'])}
 		>
 			{text('text', tooltipText)}
 		</Tooltip>
@@ -26,5 +26,15 @@ storiesOf('Components|Tooltip', module)
 			<Tooltip hidden={boolean('hidden', tooltipHidden)} placement="right">{text('text', tooltipText)}</Tooltip>
 			<Tooltip hidden={boolean('hidden', tooltipHidden)} placement="bottom">{text('text', tooltipText)}</Tooltip>
 		</div>
+	))
+	.add('inside Placeholder', () => (
+		<Placeholder style={{ border: '1rem solid red', borderRadius: '20px', width: '10px', height: '10px' }}>
+			<Tooltip
+				hidden={boolean('hidden', tooltipHidden)}
+				placement={select('placement', [null, 'left', 'top', 'right', 'bottom'])}
+			>
+				{text('text', tooltipText)}
+			</Tooltip>
+		</Placeholder>
 	))
 ;
