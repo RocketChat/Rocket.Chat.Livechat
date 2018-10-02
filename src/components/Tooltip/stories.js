@@ -4,6 +4,7 @@ import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
 import Tooltip, { Placeholder } from '.';
+import Button from '../Button';
 
 const tooltipText = 'A simple tool tip';
 const tooltipHidden = false;
@@ -32,6 +33,17 @@ storiesOf('Components|Tooltip', module)
 			<Tooltip
 				hidden={boolean('hidden', tooltipHidden)}
 				placement={select('placement', [null, 'left', 'top', 'right', 'bottom'])}
+			>
+				{text('text', tooltipText)}
+			</Tooltip>
+		</Placeholder>
+	))
+	.add('inside wrapper Placeholder', () => (
+		<Placeholder>
+			<Button>Test</Button>
+			<Tooltip
+				hidden={boolean('hidden', tooltipHidden)}
+				placement={select('placement', [null, 'left', 'top', 'right', 'bottom'], 'left')}
 			>
 				{text('text', tooltipText)}
 			</Tooltip>
