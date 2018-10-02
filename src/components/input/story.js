@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import c from '../../../stories/helper/center';
 import Input, { Label, Item, Description, Error, Form } from './';
-import Button, { Group } from '../button';
+import Button, { Group } from '../Button';
 
 const text = 'Powered by Rocket.Chat';
 storiesOf('Form', module).add('Simple Input', () => c(<Input onClick={action('clicked')} onFocus={action('focus')} onInput={action('input')}>{text}</Input>));

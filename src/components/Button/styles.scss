@@ -4,7 +4,7 @@
 @mixin state($color) {
 	border-color: $color;
 	background: $color;
-	&.outline {
+	&.button--outline {
 		color: $color;
 	}
 }
@@ -20,7 +20,6 @@
 		margin: .25rem;
 		flex-grow: 1;
 	}
-
 }
 
 .button {
@@ -46,31 +45,29 @@
 	cursor: pointer;
 
 	// COLORS
-	&.danger {
+	&--danger {
 		@include state($color-dark-red);
 	}
 
 	// STYLE
-	&.outline {
+	&--outline {
 		background: none;
 	}
 
-	&.stack {
+	&--stack {
 		width: 100%;
 	}
 
-	&.small {
+	&--small {
 		height: $form-item-height-small;
 		padding: 0.25rem 10px;
 	}
 
 	// STATES
-
-	&.disabled {
+	&--disabled {
 		opacity: .5;
 		cursor: not-allowed;
 	}
-
 
 	&:active {
 		opacity: .9;
