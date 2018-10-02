@@ -20,4 +20,11 @@ export const Placeholder = ({ children, ...props }) => (
 	</div>
 );
 
+export const wrapElement = (props, element) => (
+	<Placeholder>
+		{element}
+		<Tooltip {...props} />
+	</Placeholder>
+);
+
 export default Tooltip;

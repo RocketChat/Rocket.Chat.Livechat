@@ -3,7 +3,7 @@ import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
-import Tooltip, { Placeholder } from '.';
+import Tooltip, { Placeholder, wrapElement } from '.';
 import Button from '../Button';
 
 const tooltipText = 'A simple tool tip';
@@ -48,5 +48,15 @@ storiesOf('Components|Tooltip', module)
 				{text('text', tooltipText)}
 			</Tooltip>
 		</Placeholder>
+	))
+	.add('wrapElement', () => (
+		wrapElement(
+			{
+				hidden: boolean('hidden', tooltipHidden),
+				placement: select('placement', [null, 'left', 'top', 'right', 'bottom'], 'left'),
+				children: text('text', tooltipText),
+			},
+			<Button>Test</Button>
+		)
 	))
 ;
