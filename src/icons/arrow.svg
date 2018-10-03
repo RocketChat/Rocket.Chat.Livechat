@@ -1,0 +1,24 @@
+<svg viewBox="0 0 20 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="20" height="20"></rect>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="LiveChat/components/desktop/header/default" transform="translate(-295.000000, -23.000000)">
+            <g id="icon/arrow-down" transform="translate(293.000000, 18.000000)">
+                <g id="20x20/arrow-back--grey" transform="translate(10.000000, 10.000000) rotate(-90.000000) translate(-10.000000, -10.000000) ">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Mask"></g>
+                    <g id="Group-2" mask="url(#mask-2)" stroke="#FFFFFF" stroke-width="1.5">
+                        <g transform="translate(6.000000, 2.000000)" id="Rectangle">
+                            <polyline transform="translate(8.000000, 8.000000) rotate(-45.000000) translate(-8.000000, -8.000000) " points="3 13 3 3 13 3"></polyline>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

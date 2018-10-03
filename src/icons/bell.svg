@@ -1,0 +1,18 @@
+
+<svg viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="LiveChat/components/desktop/header/default" transform="translate(-258.000000, -19.000000)">
+            <g id="icon/notification--white" transform="translate(257.000000, 18.000000)">
+                <g id="24x24/star--light">
+                    <rect id="Rectangle-4" x="0" y="0" width="20" height="20"></rect>
+                </g>
+                <g id="Group-4" transform="translate(2.000000, 2.000000)" fill="#FFFFFF" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3.61908601,9.53200296 L3.61908601,5.37413156 C3.61908601,3.07794708 5.58064025,1.21626016 8,1.21626016 C10.4193597,1.21626016 12.380914,3.07794708 12.380914,5.37413156 L12.380914,9.53200296 L14.0237567,12.6504065 L1.97624327,12.6504065 L3.61908601,9.53200296 Z M6.66558885,13.9577236 L9.33441115,13.9577236 C9.13870383,14.4720911 8.61839721,14.8422764 8,14.8422764 C7.38160279,14.8422764 6.86129617,14.4720911 6.66558885,13.9577236 Z M13.7142857,5.33333333 C13.7142857,2.38826667 11.1554286,0 8,0 C4.84457143,0 2.28571429,2.38826667 2.28571429,5.33333333 L2.28571429,9.6 L0,13.8666667 L5.20057143,13.8666667 C5.46514286,15.0837333 6.61771429,16 8,16 C9.38228571,16 10.5348571,15.0837333 10.7994286,13.8666667 L16,13.8666667 L13.7142857,9.6 L13.7142857,5.33333333 Z" id="Fill-67" stroke-width="0.3" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

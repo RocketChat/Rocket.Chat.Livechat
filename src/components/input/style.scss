@@ -7,13 +7,17 @@
 	font-size: 14px;
 	font-weight: 500;
 	border-radius: $default-border;
-	padding: 0 10px;
+	padding: 10px;
 	height: $form-item-height;
 	border: $default-border solid $bg-color-grey;
 	color: $color-text-dark;
-
+	transition: color $default-time-animation, background $default-time-animation, trasform $default-time-animation;
 	&.small {
 		height: $form-item-height-small;
+	}
+
+	&:focus {
+		border-color: $bg-color-dark;
 	}
 
 	&.error {
@@ -22,9 +26,20 @@
 	}
 
 	&:focus {
-		border-color: $bg-color-dark;
 		color: $color-text-dark;
 	}
+
+
+	&.disabled {
+		opacity: .9;
+		background: $color-text-light;
+		cursor: not-allowed;
+	}
+}
+
+textarea.input {
+	height: auto;
+	resize: none;
 }
 
 .label {

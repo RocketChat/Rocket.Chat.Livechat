@@ -4,7 +4,7 @@
 @mixin state($color) {
 	border-color: $color;
 	background: $color;
-	&.button--outline {
+	&--outline {
 		color: $color;
 	}
 }
@@ -21,6 +21,8 @@
 		flex-grow: 1;
 	}
 }
+
+$padding: 20px;
 
 .button {
 	position: relative;
@@ -40,10 +42,17 @@
 	white-space: nowrap;
 	text-decoration: none;
 
-	padding: 0.25rem 20px;
+	padding: 0.25rem $padding/2;
 
 	cursor: pointer;
 
+	&__inner {
+		padding: 0 $padding/2;
+		display: inline-block;
+		vertical-align: middle;
+		width: 100%;
+		transition: all $default-time-animation;
+	}
 	// COLORS
 	&--danger {
 		@include state($color-dark-red);
@@ -69,8 +78,37 @@
 		cursor: not-allowed;
 	}
 
-	&:active {
+	&--loading {
+		& .button__inner {
+			padding-right: 24px;
+		}
+		&.button--stack .button__inner {
+			padding-left: 24px;
+		}
+
+		&::after {
+			width: 10px;
+			height: 10px;
+			border: 8px solid rgba(0, 82, 236, 0.25);
+			border-top-color: #0052ec;
+			border-radius: 50%;
+			animation: loader-rotate 1s linear infinite;
+			display: inline-block;
+			vertical-align: middle;
+			content: "";
+			position: relative;
+			right: 24px;
+		}
+	}
+
+	&:active:not(:disabled) {
 		opacity: .9;
 		transform: translateY(2px);
 	}
 }
+
+@keyframes loader-rotate {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }

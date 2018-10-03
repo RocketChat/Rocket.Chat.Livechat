@@ -6,7 +6,9 @@ module.exports = (baseConfig, env, defaultConfig) => {
 	// we are extending the base alias config here, adding preact as an alias
 	defaultConfig = webpackOverride(defaultConfig, env);
 
+
 	defaultConfig.resolve.extensions.push('.css');
+	defaultConfig.resolve.extensions.push('.svg');
 	defaultConfig.resolve.extensions.push('.scss');
 	// defaultConfig.resolve.extensions.push('.sass');
 
@@ -59,6 +61,12 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		loaders: [require.resolve('@storybook/addon-storysource/loader')],
 		enforce: 'pre',
 	});
+
+	defaultConfig.module.rules[4].test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/;
+	defaultConfig.module.rules.push({
+		test: /\.svg$/,
+		loader: 'desvg-loader/preact!svg-loader'
+	})
 
 	return defaultConfig;
 };

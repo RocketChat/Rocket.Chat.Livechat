@@ -40,21 +40,26 @@
     "css-loader": "^1.0.0",
     "eslint": "^4.9.0",
     "eslint-config-synacor": "^2.0.2",
+    "i18nline": "^2.0.1",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
     "jest": "^21.2.1",
     "node-sass": "^4.9.3",
     "preact-cli": "^2.1.0",
-    "preact-compat": "^3.18.2",
+    "preact-compat": "^3.18.4",
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1"
   },
   "dependencies": {
+    "@kossnocorp/desvg": "^0.2.0",
+    "desvg": "^1.0.2",
+    "desvg-loader": "^0.1.0",
     "i18nline": "^2.0.1",
     "preact": "^8.2.6",
     "preact-i18nline": "^2.0.0",
-    "preact-router": "^2.5.7"
+    "preact-router": "^2.5.7",
+    "svg-loader": "^0.0.2"
   },
   "jest": {
     "verbose": true,
