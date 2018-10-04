@@ -3,7 +3,7 @@ import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
-import Tooltip, { Placeholder, wrapElement } from '.';
+import Tooltip, { TooltipConnector, withTooltip } from '.';
 import Button from '../Button';
 
 const tooltipText = 'A simple tool tip';
@@ -28,35 +28,14 @@ storiesOf('Components|Tooltip', module)
 			<Tooltip hidden={boolean('hidden', tooltipHidden)} placement="bottom">{text('text', tooltipText)}</Tooltip>
 		</div>
 	))
-	.add('inside Placeholder', () => (
-		<Placeholder style={{ border: '1rem solid red', borderRadius: '20px', width: '10px', height: '10px' }}>
-			<Tooltip
-				hidden={boolean('hidden', tooltipHidden)}
-				placement={select('placement', [null, 'left', 'top', 'right', 'bottom'])}
-			>
-				{text('text', tooltipText)}
-			</Tooltip>
-		</Placeholder>
+	.add('connected to another component', () => (
+		<TooltipConnector text={text('text', tooltipText)} placement={select('placement', [null, 'left', 'top', 'right', 'bottom'], 'bottom')}>
+			<Button>A simple button</Button>
+		</TooltipConnector>
 	))
-	.add('inside wrapper Placeholder', () => (
-		<Placeholder>
-			<Button>Test</Button>
-			<Tooltip
-				hidden={boolean('hidden', tooltipHidden)}
-				placement={select('placement', [null, 'left', 'top', 'right', 'bottom'], 'left')}
-			>
-				{text('text', tooltipText)}
-			</Tooltip>
-		</Placeholder>
-	))
-	.add('wrapElement', () => (
-		wrapElement(
-			{
-				hidden: boolean('hidden', tooltipHidden),
-				placement: select('placement', [null, 'left', 'top', 'right', 'bottom'], 'left'),
-				children: text('text', tooltipText),
-			},
-			<Button>Test</Button>
-		)
-	))
+	.add('withTooltip()', () => {
+		const MyComponent = withTooltip(() => <Button>A simple button</Button>);
+
+		return (<MyComponent tooltip={text('tooltip', tooltipText)} />);
+	})
 ;
