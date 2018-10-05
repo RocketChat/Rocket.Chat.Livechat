@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "@kossnocorp/desvg": "^0.2.0",
+    "date-fns": "^1.29.0",
     "desvg": "^1.0.2",
     "desvg-loader": "^0.1.0",
     "eventemitter2": "^5.0.1",

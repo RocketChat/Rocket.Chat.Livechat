@@ -1,0 +1,46 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+$message-padding: 12px;
+$message-margin: 8px;
+
+.message {
+    width: 100%;
+    display: flex;
+
+    &--me {
+        justify-content: flex-end;
+    }
+
+    &__container {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 16px;
+    }
+
+    &__text {
+        margin: 0 $message-margin;
+        padding: $message-padding;
+        background: $bg-color-light;
+        color: $bg-color-dark;
+        border-radius: $default-border-radius;
+        font-size: 14px;
+        position: relative;
+        word-break: break-word;
+
+        &--me {
+            background: $color-blue;
+            color: white;
+        }
+    }
+
+    &__time {
+        position: absolute;
+        color: $color-text-grey;
+        line-height: 16px;
+        font-size: 10px;
+        text-align: right;
+        right: 0;
+        bottom: -16px;
+    }
+}

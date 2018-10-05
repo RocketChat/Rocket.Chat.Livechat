@@ -14,7 +14,6 @@ export default class App extends Component {
 	 *	@param {string} event.url	The newly routed URL
 	 */
 	handleRoute = (...args) => {
-		console.log(args);
 		this.currentUrl = args[0].url;
 	};
 
@@ -23,9 +22,9 @@ export default class App extends Component {
 			<div id="app">
 				<UserStore>
 					<UserContext.Consumer>
-						{({ state: { name } }) => (
-							<Router onChange={this.handleRoute} TASSO={{ name }}>
-								<Register title={name} path="/register/" />
+						{() => (
+							<Router onChange={this.handleRoute}>
+								<Register title="Register" path="/register/" />
 								<Home path="/" />
 								<LeaveMessage path="/leavemessage/" />
 							</Router>

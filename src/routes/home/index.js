@@ -7,6 +7,7 @@ import Header, {
 import Footer, { Container, Powered } from 'components/Footer';
 import Avatar from 'components/Avatar';
 import Composer, { Action, Actions } from 'components/Composer';
+import Message from 'components/Message';
 
 
 import Smile from 'icons/smile.svg';
@@ -17,8 +18,14 @@ import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
-const renderRow = (row) => <li class={style.item}><Avatar />{row}</li>;
-const data = ['a', 'b', 'c', 'd', 'e'];
+const renderRow = ({ text, me }) => <Message ts={new Date()} msg={text} me={me} />;
+const data = [
+	{ me: true, text: 'Hello dido' },
+	{ text: 'Welcome to my channel' },
+	{ text: '???' },
+	{ text: 'Welcome to my channel' },
+	{ me: true, text: 'LARGE MESSAGE AAaasdkaskdlaskdl;kas;ldk;aslkd;aslkd;alsdk;alskd;al ;laskd;laskd;lask ;laskd;laskd;laskd;alk;sldk;alskd;aslkd;alskda;lskd;alskd;laskd;laskd;laks;dl' },
+];
 const Home = ({ title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
 	<div class={style.container}>
 		<Header>
@@ -34,7 +41,7 @@ const Home = ({ title, subtitle, uploads, emoji = true, notification, minimize, 
 			</Header.Actions>
 		</Header>
 		<main class={style.main}>
-			<ol>{data.map(renderRow)}</ol>
+			<ol style="padding:0;">{data.map(renderRow)}</ol>
 		</main>
 		<Footer>
 			<Container>

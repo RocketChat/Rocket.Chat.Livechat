@@ -11,11 +11,11 @@ storiesOf('Components|Modal', module)
 	.add('opened', () => (
 		<div>
 			Hello Modal!
-			<Modal open={boolean('open', true)} overlay={boolean('overlay', true)}>Hey</Modal>
+			<Modal open={boolean('open', true)} overlay={boolean('overlay', true)}>{text('text', 'hey')}</Modal>
 		</div>
 	)).add('closed', () => (
 		<div>
 			Hello Modal!
-			<Modal open={boolean('open', false)} overlay={boolean('overlay', true)}>Hey</Modal>
+			<Modal open={boolean('open', false)} overlay={boolean('overlay', true)}>{text('text', 'hey')}</Modal>
 		</div>
 	));
