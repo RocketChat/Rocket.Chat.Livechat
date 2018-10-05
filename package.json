@@ -55,8 +55,10 @@
     "@kossnocorp/desvg": "^0.2.0",
     "desvg": "^1.0.2",
     "desvg-loader": "^0.1.0",
+    "eventemitter2": "^5.0.1",
     "i18nline": "^2.0.1",
     "preact": "^8.2.6",
+    "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
     "preact-router": "^2.5.7",
     "svg-loader": "^0.0.2"

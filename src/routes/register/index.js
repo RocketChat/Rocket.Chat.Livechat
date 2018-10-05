@@ -19,7 +19,7 @@ export default class Home extends Component {
 	}
 
 	validate = async() => {
-		const valid = await asyncEvery([...this.state.fields], async(el) => await el.validate());
+		const valid = await asyncEvery(Array.from(this.state.fields), async(el) => await el.validate());
 		this.setState({
 			valid,
 		});
