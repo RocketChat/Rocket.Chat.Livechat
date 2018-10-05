@@ -3,7 +3,7 @@ import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
-import Tooltip, { TooltipConnector, withTooltip } from '.';
+import Tooltip, { withTooltip } from '.';
 import Button from '../Button';
 
 const tooltipText = 'A simple tool tip';
@@ -29,13 +29,19 @@ storiesOf('Components|Tooltip', module)
 		</div>
 	))
 	.add('connected to another component', () => (
-		<TooltipConnector text={text('text', tooltipText)} placement={select('placement', [null, 'left', 'top', 'right', 'bottom'], 'bottom')}>
-			<Button>A simple button</Button>
-		</TooltipConnector>
+		<Tooltip.Container>
+			<Tooltip.Trigger content={text('text', tooltipText)}>
+				<Button>A simple button</Button>
+			</Tooltip.Trigger>
+		</Tooltip.Container>
 	))
 	.add('withTooltip()', () => {
-		const MyComponent = withTooltip(() => <Button>A simple button</Button>);
+		const MyButton = withTooltip(Button);
 
-		return (<MyComponent tooltip={text('tooltip', tooltipText)} />);
+		return (
+			<Tooltip.Container>
+				<MyButton tooltip={text('tooltip', tooltipText)}>A simple button</MyButton>
+			</Tooltip.Container>
+		);
 	})
 ;

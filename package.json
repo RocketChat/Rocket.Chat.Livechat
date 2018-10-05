@@ -53,6 +53,7 @@
   "dependencies": {
     "i18nline": "^2.0.1",
     "preact": "^8.2.6",
+    "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
     "preact-router": "^2.5.7"
   },

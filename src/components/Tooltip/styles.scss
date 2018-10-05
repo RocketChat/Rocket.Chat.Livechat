@@ -21,6 +21,7 @@
   text-align: center;
   white-space: nowrap;
   user-select: none;
+  pointer-events: none;
 
   display: inline-block;
   visibility: visible;
@@ -83,37 +84,22 @@
     }
   }
 
-  &__wrapper {
-    display: flex;
-    position: relative;
+  &--floating {
+    position: fixed;
+    margin: 0;
+    transform: translate(-50%, var(--tail-size));
 
-    .tooltip {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin: 0;
-      transform: translate(-50%, -50%);
+    &.tooltip--placement {
+      &-left {
+        transform: translate(calc(-100% - var(--tail-size)), -50%);
+      }
 
-      &--placement {
-        &-left {
-          left: 0;
-          transform: translate(-100%, -50%) translateX(calc(-1 * var(--tail-size)));
-        }
+      &-top {
+        transform: translate(-50%, calc(-100% - var(--tail-size)));
+      }
 
-        &-top {
-          top: 0;
-          transform: translate(-50%, -100%) translateY(calc(-1 * var(--tail-size)));
-        }
-
-        &-right {
-          left: 100%;
-          transform: translate(0%, -50%) translateX(var(--tail-size));
-        }
-
-        &-bottom {
-          top: 100%;
-          transform: translate(-50%, 0%) translateY(var(--tail-size));
-        }
+      &-right {
+        transform: translate(var(--tail-size), -50%);
       }
     }
   }
