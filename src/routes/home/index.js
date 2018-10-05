@@ -1,9 +1,7 @@
 import { h } from 'preact';
 
 import style from './style';
-import Header, {
-	Title, SubTitle, Content, Actions as HeaderActions, Action as HeaderAction,
-} from 'components/header';
+import Header from 'components/header';
 import Footer, { Container, Powered } from 'components/Footer';
 import Avatar from 'components/Avatar';
 import Composer, { Action, Actions } from 'components/Composer';
@@ -19,16 +17,10 @@ import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
 const renderRow = ({ text, me }) => <Message ts={new Date()} msg={text} me={me} />;
-const data = [
-	{ me: true, text: 'Hello dido' },
-	{ text: 'Welcome to my channel' },
-	{ text: '???' },
-	{ text: 'Welcome to my channel' },
-	{ me: true, text: 'LARGE MESSAGE AAaasdkaskdlaskdl;kas;ldk;aslkd;aslkd;alsdk;alskd;al ;laskd;laskd;lask ;laskd;laskd;laskd;alk;sldk;alskd;aslkd;alskda;lskd;alskd;laskd;laskd;laks;dl' },
-];
-const Home = ({ title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
+
+const Home = ({ color, messages = [], title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
 	<div class={style.container}>
-		<Header>
+		<Header color={color}>
 			<Header.Avatar><Avatar /></Header.Avatar>
 			<Header.Content>
 				<Header.Title>{title}</Header.Title>
@@ -41,7 +33,7 @@ const Home = ({ title, subtitle, uploads, emoji = true, notification, minimize, 
 			</Header.Actions>
 		</Header>
 		<main class={style.main}>
-			<ol style="padding:0;">{data.map(renderRow)}</ol>
+			<ol style="padding:0;">{messages.map(renderRow)}</ol>
 		</main>
 		<Footer>
 			<Container>

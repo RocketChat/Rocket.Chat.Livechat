@@ -12,6 +12,11 @@ $message-margin: 8px;
         justify-content: flex-end;
     }
 
+    &__content {
+        position: relative;
+        margin: 0 $message-margin;
+    }
+
     &__container {
         display: flex;
         align-items: flex-end;
@@ -19,7 +24,6 @@ $message-margin: 8px;
     }
 
     &__text {
-        margin: 0 $message-margin;
         padding: $message-padding;
         background: $bg-color-light;
         color: $bg-color-dark;
@@ -42,5 +46,10 @@ $message-margin: 8px;
         text-align: right;
         right: 0;
         bottom: -16px;
+    }
+
+    h1,h2, h3,p {
+        padding: 0;
+        margin: 0;
     }
 }

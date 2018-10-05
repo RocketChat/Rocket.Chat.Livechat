@@ -46,7 +46,7 @@ export default class Home extends Component {
 		this.validate();
 	}
 
-	render({ title, minimize, fullScreen, notification, loading }) {
+	render({ title, minimize, fullScreen, notification, loading, emailPlaceholder = 'insert your e-mail here...', namePlaceholder = 'insert your name here...', messsagePlaceholder = 'write your message...' }) {
 		return (<div class={style.container}>
 			<Header>
 				<Content>
@@ -62,11 +62,11 @@ export default class Home extends Component {
 				<p>Please, tell us some informations to start the chat</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
 					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull', 'email']} name="email"
-						placeholder="insert your e-mail here..."
+						placeholder={emailPlaceholder}
 						label="E-mail"
 					/>
 					<InputField disabled={loading} equired onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
-						placeholder="insert your name here..."
+						placeholder={namePlaceholder}
 						label="Name"
 					/>
 					<InputField
@@ -77,7 +77,7 @@ export default class Home extends Component {
 						ref={this.addToValidate}
 						validations={['notNull']}
 						name="message"
-						placeholder="write your message..."
+						placeholder={messsagePlaceholder}
 						label="Message"
 					/>
 					<Item>

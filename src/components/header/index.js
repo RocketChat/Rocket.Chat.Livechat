@@ -1,8 +1,8 @@
 import { h } from 'preact';
 import styles from './styles';
 
-const Header = ({ children, ...args }) => (
-	<header {...args} class={styles.header}>
+const Header = ({ children, color, ...args }) => (
+	<header {...args} class={styles.header} style={`background-color:${ color }`}>
 		{children}
 	</header>
 );

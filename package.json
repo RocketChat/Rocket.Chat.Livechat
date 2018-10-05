@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build",
+    "build": "preact build --json",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src",
@@ -49,15 +49,19 @@
     "preact-compat": "^3.18.4",
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.22.1"
+    "style-loader": "^0.22.1",
+    "webpack-bundle-analyzer": "^3.0.2"
   },
   "dependencies": {
     "@kossnocorp/desvg": "^0.2.0",
+    "@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
     "date-fns": "^1.29.0",
     "desvg": "^1.0.2",
     "desvg-loader": "^0.1.0",
     "eventemitter2": "^5.0.1",
+    "i18n": "^0.8.3",
     "i18nline": "^2.0.1",
+    "markdown-it": "^8.4.2",
     "preact": "^8.2.6",
     "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
