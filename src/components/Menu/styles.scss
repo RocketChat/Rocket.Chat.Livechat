@@ -2,10 +2,10 @@
 @import '~styles/variables';
 
 .menu {
-	background: #FFFFFF;
+	background: $bg-color-white;
 	border-radius: 4px;
-	box-shadow: 0 0 2px 0 rgba(47,52,61,0.08),
-		0 0 12px 0 rgba(47,52,61,0.12);
+	box-shadow: 0 0 2px 0 rgba($bg-color-dark, 0.08),
+		0 0 12px 0 rgba($bg-color-dark, 0.12);
 	padding: 16px 0;
 	transition: opacity $default-time-animation,
 		visibility $default-time-animation,
@@ -25,7 +25,7 @@
 		align-items: stretch;
 
 		&-title {
-			color: #2F343D;
+			color: $color-text-dark;
 			font-size: 12px;
 			font-weight: 600;
 			letter-spacing: 0;
@@ -37,7 +37,7 @@
 		& + &::before {
 			content: "";
 			display: block;
-			border: 1px solid #E1E5E8;
+			border: 1px solid $bg-color-grey;
 			margin: 14px 16px;
 		}
 	}
@@ -55,33 +55,33 @@
 		border: none;
 		outline: none;
 		cursor: pointer;
-		color: #2F343D;
-		--hover-color: #{mix(#2F343D, #ffffff, 5%)};
-		--active-color: #{mix(#2F343D, #ffffff, 10%)};
+
+		@mixin itemcolor($color) {
+			color: $color;
+
+			&:hover {
+				background-color: mix($color, $bg-color-white, 5%);
+			}
+
+			&:active {
+				background-color: mix($color, $bg-color-white, 10%)
+			}
+		}
+
+		@include itemcolor($color-text-dark);
+
 
 		&--primary {
-			color: $color-blue;
-			--hover-color: #{mix($color-blue, #ffffff, 5%)};
-			--active-color: #{mix($color-blue, #ffffff, 10%)};
+			@include itemcolor($color-blue);
 		}
 
 		&--danger {
-			color: $color-red;
-			--hover-color: #{mix($color-red, #ffffff, 5%)};
-			--active-color: #{mix($color-red, #ffffff, 10%)};
+			@include itemcolor($color-red);
 		}
 
 		&--disabled {
 			opacity: .5;
 			pointer-events: none;
-		}
-
-		&:hover {
-			background-color: var(--hover-color);
-		}
-
-		&:active {
-			background-color: var(--active-color);
 		}
 	}
 
