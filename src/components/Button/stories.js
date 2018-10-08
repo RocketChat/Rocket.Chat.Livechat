@@ -82,6 +82,14 @@ storiesOf('Components|Button', module)
 		>
 			{text('text', buttonText)}
 		</Button>
+	))
+	.add('loading', () => (
+		<Button
+			loading={boolean('loading', true)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
 	));
 
 storiesOf('Components|Button/Group', module)
