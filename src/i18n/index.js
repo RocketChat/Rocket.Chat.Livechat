@@ -20,4 +20,5 @@ if ((typeof module === 'object') && module.hot) {
 	module.hot.accept('./pt.json', I18n.reload('pt'));
 	module.hot.accept('./default.json', I18n.reload('default'));
 }
+
 export default I18n;

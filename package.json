@@ -11,7 +11,7 @@
     "test": "jest ./tests",
     "coverage": "jest --coverage",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "i18n": "i18nline synch"
+    "i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js"
   },
   "eslintIgnore": [
     "build/*"
