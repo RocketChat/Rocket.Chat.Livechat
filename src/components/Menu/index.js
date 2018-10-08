@@ -2,8 +2,8 @@ import { h } from 'preact';
 import { createClassName } from '../helpers';
 import styles from './styles';
 
-export const Menu = ({ children, hidden, ...props }) => (
-	<div className={createClassName(styles, 'menu', { hidden })} {...props}>
+export const Menu = ({ children, hidden, placement, ...props }) => (
+	<div className={createClassName(styles, 'menu', { hidden, placement })} {...props}>
 		{children}
 	</div>
 );
@@ -18,7 +18,9 @@ export const Group = ({ children, title, ...props }) => (
 export const Item = ({ children, primary, danger, disabled, ...props }) => (
 	<button
 		className={createClassName(styles, 'menu__item', { primary, danger, disabled })}
-		disabled={disabled} {...props}>{children}</button>
+		disabled={disabled}
+		{...props}
+	>{children}</button>
 );
 
 export default Menu;

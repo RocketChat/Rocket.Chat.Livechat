@@ -90,4 +90,32 @@
 		opacity: 0;
 		transform: scale(0);
 	}
+
+	&--placement {
+		position: absolute;
+
+		&-left-top {
+			right: 0;
+			bottom: 100%;
+			transform-origin: right bottom;
+		}
+
+		&-right-top {
+			left: 0;
+			bottom: 100%;
+			transform-origin: left bottom;
+		}
+
+		&-right-bottom {
+			left: 0;
+			top: 100%;
+			transform-origin: left top;
+		}
+
+		&-left-bottom {
+			right: 0;
+			top: 100%;
+			transform-origin: right top;
+		}
+	}
 }
