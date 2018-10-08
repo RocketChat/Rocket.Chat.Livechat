@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 const webpackOverride = require('./webpackOverride.config');
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 export default (config, env, helpers) => {
 	// Use Preact CLI's helpers object to get the babel-loader
 	const babel = helpers.getLoadersByName(config, 'babel-loader')[0].rule;
@@ -37,5 +38,7 @@ export default (config, env, helpers) => {
 		components: path.join(__dirname, './src/components'),
 		autoI18n: path.resolve(__dirname, './src/i18n'),
 	});
+	const { index } = helpers.getPluginsByName(config, 'UglifyJsPlugin')[0];
+	config.plugins.splice(index, 1);
 	return config;
 };

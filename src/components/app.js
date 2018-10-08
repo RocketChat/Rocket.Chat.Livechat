@@ -7,7 +7,6 @@ import SettingStore, { SettingsContext } from '../store/settings';
 import Home from '../containers/home';
 import LeaveMessage from '../routes/leaveamessage';
 import Register from '../containers/register';
-window.api = api;
 export default class App extends Component {
 
 	/** Gets fired when the route changes.
