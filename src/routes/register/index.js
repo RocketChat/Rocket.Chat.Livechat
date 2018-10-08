@@ -4,7 +4,7 @@ import { asyncForEach, asyncEvery } from '../../components/helpers';
 import style from './style';
 import Header, {
 	Title, Content,
-} from 'components/header';
+} from 'components/Header';
 import { Form, InputField, Item } from 'components/input';
 
 import Button from 'components/Button';

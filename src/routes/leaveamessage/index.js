@@ -4,7 +4,7 @@ import { asyncForEach, asyncEvery } from '../../components/helpers';
 import style from './style';
 import Header, {
 	Title, Content, Actions, Action,
-} from 'components/header';
+} from 'components/Header';
 import { Form, InputField, Item } from 'components/input';
 
 import Bell from 'icons/bell.svg';
