@@ -92,8 +92,8 @@ $padding: 20px;
 		&::after {
 			width: 10px;
 			height: 10px;
-			border: 8px solid rgba(0, 82, 236, 0.25);
-			border-top-color: #0052ec;
+			border: 8px solid rgba($color-dark-blue, 0.5);
+			border-top-color: $color-dark-blue;
 			border-radius: 50%;
 			animation: loader-rotate 1s linear infinite;
 			display: inline-block;
