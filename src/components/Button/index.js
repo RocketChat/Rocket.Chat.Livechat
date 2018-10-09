@@ -11,7 +11,11 @@ const Button = ({ children, disabled, outline, danger, stack, small, loading, ..
 		small,
 		loading,
 	})}
-	><div className={styles.button__inner}>{children}</div></button>
+	>
+		<div className={styles.button__inner}>
+			{children}
+		</div>
+	</button>
 );
 
 export default Button;

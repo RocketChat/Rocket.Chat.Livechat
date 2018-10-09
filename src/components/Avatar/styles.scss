@@ -20,6 +20,10 @@ $avatar-size-large: 38px;
 
     flex: 0 0 auto;
 
+    &--nobg {
+        background: none;
+    }
+
     &--small {
         width: 20px;
         height: 20px;
