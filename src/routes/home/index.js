@@ -5,6 +5,7 @@ import Header from 'components/header';
 import Footer, { Container, Powered } from 'components/Footer';
 import Avatar from 'components/Avatar';
 import Composer, { Action, Actions } from 'components/Composer';
+import Typing from 'components/TypingIndicator';
 import Message from 'components/Message';
 import { throttle, createClassName } from 'components/helpers';
 
@@ -18,7 +19,7 @@ import NewWindow from 'icons/newWindow.svg';
 
 const renderRow = (args, user) => {
 	const { msg, u } = args;
-	return <Message ts={new Date()} msg={msg} me={u._id === user} />;
+	return <Message el="li" ts={new Date()} msg={msg} me={u._id === user} />;
 };
 
 export const isBottom = (el) => el.scrollHeight - el.scrollTop === el.clientHeight;
@@ -82,6 +83,7 @@ export default class Home extends Component {
 			</Header>
 			<main onScroll={this.handleScroll} ref={this.bind} className={createClassName(style, 'main', { loading: this.props.loading })}>
 				<ol style="padding:0;">{messages.map((el) => renderRow(el, _id))}</ol>
+				{this.state.typingUsers && <Typing users={this.state.typingUsers} />}
 			</main>
 			<Footer>
 				<Container>

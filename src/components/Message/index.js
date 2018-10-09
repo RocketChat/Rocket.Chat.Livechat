@@ -9,16 +9,28 @@ import Avatar from 'components/Avatar';
 
 const parseDate = (ts) => format(ts, isToday(ts) ? 'HH:mm' : 'dddd HH:mm');
 
-const Message = ({ _id, Element = 'div', msg, ts, me, ...args }) => (
-	<Element id={_id} className={createClassName(styles, 'message', { me })}
-		{...args}
-	>
-		<div className={createClassName(styles, 'message__container', {})}>
+export const Container = ({ children, ...args }) => (<div {...args} className={createClassName(styles, 'message__container', {})}>{children}</div>);
+export const Text = ({ children, me, ...args }) => (<div {...args} className={createClassName(styles, 'message__text', { me })}>{children}</div>);
+
+export const Content = ({ children, me, ...args }) => (<div {...args} className={createClassName(styles, 'message__content', { me })} >{children}</div>);
+
+export const Body = ({ me, children, Element = 'div', ...args }) => (<Element className={createClassName(styles, 'message', { me })} {...args}>
+	{children}
+</Element>);
+
+const Message = ({ _id, Element, msg, ts, me, ...args }) => (
+	<Body id={_id} me={me} Element={Element} {...args}>
+		<Container>
 			{!me && <Avatar />}
-			<div className={createClassName(styles, 'message__content', { me })} ><div className={createClassName(styles, 'message__text', { me })} dangerouslySetInnerHTML={{ __html: md.render(msg) }} /> <div className={createClassName(styles, 'message__time', {})}>{parseDate(ts)}</div></div>
+			<Content me={me}>
+				<Text me={me} dangerouslySetInnerHTML={{ __html: md.render(msg) }} />
+				<div className={createClassName(styles, 'message__time', {})}>{parseDate(ts)}</div>
+			</Content>
 			{me && <Avatar />}
-		</div>
-	</Element>
+
+		</Container>
+	</Body>
 );
+
 
 export default Message;
