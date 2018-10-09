@@ -7,7 +7,7 @@ $avatar-size-large: 38px;
 
 .avatar {
     background-color: $bg-color-grey;
-    background-image: url(./placeholder.png);
+    background-image: url(./profile.png);
     background-position: right;
     background-repeat: no-repeat;
     background-size: contain;
@@ -17,6 +17,8 @@ $avatar-size-large: 38px;
 
     width: $avatar-size-medium;
     height: $avatar-size-medium;
+
+    flex: 0 0 auto;
 
     &--small {
         width: 20px;

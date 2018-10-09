@@ -1,7 +1,6 @@
 import { h } from 'preact';
 import styles from './styles';
 import { createClassName } from '../helpers';
-import placeholder from './placeholder.png';
 
 const Avatar = ({ small, large, src, description, ...args }) => (
 	<div
