@@ -9,6 +9,10 @@ const data = [
 	{ msg: 'Welcome to my channel' },
 	{ msg: '???' },
 	{ msg: 'Welcome to my channel' },
+	{ msg: 'Welcome to my channel' },
+	{ msg: 'Welcome to my channel' },
+	{ msg: 'Welcome to my channel' },
+	{ msg: 'Welcome to my channel' },
 	{ me: true, msg: 'LARGE MESSAGE AAaasdkaskdlaskdl;kas;ldk;aslkd;aslkd;alsdk;alskd;al ;laskd;laskd;lask ;laskd;laskd;laskd;alk;sldk;alskd;aslkd;alskda;lskd;alskd;laskd;laskd;laks;dl' },
 ];
 const Center = (storyFn) => (

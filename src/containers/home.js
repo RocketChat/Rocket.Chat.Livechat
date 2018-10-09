@@ -1,51 +1,51 @@
 import { h, Component } from 'preact';
+import { api } from '@rocket.chat/sdk/dist/bundle';
+const { livechat } = api;
 import { Consumer, getState } from '../store';
-
 import Home from '../routes/home';
 let rid = '';
 class Wrapped extends Component {
 	async sendMessage(msg) {
-
 		const state = getState();
-		const { token } = state.user;
+		const { user: { token }, messages } = state;
 		if (!rid) {
-			const { room } = await fetch(`http://localhost:3000/api/v1/livechat/room?token=${ token }`).then((res) => res.json());
+			const { room } = await livechat.room({ token });
 			rid = room._id;
 			this.actions({ room });
 		}
+		const { message } = await livechat.sendMessage({ msg, token, rid });
+		// this.actions({ messages: insert(messages, message).filter((e) => e) });
+	}
 
-		const { messages } = state;
-		const { message } = await fetch(`http://localhost:3000/api/v1/livechat/message?token=${ token }&rid=${ rid }`, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ msg, token, rid }),
-		}).then((res) => res.json());
-
-		this.actions({ messages: [...messages, message].filter((e) => e) });
+	async onTop() {
+		console.log('ontop');
 	}
 
 	constructor() {
 		super();
 		this.state = {
-			loading: true,
+			loading: false,
 		};
 		const state = getState();
 		rid = state.room && state.room._id;
 		this.sendMessage = this.sendMessage.bind(this);
+		this.onTop = this.onTop.bind(this);
 	}
+
 	async componentDidMount() {
 		const state = getState();
 		const { token } = state.user;
 
 		if (rid) {
-			const { messages } = await fetch(`http://localhost:3000/api/v1/livechat/messages.history/${ rid }?token=${ token }`).then((res) => res.json());
-			this.actions({ messages: messages.reverse() });
+			this.setState({ loading: true });
+			const { messages } = await livechat.loadMessages(rid, { token });
+			this.setState({ loading: false });
+			this.actions({ messages: (messages || []).reverse() });
 		}
+
 	}
-	render(props, { loading }) {
+
+	render(props) {
 		return (
 			<Consumer>
 				{
@@ -54,13 +54,14 @@ class Wrapped extends Component {
 						return (
 							<Home
 								{...props}
+								onTop={this.onTop}
 								user={user}
-								loading={loading}
+								loading={this.state.loading}
 								onSubmit={this.sendMessage}
 								color={theme.color}
 								messages={messages}
 								uploads={settings.fileUpload}
-								title={agent.username}
+								title={agent && agent.username}
 							/>);
 					}}
 			</Consumer>);

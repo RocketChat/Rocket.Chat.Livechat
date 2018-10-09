@@ -1,8 +1,8 @@
 import webpack from 'webpack';
 const webpackOverride = require('./webpackOverride.config');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 export default (config, env, helpers) => {
+	// config.mode = 'production';
 	// Use Preact CLI's helpers object to get the babel-loader
 	const babel = helpers.getLoadersByName(config, 'babel-loader')[0].rule;
 	// Update the loader config to include preact-i18nline
@@ -17,7 +17,6 @@ export default (config, env, helpers) => {
 	];
 	// remove the old loader options
 	delete babel.options;
-
 
 	config.module.loaders[8].test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
 	config.module.loaders.push({
@@ -39,6 +38,18 @@ export default (config, env, helpers) => {
 		autoI18n: path.resolve(__dirname, './src/i18n'),
 	});
 	// const { index } = helpers.getPluginsByName(config, 'UglifyJsPlugin')[0];
-	// config.plugins.splice(index, 1);
+	// config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+	// 	name: 'commons',
+	// 	// (the commons chunk name)
+
+	// 	filename: 'commons.js',
+	// 	// (the filename of the commons chunk)
+
+	// 	// minChunks: 3,
+	// 	// (Modules must be shared between 3 entries)
+
+	// 	// chunks: ["pageA", "pageB"],
+	// 	// (Only use these entries)
+	// }));
 	return config;
 };

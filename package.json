@@ -1,5 +1,6 @@
 {
   "name": "rocket.chat.livechat",
+  "sideEffects": false,
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -45,7 +46,7 @@
     "if-env": "^1.0.0",
     "jest": "^21.2.1",
     "node-sass": "^4.9.3",
-    "preact-cli": "^2.1.0",
+    "preact-cli": "^2.2.1",
     "preact-compat": "^3.18.4",
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",

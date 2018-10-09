@@ -18,7 +18,7 @@ export default class Home extends Component {
 	async submit(event) {
 		event.preventDefault();
 		if (await this.validate()) {
-			this.props.onSubmit([...this.state.fields].map((el) => [el.props.name, el.value]).reduce((values, [key, value]) => ({ ...values, [key]: value }), { }));
+			this.props.onSubmit(Array.from(this.state.fields).map((el) => [el.props.name, el.value]).reduce((values, [key, value]) => ({ ...values, [key]: value }), { }));
 		}
 	}
 
@@ -30,7 +30,7 @@ export default class Home extends Component {
 		return valid;
 	}
 
-	addToValidate = (element) => {
+	addToValidate(element) {
 		this.state.fields.add(element);
 	}
 
@@ -42,6 +42,7 @@ export default class Home extends Component {
 		};
 		this.submit = this.submit.bind(this);
 		this.validate = this.validate.bind(this);
+		this.addToValidate = this.addToValidate.bind(this);
 	}
 
 	componentDidMount() {

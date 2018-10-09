@@ -19,17 +19,22 @@ $header-padding: $default-padding;
 
 .content {
 	flex: 1 1 auto;
-    margin: 0 $header-padding / 2;
+	margin: 0 $header-padding / 2;
+	overflow: hidden;
 }
 
 .subTitle {
 	font-size: 14px;
 	font-weight: 500;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
 }
 
 .title {
 	font-size: 16px;
 	font-weight: 500;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
 }
 
 .action {
