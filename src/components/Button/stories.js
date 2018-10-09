@@ -85,6 +85,11 @@ storiesOf('Components|Button', module)
 	))
 	.add('loading', () => (
 		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			danger={boolean('danger', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
 			loading={boolean('loading', true)}
 			onClick={action('clicked')}
 		>

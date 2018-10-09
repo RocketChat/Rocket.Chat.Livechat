@@ -4,8 +4,19 @@
 @mixin state($color) {
 	border-color: $color;
 	background: $color;
-	&--outline {
+
+	&.button--outline {
 		color: $color;
+	}
+
+	&.button--loading {
+		&::after {
+			$color-dark: darken($color, 10%);
+			border-color: $color-dark
+				rgba($color-dark, 0.5)
+				rgba($color-dark, 0.5)
+				rgba($color-dark, 0.5);
+		}
 	}
 }
 
@@ -25,6 +36,7 @@
 $padding: 20px;
 
 .button {
+	box-sizing: border-box;
 	position: relative;
 
 	transition: color $default-time-animation, background $default-time-animation, trasform $default-time-animation;
@@ -53,6 +65,7 @@ $padding: 20px;
 		width: 100%;
 		transition: all $default-time-animation;
 	}
+
 	// COLORS
 	&--danger {
 		@include state($color-dark-red);
@@ -82,6 +95,7 @@ $padding: 20px;
 		& .button__inner {
 			padding-right: 24px;
 		}
+
 		&.button--stack .button__inner {
 			padding-left: 24px;
 		}
@@ -89,8 +103,8 @@ $padding: 20px;
 		&::after {
 			width: 10px;
 			height: 10px;
-			border: 8px solid rgba(0, 82, 236, 0.25);
-			border-top-color: #0052ec;
+			border-width: 8px;
+			border-style: solid;
 			border-radius: 50%;
 			animation: loader-rotate 1s linear infinite;
 			display: inline-block;
@@ -109,6 +123,10 @@ $padding: 20px;
 
 @keyframes loader-rotate {
   0% {
-    transform: rotate(0); }
+		transform: rotate(0);
+	}
+
   100% {
-    transform: rotate(360deg); } }
+		transform: rotate(360deg);
+	}
+}
