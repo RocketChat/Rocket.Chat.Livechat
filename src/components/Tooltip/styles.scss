@@ -2,6 +2,8 @@
 @import '~styles/variables';
 
 .tooltip {
+  --tail-size: 0.3125rem;
+
   position: relative;
   padding: 0.5rem 0.75rem;
   margin: 0.5rem;
@@ -19,6 +21,7 @@
   text-align: center;
   white-space: nowrap;
   user-select: none;
+  pointer-events: none;
 
   display: inline-block;
   visibility: visible;
@@ -35,7 +38,7 @@
       &::before {
         content: "";
         position: absolute;
-        border: 0.3125rem solid $bg-color-darker;
+        border: var(--tail-size) solid $bg-color-darker;
         @content;
       }
     }
@@ -43,7 +46,7 @@
     &-left {
       @include tail {
         left: 100%;
-        top: calc(50% - 0.3125rem);
+        top: calc(50% - var(--tail-size));
         border-top-color: transparent;
         border-bottom-color: transparent;
         border-right-color: transparent;
@@ -53,7 +56,7 @@
     &-right {
       @include tail {
         right: 100%;
-        top: calc(50% - 0.3125rem);
+        top: calc(50% - var(--tail-size));
         border-top-color: transparent;
         border-bottom-color: transparent;
         border-left-color: transparent;
@@ -62,7 +65,7 @@
 
     &-top {
       @include tail {
-        left: calc(50% - 0.3125rem);
+        left: calc(50% - var(--tail-size));
         top: 100%;
         border-left-color: transparent;
         border-right-color: transparent;
@@ -72,11 +75,31 @@
 
     &-bottom {
       @include tail {
-        left: calc(50% - 0.3125rem);
+        left: calc(50% - var(--tail-size));
         bottom: 100%;
         border-left-color: transparent;
         border-right-color: transparent;
         border-top-color: transparent;
+      }
+    }
+  }
+
+  &--floating {
+    position: fixed;
+    margin: 0;
+    transform: translate(-50%, var(--tail-size));
+
+    &.tooltip--placement {
+      &-left {
+        transform: translate(calc(-100% - var(--tail-size)), -50%);
+      }
+
+      &-top {
+        transform: translate(-50%, calc(-100% - var(--tail-size)));
+      }
+
+      &-right {
+        transform: translate(var(--tail-size), -50%);
       }
     }
   }
