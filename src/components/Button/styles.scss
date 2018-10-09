@@ -5,8 +5,18 @@
 	border-color: $color;
 	background: $color;
 
-	&--outline {
+	&.button--outline {
 		color: $color;
+	}
+
+	&.button--loading {
+		&::after {
+			$color-dark: darken($color, 10%);
+			border-color: $color-dark
+				rgba($color-dark, 0.5)
+				rgba($color-dark, 0.5)
+				rgba($color-dark, 0.5);
+		}
 	}
 }
 
@@ -26,6 +36,7 @@
 $padding: 20px;
 
 .button {
+	box-sizing: border-box;
 	position: relative;
 
 	transition: color $default-time-animation, background $default-time-animation, trasform $default-time-animation;
@@ -92,8 +103,8 @@ $padding: 20px;
 		&::after {
 			width: 10px;
 			height: 10px;
-			border: 8px solid rgba($color-dark-blue, 0.5);
-			border-top-color: $color-dark-blue;
+			border-width: 8px;
+			border-style: solid;
 			border-radius: 50%;
 			animation: loader-rotate 1s linear infinite;
 			display: inline-block;
