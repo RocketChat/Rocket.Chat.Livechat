@@ -1,0 +1,57 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+$header-padding: $default-padding;
+
+.header {
+	width: 100%;
+	height: 56px;
+	padding: 0 $header-padding/2;
+	background: $color-dark-blue;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex: 0 0 auto;
+	color: $bg-color-white;
+	font-size: 16px;
+}
+
+.content {
+	flex: 1 1 auto;
+    margin: 0 $header-padding / 2;
+}
+
+.subTitle {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.title {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.action {
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	display: flex;
+    justify-content: center;
+	flex: 0 0 auto;
+	&:active {
+		opacity: .9;
+		transform: translateY(2px);
+	}
+}
+
+.actions {
+	display:flex;
+	flex: 0 0 auto;
+    margin: 0 $header-padding / 2;
+}
+
+.avatar {
+	margin: 0 $header-padding / 2;
+}
