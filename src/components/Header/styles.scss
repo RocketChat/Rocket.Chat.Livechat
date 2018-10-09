@@ -15,43 +15,48 @@ $header-padding: $default-padding;
 	flex: 0 0 auto;
 	color: $bg-color-white;
 	font-size: 16px;
-}
 
-.content {
-	flex: 1 1 auto;
-    margin: 0 $header-padding / 2;
-}
-
-.subTitle {
-	font-size: 14px;
-	font-weight: 500;
-}
-
-.title {
-	font-size: 16px;
-	font-weight: 500;
-}
-
-.action {
-	background: none;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	display: flex;
-    justify-content: center;
-	flex: 0 0 auto;
-	&:active {
-		opacity: .9;
-		transform: translateY(2px);
+	&__item {
+		margin: 0 $header-padding / 2;
 	}
-}
 
-.actions {
-	display:flex;
-	flex: 0 0 auto;
-    margin: 0 $header-padding / 2;
-}
+	&__picture {
+		@extend .header__item;
+	}
 
-.avatar {
-	margin: 0 $header-padding / 2;
+	&__content {
+		@extend .header__item;
+		flex: 1 1 auto;
+
+		.header__title {
+			font-size: 16px;
+			font-weight: 500;
+		}
+
+		.header__subtitle {
+			font-size: 14px;
+			font-weight: 500;
+		}
+	}
+
+	&__actions {
+		@extend .header__item;
+		flex: 0 0 auto;
+		display: flex;
+
+		.header__action {
+			background: none;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			flex: 0 0 auto;
+
+			&:active {
+				opacity: .9;
+				transform: translateY(2px);
+			}
+		}
+	}
 }
