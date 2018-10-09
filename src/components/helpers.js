@@ -1,4 +1,4 @@
-export const createClassName = (styles, elementName, modifiers = {}) => [
+export const createClassName = (styles, elementName, modifiers = {}, classes = []) => [
 	styles[elementName],
 	...(Object.entries(modifiers)
 		.flatMap(([modifierKey, modifierValue]) => [
@@ -6,4 +6,4 @@ export const createClassName = (styles, elementName, modifiers = {}) => [
 			typeof modifierValue !== 'boolean' && styles[`${ elementName }--${ modifierKey }-${ modifierValue }`],
 		])
 		.filter((className) => !!className)),
-].join(' ');
+	...classes].join(' ');

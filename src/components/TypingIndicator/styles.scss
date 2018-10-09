@@ -2,6 +2,19 @@
 @import '~styles/variables';
 @import '~styles/helpers';
 
+
+.avatar-container {
+    display: flex;
+}
+
+.avatar {
+    margin: auto -5px;
+    box-shadow: -2px 0 1px 0px #00000082;
+    &:first-child {
+        box-shadow: none;
+    }
+}
+
 .typing-indicator {
     text-align: center;
 
