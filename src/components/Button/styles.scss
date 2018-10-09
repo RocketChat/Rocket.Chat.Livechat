@@ -4,8 +4,19 @@
 @mixin state($color) {
 	border-color: $color;
 	background: $color;
+
 	&.button--outline {
 		color: $color;
+	}
+
+	&.button--loading {
+		&::after {
+			$color-dark: darken($color, 10%);
+			border-color: $color-dark
+				rgba($color-dark, 0.5)
+				rgba($color-dark, 0.5)
+				rgba($color-dark, 0.5);
+		}
 	}
 }
 
@@ -22,7 +33,10 @@
 	}
 }
 
+$padding: 20px;
+
 .button {
+	box-sizing: border-box;
 	position: relative;
 
 	transition: color $default-time-animation, background $default-time-animation, trasform $default-time-animation;
@@ -40,9 +54,17 @@
 	white-space: nowrap;
 	text-decoration: none;
 
-	padding: 0.25rem 20px;
+	padding: 0.25rem $padding/2;
 
 	cursor: pointer;
+
+	&__inner {
+		padding: 0 $padding/2;
+		display: inline-block;
+		vertical-align: middle;
+		width: 100%;
+		transition: all $default-time-animation;
+	}
 
 	// COLORS
 	&--danger {
@@ -69,8 +91,42 @@
 		cursor: not-allowed;
 	}
 
-	&:active {
+	&--loading {
+		& .button__inner {
+			padding-right: 24px;
+		}
+
+		&.button--stack .button__inner {
+			padding-left: 24px;
+		}
+
+		&::after {
+			width: 10px;
+			height: 10px;
+			border-width: 8px;
+			border-style: solid;
+			border-radius: 50%;
+			animation: loader-rotate 1s linear infinite;
+			display: inline-block;
+			vertical-align: middle;
+			content: "";
+			position: relative;
+			right: 24px;
+		}
+	}
+
+	&:active:not(:disabled) {
 		opacity: .9;
 		transform: translateY(2px);
+	}
+}
+
+@keyframes loader-rotate {
+  0% {
+		transform: rotate(0);
+	}
+
+  100% {
+		transform: rotate(360deg);
 	}
 }

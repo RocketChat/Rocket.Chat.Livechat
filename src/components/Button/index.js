@@ -2,15 +2,20 @@ import { h } from 'preact';
 import { createClassName } from '../helpers';
 import styles from './styles';
 
-const Button = ({ children, disabled, outline, danger, stack, small, ...args }) => (
+const Button = ({ children, disabled, outline, danger, stack, small, loading, ...args }) => (
 	<button {...args} disabled={disabled} className={createClassName(styles, 'button', {
 		disabled,
 		outline,
 		danger,
 		stack,
 		small,
+		loading,
 	})}
-	>{children}</button>
+	>
+		<div className={styles.button__inner}>
+			{children}
+		</div>
+	</button>
 );
 
 export default Button;
