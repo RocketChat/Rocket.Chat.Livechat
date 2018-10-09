@@ -8,6 +8,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 
 	defaultConfig.resolve.extensions.push('.css');
 	defaultConfig.resolve.extensions.push('.scss');
+	defaultConfig.resolve.extensions.push('.svg');
 	// defaultConfig.resolve.extensions.push('.sass');
 
 	// adding new plugins to the default config.
@@ -49,7 +50,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		use: [
 			{ ...loader },
 			{
-				loader: "preact-i18nline/webpack-loader"
+				loader: 'preact-i18nline/webpack-loader'
 			},
 		]
 	}
@@ -58,6 +59,12 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		test: /(stories|story)\.js$/,
 		loaders: [require.resolve('@storybook/addon-storysource/loader')],
 		enforce: 'pre',
+	});
+
+	defaultConfig.module.rules[4].test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/;
+	defaultConfig.module.rules.push({
+		test: /\.svg$/,
+		loader: 'desvg-loader/preact!svg-loader'
 	});
 
 	return defaultConfig;
