@@ -16,9 +16,12 @@ import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
-const renderRow = ({ text, me }) => <Message ts={new Date()} msg={text} me={me} />;
+const renderRow = (args, user) => {
+	const { msg, u } = args;
+	return <Message ts={new Date()} msg={msg} me={u._id === user} />;
+};
 
-const Home = ({ color, messages = [], title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
+const Home = ({ user: { _id }, onSubmit, color, messages, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
 	<div class={style.container}>
 		<Header color={color}>
 			<Header.Avatar><Avatar /></Header.Avatar>
@@ -33,11 +36,12 @@ const Home = ({ color, messages = [], title, subtitle, uploads, emoji = true, no
 			</Header.Actions>
 		</Header>
 		<main class={style.main}>
-			<ol style="padding:0;">{messages.map(renderRow)}</ol>
+			<ol style="padding:0;">{messages.map((el) => renderRow(el, _id))}</ol>
 		</main>
 		<Footer>
 			<Container>
 				<Composer
+					onSubmit={onSubmit}
 					pre={
 						emoji && <Actions>
 							<Action>

@@ -11,14 +11,14 @@ import Button from 'components/Button';
 import Footer, { Container, Powered } from 'components/Footer';
 
 export default class Home extends Component {
-	submit = async(event) => {
+	async submit(event) {
 		event.preventDefault();
 		if (await this.validate()) {
-			this.props.onSubmit([...this.state.fields].map((el) => [el.props.name, el.value]).reduce((values, [key, value]) => ({ ...values, [key]: value }), { }));
+			this.props.onSubmit(Array.from(this.state.fields).map((el) => [el.props.name, el.value]).reduce((values, [key, value]) => ({ ...values, [key]: value }), { }));
 		}
 	}
 
-	validate = async() => {
+	async validate() {
 		const valid = await asyncEvery(Array.from(this.state.fields), async(el) => await el.validate());
 		this.setState({
 			valid,
@@ -36,15 +36,18 @@ export default class Home extends Component {
 			valid: false,
 			fields: new Set(),
 		};
+
+		this.submit = this.submit.bind(this);
+		this.validate = this.validate.bind(this);
 	}
 
 	componentDidMount() {
 		this.validate();
 	}
 
-	render({ title }) {
+	render({ title, color, loading }) {
 		return (<div class={style.container}>
-			<Header>
+			<Header color={color}>
 				<Content>
 					<Title>{title}</Title>
 				</Content>
@@ -52,14 +55,26 @@ export default class Home extends Component {
 			<main class={style.main}>
 				<p>Please, tell us some informations to start the chat</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
-					<InputField required onChange={this.validate} ref={this.addToValidate} validations={['notNull', 'email']} name="email" placeholder="insert your e-mail here..."
+					<InputField
+						disabled={loading}
+						required onChange={this.validate}
+						ref={this.addToValidate}
+						validations={['notNull', 'email']} name="email"
+						placeholder="insert your e-mail here..."
 						label="E-mail"
 					/>
-					<InputField required onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name" placeholder="insert your name here..."
+					<InputField
+						disabled={loading}
+						required
+						onChange={this.validate}
+						ref={this.addToValidate}
+						validations={['notNull']}
+						name="name"
+						placeholder="insert your name here..."
 						label="Name"
 					/>
 					<Item>
-						<Button disabled={!this.state.valid} stack>Start Chat</Button>
+						<Button loading={loading} disabled={!this.state.valid || loading} stack>Start Chat</Button>
 					</Item>
 				</Form>
 			</main>

@@ -2,10 +2,9 @@ import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 import { api } from '@rocket.chat/sdk/dist/bundle.js';
 // Code-splitting is automated for routes
-import UserStore, { UserContext } from '../store/user';
-import SettingStore, { SettingsContext } from '../store/settings';
+import Store, { Consumer } from '../store';
 import Home from '../containers/home';
-import LeaveMessage from '../routes/leaveamessage';
+import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
 export default class App extends Component {
 
@@ -14,28 +13,38 @@ export default class App extends Component {
 	 *	@param {string} event.url	The newly routed URL
 	 */
 	handleRoute = (...args) => {
-		this.currentUrl = args[0].url;
+		// this.currentUrl = args[0].url;
 	};
 	async componentDidMount() {
 		// console.log(await api.livechat.config());
 	}
+
+	renderScreen({ user, config, messages }) {
+		const { settings = {}, online } = config;
+		if (online) {
+			if (user) {
+				return <Home {...config} messages={messages} default path="/home" />;
+			}
+			return <Register {...config} default path="/register" />;
+		}
+		if (settings.displayOfflineForm) {
+			return <LeaveMessage {...config} default path="/LeaveMessage" />;
+		}
+		return <LeaveMessage {...config} default path="/LeaveMessage" />;
+
+	}
 	render() {
 		return (
-			<div id="app">
-				<SettingStore>
-					<UserStore>
-						<UserContext.Consumer>
-							{() => (
-								<Router onChange={this.handleRoute}>
-									<Register title="Register" path="/register/" />
-									<Home path="/" />
-									<LeaveMessage path="/leavemessage/" />
-								</Router>
-							)}
-						</UserContext.Consumer>
-					</UserStore>
-				</SettingStore>
-			</div>
+			<Store>
+				<div id="app">
+					<Consumer>
+						{(state) => (
+							<Router onChange={this.handleRoute}>
+								{ this.renderScreen(state) }
+							</Router>)}
+					</Consumer>
+				</div>
+			</Store>
 		);
 	}
 }

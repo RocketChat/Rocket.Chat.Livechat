@@ -20,6 +20,7 @@ storiesOf('Components|Composer', module)
 	.addDecorator(centered)
 	.add('composer with actions', () =>
 		(<Composer
+			onSubmit={console.log}
 			pre={
 				<Actions>
 					<Action onClick={action('clicked')}>

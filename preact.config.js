@@ -38,7 +38,7 @@ export default (config, env, helpers) => {
 		components: path.join(__dirname, './src/components'),
 		autoI18n: path.resolve(__dirname, './src/i18n'),
 	});
-	const { index } = helpers.getPluginsByName(config, 'UglifyJsPlugin')[0];
-	config.plugins.splice(index, 1);
+	// const { index } = helpers.getPluginsByName(config, 'UglifyJsPlugin')[0];
+	// config.plugins.splice(index, 1);
 	return config;
 };

@@ -15,15 +15,15 @@ import Button from 'components/Button';
 import Footer, { Container, Powered } from 'components/Footer';
 
 export default class Home extends Component {
-	submit = async(event) => {
+	async submit(event) {
 		event.preventDefault();
 		if (await this.validate()) {
 			this.props.onSubmit([...this.state.fields].map((el) => [el.props.name, el.value]).reduce((values, [key, value]) => ({ ...values, [key]: value }), { }));
 		}
 	}
 
-	validate = async() => {
-		const valid = await asyncEvery([...this.state.fields], async(el) => await el.validate());
+	async validate() {
+		const valid = await asyncEvery(Array.from(this.state.fields), async(el) => await el.validate());
 		this.setState({
 			valid,
 		});
@@ -40,15 +40,17 @@ export default class Home extends Component {
 			valid: false,
 			fields: new Set(),
 		};
+		this.submit = this.submit.bind(this);
+		this.validate = this.validate.bind(this);
 	}
 
 	componentDidMount() {
 		this.validate();
 	}
 
-	render({ title, minimize, fullScreen, notification, loading, emailPlaceholder = 'insert your e-mail here...', namePlaceholder = 'insert your name here...', messsagePlaceholder = 'write your message...' }) {
+	render({ color, title, message, minimize, fullScreen, notification, loading, emailPlaceholder = 'insert your e-mail here...', namePlaceholder = 'insert your name here...', messsagePlaceholder = 'write your message...' }) {
 		return (<div class={style.container}>
-			<Header>
+			<Header color={color}>
 				<Content>
 					<Title>{title}</Title>
 				</Content>
@@ -59,7 +61,7 @@ export default class Home extends Component {
 				</Actions>
 			</Header>
 			<main class={style.main}>
-				<p>Please, tell us some informations to start the chat</p>
+				<p>{message}</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
 					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull', 'email']} name="email"
 						placeholder={emailPlaceholder}

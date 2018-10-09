@@ -18,6 +18,7 @@ $composer-padding: 12px;
     }
 
     &__input {
+        color:  $bg-color-dark;
         padding: 2px $composer-padding/2;
         min-height: 20px;
         font-size: 14px;

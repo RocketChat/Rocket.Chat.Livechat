@@ -5,11 +5,11 @@ import { storiesOf } from '@storybook/react';
 
 import Register from '.';
 const data = [
-	{ me: true, text: 'Hello dido' },
-	{ text: 'Welcome to my channel' },
-	{ text: '???' },
-	{ text: 'Welcome to my channel' },
-	{ me: true, text: 'LARGE MESSAGE AAaasdkaskdlaskdl;kas;ldk;aslkd;aslkd;alsdk;alskd;al ;laskd;laskd;lask ;laskd;laskd;laskd;alk;sldk;alskd;aslkd;alskda;lskd;alskd;laskd;laskd;laks;dl' },
+	{ me: true, msg: 'Hello dido' },
+	{ msg: 'Welcome to my channel' },
+	{ msg: '???' },
+	{ msg: 'Welcome to my channel' },
+	{ me: true, msg: 'LARGE MESSAGE AAaasdkaskdlaskdl;kas;ldk;aslkd;aslkd;alsdk;alskd;al ;laskd;laskd;lask ;laskd;laskd;laskd;alk;sldk;alskd;aslkd;alskda;lskd;alskd;laskd;laskd;laks;dl' },
 ];
 const Center = (storyFn) => (
 	<div style="background: white; width: 100%; max-width: 350px; margin: auto; min-height: 300px; display: flex;">
