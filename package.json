@@ -38,6 +38,7 @@
     "@storybook/addon-viewport": "^3.4.10",
     "@storybook/react": "^3.4.10",
     "css-loader": "^1.0.0",
+    "desvg-loader": "^0.1.0",
     "eslint": "^4.9.0",
     "eslint-config-synacor": "^2.0.2",
     "identity-obj-proxy": "^3.0.0",
@@ -48,9 +49,11 @@
     "preact-compat": "^3.18.2",
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.22.1"
+    "style-loader": "^0.22.1",
+    "svg-loader": "0.0.2"
   },
   "dependencies": {
+    "desvg": "^1.0.2",
     "i18nline": "^2.0.1",
     "preact": "^8.2.6",
     "preact-context": "^1.1.1",
