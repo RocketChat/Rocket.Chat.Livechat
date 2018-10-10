@@ -9,7 +9,6 @@ import StatusIndicator, { statuses } from '../StatusIndicator';
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
-import bertieBartonAvatar from '../Avatar/bertieBarton.png';
 import { select } from '@storybook/addon-knobs/dist/vue';
 
 
@@ -25,14 +24,14 @@ storiesOf('Components|Header', module)
 	.add('with picture', () => (
 		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} />
+				<Avatar />
 			</Picture>
 
 			<Content>
 				<Title>{text('title', '@bertie.barton')}</Title>
 				<SubTitle>
 					<StatusIndicator status={select('status', statuses, 'online')} />
-					{text('subtitle', 'Available')}
+					<span style={{ margin: '5px' }}>{text('subtitle', 'Available')}</span>
 				</SubTitle>
 			</Content>
 		</Header>)
@@ -40,12 +39,15 @@ storiesOf('Components|Header', module)
 	.add('with actions', () => (
 		<Header color={color('color', '#175CC4')}>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} />
+				<Avatar />
 			</Picture>
 
 			<Content>
 				<Title>{text('title', '@bertie.barton')}</Title>
-				<SubTitle>{text('subtitle', 'Available')}</SubTitle>
+				<SubTitle>
+					<StatusIndicator status={select('status', statuses, 'online')} />
+					<span style={{ margin: '5px' }}>{text('subtitle', 'Available')}</span>
+				</SubTitle>
 			</Content>
 
 			<Actions>
