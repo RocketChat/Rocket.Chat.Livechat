@@ -1,0 +1,25 @@
+@import '~styles/colors';
+
+.status {
+  display: inline-block;
+  vertical-align: middle;
+  height: 10px;
+  width: 10px;
+  margin: 5px;
+  border-radius: 50%;
+  background-color: $bg-color-grey;
+
+  &--status {
+    &-online {
+      background-color: $color-green;
+    }
+
+    &-away {
+      background-color: $color-yellow;
+    }
+
+    &-busy {
+      background-color: $color-red;
+    }
+  }
+}

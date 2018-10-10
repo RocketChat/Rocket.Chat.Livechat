@@ -5,10 +5,12 @@ import { withKnobs, color, text } from '@storybook/addon-knobs';
 
 import Header, { Picture, Content, SubTitle, Title, Actions, Action } from '.';
 import Avatar from '../Avatar';
+import StatusIndicator, { statuses } from '../StatusIndicator';
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 import bertieBartonAvatar from '../Avatar/bertieBarton.png';
+import { select } from '@storybook/addon-knobs/dist/vue';
 
 
 storiesOf('Components|Header', module)
@@ -28,7 +30,10 @@ storiesOf('Components|Header', module)
 
 			<Content>
 				<Title>{text('title', '@bertie.barton')}</Title>
-				<SubTitle>{text('subtitle', 'Available')}</SubTitle>
+				<SubTitle>
+					<StatusIndicator status={select('status', statuses, 'online')} />
+					{text('subtitle', 'Available')}
+				</SubTitle>
 			</Content>
 		</Header>)
 	)
