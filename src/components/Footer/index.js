@@ -4,23 +4,27 @@ import Logo from './logo.svg';
 import { createClassName } from '../helpers';
 
 export const Footer = ({ children, ...props }) => (
-	<footer class={createClassName(styles, 'footer')} {...props}>
+	<footer className={createClassName(styles, 'footer')} {...props}>
 		{children}
 	</footer>
 );
 
-export const Container = ({ children, ...props }) => (
-	<div class={createClassName(styles, 'footer__container')} {...props}>
+export const Content = ({ children, ...props }) => (
+	<div className={createClassName(styles, 'footer__content')} {...props}>
 		{children}
 	</div>
 );
 
 export const PoweredBy = (props) => (
-	<h3 class={createClassName(styles, 'powered-by')} {...props}>
+	<h3 className={createClassName(styles, 'powered-by')} {...props}>
 		Powered by <Logo title="Rocket.Chat" class={createClassName(styles, 'powered-by__logo')} width="60" />
 	</h3>
 );
 
-export { Logo };
+export const Options = (props) => (
+	<button className={createClassName(styles, 'footer__options')} {...props}>
+		Options
+	</button>
+);
 
 export default Footer;
