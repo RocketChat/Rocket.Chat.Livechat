@@ -6,6 +6,9 @@ export default (config, env, helpers) => {
 	// Use Preact CLI's helpers object to get the babel-loader
 	const babel = helpers.getLoadersByName(config, 'babel-loader')[0].rule;
 	// Update the loader config to include preact-i18nline
+	babel.options.presets[0][1].exclude.push('transform-async-to-generator');
+	// Add fast-async
+	babel.options.plugins.push([require.resolve('fast-async'), { spec: true }]);
 	babel.loader = [
 		{ // create an entry for the old loader
 			loader: babel.loader,
@@ -23,11 +26,43 @@ export default (config, env, helpers) => {
 		test: /\.svg$/,
 		loader: 'desvg-loader/preact!svg-loader',
 	});
-	config.plugins.push(
+	config.plugins.push(...[
 		new webpack.ProvidePlugin({
 			I18n: ['autoI18n', 'default'],
-		})
-	);
+		}),
+		new webpack.DefinePlugin({
+			'process.env': {
+			},
+		}),
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: 'vendor',
+		// 	minChunks(module) {
+		// 		return module.context && module.context.includes('node_modules');
+		// 	},
+		// }),
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: 'components',
+		// 	minChunks(module) {
+		// 		return module.context && module.context.includes('components');
+		// 	},
+		// }),
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	// (choose the chunks, or omit for all chunks)
+
+		// 	// names: ["app", "subPageA"]
+		// 	name: 'common',
+		// 	minChunks: 2,
+		// 	chunks: 'async',
+		// 	priority: 10,
+		// 	reuseExistingChunk: true,
+		// 	enforce: true,
+		// 	// children: true,
+		// 	// (select all children of chosen chunks)
+
+		// 	// minChunks: 3,
+		// 	// (3 children must share the module before it's moved)
+		// }),
+	]);
 	config = webpackOverride(config);
 	config.resolve.alias = Object.assign({}, config.resolve.alias, {
 		react: 'preact-compat',
