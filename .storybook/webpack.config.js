@@ -10,6 +10,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 	defaultConfig.resolve.extensions.push('.css');
 	defaultConfig.resolve.extensions.push('.svg');
 	defaultConfig.resolve.extensions.push('.scss');
+	defaultConfig.resolve.extensions.push('.svg');
 	// defaultConfig.resolve.extensions.push('.sass');
 
 	// adding new plugins to the default config.
@@ -51,7 +52,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		use: [
 			{ ...loader },
 			{
-				loader: "preact-i18nline/webpack-loader"
+				loader: 'preact-i18nline/webpack-loader'
 			},
 		]
 	}
@@ -66,7 +67,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 	defaultConfig.module.rules.push({
 		test: /\.svg$/,
 		loader: 'desvg-loader/preact!svg-loader'
-	})
+	});
 
 	return defaultConfig;
 };
