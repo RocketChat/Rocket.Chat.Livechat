@@ -52,6 +52,7 @@ $header-padding: $default-padding;
 			display: flex;
 			justify-content: center;
 			flex: 0 0 auto;
+			color: $color-text-lighter;
 
 			&:active {
 				opacity: .9;

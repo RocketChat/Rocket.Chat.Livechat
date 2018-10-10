@@ -3,8 +3,11 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, color, text } from '@storybook/addon-knobs';
 
-import Header, { Picture, Content, SubTitle, Title } from '.';
+import Header, { Picture, Content, SubTitle, Title, Actions, Action } from '.';
 import Avatar from '../Avatar';
+import Bell from 'icons/bell.svg';
+import Arrow from 'icons/arrow.svg';
+import NewWindow from 'icons/newWindow.svg';
 import bertieBartonAvatar from '../Avatar/bertieBarton.png';
 
 
@@ -15,7 +18,7 @@ storiesOf('Components|Header', module)
 			Need Help?
 		</Header>
 	))
-	.add('with agent', () => (
+	.add('with picture', () => (
 		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
 			<Picture>
 				<Avatar src={bertieBartonAvatar} />
@@ -27,4 +30,28 @@ storiesOf('Components|Header', module)
 			</Content>
 		</Header>)
 	)
+	.add('with actions', () => (
+		<Header color={color('color', '#175CC4')}>
+			<Picture>
+				<Avatar src={bertieBartonAvatar} />
+			</Picture>
+
+			<Content>
+				<Title>{text('title', '@bertie.barton')}</Title>
+				<SubTitle>{text('subtitle', 'Available')}</SubTitle>
+			</Content>
+
+			<Actions>
+				<Action onClick={action('notifications')}>
+					<Bell width={20} />
+				</Action>
+				<Action onClick={action('minimize')}>
+					<Arrow width={20} />
+				</Action>
+				<Action onClick={action('fullscreen')}>
+					<NewWindow width={20} />
+				</Action>
+			</Actions>
+		</Header>
+	))
 ;
