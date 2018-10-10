@@ -15,7 +15,9 @@ storiesOf('Components|Header', module)
 	.addDecorator(withKnobs)
 	.add('with text content', () => (
 		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
-			Need Help?
+			<Content>
+				Need Help?
+			</Content>
 		</Header>
 	))
 	.add('with picture', () => (
