@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build",
+    "build": "preact build --no-prerender --json",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src",
@@ -31,6 +31,7 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.11",
     "@storybook/addon-centered": "^3.4.10",
     "@storybook/addon-knobs": "^3.4.10",
     "@storybook/addon-options": "^3.4.10",
@@ -44,14 +45,16 @@
     "eslint-config-synacor": "^2.0.2",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
+    "image-webpack-loader": "^4.3.1",
     "jest": "^21.2.1",
     "node-sass": "^4.9.3",
-    "preact-cli": "^2.1.0",
+    "preact-cli": "^3.0.0-next.11",
     "preact-compat": "^3.18.4",
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
-    "svg-loader": "0.0.2"
+    "svg-loader": "0.0.2",
+    "webpack": "3"
   },
   "dependencies": {
     "@kossnocorp/desvg": "^0.2.0",

@@ -1,5 +1,5 @@
 const webpackOverride = require('./webpackOverride.config');
-
+import webpack from 'webpack';
 export default (config, env, helpers) => {
 	// Use Preact CLI's helpers object to get the babel-loader
 	const babel = helpers.getLoadersByName(config, 'babel-loader')[0].rule;
@@ -16,12 +16,43 @@ export default (config, env, helpers) => {
 	// remove the old loader options
 	delete babel.options;
 
-	config.module.loaders[8].test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
-	config.module.loaders.push({
-		test: /\.svg$/,
-		loader: 'desvg-loader/preact!svg-loader',
-	});
+	config.plugins.push(
+		new webpack.ProvidePlugin({
+			I18n: ['autoI18n', 'default'],
+		})
+	);
 
-	config = webpackOverride(config);
-	return config;
+	config.optimization = {
+		splitChunks: {
+			chunks: 'async',
+			minSize: 30000,
+			maxSize: 0,
+			minChunks: 1,
+			maxAsyncRequests: 5,
+			maxInitialRequests: 3,
+			automaticNameDelimiter: '~',
+			name: true,
+			cacheGroups: {
+				vendor: {
+					// name of the chunk
+					name: 'vendor',
+					// async + async chunks
+					chunks: 'all',
+					// import file path containing node_modules
+					test: /node_modules/,
+					// priority
+					priority: 20,
+				},
+				common: {
+					name: 'common',
+					minChunks: 2,
+					chunks: 'async',
+					priority: 10,
+					reuseExistingChunk: true,
+					enforce: true,
+				},
+			},
+		},
+	};
+	return webpackOverride(config);
 };
