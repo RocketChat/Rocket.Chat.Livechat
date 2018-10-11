@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
-import Register from '.';
+import Chat from '.';
 const data = [
 	{ me: true, msg: 'Hello dido' },
 	{ msg: 'Welcome to my channel' },
@@ -24,5 +24,7 @@ storiesOf('Screen|Chat', module)
 	.addDecorator(Center)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
-		<Register messages={data} loading={boolean('loading', true)} uploads={boolean('uploads', true)} emoji={boolean('emoji', true)} title={text('text', 'guilherme.gazzo')} onSubmit={action('submit')} />
+		<Chat user={{ _id: 1 }}messages={data} loading={boolean('loading', true)} uploads={boolean('uploads', true)} emoji={boolean('emoji', true)} title={text('text', 'guilherme.gazzo')}
+			onSubmit={action('submit')}
+		/>
 	));

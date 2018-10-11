@@ -18,7 +18,7 @@ import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
 const renderRow = (args, user) => {
-	const { msg, u } = args;
+	const { msg, u = {} } = args;
 	return <Message el="li" ts={new Date()} msg={msg} me={u._id === user} />;
 };
 
