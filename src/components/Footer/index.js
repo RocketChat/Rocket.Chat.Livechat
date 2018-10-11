@@ -1,14 +1,30 @@
 import { h } from 'preact';
 import styles from './styles';
+import Logo from './logo.svg';
+import { createClassName } from '../helpers';
 
-export const Container = ({ children }) => <div class={styles.container}>{children}</div>;
-
-const Footer = ({ children }) => (
-	<footer class={styles.footer}>
+export const Footer = ({ children, ...props }) => (
+	<footer className={createClassName(styles, 'footer')} {...props}>
 		{children}
 	</footer>
 );
 
-export const PoweredBy = () => <h3 class={styles.powered}>Powered by Rocket.Chat</h3>;
+export const Content = ({ children, ...props }) => (
+	<div className={createClassName(styles, 'footer__content')} {...props}>
+		{children}
+	</div>
+);
+
+export const PoweredBy = (props) => (
+	<h3 className={createClassName(styles, 'powered-by')} {...props}>
+		Powered by <Logo title="Rocket.Chat" class={createClassName(styles, 'powered-by__logo')} width="60" />
+	</h3>
+);
+
+export const Options = (props) => (
+	<button className={createClassName(styles, 'footer__options')} {...props}>
+		Options
+	</button>
+);
 
 export default Footer;

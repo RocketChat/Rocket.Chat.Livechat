@@ -1,0 +1,24 @@
+@import '~styles/colors';
+
+.status {
+  display: inline-flex;
+  align-self: center;
+  height: 0.75em;
+  width: 0.75em;
+  border-radius: 50%;
+  background-color: $bg-color-grey;
+
+  &--status {
+    &-online {
+      background-color: $color-green;
+    }
+
+    &-away {
+      background-color: $color-yellow;
+    }
+
+    &-busy {
+      background-color: $color-red;
+    }
+  }
+}
