@@ -4,10 +4,9 @@ import EventEmitter from 'eventemitter2';
 import { insert } from 'components/helpers';
 import * as SDK from '@rocket.chat/sdk/dist/bundle';
 const { livechat } = SDK.api;
-
 const e = new EventEmitter();
-const defaultState = { config: { messages: {}, settings: {}, theme: {} }, messages: [], user: {} };
-let state = localStorage.getItem('store') ? JSON.parse(localStorage.getItem('store')) : defaultState;
+const defaultState = { typing: [], config: { messages: {}, settings: {}, theme: {} }, messages: [], user: {} };
+let state = localStorage.getItem('store') ? { ...defaultState, ...JSON.parse(localStorage.getItem('store')) } : defaultState;
 
 export const Context = createContext({});
 
@@ -16,19 +15,34 @@ export const { Consumer } = Context;
 export default class UserWrap extends Component {
 	actions = (args) => {
 		this.setState(args);
-
 	}
 
 	emit = async(newState) => {
-		state = { ...state, ...newState };
-		localStorage.setItem('store', JSON.stringify(state));
+		state = { ...defaultState, ...state, ...newState };
+
+		localStorage.setItem('store', JSON.stringify({ ...state, typing: [] }));
 		if (newState.user) {
 			this.getConfig();
 		}
 		if (newState.room) {
-			await SDK.driver.subscribe('stream-room-messages', newState.room._id, { useCollection: false, args: [{ visitorToken: (newState.user || state.user).token }] });
-			SDK.driver.on('stream-room-messages', (error, message) => {
-				this.actions({ messages: insert(getState().messages, message).filter((e) => e) });
+			this.ddp = this.ddp || await SDK.driver.create({ host: 'http://localhost:3000', timeout: 1000 });
+			this.ddp.subscribe('stream-room-messages', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
+			this.ddp.subscribe('stream-livechat-room', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
+
+			await this.ddp.subscribe('stream-notify-room', `${ state.room._id }/typing`, { useCollection: false, args: [{ token: state.user.token }] });
+			this.ddp.on('stream-room-messages', (error, { args: [message] }) => {
+				this.emit({ messages: insert(getState().messages, message).filter(({ msg }) => msg) });
+			}).on('stream-notify-room', (error, { args: [username, isTyping] }) => {
+				const { typing } = this.state;
+				if (typing.indexOf(username) > -1 || !isTyping) {
+					return this.emit({ typing: typing.filter((user) => user !== username) });
+				}
+				if (isTyping) {
+					typing.push(username);
+					this.emit({ typing });
+				}
+			}).on('stream-livechat-room', (error, data) => {
+				console.log(data);
 			});
 		}
 		e.emit('change', state);
@@ -36,7 +50,7 @@ export default class UserWrap extends Component {
 
 	async getConfig() {
 		const { user: { token } } = getState();
-		const { config } = await livechat.config({ token });
+		const { config } = await (token ? livechat.config({ token }) : livechat.config());
 		this.emit({ config });
 		return config;
 	}
@@ -47,14 +61,27 @@ export default class UserWrap extends Component {
 	}
 
 	async componentDidMount() {
-		this.ddp = await SDK.driver.connect();
 		e.on('change', this.actions);
 		this.getConfig();
 		this.state = state;
 		if (state.room) {
-			await SDK.driver.subscribe('stream-room-messages', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
-			SDK.driver.on('stream-room-messages', (error, message) => {
+			this.ddp = await SDK.driver.create({ host: 'http://localhost:3000', timeout: 1000 });
+			this.ddp.subscribe('stream-room-messages', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
+			this.ddp.subscribe('stream-livechat-room', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
+			await this.ddp.subscribe('stream-notify-room', `${ state.room._id }/typing`, { useCollection: false, args: [{ token: state.user.token }] });
+			this.ddp.on('stream-room-messages', (error, { args: [message] }) => {
 				this.emit({ messages: insert(getState().messages, message).filter((e) => e) });
+			}).on('stream-notify-room', (error, { args: [username, isTyping] }) => {
+				const { typing } = this.state;
+				if (typing.indexOf(username) > -1 || !isTyping) {
+					return this.emit({ typing: typing.filter((user) => user !== username) });
+				}
+				if (isTyping) {
+					typing.push(username);
+					this.emit({ typing });
+				}
+			}).on('stream-livechat-room', (error, data) => {
+				console.log(data);
 			});
 		}
 	}

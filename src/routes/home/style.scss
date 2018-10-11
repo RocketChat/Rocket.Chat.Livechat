@@ -2,11 +2,37 @@
 @import '~styles/variables';
 
 .main {
-	padding: 0 16px;
-	flex: 1 1 auto;
-	overflow-y: auto;
 
-	&--loading::before {
+		display: flex;
+		position: relative;
+		overflow: hidden;
+
+	&__wrapper {
+		flex: 1 1 auto;
+		padding: 0 16px;
+		overflow-y: auto;
+	}
+
+	&::before {
+		content:"";
+		transition: all .3s;
+		width: 100%;
+		position: absolute;
+		bottom: -4px;
+    box-shadow: 0 0 1px 1px #ccc;
+    border-radius: 50%;
+    height: 4px;
+    z-index: 1;
+	}
+
+	&--atBottom::before {
+		box-shadow: 0 0 1px 1px transparent;
+	}
+
+	&--loading::after {
+		position: absolute;
+		left: 0;
+    right: 0;
 		content: "";
 		height: 20px;
 		width: 20px;

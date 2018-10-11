@@ -1,18 +1,10 @@
 
 const webpack  = require('webpack');
 const webpackOverride = require('../webpackOverride.config');
-
 module.exports = (baseConfig, env, defaultConfig) => {
 	// we are extending the base alias config here, adding preact as an alias
 	defaultConfig = webpackOverride(defaultConfig, env);
-
-
-	defaultConfig.resolve.extensions.push('.css');
-	defaultConfig.resolve.extensions.push('.svg');
-	defaultConfig.resolve.extensions.push('.scss');
-	defaultConfig.resolve.extensions.push('.svg');
 	// defaultConfig.resolve.extensions.push('.sass');
-
 	// adding new plugins to the default config.
 	defaultConfig.plugins.push(
 		new webpack.ProvidePlugin({
@@ -21,8 +13,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 			I18n: ['autoI18n', 'default']
 		})
 	);
-
-	defaultConfig.module.rules[2] = ({
+	defaultConfig.module.rules.push({
 		test: /\.(s?css|sass)$/,
 		use: [
 			{
@@ -45,6 +36,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 	})
 
 	const { include, exclude, test, ...loader } = defaultConfig.module.rules[0];
+
 	defaultConfig.module.rules[0] = {
 		test,
 		include,
@@ -63,11 +55,8 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		enforce: 'pre',
 	});
 
-	defaultConfig.module.rules[4].test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/;
-	defaultConfig.module.rules.push({
-		test: /\.svg$/,
-		loader: 'desvg-loader/preact!svg-loader'
-	});
+	// defaultConfig.module.rules[4].test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/;
+
 
 	return defaultConfig;
 };

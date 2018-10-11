@@ -18,8 +18,8 @@ export const Body = ({ me, children, Element = 'div', ...args }) => (<Element cl
 	{children}
 </Element>);
 
-const Message = ({ _id, Element, msg, ts, me, ...args }) => (
-	<Body id={_id} me={me} Element={Element} {...args}>
+const Message = ({ _id, el, msg, ts, me, ...args }) => (
+	<Body id={_id} me={me} Element={el} {...args}>
 		<Container>
 			{!me && <Avatar />}
 			<Content me={me}>

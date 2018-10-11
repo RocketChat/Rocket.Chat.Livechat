@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { api } from '@rocket.chat/sdk/dist/bundle';
+import { api } from '/Users/guilhermegazzo/Rocket.Chat.js.SDK/dist/';
 const { livechat } = api;
 import { Consumer, getState } from '../store';
 import Home from '../routes/home';
@@ -7,18 +7,25 @@ let rid = '';
 class Wrapped extends Component {
 	async sendMessage(msg) {
 		const state = getState();
-		const { user: { token }, messages } = state;
+		const { user: { token } } = state;
 		if (!rid) {
 			const { room } = await livechat.room({ token });
 			rid = room._id;
 			this.actions({ room });
 		}
-		const { message } = await livechat.sendMessage({ msg, token, rid });
-		// this.actions({ messages: insert(messages, message).filter((e) => e) });
+		await livechat.sendMessage({ msg, token, rid });
 	}
 
 	async onTop() {
-		console.log('ontop');
+		if (this.state.ended) {
+			return;
+		}
+		const state = getState();
+		const { user: { token }, messages } = state;
+		this.setState({ loading: true });
+		const { messages: moreMessages } = await livechat.loadMessages(rid, { token, limit: messages.length + 10 });
+		this.setState({ loading: false, ended: messages.length + 10 >= moreMessages.length });
+		this.actions({ messages: (moreMessages || []).reverse() });
 	}
 
 	constructor() {
@@ -44,21 +51,26 @@ class Wrapped extends Component {
 		}
 
 	}
+	onUpload(files) {
+		console.log(files);
+	}
 
 	render(props) {
 		return (
 			<Consumer>
 				{
-					({ user, dispatch, config: { theme, settings, agent }, messages }) => {
+					({ typing, user, dispatch, config: { theme, settings, agent }, messages }) => {
 						this.actions = dispatch;
 						return (
 							<Home
 								{...props}
 								onTop={this.onTop}
 								user={user}
+								typingUsers={typing}
 								loading={this.state.loading}
 								onSubmit={this.sendMessage}
 								color={theme.color}
+								onUpload={this.onUpload}
 								messages={messages}
 								uploads={settings.fileUpload}
 								title={agent && agent.username}

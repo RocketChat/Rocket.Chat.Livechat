@@ -18,8 +18,8 @@ import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
 const renderRow = (args, user) => {
-	const { msg, u = {} } = args;
-	return <Message el="li" ts={new Date()} msg={msg} me={u._id === user} />;
+	const { u = {}, _id } = args;
+	return <Message {...args} key={_id} el="li" me={u._id === user} />;
 };
 
 export const isBottom = (el) => el.scrollHeight - el.scrollTop === el.clientHeight;
@@ -36,7 +36,9 @@ export default class Home extends Component {
 	handleScroll() {
 
 		const atBottom = isBottom(this.el);
-		this.setState({ atBottom });
+		if (this.state.atBottom !== atBottom) {
+			this.setState({ atBottom });
+		}
 
 		if (isTop(this.el)) {
 			return this.props.onTop && this.props.onTop();
@@ -54,7 +56,7 @@ export default class Home extends Component {
 			atBottom: true,
 		};
 		this.handleScroll = this.handleScroll.bind(this);
-		this.bind = throttle(this.bind, 1000).bind(this);
+		this.bind = throttle(this.bind, 100).bind(this);
 	}
 
 	componentDidMount() {
@@ -67,7 +69,7 @@ export default class Home extends Component {
 		}
 	}
 
-	render = ({ user: { _id }, onSubmit, color, messages, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
+	render = ({ onUpload, user: { _id }, typingUsers, onSubmit, color, messages, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
 		<div class={style.container}>
 			<Header color={color}>
 				<Header.Avatar><Avatar /></Header.Avatar>
@@ -81,13 +83,15 @@ export default class Home extends Component {
 					<Header.Action onClick={fullScreen}><NewWindow width={20} /></Header.Action>
 				</Header.Actions>
 			</Header>
-			<main onScroll={this.handleScroll} ref={this.bind} className={createClassName(style, 'main', { loading: this.props.loading })}>
-				<ol style="padding:0;">{messages.map((el) => renderRow(el, _id))}</ol>
-				{this.state.typingUsers && <Typing users={this.state.typingUsers} />}
+			<main className={createClassName(style, 'main', { atBottom: this.state.atBottom, loading: this.props.loading })}>
+				<div ref={this.bind} onScroll={this.handleScroll} className={createClassName(style, 'main__wrapper')}>
+					<ol style="padding:0;">{messages.map((el) => renderRow(el, _id))}</ol>
+					{typingUsers && !!typingUsers.length && <Typing users={typingUsers} />}
+				</div>
 			</main>
 			<Footer>
 				<Container>
-					<Composer
+					<Composer onUpload={onUpload}
 						onSubmit={onSubmit}
 						pre={
 							emoji && <Actions>
@@ -109,5 +113,5 @@ export default class Home extends Component {
 				<Container><Powered /></Container>
 			</Footer>
 		</div>
-	);
+	)
 }
