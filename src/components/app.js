@@ -1,6 +1,10 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 import { api } from '@rocket.chat/sdk/dist/bundle.js';
+
+import Header from './Header';
+import Footer from './Footer';
+
 // Code-splitting is automated for routes
 import Store, { Consumer } from '../store';
 import Home from '../containers/home';

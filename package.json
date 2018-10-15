@@ -11,7 +11,7 @@
     "test": "jest ./tests",
     "coverage": "jest --coverage",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "i18n": "i18nline synch"
+    "i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js"
   },
   "eslintIgnore": [
     "build/*"
@@ -38,6 +38,8 @@
     "@storybook/addon-viewport": "^3.4.10",
     "@storybook/react": "^3.4.10",
     "css-loader": "^1.0.0",
+    "desvg": "^1.0.2",
+    "desvg-loader": "^0.1.0",
     "eslint": "^4.9.0",
     "eslint-config-synacor": "^2.0.2",
     "i18nline": "^2.0.1",
@@ -50,15 +52,14 @@
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
-    "webpack-bundle-analyzer": "^3.0.2"
+		"svg-loader": "0.0.2",
+    "webpack-bundle-analyzer": "^3.0.2",
+		"@kossnocorp/desvg": "^0.2.0"
   },
   "dependencies": {
-    "@kossnocorp/desvg": "^0.2.0",
-    "@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
-    "date-fns": "^1.29.0",
-    "desvg": "^1.0.2",
-    "desvg-loader": "^0.1.0",
-    "eventemitter2": "^5.0.1",
+		"@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
+		"date-fns": "^1.29.0",
+		"eventemitter2": "^5.0.1",
     "i18n": "^0.8.3",
     "i18nline": "^2.0.1",
     "markdown-it": "^8.4.2",
