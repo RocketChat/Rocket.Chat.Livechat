@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function flatMap(arr, mapFunc) {
 	const result = [];
 	for (const [index, elem] of arr.entries()) {
@@ -17,6 +18,9 @@ export const createClassName = (styles, elementName, modifiers = {}) => [
 =======
 export const createClassName = (styles, elementName, modifiers = {}, classes = []) => [
 >>>>>>> origin/master
+=======
+export const createClassName = (styles, elementName, modifiers = {}, classes = []) => [
+>>>>>>> master
 	styles[elementName],
 	...(flatMap(Object.entries(modifiers), ([modifierKey, modifierValue]) => [
 		modifierValue && styles[`${ elementName }--${ modifierKey }`],
@@ -24,6 +28,7 @@ export const createClassName = (styles, elementName, modifiers = {}, classes = [
 	])
 <<<<<<< HEAD
 		.filter((className) => !!className)),
+<<<<<<< HEAD
 ].join(' ');
 =======
 		.filter((className) => !!className)), ...classes].join(' ');
@@ -43,3 +48,6 @@ export async function asyncEvery(array, callback) {
 	}
 	return true;
 }
+=======
+	...classes].join(' ');
+>>>>>>> master

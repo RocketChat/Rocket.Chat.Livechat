@@ -4,7 +4,13 @@ import { api } from '@rocket.chat/sdk/dist/bundle.js';
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 >>>>>>> origin/master
+=======
+import Header from './Header';
+import Footer from './Footer';
+
+>>>>>>> master
 // Code-splitting is automated for routes
 import Store, { Consumer } from '../store';
 import Home from '../containers/home';

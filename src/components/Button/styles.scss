@@ -5,6 +5,7 @@
 	border-color: $color;
 	background: $color;
 
+<<<<<<< HEAD
 	&--outline {
 		&.button--outline {
 			color: $color;
@@ -18,6 +19,20 @@
 					rgba($color-dark, 0.5)
 					rgba($color-dark, 0.5);
 			}
+		}
+=======
+	&.button--outline {
+		color: $color;
+>>>>>>> master
+	}
+
+	&.button--loading {
+		&::after {
+			$color-dark: darken($color, 10%);
+			border-color: $color-dark
+				rgba($color-dark, 0.5)
+				rgba($color-dark, 0.5)
+				rgba($color-dark, 0.5);
 		}
 	}
 }
@@ -67,6 +82,10 @@ $padding: 20px;
 		width: 100%;
 		transition: all $default-time-animation;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 	// COLORS
 	&--danger {
 		@include state($color-dark-red);
@@ -96,6 +115,10 @@ $padding: 20px;
 		& .button__inner {
 			padding-right: 24px;
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 		&.button--stack .button__inner {
 			padding-left: 24px;
 		}
@@ -103,10 +126,15 @@ $padding: 20px;
 		&::after {
 			width: 10px;
 			height: 10px;
+<<<<<<< HEAD
 
 			border-width: 8px;
 			border-style: solid;
 
+=======
+			border-width: 8px;
+			border-style: solid;
+>>>>>>> master
 			border-radius: 50%;
 			animation: loader-rotate 1s linear infinite;
 			display: inline-block;
