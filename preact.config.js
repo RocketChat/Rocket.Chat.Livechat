@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 const webpackOverride = require('./webpackOverride.config');
+const path = require('path');
 
 export default (config, env, helpers) => {
 	// config.mode = 'production';

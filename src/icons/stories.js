@@ -4,7 +4,7 @@ import centered from '@storybook/addon-centered';
 import { withKnobs, color } from '@storybook/addon-knobs';
 import path from 'path';
 
-const req = require.context('../', true, /\.svg$/);
+const req = require.context('./', true, /\.svg$/);
 const iconset = req.keys()
 	.map((filename) => ({
 		component: req(filename),

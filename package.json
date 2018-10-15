@@ -40,6 +40,7 @@
     "@storybook/addon-viewport": "^3.4.10",
     "@storybook/react": "^3.4.10",
     "css-loader": "^1.0.0",
+    "desvg": "^1.0.2",
     "desvg-loader": "^0.1.0",
     "eslint": "^4.9.0",
     "eslint-config-synacor": "^2.0.2",
@@ -72,7 +73,8 @@
     "preact": "^8.2.6",
     "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
-    "preact-router": "^2.5.7"
+    "preact-router": "^2.5.7",
+    "svg-loader": "^0.0.2"
   },
   "jest": {
     "verbose": true,
