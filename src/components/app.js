@@ -2,7 +2,9 @@ import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 import { api } from '@rocket.chat/sdk/dist/bundle.js';
 
-// Code-splitting is automated for routes
+import Header from './Header';
+import Footer from './Footer';
+
 import Store, { Consumer } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';

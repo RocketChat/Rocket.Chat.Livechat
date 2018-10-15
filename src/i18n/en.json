@@ -1,10 +1,25 @@
 {
   "en": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "click_mes_clicked_count_times_666c410a": "*Click Mes* Clicked %{count} times.",
+    "insert_your_e_mail_here_b3f12d58": "insert your e-mail here...",
+    "insert_your_name_here_c459a13c": "insert your name here...",
+    "please_tell_us_some_informations_to_start_the_chat_7d6b71de": "Please, tell us some informations to start the chat",
+    "powered_by_ab81d6bc": "Powered by",
+=======
     "click_me_clicked_count_times_a941f54d": "*Click Me* ' ' Clicked %{count} times.",
     "home_351838cd": "Home",
     "powered_by_rocket_chat_4d7c2ab4": "Powered by Rocket.Chat",
+>>>>>>> origin/master
+=======
+    "click_me_clicked_count_times_a941f54d": "*Click Me* ' ' Clicked %{count} times.",
+    "home_351838cd": "Home",
+    "powered_by_rocket_chat_4d7c2ab4": "Powered by Rocket.Chat",
+>>>>>>> master
     "profile_user_f5c94dd": "Profile: %{user}",
-    "this_is_the_home_component_787e9e91": "This is the Home component.",
-    "this_is_the_user_profile_for_a_user_named_user_88765ee4": "This is the user profile for a user named %{user}."
+    "test_3c83e52f": "test its working",
+    "this_is_the_user_profile_for_a_user_named_user_88765ee4": "This is the user profile for a user named %{user}.",
+    "write_your_message_f9262450": "write your message..."
   }
 }

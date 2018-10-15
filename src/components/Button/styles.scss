@@ -19,6 +19,16 @@
 					rgba($color-dark, 0.5);
 			}
 		}
+
+		&.button--loading {
+			&::after {
+				$color-dark: darken($color, 10%);
+				border-color: $color-dark
+					rgba($color-dark, 0.5)
+					rgba($color-dark, 0.5)
+					rgba($color-dark, 0.5);
+			}
+		}
 	}
 }
 

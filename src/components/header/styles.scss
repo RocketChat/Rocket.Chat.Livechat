@@ -1,0 +1,63 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+$header-padding: $default-padding;
+
+.header {
+	width: 100%;
+	height: 56px;
+	padding: 0 $header-padding / 2;
+	background: $color-dark-blue;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex: 0 0 auto;
+	color: $bg-color-white;
+	font-size: 16px;
+
+	&__item {
+		margin: 0 $header-padding / 2;
+	}
+
+	&__picture {
+		@extend .header__item;
+	}
+
+	&__content {
+		@extend .header__item;
+		flex: 1 1 auto;
+
+		.header__title {
+			font-size: 16px;
+			font-weight: 500;
+		}
+
+		.header__subtitle {
+			font-size: 14px;
+			font-weight: 500;
+		}
+	}
+
+	&__actions {
+		@extend .header__item;
+		flex: 0 0 auto;
+		display: flex;
+
+		.header__action {
+			background: none;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			flex: 0 0 auto;
+			color: $color-text-lighter;
+
+			&:active {
+				opacity: .9;
+				transform: translateY(2px);
+			}
+		}
+	}
+}
