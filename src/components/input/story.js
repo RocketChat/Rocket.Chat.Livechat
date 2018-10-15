@@ -26,6 +26,14 @@ storiesOf('Form', module).add('Input, Label, Error', () => c(
 	</Item>
 ));
 
+storiesOf('Form', module).add('Textarea', () => c(
+	<Item>
+		<Label error>alo</Label>
+		<Input multiple="4" error onClick={action('clicked')} onFocus={action('focus')} onInput={action('input')}>{text}</Input>
+		<Error>bla bla bla bla</Error>
+	</Item>
+));
+
 storiesOf('Form', module).add('Input and Label- Inline', () => c(
 	<Item inline>
 		<Label>alo</Label>

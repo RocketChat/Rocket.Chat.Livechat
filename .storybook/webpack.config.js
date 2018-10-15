@@ -6,7 +6,9 @@ module.exports = (baseConfig, env, defaultConfig) => {
 	// we are extending the base alias config here, adding preact as an alias
 	defaultConfig = webpackOverride(defaultConfig, env);
 
+
 	defaultConfig.resolve.extensions.push('.css');
+	defaultConfig.resolve.extensions.push('.svg');
 	defaultConfig.resolve.extensions.push('.scss');
 	defaultConfig.resolve.extensions.push('.svg');
 	// defaultConfig.resolve.extensions.push('.sass');

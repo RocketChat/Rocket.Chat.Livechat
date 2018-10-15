@@ -1,0 +1,51 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+:global(.is-blurred) {
+    filter: blur(2px);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: transparent;
+
+  &--overlay {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+}
+
+.container {
+    max-width: 80%;
+    min-width: 150px;
+    max-height: 80%;
+    position:fixed;
+    padding: $default-padding;
+    background: $bg-color-white;
+    height: auto;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 10px 25px 0px rgba(0, 0, 0, 0.15);
+    border-radius: $default-border-radius;
+
+    &--animated {
+        animation-name: fadeInUp;
+        animation-duration: $default-time-animation;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity:0;
+        transform:translate3d(-50%,100%,0)
+    }
+    to {
+        opacity:1;
+        transform: translate(-50%,-50%);
+    }
+}

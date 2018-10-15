@@ -1,12 +1,13 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
+$composer-padding: 12px;
 
 .composer {
     transition: all .3s;
     border: $default-border solid $color-text-light;
     border-radius: $default-border-radius;
-    padding: 12px;
+    padding: $composer-padding $composer-padding/2;
     display: flex;
     align-items: flex-end;
     background: $bg-color-white;
@@ -16,7 +17,10 @@
         border-color: $color-text-grey;
     }
 
-    & &__input {
+    &__input {
+        color:  $bg-color-dark;
+        padding: 2px $composer-padding/2;
+        min-height: 20px;
         font-size: 14px;
         font-weight: 500;
         border:none;
@@ -26,16 +30,40 @@
         resize: none;
         word-wrap: break-word;
         overflow-y: auto;
-
         &:empty:before {
             content: attr(placeholder);
             display: block; /* For Firefox */
             color: $color-text-light;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
         }
     }
 }
 
-.icon {
-    padding: 0 12px;
+.actions {
     flex: 0 0;
+    font-size: 0;
+    display: flex;
+}
+
+.action {
+    margin: 0 $composer-padding/2;
+    padding: 0;
+    flex: 0 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 0;
+
+    &:focus {
+        transform: scale(1.05);
+        outline: none;
+    }
+
+    &:active {
+        transform: translateY(1px);
+    }
+
 }
