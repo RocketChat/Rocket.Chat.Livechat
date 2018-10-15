@@ -4,11 +4,12 @@
 
 
 .avatar-container {
+    margin: 0 5px;
     display: flex;
 }
 
 .avatar {
-    margin: auto -5px;
+    margin: 0 -5px;
     box-shadow: -2px 0 1px 0px #00000082;
     &:first-child {
         box-shadow: none;

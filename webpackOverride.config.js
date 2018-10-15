@@ -11,10 +11,10 @@ module.exports = (config/* , env */) => {
 			'React': 'preact-compat',
 			'react': 'preact-compat',
 			'react-dom': 'preact-compat',
-			'styles': path.join(__dirname, 'src/styles'),
-			'icons': path.join(__dirname, 'src/icons'),
-			'components': path.join(__dirname, 'src/components'),
-			'autoI18n': path.resolve(__dirname, 'src/i18n'),
+			'styles': path.join(__dirname, './src/styles'),
+			'autoI18n': path.resolve(__dirname, './src/i18n'),
+			'icons': path.join(__dirname, './src/icons'),
+			'components': path.join(__dirname, './src/components'),
 		}
 	);
 

@@ -1,10 +1,15 @@
 {
   "name": "rocket.chat.livechat",
+  "sideEffects": false,
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+<<<<<<< HEAD
     "build": "preact build --no-prerender --json",
+=======
+    "build": "preact build --json --no-prerender",
+>>>>>>> origin/master
     "serve": "preact build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src",
@@ -43,6 +48,7 @@
     "desvg-loader": "^0.1.0",
     "eslint": "^4.9.0",
     "eslint-config-synacor": "^2.0.2",
+    "i18nline": "^2.0.1",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
     "image-webpack-loader": "^4.3.1",
@@ -53,17 +59,29 @@
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
+<<<<<<< HEAD
+=======
+    "webpack-bundle-analyzer": "^3.0.2",
+>>>>>>> origin/master
     "svg-loader": "0.0.2",
     "webpack": "3"
   },
   "dependencies": {
     "@kossnocorp/desvg": "^0.2.0",
+    "@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
+    "date-fns": "^1.29.0",
+    "desvg": "^1.0.2",
+    "desvg-loader": "^0.1.0",
+    "eventemitter2": "^5.0.1",
+    "fast-async": "^6.3.8",
     "i18n": "^0.8.3",
     "i18nline": "^2.0.1",
+    "markdown-it": "^8.4.2",
     "preact": "^8.2.6",
     "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
-    "preact-router": "^2.5.7"
+    "preact-router": "^2.5.7",
+    "svg-loader": "^0.0.2"
   },
   "jest": {
     "verbose": true,

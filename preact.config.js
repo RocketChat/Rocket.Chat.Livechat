@@ -1,9 +1,15 @@
-const webpackOverride = require('./webpackOverride.config');
 import webpack from 'webpack';
+const webpackOverride = require('./webpackOverride.config');
+const path = require('path');
+
 export default (config, env, helpers) => {
+	// config.mode = 'production';
 	// Use Preact CLI's helpers object to get the babel-loader
 	const babel = helpers.getLoadersByName(config, 'babel-loader')[0].rule;
 	// Update the loader config to include preact-i18nline
+	// babel.options.presets[0][1].exclude.push('transform-async-to-generator');
+	// // Add fast-async
+	// babel.options.plugins.push([require.resolve('fast-async'), { spec: true }]);
 	babel.loader = [
 		{ // create an entry for the old loader
 			loader: babel.loader,
@@ -21,6 +27,7 @@ export default (config, env, helpers) => {
 			I18n: ['autoI18n', 'default'],
 		})
 	);
+	config.plugins[1].definitions['process.env'] = {};
 
 	config.optimization = {
 		splitChunks: {

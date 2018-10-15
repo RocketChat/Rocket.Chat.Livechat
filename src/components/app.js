@@ -1,34 +1,74 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
+import { api } from '@rocket.chat/sdk/dist/bundle.js';
+<<<<<<< HEAD
+// Code-splitting is automated for routes
+=======
 
 import Header from './Header';
 import Footer from './Footer';
 
-// Code-splitting is automated for routes
-import Home from '../routes/home';
-import Profile from '../routes/profile';
-
+>>>>>>> master
+import Store, { Consumer } from '../store';
+import Home from '../containers/home';
+import LeaveMessage from '../containers/leaveamessage';
+import Register from '../containers/register';
 export default class App extends Component {
 
 	/** Gets fired when the route changes.
 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
 	 *	@param {string} event.url	The newly routed URL
 	 */
-	handleRoute = (e) => {
-		this.currentUrl = e.url;
+	handleRoute = (...args) => {
+		// this.currentUrl = args[0].url;
 	};
+	async componentDidMount() {
+		// console.log(await api.livechat.config());
+	}
+<<<<<<< HEAD
 
+	renderScreen({ user, config, messages }) {
+		const { settings = {}, online } = config;
+		if (online) {
+			if (user.token) {
+				return <Home {...config} messages={messages} default path="/home" />;
+			}
+			return <Register {...config} default path="/register" />;
+		}
+		if (settings.displayOfflineForm) {
+			return <LeaveMessage {...config} default path="/LeaveMessage" />;
+		}
+		return <LeaveMessage {...config} default path="/LeaveMessage" />;
+
+=======
+
+	renderScreen({ user, config, messages }) {
+		const { settings = {}, online } = config;
+		if (online) {
+			if (user) {
+				return <Home {...config} messages={messages} default path="/home" />;
+			}
+			return <Register {...config} default path="/register" />;
+		}
+		if (settings.displayOfflineForm) {
+			return <LeaveMessage {...config} default path="/LeaveMessage" />;
+		}
+		return <LeaveMessage {...config} default path="/LeaveMessage" />;
+
+>>>>>>> master
+	}
 	render() {
 		return (
-			<div id="app">
-				<Header>Need help?</Header>
-				<Router onChange={this.handleRoute}>
-					<Home path="/" />
-					<Profile path="/profile/" user="me" />
-					<Profile path="/profile/:user" />
-				</Router>
-				<Footer>Powered by Rocket.Chat</Footer>
-			</div>
+			<Store>
+				<div id="app">
+					<Consumer>
+						{(state) => (
+							<Router onChange={this.handleRoute}>
+								{ this.renderScreen(state) }
+							</Router>)}
+					</Consumer>
+				</div>
+			</Store>
 		);
 	}
 }
