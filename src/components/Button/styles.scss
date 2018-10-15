@@ -77,7 +77,6 @@ $padding: 20px;
 		width: 100%;
 		transition: all $default-time-animation;
 	}
-
 	// COLORS
 	&--danger {
 		@include state($color-dark-red);
@@ -107,7 +106,6 @@ $padding: 20px;
 		& .button__inner {
 			padding-right: 24px;
 		}
-
 		&.button--stack .button__inner {
 			padding-left: 24px;
 		}

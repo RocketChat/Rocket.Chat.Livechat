@@ -32,6 +32,21 @@ export default class Composer extends Component {
 			event.preventDefault();
 		}
 	}
+	onPaste(e) {
+		if (e.clipboardData == null || !e.clipboardData.items) {
+			return;
+		}
+		const items = Array.from(e.clipboardData.items);
+		const files = items
+			.filter((item) => (item.kind === 'file' && item.type.indexOf('image/') !== -1))
+			.map((item) => ({
+				file: item.getAsFile(),
+				name: 'Clipboard',
+			}));
+
+		this.props.onUpload(files);
+		e.preventDefault();
+	}
 	input(event) {
 		// const { inputType, data } = event;
 		// if (inputType === 'insertParagraph' || (inputType === 'insertText' && data === null)) {
@@ -44,12 +59,15 @@ export default class Composer extends Component {
 		this.bind = this.bind.bind(this);
 		this.input = this.input.bind(this);
 		this.onKeypress = this.onKeypress.bind(this);
+		this.onPaste = this.onPaste.bind(this);
 	}
 	 render({ pre, post, placeholder, ...args }) {
 		 return (
 			<div {...args} className={createClassName(styles, 'composer', {})}>
 				{pre}
-				<div ref={this.bind} onKeypress={this.onKeypress} onInput={this.input} placeholder={placeholder} className={createClassName(styles, 'composer__input', {})} contenteditable />
+				<div ref={this.bind} onPaste={this.onPaste} onKeypress={this.onKeypress} onInput={this.input} placeholder={placeholder} className={createClassName(styles, 'composer__input', {})}
+					contenteditable
+				/>
 				{post}
 			</div>);
 	 }

@@ -1,5 +1,6 @@
 {
   "name": "rocket.chat.livechat",
+  "sideEffects": false,
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -31,6 +32,7 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.11",
     "@storybook/addon-centered": "^3.4.10",
     "@storybook/addon-knobs": "^3.4.10",
     "@storybook/addon-options": "^3.4.10",
@@ -45,21 +47,26 @@
     "i18nline": "^2.0.1",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
+    "image-webpack-loader": "^4.3.1",
     "jest": "^21.2.1",
     "node-sass": "^4.9.3",
-    "preact-cli": "^2.1.0",
+    "preact-cli": "^3.0.0-next.11",
     "preact-compat": "^3.18.4",
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
+    "webpack-bundle-analyzer": "^3.0.2",
     "svg-loader": "0.0.2",
-    "webpack-bundle-analyzer": "^3.0.2"
+    "webpack": "3"
   },
   "dependencies": {
     "@kossnocorp/desvg": "^0.2.0",
     "@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
     "date-fns": "^1.29.0",
+    "desvg": "^1.0.2",
+    "desvg-loader": "^0.1.0",
     "eventemitter2": "^5.0.1",
+    "fast-async": "^6.3.8",
     "i18n": "^0.8.3",
     "i18nline": "^2.0.1",
     "markdown-it": "^8.4.2",

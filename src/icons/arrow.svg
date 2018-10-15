@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg version="1.1" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg">
-	<g fill="none" fill-rule="evenodd">
-		<g transform="translate(-295 -23)">
-			<g transform="translate(293 18)">
-				<g transform="translate(10 10) rotate(-90) translate(-10 -10)">
-					<g stroke="currentcolor" stroke-width="1.5">
-						<g transform="translate(6 2)">
-							<polyline transform="translate(8 8) rotate(-45) translate(-8 -8)" points="3 13 3 3 13 3" />
-						</g>
-					</g>
-				</g>
-			</g>
-		</g>
-	</g>
-</svg>
+<?xml version="1.0" encoding="UTF-8"?><svg version="1.1" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><rect id="a" width="20" height="20"/></defs><g fill="none" fill-rule="evenodd"><g transform="translate(-295 -23)"><g transform="translate(293 18)"><g transform="translate(10 10) rotate(-90) translate(-10 -10)"><mask id="b" fill="white"><use xlink:href="#a"/></mask><g mask="url(#b)" stroke="#fff" stroke-width="1.5"><g transform="translate(6 2)"><polyline transform="translate(8 8) rotate(-45) translate(-8 -8)" points="3 13 3 3 13 3"/></g></g></g></g></g></g></svg>

@@ -1,4 +1,6 @@
 import { h, Component } from 'preact';
+import { api } from '@rocket.chat/sdk/dist/bundle';
+const { livechat } = api;
 
 import { Consumer } from '../store';
 import Register from '../routes/register';
@@ -6,19 +8,9 @@ import Register from '../routes/register';
 class Wrapped extends Component {
 	async onSubmit(args) {
 		this.setState({ loading: true });
-		const user = await fetch('http://localhost:3000/api/v1/livechat/visitor', {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ visitor: { ...args, token: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) } }),
-		}).then((res) => res.json());
-
-		const result = await fetch(`http://localhost:3000/api/v1/livechat/messages?token=${ user.visitor.token }`).then((res) => res.json());
-		console.log(result);
+		const { visitor } = await livechat.grantVisitor({ visitor: { ...args, token: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) } });
 		this.setState({ loading: false });
-		this.actions({ user: user.visitor });
+		this.actions({ user: visitor });
 	}
 
 	constructor() {

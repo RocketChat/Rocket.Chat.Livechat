@@ -3,9 +3,13 @@ const webpackOverride = require('./webpackOverride.config');
 const path = require('path');
 
 export default (config, env, helpers) => {
+	// config.mode = 'production';
 	// Use Preact CLI's helpers object to get the babel-loader
 	const babel = helpers.getLoadersByName(config, 'babel-loader')[0].rule;
 	// Update the loader config to include preact-i18nline
+	// babel.options.presets[0][1].exclude.push('transform-async-to-generator');
+	// // Add fast-async
+	// babel.options.plugins.push([require.resolve('fast-async'), { spec: true }]);
 	babel.loader = [
 		{ // create an entry for the old loader
 			loader: babel.loader,
@@ -18,26 +22,44 @@ export default (config, env, helpers) => {
 	// remove the old loader options
 	delete babel.options;
 
-	config.module.loaders[8].test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
-	config.module.loaders.push({
-		test: /\.svg$/,
-		loader: 'desvg-loader/preact!svg-loader',
-	});
 	config.plugins.push(
 		new webpack.ProvidePlugin({
 			I18n: ['autoI18n', 'default'],
 		})
 	);
-	config = webpackOverride(config);
-	config.resolve.alias = Object.assign({}, config.resolve.alias, {
-		react: 'preact-compat',
-		'react-dom': 'preact-compat',
-		styles: path.join(__dirname, './src/styles'),
-		icons: path.join(__dirname, './src/icons'),
-		components: path.join(__dirname, './src/components'),
-		autoI18n: path.resolve(__dirname, './src/i18n'),
-	});
-	// const { index } = helpers.getPluginsByName(config, 'UglifyJsPlugin')[0];
-	// config.plugins.splice(index, 1);
-	return config;
+	config.plugins[1].definitions['process.env'] = {};
+
+	config.optimization = {
+		splitChunks: {
+			chunks: 'async',
+			minSize: 30000,
+			maxSize: 0,
+			minChunks: 1,
+			maxAsyncRequests: 5,
+			maxInitialRequests: 3,
+			automaticNameDelimiter: '~',
+			name: true,
+			cacheGroups: {
+				vendor: {
+					// name of the chunk
+					name: 'vendor',
+					// async + async chunks
+					chunks: 'all',
+					// import file path containing node_modules
+					test: /node_modules/,
+					// priority
+					priority: 20,
+				},
+				common: {
+					name: 'common',
+					minChunks: 2,
+					chunks: 'async',
+					priority: 10,
+					reuseExistingChunk: true,
+					enforce: true,
+				},
+			},
+		},
+	};
+	return webpackOverride(config);
 };

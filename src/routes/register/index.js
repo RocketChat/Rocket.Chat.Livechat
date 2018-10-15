@@ -4,7 +4,7 @@ import { asyncForEach, asyncEvery } from '../../components/helpers';
 import style from './style';
 import Header, {
 	Title, Content,
-} from 'components/Header';
+} from 'components/header';
 import { Form, InputField, Item } from 'components/input';
 
 import Button from 'components/Button';
@@ -26,7 +26,7 @@ export default class Home extends Component {
 		return valid;
 	}
 
-	addToValidate = (element) => {
+	addToValidate(element) {
 		this.state.fields.add(element);
 	}
 
@@ -39,6 +39,7 @@ export default class Home extends Component {
 
 		this.submit = this.submit.bind(this);
 		this.validate = this.validate.bind(this);
+		this.addToValidate = this.addToValidate.bind(this);
 	}
 
 	componentDidMount() {
