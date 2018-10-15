@@ -1,8 +1,6 @@
 import { h } from 'preact';
-<<<<<<< HEAD
+
 import Header from '../components/Header';
-=======
->>>>>>> master
 import { Link } from 'preact-router/match';
 // See: https://github.com/mzgoddard/preact-render-spy
 import { shallow } from 'preact-render-spy';

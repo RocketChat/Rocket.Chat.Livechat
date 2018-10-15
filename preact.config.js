@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 const webpackOverride = require('./webpackOverride.config');
 const path = require('path');
+
 export default (config, env, helpers) => {
 	// Use Preact CLI's helpers object to get the babel-loader
 	const babel = helpers.getLoadersByName(config, 'babel-loader')[0].rule;

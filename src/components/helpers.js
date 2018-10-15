@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function flatMap(arr, mapFunc) {
 	const result = [];
 	for (const [index, elem] of arr.entries()) {
@@ -13,26 +12,12 @@ function flatMap(arr, mapFunc) {
 	return result;
 }
 
-<<<<<<< HEAD
-export const createClassName = (styles, elementName, modifiers = {}) => [
-=======
 export const createClassName = (styles, elementName, modifiers = {}, classes = []) => [
->>>>>>> origin/master
-=======
-export const createClassName = (styles, elementName, modifiers = {}, classes = []) => [
->>>>>>> master
 	styles[elementName],
 	...(flatMap(Object.entries(modifiers), ([modifierKey, modifierValue]) => [
 		modifierValue && styles[`${ elementName }--${ modifierKey }`],
 		typeof modifierValue !== 'boolean' && styles[`${ elementName }--${ modifierKey }-${ modifierValue }`],
-	])
-<<<<<<< HEAD
-		.filter((className) => !!className)),
-<<<<<<< HEAD
-].join(' ');
-=======
-		.filter((className) => !!className)), ...classes].join(' ');
->>>>>>> origin/master
+	]).filter((className) => !!className)), ...classes].join(' ');
 
 export async function asyncForEach(array, callback) {
 	for (let index = 0; index < array.length; index++) {
@@ -48,6 +33,3 @@ export async function asyncEvery(array, callback) {
 	}
 	return true;
 }
-=======
-	...classes].join(' ');
->>>>>>> master
