@@ -18,7 +18,7 @@ export const createClassName = (styles, elementName, modifiers = {}, classes = [
 		modifierValue && styles[`${ elementName }--${ modifierKey }`],
 		typeof modifierValue !== 'boolean' && styles[`${ elementName }--${ modifierKey }-${ modifierValue }`],
 	])
-	.filter((className) => !!className)), ...classes].join(' ');
+		.filter((className) => !!className)), ...classes].join(' ');
 
 export async function asyncForEach(array, callback) {
 	for (let index = 0; index < array.length; index++) {

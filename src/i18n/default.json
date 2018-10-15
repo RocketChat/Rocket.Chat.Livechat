@@ -4,8 +4,7 @@
     "home_351838cd": "Home",
     "powered_by_rocket_chat_4d7c2ab4": "Powered by Rocket.Chat",
     "profile_user_f5c94dd": "Profile: %{user}",
-    "test_3c83e52f": "test...its working",
-    "this_is_the_user_profile_for_a_user_named_user_88765ee4": "This is the user profile for a user named %{user}.",
-    "write_your_message_f9262450": "write your message..."
+    "this_is_the_home_component_787e9e91": "This is the Home component.",
+    "this_is_the_user_profile_for_a_user_named_user_88765ee4": "This is the user profile for a user named %{user}."
   }
 }

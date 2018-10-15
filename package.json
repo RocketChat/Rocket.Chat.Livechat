@@ -52,22 +52,21 @@
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
-		"svg-loader": "0.0.2",
-    "webpack-bundle-analyzer": "^3.0.2",
-		"@kossnocorp/desvg": "^0.2.0"
+    "svg-loader": "0.0.2",
+    "webpack-bundle-analyzer": "^3.0.2"
   },
   "dependencies": {
-		"@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
-		"date-fns": "^1.29.0",
-		"eventemitter2": "^5.0.1",
+    "@kossnocorp/desvg": "^0.2.0",
+    "@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
+    "date-fns": "^1.29.0",
+    "eventemitter2": "^5.0.1",
     "i18n": "^0.8.3",
     "i18nline": "^2.0.1",
     "markdown-it": "^8.4.2",
     "preact": "^8.2.6",
     "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
-    "preact-router": "^2.5.7",
-    "svg-loader": "^0.0.2"
+    "preact-router": "^2.5.7"
   },
   "jest": {
     "verbose": true,
