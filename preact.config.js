@@ -1,7 +1,6 @@
 import webpack from 'webpack';
 const webpackOverride = require('./webpackOverride.config');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 export default (config, env, helpers) => {
 	// Use Preact CLI's helpers object to get the babel-loader
 	const babel = helpers.getLoadersByName(config, 'babel-loader')[0].rule;
@@ -17,7 +16,6 @@ export default (config, env, helpers) => {
 	];
 	// remove the old loader options
 	delete babel.options;
-
 
 	config.module.loaders[8].test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
 	config.module.loaders.push({

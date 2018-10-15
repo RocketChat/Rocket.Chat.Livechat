@@ -12,14 +12,22 @@ function flatMap(arr, mapFunc) {
 	return result;
 }
 
+<<<<<<< HEAD
 export const createClassName = (styles, elementName, modifiers = {}) => [
+=======
+export const createClassName = (styles, elementName, modifiers = {}, classes = []) => [
+>>>>>>> origin/master
 	styles[elementName],
 	...(flatMap(Object.entries(modifiers), ([modifierKey, modifierValue]) => [
 		modifierValue && styles[`${ elementName }--${ modifierKey }`],
 		typeof modifierValue !== 'boolean' && styles[`${ elementName }--${ modifierKey }-${ modifierValue }`],
 	])
+<<<<<<< HEAD
 		.filter((className) => !!className)),
 ].join(' ');
+=======
+		.filter((className) => !!className)), ...classes].join(' ');
+>>>>>>> origin/master
 
 export async function asyncForEach(array, callback) {
 	for (let index = 0; index < array.length; index++) {

@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
 import style from './style';
-import Header from 'components/header';
+import Header from 'components/Header';
 import Footer, { Container, Powered } from 'components/Footer';
 import Avatar from 'components/Avatar';
 import Composer, { Action, Actions } from 'components/Composer';
