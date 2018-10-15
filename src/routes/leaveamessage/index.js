@@ -4,7 +4,7 @@ import { asyncForEach, asyncEvery } from '../../components/helpers';
 import style from './style';
 import Header, {
 	Title, Content, Actions, Action,
-} from 'components/header';
+} from 'components/Header';
 import { Form, InputField, Item } from 'components/input';
 
 import Bell from 'icons/bell.svg';
@@ -12,7 +12,7 @@ import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
 import Button from 'components/Button';
-import Footer, { Container, Powered } from 'components/Footer';
+import * as Footer from 'components/Footer';
 
 export default class Home extends Component {
 	async submit(event) {
@@ -88,9 +88,9 @@ export default class Home extends Component {
 					</Item>
 				</Form>
 			</main>
-			<Footer>
-				<Container><Powered /></Container>
-			</Footer>
+			<Footer.Main>
+				<Footer.Content><Footer.PoweredBy /></Footer.Content>
+			</Footer.Main>
 		</div>);
 	}
 }

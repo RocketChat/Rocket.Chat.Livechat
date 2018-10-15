@@ -1,14 +1,6 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
-import { api } from '@rocket.chat/sdk/dist/bundle.js';
-<<<<<<< HEAD
-// Code-splitting is automated for routes
-=======
 
-import Header from './Header';
-import Footer from './Footer';
-
->>>>>>> master
 import Store, { Consumer } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
@@ -25,22 +17,6 @@ export default class App extends Component {
 	async componentDidMount() {
 		// console.log(await api.livechat.config());
 	}
-<<<<<<< HEAD
-
-	renderScreen({ user, config, messages }) {
-		const { settings = {}, online } = config;
-		if (online) {
-			if (user.token) {
-				return <Home {...config} messages={messages} default path="/home" />;
-			}
-			return <Register {...config} default path="/register" />;
-		}
-		if (settings.displayOfflineForm) {
-			return <LeaveMessage {...config} default path="/LeaveMessage" />;
-		}
-		return <LeaveMessage {...config} default path="/LeaveMessage" />;
-
-=======
 
 	renderScreen({ user, config, messages }) {
 		const { settings = {}, online } = config;
@@ -55,7 +31,6 @@ export default class App extends Component {
 		}
 		return <LeaveMessage {...config} default path="/LeaveMessage" />;
 
->>>>>>> master
 	}
 	render() {
 		return (

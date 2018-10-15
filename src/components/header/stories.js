@@ -1,14 +1,10 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-<<<<<<< HEAD
-import { color, withKnobs } from '@storybook/addon-knobs';
-import Header from '.';
-=======
 import { withKnobs, color, select, text } from '@storybook/addon-knobs';
 
 import Header, { Picture, Content, SubTitle, Title, Actions, Action } from '.';
->>>>>>> master
+
 import Avatar from '../Avatar';
 import StatusIndicator, { statuses } from '../StatusIndicator';
 import Bell from 'icons/bell.svg';

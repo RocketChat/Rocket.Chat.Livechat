@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 
 import style from './style';
-import Header from 'components/header';
-import Footer, { Container, Powered } from 'components/Footer';
+import Header from 'components/Header';
+import * as Footer from 'components/Footer';
 import Avatar from 'components/Avatar';
 import Composer, { Action, Actions } from 'components/Composer';
 import Typing from 'components/TypingIndicator';
@@ -89,8 +89,8 @@ export default class Home extends Component {
 					{typingUsers && !!typingUsers.length && <Typing users={typingUsers} />}
 				</div>
 			</main>
-			<Footer>
-				<Container>
+			<Footer.Main>
+				<Footer.Content>
 					<Composer onUpload={onUpload}
 						onSubmit={onSubmit}
 						pre={
@@ -109,9 +109,9 @@ export default class Home extends Component {
 						}
 						placeholder="insert your text here"
 					/>
-				</Container>
-				<Container><Powered /></Container>
-			</Footer>
+				</Footer.Content>
+				<Footer.Content><Footer.PoweredBy /></Footer.Content>
+			</Footer.Main>
 		</div>
 	)
 }

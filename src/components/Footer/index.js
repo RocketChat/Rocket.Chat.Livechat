@@ -3,7 +3,7 @@ import styles from './styles';
 import Logo from './logo.svg';
 import { createClassName } from '../helpers';
 
-export const Footer = ({ children, ...props }) => (
+export const Main = ({ children, ...props }) => (
 	<footer className={createClassName(styles, 'footer')} {...props}>
 		{children}
 	</footer>
@@ -26,5 +26,3 @@ export const Options = (props) => (
 		Options
 	</button>
 );
-
-export default Footer;

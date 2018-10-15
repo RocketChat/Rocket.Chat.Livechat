@@ -4,11 +4,11 @@ import { asyncForEach, asyncEvery } from '../../components/helpers';
 import style from './style';
 import Header, {
 	Title, Content,
-} from 'components/header';
+} from 'components/Header';
 import { Form, InputField, Item } from 'components/input';
 
 import Button from 'components/Button';
-import Footer, { Container, Powered } from 'components/Footer';
+import * as Footer from 'components/Footer';
 
 export default class Home extends Component {
 	async submit(event) {
@@ -79,9 +79,9 @@ export default class Home extends Component {
 					</Item>
 				</Form>
 			</main>
-			<Footer>
-				<Container><Powered /></Container>
-			</Footer>
+			<Footer.Main>
+				<Footer.Content><Footer.PoweredBy /></Footer.Content>
+			</Footer.Main>
 		</div>);
 	}
 }
