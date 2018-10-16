@@ -28,6 +28,18 @@ class Wrapped extends Component {
 		this.actions({ messages: (moreMessages || []).reverse() });
 	}
 
+	onUpload(files) {
+		const state = getState();
+		files.forEach(async(file) => {
+			const formData = new FormData();
+			formData.append('file', file);
+			await fetch(`http://localhost:3000/api/v1/livechat/upload/${ state.room._id }`, {
+				body: formData,
+				method: 'POST',
+				headers: { 'x-visitor-token': state.user.token },
+			});
+		});
+	}
 	constructor() {
 		super();
 		this.state = {
@@ -37,6 +49,7 @@ class Wrapped extends Component {
 		rid = state.room && state.room._id;
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onTop = this.onTop.bind(this);
+		this.onUpload = this.onUpload.bind(this);
 	}
 
 	async componentDidMount() {
@@ -50,9 +63,6 @@ class Wrapped extends Component {
 			this.actions({ messages: (messages || []).reverse() });
 		}
 
-	}
-	onUpload(files) {
-		console.log(files);
 	}
 
 	render(props) {

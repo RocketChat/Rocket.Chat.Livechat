@@ -16,7 +16,7 @@ const data = [
 	{ me: true, msg: 'LARGE MESSAGE AAaasdkaskdlaskdl;kas;ldk;aslkd;aslkd;alsdk;alskd;al ;laskd;laskd;lask ;laskd;laskd;laskd;alk;sldk;alskd;aslkd;alskda;lskd;alskd;laskd;laskd;laks;dl' },
 ];
 const Center = (storyFn) => (
-	<div style="background: white; width: 100%; max-width: 350px; margin: auto; min-height: 300px; display: flex;">
+	<div style="background: white; width: 100%; max-width: 350px; margin: auto; height: 500px; display: flex;">
 		{storyFn()}
 	</div>
 );
@@ -24,7 +24,8 @@ storiesOf('Screen|Chat', module)
 	.addDecorator(Center)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
-		<Chat user={{ _id: 1 }}messages={data} loading={boolean('loading', true)} uploads={boolean('uploads', true)} emoji={boolean('emoji', true)} title={text('text', 'guilherme.gazzo')}
+		<Chat onUpload={action('upload')} user={{ _id: 1 }} messages={data} loading={boolean('loading', true)} uploads={boolean('uploads', true)} emoji={boolean('emoji', true)}
+			title={text('text', 'guilherme.gazzo')}
 			onSubmit={action('submit')}
 		/>
 	));

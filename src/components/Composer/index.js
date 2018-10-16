@@ -39,10 +39,7 @@ export default class Composer extends Component {
 		const items = Array.from(e.clipboardData.items);
 		const files = items
 			.filter((item) => (item.kind === 'file' && item.type.indexOf('image/') !== -1))
-			.map((item) => ({
-				file: item.getAsFile(),
-				name: 'Clipboard',
-			}));
+			.map((item) => item.getAsFile());
 
 		this.props.onUpload(files);
 		e.preventDefault();

@@ -21,7 +21,7 @@ export default class App extends Component {
 	renderScreen({ user, config, messages }) {
 		const { settings = {}, online } = config;
 		if (online) {
-			if (user) {
+			if (user && user.token) {
 				return <Home {...config} messages={messages} default path="/home" />;
 			}
 			return <Register {...config} default path="/register" />;
