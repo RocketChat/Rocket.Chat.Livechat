@@ -14,19 +14,22 @@ export const Text = ({ children, me, ...args }) => (<div {...args} className={cr
 
 export const Content = ({ children, me, ...args }) => (<div {...args} className={createClassName(styles, 'message__content', { me })} >{children}</div>);
 
-export const Body = ({ me, children, Element = 'div', ...args }) => (<Element className={createClassName(styles, 'message', { me })} {...args}>
+export const Body = ({ me, children, Element = 'div', group, ...args }) => (<Element className={createClassName(styles, 'message', { me, group })} {...args}>
 	{children}
 </Element>);
 
-const Message = ({ _id, el, msg, ts, me, ...args }) => (
-	<Body id={_id} me={me} Element={el} {...args}>
+const Attachments = ({ attachments }) => <img className={createClassName(styles, 'attachment', {})} src={`http://localhost:3000${ attachments[0].image_url }`} />;
+
+const Message = ({ _id, el, msg, ts, me, group, attachments = [], ...args }) => (
+	<Body id={_id} me={me} group={group} Element={el} {...args}>
 		<Container>
-			{!me && <Avatar />}
+			{!me && <Avatar className={createClassName(styles, 'avatar', { group })} />}
 			<Content me={me}>
-				<Text me={me} dangerouslySetInnerHTML={{ __html: md.render(msg) }} />
+				{msg && <Text me={me} dangerouslySetInnerHTML={{ __html: md.render(msg) }} />}
+				{attachments && attachments.length && <Attachments attachments={attachments} />}
 				<div className={createClassName(styles, 'message__time', {})}>{parseDate(ts)}</div>
 			</Content>
-			{me && <Avatar />}
+			{me && <Avatar className={createClassName(styles, 'avatar', { group })} />}
 
 		</Container>
 	</Body>
