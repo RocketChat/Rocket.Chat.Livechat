@@ -1,6 +1,6 @@
 import { createContext } from 'preact-context';
 import { Component } from 'preact';
-import EventEmitter from 'eventemitter2';
+import { EventEmitter } from 'tiny-events';
 import { insert } from 'components/helpers';
 import * as SDK from '@rocket.chat/sdk/dist/bundle';
 const { livechat } = SDK.api;
@@ -96,15 +96,3 @@ export default class UserWrap extends Component {
 		);
 	}
 }
-
-export const connect = (children) => (
-	<Consumer>{(...args) =>
-		 children
-		// return cloneElement(children);// , {}, { props: { ...children.props, dispatch, ...state } });
-
-
-	}
-
-	</Consumer>);
-	// );
-// console.log(children, { ...children.props, dispatch, ...state });

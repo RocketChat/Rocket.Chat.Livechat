@@ -3,5 +3,5 @@ node_modules
 /*.log
 *.lock
 coverage
-
+.vscode
 package-lock.json

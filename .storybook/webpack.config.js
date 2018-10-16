@@ -13,6 +13,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 			I18n: ['autoI18n', 'default']
 		})
 	);
+	defaultConfig.module.rules.splice(2,1);
 	defaultConfig.module.rules.push({
 		test: /\.(s?css|sass)$/,
 		use: [

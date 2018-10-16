@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import Footer, { Content, Options, PoweredBy } from '.';
+import * as Footer from '.';
 import Composer from '../Composer';
 
 const stickyFooterDecorator = (storyFn) => (
@@ -27,21 +27,21 @@ const stickyFooterDecorator = (storyFn) => (
 storiesOf('Components|Footer', module)
 	.addDecorator(stickyFooterDecorator)
 	.add('simple', () => (
-		<Footer>
-			<Content>
-				<PoweredBy />
-			</Content>
-		</Footer>
+		<Footer.Main>
+			<Footer.Content>
+				<Footer.PoweredBy />
+			</Footer.Content>
+		</Footer.Main>
 	))
 	.add('with Composer and options', () => (
-		<Footer>
-			<Content>
+		<Footer.Main>
+			<Footer.Content>
 				<Composer placeholder="Insert your text here" />
-			</Content>
-			<Content>
-				<Options onClick={action('options clicked')} />
-				<PoweredBy />
-			</Content>
-		</Footer>
+			</Footer.Content>
+			<Footer.Content>
+				<Footer.Options onClick={action('options clicked')} />
+				<Footer.PoweredBy />
+			</Footer.Content>
+		</Footer.Main>
 	))
 ;

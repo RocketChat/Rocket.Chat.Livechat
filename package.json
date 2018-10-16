@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build --json --no-prerender",
+    "build": "preact build --json --no-prerender --optimize-minimize",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src",
@@ -55,17 +55,16 @@
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
-    "webpack-bundle-analyzer": "^3.0.2",
     "svg-loader": "0.0.2",
-    "webpack": "3"
+    "webpack": "3",
+    "webpack-bundle-analyzer": "^3.0.2"
   },
   "dependencies": {
-    "@kossnocorp/desvg": "^0.2.0",
+		"@kossnocorp/desvg": "^0.2.0",
     "@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
     "date-fns": "^1.29.0",
     "desvg": "^1.0.2",
     "desvg-loader": "^0.1.0",
-    "eventemitter2": "^5.0.1",
     "fast-async": "^6.3.8",
     "i18n": "^0.8.3",
     "i18nline": "^2.0.1",
@@ -73,7 +72,8 @@
     "preact": "^8.2.6",
     "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
-    "preact-router": "^2.5.7"
+    "preact-router": "^2.5.7",
+		"tiny-events": "^1.0.1"
   },
   "jest": {
     "verbose": true,
@@ -98,5 +98,10 @@
       "^create-react-class$": "preact-compat/lib/create-react-class",
       "^react-addons-css-transition-group$": "preact-css-transition-group"
     }
-  }
+	},
+	"browserslist": [
+		"last 2 versions",
+		"safari > 8",
+		"not ie < 11"
+	]
 }
