@@ -1,9 +1,10 @@
 import { h, Component } from 'preact';
 
 import style from './style';
-import Header from 'components/Header';
+import * as Header from 'components/Header';
 import * as Footer from 'components/Footer';
 import Avatar from 'components/Avatar';
+import DropFiles from 'components/DropFiles';
 import Composer, { Action, Actions } from 'components/Composer';
 import Typing from 'components/TypingIndicator';
 import Message from 'components/Message';
@@ -71,7 +72,7 @@ export default class Home extends Component {
 
 	render = ({ onUpload, user: { _id }, typingUsers, onSubmit, color, messages, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
 		<div class={style.container}>
-			<Header color={color}>
+			<Header.default color={color}>
 				<Header.Avatar><Avatar /></Header.Avatar>
 				<Header.Content>
 					<Header.Title>{title}</Header.Title>
@@ -82,13 +83,15 @@ export default class Home extends Component {
 					<Header.Action onClick={minimize}><Arrow width={20} /></Header.Action>
 					<Header.Action onClick={fullScreen}><NewWindow width={20} /></Header.Action>
 				</Header.Actions>
-			</Header>
-			<main className={createClassName(style, 'main', { atBottom: this.state.atBottom, loading: this.props.loading })}>
-				<div ref={this.bind} onScroll={this.handleScroll} className={createClassName(style, 'main__wrapper')}>
-					<ol style="padding:0;">{messages.map((el) => renderRow(el, _id))}</ol>
-					{typingUsers && !!typingUsers.length && <Typing users={typingUsers} />}
+			</Header.default>
+			<DropFiles onUpload={onUpload}>
+				<div className={createClassName(style, 'main', { atBottom: this.state.atBottom, loading: this.props.loading })}>
+					<div ref={this.bind} onScroll={this.handleScroll} className={createClassName(style, 'main__wrapper')}>
+						<ol style="padding:0;">{messages.map((el) => renderRow(el, _id))}</ol>
+						{typingUsers && !!typingUsers.length && <Typing users={typingUsers} />}
+					</div>
 				</div>
-			</main>
+			</DropFiles>
 			<Footer.Main>
 				<Footer.Content>
 					<Composer onUpload={onUpload}
