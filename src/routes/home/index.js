@@ -18,9 +18,9 @@ import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
-const renderRow = (args, user) => {
+const renderRow = (args, user, group = false) => {
 	const { u = {}, _id } = args;
-	return <Message {...args} key={_id} el="li" me={u._id === user} />;
+	return <Message group={group} {...args} key={_id} el="li" me={u._id === user} />;
 };
 
 export const isBottom = (el) => el.scrollHeight - el.scrollTop === el.clientHeight;
@@ -69,7 +69,14 @@ export default class Home extends Component {
 			toBottom(this.el);
 		}
 	}
-
+	renderlist(messages) {
+		const { user: { _id } } = this.props;
+		return messages.map((el, index, arr) => {
+			const next = arr[index + 1];
+			const group = next && next.u._id === el.u._id;
+			return renderRow(el, _id, group);
+		});
+	}
 	render = ({ onUpload, user: { _id }, typingUsers, onSubmit, color, messages, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
 		<div class={style.container}>
 			<Header.default color={color}>
@@ -87,7 +94,7 @@ export default class Home extends Component {
 			<DropFiles onUpload={onUpload}>
 				<div className={createClassName(style, 'main', { atBottom: this.state.atBottom, loading: this.props.loading })}>
 					<div ref={this.bind} onScroll={this.handleScroll} className={createClassName(style, 'main__wrapper')}>
-						<ol style="padding:0;">{messages.map((el) => renderRow(el, _id))}</ol>
+						<ol style="padding:0;">{this.renderlist(messages)}</ol>
 						{typingUsers && !!typingUsers.length && <Typing users={typingUsers} />}
 					</div>
 				</div>

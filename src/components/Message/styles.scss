@@ -4,10 +4,27 @@
 $message-padding: 12px;
 $message-margin: 8px;
 
+
+.attachment {
+    max-width: 100%;
+    border-radius: $default-border-radius;
+    box-shadow: 0px 0px $default-border-radius 0px $color-text-grey;
+    max-height: 250px;
+}
+.avatar--group {
+    visibility: hidden;
+}
 .message {
     width: 100%;
     display: flex;
-
+    &--group {
+        .message__time {
+            display: none;
+        }
+        .message__container {
+            margin-bottom: $default-padding/4;
+        }
+    }
     &--me {
         justify-content: flex-end;
     }
@@ -15,13 +32,15 @@ $message-margin: 8px;
     &__content {
         position: relative;
         margin: 0 $message-margin;
+        font-size: 0;
     }
 
     &__container {
         display: flex;
         align-items: flex-end;
-        margin-bottom: 16px;
+        margin-bottom: $default-padding;
     }
+
 
     &__text {
         padding: $message-padding;
@@ -41,11 +60,12 @@ $message-margin: 8px;
     &__time {
         position: absolute;
         color: $color-text-grey;
-        line-height: 16px;
+        line-height: $default-padding;
         font-size: 10px;
         text-align: right;
         right: 0;
-        bottom: -16px;
+        bottom: -$default-padding;
+        white-space: nowrap;
     }
 
     h1,h2, h3,p {
