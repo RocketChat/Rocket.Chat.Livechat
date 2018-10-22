@@ -77,7 +77,7 @@ export default class Home extends Component {
 			return renderRow(el, _id, group);
 		});
 	}
-	render = ({ onUpload, user: { _id }, typingUsers, onSubmit, color, messages, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
+	render = ({ onUpload, typingUsers, onSubmit, color, messages, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
 		<div class={style.container}>
 			<Header.default color={color}>
 				<Header.Avatar><Avatar /></Header.Avatar>

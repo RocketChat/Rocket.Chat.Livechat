@@ -5,15 +5,15 @@ import { storiesOf } from '@storybook/react';
 
 import Chat from '.';
 const data = [
-	{ me: true, msg: 'Hello dido' },
-	{ msg: 'Welcome to my channel' },
-	{ msg: '???' },
-	{ msg: 'Welcome to my channel' },
-	{ msg: 'Welcome to my channel' },
-	{ msg: 'Welcome to my channel' },
-	{ msg: 'Welcome to my channel' },
-	{ msg: 'Welcome to my channel' },
-	{ me: true, msg: 'LARGE MESSAGE AAaasdkaskdlaskdl;kas;ldk;aslkd;aslkd;alsdk;alskd;al ;laskd;laskd;lask ;laskd;laskd;laskd;alk;sldk;alskd;aslkd;alskda;lskd;alskd;laskd;laskd;laks;dl' },
+	{ u: { _id: 1 }, ts: new Date(), msg: 'Hello dido' },
+	{ u: { _id: 2 }, ts: new Date(), msg: 'Welcome to my channel' },
+	{ u: { _id: 2 }, ts: new Date(), msg: '???' },
+	{ u: { _id: 2 }, ts: new Date(), msg: 'Welcome to my channel' },
+	{ u: { _id: 2 }, ts: new Date(), msg: 'Welcome to my channel' },
+	{ u: { _id: 2 }, ts: new Date(), msg: 'Welcome to my channel' },
+	{ u: { _id: 2 }, ts: new Date(), msg: 'Welcome to my channel' },
+	{ u: { _id: 2 }, ts: new Date(), msg: 'Welcome to my channel' },
+	{ u: { _id: 1 }, ts: new Date(), msg: 'LARGE MESSAGE AAaasdkaskdlaskdl;kas;ldk;aslkd;aslkd;alsdk;alskd;al ;laskd;laskd;lask ;laskd;laskd;laskd;alk;sldk;alskd;aslkd;alskda;lskd;alskd;laskd;laskd;laks;dl' },
 ];
 const Center = (storyFn) => (
 	<div style="background: white; width: 100%; max-width: 350px; margin: auto; height: 500px; display: flex;">
