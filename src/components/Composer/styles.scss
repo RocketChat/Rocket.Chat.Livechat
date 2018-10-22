@@ -30,6 +30,8 @@ $composer-padding: 12px;
         resize: none;
         word-wrap: break-word;
         overflow-y: auto;
+        cursor: text;
+
         &:empty:before {
             content: attr(placeholder);
             display: block; /* For Firefox */
