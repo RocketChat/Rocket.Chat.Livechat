@@ -44,7 +44,7 @@ export default class Composer extends Component {
 		this.props.onUpload(files);
 		e.preventDefault();
 	}
-	input(event) {
+	input(/* event*/) {
 		// const { inputType, data } = event;
 		// if (inputType === 'insertParagraph' || (inputType === 'insertText' && data === null)) {
 		// 	this.props.onSubmit && this.props.onSubmit(this.el.innerText);

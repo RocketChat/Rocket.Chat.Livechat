@@ -69,7 +69,7 @@
 		"no-unused-vars": [2, {
 			"vars": "all",
 			"args": "after-used",
-			"varsIgnorePattern": "h"
+			"varsIgnorePattern": "^h$"
 		}],
 		"no-void": 2,
 		"no-var": 2,

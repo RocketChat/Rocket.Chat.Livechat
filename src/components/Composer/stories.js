@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
 import Smile from 'icons/smile';
@@ -40,6 +40,7 @@ storiesOf('Components|Composer', module)
 			}
 			placeholder="insert your text here"
 			onInput={action('input')}
-		/>))
+		/>
+		))
 	.add('static composer', () => <Composer placeholder="insert your text here" onInput={action('input')} />)
 	.add('large placeholder', () => <Composer placeholder="insert your text here large large large large large large large large large large large large large large large" onInput={action('input')} />);
