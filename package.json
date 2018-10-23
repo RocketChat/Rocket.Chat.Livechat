@@ -60,7 +60,7 @@
     "webpack-bundle-analyzer": "^3.0.2"
   },
   "dependencies": {
-		"@kossnocorp/desvg": "^0.2.0",
+    "@kossnocorp/desvg": "^0.2.0",
     "@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
     "date-fns": "^1.29.0",
     "desvg": "^1.0.2",
@@ -73,7 +73,7 @@
     "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
     "preact-router": "^2.5.7",
-		"tiny-events": "^1.0.1"
+    "tiny-events": "^1.0.1"
   },
   "jest": {
     "verbose": true,
@@ -98,10 +98,10 @@
       "^create-react-class$": "preact-compat/lib/create-react-class",
       "^react-addons-css-transition-group$": "preact-css-transition-group"
     }
-	},
-	"browserslist": [
-		"last 2 versions",
-		"safari > 8",
-		"not ie < 11"
-	]
+  },
+  "browserslist": [
+    "last 2 versions",
+    "safari > 8",
+    "not ie < 11"
+  ]
 }
