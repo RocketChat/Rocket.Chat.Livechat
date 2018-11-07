@@ -5,7 +5,7 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build --json --no-prerender --optimize-minimize",
-    "serve": "preact build && preact serve",
+    "serve": "yarn build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src",
     "test": "jest ./tests",
@@ -49,7 +49,7 @@
     "image-webpack-loader": "^4.3.1",
     "jest": "^21.2.1",
     "node-sass": "^4.9.3",
-    "preact-cli": "^3.0.0-next.11",
+    "preact-cli": "^3.0.0-next.14",
     "preact-compat": "^3.18.4",
     "preact-render-spy": "^1.2.1",
     "sass-loader": "^7.1.0",
@@ -101,9 +101,9 @@
       "^react-addons-css-transition-group$": "preact-css-transition-group"
     }
   },
-  "browserslist": [
-    "last 2 versions",
-    "safari > 8",
-    "not ie < 11"
-  ]
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not ie <= 11"
+	]
 }

@@ -21,16 +21,17 @@ export default class UserWrap extends Component {
 		state = { ...defaultState, ...state, ...newState };
 
 		localStorage.setItem('store', JSON.stringify({ ...state, typing: [] }));
+
 		if (newState.user) {
 			this.getConfig();
 		}
 		if (newState.room) {
-			this.streamer = this.streamer || await SDK.connect();
-			this.streamer.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
-			this.streamer.onMessage((message) => {
+			this.stream = this.stream || await SDK.connect();
+			SDK.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
+			SDK.onMessage((message) => {
 				this.emit({ messages: insert(getState().messages, message).filter(({ msg }) => msg) });
 			});
-			this.streamer.onTyping((username, isTyping) => {
+			SDK.onTyping((username, isTyping) => {
 				const { typing } = this.state;
 				if (typing.indexOf(username) > -1 || !isTyping) {
 					return this.emit({ typing: typing.filter((user) => user !== username) });
@@ -40,7 +41,7 @@ export default class UserWrap extends Component {
 					this.emit({ typing });
 				}
 			});
-			this.streamer.on('stream-livechat-room', (error, data) => {
+			SDK.on('stream-livechat-room', (error, data) => {
 				console.log(data);
 			});
 		}
@@ -50,7 +51,7 @@ export default class UserWrap extends Component {
 	async getConfig() {
 		const { user: { token } } = getState();
 		const { config } = await (token ? SDK.config({ token }) : SDK.config());
-		this.emit({ config });
+		this.emit({ config, room: config.room });
 		return config;
 	}
 
@@ -64,13 +65,13 @@ export default class UserWrap extends Component {
 		this.getConfig();
 		this.state = state;
 		if (state.room) {
-			this.streamer = await SDK.connect();
-			this.streamer.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
-			this.streamer.subscribe('stream-livechat-room', state.room._id, { token: state.user.token, visitorToken: state.user.token });
-			this.streamer.onMessage((message) => {
+			this.stream = await SDK.connect();
+			SDK.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
+			SDK.subscribe('stream-livechat-room', state.room._id, { token: state.user.token, visitorToken: state.user.token });
+			SDK.onMessage((message) => {
 				this.emit({ messages: insert(getState().messages, message).filter((e) => e) });
 			});
-			this.streamer.onTyping((username, isTyping) => {
+			SDK.onTyping((username, isTyping) => {
 				const { typing } = this.state;
 				if (typing.indexOf(username) > -1 || !isTyping) {
 					return this.emit({ typing: typing.filter((user) => user !== username) });
@@ -80,7 +81,7 @@ export default class UserWrap extends Component {
 					this.emit({ typing });
 				}
 			});
-			this.streamer.on('stream-livechat-room', (error, data) => {
+			SDK.on('stream-livechat-room', (error, data) => {
 				console.log(data);
 			});
 		}
