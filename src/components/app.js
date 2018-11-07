@@ -39,7 +39,7 @@ export default class App extends Component {
 					<Consumer>
 						{(state) => (
 							<Router onChange={this.handleRoute}>
-								{ this.renderScreen(state) }
+								{this.renderScreen(state)}
 							</Router>)}
 					</Consumer>
 				</div>

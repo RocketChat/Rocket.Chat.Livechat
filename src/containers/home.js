@@ -29,7 +29,7 @@ class Wrapped extends Component {
 
 	onUpload(files) {
 		const state = getState();
-		files.forEach(async(file) => {
+		files.forEach(async (file) => {
 			const formData = new FormData();
 			formData.append('file', file);
 			await fetch(`http://localhost:3000/api/v1/livechat/upload/${ state.room._id }`, {
