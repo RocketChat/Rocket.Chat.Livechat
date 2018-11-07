@@ -1,6 +1,5 @@
 {
   "name": "rocket.chat.livechat",
-  "sideEffects": false,
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {

@@ -1,13 +1,12 @@
 import { h, Component } from 'preact';
 
 import Leaveamessage from '../routes/leaveamessage';
-import { api } from '@rocket.chat/sdk/dist/bundle';
-const { livechat } = api;
+import SDK from '../api';
 
 export default class wrapped extends Component {
 	async onSubmit(data) {
 		this.setState({ loading: true });
-		const { message } = await livechat.sendOfflineMessage(data);
+		const { message } = await SDK.sendOfflineMessage(data);
 		alert(message);
 		this.setState({ loading: false });
 	}

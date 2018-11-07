@@ -2,8 +2,8 @@ import { createContext } from 'preact-context';
 import { Component } from 'preact';
 import { EventEmitter } from 'tiny-events';
 import { insert } from 'components/helpers';
-import * as SDK from '@rocket.chat/sdk/dist/bundle';
-const { livechat } = SDK.api;
+import SDK from '../api';
+
 const e = new EventEmitter();
 const defaultState = { typing: [], config: { messages: {}, settings: {}, theme: {} }, messages: [], user: {} };
 let state = localStorage.getItem('store') ? { ...defaultState, ...JSON.parse(localStorage.getItem('store')) } : defaultState;
@@ -25,14 +25,12 @@ export default class UserWrap extends Component {
 			this.getConfig();
 		}
 		if (newState.room) {
-			this.ddp = this.ddp || await SDK.driver.create({ host: 'http://localhost:3000', timeout: 1000 });
-			this.ddp.subscribe('stream-room-messages', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
-			this.ddp.subscribe('stream-livechat-room', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
-
-			await this.ddp.subscribe('stream-notify-room', `${ state.room._id }/typing`, { useCollection: false, args: [{ token: state.user.token }] });
-			this.ddp.on('stream-room-messages', (error, { args: [message] }) => {
+			this.streamer = this.streamer || await SDK.connect();
+			this.streamer.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
+			this.streamer.onMessage((message) => {
 				this.emit({ messages: insert(getState().messages, message).filter(({ msg }) => msg) });
-			}).on('stream-notify-room', (error, { args: [username, isTyping] }) => {
+			});
+			this.streamer.onTyping((username, isTyping) => {
 				const { typing } = this.state;
 				if (typing.indexOf(username) > -1 || !isTyping) {
 					return this.emit({ typing: typing.filter((user) => user !== username) });
@@ -41,7 +39,8 @@ export default class UserWrap extends Component {
 					typing.push(username);
 					this.emit({ typing });
 				}
-			}).on('stream-livechat-room', (error, data) => {
+			});
+			this.streamer.on('stream-livechat-room', (error, data) => {
 				console.log(data);
 			});
 		}
@@ -50,7 +49,7 @@ export default class UserWrap extends Component {
 
 	async getConfig() {
 		const { user: { token } } = getState();
-		const { config } = await (token ? livechat.config({ token }) : livechat.config());
+		const { config } = await (token ? SDK.config({ token }) : SDK.config());
 		this.emit({ config });
 		return config;
 	}
@@ -65,13 +64,13 @@ export default class UserWrap extends Component {
 		this.getConfig();
 		this.state = state;
 		if (state.room) {
-			this.ddp = await SDK.driver.create({ host: 'http://localhost:3000', timeout: 1000 });
-			this.ddp.subscribe('stream-room-messages', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
-			this.ddp.subscribe('stream-livechat-room', state.room._id, { useCollection: false, args: [{ visitorToken: state.user.token }] });
-			await this.ddp.subscribe('stream-notify-room', `${ state.room._id }/typing`, { useCollection: false, args: [{ token: state.user.token }] });
-			this.ddp.on('stream-room-messages', (error, { args: [message] }) => {
+			this.streamer = await SDK.connect();
+			this.streamer.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
+			this.streamer.subscribe('stream-livechat-room', state.room._id, { token: state.user.token, visitorToken: state.user.token });
+			this.streamer.onMessage((message) => {
 				this.emit({ messages: insert(getState().messages, message).filter((e) => e) });
-			}).on('stream-notify-room', (error, { args: [username, isTyping] }) => {
+			});
+			this.streamer.onTyping((username, isTyping) => {
 				const { typing } = this.state;
 				if (typing.indexOf(username) > -1 || !isTyping) {
 					return this.emit({ typing: typing.filter((user) => user !== username) });
@@ -80,7 +79,8 @@ export default class UserWrap extends Component {
 					typing.push(username);
 					this.emit({ typing });
 				}
-			}).on('stream-livechat-room', (error, data) => {
+			});
+			this.streamer.on('stream-livechat-room', (error, data) => {
 				console.log(data);
 			});
 		}
