@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 const webpackOverride = require('./webpackOverride.config');
-const path = require('path');
-
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 export default (config, env, helpers) => {
 	// config.mode = 'production';
 	// Use Preact CLI's helpers object to get the babel-loader
@@ -27,9 +27,24 @@ export default (config, env, helpers) => {
 			I18n: ['autoI18n', 'default'],
 		})
 	);
-	config.plugins[1].definitions['process.env'] = {};
 
+	config.plugins.push(new BundleAnalyzerPlugin());
+	config.plugins[1].definitions['process.env'] = {};
+	config.plugins[1].definitions.process = {};
+	config.plugins[1].definitions['process.title'] = 'browser';
+	config.mode = 'production';
 	config.optimization = {
+		removeAvailableModules: true,
+		removeEmptyChunks: true,
+		mergeDuplicateChunks: false,
+		occurrenceOrder: false,
+		concatenateModules: true,
+		mangleWasmImports: true,
+		sideEffects: false,
+		portableRecords: true,
+		minimizer: [
+			new UglifyJsPlugin({ /* your config */ }),
+		],
 		splitChunks: {
 			chunks: 'async',
 			minSize: 30000,
@@ -40,6 +55,30 @@ export default (config, env, helpers) => {
 			automaticNameDelimiter: '~',
 			name: true,
 			cacheGroups: {
+				mqtt: {
+					name: 'mqtt',
+					chunks: 'all',
+					test: /mqtt/,
+					priority: 35,
+				},
+				ddp: {
+					name: 'ddp',
+					chunks: 'all',
+					test: /Users\/guilhermegazzo\/Rocket.Chat.js.SDK\/dist\/lib\/drivers\/ddp.js/,
+					priority: 55,
+				},
+				sdk: {
+					name: 'Rocket.Chat.js.SDK',
+					chunks: 'all',
+					test: /Rocket.Chat.js.SDK/,
+					priority: 30,
+				},
+				styles: {
+					name: 'styles',
+					test: /\.scss$/,
+					chunks: 'all',
+					priority: 50,
+				},
 				vendor: {
 					// name of the chunk
 					name: 'vendor',
