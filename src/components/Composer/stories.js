@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { text, withKnobsOptions } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
 import Smile from 'icons/smile';
@@ -16,12 +16,21 @@ storiesOf('Components|Composer', module)
 			{storyFn()}
 		</div>
 	))
-	.addDecorator(withKnobs)
+	.addDecorator(withKnobsOptions({
+		escapeHTML: false,
+	}))
 	.addDecorator(centered)
-	.add('simple', () => (
+	.add('empty', () => (
 		<Composer
 			placeholder={text('placeholder', 'Insert your text here')}
-			onInput={action('input')}
+			value={text('value', '')}
+			onSubmit={action('submit')}
+		/>
+	))
+	.add('with plain text', () => (
+		<Composer
+			placeholder={text('placeholder', 'Insert your text here')}
+			value={text('value', 'Please, could you help me?')}
 			onSubmit={action('submit')}
 		/>
 	))

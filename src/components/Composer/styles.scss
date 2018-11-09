@@ -33,7 +33,7 @@ $composer-padding: 12px;
         cursor: text;
 
         &:empty:before {
-            content: attr(placeholder);
+            content: attr(data-placeholder);
             display: block; /* For Firefox */
             color: $color-text-light;
             text-overflow: ellipsis;
@@ -44,13 +44,13 @@ $composer-padding: 12px;
     }
 }
 
-.actions {
+.composer__actions {
     flex: 0 0;
     font-size: 0;
     display: flex;
 }
 
-.action {
+.composer__action {
     margin: 0 $composer-padding/2;
     padding: 0;
     flex: 0 0;
@@ -67,5 +67,4 @@ $composer-padding: 12px;
     &:active {
         transform: translateY(1px);
     }
-
 }
