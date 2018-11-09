@@ -22,15 +22,17 @@ storiesOf('Components|Composer', module)
 	.addDecorator(centered)
 	.add('empty', () => (
 		<Composer
-			placeholder={text('placeholder', 'Insert your text here')}
 			value={text('value', '')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
 			onSubmit={action('submit')}
 		/>
 	))
 	.add('with plain text', () => (
 		<Composer
-			placeholder={text('placeholder', 'Insert your text here')}
 			value={text('value', 'Please, could you help me?')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
 			onSubmit={action('submit')}
 		/>
 	))

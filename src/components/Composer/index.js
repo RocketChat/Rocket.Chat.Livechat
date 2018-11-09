@@ -29,18 +29,20 @@ export class Composer extends Component {
 		return this.el.innerText;
 	}
 
-	handleKeypress = (onSubmit) => (event) => {
-		const { which, shiftKey } = event;
+	handleInput = (onChange) => () => {
+		onChange && onChange(this.el.innerText);
+	}
 
-		if (which === 13 && !shiftKey) {
+	handleKeypress = (onSubmit) => (event) => {
+		if (event.which === 13 && !event.shiftKey) {
+			event.preventDefault();
 			onSubmit && onSubmit(this.el.innerText);
 			this.el.innerText = '';
-			event.preventDefault();
 		}
 	}
 
 	handlePaste = (onUpload) => (event) => {
-		if (event.clipboardData == null || !event.clipboardData.items) {
+		if (!event.clipboardData || !event.clipboardData.items) {
 			return;
 		}
 
@@ -51,24 +53,26 @@ export class Composer extends Component {
 			.filter((item) => (item.kind === 'file' && item.type.indexOf('image/') !== -1))
 			.map((item) => item.getAsFile());
 
-		onUpload(files);
+		onUpload && onUpload(files);
 	}
 
-	handleInput = () => {}
+	parse = (value) => value
 
-	render({ pre, post, placeholder, value, onSubmit, onUpload, ...args }) {
+	render({ pre, post, placeholder, value, onChange, onSubmit, onUpload, ...args }) {
 		return (
 			<div className={createClassName(styles, 'composer', {})} {...args}>
 				{pre}
 				<div
 					ref={this.bind}
+					// eslint-disable-next-line react/no-danger
+					dangerouslySetInnerHTML={{ __html: this.parse(value) }}
 					data-placeholder={placeholder}
+					onInput={this.handleInput(onChange)}
 					onKeypress={this.handleKeypress(onSubmit)}
 					onPaste={this.handlePaste(onUpload)}
-					onInput={this.handleInput}
 					className={createClassName(styles, 'composer__input', {})}
 					contentEditable
-				>{value}</div>
+				/>
 				{post}
 			</div>
 		);
