@@ -34,14 +34,7 @@ export default (config, env, helpers) => {
 	config.plugins[1].definitions['process.title'] = 'browser';
 	config.mode = 'production';
 	config.optimization = {
-		removeAvailableModules: true,
-		removeEmptyChunks: true,
-		mergeDuplicateChunks: false,
-		occurrenceOrder: false,
-		concatenateModules: true,
-		mangleWasmImports: true,
 		sideEffects: false,
-		portableRecords: true,
 		minimizer: [
 			new UglifyJsPlugin({ /* your config */ }),
 		],
@@ -57,25 +50,25 @@ export default (config, env, helpers) => {
 			cacheGroups: {
 				mqtt: {
 					name: 'mqtt',
-					chunks: 'all',
+					chunks: 'async',
 					test: /mqtt/,
-					priority: 35,
+					priority: 50,
 				},
 				ddp: {
 					name: 'ddp',
-					chunks: 'all',
-					test: /Users\/guilhermegazzo\/Rocket.Chat.js.SDK\/dist\/lib\/drivers\/ddp.js/,
-					priority: 55,
+					chunks: 'async',
+					test: /ddp/,
+					priority: 50,
 				},
 				sdk: {
 					name: 'Rocket.Chat.js.SDK',
 					chunks: 'all',
-					test: /Rocket.Chat.js.SDK/,
-					priority: 30,
+					test: /Rocket\.Chat\.js\.SDK\/dist\/lib/,
+					priority: 40,
 				},
-				styles: {
-					name: 'styles',
-					test: /\.scss$/,
+				components: {
+					name: 'components',
+					test: /components|icons|\.scss$/,
 					chunks: 'all',
 					priority: 50,
 				},
@@ -87,7 +80,7 @@ export default (config, env, helpers) => {
 					// import file path containing node_modules
 					test: /node_modules/,
 					// priority
-					priority: 20,
+					priority: 30,
 				},
 				common: {
 					name: 'common',

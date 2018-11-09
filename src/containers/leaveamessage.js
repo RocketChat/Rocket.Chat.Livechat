@@ -5,11 +5,13 @@ import SDK from '../api';
 
 export default class wrapped extends Component {
 	async onSubmit(data) {
+		const { messages } = this.props;
 		this.setState({ loading: true });
 		let message;
 
 		try {
 			({ message } = await SDK.sendOfflineMessage(data));
+			message = (messages && messages.offlineSuccessMessage) || message;
 		} catch (error) {
 			({ message } = error.data);
 		}

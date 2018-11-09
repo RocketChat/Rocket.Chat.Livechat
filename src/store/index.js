@@ -1,3 +1,4 @@
+/* eslint-disable react/sort-comp */
 import { createContext } from 'preact-context';
 import { Component } from 'preact';
 import { EventEmitter } from 'tiny-events';
@@ -13,13 +14,21 @@ export const Context = createContext({});
 export const getState = () => state || defaultState;
 export const { Consumer } = Context;
 export default class UserWrap extends Component {
+	updateCookies = (state) => {
+		const { room, user } = state;
+		if (room && user && user.token) {
+			document.cookie = `rc_rid=${ room._id }; path=/`;
+			document.cookie = `rc_token=${ user.token }; path=/`;
+			document.cookie = 'rc_room_type=l; path=/';
+		}
+	}
+
 	actions = (args) => {
 		this.setState(args);
 	}
 
-	emit = async(newState) => {
+	emit = async (newState) => {
 		state = { ...defaultState, ...state, ...newState };
-
 		localStorage.setItem('store', JSON.stringify({ ...state, typing: [] }));
 
 		if (newState.user) {
@@ -46,6 +55,7 @@ export default class UserWrap extends Component {
 			});
 		}
 		e.emit('change', state);
+		this.updateCookies(state);
 	}
 
 	async getConfig() {
@@ -84,6 +94,8 @@ export default class UserWrap extends Component {
 			SDK.on('stream-livechat-room', (error, data) => {
 				console.log(data);
 			});
+
+			this.updateCookies(state);
 		}
 	}
 	componentWillUnmount() {

@@ -27,7 +27,16 @@ class Wrapped extends Component {
 				{
 					({ dispatch }) => {
 						this.actions = dispatch;
-						return (<Register color={props.theme.color} {...props} loading={loading} title={I18n.t('Need help?')} onSubmit={this.onSubmit} />);
+						return (
+							<Register
+								{...props}
+								color={props.theme.color}
+								loading={loading}
+								title={props.theme.title || I18n.t('Need help?')}
+								message={props.messages.registrationFormMessage || I18n.t('Please, tell us some informations to start the chat')}
+								onSubmit={this.onSubmit}
+							/>
+						);
 					}}
 			</Consumer>);
 	}
