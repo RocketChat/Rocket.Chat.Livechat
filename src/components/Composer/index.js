@@ -64,7 +64,32 @@ export class Composer extends Component {
 		texts.forEach((text) => this.pasteText(text));
 	}
 
+	handleDrop = (onUpload) => async(event) => {
+		if (!event.dataTransfer || !event.dataTransfer.items) {
+			return;
+		}
+
+		event.preventDefault();
+
+		const items = Array.from(event.dataTransfer.items);
+
+		const files = items.filter((item) => (item.kind === 'file' && /^image\//.test(item.type)))
+			.map((item) => item.getAsFile());
+		if (files.length) {
+			onUpload && onUpload(files);
+			return;
+		}
+
+		const texts = await Promise.all(
+			items.filter((item) => (item.kind === 'string' && /^text\/plain/.test(item.type)))
+				.map((item) => new Promise((resolve) => item.getAsString(resolve)))
+		);
+		texts.forEach((text) => this.pasteText(text));
+	}
+
 	pasteText = (plainText) => {
+		this.el.focus();
+
 		if (document.queryCommandSupported('insertText')) {
 			document.execCommand('insertText', false, plainText);
 			return;
@@ -96,6 +121,7 @@ export class Composer extends Component {
 					onInput={this.handleInput(onChange)}
 					onKeypress={this.handleKeypress(onSubmit)}
 					onPaste={this.handlePaste(onUpload)}
+					onDrop={this.handleDrop(onUpload)}
 					className={createClassName(styles, 'composer__input')}
 					contentEditable
 				/>
