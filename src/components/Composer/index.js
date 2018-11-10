@@ -41,7 +41,7 @@ export class Composer extends Component {
 		}
 	}
 
-	handlePaste = (onUpload) => (event) => {
+	handlePaste = (onUpload) => async(event) => {
 		if (!event.clipboardData || !event.clipboardData.items) {
 			return;
 		}
@@ -49,18 +49,44 @@ export class Composer extends Component {
 		event.preventDefault();
 
 		const items = Array.from(event.clipboardData.items);
-		const files = items
-			.filter((item) => (item.kind === 'file' && item.type.indexOf('image/') !== -1))
-			.map((item) => item.getAsFile());
 
-		onUpload && onUpload(files);
+		const files = items.filter((item) => (item.kind === 'file' && /^image\//.test(item.type)))
+			.map((item) => item.getAsFile());
+		if (files.length) {
+			onUpload && onUpload(files);
+			return;
+		}
+
+		const texts = await Promise.all(
+			items.filter((item) => (item.kind === 'string' && /^text\/plain/.test(item.type)))
+				.map((item) => new Promise((resolve) => item.getAsString(resolve)))
+		);
+		texts.forEach((text) => this.pasteText(text));
+	}
+
+	pasteText = (plainText) => {
+		if (document.queryCommandSupported('insertText')) {
+			document.execCommand('insertText', false, plainText);
+			return;
+		}
+
+		const range = document.getSelection().getRangeAt(0);
+		range.deleteContents();
+		const textNode = document.createTextNode(plainText);
+		range.insertNode(textNode);
+		range.selectNodeContents(textNode);
+		range.collapse(false);
+
+		const selection = window.getSelection();
+		selection.removeAllRanges();
+		selection.addRange(range);
 	}
 
 	parse = (value) => value
 
 	render({ pre, post, placeholder, value, onChange, onSubmit, onUpload, ...args }) {
 		return (
-			<div className={createClassName(styles, 'composer', {})} {...args}>
+			<div className={createClassName(styles, 'composer')} {...args}>
 				{pre}
 				<div
 					ref={this.bind}
@@ -70,7 +96,7 @@ export class Composer extends Component {
 					onInput={this.handleInput(onChange)}
 					onKeypress={this.handleKeypress(onSubmit)}
 					onPaste={this.handlePaste(onUpload)}
-					className={createClassName(styles, 'composer__input', {})}
+					className={createClassName(styles, 'composer__input')}
 					contentEditable
 				/>
 				{post}
