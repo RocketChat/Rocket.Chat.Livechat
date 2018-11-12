@@ -4,6 +4,7 @@ import centered from '@storybook/addon-centered';
 import { withKnobs, color } from '@storybook/addon-knobs';
 import path from 'path';
 
+
 const req = require.context('./', true, /\.svg$/);
 const iconset = req.keys()
 	.map((filename) => ({
@@ -30,22 +31,22 @@ const IconDisplay = ({ component: Icon, name, color }) => (
 	</div>
 );
 
-const stories = storiesOf('Icons', module);
-
-stories
+storiesOf('Components|Icons', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('all', () => (
 		<div style={{ width: '100%', display: 'flex', flexWrap: 'wrap' }}>
-			{iconset.map((props) => <IconDisplay color={color('color', '#000000')} {...props} />)}
+			{iconset.map((props) => <IconDisplay color={color('color', '#E0364D')} {...props} />)}
 		</div>
 	))
 ;
 
 iconset.forEach(({ component: Icon, name }) =>
-	stories
+	storiesOf('Components|Icons', module)
+		.addDecorator(centered)
+		.addDecorator(withKnobs)
 		.add(name, () => (
-			<div style={{ color: color('color', '#000000') }}>
+			<div style={{ color: color('color', '#E0364D') }}>
 				<Icon width={256} height={256} />
 			</div>
 		))
