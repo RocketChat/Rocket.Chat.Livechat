@@ -26,6 +26,7 @@ storiesOf('Components|Composer', module)
 			placeholder={text('placeholder', 'Insert your text here')}
 			onChange={action('change')}
 			onSubmit={action('submit')}
+			onUpload={action('upload')}
 		/>
 	))
 	.add('large placeholder', () => (
@@ -34,6 +35,7 @@ storiesOf('Components|Composer', module)
 			placeholder={text('placeholder', 'Insert your text here Insert your text here Insert your text here')}
 			onChange={action('change')}
 			onSubmit={action('submit')}
+			onUpload={action('upload')}
 		/>
 	))
 	.add('plain text', () => (
@@ -42,6 +44,7 @@ storiesOf('Components|Composer', module)
 			placeholder={text('placeholder', 'Insert your text here')}
 			onChange={action('change')}
 			onSubmit={action('submit')}
+			onUpload={action('upload')}
 		/>
 	))
 	.add('emojis', () => (
@@ -50,6 +53,7 @@ storiesOf('Components|Composer', module)
 			placeholder={text('placeholder', 'Insert your text here')}
 			onChange={action('change')}
 			onSubmit={action('submit')}
+			onUpload={action('upload')}
 		/>
 	))
 	.add('mentions', () => (
@@ -58,6 +62,7 @@ storiesOf('Components|Composer', module)
 			placeholder={text('placeholder', 'Insert your text here')}
 			onChange={action('change')}
 			onSubmit={action('submit')}
+			onUpload={action('upload')}
 		/>
 	))
 	.add('actions', () => (
@@ -66,6 +71,7 @@ storiesOf('Components|Composer', module)
 			placeholder={text('placeholder', 'Insert your text here')}
 			onChange={action('change')}
 			onSubmit={action('submit')}
+			onUpload={action('upload')}
 			pre={
 				<Actions>
 					<Action onClick={action('click smile')}>
