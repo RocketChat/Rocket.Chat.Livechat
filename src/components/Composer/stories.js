@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
 import Smile from 'icons/smile';
@@ -18,9 +18,16 @@ storiesOf('Components|Composer', module)
 	))
 	.addDecorator(withKnobs)
 	.addDecorator(centered)
-	.add('composer with actions', () =>
-		(<Composer
-			onSubmit={console.log}
+	.add('simple', () => (
+		<Composer
+			placeholder={text('placeholder', 'Insert your text here')}
+			onInput={action('input')}
+			onSubmit={action('submit')}
+		/>
+	))
+	.add('composer with actions', () => (
+		<Composer
+			onSubmit={action('submit')}
 			pre={
 				<Actions>
 					<Action onClick={action('clicked')}>
@@ -41,6 +48,6 @@ storiesOf('Components|Composer', module)
 			placeholder="insert your text here"
 			onInput={action('input')}
 		/>
-		))
+	))
 	.add('static composer', () => <Composer placeholder="insert your text here" onInput={action('input')} />)
 	.add('large placeholder', () => <Composer placeholder="insert your text here large large large large large large large large large large large large large large large" onInput={action('input')} />);

@@ -80,7 +80,7 @@ export default class Home extends Component {
 	render = ({ onUpload, typingUsers, onSubmit, color, messages, src, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
 		<div class={style.container}>
 			<Header.default color={color}>
-				<Header.Avatar><Avatar src={src} /></Header.Avatar>
+				<Header.Picture><Avatar src={src} /></Header.Picture>
 				<Header.Content>
 					<Header.Title>{title}</Header.Title>
 					<Header.SubTitle>{subtitle}</Header.SubTitle>
