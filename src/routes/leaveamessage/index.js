@@ -68,7 +68,7 @@ export default class Home extends Component {
 						placeholder={emailPlaceholder}
 						label="E-mail"
 					/>
-					<InputField disabled={loading} equired onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
+					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
 						placeholder={namePlaceholder}
 						label="Name"
 					/>
