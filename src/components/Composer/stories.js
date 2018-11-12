@@ -28,37 +28,61 @@ storiesOf('Components|Composer', module)
 			onSubmit={action('submit')}
 		/>
 	))
-	.add('with plain text', () => (
+	.add('large placeholder', () => (
 		<Composer
-			value={text('value', 'Please, could you help me?')}
+			value={text('value', '')}
+			placeholder={text('placeholder', 'Insert your text here Insert your text here Insert your text here')}
+			onChange={action('change')}
+			onSubmit={action('submit')}
+		/>
+	))
+	.add('plain text', () => (
+		<Composer
+			value={text('value', 'Should I use &amp; or &?')}
 			placeholder={text('placeholder', 'Insert your text here')}
 			onChange={action('change')}
 			onSubmit={action('submit')}
 		/>
 	))
-	.add('composer with actions', () => (
+	.add('emojis', () => (
 		<Composer
+			value={text('value', ':heart: :smile: :\'(')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
+			onSubmit={action('submit')}
+		/>
+	))
+	.add('mentions', () => (
+		<Composer
+			value={text('value', '@all, I\'m @here with @user.')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
+			onSubmit={action('submit')}
+		/>
+	))
+	.add('actions', () => (
+		<Composer
+			value={text('value', '')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
 			onSubmit={action('submit')}
 			pre={
 				<Actions>
-					<Action onClick={action('clicked')}>
+					<Action onClick={action('click smile')}>
 						<Smile width="20" />
 					</Action>
-					<Action>
+					<Action onClick={action('click send')}>
 						<Send color="#1D74F5" width="20" />
 					</Action>
 				</Actions>
 			}
 			post={
 				<Actions>
-					<Action>
+					<Action onClick={action('click plus')}>
 						<Plus width="20" />
 					</Action>
 				</Actions>
 			}
-			placeholder="insert your text here"
-			onInput={action('input')}
 		/>
 	))
-	.add('static composer', () => <Composer placeholder="insert your text here" onInput={action('input')} />)
-	.add('large placeholder', () => <Composer placeholder="insert your text here large large large large large large large large large large large large large large large" onInput={action('input')} />);
+;

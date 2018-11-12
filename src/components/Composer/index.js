@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { createClassName } from '../helpers';
+import { parse } from './parsing';
 import styles from './styles';
 
 
@@ -107,8 +108,6 @@ export class Composer extends Component {
 		selection.addRange(range);
 	}
 
-	parse = (value) => value
-
 	render({ pre, post, placeholder, value, onChange, onSubmit, onUpload, ...args }) {
 		return (
 			<div className={createClassName(styles, 'composer')} {...args}>
@@ -116,7 +115,7 @@ export class Composer extends Component {
 				<div
 					ref={this.bind}
 					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: this.parse(value) }}
+					dangerouslySetInnerHTML={{ __html: parse(value) }}
 					data-placeholder={placeholder}
 					onInput={this.handleInput(onChange)}
 					onKeypress={this.handleKeypress(onSubmit)}
