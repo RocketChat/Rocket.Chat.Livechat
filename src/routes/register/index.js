@@ -5,7 +5,7 @@ import style from './style';
 import Header, {
 	Title, Content,
 } from 'components/Header';
-import { Form, InputField, Item } from 'components/input';
+import { Form, InputField, Item } from 'components/Form';
 
 import Button from 'components/Button';
 import * as Footer from 'components/Footer';

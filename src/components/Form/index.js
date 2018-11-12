@@ -30,8 +30,6 @@ const Input = ({ children, disabled, error, danger, stack, small, multiple = 1, 
 	        >{children}</El>);
 };
 
-export default Input;
-
 export const Select = ({ children, disabled, error, danger, stack, small, ...args }) => (
 	<input {...args} disabled={disabled} className={getStyles(style, 'input', {
 		disabled,

@@ -5,7 +5,7 @@ import style from './style';
 import Header, {
 	Title, Content, Actions, Action,
 } from 'components/Header';
-import { Form, InputField, Item } from 'components/input';
+import { Form, InputField, Item } from 'components/Form';
 
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrow.svg';
