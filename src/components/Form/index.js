@@ -1,6 +1,8 @@
 import { h, Component } from 'preact';
 import style from './style';
 import { asyncForEach } from '../helpers';
+
+
 const validations = {
 	notNull: (value) => {
 		if (!value) {
@@ -15,10 +17,9 @@ const validations = {
 	},
 };
 
-
 const getStyles = (style, name, classes) => [style[name], ...Object.entries(style).filter(([key]) => classes[key]).map(([, value]) => value)].join(' ');
 
-const Input = ({ children, disabled, error, danger, stack, small, multiple = 1, ...args }) => {
+export const Input = ({ children, disabled, error, danger, stack, small, multiple = 1, ...args }) => {
 	const El = multiple < 2 ? 'input' : 'textarea';
 	return (<El {...args} rows={multiple} disabled={disabled} className={getStyles(style, 'input', {
 		disabled,
@@ -27,7 +28,7 @@ const Input = ({ children, disabled, error, danger, stack, small, multiple = 1, 
 		stack,
 		small,
 	})}
-	        >{children}</El>);
+	>{children}</El>);
 };
 
 export const Select = ({ children, disabled, error, danger, stack, small, ...args }) => (
