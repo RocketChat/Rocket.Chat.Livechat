@@ -101,7 +101,9 @@ class Wrapped extends Component {
 								onUpload={this.onUpload}
 								messages={messages}
 								uploads={settings.fileUpload}
-								title={agent && agent.username}
+								title={agent && agent.name}
+								subtitle={agent && agent.emails && agent.emails[0] && agent.emails[0].address}
+								src={agent && `http://localhost:3000/avatar/${ agent.username }`}
 							/>);
 					}}
 			</Consumer>);
