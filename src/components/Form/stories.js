@@ -3,11 +3,11 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
-import { Description, Error, Form, Input, Item, Label } from '.';
+import { Description, Error, Form, TextInput, Item, Label } from '.';
 import Button, { Group } from '../Button';
 
 
-storiesOf('Forms|Input', module)
+storiesOf('Forms|TextInput', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('empty', ({
@@ -20,7 +20,7 @@ storiesOf('Forms|Input', module)
 	}) => (
 		<Form>
 			<Item>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -42,7 +42,7 @@ storiesOf('Forms|Input', module)
 	}) => (
 		<Form>
 			<Item>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -64,7 +64,7 @@ storiesOf('Forms|Input', module)
 	}) => (
 		<Form>
 			<Item>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -86,7 +86,7 @@ storiesOf('Forms|Input', module)
 	}) => (
 		<Form>
 			<Item>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -108,7 +108,7 @@ storiesOf('Forms|Input', module)
 	}) => (
 		<Form>
 			<Item>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -130,7 +130,7 @@ storiesOf('Forms|Input', module)
 	}) => (
 		<Form>
 			<Item>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -154,7 +154,7 @@ storiesOf('Forms|Label, Description, and Error', module)
 		<Form>
 			<Item>
 				<Label error={error}>{label}</Label>
-				<Input />
+				<TextInput />
 			</Item>
 		</Form>
 	))
@@ -165,7 +165,7 @@ storiesOf('Forms|Label, Description, and Error', module)
 		<Form>
 			<Item>
 				<Label error={error}>{label}</Label>
-				<Input error={error} />
+				<TextInput error={error} />
 			</Item>
 		</Form>
 	))
@@ -174,7 +174,7 @@ storiesOf('Forms|Label, Description, and Error', module)
 	}) => (
 		<Form>
 			<Item>
-				<Input />
+				<TextInput />
 				<Description>{description}</Description>
 			</Item>
 		</Form>
@@ -184,7 +184,7 @@ storiesOf('Forms|Label, Description, and Error', module)
 	}) => (
 		<Form>
 			<Item>
-				<Input error={!!error} />
+				<TextInput error={!!error} />
 				<Error>{error}</Error>
 			</Item>
 		</Form>
@@ -208,7 +208,7 @@ storiesOf('Forms|Item', module)
 		<Form>
 			<Item inline={inline}>
 				<Label error={!!error}>{label}</Label>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -236,7 +236,7 @@ storiesOf('Forms|Item', module)
 		<Form>
 			<Item inline={inline}>
 				<Label error={!!error}>{label}</Label>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -264,7 +264,7 @@ storiesOf('Forms|Item', module)
 		<Form>
 			<Item inline={inline}>
 				<Label error={!!error}>{label}</Label>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -298,7 +298,7 @@ storiesOf('Forms|Buttons', module)
 		<Form>
 			<Item inline={inline}>
 				<Label error={!!error}>{label}</Label>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -330,7 +330,7 @@ storiesOf('Forms|Buttons', module)
 		<Form>
 			<Item inline={inline}>
 				<Label error={!!error}>{label}</Label>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}
@@ -364,7 +364,7 @@ storiesOf('Forms|Buttons', module)
 		<Form>
 			<Item inline={inline}>
 				<Label error={!!error}>{label}</Label>
-				<Input
+				<TextInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}

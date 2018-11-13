@@ -1,7 +1,60 @@
 import { h, Component } from 'preact';
-import style from './style';
-import { asyncForEach } from '../helpers';
+import styles from './style';
+import { asyncForEach, createClassName } from '../helpers';
 
+
+const handleFormSubmit = (event) => event.preventDefault();
+
+export const Form = ({ children, ...args }) => (
+	<form onSubmit={handleFormSubmit} className={createClassName(styles, 'form')} {...args}>
+		{children}
+	</form>
+);
+
+export const Item = ({ children, inline, ...args }) => (
+	<div className={createClassName(styles, 'form__item', { inline })} {...args}>
+		{children}
+	</div>
+);
+
+export const Label = ({ children, error, ...args }) => (
+	<label className={createClassName(styles, 'form__label', { error })} {...args}>
+		{children}
+	</label>
+);
+
+export const Description = ({ children, error, ...args }) => (
+	<small className={createClassName(styles, 'form__description', { error })} {...args}>
+		{children}
+	</small>
+);
+
+export const Error = (props) => <Description error {...props} />;
+
+export const TextInput = ({
+	disabled,
+	error,
+	danger,
+	stack,
+	small,
+	multiple = 1,
+	...args
+}) => h(
+	multiple < 2 ? 'input' : 'textarea',
+	{
+		rows: multiple,
+		disabled,
+		className: createClassName(styles, 'form__textinput', {
+			error,
+			danger,
+			stack,
+			small,
+		}),
+		...args,
+	}
+);
+
+export const Input = TextInput;
 
 const validations = {
 	notNull: (value) => {
@@ -17,22 +70,9 @@ const validations = {
 	},
 };
 
-const getStyles = (style, name, classes) => [style[name], ...Object.entries(style).filter(([key]) => classes[key]).map(([, value]) => value)].join(' ');
-
-export const Input = ({ children, disabled, error, danger, stack, small, multiple = 1, ...args }) => {
-	const El = multiple < 2 ? 'input' : 'textarea';
-	return (<El {...args} rows={multiple} disabled={disabled} className={getStyles(style, 'input', {
-		disabled,
-		error,
-		danger,
-		stack,
-		small,
-	})}
-	>{children}</El>);
-};
-
+/*
 export const Select = ({ children, disabled, error, danger, stack, small, ...args }) => (
-	<input {...args} disabled={disabled} className={getStyles(style, 'input', {
+	<input {...args} disabled={disabled} className={getStyles(styles, 'input', {
 		disabled,
 		error,
 		danger,
@@ -41,28 +81,7 @@ export const Select = ({ children, disabled, error, danger, stack, small, ...arg
 	})}
 	>{children}</input>
 );
-
-export const Form = ({ children, ...args }) => <form onSubmit={(e) => e.preventDefault()} {...args}> {children} </form>;
-
-export const Label = ({ children, error }) => (<label className={getStyles(style, 'label', {
-	error,
-})}
-                                               >{children}</label>);
-
-export const Description = ({ children }) => <small className={style.description}>{children}</small>;
-
-export const Error = ({ children }) => (<small
-	className={getStyles(style, 'description', {
-		error: true,
-	})}
-                                        >{children}</small>);
-
-export const Item = ({ children, inline }) => (
-	<div
-		className={getStyles(style, 'formGroup', { inline })}
-	>
-		{children}
-	</div>);
+*/
 
 export class InputField extends Component {
 	onChange = () => {
@@ -116,12 +135,14 @@ export class InputField extends Component {
 
 	render({ children, required, label, name, description, ...args }) {
 		const { error } = this.state;
-		return (<Item>
-			<Label error={error}>{label}{required && ' *'}</Label>
-			<Input {...args} ref={(el) => this.el = el} error={error} onChange={this.onChange} name={name}>{children}</Input>
-			{description && <Description>{description}</Description>}
-			{error && <Error>{error}</Error>}
-		</Item>);
+		return (
+			<Item>
+				<Label error={error}>{label}{required && ' *'}</Label>
+				<TextInput {...args} ref={(el) => this.el = el} error={error} onChange={this.onChange} name={name}>{children}</TextInput>
+				{description && <Description>{description}</Description>}
+				{error && <Error>{error}</Error>}
+			</Item>
+		);
 	}
 
 }
