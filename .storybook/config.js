@@ -9,7 +9,7 @@ setOptions({
 });
 
 function loadStories() {
-	require('../stories/index.js');
+	require('../src/styles/index.scss');
 	const req = require.context('../src', true, /(stories|story)\.js$/);
 	req.keys().forEach(filename => req(filename));
 }
