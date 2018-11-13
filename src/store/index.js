@@ -12,12 +12,17 @@ export const Context = createContext({});
 
 export const getState = () => state || defaultState;
 export const { Consumer } = Context;
+
+const { user: { token } } = getState();
+if (token) {
+	SDK.credentials.token = token;
+}
 export default class UserWrap extends Component {
 	actions = (args) => {
 		this.setState(args);
 	}
 
-	emit = async(newState) => {
+	async emit(newState) {
 		state = { ...defaultState, ...state, ...newState };
 
 		localStorage.setItem('store', JSON.stringify({ ...state, typing: [] }));
@@ -26,7 +31,9 @@ export default class UserWrap extends Component {
 			this.getConfig();
 		}
 		if (newState.room) {
-			this.stream = this.stream || await SDK.connect();
+			if (this.stream) { return ; }
+			this.stream = this.stream || SDK.connect();
+			await this.stream;
 			SDK.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
 			SDK.onMessage((message) => {
 				this.emit({ messages: insert(getState().messages, message).filter(({ msg }) => msg) });
@@ -50,6 +57,7 @@ export default class UserWrap extends Component {
 
 	async getConfig() {
 		const { user: { token } } = getState();
+		SDK.credentials.token = token;
 		const { config } = await (token ? SDK.config({ token }) : SDK.config());
 		this.emit({ config, room: config.room });
 		return config;
@@ -65,9 +73,9 @@ export default class UserWrap extends Component {
 		this.getConfig();
 		this.state = state;
 		if (state.room) {
-			this.stream = await SDK.connect();
+			this.stream = SDK.connect();
+			await this.stream;
 			SDK.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
-			SDK.subscribe('stream-livechat-room', state.room._id, { token: state.user.token, visitorToken: state.user.token });
 			SDK.onMessage((message) => {
 				this.emit({ messages: insert(getState().messages, message).filter((e) => e) });
 			});

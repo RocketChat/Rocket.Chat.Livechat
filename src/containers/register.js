@@ -8,9 +8,9 @@ import Register from '../routes/register';
 class Wrapped extends Component {
 	async onSubmit(args) {
 		this.setState({ loading: true });
-		const { visitor } = await SDK.grantVisitor({ visitor: { ...args, token: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) } });
+		const user = await SDK.grantVisitor({ visitor: { ...args, token: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) } });
 		this.setState({ loading: false });
-		this.actions({ user: visitor });
+		this.actions({ user });
 	}
 
 	constructor() {

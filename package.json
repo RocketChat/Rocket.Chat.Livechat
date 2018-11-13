@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build --json --no-prerender --optimize-minimize",
+    "build": "GENERATE_SOURCEMAP=false preact build --json --no-prerender --optimize-minimize",
     "serve": "yarn build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src",
@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@kossnocorp/desvg": "^0.2.0",
-    "@rocket.chat/sdk": "https://github.com/RocketChat/Rocket.Chat.js.SDK.git#ddp",
+    "@rocket.chat/sdk": "^1.0.0-alpha.6",
     "date-fns": "^1.29.0",
     "desvg": "^1.0.2",
     "desvg-loader": "^0.1.0",
@@ -68,6 +68,7 @@
     "i18n": "^0.8.3",
     "i18nline": "^2.0.1",
     "markdown-it": "^8.4.2",
+    "msgpack": "^1.0.2",
     "preact": "^8.2.6",
     "preact-context": "^1.1.1",
     "preact-i18nline": "^2.0.0",
@@ -98,9 +99,9 @@
       "^react-addons-css-transition-group$": "preact-css-transition-group"
     }
   },
-	"browserslist": [
-		"> 1%",
-		"last 2 versions",
-		"not ie <= 11"
-	]
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 11"
+  ]
 }
