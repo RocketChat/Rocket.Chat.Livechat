@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
-import { Description, Error, Form, TextInput, Item, Label } from '.';
+import { Description, Error, Form, TextInput, PasswordInput, Item, Label } from '.';
 import Button, { Group } from '../Button';
 
 
@@ -15,8 +15,8 @@ storiesOf('Forms|TextInput', module)
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', false),
-		error = boolean('error', false),
 		multiple = number('multiple', 1),
+		error = boolean('error', false),
 	}) => (
 		<Form>
 			<Item>
@@ -37,8 +37,8 @@ storiesOf('Forms|TextInput', module)
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', false),
-		error = boolean('error', false),
 		multiple = number('multiple', 1),
+		error = boolean('error', false),
 	}) => (
 		<Form>
 			<Item>
@@ -59,8 +59,8 @@ storiesOf('Forms|TextInput', module)
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', true),
 		small = boolean('small', false),
-		error = boolean('error', false),
 		multiple = number('multiple', 1),
+		error = boolean('error', false),
 	}) => (
 		<Form>
 			<Item>
@@ -81,8 +81,8 @@ storiesOf('Forms|TextInput', module)
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', true),
-		error = boolean('error', false),
 		multiple = number('multiple', 1),
+		error = boolean('error', false),
 	}) => (
 		<Form>
 			<Item>
@@ -103,8 +103,8 @@ storiesOf('Forms|TextInput', module)
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', false),
-		error = boolean('error', true),
 		multiple = number('multiple', 1),
+		error = boolean('error', true),
 	}) => (
 		<Form>
 			<Item>
@@ -125,12 +125,127 @@ storiesOf('Forms|TextInput', module)
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', false),
-		error = boolean('error', false),
 		multiple = number('multiple', 3),
+		error = boolean('error', false),
 	}) => (
 		<Form>
 			<Item>
 				<TextInput
+					value={value}
+					placeholder={placeholder}
+					disabled={disabled}
+					small={small}
+					multiple={multiple}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+;
+
+storiesOf('Forms|PasswordInput', module)
+	.addDecorator(centered)
+	.addDecorator(withKnobs)
+	.add('empty', ({
+		value = text('value', ''),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', false),
+		small = boolean('small', false),
+		multiple = number('multiple', 1),
+		error = boolean('error', false),
+	}) => (
+		<Form>
+			<Item>
+				<PasswordInput
+					value={value}
+					placeholder={placeholder}
+					disabled={disabled}
+					small={small}
+					multiple={multiple}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+	.add('filled', ({
+		value = text('value', 'Value'),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', false),
+		small = boolean('small', false),
+		multiple = number('multiple', 1),
+		error = boolean('error', false),
+	}) => (
+		<Form>
+			<Item>
+				<PasswordInput
+					value={value}
+					placeholder={placeholder}
+					disabled={disabled}
+					small={small}
+					multiple={multiple}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+	.add('disabled', ({
+		value = text('value', 'Value'),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', true),
+		small = boolean('small', false),
+		multiple = number('multiple', 1),
+		error = boolean('error', false),
+	}) => (
+		<Form>
+			<Item>
+				<PasswordInput
+					value={value}
+					placeholder={placeholder}
+					disabled={disabled}
+					small={small}
+					multiple={multiple}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+	.add('small', ({
+		value = text('value', 'Value'),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', false),
+		small = boolean('small', true),
+		multiple = number('multiple', 1),
+		error = boolean('error', false),
+	}) => (
+		<Form>
+			<Item>
+				<PasswordInput
+					value={value}
+					placeholder={placeholder}
+					disabled={disabled}
+					small={small}
+					multiple={multiple}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+	.add('error', ({
+		value = text('value', 'Value'),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', false),
+		small = boolean('small', false),
+		multiple = number('multiple', 1),
+		error = boolean('error', true),
+	}) => (
+		<Form>
+			<Item>
+				<PasswordInput
 					value={value}
 					placeholder={placeholder}
 					disabled={disabled}

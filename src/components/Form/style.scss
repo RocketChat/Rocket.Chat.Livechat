@@ -59,7 +59,7 @@ $form-input-disabled-opacity: .9;
 		flex-direction: row;
 		align-items: center;
 
-		.form__label + .form__textinput {
+		.form__label + .form__input {
 			margin-left: $form-item-margin;
 		}
 	}
@@ -95,7 +95,8 @@ $form-input-disabled-opacity: .9;
 	}
 }
 
-.form__textinput {
+.form__input-text,
+.form__input-password {
 	height: $form-input-height;
 	padding: $form-input-padding;
 
@@ -138,7 +139,7 @@ $form-input-disabled-opacity: .9;
 		height: $form-input-small-height;
 	}
 
-	&--error {
+	&.form__input--error {
 		border-color: $form-input-error-border-color;
 		color: $form-input-error-color;
 	}

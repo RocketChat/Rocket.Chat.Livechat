@@ -34,24 +34,48 @@ export const Error = (props) => <Description error {...props} />;
 export const TextInput = ({
 	disabled,
 	error,
-	danger,
-	stack,
 	small,
 	multiple = 1,
 	...args
-}) => h(
-	multiple < 2 ? 'input' : 'textarea',
-	{
-		rows: multiple,
-		disabled,
-		className: createClassName(styles, 'form__textinput', {
-			error,
-			danger,
-			stack,
-			small,
-		}),
-		...args,
-	}
+}) => (
+	multiple < 2 ? (
+		<input
+			type="text"
+			disabled={disabled}
+			className={[
+				createClassName(styles, 'form__input', { error }),
+				createClassName(styles, 'form__input-text', { small }),
+			].join(' ')}
+			{...args}
+		/>
+	) : (
+		<textarea
+			rows={multiple}
+			disabled={disabled}
+			className={[
+				createClassName(styles, 'form__input', { error }),
+				createClassName(styles, 'form__input-text', { small }),
+			].join(' ')}
+			{...args}
+		/>
+	)
+);
+
+export const PasswordInput = ({
+	disabled,
+	error,
+	small,
+	...args
+}) => (
+	<input
+		type="password"
+		disabled={disabled}
+		className={[
+			createClassName(styles, 'form__input', { error }),
+			createClassName(styles, 'form__input-password', { small }),
+		].join(' ')}
+		{...args}
+	/>
 );
 
 export const Input = TextInput;
