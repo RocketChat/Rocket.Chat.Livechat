@@ -2,8 +2,8 @@ import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
-import { Description, Error, Form, TextInput, PasswordInput, Item, Label } from '.';
+import { withKnobs, boolean, number, text, object } from '@storybook/addon-knobs';
+import { Form, Item, Label, Description, Error, TextInput, PasswordInput, SelectInput } from '.';
 import Button, { Group } from '../Button';
 
 
@@ -251,6 +251,141 @@ storiesOf('Forms|PasswordInput', module)
 					disabled={disabled}
 					small={small}
 					multiple={multiple}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+;
+
+storiesOf('Forms|SelectInput', module)
+	.addDecorator(centered)
+	.addDecorator(withKnobs)
+	.add('empty', ({
+		value = text('value', ''),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', false),
+		small = boolean('small', false),
+		options = object('options', {
+			1: 'Option 1',
+			2: 'Option 2',
+			3: 'Option 3',
+		}),
+		error = boolean('error', false),
+	}) => (
+		<Form>
+			<Item>
+				<SelectInput
+					value={value}
+					placeholder={placeholder}
+					options={options}
+					disabled={disabled}
+					small={small}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+	.add('selected', ({
+		value = text('value', '2'),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', false),
+		small = boolean('small', false),
+		options = object('options', {
+			1: 'Option 1',
+			2: 'Option 2',
+			3: 'Option 3',
+		}),
+		error = boolean('error', false),
+	}) => (
+		<Form>
+			<Item>
+				<SelectInput
+					value={value}
+					placeholder={placeholder}
+					options={options}
+					disabled={disabled}
+					small={small}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+	.add('disabled', ({
+		value = text('value', '2'),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', true),
+		small = boolean('small', false),
+		options = object('options', {
+			1: 'Option 1',
+			2: 'Option 2',
+			3: 'Option 3',
+		}),
+		error = boolean('error', false),
+	}) => (
+		<Form>
+			<Item>
+				<SelectInput
+					value={value}
+					placeholder={placeholder}
+					options={options}
+					disabled={disabled}
+					small={small}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+	.add('small', ({
+		value = text('value', '2'),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', false),
+		small = boolean('small', true),
+		options = object('options', {
+			1: 'Option 1',
+			2: 'Option 2',
+			3: 'Option 3',
+		}),
+		error = boolean('error', false),
+	}) => (
+		<Form>
+			<Item>
+				<SelectInput
+					value={value}
+					placeholder={placeholder}
+					options={options}
+					disabled={disabled}
+					small={small}
+					error={error}
+					onInput={action('input')}
+				/>
+			</Item>
+		</Form>
+	))
+	.add('error', ({
+		value = text('value', '2'),
+		placeholder = text('placeholder', 'Placeholder'),
+		disabled = boolean('disabled', false),
+		small = boolean('small', false),
+		options = object('options', {
+			1: 'Option 1',
+			2: 'Option 2',
+			3: 'Option 3',
+		}),
+		error = boolean('error', true),
+	}) => (
+		<Form>
+			<Item>
+				<SelectInput
+					value={value}
+					placeholder={placeholder}
+					options={options}
+					disabled={disabled}
+					small={small}
 					error={error}
 					onInput={action('input')}
 				/>

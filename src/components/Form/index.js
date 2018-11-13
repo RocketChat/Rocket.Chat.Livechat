@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import Arrow from '../../icons/arrow.svg';
 import styles from './style';
 import { asyncForEach, createClassName } from '../helpers';
 
@@ -77,6 +78,58 @@ export const PasswordInput = ({
 		{...args}
 	/>
 );
+
+
+export class SelectInput extends Component {
+	state = {
+		value: this.props.value,
+	}
+
+	handleInput = (onInput) => (event) => {
+		this.setState({ value: event.target.value });
+		onInput && onInput(event);
+	}
+
+	componentWillReceiveProps({ value }) {
+		this.setState({ value });
+	}
+
+	render() {
+		const {
+			// eslint-disable-next-line no-unused-vars
+			value,
+			options = {},
+			placeholder,
+			disabled,
+			error,
+			small,
+			onInput,
+			...args
+		} = this.props;
+		return (
+			<div
+				className={[
+					createClassName(styles, 'form__input', { error }),
+					createClassName(styles, 'form__input-select', { small, placeholder: !this.state.value }),
+				].join(' ')}
+			>
+				<select
+					value={this.state.value}
+					disabled={disabled}
+					onInput={this.handleInput(onInput)}
+					className={createClassName(styles, 'form__input-select__select')}
+					{...args}
+				>
+					<option value="" disabled hidden>{placeholder}</option>
+					{Object.entries(options).map(([value, label]) => (
+						<option value={value} className={createClassName(styles, 'form__input-select__option')}>{label}</option>
+					))}
+				</select>
+				<Arrow className={createClassName(styles, 'form__input-select__arrow')} />
+			</div>
+		);
+	}
+}
 
 export const Input = TextInput;
 

@@ -47,6 +47,8 @@ $form-input-line-height: 20px;
 
 $form-input-disabled-opacity: .9;
 
+$form-input-select-arrow-color: #cbced1;
+
 
 .form__item {
 	display: flex;
@@ -137,13 +139,14 @@ $form-input-disabled-opacity: .9;
 
 	&--small {
 		height: $form-input-small-height;
+		padding-top: 0;
+		padding-bottom: 0;
 	}
 
 	&.form__input--error {
 		border-color: $form-input-error-border-color;
 		color: $form-input-error-color;
 	}
-
 
 	&[disabled] {
 		color: $form-input-disabled-color;
@@ -152,5 +155,61 @@ $form-input-disabled-opacity: .9;
 
 		opacity: $form-input-disabled-opacity;
 		cursor: not-allowed;
+	}
+}
+
+.form__input-select {
+	position: relative;
+	display: flex;
+
+	&__select {
+		@extend .form__input-text;
+
+		flex: 1;
+
+		padding-right: 44px;
+
+		color: $form-input-color;
+
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+
+		&::-ms-expand {
+			display: none;
+		}
+
+		.form__input-select--placeholder & {
+			color: $form-input-placeholder-color;
+		}
+
+		.form__input-select--small & {
+			height: $form-input-small-height;
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		.form__input--error & {
+			border-color: $form-input-error-border-color;
+			color: $form-input-error-color;
+		}
+	}
+
+	&__option {
+		color: $form-input-color;
+	}
+
+	&__arrow {
+		position: absolute;
+		right: 12px;
+		top: 50%;
+
+		width: 12px;
+		height: 12px;
+
+		color: $form-input-select-arrow-color;
+
+		transform: translateY(-50%) translateY(2px);
+		pointer-events: none;
 	}
 }
