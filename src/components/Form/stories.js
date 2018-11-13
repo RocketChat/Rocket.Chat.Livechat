@@ -448,6 +448,11 @@ storiesOf('Forms|Item', module)
 		inline = boolean('inline', false),
 		label = text('label', 'Label'),
 		value = text('value', ''),
+		options = object('options', {
+			1: 'Option 1',
+			2: 'Option 2',
+			3: 'Option 3',
+		}),
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', false),
@@ -464,6 +469,20 @@ storiesOf('Forms|Item', module)
 					disabled={disabled}
 					small={small}
 					multiple={multiple}
+					error={error}
+					onInput={action('input')}
+				/>
+				{!inline && description && <Description>{description}</Description>}
+				{!inline && error && <Error>{error}</Error>}
+			</Item>
+			<Item inline={inline}>
+				<Label error={!!error}>{label}</Label>
+				<SelectInput
+					value={value}
+					options={options}
+					placeholder={placeholder}
+					disabled={disabled}
+					small={small}
 					error={error}
 					onInput={action('input')}
 				/>
@@ -504,6 +523,11 @@ storiesOf('Forms|Item', module)
 		inline = boolean('inline', true),
 		label = text('label', 'Label'),
 		value = text('value', ''),
+		options = object('options', {
+			1: 'Option 1',
+			2: 'Option 2',
+			3: 'Option 3',
+		}),
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', false),
@@ -520,6 +544,20 @@ storiesOf('Forms|Item', module)
 					disabled={disabled}
 					small={small}
 					multiple={multiple}
+					error={error}
+					onInput={action('input')}
+				/>
+				{!inline && description && <Description>{description}</Description>}
+				{!inline && error && <Error>{error}</Error>}
+			</Item>
+			<Item inline={inline}>
+				<Label error={!!error}>{label}</Label>
+				<SelectInput
+					value={value}
+					options={options}
+					placeholder={placeholder}
+					disabled={disabled}
+					small={small}
 					error={error}
 					onInput={action('input')}
 				/>

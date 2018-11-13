@@ -44,7 +44,7 @@ export const TextInput = ({
 			type="text"
 			disabled={disabled}
 			className={[
-				createClassName(styles, 'form__input', { error }),
+				createClassName(styles, 'form__input', { disabled, error }),
 				createClassName(styles, 'form__input-text', { small }),
 			].join(' ')}
 			{...args}
@@ -54,7 +54,7 @@ export const TextInput = ({
 			rows={multiple}
 			disabled={disabled}
 			className={[
-				createClassName(styles, 'form__input', { error }),
+				createClassName(styles, 'form__input', { disabled, error }),
 				createClassName(styles, 'form__input-text', { small }),
 			].join(' ')}
 			{...args}
@@ -72,7 +72,7 @@ export const PasswordInput = ({
 		type="password"
 		disabled={disabled}
 		className={[
-			createClassName(styles, 'form__input', { error }),
+			createClassName(styles, 'form__input', { disabled, error }),
 			createClassName(styles, 'form__input-password', { small }),
 		].join(' ')}
 		{...args}
@@ -109,7 +109,7 @@ export class SelectInput extends Component {
 		return (
 			<div
 				className={[
-					createClassName(styles, 'form__input', { error }),
+					createClassName(styles, 'form__input', { disabled, error }),
 					createClassName(styles, 'form__input-select', { small, placeholder: !this.state.value }),
 				].join(' ')}
 			>

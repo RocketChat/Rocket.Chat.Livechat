@@ -2,73 +2,73 @@
 @import '~styles/variables';
 
 
-$form-item-margin: 16px;
+$form-item-margin-bottom: $default-gap;
+$form-item-inline-margin-left: $default-gap;
 
-$form-label-height: 16px;
-$form-label-margin: 5px 0;
+$form-label-margin: ($default-gap / 3) 0;
 
-$form-label-color: #2f343d;
-$form-label-error-color: #f5455c;
+$form-label-color: $color-text-dark;
+$form-label-error-color: $color-red;
 
-$form-label-font-size: 12px;
+$form-label-font-size: 0.75rem;
 $form-label-font-weight: 600;
+$form-label-line-height: 1rem;
 
-$form-description-height: 20px;
-$form-description-margin: 8px 0 0 0;
+$form-description-margin: ($default-gap / 2) 0 0;
 
-$form-description-color: #9ea2a8;
-$form-description-error-color: #f5455c;
+$form-description-color: $color-text-grey;
+$form-description-error-color: $color-red;
 
-$form-description-font-size: 12px;
+$form-description-font-size: 0.75rem;
 $form-description-font-weight: 500;
+$form-description-line-height: 1rem;
 
-$form-input-height: 44px;
-$form-input-small-height: 30px;
-$form-input-padding: 12px;
+$form-input-border-width: $default-border;
+$form-input-border-radius: $default-border-radius;
+$form-input-padding: (0.75 * $default-gap - $default-border);
+$form-input-small-padding: (0.25 * $default-gap - $default-border / 2) (0.75 * $default-gap - $default-border);
 
-$form-input-color: #2f343d;
-$form-input-placeholder-color: #cbced1;
-$form-input-background-color: #ffffff;
-$form-input-border-width: 1.5px;
-$form-input-border-color: #e1e5e8;
-$form-input-border-radius: 2px;
-$form-input-focus-color: #6c727a;
-$form-input-focus-border-color: #2f343d;
-$form-input-hover-border-color: #cbced1;
-$form-input-disabled-background-color: #e1e5e8;
-$form-input-disabled-color: #cbced1;
-$form-input-error-color: #f5455c;
-$form-input-error-border-color: #f5455c;
+$form-input-color: $color-text-dark;
+$form-input-placeholder-color: $color-text-light;
+$form-input-background-color: $bg-color-white;
+$form-input-border-color: $bg-color-grey;
+$form-input-focus-border-color: $color-text-dark;
+$form-input-hover-border-color: $color-text-light;
+$form-input-disabled-background-color: $bg-color-grey;
+$form-input-disabled-color: $color-text-light;
+$form-input-error-color: $color-red;
+$form-input-error-border-color: $color-red;
 
-$form-input-font-family: 'Helvetica Neue', arial, sans-serif;
-$form-input-font-size: 14px;
+$form-input-font-family: $font-family;
+$form-input-font-size: 1rem;
 $form-input-font-weight: 500;
-$form-input-line-height: 20px;
+$form-input-line-height: 1.25rem;
 
-$form-input-disabled-opacity: .9;
+$form-input-disabled-opacity: $disabled-opacity;
 
-$form-input-select-arrow-color: #cbced1;
+$form-input-select-arrow-size: $form-input-padding;
+$form-input-select-arrow-padding: $form-input-padding;
 
+$form-input-select-arrow-color: $color-text-light;
 
 .form__item {
 	display: flex;
 	flex-direction: column;
 
 	width: 100%;
-	margin-bottom: $form-item-margin;
+	margin-bottom: $form-item-margin-bottom;
 
 	&--inline {
 		flex-direction: row;
 		align-items: center;
 
 		.form__label + .form__input {
-			margin-left: $form-item-margin;
+			margin-left: $form-item-inline-margin-left;
 		}
 	}
 }
 
 .form__label {
-	height: $form-label-height;
 	margin: $form-label-margin;
 
 	color: $form-label-color;
@@ -77,6 +77,7 @@ $form-input-select-arrow-color: #cbced1;
 	font-weight: $form-label-font-weight;
 	text-align: left;
 	letter-spacing: 0;
+	line-height: $form-label-line-height;
 
 	&--error {
 		color: $form-label-error-color;
@@ -84,13 +85,13 @@ $form-input-select-arrow-color: #cbced1;
 }
 
 .form__description {
-	height: $form-description-height;
+	margin: $form-description-margin;
 
 	color: $form-description-color;
 
 	font-size: $form-description-font-size;
 	font-weight: $form-description-font-weight;
-	margin: $form-description-margin;
+	line-height: $form-description-line-height;
 
 	&--error {
 		color: $form-description-error-color;
@@ -99,13 +100,12 @@ $form-input-select-arrow-color: #cbced1;
 
 .form__input-text,
 .form__input-password {
-	height: $form-input-height;
+	border: $form-input-border-width solid $form-input-border-color;
+	border-radius: $form-input-border-radius;
 	padding: $form-input-padding;
 
 	color: $form-input-color;
 	background-color: $form-input-background-color;
-	border: $form-input-border-width solid $form-input-border-color;
-	border-radius: $form-input-border-radius;
 	outline: none;
 
 	font-family: $form-input-font-family;
@@ -125,7 +125,6 @@ $form-input-select-arrow-color: #cbced1;
 	}
 
 	&:focus {
-		color: $form-input-focus-color;
 		border-color: $form-input-focus-border-color;
 	}
 
@@ -138,9 +137,7 @@ $form-input-select-arrow-color: #cbced1;
 	}
 
 	&--small {
-		height: $form-input-small-height;
-		padding-top: 0;
-		padding-bottom: 0;
+		padding: $form-input-small-padding;
 	}
 
 	&.form__input--error {
@@ -148,7 +145,7 @@ $form-input-select-arrow-color: #cbced1;
 		color: $form-input-error-color;
 	}
 
-	&[disabled] {
+	&.form__input--disabled {
 		color: $form-input-disabled-color;
 		background-color: $form-input-disabled-background-color;
 		border-color: $form-input-border-color;
@@ -161,13 +158,14 @@ $form-input-select-arrow-color: #cbced1;
 .form__input-select {
 	position: relative;
 	display: flex;
+	flex: 1;
 
 	&__select {
 		@extend .form__input-text;
 
 		flex: 1;
 
-		padding-right: 44px;
+		padding-right: (3 * $form-input-select-arrow-padding + $form-input-select-arrow-size);
 
 		color: $form-input-color;
 
@@ -184,9 +182,8 @@ $form-input-select-arrow-color: #cbced1;
 		}
 
 		.form__input-select--small & {
-			height: $form-input-small-height;
-			padding-top: 0;
-			padding-bottom: 0;
+			padding: $form-input-small-padding;
+			padding-right: (3 * $form-input-select-arrow-padding + $form-input-select-arrow-size);
 		}
 
 		.form__input--error & {
@@ -201,11 +198,11 @@ $form-input-select-arrow-color: #cbced1;
 
 	&__arrow {
 		position: absolute;
-		right: 12px;
+		right: $form-input-select-arrow-padding;
 		top: 50%;
 
-		width: 12px;
-		height: 12px;
+		width: $form-input-select-arrow-size;
+		height: $form-input-select-arrow-size;
 
 		color: $form-input-select-arrow-color;
 
