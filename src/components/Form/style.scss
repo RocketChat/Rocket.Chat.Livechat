@@ -98,8 +98,7 @@ $form-input-select-arrow-color: $color-text-light;
 	}
 }
 
-.form__input-text,
-.form__input-password {
+@mixin form__input-box {
 	border: $form-input-border-width solid $form-input-border-color;
 	border-radius: $form-input-border-radius;
 	padding: $form-input-padding;
@@ -119,11 +118,6 @@ $form-input-select-arrow-color: $color-text-light;
 		background-color $default-time-animation,
 		trasform $default-time-animation;
 
-	@at-root textarea#{&} {
-		height: auto;
-		resize: none;
-	}
-
 	&:focus {
 		border-color: $form-input-focus-border-color;
 	}
@@ -132,20 +126,11 @@ $form-input-select-arrow-color: $color-text-light;
 		border-color: $form-input-hover-border-color;
 	}
 
-	&::placeholder {
-		color: $form-input-placeholder-color;
-	}
-
 	&--small {
 		padding: $form-input-small-padding;
 	}
 
-	&.form__input--error {
-		border-color: $form-input-error-border-color;
-		color: $form-input-error-color;
-	}
-
-	&.form__input--disabled {
+	&--disabled {
 		color: $form-input-disabled-color;
 		background-color: $form-input-disabled-background-color;
 		border-color: $form-input-border-color;
@@ -153,6 +138,24 @@ $form-input-select-arrow-color: $color-text-light;
 		opacity: $form-input-disabled-opacity;
 		cursor: not-allowed;
 	}
+
+	&--error {
+		border-color: $form-input-error-border-color;
+		color: $form-input-error-color;
+	}
+}
+
+.form__input-text,
+.form__input-password {
+	@include form__input-box;
+
+	&::placeholder {
+		color: $form-input-placeholder-color;
+	}
+}
+
+textarea.form__input-text {
+	resize: none;
 }
 
 .form__input-select {
@@ -161,7 +164,7 @@ $form-input-select-arrow-color: $color-text-light;
 	flex: 1;
 
 	&__select {
-		@extend .form__input-text;
+		@include form__input-box;
 
 		flex: 1;
 
@@ -177,18 +180,12 @@ $form-input-select-arrow-color: $color-text-light;
 			display: none;
 		}
 
-		.form__input-select--placeholder & {
+		&--placeholder {
 			color: $form-input-placeholder-color;
 		}
 
-		.form__input-select--small & {
-			padding: $form-input-small-padding;
+		&--small {
 			padding-right: (3 * $form-input-select-arrow-padding + $form-input-select-arrow-size);
-		}
-
-		.form__input--error & {
-			border-color: $form-input-error-border-color;
-			color: $form-input-error-color;
 		}
 	}
 

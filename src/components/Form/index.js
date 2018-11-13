@@ -43,20 +43,14 @@ export const TextInput = ({
 		<input
 			type="text"
 			disabled={disabled}
-			className={[
-				createClassName(styles, 'form__input', { disabled, error }),
-				createClassName(styles, 'form__input-text', { small }),
-			].join(' ')}
+			className={createClassName(styles, 'form__input-text', { disabled, error, small })}
 			{...args}
 		/>
 	) : (
 		<textarea
 			rows={multiple}
 			disabled={disabled}
-			className={[
-				createClassName(styles, 'form__input', { disabled, error }),
-				createClassName(styles, 'form__input-text', { small }),
-			].join(' ')}
+			className={createClassName(styles, 'form__input-text', { disabled, error, small })}
 			{...args}
 		/>
 	)
@@ -71,10 +65,7 @@ export const PasswordInput = ({
 	<input
 		type="password"
 		disabled={disabled}
-		className={[
-			createClassName(styles, 'form__input', { disabled, error }),
-			createClassName(styles, 'form__input-password', { small }),
-		].join(' ')}
+		className={createClassName(styles, 'form__input-password', { disabled, error, small })}
 		{...args}
 	/>
 );
@@ -107,17 +98,17 @@ export class SelectInput extends Component {
 			...args
 		} = this.props;
 		return (
-			<div
-				className={[
-					createClassName(styles, 'form__input', { disabled, error }),
-					createClassName(styles, 'form__input-select', { small, placeholder: !this.state.value }),
-				].join(' ')}
-			>
+			<div className={createClassName(styles, 'form__input-select')}>
 				<select
 					value={this.state.value}
 					disabled={disabled}
 					onInput={this.handleInput(onInput)}
-					className={createClassName(styles, 'form__input-select__select')}
+					className={createClassName(styles, 'form__input-select__select', {
+						disabled,
+						error,
+						small,
+						placeholder: !this.state.value,
+					})}
 					{...args}
 				>
 					<option value="" disabled hidden>{placeholder}</option>
