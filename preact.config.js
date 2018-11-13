@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 const webpackOverride = require('./webpackOverride.config');
-const path = require('path');
-
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 export default (config, env, helpers) => {
 	// config.mode = 'production';
 	// Use Preact CLI's helpers object to get the babel-loader
@@ -27,19 +27,84 @@ export default (config, env, helpers) => {
 			I18n: ['autoI18n', 'default'],
 		})
 	);
-	config.plugins[1].definitions['process.env'] = {};
 
+	config.plugins.push(new BundleAnalyzerPlugin());
+	config.plugins[1].definitions['process.env'] = {};
+	config.plugins[1].definitions.process = {};
+	config.plugins[1].definitions['process.title'] = 'browser';
+	config.mode = 'production';
 	config.optimization = {
+		sideEffects: false,
+		minimizer: [
+			new UglifyJSPlugin({
+				uglifyOptions: {
+					extractComments: 'all',
+					warnings: false,
+					mangle: true, // Note `mangle.properties` is `false` by default.
+					toplevel: false,
+					nameCache: null,
+					ie8: false,
+					keep_fnames: false,
+					output: {
+						comments: false,
+					},
+					compress: {
+						unsafe_comps: true,
+						properties: true,
+						keep_fargs: false,
+						pure_getters: true,
+						collapse_vars: true,
+						warnings: false,
+						sequences: true,
+						dead_code: true,
+						drop_debugger: true,
+						comparisons: true,
+						conditionals: true,
+						evaluate: true,
+						booleans: true,
+						loops: true,
+						unused: true,
+						if_return: true,
+						join_vars: true,
+						drop_console: true,
+					},
+				},
+			}),
+		],
 		splitChunks: {
-			chunks: 'async',
+			// chunks: 'async',
 			minSize: 30000,
 			maxSize: 0,
 			minChunks: 1,
-			maxAsyncRequests: 5,
-			maxInitialRequests: 3,
+			maxAsyncRequests: 10,
+			maxInitialRequests: 10,
 			automaticNameDelimiter: '~',
-			name: true,
+			// name: true,
 			cacheGroups: {
+				mqtt: {
+					name: 'mqtt',
+					chunks: 'async',
+					test: /node_modules\/@rocket\.chat\/sdk\/drivers\/mqtt/,
+					priority: 50,
+				},
+				ddp: {
+					name: 'ddp',
+					chunks: 'async',
+					test: /ddp/,
+					priority: 50,
+				},
+				sdk: {
+					name: 'Rocket.Chat.js.SDK',
+					chunks: 'all',
+					test: /node_modules\/@rocket\.chat\/sdk/,
+					priority: 40,
+				},
+				components: {
+					name: 'components',
+					test: /components|icons|\.scss$/,
+					chunks: 'all',
+					priority: 50,
+				},
 				vendor: {
 					// name of the chunk
 					name: 'vendor',
@@ -48,7 +113,7 @@ export default (config, env, helpers) => {
 					// import file path containing node_modules
 					test: /node_modules/,
 					// priority
-					priority: 20,
+					priority: 30,
 				},
 				common: {
 					name: 'common',
