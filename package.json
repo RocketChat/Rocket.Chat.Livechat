@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@kossnocorp/desvg": "^0.2.0",
-    "@rocket.chat/sdk": "^1.0.0-alpha.6",
+    "@rocket.chat/sdk": "^1.0.0-alpha.8",
     "date-fns": "^1.29.0",
     "desvg": "^1.0.2",
     "desvg-loader": "^0.1.0",

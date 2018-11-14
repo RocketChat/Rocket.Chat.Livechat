@@ -34,10 +34,12 @@ export default class UserWrap extends Component {
 			if (this.stream) { return ; }
 			this.stream = this.stream || SDK.connect();
 			await this.stream;
-			SDK.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
+			SDK.subscribeRoom(state.room._id);
+
 			SDK.onMessage((message) => {
 				this.emit({ messages: insert(getState().messages, message).filter(({ msg }) => msg) });
 			});
+
 			SDK.onTyping((username, isTyping) => {
 				const { typing } = this.state;
 				if (typing.indexOf(username) > -1 || !isTyping) {
@@ -48,8 +50,9 @@ export default class UserWrap extends Component {
 					this.emit({ typing });
 				}
 			});
-			SDK.on('stream-livechat-room', (error, data) => {
-				console.log(data);
+
+			SDK.onAgentChange(state.room._id, (agent) => {
+				this.emit({ agent });
 			});
 		}
 		e.emit('change', state);
@@ -58,8 +61,10 @@ export default class UserWrap extends Component {
 	async getConfig() {
 		const { user: { token } } = getState();
 		SDK.credentials.token = token;
-		const { config } = await (token ? SDK.config({ token }) : SDK.config());
-		this.emit({ config, room: config.room });
+		const config = await (token ? SDK.config({ token }) : SDK.config());
+		const { admin } = config;
+		delete config.admin;
+		this.emit({ config, room: config.room, admin });
 		return config;
 	}
 
@@ -75,10 +80,12 @@ export default class UserWrap extends Component {
 		if (state.room) {
 			this.stream = SDK.connect();
 			await this.stream;
-			SDK.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
+			SDK.subscribeRoom(state.room._id);
+
 			SDK.onMessage((message) => {
 				this.emit({ messages: insert(getState().messages, message).filter((e) => e) });
 			});
+
 			SDK.onTyping((username, isTyping) => {
 				const { typing } = this.state;
 				if (typing.indexOf(username) > -1 || !isTyping) {
@@ -89,8 +96,9 @@ export default class UserWrap extends Component {
 					this.emit({ typing });
 				}
 			});
-			SDK.on('stream-livechat-room', (error, data) => {
-				console.log(data);
+
+			SDK.onAgentChange(state.room._id, (agent) => {
+				this.emit({ agent });
 			});
 		}
 	}
