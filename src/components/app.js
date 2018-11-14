@@ -5,6 +5,7 @@ import Store, { Consumer } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
+import SDK from '../api';
 export default class App extends Component {
 
 	/** Gets fired when the route changes.
@@ -20,6 +21,7 @@ export default class App extends Component {
 
 	renderScreen({ user, config, messages }) {
 		const { settings = {}, online } = config;
+
 		if (online) {
 			if (user && user.token) {
 				return <Home {...config} messages={messages} default path="/home" />;
@@ -37,10 +39,16 @@ export default class App extends Component {
 			<Store>
 				<div id="app">
 					<Consumer>
-						{(state) => (
-							<Router onChange={this.handleRoute}>
-								{this.renderScreen(state)}
-							</Router>)}
+						{
+							(state) => {
+								this.actions = state.dispatch;
+								return (
+									< Router onChange={this.handleRoute} >
+										{this.renderScreen(state)}
+									</Router>
+								)
+							}
+						}
 					</Consumer>
 				</div>
 			</Store>

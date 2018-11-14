@@ -6,13 +6,22 @@ import { insert } from 'components/helpers';
 import SDK from '../api';
 
 const e = new EventEmitter();
-const defaultState = { typing: [], config: { messages: {}, settings: {}, theme: {} }, messages: [], user: {} };
+const defaultToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+const defaultState = { defaultToken, typing: [], config: { messages: {}, settings: {}, theme: {}, triggers: [], departments: [] }, messages: [], user: {} };
 let state = localStorage.getItem('store') ? { ...defaultState, ...JSON.parse(localStorage.getItem('store')) } : defaultState;
 
 export const Context = createContext({});
 
 export const getState = () => state || defaultState;
 export const { Consumer } = Context;
+
+const { user: { token } } = getState();
+if (token) {
+	SDK.credentials.token = token;
+}
+
+let self;
+
 export default class UserWrap extends Component {
 	updateCookies = (state) => {
 		const { room, user } = state;
@@ -24,12 +33,13 @@ export default class UserWrap extends Component {
 	}
 
 	async initRoom(state) {
-		this.stream = this.stream || await SDK.connect();
+		if (this.stream) { return; }
+		this.stream = this.stream || SDK.connect();
+		await this.stream;
 		SDK.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
 		SDK.onMessage((message) => {
-			this.emit({ messages: insert(getState().messages, message).filter(({ msg }) => msg) });
+			this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => { return { msg, attachments }; }) });
 		});
-
 		SDK.onTyping((username, isTyping) => {
 			const { typing, user } = this.state;
 
@@ -59,15 +69,15 @@ export default class UserWrap extends Component {
 		this.setState(args);
 	}
 
-	emit = async (newState) => {
+	async emit(newState) {
 		state = { ...defaultState, ...state, ...newState };
 		localStorage.setItem('store', JSON.stringify({ ...state, typing: [] }));
 
 		if (newState.user) {
-			this.getConfig();
+			self.getConfig();
 		}
 		if (newState.room) {
-			this.initRoom(state);
+			self.initRoom(state);
 		}
 
 		e.emit('change', state);
@@ -75,6 +85,7 @@ export default class UserWrap extends Component {
 
 	async getConfig() {
 		const { user: { token } } = getState();
+		SDK.credentials.token = token;
 		const { config } = await (token ? SDK.config({ token }) : SDK.config());
 		this.emit({ config, room: config.room });
 		return config;
@@ -83,6 +94,8 @@ export default class UserWrap extends Component {
 	constructor() {
 		super();
 		this.state = state;
+
+		self = this;
 	}
 
 	async componentDidMount() {

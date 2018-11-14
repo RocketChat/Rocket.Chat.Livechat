@@ -2,15 +2,18 @@ import { h, Component } from 'preact';
 import SDK from '../api';
 
 
-import { Consumer } from '../store';
+import { Consumer, getState } from '../store';
 import Register from '../routes/register';
 
 class Wrapped extends Component {
 	async onSubmit(args) {
 		this.setState({ loading: true });
-		const { visitor } = await SDK.grantVisitor({ visitor: { ...args, token: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) } });
+		const state = getState();
+		const { defaultToken } = state;
+
+		const user = await SDK.grantVisitor({ visitor: { ...args, token: defaultToken } });
 		this.setState({ loading: false });
-		this.actions({ user: visitor });
+		this.actions({ user });
 	}
 
 	constructor() {
@@ -35,9 +38,11 @@ class Wrapped extends Component {
 								title={props.theme.title || I18n.t('Need help?')}
 								message={props.messages.registrationFormMessage || I18n.t('Please, tell us some informations to start the chat')}
 								onSubmit={this.onSubmit}
+								settings={props.settings}
 							/>
 						);
-					}}
+					}
+				}
 			</Consumer>);
 	}
 }

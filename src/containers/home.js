@@ -7,7 +7,7 @@ class Wrapped extends Component {
 	async getRoomId(token) {
 		if (!rid) {
 			try {
-				const { room } = await SDK.room({ token });
+				const room = await SDK.room({ token });
 				rid = room._id;
 				this.actions({ room });
 			} catch (error) {
@@ -31,9 +31,9 @@ class Wrapped extends Component {
 			return;
 		}
 		const state = getState();
-		const { user: { token }, messages } = state;
+		const { messages } = state;
 		this.setState({ loading: true });
-		const { messages: moreMessages } = await SDK.loadMessages(rid, { token, limit: messages.length + 10 });
+		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
 		this.setState({ loading: false, ended: messages.length + 10 >= moreMessages.length });
 		this.actions({ messages: (moreMessages || []).reverse() });
 	}
@@ -76,7 +76,7 @@ class Wrapped extends Component {
 
 		if (rid) {
 			this.setState({ loading: true });
-			const { messages } = await SDK.loadMessages(rid, { token });
+			const messages = await SDK.loadMessages(rid, { token });
 			this.setState({ loading: false });
 			this.actions({ messages: (messages || []).reverse() });
 		}

@@ -46,7 +46,7 @@ export default class Home extends Component {
 		this.validate();
 	}
 
-	render({ title, color, message, loading }) {
+	render({ title, color, message, loading, settings }) {
 		return (<div class={style.container}>
 			<Header color={color}>
 				<Content>
@@ -56,7 +56,7 @@ export default class Home extends Component {
 			<main class={style.main}>
 				<p>{message}</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
-					<InputField
+					{settings && settings.nameFieldRegistrationForm && <InputField
 						disabled={loading}
 						required
 						onChange={this.validate}
@@ -65,8 +65,8 @@ export default class Home extends Component {
 						name="name"
 						placeholder="insert your name here..."
 						label="Name"
-					/>
-					<InputField
+					/>}
+					{settings && settings.emailFieldRegistrationForm && <InputField
 						disabled={loading}
 						required
 						onChange={this.validate}
@@ -74,7 +74,7 @@ export default class Home extends Component {
 						validations={['notNull', 'email']} name="email"
 						placeholder="insert your e-mail here..."
 						label="E-mail"
-					/>
+					/>}
 					<Item>
 						<Button loading={loading} disabled={!this.state.valid || loading} stack>Start Chat</Button>
 					</Item>
