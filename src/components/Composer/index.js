@@ -58,8 +58,8 @@ export default class Composer extends Component {
 		this.onKeypress = this.onKeypress.bind(this);
 		this.onPaste = this.onPaste.bind(this);
 	}
-	 render({ pre, post, placeholder, ...args }) {
-		 return (
+	render({ pre, post, placeholder, ...args }) {
+		return (
 			<div {...args} className={createClassName(styles, 'composer', {})}>
 				{pre}
 				<div ref={this.bind} onPaste={this.onPaste} onKeypress={this.onKeypress} onInput={this.input} placeholder={placeholder} className={createClassName(styles, 'composer__input', {})}
@@ -67,5 +67,5 @@ export default class Composer extends Component {
 				/>
 				{post}
 			</div>);
-	 }
+	}
 }
