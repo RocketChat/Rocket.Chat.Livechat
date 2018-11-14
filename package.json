@@ -1,6 +1,6 @@
 {
   "name": "rocket.chat.livechat",
-  "version": "0.0.1-0",
+  "version": "0.0.1-1",
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@kossnocorp/desvg": "^0.2.0",
-    "@rocket.chat/sdk": "^1.0.0-alpha.9",
+    "@rocket.chat/sdk": "^1.0.0-alpha.13",
     "date-fns": "^1.29.0",
     "desvg": "^1.0.2",
     "desvg-loader": "^0.1.0",
