@@ -87,7 +87,7 @@ class Wrapped extends Component {
 		return (
 			<Consumer>
 				{
-					({ typing, user, dispatch, config: { theme, settings, agent }, messages }) => {
+					({ typing, user, dispatch, config: { theme, settings }, agent, messages }) => {
 						this.actions = dispatch;
 						return (
 							<Home
