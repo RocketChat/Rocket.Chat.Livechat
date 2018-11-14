@@ -62,9 +62,9 @@ export default class UserWrap extends Component {
 		const { user: { token } } = getState();
 		SDK.credentials.token = token;
 		const config = await (token ? SDK.config({ token }) : SDK.config());
-		const { admin } = config;
-		delete config.admin;
-		this.emit({ config, room: config.room, admin });
+		const { agent } = config;
+		delete config.agent;
+		this.emit({ config, room: config.room, agent });
 		return config;
 	}
 
