@@ -212,7 +212,7 @@ export class Field extends Component {
 	)
 
 	render() {
-		const { type, name, onChange, inline, ...args } = this.props;
+		const { type = 'text', name, onChange, inline, ...args } = this.props;
 		const { error } = this.state;
 
 		return (
