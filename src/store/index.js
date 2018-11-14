@@ -36,13 +36,13 @@ export default class UserWrap extends Component {
 		if (this.stream) { return; }
 		this.stream = SDK.connect();
 		await this.stream;
-    
-    SDK.subscribeRoom(state.room._id);
-    
-    SDK.onMessage((message) => {
-			this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => { return { msg, attachments }; }) });
+
+		SDK.subscribeRoom(state.room._id);
+
+		SDK.onMessage((message) => {
+			this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 		});
-    
+
 		SDK.onTyping((username, isTyping) => {
 			const { typing, user } = this.state;
 
@@ -60,9 +60,9 @@ export default class UserWrap extends Component {
 			}
 		});
 
-    SDK.onAgentChange(state.room._id, (agent) => {
-      this.emit({ agent });
-    });
+		SDK.onAgentChange(state.room._id, (agent) => {
+			this.emit({ agent });
+		});
 
 		this.updateCookies(state);
 	}
