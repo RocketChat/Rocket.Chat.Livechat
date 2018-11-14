@@ -64,13 +64,13 @@ export default class Home extends Component {
 			<main class={style.main}>
 				<p>{message}</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
-					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull', 'email']} name="email"
-						placeholder={emailPlaceholder}
-						label="E-mail"
-					/>
 					<InputField disabled={loading} equired onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
 						placeholder={namePlaceholder}
 						label="Name"
+					/>
+					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull', 'email']} name="email"
+						placeholder={emailPlaceholder}
+						label="E-mail"
 					/>
 					<InputField
 						disabled={loading}

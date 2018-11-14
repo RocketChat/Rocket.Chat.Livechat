@@ -19,11 +19,15 @@ export const Body = ({ me, children, Element = 'div', group, ...args }) => (<Ele
 </Element>);
 
 const Attachments = ({ attachments }) => <img className={createClassName(styles, 'attachment', {})} src={`http://localhost:3000${ attachments[0].image_url }`} />;
+const src = (args) => {
+	const { u } = args;
+	return u && `http://localhost:3000/avatar/${ u.username }`;
+};
 
 const Message = ({ _id, el, msg, ts, me, group, attachments = [], ...args }) => (
 	<Body id={_id} me={me} group={group} Element={el} {...args}>
 		<Container>
-			{!me && <Avatar className={createClassName(styles, 'avatar', { group })} />}
+			{!me && <Avatar src={src(args)} className={createClassName(styles, 'avatar', { group })} />}
 			<Content me={me}>
 				{msg && <Text me={me} dangerouslySetInnerHTML={{ __html: md.render(msg) }} />}
 				{attachments && attachments.length && <Attachments attachments={attachments} />}
