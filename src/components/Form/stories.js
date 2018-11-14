@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, boolean, number, text, object, select } from '@storybook/addon-knobs';
+import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs';
 import {
 	Form,
 	Item,
@@ -688,7 +688,7 @@ storiesOf('Forms|Buttons', module)
 storiesOf('Forms|Field', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('default', () => (
+	.add('text', () => (
 		<Form>
 			<Field
 				inline={boolean('inline', false)}
@@ -696,11 +696,39 @@ storiesOf('Forms|Field', module)
 				required={boolean('required', true)}
 				description={text('description', 'Description.')}
 				error={text('error', '')}
-				type={select('type', {
-					text: 'text',
-					password: 'password',
-					select: 'select',
-				})}
+				type="text"
+				value={text('value', 'Value')}
+			/>
+		</Form>
+	))
+	.add('password', () => (
+		<Form>
+			<Field
+				inline={boolean('inline', false)}
+				label={text('label', 'Label')}
+				required={boolean('required', true)}
+				description={text('description', 'Description.')}
+				error={text('error', '')}
+				type="password"
+				value={text('value', 'Value')}
+			/>
+		</Form>
+	))
+	.add('select', () => (
+		<Form>
+			<Field
+				inline={boolean('inline', false)}
+				label={text('label', 'Label')}
+				required={boolean('required', true)}
+				description={text('description', 'Description.')}
+				error={text('error', '')}
+				type="select"
+				value={text('value', '1')}
+				options={{
+					1: 'Option 1',
+					2: 'Option 2',
+					3: 'Option 3',
+				}}
 			/>
 		</Form>
 	))

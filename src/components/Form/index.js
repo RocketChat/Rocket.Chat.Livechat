@@ -150,39 +150,39 @@ const validations = {
 	},
 };
 
-export class InputField extends Component {
-	onChange = () => {
-		this.props.onChange();
+export class Field extends Component {
+	handleChange = (onChange) => (event) => {
+		onChange && onChange(event);
 		this.validateAndChangeState();
 	}
 
 	validateAndChangeState = async() => {
 		try {
 			await this.validate(true);
-			this.setState({
-				error: false,
-			});
+			this.setState({ error: false });
 		} catch (error) {
-			this.setState({
-				error,
-			});
+			this.setState({ error });
 		}
 	}
 
-	validate = async(t = false) => {
+	validate = async(rethrowErrors = false) => {
 		const { base: { value } } = this.el;
+
 		try {
-			await asyncForEach(this.props.validations, (fn) => {
-				if (typeof fn === 'string') {
-					return validations[fn](value);
+			await asyncForEach(this.props.validations, (validation) => {
+				if (typeof validation === 'string') {
+					return validations[validation](value);
 				}
-				fn(value);
+
+				validation(value);
 			});
+
 			return true;
 		} catch (error) {
-			if (t) {
+			if (rethrowErrors) {
 				throw error;
 			}
+
 			return false;
 		}
 	}
@@ -192,50 +192,47 @@ export class InputField extends Component {
 		return value;
 	}
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			value: '',
-			error: false,
-		};
-		this.onChange = this.onChange.bind(this);
+	state = {
+		value: '',
+		error: false,
 	}
 
+	renderLabel = ({ label, required, error }) => (
+		label && <Label error={!!error}>{label}{required && ' *'}</Label>
+	)
+
+	renderInput = ({ type, error, ...args }) => h({
+		text: TextInput,
+		password: PasswordInput,
+		select: SelectInput,
+	}[type], { error: !!error, ...args });
+
+	renderDescription = ({ description, error }) => (
+		(error || description) && <Description error={!!error}>{error || description}</Description>
+	)
+
 	render() {
-		const { children, required, label, name, description, ...args } = this.props;
+		const { type, name, onChange, inline, ...args } = this.props;
 		const { error } = this.state;
 
 		return (
-			<Item>
-				<Label error={error}>{label}{required && ' *'}</Label>
-				<TextInput {...args} ref={(el) => this.el = el} error={error} onChange={this.onChange} name={name}>{children}</TextInput>
-				{description && <Description>{description}</Description>}
-				{error && <Error>{error}</Error>}
+			<Item inline={inline}>
+				{this.renderLabel({ error, ...args })}
+				{this.renderInput({
+					type,
+					name,
+					ref: (el) => this.el = el,
+					error,
+					onChange: this.handleChange(onChange),
+					...args,
+				})}
+				{this.renderDescription({ error, ...args })}
 			</Item>
 		);
 	}
 }
 
-export const Field = ({
-	inline,
-	label,
-	required,
-	description,
-	error,
-	type = 'text',
-	...args
-}) => (
-	<Item inline={inline}>
-		{label && <Label error={!!error}>{label}{required && ' *'}</Label>}
-		{h({
-			text: TextInput,
-			password: PasswordInput,
-			select: SelectInput,
-		}[type], { error: !!error, ...args })}
-		{(error || description) && <Description error={!!error}>{error || description}</Description>}
-	</Item>
-);
-
 export {
 	TextInput as Input,
+	Field as InputField,
 };
