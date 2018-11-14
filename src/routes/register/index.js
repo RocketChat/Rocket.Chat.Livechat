@@ -14,12 +14,12 @@ export default class Home extends Component {
 	async submit(event) {
 		event.preventDefault();
 		if (await this.validate()) {
-			this.props.onSubmit(Array.from(this.state.fields).map((el) => [el.props.name, el.value]).reduce((values, [key, value]) => ({ ...values, [key]: value }), { }));
+			this.props.onSubmit(Array.from(this.state.fields).map((el) => [el.props.name, el.value]).reduce((values, [key, value]) => ({ ...values, [key]: value }), {}));
 		}
 	}
 
 	async validate() {
-		const valid = await asyncEvery(Array.from(this.state.fields), async(el) => await el.validate());
+		const valid = await asyncEvery(Array.from(this.state.fields), async (el) => await el.validate());
 		this.setState({
 			valid,
 		});
@@ -46,7 +46,7 @@ export default class Home extends Component {
 		this.validate();
 	}
 
-	render({ title, color, loading }) {
+	render({ title, color, message, loading, settings }) {
 		return (<div class={style.container}>
 			<Header color={color}>
 				<Content>
@@ -54,17 +54,9 @@ export default class Home extends Component {
 				</Content>
 			</Header>
 			<main class={style.main}>
-				<p>Please, tell us some informations to start the chat</p>
+				<p>{message}</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
-					<InputField
-						disabled={loading}
-						required onChange={this.validate}
-						ref={this.addToValidate}
-						validations={['notNull', 'email']} name="email"
-						placeholder="insert your e-mail here..."
-						label="E-mail"
-					/>
-					<InputField
+					{settings && settings.nameFieldRegistrationForm && <InputField
 						disabled={loading}
 						required
 						onChange={this.validate}
@@ -73,7 +65,16 @@ export default class Home extends Component {
 						name="name"
 						placeholder="insert your name here..."
 						label="Name"
-					/>
+					/>}
+					{settings && settings.emailFieldRegistrationForm && <InputField
+						disabled={loading}
+						required
+						onChange={this.validate}
+						ref={this.addToValidate}
+						validations={['notNull', 'email']} name="email"
+						placeholder="insert your e-mail here..."
+						label="E-mail"
+					/>}
 					<Item>
 						<Button loading={loading} disabled={!this.state.valid || loading} stack>Start Chat</Button>
 					</Item>

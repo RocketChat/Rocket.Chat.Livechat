@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { text, withKnobsOptions } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
 import Smile from 'icons/smile';
@@ -16,38 +16,79 @@ storiesOf('Components|Composer', module)
 			{storyFn()}
 		</div>
 	))
-	.addDecorator(withKnobs)
+	.addDecorator(withKnobsOptions({
+		escapeHTML: false,
+	}))
 	.addDecorator(centered)
-	.add('simple', () => (
+	.add('empty', () => (
 		<Composer
+			value={text('value', '')}
 			placeholder={text('placeholder', 'Insert your text here')}
-			onInput={action('input')}
+			onChange={action('change')}
 			onSubmit={action('submit')}
+			onUpload={action('upload')}
 		/>
 	))
-	.add('composer with actions', () => (
+	.add('large placeholder', () => (
 		<Composer
+			value={text('value', '')}
+			placeholder={text('placeholder', 'Insert your text here Insert your text here Insert your text here')}
+			onChange={action('change')}
 			onSubmit={action('submit')}
+			onUpload={action('upload')}
+		/>
+	))
+	.add('plain text', () => (
+		<Composer
+			value={text('value', 'Should I use &amp; or &?')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
+			onSubmit={action('submit')}
+			onUpload={action('upload')}
+		/>
+	))
+	.add('emojis', () => (
+		<Composer
+			value={text('value', ':heart: :smile: :\'(')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
+			onSubmit={action('submit')}
+			onUpload={action('upload')}
+		/>
+	))
+	.add('mentions', () => (
+		<Composer
+			value={text('value', '@all, I\'m @here with @user.')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
+			onSubmit={action('submit')}
+			onUpload={action('upload')}
+		/>
+	))
+	.add('actions', () => (
+		<Composer
+			value={text('value', '')}
+			placeholder={text('placeholder', 'Insert your text here')}
+			onChange={action('change')}
+			onSubmit={action('submit')}
+			onUpload={action('upload')}
 			pre={
 				<Actions>
-					<Action onClick={action('clicked')}>
+					<Action onClick={action('click smile')}>
 						<Smile width="20" />
 					</Action>
-					<Action>
+					<Action onClick={action('click send')}>
 						<Send color="#1D74F5" width="20" />
 					</Action>
 				</Actions>
 			}
 			post={
 				<Actions>
-					<Action>
+					<Action onClick={action('click plus')}>
 						<Plus width="20" />
 					</Action>
 				</Actions>
 			}
-			placeholder="insert your text here"
-			onInput={action('input')}
 		/>
 	))
-	.add('static composer', () => <Composer placeholder="insert your text here" onInput={action('input')} />)
-	.add('large placeholder', () => <Composer placeholder="insert your text here large large large large large large large large large large large large large large large" onInput={action('input')} />);
+;
