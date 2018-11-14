@@ -732,4 +732,16 @@ storiesOf('Forms|Field', module)
 			/>
 		</Form>
 	))
+	.add('validations', () => (
+		<Form>
+			<Field
+				label="Name"
+				required
+				description="Required fields always use 'notNull' validation"
+				type="text"
+				value={text('value', '')}
+				onChange={action('change')}
+			/>
+		</Form>
+	))
 ;

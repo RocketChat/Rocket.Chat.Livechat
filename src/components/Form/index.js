@@ -7,7 +7,7 @@ import { asyncForEach, createClassName } from '../helpers';
 const handleFormSubmit = (event) => event.preventDefault();
 
 export const Form = ({ children, ...args }) => (
-	<form onSubmit={handleFormSubmit} className={createClassName(styles, 'form')} {...args}>
+	<form noValidate onSubmit={handleFormSubmit} className={createClassName(styles, 'form')} {...args}>
 		{children}
 	</form>
 );
@@ -136,13 +136,14 @@ export class SelectInput extends Component {
 	}
 }
 
-const validations = {
+const builtinValidations = {
 	notNull: (value) => {
 		if (!value) {
 			throw 'Field required';
 		}
 	},
-	email(value) {
+
+	email: (value) => {
 		const re = /^\S+@\S+\.\S+/;
 		if (value && !re.test(String(value).toLowerCase())) {
 			throw 'Invalid email';
@@ -168,10 +169,15 @@ export class Field extends Component {
 	validate = async(rethrowErrors = false) => {
 		const { base: { value } } = this.el;
 
+		const validations = this.props.validations || [];
+		if (this.props.required && ![].includes(builtinValidations.notNull)) {
+			validations.push(builtinValidations.notNull);
+		}
+
 		try {
-			await asyncForEach(this.props.validations, (validation) => {
+			await asyncForEach(builtinValidations, (validation) => {
 				if (typeof validation === 'string') {
-					return validations[validation](value);
+					return builtinValidations[validation](value);
 				}
 
 				validation(value);
