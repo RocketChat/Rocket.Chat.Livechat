@@ -2,8 +2,18 @@ import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, boolean, number, text, object } from '@storybook/addon-knobs';
-import { Form, Item, Label, Description, Error, TextInput, PasswordInput, SelectInput } from '.';
+import { withKnobs, boolean, number, text, object, select } from '@storybook/addon-knobs';
+import {
+	Form,
+	Item,
+	Label,
+	Description,
+	Error,
+	TextInput,
+	PasswordInput,
+	SelectInput,
+	Field,
+} from '.';
 import Button, { Group } from '../Button';
 
 
@@ -671,6 +681,27 @@ storiesOf('Forms|Buttons', module)
 					<Button danger outline stack small={small} onClick={action('click c')}>{buttonTextC}</Button>
 				</Group>
 			</Item>
+		</Form>
+	))
+;
+
+storiesOf('Forms|Field', module)
+	.addDecorator(centered)
+	.addDecorator(withKnobs)
+	.add('default', () => (
+		<Form>
+			<Field
+				inline={boolean('inline', false)}
+				label={text('label', 'Label')}
+				required={boolean('required', true)}
+				description={text('description', 'Description.')}
+				error={text('error', '')}
+				type={select('type', {
+					text: 'text',
+					password: 'password',
+					select: 'select',
+				})}
+			/>
 		</Form>
 	))
 ;

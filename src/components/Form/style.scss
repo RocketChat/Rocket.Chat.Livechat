@@ -60,10 +60,20 @@ $form-input-select-arrow-color: $color-text-light;
 
 	&--inline {
 		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-end;
 		align-items: center;
 
+		.form__label {
+			flex: 1 25%;
+		}
+
 		.form__label + .form__input {
-			margin-left: $form-item-inline-margin-left;
+			flex: 3 75%;
+		}
+
+		.form__description {
+			flex: 0 75%;
 		}
 	}
 }
@@ -78,6 +88,8 @@ $form-input-select-arrow-color: $color-text-light;
 	text-align: left;
 	letter-spacing: 0;
 	line-height: $form-label-line-height;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 
 	&--error {
 		color: $form-label-error-color;

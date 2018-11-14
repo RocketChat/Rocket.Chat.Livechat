@@ -45,7 +45,7 @@ export const TextInput = ({
 			disabled={disabled}
 			className={[
 				createClassName(styles, 'form__input'),
-				createClassName(styles, 'form__input-text', { disabled, error, small })
+				createClassName(styles, 'form__input-text', { disabled, error, small }),
 			].join(' ')}
 			{...args}
 		/>
@@ -136,8 +136,6 @@ export class SelectInput extends Component {
 	}
 }
 
-export const Input = TextInput;
-
 const validations = {
 	notNull: (value) => {
 		if (!value) {
@@ -151,19 +149,6 @@ const validations = {
 		}
 	},
 };
-
-/*
-export const Select = ({ children, disabled, error, danger, stack, small, ...args }) => (
-	<input {...args} disabled={disabled} className={getStyles(styles, 'input', {
-		disabled,
-		error,
-		danger,
-		stack,
-		small,
-	})}
-	>{children}</input>
-);
-*/
 
 export class InputField extends Component {
 	onChange = () => {
@@ -183,6 +168,7 @@ export class InputField extends Component {
 			});
 		}
 	}
+
 	validate = async(t = false) => {
 		const { base: { value } } = this.el;
 		try {
@@ -215,8 +201,10 @@ export class InputField extends Component {
 		this.onChange = this.onChange.bind(this);
 	}
 
-	render({ children, required, label, name, description, ...args }) {
+	render() {
+		const { children, required, label, name, description, ...args } = this.props;
 		const { error } = this.state;
+
 		return (
 			<Item>
 				<Label error={error}>{label}{required && ' *'}</Label>
@@ -226,5 +214,28 @@ export class InputField extends Component {
 			</Item>
 		);
 	}
-
 }
+
+export const Field = ({
+	inline,
+	label,
+	required,
+	description,
+	error,
+	type = 'text',
+	...args
+}) => (
+	<Item inline={inline}>
+		{label && <Label error={!!error}>{label}{required && ' *'}</Label>}
+		{h({
+			text: TextInput,
+			password: PasswordInput,
+			select: SelectInput,
+		}[type], { error: !!error, ...args })}
+		{(error || description) && <Description error={!!error}>{error || description}</Description>}
+	</Item>
+);
+
+export {
+	TextInput as Input,
+};
