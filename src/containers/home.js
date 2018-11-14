@@ -4,15 +4,26 @@ import { Consumer, getState } from '../store';
 import Home from '../routes/home';
 let rid = '';
 class Wrapped extends Component {
+	async getRoomId(token) {
+		if (!rid) {
+			try {
+				const room = await SDK.room({ token });
+				rid = room._id;
+				this.actions({ room });
+			} catch (error) {
+				throw error;
+			}
+		}
+		return rid;
+	}
+
 	async sendMessage(msg) {
 		const state = getState();
 		const { user: { token } } = state;
-		if (!rid) {
-			const room = await SDK.room({ token });
-			rid = room._id;
-			this.actions({ room });
-		}
-		await SDK.sendMessage({ msg, token, rid });
+		this.getRoomId(token).then(async (rid) => {
+			await SDK.sendMessage({ msg, token, rid });
+		});
+
 	}
 
 	async onTop() {
@@ -29,14 +40,22 @@ class Wrapped extends Component {
 
 	onUpload(files) {
 		const state = getState();
-		files.forEach(async(file) => {
-			const formData = new FormData();
-			formData.append('file', file);
-			await fetch(`http://localhost:3000/api/v1/livechat/upload/${ state.room._id }`, {
-				body: formData,
-				method: 'POST',
-				headers: { 'x-visitor-token': state.user.token },
+		const { user: { token } } = state;
+
+		const sendFiles = (files) => {
+			files.forEach(async (file) => {
+				const formData = new FormData();
+				formData.append('file', file);
+				await fetch(`http://localhost:3000/api/v1/livechat/upload/${ rid }`, {
+					body: formData,
+					method: 'POST',
+					headers: { 'x-visitor-token': token },
+				});
 			});
+		}
+
+		this.getRoomId(token).then((rid) => {
+			sendFiles(files);
 		});
 	}
 	constructor() {
@@ -82,7 +101,9 @@ class Wrapped extends Component {
 								onUpload={this.onUpload}
 								messages={messages}
 								uploads={settings.fileUpload}
-								title={agent && agent.username}
+								title={agent && agent.name}
+								subtitle={agent && agent.emails && agent.emails[0] && agent.emails[0].address}
+								src={agent && `http://localhost:3000/avatar/${ agent.username }`}
 							/>);
 					}}
 			</Consumer>);

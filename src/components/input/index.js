@@ -48,7 +48,7 @@ export const Form = ({ children, ...args }) => <form onSubmit={(e) => e.preventD
 export const Label = ({ children, error }) => (<label className={getStyles(style, 'label', {
 	error,
 })}
-                                               >{children}</label>);
+>{children}</label>);
 
 export const Description = ({ children }) => <small className={style.description}>{children}</small>;
 
@@ -56,7 +56,7 @@ export const Error = ({ children }) => (<small
 	className={getStyles(style, 'description', {
 		error: true,
 	})}
-                                        >{children}</small>);
+>{children}</small>);
 
 export const Item = ({ children, inline }) => (
 	<div
