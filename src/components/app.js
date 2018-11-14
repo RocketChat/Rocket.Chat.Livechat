@@ -5,7 +5,7 @@ import Store, { Consumer } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
-import SDK from '../api';
+
 export default class App extends Component {
 
 	/** Gets fired when the route changes.

@@ -20,7 +20,7 @@ class Wrapped extends Component {
 	async sendMessage(msg) {
 		const state = getState();
 		const { user: { token } } = state;
-		this.getRoomId(token).then((rid) => {
+		this.getRoomId(token).then(async (rid) => {
 			await SDK.sendMessage({ msg, token, rid });
 		});
 
