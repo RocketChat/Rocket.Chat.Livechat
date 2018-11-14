@@ -20,15 +20,15 @@ export default class App extends Component {
 	}
 
 	renderScreen({ user, config, messages }) {
-		const { settings = {}, online } = config;
-
+		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online, departments } = config;
 		if (online) {
-			if (user && user.token) {
+			const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
+			if ((user && user.token) || !showRegistrationForm) {
 				return <Home {...config} messages={messages} default path="/home" />;
 			}
 			return <Register {...config} default path="/register" />;
 		}
-		if (settings.displayOfflineForm) {
+		if (displayOfflineForm) {
 			return <LeaveMessage {...config} default path="/LeaveMessage" />;
 		}
 		return <LeaveMessage {...config} default path="/LeaveMessage" />;
@@ -39,16 +39,10 @@ export default class App extends Component {
 			<Store>
 				<div id="app">
 					<Consumer>
-						{
-							(state) => {
-								this.actions = state.dispatch;
-								return (
-									< Router onChange={this.handleRoute} >
-										{this.renderScreen(state)}
-									</Router>
-								)
-							}
-						}
+						{(state) => (
+							<Router onChange={this.handleRoute}>
+								{this.renderScreen(state)}
+							</Router>)}
 					</Consumer>
 				</div>
 			</Store>

@@ -4,6 +4,19 @@ import { Consumer, getState } from '../store';
 import Home from '../routes/home';
 let rid = '';
 class Wrapped extends Component {
+	async getUser() {
+		const state = getState();
+		let { user } = state;
+		if (user && user.token) {
+			return user;
+		}
+
+		const { defaultToken } = state;
+		user = await SDK.grantVisitor({ visitor: { token: defaultToken } });
+		this.actions({ user });
+		return user;
+	}
+
 	async getRoomId(token) {
 		if (!rid) {
 			try {
@@ -18,8 +31,9 @@ class Wrapped extends Component {
 	}
 
 	async sendMessage(msg) {
-		const state = getState();
-		const { user: { token } } = state;
+		const stateUser = await this.getUser();
+		const { token } = stateUser;
+
 		this.getRoomId(token).then(async (rid) => {
 			await SDK.sendMessage({ msg, token, rid });
 		});
