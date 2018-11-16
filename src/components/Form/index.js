@@ -98,7 +98,7 @@ export class SelectInput extends Component {
 		const {
 			// eslint-disable-next-line no-unused-vars
 			value,
-			options = {},
+			options = [],
 			placeholder,
 			disabled,
 			error,
@@ -126,7 +126,7 @@ export class SelectInput extends Component {
 					{...args}
 				>
 					<option value="" disabled hidden>{placeholder}</option>
-					{Object.entries(options).map(([value, label]) => (
+					{Array.from(options).map(({ value, label }) => (
 						<option value={value} className={createClassName(styles, 'form__input-select__option')}>{label}</option>
 					))}
 				</select>

@@ -20,133 +20,91 @@ import Button, { Group } from '../Button';
 storiesOf('Forms|TextInput', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('empty', ({
-		value = text('value', ''),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		multiple = number('multiple', 1),
-		error = boolean('error', false),
-	}) => (
+	.add('empty', () => (
 		<Form>
 			<Item>
 				<TextInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', '')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('filled', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		multiple = number('multiple', 1),
-		error = boolean('error', false),
-	}) => (
+	.add('filled', () => (
 		<Form>
 			<Item>
 				<TextInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('disabled', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', true),
-		small = boolean('small', false),
-		multiple = number('multiple', 1),
-		error = boolean('error', false),
-	}) => (
+	.add('disabled', () => (
 		<Form>
 			<Item>
 				<TextInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', true)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('small', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', true),
-		multiple = number('multiple', 1),
-		error = boolean('error', false),
-	}) => (
+	.add('small', () => (
 		<Form>
 			<Item>
 				<TextInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', true)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('error', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		multiple = number('multiple', 1),
-		error = boolean('error', true),
-	}) => (
+	.add('error', () => (
 		<Form>
 			<Item>
 				<TextInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', true)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('multine', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		multiple = number('multiple', 3),
-		error = boolean('error', false),
-	}) => (
+	.add('multine', () => (
 		<Form>
 			<Item>
 				<TextInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 3)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
@@ -157,111 +115,76 @@ storiesOf('Forms|TextInput', module)
 storiesOf('Forms|PasswordInput', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('empty', ({
-		value = text('value', ''),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		multiple = number('multiple', 1),
-		error = boolean('error', false),
-	}) => (
+	.add('empty', () => (
 		<Form>
 			<Item>
 				<PasswordInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', '')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('filled', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		multiple = number('multiple', 1),
-		error = boolean('error', false),
-	}) => (
+	.add('filled', () => (
 		<Form>
 			<Item>
 				<PasswordInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('disabled', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', true),
-		small = boolean('small', false),
-		multiple = number('multiple', 1),
-		error = boolean('error', false),
-	}) => (
+	.add('disabled', () => (
 		<Form>
 			<Item>
 				<PasswordInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', true)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('small', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', true),
-		multiple = number('multiple', 1),
-		error = boolean('error', false),
-	}) => (
+	.add('small', () => (
 		<Form>
 			<Item>
 				<PasswordInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', true)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('error', ({
-		value = text('value', 'Value'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		multiple = number('multiple', 1),
-		error = boolean('error', true),
-	}) => (
+	.add('error', () => (
 		<Form>
 			<Item>
 				<PasswordInput
-					value={value}
-					placeholder={placeholder}
-					disabled={disabled}
-					small={small}
-					multiple={multiple}
-					error={error}
+					value={text('value', 'Value')}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					multiple={number('multiple', 1)}
+					error={boolean('error', true)}
 					onInput={action('input')}
 				/>
 			</Item>
@@ -272,131 +195,96 @@ storiesOf('Forms|PasswordInput', module)
 storiesOf('Forms|SelectInput', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('empty', ({
-		value = text('value', ''),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		options = object('options', {
-			1: 'Option 1',
-			2: 'Option 2',
-			3: 'Option 3',
-		}),
-		error = boolean('error', false),
-	}) => (
+	.add('empty', () => (
 		<Form>
 			<Item>
 				<SelectInput
-					value={value}
-					placeholder={placeholder}
-					options={options}
-					disabled={disabled}
-					small={small}
-					error={error}
+					value={text('value', '')}
+					options={object('options', [
+						{ value: '1', label: 'Option 1' },
+						{ value: '2', label: 'Option 2' },
+						{ value: '3', label: 'Option 3' },
+					])}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('selected', ({
-		value = text('value', '2'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		options = object('options', {
-			1: 'Option 1',
-			2: 'Option 2',
-			3: 'Option 3',
-		}),
-		error = boolean('error', false),
-	}) => (
+	.add('selected', () => (
 		<Form>
 			<Item>
 				<SelectInput
-					value={value}
-					placeholder={placeholder}
-					options={options}
-					disabled={disabled}
-					small={small}
-					error={error}
+					value={text('value', '2')}
+					options={object('options', [
+						{ value: '1', label: 'Option 1' },
+						{ value: '2', label: 'Option 2' },
+						{ value: '3', label: 'Option 3' },
+					])}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('disabled', ({
-		value = text('value', '2'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', true),
-		small = boolean('small', false),
-		options = object('options', {
-			1: 'Option 1',
-			2: 'Option 2',
-			3: 'Option 3',
-		}),
-		error = boolean('error', false),
-	}) => (
+	.add('disabled', () => (
 		<Form>
 			<Item>
 				<SelectInput
-					value={value}
-					placeholder={placeholder}
-					options={options}
-					disabled={disabled}
-					small={small}
-					error={error}
+					value={text('value', '2')}
+					options={object('options', [
+						{ value: '1', label: 'Option 1' },
+						{ value: '2', label: 'Option 2' },
+						{ value: '3', label: 'Option 3' },
+					])}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', true)}
+					small={boolean('small', false)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('small', ({
-		value = text('value', '2'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', true),
-		options = object('options', {
-			1: 'Option 1',
-			2: 'Option 2',
-			3: 'Option 3',
-		}),
-		error = boolean('error', false),
-	}) => (
+	.add('small', () => (
 		<Form>
 			<Item>
 				<SelectInput
-					value={value}
-					placeholder={placeholder}
-					options={options}
-					disabled={disabled}
-					small={small}
-					error={error}
+					value={text('value', '2')}
+					options={object('options', [
+						{ value: '1', label: 'Option 1' },
+						{ value: '2', label: 'Option 2' },
+						{ value: '3', label: 'Option 3' },
+					])}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', true)}
+					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
 			</Item>
 		</Form>
 	))
-	.add('error', ({
-		value = text('value', '2'),
-		placeholder = text('placeholder', 'Placeholder'),
-		disabled = boolean('disabled', false),
-		small = boolean('small', false),
-		options = object('options', {
-			1: 'Option 1',
-			2: 'Option 2',
-			3: 'Option 3',
-		}),
-		error = boolean('error', true),
-	}) => (
+	.add('error', () => (
 		<Form>
 			<Item>
 				<SelectInput
-					value={value}
-					placeholder={placeholder}
-					options={options}
-					disabled={disabled}
-					small={small}
-					error={error}
+					value={text('value', '2')}
+					options={object('options', [
+						{ value: '1', label: 'Option 1' },
+						{ value: '2', label: 'Option 2' },
+						{ value: '3', label: 'Option 3' },
+					])}
+					placeholder={text('placeholder', 'Placeholder')}
+					disabled={boolean('disabled', false)}
+					small={boolean('small', false)}
+					error={boolean('error', true)}
 					onInput={action('input')}
 				/>
 			</Item>
@@ -407,45 +295,35 @@ storiesOf('Forms|SelectInput', module)
 storiesOf('Forms|Label, Description, and Error', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('normal label', ({
-		label = text('label', 'Label'),
-		error = boolean('error', false),
-	}) => (
+	.add('normal label', () => (
 		<Form>
 			<Item>
-				<Label error={error}>{label}</Label>
+				<Label error={boolean('error', false)}>{text('label', 'Label')}</Label>
 				<TextInput />
 			</Item>
 		</Form>
 	))
-	.add('error label', ({
-		label = text('label', 'Label'),
-		error = boolean('error', true),
-	}) => (
+	.add('error label', () => (
 		<Form>
 			<Item>
-				<Label error={error}>{label}</Label>
-				<TextInput error={error} />
+				<Label error={boolean('error', true)}>{text('label', 'Label')}</Label>
+				<TextInput error={boolean('error', true)} />
 			</Item>
 		</Form>
 	))
-	.add('description', ({
-		description = text('description', 'Description'),
-	}) => (
+	.add('description', () => (
 		<Form>
 			<Item>
 				<TextInput />
-				<Description>{description}</Description>
+				<Description>{text('description', 'Description')}</Description>
 			</Item>
 		</Form>
 	))
-	.add('error', ({
-		error = text('error', 'Error'),
-	}) => (
+	.add('error', () => (
 		<Form>
 			<Item>
-				<TextInput error={!!error} />
-				<Error>{error}</Error>
+				<TextInput error={!!text('error', 'Error')} />
+				<Error>{text('error', 'Error')}</Error>
 			</Item>
 		</Form>
 	))
@@ -458,11 +336,11 @@ storiesOf('Forms|Item', module)
 		inline = boolean('inline', false),
 		label = text('label', 'Label'),
 		value = text('value', ''),
-		options = object('options', {
-			1: 'Option 1',
-			2: 'Option 2',
-			3: 'Option 3',
-		}),
+		options = object('options', [
+			{ value: '1', label: 'Option 1' },
+			{ value: '2', label: 'Option 2' },
+			{ value: '3', label: 'Option 3' },
+		]),
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', false),
@@ -533,11 +411,11 @@ storiesOf('Forms|Item', module)
 		inline = boolean('inline', true),
 		label = text('label', 'Label'),
 		value = text('value', ''),
-		options = object('options', {
-			1: 'Option 1',
-			2: 'Option 2',
-			3: 'Option 3',
-		}),
+		options = object('options', [
+			{ value: '1', label: 'Option 1' },
+			{ value: '2', label: 'Option 2' },
+			{ value: '3', label: 'Option 3' },
+		]),
 		placeholder = text('placeholder', 'Placeholder'),
 		disabled = boolean('disabled', false),
 		small = boolean('small', false),
@@ -698,6 +576,27 @@ storiesOf('Forms|Field', module)
 				error={text('error', '')}
 			>
 				{({ error, onChange }) => <TextInput error={!!error} onChange={onChange} />}
+			</Field>
+
+			<Field
+				inline={boolean('inline', false)}
+				label={text('label', 'Label')}
+				required={boolean('required', true)}
+				description={text('description', 'Description.')}
+				error={text('error', '')}
+			>
+				{({ error, onChange }) => (
+					<SelectInput
+						error={!!error}
+						onChange={onChange}
+						options={object('', [
+							{ value: '', label: 'Empty option' },
+							{ value: '1', label: 'Option 1' },
+							{ value: '2', label: 'Option 2' },
+							{ value: '3', label: 'Option 3' },
+						])}
+					/>
+				)}
 			</Field>
 		</Form>
 	))
