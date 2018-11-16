@@ -91,6 +91,8 @@ $form-input-select-arrow-color: $color-text-light;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 
+	transition: color $default-time-animation;
+
 	&--error {
 		color: $form-label-error-color;
 	}
@@ -104,6 +106,8 @@ $form-input-select-arrow-color: $color-text-light;
 	font-size: $form-description-font-size;
 	font-weight: $form-description-font-weight;
 	line-height: $form-description-line-height;
+
+	transition: color $default-time-animation;
 
 	&--error {
 		color: $form-description-error-color;
@@ -125,7 +129,6 @@ $form-input-select-arrow-color: $color-text-light;
 	line-height: $form-input-line-height;
 
 	transition: border-color $default-time-animation,
-		color $default-time-animation,
 		color $default-time-animation,
 		background-color $default-time-animation,
 		trasform $default-time-animation;
