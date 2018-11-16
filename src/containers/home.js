@@ -32,6 +32,10 @@ class Wrapped extends Component {
 	}
 
 	async sendMessage(msg) {
+		if (msg.trim() === '') {
+			return;
+		}
+
 		const stateUser = await this.getUser();
 		const { token } = stateUser;
 
@@ -79,10 +83,12 @@ class Wrapped extends Component {
 			loading: false,
 		};
 		const state = getState();
+		const { config: { settings: { fileUpload } } } = state;
+
 		rid = state.room && state.room._id;
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onTop = this.onTop.bind(this);
-		this.onUpload = this.onUpload.bind(this);
+		this.onUpload = fileUpload && this.onUpload.bind(this);
 	}
 
 	async componentDidMount() {
