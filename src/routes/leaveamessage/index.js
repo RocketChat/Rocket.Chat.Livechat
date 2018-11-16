@@ -5,7 +5,7 @@ import style from './style';
 import Header, {
 	Title, Content, Actions, Action,
 } from 'components/Header';
-import { Form, Field, Item } from 'components/Form';
+import { Form, InputField, Item } from 'components/Form';
 
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrow.svg';
@@ -64,15 +64,15 @@ export default class Home extends Component {
 			<main class={style.main}>
 				<p>{message}</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
-					<Field disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
+					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
 						placeholder={namePlaceholder}
 						label="Name"
 					/>
-					<Field disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull', 'email']} name="email"
+					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull', 'email']} name="email"
 						placeholder={emailPlaceholder}
 						label="E-mail"
 					/>
-					<Field
+					<InputField
 						disabled={loading}
 						multiple={4}
 						required

@@ -151,7 +151,7 @@ const builtinValidations = {
 	},
 };
 
-export class Field extends Component {
+export class InputField extends Component {
 	handleChange = (onChange) => (event) => {
 		onChange && onChange(event);
 		this.validateAndChangeState();
@@ -175,7 +175,7 @@ export class Field extends Component {
 		}
 
 		try {
-			await asyncForEach(builtinValidations, (validation) => {
+			await asyncForEach(validations, (validation) => {
 				if (typeof validation === 'string') {
 					return builtinValidations[validation](value);
 				}
@@ -199,7 +199,6 @@ export class Field extends Component {
 	}
 
 	state = {
-		value: '',
 		error: false,
 	}
 
@@ -238,7 +237,81 @@ export class Field extends Component {
 	}
 }
 
+const fieldValidations = {
+	required: ({ target: { value } }) => (value ?
+		{ valid: true } : { valid: false, error: 'Field required' }),
+
+	email: ({ target: { value } }) => (!value || /^\S+@\S+\.\S+/.test(String(value).toLowerCase()) ?
+		{ valid: true } : { valid: false, error: 'Invalid email' }),
+};
+
+export class Field extends Component {
+	static validations = fieldValidations;
+
+	handleChange = async(event) => {
+		const { onChange } = this.props;
+		onChange && onChange(event);
+
+		if (event.defaultPrevented) {
+			return;
+		}
+
+		const { valid, error } = await this.validateChange(event);
+		const wasValid = !this.state.error;
+		if (valid !== wasValid) {
+			this.setState({ error });
+		}
+	}
+
+	validateChange = async(event) => {
+		const validations = [
+			...(this.props.validations || []),
+			this.props.required && Field.validations.required,
+		]
+			.map((validation) => (typeof validation === 'string' ? Field.validations[validation] : validation))
+			.filter((validation, index, validations) => validation && validations.indexOf(validation) === index);
+
+		for (const validation of validations) {
+			const result = await validation(event);
+
+			if (!result.valid) {
+				return result;
+			}
+		}
+
+		return { valid: true };
+	}
+
+	state = {
+		error: false,
+	}
+
+	renderLabel = ({ label, required, error }) => (
+		label && <Label error={!!error}>{label}{required && ' *'}</Label>
+	)
+
+	renderChild = ({ children, error }) => (
+		typeof children[0] === 'function' && children[0]({ error, onChange: this.handleChange })
+	)
+
+	renderDescription = ({ description, error }) => (
+		(error || description) && <Description error={!!error}>{error || description}</Description>
+	)
+
+	render() {
+		const { inline, label, required, description, children } = this.props;
+		const error = this.state.error || this.props.error;
+
+		return (
+			<Item inline={inline}>
+				{this.renderLabel({ label, required, error })}
+				{this.renderChild({ children, error })}
+				{this.renderDescription({ description, error })}
+			</Item>
+		);
+	}
+}
+
 export {
 	TextInput as Input,
-	Field as InputField,
 };

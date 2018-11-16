@@ -688,7 +688,7 @@ storiesOf('Forms|Buttons', module)
 storiesOf('Forms|Field', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('text', () => (
+	.add('"required" validation', () => (
 		<Form>
 			<Field
 				inline={boolean('inline', false)}
@@ -696,52 +696,23 @@ storiesOf('Forms|Field', module)
 				required={boolean('required', true)}
 				description={text('description', 'Description.')}
 				error={text('error', '')}
-				type="text"
-				value={text('value', 'Value')}
-			/>
+			>
+				{({ error, onChange }) => <TextInput error={!!error} onChange={onChange} />}
+			</Field>
 		</Form>
 	))
-	.add('password', () => (
+	.add('"email" validation', () => (
 		<Form>
 			<Field
 				inline={boolean('inline', false)}
 				label={text('label', 'Label')}
-				required={boolean('required', true)}
+				required={boolean('required', false)}
+				validations={['email']}
 				description={text('description', 'Description.')}
 				error={text('error', '')}
-				type="password"
-				value={text('value', 'Value')}
-			/>
-		</Form>
-	))
-	.add('select', () => (
-		<Form>
-			<Field
-				inline={boolean('inline', false)}
-				label={text('label', 'Label')}
-				required={boolean('required', true)}
-				description={text('description', 'Description.')}
-				error={text('error', '')}
-				type="select"
-				value={text('value', '1')}
-				options={{
-					1: 'Option 1',
-					2: 'Option 2',
-					3: 'Option 3',
-				}}
-			/>
-		</Form>
-	))
-	.add('validations', () => (
-		<Form>
-			<Field
-				label="Name"
-				required
-				description="Required fields always use 'notNull' validation"
-				type="text"
-				value={text('value', '')}
-				onChange={action('change')}
-			/>
+			>
+				{({ error, onChange }) => <TextInput error={!!error} onChange={onChange} />}
+			</Field>
 		</Form>
 	))
 ;
