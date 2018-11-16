@@ -30,7 +30,7 @@ storiesOf('Forms|TextInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -45,7 +45,7 @@ storiesOf('Forms|TextInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -60,7 +60,7 @@ storiesOf('Forms|TextInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -75,7 +75,7 @@ storiesOf('Forms|TextInput', module)
 					small={boolean('small', true)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -90,7 +90,7 @@ storiesOf('Forms|TextInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', true)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -105,7 +105,7 @@ storiesOf('Forms|TextInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 3)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -125,7 +125,7 @@ storiesOf('Forms|PasswordInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -140,7 +140,7 @@ storiesOf('Forms|PasswordInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -155,7 +155,7 @@ storiesOf('Forms|PasswordInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -170,7 +170,7 @@ storiesOf('Forms|PasswordInput', module)
 					small={boolean('small', true)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -185,7 +185,7 @@ storiesOf('Forms|PasswordInput', module)
 					small={boolean('small', false)}
 					multiple={number('multiple', 1)}
 					error={boolean('error', true)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -209,7 +209,7 @@ storiesOf('Forms|SelectInput', module)
 					disabled={boolean('disabled', false)}
 					small={boolean('small', false)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -228,7 +228,7 @@ storiesOf('Forms|SelectInput', module)
 					disabled={boolean('disabled', false)}
 					small={boolean('small', false)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -247,7 +247,7 @@ storiesOf('Forms|SelectInput', module)
 					disabled={boolean('disabled', true)}
 					small={boolean('small', false)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -266,7 +266,7 @@ storiesOf('Forms|SelectInput', module)
 					disabled={boolean('disabled', false)}
 					small={boolean('small', true)}
 					error={boolean('error', false)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -285,7 +285,7 @@ storiesOf('Forms|SelectInput', module)
 					disabled={boolean('disabled', false)}
 					small={boolean('small', false)}
 					error={boolean('error', true)}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 			</Item>
 		</Form>
@@ -358,7 +358,7 @@ storiesOf('Forms|Item', module)
 					small={small}
 					multiple={multiple}
 					error={error}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 				{!inline && description && <Description>{description}</Description>}
 				{!inline && error && <Error>{error}</Error>}
@@ -372,7 +372,7 @@ storiesOf('Forms|Item', module)
 					disabled={disabled}
 					small={small}
 					error={error}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 				{!inline && description && <Description>{description}</Description>}
 				{!inline && error && <Error>{error}</Error>}
@@ -400,7 +400,7 @@ storiesOf('Forms|Item', module)
 					small={small}
 					multiple={multiple}
 					error={error}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 				{!inline && description && <Description>{description}</Description>}
 				{!inline && error && <Error>{error}</Error>}
@@ -433,7 +433,7 @@ storiesOf('Forms|Item', module)
 					small={small}
 					multiple={multiple}
 					error={error}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 				{!inline && description && <Description>{description}</Description>}
 				{!inline && error && <Error>{error}</Error>}
@@ -447,7 +447,7 @@ storiesOf('Forms|Item', module)
 					disabled={disabled}
 					small={small}
 					error={error}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 				{!inline && description && <Description>{description}</Description>}
 				{!inline && error && <Error>{error}</Error>}
@@ -481,7 +481,7 @@ storiesOf('Forms|Buttons', module)
 					small={small}
 					multiple={multiple}
 					error={error}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 				{!inline && description && <Description>{description}</Description>}
 				{!inline && error && <Error>{error}</Error>}
@@ -513,7 +513,7 @@ storiesOf('Forms|Buttons', module)
 					small={small}
 					multiple={multiple}
 					error={error}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 				{!inline && description && <Description>{description}</Description>}
 				{!inline && error && <Error>{error}</Error>}
@@ -547,7 +547,7 @@ storiesOf('Forms|Buttons', module)
 					small={small}
 					multiple={multiple}
 					error={error}
-					onInput={action('input')}
+					onChange={action('change')}
 				/>
 				{!inline && description && <Description>{description}</Description>}
 				{!inline && error && <Error>{error}</Error>}

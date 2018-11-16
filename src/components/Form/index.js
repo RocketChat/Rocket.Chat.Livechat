@@ -85,27 +85,37 @@ export class SelectInput extends Component {
 		value: this.props.value,
 	}
 
-	handleInput = (onInput) => (event) => {
+	handleChange = (event) => {
+		const { onChange } = this.props;
+		onChange && onChange(event);
+
+		if (event.defaultPrevented) {
+			return;
+		}
+
 		this.setState({ value: event.target.value });
-		onInput && onInput(event);
 	}
 
-	componentWillReceiveProps({ value }) {
-		this.setState({ value });
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.hasOwnProperty('value') && nextProps.value !== this.props.value) {
+			this.setState({ value: nextProps.value });
+		}
 	}
 
 	render() {
 		const {
 			// eslint-disable-next-line no-unused-vars
 			value,
+			// eslint-disable-next-line no-unused-vars
+			onChange,
 			options = [],
 			placeholder,
 			disabled,
 			error,
 			small,
-			onInput,
 			...args
 		} = this.props;
+
 		return (
 			<div
 				className={[
@@ -116,7 +126,7 @@ export class SelectInput extends Component {
 				<select
 					value={this.state.value}
 					disabled={disabled}
-					onInput={this.handleInput(onInput)}
+					onChange={this.handleChange}
 					className={createClassName(styles, 'form__input-select__select', {
 						disabled,
 						error,
