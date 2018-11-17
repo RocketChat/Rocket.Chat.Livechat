@@ -34,12 +34,15 @@ export default class UserWrap extends Component {
 
 	async initRoom(state) {
 		if (this.stream) { return; }
-		this.stream = this.stream || SDK.connect();
+		this.stream = SDK.connect();
 		await this.stream;
-		SDK.subscribeRoom(state.room._id, { token: state.user.token, visitorToken: state.user.token });
+
+		SDK.subscribeRoom(state.room._id);
+
 		SDK.onMessage((message) => {
-			this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => { return { msg, attachments }; }) });
+			this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 		});
+
 		SDK.onTyping((username, isTyping) => {
 			const { typing, user } = this.state;
 
@@ -57,8 +60,18 @@ export default class UserWrap extends Component {
 			}
 		});
 
-		SDK.on('stream-livechat-room', (error, data) => {
-			console.log(data);
+		const { agent, room: { _id, servedBy } } = state;
+		if (!agent && servedBy) {
+			const agent = await SDK.agent({ rid: _id });
+			//we're changing the SDK.agent method to return de agent prop instead of the endpoint data
+			//so then we'll need to change this method, sending the { agent } object over the emit method
+			delete agent.success;
+
+			this.emit(agent);
+		}
+
+		SDK.onAgentChange(state.room._id, (agent) => {
+			this.emit({ agent });
 		});
 
 		this.updateCookies(state);
@@ -86,8 +99,10 @@ export default class UserWrap extends Component {
 	async getConfig() {
 		const { user: { token } } = getState();
 		SDK.credentials.token = token;
-		const { config } = await (token ? SDK.config({ token }) : SDK.config());
-		this.emit({ config, room: config.room });
+		const config = await (token ? SDK.config({ token }) : SDK.config());
+		const { agent } = config;
+		delete config.agent;
+		this.emit({ config, room: config.room, agent });
 		return config;
 	}
 
