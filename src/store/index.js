@@ -107,12 +107,14 @@ export default class UserWrap extends Component {
 	}
 
 	async getConfig() {
-		const { user: { token } } = getState();
+		const { sound, user: { token } } = getState();
 		SDK.credentials.token = token;
 		const config = await (token ? SDK.config({ token }) : SDK.config());
 		const { agent } = config;
 		delete config.agent;
-		const sound = Object.assign(state.sound, { src: config.resources && config.resources.sound });
+
+		sound.src = config.resources && config.resources.sound;
+
 		this.emit({ config, room: config.room, agent, sound });
 		return config;
 	}
