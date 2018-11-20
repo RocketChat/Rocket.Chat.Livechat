@@ -55,11 +55,6 @@ export default class Home extends Component {
 				<Content>
 					<Title>{title}</Title>
 				</Content>
-				<Actions>
-					<Action onClick={notification}><Bell width={20} /></Action>
-					<Action onClick={minimize}><Arrow width={20} /></Action>
-					<Action onClick={fullScreen}><NewWindow width={20} /></Action>
-				</Actions>
 			</Header>
 			<main class={style.main}>
 				<p>{message}</p>

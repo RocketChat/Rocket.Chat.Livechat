@@ -77,6 +77,20 @@ class Wrapped extends Component {
 			sendFiles(files);
 		});
 	}
+
+	onPlaySound() {
+		const state = getState();
+		const sound = Object.assign(state.sound, { play: false });
+		this.actions({ sound });
+	}
+
+	notification() {
+		const state = getState();
+		const enabled = !state.sound.enabled;
+		const sound = Object.assign(state.sound, { enabled });
+		this.actions({ sound });
+	}
+
 	constructor() {
 		super();
 		this.state = {
@@ -89,6 +103,8 @@ class Wrapped extends Component {
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onTop = this.onTop.bind(this);
 		this.onUpload = fileUpload && this.onUpload.bind(this);
+		this.onPlaySound = this.onPlaySound.bind(this);
+		this.notification = this.notification.bind(this);
 	}
 
 	async componentDidMount() {
@@ -108,7 +124,7 @@ class Wrapped extends Component {
 		return (
 			<Consumer>
 				{
-					({ typing, user, dispatch, config: { theme, settings }, agent, messages }) => {
+					({ typing, user, dispatch, sound, config: { theme, settings, resources }, agent, messages }) => {
 						this.actions = dispatch;
 						return (
 							<Home
@@ -125,6 +141,9 @@ class Wrapped extends Component {
 								title={agent && agent.name}
 								subtitle={agent && agent.emails && agent.emails[0] && agent.emails[0].address}
 								src={agent && `http://localhost:3000/avatar/${ agent.username }`}
+								sound={sound}
+								onPlaySound={this.onPlaySound}
+								notification={this.notification}
 							/>);
 					}}
 			</Consumer>);

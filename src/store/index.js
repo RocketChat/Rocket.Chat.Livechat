@@ -2,12 +2,14 @@
 import { createContext } from 'preact-context';
 import { Component } from 'preact';
 import { EventEmitter } from 'tiny-events';
-import { insert } from 'components/helpers';
+import { insert, setCookies } from 'components/helpers';
 import SDK from '../api';
+import Commands from '../lib/commands';
 
 const e = new EventEmitter();
 const defaultToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-const defaultState = { defaultToken, typing: [], config: { messages: {}, settings: {}, theme: {}, triggers: [], departments: [] }, messages: [], user: {} };
+const sound = { src: '', enabled: true, play: false };
+const defaultState = { defaultToken, typing: [], config: { messages: {}, settings: {}, theme: {}, triggers: [], departments: [], resources: {} }, messages: [], user: {}, sound };
 let state = localStorage.getItem('store') ? { ...defaultState, ...JSON.parse(localStorage.getItem('store')) } : defaultState;
 
 export const Context = createContext({});
@@ -22,25 +24,33 @@ if (token) {
 
 let self;
 
-export default class UserWrap extends Component {
-	updateCookies = (state) => {
-		const { room, user } = state;
-		if (room && user && user.token) {
-			document.cookie = `rc_rid=${ room._id }; path=/`;
-			document.cookie = `rc_token=${ user.token }; path=/`;
-			document.cookie = 'rc_room_type=l; path=/';
-		}
-	}
+const commands = new Commands();
 
+export default class UserWrap extends Component {
 	async initRoom(state) {
 		if (this.stream) { return; }
 		this.stream = SDK.connect();
 		await this.stream;
 
 		SDK.subscribeRoom(state.room._id);
+		const { sound, user } = state;
+		const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
 
 		SDK.onMessage((message) => {
-			this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+			if (message.t === 'command') {
+				commands[message.msg] && commands[message.msg](state);
+			} else if (!msgTypesNotDisplayed.includes(message.t)) {
+				this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+
+				if (message.t === 'livechat-close') {
+					//parentCall('callback', 'chat-ended');
+				}
+
+				if (sound.enabled && message.u._id !== user._id) {
+					sound.play = true;
+					return this.emit({ sound });
+				}
+			}
 		});
 
 		SDK.onTyping((username, isTyping) => {
@@ -74,7 +84,7 @@ export default class UserWrap extends Component {
 			this.emit({ agent });
 		});
 
-		this.updateCookies(state);
+		setCookies(state);
 	}
 
 
@@ -102,7 +112,8 @@ export default class UserWrap extends Component {
 		const config = await (token ? SDK.config({ token }) : SDK.config());
 		const { agent } = config;
 		delete config.agent;
-		this.emit({ config, room: config.room, agent });
+		const sound = Object.assign(state.sound, { src: config.resources && config.resources.sound });
+		this.emit({ config, room: config.room, agent, sound });
 		return config;
 	}
 
