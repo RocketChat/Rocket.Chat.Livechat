@@ -16,7 +16,7 @@ import Plus from 'icons/plus.svg';
 
 
 import Bell from 'icons/bell.svg';
-import BellOff from 'icons/bell-off.svg';
+import BellOff from 'icons/bellOff.svg';
 import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
