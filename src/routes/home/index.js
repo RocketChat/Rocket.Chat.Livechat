@@ -80,7 +80,7 @@ export default class Home extends Component {
 		});
 	}
 
-	renderBell() {
+	renderNotification() {
 		if (this.props.sound.enabled) {
 			return <Bell width={20} />
 		}
@@ -92,13 +92,13 @@ export default class Home extends Component {
 		<div class={style.container}>
 			<Sound onPlay={onPlaySound} src={sound.src} play={sound.play} />
 			<Header.default color={color}>
-				<Header.Picture><Avatar src={src} /></Header.Picture>
+				{src && <Header.Picture><Avatar src={src} /></Header.Picture>}
 				<Header.Content>
 					<Header.Title>{title}</Header.Title>
 					<Header.SubTitle>{subtitle}</Header.SubTitle>
 				</Header.Content>
 				<Header.Actions>
-					<Header.Action onClick={notification}>{this.renderBell()}</Header.Action>
+					<Header.Action onClick={notification}>{this.renderNotification()}</Header.Action>
 					<Header.Action onClick={minimize}><Arrow width={20} /></Header.Action>
 					<Header.Action onClick={fullScreen}><NewWindow width={20} /></Header.Action>
 				</Header.Actions>

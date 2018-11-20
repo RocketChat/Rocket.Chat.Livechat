@@ -117,7 +117,26 @@ class Wrapped extends Component {
 			this.setState({ loading: false });
 			this.actions({ messages: (messages || []).reverse() });
 		}
+	}
 
+	title(agent, theme) {
+		if (agent) {
+			return agent.name;
+		}
+		return (theme && theme.title) || I18n.t('Need help?');
+	}
+
+	subTitle(agent) {
+		if (!agent) {
+			return;
+		}
+
+		const { username, emails } = agent;
+		if (emails && emails[0]) {
+			return emails[0].address;
+		}
+
+		return username;
 	}
 
 	render(props) {
@@ -138,8 +157,8 @@ class Wrapped extends Component {
 								onUpload={this.onUpload}
 								messages={messages}
 								uploads={settings.fileUpload}
-								title={agent && agent.name}
-								subtitle={agent && agent.emails && agent.emails[0] && agent.emails[0].address}
+								title={this.title(agent, theme)}
+								subtitle={this.subTitle(agent)}
 								src={agent && `http://localhost:3000/avatar/${ agent.username }`}
 								sound={sound}
 								onPlaySound={this.onPlaySound}
