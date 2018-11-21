@@ -12,7 +12,6 @@ import {
 	TextInput,
 	PasswordInput,
 	SelectInput,
-	Field,
 } from '.';
 import Button, { Group } from '../Button';
 
@@ -559,59 +558,6 @@ storiesOf('Forms|Buttons', module)
 					<Button danger outline stack small={small} onClick={action('click c')}>{buttonTextC}</Button>
 				</Group>
 			</Item>
-		</Form>
-	))
-;
-
-storiesOf('Forms|Field', module)
-	.addDecorator(centered)
-	.addDecorator(withKnobs)
-	.add('"required" validation', () => (
-		<Form>
-			<Field
-				inline={boolean('inline', false)}
-				label={text('label', 'Label')}
-				required={boolean('required', true)}
-				description={text('description', 'Description.')}
-				error={text('error', '')}
-			>
-				{({ error, onChange }) => <TextInput error={!!error} onChange={onChange} />}
-			</Field>
-
-			<Field
-				inline={boolean('inline', false)}
-				label={text('label', 'Label')}
-				required={boolean('required', true)}
-				description={text('description', 'Description.')}
-				error={text('error', '')}
-			>
-				{({ error, onChange }) => (
-					<SelectInput
-						error={!!error}
-						onChange={onChange}
-						options={object('', [
-							{ value: '', label: 'Empty option' },
-							{ value: '1', label: 'Option 1' },
-							{ value: '2', label: 'Option 2' },
-							{ value: '3', label: 'Option 3' },
-						])}
-					/>
-				)}
-			</Field>
-		</Form>
-	))
-	.add('"email" validation', () => (
-		<Form>
-			<Field
-				inline={boolean('inline', false)}
-				label={text('label', 'Label')}
-				required={boolean('required', false)}
-				validations={['email']}
-				description={text('description', 'Description.')}
-				error={text('error', '')}
-			>
-				{({ error, onChange }) => <TextInput error={!!error} onChange={onChange} />}
-			</Field>
 		</Form>
 	))
 ;
