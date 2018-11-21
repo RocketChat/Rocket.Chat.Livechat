@@ -154,7 +154,9 @@ $form-input-select-arrow-color: $color-text-light;
 		cursor: not-allowed;
 	}
 
-	&--error {
+	&--error,
+	&--error:focus,
+	&--error:hover {
 		border-color: $form-input-error-border-color;
 		color: $form-input-error-color;
 	}
