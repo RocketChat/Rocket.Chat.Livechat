@@ -3,7 +3,8 @@ import styles from './styles';
 import Logo from './logo.svg';
 import { createClassName } from '../helpers';
 
-export const Main = ({ children, ...props }) => (
+
+export const Footer = ({ children, ...props }) => (
 	<footer className={createClassName(styles, 'footer')} {...props}>
 		{children}
 	</footer>
@@ -26,3 +27,11 @@ export const Options = (props) => (
 		Options
 	</button>
 );
+
+Footer.Content = Content;
+Footer.PoweredBy = PoweredBy;
+Footer.Options = Options;
+
+export { Footer as Main };
+
+export default Footer;
