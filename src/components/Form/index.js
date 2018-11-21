@@ -266,9 +266,8 @@ export class Field extends Component {
 			return;
 		}
 
-		const { valid, error } = await this.validateChange(event);
-		const wasValid = !this.state.error;
-		if (valid !== wasValid) {
+		const { error } = await this.validateChange(event);
+		if (error !== this.state.error) {
 			this.setState({ error });
 		}
 	}
