@@ -7,7 +7,7 @@ import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
 
-export default class Home extends Component {
+export default class Register extends Component {
 	state = {
 		name: null,
 		email: null,
@@ -79,10 +79,9 @@ export default class Home extends Component {
 		const hasEmail = emailFieldRegistrationForm;
 		const hasDepartment = allowSwitchingDepartments && departments && departments.length > 0;
 
-
 		if (hasName && !this.state.name) {
 			this.setState({ name: { value: '' } });
-		} else if (!nameFieldRegistrationForm) {
+		} else if (!hasName) {
 			this.setState({ name: null });
 		}
 
