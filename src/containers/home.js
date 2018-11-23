@@ -18,17 +18,19 @@ class Wrapped extends Component {
 		return user;
 	}
 
-	async getRoomId(token) {
-		if (!rid) {
+	async getRoom(token) {
+		const state = getState();
+		let { room } = state;
+
+		if (!room) {
 			try {
-				const room = await SDK.room({ token });
-				rid = room._id;
+				room = await SDK.room({ token });
 				this.actions({ room });
 			} catch (error) {
 				throw error;
 			}
 		}
-		return rid;
+		return room;
 	}
 
 	async sendMessage(msg) {
@@ -39,8 +41,9 @@ class Wrapped extends Component {
 		const stateUser = await this.getUser();
 		const { token } = stateUser;
 
-		this.getRoomId(token).then(async (rid) => {
-			await SDK.sendMessage({ msg, token, rid });
+		this.getRoom(token).then(async (room) => {
+			const m = await SDK.sendMessage({ msg, token, rid: room._id });
+			console.log(m);
 		});
 
 	}
@@ -50,7 +53,9 @@ class Wrapped extends Component {
 			return;
 		}
 		const state = getState();
-		const { messages } = state;
+		const { room, messages } = state;
+		const rid = room && room._id;
+
 		this.setState({ loading: true });
 		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
 		this.setState({ loading: false, ended: messages.length + 10 >= moreMessages.length });
@@ -61,7 +66,7 @@ class Wrapped extends Component {
 		const state = getState();
 		const { user: { token } } = state;
 
-		const sendFiles = (files) => {
+		const sendFiles = (files, rid) => {
 			files.forEach(async (file) => {
 				const formData = new FormData();
 				formData.append('file', file);
@@ -73,8 +78,9 @@ class Wrapped extends Component {
 			});
 		}
 
-		this.getRoomId(token).then((rid) => {
-			sendFiles(files);
+		this.getRoom(token).then((room) => {
+			const rid = room && room._id;
+			sendFiles(files, rid);
 		});
 	}
 
@@ -99,7 +105,6 @@ class Wrapped extends Component {
 		const state = getState();
 		const { config: { settings: { fileUpload } } } = state;
 
-		rid = state.room && state.room._id;
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onTop = this.onTop.bind(this);
 		this.onUpload = fileUpload && this.onUpload.bind(this);
@@ -109,9 +114,10 @@ class Wrapped extends Component {
 
 	async componentDidMount() {
 		const state = getState();
-		const { token } = state.user;
+		const { room, user: { token } } = state;
 
-		if (rid) {
+		if (room) {
+			const rid = room._id;
 			this.setState({ loading: true });
 			const messages = await SDK.loadMessages(rid, { token });
 			this.setState({ loading: false });

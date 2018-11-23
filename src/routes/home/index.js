@@ -7,7 +7,7 @@ import Avatar from 'components/Avatar';
 import DropFiles from 'components/DropFiles';
 import Composer, { Action, Actions } from 'components/Composer';
 import Typing from 'components/TypingIndicator';
-import Message from 'components/Message';
+import Messages from 'components/Messages';
 import { throttle, createClassName } from 'components/helpers';
 import Sound from 'components/Sound';
 
@@ -19,11 +19,6 @@ import Bell from 'icons/bell.svg';
 import BellOff from 'icons/bellOff.svg';
 import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
-
-const renderRow = (args, user, group = false) => {
-	const { u = {}, _id } = args;
-	return <Message group={group} {...args} key={_id} el="li" me={u._id === user} />;
-};
 
 export const isBottom = (el) => el.scrollHeight - el.scrollTop === el.clientHeight;
 export const isTop = (el) => el.scrollTop === 0;
@@ -71,14 +66,6 @@ export default class Home extends Component {
 			toBottom(this.el);
 		}
 	}
-	renderlist(messages) {
-		const { user: { _id } } = this.props;
-		return messages.map((el, index, arr) => {
-			const next = arr[index + 1];
-			const group = next && next.u._id === el.u._id;
-			return renderRow(el, _id, group);
-		});
-	}
 
 	renderNotification() {
 		if (this.props.sound.enabled) {
@@ -88,7 +75,7 @@ export default class Home extends Component {
 		return <BellOff width={20} />
 	}
 
-	render = ({ onUpload, onPlaySound, typingUsers, onSubmit, color, messages, src, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen, sound }) => (
+	render = ({ onUpload, onPlaySound, typingUsers, onSubmit, color, messages, user, src, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen, sound }) => (
 		<div class={style.container}>
 			<Sound onPlay={onPlaySound} src={sound.src} play={sound.play} />
 			<Header.default color={color}>
@@ -106,7 +93,7 @@ export default class Home extends Component {
 			<DropFiles onUpload={onUpload}>
 				<div className={createClassName(style, 'main', { atBottom: this.state.atBottom, loading: this.props.loading })}>
 					<div ref={this.bind} onScroll={this.handleScroll} className={createClassName(style, 'main__wrapper')}>
-						<ol style="padding:0;">{this.renderlist(messages)}</ol>
+						<Messages messages={messages} user={user} />
 						{typingUsers && !!typingUsers.length && <Typing users={typingUsers} />}
 					</div>
 				</div>

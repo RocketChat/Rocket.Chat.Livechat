@@ -24,8 +24,6 @@ if (token) {
 
 let self;
 
-const commands = new Commands();
-
 export default class UserWrap extends Component {
 	async initRoom(state) {
 		if (this.stream) { return; }
@@ -38,14 +36,14 @@ export default class UserWrap extends Component {
 
 		SDK.onMessage((message) => {
 			if (message.t === 'command') {
-				commands[message.msg] && commands[message.msg](state);
+				this.commands[message.msg] && this.commands[message.msg](state);
 			} else if (!msgTypesNotDisplayed.includes(message.t)) {
 				this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 
 				if (message.t === 'livechat-close') {
 					//parentCall('callback', 'chat-ended');
 				}
-
+				console.log(message);
 				if (sound.enabled && message.u._id !== user._id) {
 					sound.play = true;
 					return this.emit({ sound });
@@ -77,7 +75,7 @@ export default class UserWrap extends Component {
 			//so then we'll need to change this method, sending the { agent } object over the emit method
 			delete agent.success;
 
-			this.emit(agent);
+			this.emit({ agent });
 		}
 
 		SDK.onAgentChange(state.room._id, (agent) => {
@@ -122,6 +120,7 @@ export default class UserWrap extends Component {
 	constructor() {
 		super();
 		this.state = state;
+		this.commands = new Commands();
 
 		self = this;
 	}

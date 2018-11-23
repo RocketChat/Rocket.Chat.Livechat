@@ -19,16 +19,16 @@ const src = (user) => {
 	return user && `http://localhost:3000/avatar/${ user.username }`;
 };
 
-const Message = ({ _id, el, msg, ts, me, group, attachments = [], ...args }) => (
-	<Body id={_id} me={me} group={group} Element={el} {...args}>
+const Message = ({ el, me, group, message, ...args }) => (
+	<Body id={message._id} me={me} group={group} Element={el} {...args}>
 		<Container>
-			{!me && <Avatar src={src(args.u)} className={createClassName(styles, 'avatar', { group })} />}
+			{!me && <Avatar src={src(message.u)} className={createClassName(styles, 'avatar', { group })} />}
 			<Content me={me}>
-				{msg && <Text me={me} dangerouslySetInnerHTML={{ __html: md.render(parseMessage(args, msg)) }} />}
-				{attachments && attachments.length && <Attachments attachments={attachments} />}
-				<div className={createClassName(styles, 'message__time', {})}>{parseDate(ts)}</div>
+				{message.msg && <Text me={me} dangerouslySetInnerHTML={{ __html: md.render(parseMessage(message, message.msg)) }} />}
+				{message.attachments && message.attachments.length && <Attachments attachments={message.attachments} />}
+				<div className={createClassName(styles, 'message__time', {})}>{parseDate(message.ts)}</div>
 			</Content>
-			{me && <Avatar src={src(args.u)} className={createClassName(styles, 'avatar', { group })} />}
+			{me && <Avatar src={src(message.u)} className={createClassName(styles, 'avatar', { group })} />}
 		</Container>
 	</Body>
 );
