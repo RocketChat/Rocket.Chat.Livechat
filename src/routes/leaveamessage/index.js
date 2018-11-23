@@ -1,11 +1,11 @@
 import { h, Component } from 'preact';
 
-import { asyncForEach, asyncEvery } from '../../components/helpers';
+import { asyncEvery } from '../../components/helpers';
 import style from './style';
 import Header, {
 	Title, Content, Actions, Action,
 } from 'components/Header';
-import { Form, InputField, Item } from 'components/input';
+import { Form, InputField, Item } from 'components/Form';
 
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrow.svg';
@@ -64,7 +64,7 @@ export default class Home extends Component {
 			<main class={style.main}>
 				<p>{message}</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
-					<InputField disabled={loading} equired onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
+					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
 						placeholder={namePlaceholder}
 						label="Name"
 					/>
