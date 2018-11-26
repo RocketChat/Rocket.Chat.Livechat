@@ -17,7 +17,7 @@ export default class Register extends Component {
 	validations = {
 		name: [Validations.nonEmpty],
 		email: [Validations.nonEmpty, Validations.email],
-		department: [Validations.nonEmpty],
+		department: [],
 	}
 
 	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => (error || validation(value)), undefined)
@@ -150,7 +150,7 @@ export default class Register extends Component {
 
 						{this.state.department && (
 							<Form.Item>
-								<Form.Label error={this.state.department.showError}>I need help with... *</Form.Label>
+								<Form.Label error={this.state.department.showError}>I need help with...</Form.Label>
 								<Form.SelectInput
 									name="department"
 									placeholder="Choose an option..."
