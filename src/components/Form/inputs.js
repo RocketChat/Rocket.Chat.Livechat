@@ -107,8 +107,8 @@ export class SelectInput extends Component {
 					{...args}
 				>
 					<option value="" disabled hidden>{placeholder}</option>
-					{Array.from(options).map(({ value, label }) => (
-						<option value={value} className={createClassName(styles, 'form__input-select__option')}>{label}</option>
+					{Array.from(options).map(({ value, label }, key) => (
+						<option key={key} value={value} className={createClassName(styles, 'form__input-select__option')}>{label}</option>
 					))}
 				</select>
 				<Arrow className={createClassName(styles, 'form__input-select__arrow')} />
