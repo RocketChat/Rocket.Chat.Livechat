@@ -60,45 +60,41 @@ export default class Register extends Component {
 	constructor(props) {
 		super(props);
 
-		const { settings: { nameFieldRegistrationForm, emailFieldRegistrationForm, allowSwitchingDepartments },
-			departments } = props;
+		const { hasNameField, hasEmailField, hasDepartmentField, departments } = props;
 
-		if (nameFieldRegistrationForm) {
+		if (hasNameField) {
 			this.state.name = { value: '' };
 		}
 
-		if (emailFieldRegistrationForm) {
+		if (hasEmailField) {
 			this.state.email = { value: '' };
 		}
 
-		if (allowSwitchingDepartments && departments && departments.length > 0) {
+		if (hasDepartmentField && departments && departments.length > 0) {
 			this.state.department = { value: '' };
 		}
 
 		this.validateAll();
 	}
 
-	componentWillReceiveProps({ settings: { nameFieldRegistrationForm, emailFieldRegistrationForm, allowSwitchingDepartments },
-		departments }) {
-		const hasName = nameFieldRegistrationForm;
-		const hasEmail = emailFieldRegistrationForm;
-		const hasDepartment = allowSwitchingDepartments && departments && departments.length > 0;
-
-		if (hasName && !this.state.name) {
+	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departments }) {
+		if (hasNameField && !this.state.name) {
 			this.setState({ name: { value: '' } });
-		} else if (!hasName) {
+		} else if (!hasNameField) {
 			this.setState({ name: null });
 		}
 
-		if (hasEmail && !this.state.email) {
+		if (hasEmailField && !this.state.email) {
 			this.setState({ email: { value: '' } });
-		} else if (!hasEmail) {
+		} else if (!hasEmailField) {
 			this.setState({ email: null });
 		}
 
-		if (hasDepartment && !this.state.department) {
+		const showDepartmentField = hasDepartmentField && departments && departments.length > 0;
+
+		if (showDepartmentField && !this.state.department) {
 			this.setState({ department: { value: '' } });
-		} else if (!hasDepartment) {
+		} else if (!showDepartmentField) {
 			this.setState({ department: null });
 		}
 	}

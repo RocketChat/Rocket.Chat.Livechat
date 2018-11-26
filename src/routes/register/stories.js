@@ -17,15 +17,12 @@ storiesOf('Screen|Register', module)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<Register
-			color={color('color', '#175CC4')}
-			loading={boolean('loading', false)}
 			title={text('title', 'Need help?')}
+			color={color('color', '#C1272D')}
 			message={text('message', 'Please, tell us some informations to start the chat')}
-			settings={{
-				nameFieldRegistrationForm: boolean('settings.nameFieldRegistrationForm', true),
-				emailFieldRegistrationForm: boolean('settings.emailFieldRegistrationForm', true),
-				allowSwitchingDepartments: boolean('settings.allowSwitchingDepartments', true),
-			}}
+			hasNameField={boolean('hasNameField', true)}
+			hasEmailField={boolean('hasEmailField', true)}
+			hasDepartmentField={boolean('hasDepartmentField', true)}
 			departments={object('departments', [
 				{
 					_id: 1,
@@ -40,6 +37,8 @@ storiesOf('Screen|Register', module)
 					name: 'Department #3',
 				},
 			])}
+			loading={boolean('loading', false)}
 			onSubmit={action('submit')}
 		/>
-	));
+	))
+;
