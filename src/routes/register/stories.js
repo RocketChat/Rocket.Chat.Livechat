@@ -38,6 +38,9 @@ storiesOf('Screen|Register', module)
 				},
 			])}
 			loading={boolean('loading', false)}
+			onToggleNotification={action('toggleNotification')}
+			onToggleMinimize={action('toggleMinimize')}
+			onToggleFullScreen={action('toggleFullScreen')}
 			onSubmit={action('submit')}
 		/>
 	))

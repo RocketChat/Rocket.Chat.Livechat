@@ -4,6 +4,9 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Form, Validations } from '../../components/Form';
 import { createClassName } from '../../components/helpers';
+import Bell from '../../icons/bell.svg';
+import Arrow from '../../icons/arrow.svg';
+import NewWindow from '../../icons/newWindow.svg';
 import styles from './styles';
 
 
@@ -33,7 +36,22 @@ export default class Register extends Component {
 		}
 	}
 
-	isValid = () => this.getValidableFields().every(({ error } = {}) => !error);
+	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
+
+	handleToggleNotification = () => {
+		const { onToggleNotification } = this.props;
+		onToggleNotification && onToggleNotification();
+	}
+
+	handleToggleMinimize = () => {
+		const { onToggleMinimize } = this.props;
+		onToggleMinimize && onToggleMinimize();
+	}
+
+	handleToggleFullScreen = () => {
+		const { onToggleFullScreen } = this.props;
+		onToggleFullScreen && onToggleFullScreen();
+	}
 
 	handleFieldChange = (fieldName) => ({ target: { value } }) => {
 		const error = this.validate(fieldName, value);
@@ -109,6 +127,11 @@ export default class Register extends Component {
 					<Header.Content>
 						<Header.Title>{title}</Header.Title>
 					</Header.Content>
+					<Header.Actions>
+						<Header.Action onClick={this.handleToggleNotification}><Bell width={20} /></Header.Action>
+						<Header.Action onClick={this.handleToggleMinimize}><Arrow width={20} /></Header.Action>
+						<Header.Action onClick={this.handleToggleFullScreen}><NewWindow width={20} /></Header.Action>
+					</Header.Actions>
 				</Header>
 
 				<main className={createClassName(styles, 'register__main')}>
