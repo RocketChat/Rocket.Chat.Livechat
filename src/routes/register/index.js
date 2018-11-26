@@ -20,15 +20,20 @@ export default class Register extends Component {
 		department: [],
 	}
 
+	getValidableFields = () => Object.keys(this.validations)
+		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
+		.filter(Boolean);
+
 	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => (error || validation(value)), undefined)
 
 	validateAll = () => {
-		for (const fieldName of Object.keys(this.validations)) {
-			const { value } = this.state[fieldName];
+		for (const { fieldName, value } of this.getValidableFields()) {
 			const error = this.validate(fieldName, value);
 			this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
 		}
 	}
+
+	isValid = () => this.getValidableFields().every(({ error } = {}) => !error);
 
 	handleFieldChange = (fieldName) => ({ target: { value } }) => {
 		const error = this.validate(fieldName, value);
@@ -100,7 +105,7 @@ export default class Register extends Component {
 
 	render() {
 		const { title, color, message, loading, departments } = this.props;
-		const valid = [this.state.name, this.state.email, this.state.department].every(({ error }) => !error);
+		const valid = this.isValid();
 
 		return (
 			<div class={createClassName(styles, 'register')}>
