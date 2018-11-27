@@ -4,6 +4,9 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Form, Validations } from '../../components/Form';
 import { createClassName } from '../../components/helpers';
+import Bell from '../../icons/bell.svg';
+import Arrow from '../../icons/arrow.svg';
+import NewWindow from '../../icons/newWindow.svg';
 import styles from './styles';
 
 
@@ -17,17 +20,37 @@ export default class Register extends Component {
 	validations = {
 		name: [Validations.nonEmpty],
 		email: [Validations.nonEmpty, Validations.email],
-		department: [Validations.nonEmpty],
+		department: [],
 	}
+
+	getValidableFields = () => Object.keys(this.validations)
+		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
+		.filter(Boolean);
 
 	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => (error || validation(value)), undefined)
 
 	validateAll = () => {
-		for (const fieldName of Object.keys(this.validations)) {
-			const { value } = this.state[fieldName];
+		for (const { fieldName, value } of this.getValidableFields()) {
 			const error = this.validate(fieldName, value);
 			this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
 		}
+	}
+
+	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
+
+	handleToggleNotification = () => {
+		const { onToggleNotification } = this.props;
+		onToggleNotification && onToggleNotification();
+	}
+
+	handleToggleMinimize = () => {
+		const { onToggleMinimize } = this.props;
+		onToggleMinimize && onToggleMinimize();
+	}
+
+	handleToggleFullScreen = () => {
+		const { onToggleFullScreen } = this.props;
+		onToggleFullScreen && onToggleFullScreen();
 	}
 
 	handleFieldChange = (fieldName) => ({ target: { value } }) => {
@@ -55,52 +78,48 @@ export default class Register extends Component {
 	constructor(props) {
 		super(props);
 
-		const { settings: { nameFieldRegistrationForm, emailFieldRegistrationForm, allowSwitchingDepartments },
-			departments } = props;
+		const { hasNameField, hasEmailField, hasDepartmentField, departments } = props;
 
-		if (nameFieldRegistrationForm) {
+		if (hasNameField) {
 			this.state.name = { value: '' };
 		}
 
-		if (emailFieldRegistrationForm) {
+		if (hasEmailField) {
 			this.state.email = { value: '' };
 		}
 
-		if (allowSwitchingDepartments && departments && departments.length > 0) {
+		if (hasDepartmentField && departments && departments.length > 0) {
 			this.state.department = { value: '' };
 		}
 
 		this.validateAll();
 	}
 
-	componentWillReceiveProps({ settings: { nameFieldRegistrationForm, emailFieldRegistrationForm, allowSwitchingDepartments },
-		departments }) {
-		const hasName = nameFieldRegistrationForm;
-		const hasEmail = emailFieldRegistrationForm;
-		const hasDepartment = allowSwitchingDepartments && departments && departments.length > 0;
-
-		if (hasName && !this.state.name) {
+	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departments }) {
+		if (hasNameField && !this.state.name) {
 			this.setState({ name: { value: '' } });
-		} else if (!hasName) {
+		} else if (!hasNameField) {
 			this.setState({ name: null });
 		}
 
-		if (hasEmail && !this.state.email) {
+		if (hasEmailField && !this.state.email) {
 			this.setState({ email: { value: '' } });
-		} else if (!hasEmail) {
+		} else if (!hasEmailField) {
 			this.setState({ email: null });
 		}
 
-		if (hasDepartment && !this.state.department) {
+		const showDepartmentField = hasDepartmentField && departments && departments.length > 0;
+
+		if (showDepartmentField && !this.state.department) {
 			this.setState({ department: { value: '' } });
-		} else if (!hasDepartment) {
+		} else if (!showDepartmentField) {
 			this.setState({ department: null });
 		}
 	}
 
 	render() {
 		const { title, color, message, loading, departments } = this.props;
-		const valid = [this.state.name, this.state.email, this.state.department].every(({ error }) => !error);
+		const valid = this.isValid();
 
 		return (
 			<div class={createClassName(styles, 'register')}>
@@ -108,6 +127,11 @@ export default class Register extends Component {
 					<Header.Content>
 						<Header.Title>{title}</Header.Title>
 					</Header.Content>
+					<Header.Actions>
+						<Header.Action onClick={this.handleToggleNotification}><Bell width={20} /></Header.Action>
+						<Header.Action onClick={this.handleToggleMinimize}><Arrow width={20} /></Header.Action>
+						<Header.Action onClick={this.handleToggleFullScreen}><NewWindow width={20} /></Header.Action>
+					</Header.Actions>
 				</Header>
 
 				<main className={createClassName(styles, 'register__main')}>
@@ -150,7 +174,7 @@ export default class Register extends Component {
 
 						{this.state.department && (
 							<Form.Item>
-								<Form.Label error={this.state.department.showError}>I need help with... *</Form.Label>
+								<Form.Label error={this.state.department.showError}>I need help with...</Form.Label>
 								<Form.SelectInput
 									name="department"
 									placeholder="Choose an option..."

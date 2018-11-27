@@ -17,15 +17,12 @@ storiesOf('Screen|Register', module)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<Register
-			color={color('color', '#175CC4')}
-			loading={boolean('loading', false)}
 			title={text('title', 'Need help?')}
+			color={color('color', '#C1272D')}
 			message={text('message', 'Please, tell us some informations to start the chat')}
-			settings={{
-				nameFieldRegistrationForm: boolean('settings.nameFieldRegistrationForm', true),
-				emailFieldRegistrationForm: boolean('settings.emailFieldRegistrationForm', true),
-				allowSwitchingDepartments: boolean('settings.allowSwitchingDepartments', true),
-			}}
+			hasNameField={boolean('hasNameField', true)}
+			hasEmailField={boolean('hasEmailField', true)}
+			hasDepartmentField={boolean('hasDepartmentField', true)}
 			departments={object('departments', [
 				{
 					_id: 1,
@@ -40,6 +37,40 @@ storiesOf('Screen|Register', module)
 					name: 'Department #3',
 				},
 			])}
+			loading={boolean('loading', false)}
+			onToggleNotification={action('toggleNotification')}
+			onToggleMinimize={action('toggleMinimize')}
+			onToggleFullScreen={action('toggleFullScreen')}
 			onSubmit={action('submit')}
 		/>
-	));
+	))
+	.add('loading', () => (
+		<Register
+			title={text('title', 'Need help?')}
+			color={color('color', '#C1272D')}
+			message={text('message', 'Please, tell us some informations to start the chat')}
+			hasNameField={boolean('hasNameField', true)}
+			hasEmailField={boolean('hasEmailField', true)}
+			hasDepartmentField={boolean('hasDepartmentField', true)}
+			departments={object('departments', [
+				{
+					_id: 1,
+					name: 'Department #1',
+				},
+				{
+					_id: 2,
+					name: 'Department #2',
+				},
+				{
+					_id: 3,
+					name: 'Department #3',
+				},
+			])}
+			loading={boolean('loading', true)}
+			onToggleNotification={action('toggleNotification')}
+			onToggleMinimize={action('toggleMinimize')}
+			onToggleFullScreen={action('toggleFullScreen')}
+			onSubmit={action('submit')}
+		/>
+	))
+;
