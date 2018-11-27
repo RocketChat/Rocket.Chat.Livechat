@@ -2,14 +2,13 @@
 import { createContext } from 'preact-context';
 import { Component } from 'preact';
 import { EventEmitter } from 'tiny-events';
-import { insert, setCookies } from 'components/helpers';
+import { insert, setCookies, createToken } from 'components/helpers';
 import SDK from '../api';
 import Commands from '../lib/commands';
 
 const e = new EventEmitter();
-const defaultToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 const sound = { src: '', enabled: true, play: false };
-const defaultState = { defaultToken, typing: [], config: { messages: {}, settings: {}, theme: {}, triggers: [], departments: [], resources: {} }, messages: [], user: {}, sound };
+const defaultState = { token: createToken(), typing: [], config: { messages: {}, settings: {}, theme: {}, triggers: [], departments: [], resources: {} }, messages: [], user: {}, sound };
 let state = localStorage.getItem('store') ? { ...defaultState, ...JSON.parse(localStorage.getItem('store')) } : defaultState;
 
 export const Context = createContext({});

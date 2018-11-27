@@ -11,8 +11,8 @@ class Wrapped extends Component {
 			return user;
 		}
 		this.setState({ loading: true });
-		const { defaultToken } = state;
-		user = await SDK.grantVisitor({ visitor: { token: defaultToken } });
+		const { token } = state;
+		user = await SDK.grantVisitor({ visitor: { token } });
 		this.setState({ loading: false });
 		this.actions({ user });
 		return user;

@@ -12,9 +12,7 @@ const Button = ({ children, disabled, outline, danger, stack, small, loading, ..
 		loading,
 	})}
 	>
-		<div className={styles.button__inner}>
-			{children}
-		</div>
+		{children}
 	</button>
 );
 
