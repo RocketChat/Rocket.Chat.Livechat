@@ -9,12 +9,14 @@ import Composer, { Action, Actions } from 'components/Composer';
 import Typing from 'components/TypingIndicator';
 import Message from 'components/Message';
 import { throttle, createClassName } from 'components/helpers';
+import Sound from 'components/Sound';
 
 import Smile from 'icons/smile.svg';
 import Plus from 'icons/plus.svg';
 
 
 import Bell from 'icons/bell.svg';
+import BellOff from 'icons/bellOff.svg';
 import Arrow from 'icons/arrow.svg';
 import NewWindow from 'icons/newWindow.svg';
 
@@ -77,16 +79,26 @@ export default class Home extends Component {
 			return renderRow(el, _id, group);
 		});
 	}
-	render = ({ onUpload, typingUsers, onSubmit, color, messages, src, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen }) => (
+
+	renderNotification() {
+		if (this.props.sound.enabled) {
+			return <Bell width={20} />;
+		}
+
+		return <BellOff width={20} />;
+	}
+
+	render = ({ onUpload, onPlaySound, typingUsers, onSubmit, color, messages, src, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen, sound }) => (
 		<div class={style.container}>
+			<Sound onPlay={onPlaySound} src={sound.src} play={sound.play} />
 			<Header.default color={color}>
-				<Header.Picture><Avatar src={src} /></Header.Picture>
+				{src && <Header.Picture><Avatar src={src} /></Header.Picture>}
 				<Header.Content>
 					<Header.Title>{title}</Header.Title>
 					<Header.SubTitle>{subtitle}</Header.SubTitle>
 				</Header.Content>
 				<Header.Actions>
-					<Header.Action onClick={notification}><Bell width={20} /></Header.Action>
+					<Header.Action onClick={notification}>{this.renderNotification()}</Header.Action>
 					<Header.Action onClick={minimize}><Arrow width={20} /></Header.Action>
 					<Header.Action onClick={fullScreen}><NewWindow width={20} /></Header.Action>
 				</Header.Actions>

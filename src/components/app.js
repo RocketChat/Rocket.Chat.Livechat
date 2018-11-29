@@ -20,7 +20,7 @@ export default class App extends Component {
 	}
 
 	renderScreen({ user, config, messages }) {
-		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online /*, departments*/ } = config;
+		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online /* , departments */ } = config;
 
 		if (online) {
 			const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);

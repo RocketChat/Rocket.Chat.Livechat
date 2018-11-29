@@ -15,7 +15,8 @@ export default class wrapped extends Component {
 		} catch (error) {
 			({ message } = error.data);
 		}
-		alert(message);
+		// eslint-disable-next-line no-alert
+		window.alert(message);
 
 		this.setState({ loading: false });
 	}

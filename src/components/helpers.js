@@ -100,3 +100,11 @@ export const parseMessage = (args, msg) => {
 			return msg;
 	}
 };
+
+export const setCookies = ({ room, user }) => {
+	if (room && user && user.token) {
+		document.cookie = `rc_rid=${ room._id }; path=/`;
+		document.cookie = `rc_token=${ user.token }; path=/`;
+		document.cookie = 'rc_room_type=l; path=/';
+	}
+};
