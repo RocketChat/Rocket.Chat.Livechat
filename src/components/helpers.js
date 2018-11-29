@@ -65,10 +65,15 @@ export function sort(array, value) {
 	while (min <= max) {
 		const guess = Math.floor((min + max) / 2);
 		const { ts } = array[guess];
-		if (ts < value) { min = guess + 1; } else
-			if (ts > array[guess + 1]) { return guess; } else { max = guess - 1; }
-
+		if (ts < value) {
+			min = guess + 1;
+		} else if (ts > array[guess + 1]) {
+			return guess;
+		} else {
+			max = guess - 1;
+		}
 	}
+
 	return array.length > 0 ? array.length : 0;
 }
 
@@ -89,12 +94,12 @@ export const parseMessage = (args, msg) => {
 			return I18n.t('User_removed_by', { user_removed: msg, user_by: username });
 		case 'wm':
 			return I18n.t('Welcome', { user: username });
-		case 'livechat-close':
+		// case 'livechat-close':
 		// return (Livechat.conversationFinishedMessage) ? Livechat.conversationFinishedMessage : t('Conversation_finished');
 		default:
 			return msg;
 	}
-}
+};
 
 export const setCookies = ({ room, user }) => {
 	if (room && user && user.token) {
@@ -102,5 +107,4 @@ export const setCookies = ({ room, user }) => {
 		document.cookie = `rc_token=${ user.token }; path=/`;
 		document.cookie = 'rc_room_type=l; path=/';
 	}
-}
-
+};

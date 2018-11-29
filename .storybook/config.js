@@ -1,5 +1,7 @@
 import { configure } from '@storybook/react';
+import { setConsoleOptions } from '@storybook/addon-console';
 import { setOptions } from '@storybook/addon-options';
+
 
 setOptions({
   name: 'RocketChat Livechat',
@@ -8,8 +10,12 @@ setOptions({
   hierarchyRootSeparator: /\|/,
 });
 
+setConsoleOptions({
+	panelExclude: [],
+});
+
 function loadStories() {
-	require('../stories/index.js');
+	require('../src/styles/index.scss');
 	const req = require.context('../src', true, /(stories|story)\.js$/);
 	req.keys().forEach(filename => req(filename));
 }

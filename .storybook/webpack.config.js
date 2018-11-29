@@ -50,12 +50,6 @@ module.exports = (baseConfig, env, defaultConfig) => {
 		]
 	}
 
-	defaultConfig.module.rules.push({
-		test: /(stories|story)\.js$/,
-		loaders: [require.resolve('@storybook/addon-storysource/loader')],
-		enforce: 'pre',
-	});
-
 	// defaultConfig.module.rules[4].test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/;
 
 

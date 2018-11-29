@@ -2,6 +2,7 @@ import { h } from 'preact';
 import styles from './styles';
 import { createClassName } from '../helpers';
 
+
 export const Header = ({ children, color, ...props }) => (
 	<header className={createClassName(styles, 'header')} style={{ backgroundColor: color }} {...props}>
 		{children}
@@ -43,5 +44,12 @@ export const Action = ({ children, ...props }) => (
 		{children}
 	</button>
 );
+
+Header.Picture = Picture;
+Header.Content = Content;
+Header.Title = Title;
+Header.SubTitle = SubTitle;
+Header.Actions = Actions;
+Header.Action = Action;
 
 export default Header;
