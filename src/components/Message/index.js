@@ -15,9 +15,7 @@ export const Body = ({ me, children, Element = 'div', group, ...args }) => (<Ele
 </Element>);
 
 const Attachments = ({ attachments }) => <img className={createClassName(styles, 'attachment', {})} src={`http://localhost:3000${ attachments[0].image_url }`} />;
-const src = (user) => {
-	return user && `http://localhost:3000/avatar/${ user.username }`;
-};
+const src = (user) => user && `http://localhost:3000/avatar/${ user.username }`;
 
 const Message = ({ _id, el, msg, ts, me, group, attachments = [], ...args }) => (
 	<Body id={_id} me={me} group={group} Element={el} {...args}>

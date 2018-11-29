@@ -82,10 +82,10 @@ export default class Home extends Component {
 
 	renderNotification() {
 		if (this.props.sound.enabled) {
-			return <Bell width={20} />
+			return <Bell width={20} />;
 		}
 
-		return <BellOff width={20} />
+		return <BellOff width={20} />;
 	}
 
 	render = ({ onUpload, onPlaySound, typingUsers, onSubmit, color, messages, src, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen, sound }) => (

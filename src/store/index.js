@@ -43,7 +43,7 @@ export default class UserWrap extends Component {
 				this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 
 				if (message.t === 'livechat-close') {
-					//parentCall('callback', 'chat-ended');
+					// parentCall('callback', 'chat-ended');
 				}
 
 				if (sound.enabled && message.u._id !== user._id) {
@@ -73,8 +73,8 @@ export default class UserWrap extends Component {
 		const { agent, room: { _id, servedBy } } = state;
 		if (!agent && servedBy) {
 			const agent = await SDK.agent({ rid: _id });
-			//we're changing the SDK.agent method to return de agent prop instead of the endpoint data
-			//so then we'll need to change this method, sending the { agent } object over the emit method
+			// we're changing the SDK.agent method to return de agent prop instead of the endpoint data
+			// so then we'll need to change this method, sending the { agent } object over the emit method
 			delete agent.success;
 
 			this.emit(agent);

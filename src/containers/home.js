@@ -39,7 +39,7 @@ class Wrapped extends Component {
 		const stateUser = await this.getUser();
 		const { token } = stateUser;
 
-		this.getRoomId(token).then(async (rid) => {
+		this.getRoomId(token).then(async(rid) => {
 			await SDK.sendMessage({ msg, token, rid });
 		});
 
@@ -62,7 +62,7 @@ class Wrapped extends Component {
 		const { user: { token } } = state;
 
 		const sendFiles = (files) => {
-			files.forEach(async (file) => {
+			files.forEach(async(file) => {
 				const formData = new FormData();
 				formData.append('file', file);
 				await fetch(`http://localhost:3000/api/v1/livechat/upload/${ rid }`, {
@@ -71,9 +71,9 @@ class Wrapped extends Component {
 					headers: { 'x-visitor-token': token },
 				});
 			});
-		}
+		};
 
-		this.getRoomId(token).then((rid) => {
+		this.getRoomId(token).then(() => {
 			sendFiles(files);
 		});
 	}
@@ -89,6 +89,26 @@ class Wrapped extends Component {
 		const enabled = !state.sound.enabled;
 		const sound = Object.assign(state.sound, { enabled });
 		this.actions({ sound });
+	}
+
+	title(agent, theme) {
+		if (agent) {
+			return agent.name;
+		}
+		return (theme && theme.title) || I18n.t('Need help?');
+	}
+
+	subTitle(agent) {
+		if (!agent) {
+			return;
+		}
+
+		const { username, emails } = agent;
+		if (emails && emails[0]) {
+			return emails[0].address;
+		}
+
+		return username;
 	}
 
 	constructor() {
@@ -112,38 +132,20 @@ class Wrapped extends Component {
 		const { token } = state.user;
 
 		if (rid) {
+			// eslint-disable-next-line react/no-did-mount-set-state
 			this.setState({ loading: true });
 			const messages = await SDK.loadMessages(rid, { token });
+			// eslint-disable-next-line react/no-did-mount-set-state
 			this.setState({ loading: false });
 			this.actions({ messages: (messages || []).reverse() });
 		}
-	}
-
-	title(agent, theme) {
-		if (agent) {
-			return agent.name;
-		}
-		return (theme && theme.title) || I18n.t('Need help?');
-	}
-
-	subTitle(agent) {
-		if (!agent) {
-			return;
-		}
-
-		const { username, emails } = agent;
-		if (emails && emails[0]) {
-			return emails[0].address;
-		}
-
-		return username;
 	}
 
 	render(props) {
 		return (
 			<Consumer>
 				{
-					({ typing, user, dispatch, sound, config: { theme, settings, resources }, agent, messages }) => {
+					({ typing, user, dispatch, sound, config: { theme, settings }, agent, messages }) => {
 						this.actions = dispatch;
 						return (
 							<Home

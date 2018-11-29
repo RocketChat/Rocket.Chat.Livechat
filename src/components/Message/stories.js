@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import centered from '@storybook/addon-centered';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
 import Message from '.';
