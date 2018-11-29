@@ -6,7 +6,7 @@ import Commands from '../lib/commands';
 import Store from './Store';
 
 
-const defaultState = {
+const initialState = {
 	defaultToken: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
 	typing: [],
 	config: {
@@ -18,7 +18,7 @@ const defaultState = {
 		resources: {},
 	},
 	messages: [],
-	user: {},
+	user: null,
 	sound: {
 		src: '',
 		enabled: true,
@@ -26,138 +26,139 @@ const defaultState = {
 	},
 };
 
-const store = new Store(defaultState);
-
-export const Context = createContext({});
-
+export const store = new Store(initialState);
 export const getState = () => store.state;
-export const { Consumer } = Context;
 
-const { user: { token } } = getState();
-if (token) {
-	SDK.credentials.token = token;
-}
-
-let self;
 
 const commands = new Commands();
+let stream;
 
-export default class UserWrap extends Component {
-	async initRoom(state) {
-		if (this.stream) { return; }
-		this.stream = SDK.connect();
-		await this.stream;
+const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
 
-		SDK.subscribeRoom(state.room._id);
-		const { sound, user } = state;
-		const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
+SDK.onMessage((message) => {
+	const { sound, user } = store.state;
 
-		SDK.onMessage((message) => {
-			if (message.t === 'command') {
-				commands[message.msg] && commands[message.msg](state);
-			} else if (!msgTypesNotDisplayed.includes(message.t)) {
-				this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+	if (message.t === 'command') {
+		commands[message.msg] && commands[message.msg](store.state);
+	} else if (!msgTypesNotDisplayed.includes(message.t)) {
+		store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 
-				if (message.t === 'livechat-close') {
-					// parentCall('callback', 'chat-ended');
-				}
+		if (message.t === 'livechat-close') {
+			// parentCall('callback', 'chat-ended');
+		}
 
-				if (sound.enabled && message.u._id !== user._id) {
-					sound.play = true;
-					return this.emit({ sound });
-				}
-			}
-		});
+		if (sound.enabled && message.u._id !== user._id) {
+			sound.play = true;
+			return store.setState({ sound });
+		}
+	}
+});
 
-		SDK.onTyping((username, isTyping) => {
-			const { typing, user } = this.state;
+SDK.onTyping((username, isTyping) => {
+	const { typing, user } = store.state;
 
-			if (user && user.username && user.username === username) {
-				return;
-			}
+	if (user && user.username && user.username === username) {
+		return;
+	}
 
-			if (typing.indexOf(username) === -1 && isTyping) {
-				typing.push(username);
-				return this.emit({ typing });
-			}
+	if (typing.indexOf(username) === -1 && isTyping) {
+		typing.push(username);
+		return store.setState({ typing });
+	}
 
-			if (!isTyping) {
-				return this.emit({ typing: typing.filter((u) => u !== username) });
-			}
-		});
+	if (!isTyping) {
+		return store.setState({ typing: typing.filter((u) => u !== username) });
+	}
+});
 
-		const { agent, room: { _id, servedBy } } = state;
+
+const token = store.state.user && store.state.user.token;
+SDK.credentials.token = token;
+
+
+const StoreContext = createContext();
+
+export class Provider extends Component {
+	static displayName = 'StoreProvider'
+
+	getConfig = async() => {
+		const config = await (token ? SDK.config({ token }) : SDK.config());
+		const { room, agent } = config;
+		delete config.agent;
+
+		const { sound } = store.state;
+		sound.src = config.resources && config.resources.sound;
+
+		store.setState({ config, room, agent, sound });
+	}
+
+	initRoom = async() => {
+		if (stream) {
+			return;
+		}
+
+		stream = await SDK.connect();
+
+		SDK.subscribeRoom(store.state.room._id);
+
+		const { agent, room: { _id, servedBy } } = store.state;
 		if (!agent && servedBy) {
 			const agent = await SDK.agent({ rid: _id });
 			// we're changing the SDK.agent method to return de agent prop instead of the endpoint data
 			// so then we'll need to change this method, sending the { agent } object over the emit method
 			delete agent.success;
 
-			this.emit(agent);
+			this.dispatch(agent);
 		}
 
-		SDK.onAgentChange(state.room._id, (agent) => {
-			this.emit({ agent });
+		SDK.onAgentChange(store.state.room._id, (agent) => {
+			this.dispatch({ agent });
 		});
 
-		setCookies(state);
+		setCookies(store.state);
 	}
 
-
-	actions = (args) => {
-		this.setState(args);
-	}
-
-	async emit(newState) {
-		await store.morph(newState);
+	dispatch = async(newState) => {
+		await store.setState(newState);
 
 		if (newState.user) {
-			self.getConfig();
+			this.getConfig();
 		}
 
 		if (newState.room) {
-			self.initRoom(store.state);
+			this.initRoom();
 		}
-
-		store.emit('change', store.state);
 	}
 
-	async getConfig() {
-		const { sound, user: { token } } = getState();
-		SDK.credentials.token = token;
-		const config = await (token ? SDK.config({ token }) : SDK.config());
-		const { agent } = config;
-		delete config.agent;
+	state = { ...store.state, dispatch: this.dispatch }
 
-		sound.src = config.resources && config.resources.sound;
-
-		this.emit({ config, room: config.room, agent, sound });
-		return config;
+	handleStoreChange = () => {
+		this.setState({ ...store.state });
 	}
 
-	constructor() {
-		super();
-		this.state = store.state;
+	componentDidMount() {
+		store.on('change', this.handleStoreChange);
 
-		self = this;
-	}
-
-	async componentDidMount() {
-		store.on('change', this.actions);
 		this.getConfig();
-		this.state = store.state;
+
 		if (store.state.room) {
-			this.initRoom(store.state);
+			this.initRoom();
 		}
 	}
+
 	componentWillUnmount() {
-		store.removeListener(this.actions);
+		store.off('change', this.handleStoreChange);
 	}
-	render({ children }) {
-		return (
-			<Context.Provider value={{ ...this.state, dispatch: this.emit }}>
-				{children}
-			</Context.Provider>
-		);
-	}
+
+	render = ({ children }) => (
+		<StoreContext.Provider value={this.state}>
+			{children}
+		</StoreContext.Provider>
+	)
 }
+
+export class Consumer extends StoreContext.Consumer {
+	static displayName = 'StoreConsumer'
+}
+
+export default Provider;

@@ -27,8 +27,11 @@ export default class Store extends EventEmitter {
 		return this._state;
 	}
 
-	morph = async(newState, reducer = identityReducer) => {
-		this._state = await reducer({ ...this._state, ...newState }, this._state);
-		localStorage.setItem(this.localStorageKey, JSON.stringify({ ...this._state, typing: [] })); // why typing is not stored?
+	setState = async(partialState, reducer = identityReducer) => {
+		const prevState = this._state;
+		this._state = await reducer({ ...prevState, ...partialState }, prevState);
+		// TODO: remove typing
+		localStorage.setItem(this.localStorageKey, JSON.stringify({ ...this._state, typing: [] }));
+		this.emit('change', this._state, prevState);
 	}
 }
