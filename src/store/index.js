@@ -1,20 +1,36 @@
-/* eslint-disable react/sort-comp */
-import { createContext } from 'preact-context';
 import { Component } from 'preact';
-import { EventEmitter } from 'tiny-events';
+import { createContext } from 'preact-context';
 import { insert, setCookies } from 'components/helpers';
 import SDK from '../api';
 import Commands from '../lib/commands';
+import Store from './Store';
 
-const e = new EventEmitter();
-const defaultToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-const sound = { src: '', enabled: true, play: false };
-const defaultState = { defaultToken, typing: [], config: { messages: {}, settings: {}, theme: {}, triggers: [], departments: [], resources: {} }, messages: [], user: {}, sound };
-let state = localStorage.getItem('store') ? { ...defaultState, ...JSON.parse(localStorage.getItem('store')) } : defaultState;
+
+const defaultState = {
+	defaultToken: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+	typing: [],
+	config: {
+		messages: {},
+		settings: {},
+		theme: {},
+		triggers: [],
+		departments: [],
+		resources: {},
+	},
+	messages: [],
+	user: {},
+	sound: {
+		src: '',
+		enabled: true,
+		play: false,
+	},
+};
+
+const store = new Store(defaultState);
 
 export const Context = createContext({});
 
-export const getState = () => state || defaultState;
+export const getState = () => store.state;
 export const { Consumer } = Context;
 
 const { user: { token } } = getState();
@@ -93,17 +109,17 @@ export default class UserWrap extends Component {
 	}
 
 	async emit(newState) {
-		state = { ...defaultState, ...state, ...newState };
-		localStorage.setItem('store', JSON.stringify({ ...state, typing: [] }));
+		await store.morph(newState);
 
 		if (newState.user) {
 			self.getConfig();
 		}
+
 		if (newState.room) {
-			self.initRoom(state);
+			self.initRoom(store.state);
 		}
 
-		e.emit('change', state);
+		store.emit('change', store.state);
 	}
 
 	async getConfig() {
@@ -121,21 +137,21 @@ export default class UserWrap extends Component {
 
 	constructor() {
 		super();
-		this.state = state;
+		this.state = store.state;
 
 		self = this;
 	}
 
 	async componentDidMount() {
-		e.on('change', this.actions);
+		store.on('change', this.actions);
 		this.getConfig();
-		this.state = state;
-		if (state.room) {
-			this.initRoom(state);
+		this.state = store.state;
+		if (store.state.room) {
+			this.initRoom(store.state);
 		}
 	}
 	componentWillUnmount() {
-		e.removeListener(this.actions);
+		store.removeListener(this.actions);
 	}
 	render({ children }) {
 		return (
