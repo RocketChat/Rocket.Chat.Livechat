@@ -69,6 +69,7 @@ export default class Register extends Component {
 
 		if (this.props.onSubmit) {
 			const values = Object.entries(this.state)
+				.filter(([, state]) => state !== null)
 				.map(([name, { value }]) => ({ [name]: value }))
 				.reduce((values, entry) => ({ ...values, ...entry }), {});
 			this.props.onSubmit(values);
