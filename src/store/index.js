@@ -71,9 +71,44 @@ SDK.onTyping((username, isTyping) => {
 	}
 });
 
-
 const token = store.state.user && store.state.user.token;
 SDK.credentials.token = token;
+
+const getConfig = async() => {
+	const config = await (token ? SDK.config({ token }) : SDK.config());
+	const { room, agent } = config;
+	delete config.agent;
+
+	const { sound } = store.state;
+	sound.src = config.resources && config.resources.sound;
+
+	store.setState({ config, room, agent, sound });
+};
+
+const initRoom = async() => {
+	if (stream) {
+		return;
+	}
+
+	stream = await SDK.connect();
+
+	SDK.subscribeRoom(store.state.room._id);
+
+	const { agent, room: { _id, servedBy } } = store.state;
+	if (!agent && servedBy) {
+		const { agent } = await SDK.agent({ rid: _id });
+		// we're changing the SDK.agent method to return de agent prop instead of the endpoint data
+		// so then we'll need to change this method, sending the { agent } object over the emit method
+
+		store.setState({ agent });
+	}
+
+	SDK.onAgentChange(store.state.room._id, (agent) => {
+		store.setState({ agent });
+	});
+
+	setCookies(store.state);
+};
 
 
 const StoreContext = createContext();
@@ -81,52 +116,15 @@ const StoreContext = createContext();
 export class Provider extends Component {
 	static displayName = 'StoreProvider'
 
-	getConfig = async() => {
-		const config = await (token ? SDK.config({ token }) : SDK.config());
-		const { room, agent } = config;
-		delete config.agent;
+	dispatch = async(partialState) => {
+		await store.setState(partialState);
 
-		const { sound } = store.state;
-		sound.src = config.resources && config.resources.sound;
-
-		store.setState({ config, room, agent, sound });
-	}
-
-	initRoom = async() => {
-		if (stream) {
-			return;
+		if (partialState.user) {
+			getConfig();
 		}
 
-		stream = await SDK.connect();
-
-		SDK.subscribeRoom(store.state.room._id);
-
-		const { agent, room: { _id, servedBy } } = store.state;
-		if (!agent && servedBy) {
-			const agent = await SDK.agent({ rid: _id });
-			// we're changing the SDK.agent method to return de agent prop instead of the endpoint data
-			// so then we'll need to change this method, sending the { agent } object over the emit method
-			delete agent.success;
-
-			this.dispatch(agent);
-		}
-
-		SDK.onAgentChange(store.state.room._id, (agent) => {
-			this.dispatch({ agent });
-		});
-
-		setCookies(store.state);
-	}
-
-	dispatch = async(newState) => {
-		await store.setState(newState);
-
-		if (newState.user) {
-			this.getConfig();
-		}
-
-		if (newState.room) {
-			this.initRoom();
+		if (partialState.room) {
+			initRoom();
 		}
 	}
 
@@ -139,10 +137,10 @@ export class Provider extends Component {
 	componentDidMount() {
 		store.on('change', this.handleStoreChange);
 
-		this.getConfig();
+		getConfig();
 
 		if (store.state.room) {
-			this.initRoom();
+			initRoom();
 		}
 	}
 
