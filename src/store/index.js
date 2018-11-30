@@ -27,7 +27,6 @@ const initialState = {
 };
 
 export const store = new Store(initialState);
-export const getState = () => store.state;
 
 const commands = new Commands();
 let stream;
@@ -156,4 +155,4 @@ export class Consumer extends StoreContext.Consumer {
 	static displayName = 'StoreConsumer'
 }
 
-export default Provider;
+export default store;

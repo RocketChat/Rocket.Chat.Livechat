@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 
-import Store, { Consumer, store } from '../store';
+import { store, Provider as StoreProvider, Consumer as StoreConsumer } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
@@ -52,16 +52,16 @@ export default class App extends Component {
 	}
 	render() {
 		return (
-			<Store>
+			<StoreProvider>
 				<div id="app">
-					<Consumer>
+					<StoreConsumer>
 						{(state) => (
 							<Router onChange={this.handleRoute}>
 								{this.renderScreen(state)}
 							</Router>)}
-					</Consumer>
+					</StoreConsumer>
 				</div>
-			</Store>
+			</StoreProvider>
 		);
 	}
 }

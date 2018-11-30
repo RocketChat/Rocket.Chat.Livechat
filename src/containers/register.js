@@ -1,14 +1,13 @@
 import { h, Component } from 'preact';
 import SDK from '../api';
-import { Consumer, getState } from '../store';
+import { Consumer, store } from '../store';
 import Register from '../routes/register';
 
 
 class Wrapped extends Component {
 	async onSubmit(args) {
 		this.setState({ loading: true });
-		const state = getState();
-		const { token } = state;
+		const { token } = store.state;
 
 		const user = await SDK.grantVisitor({ visitor: { ...args, token } });
 		this.setState({ loading: false });
