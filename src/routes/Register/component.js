@@ -141,14 +141,15 @@ export default class Register extends Component {
 					<Form onSubmit={this.handleSubmit}>
 						{this.state.name && (
 							<Form.Item>
-								<Form.Label error={this.state.name.showError}>Name *</Form.Label>
+								<Form.Label error={this.state.name.showError} htmlFor="name">Name *</Form.Label>
 								<Form.TextInput
+									id="name"
 									name="name"
 									placeholder="Insert your name here..."
 									disabled={loading}
 									value={this.state.name.value}
 									error={this.state.name.showError}
-									onChange={this.handleNameChange}
+									onInput={this.handleNameChange}
 								/>
 								<Form.Description error={this.state.name.showError}>
 									{this.state.name.showError && this.state.name.error}
@@ -158,14 +159,15 @@ export default class Register extends Component {
 
 						{this.state.email && (
 							<Form.Item>
-								<Form.Label error={this.state.email.showError}>E-mail *</Form.Label>
+								<Form.Label error={this.state.email.showError} htmlFor="email">Email *</Form.Label>
 								<Form.TextInput
+									id="email"
 									name="email"
 									placeholder="Insert your name here..."
 									disabled={loading}
 									value={this.state.email.value}
 									error={this.state.email.showError}
-									onChange={this.handleEmailChange}
+									onInput={this.handleEmailChange}
 								/>
 								<Form.Description error={this.state.email.showError}>
 									{this.state.email.showError && this.state.email.error}
@@ -175,15 +177,16 @@ export default class Register extends Component {
 
 						{this.state.department && (
 							<Form.Item>
-								<Form.Label error={this.state.department.showError}>I need help with...</Form.Label>
+								<Form.Label error={this.state.department.showError} htmlFor="department">I need help with...</Form.Label>
 								<Form.SelectInput
+									id="department"
 									name="department"
 									placeholder="Choose an option..."
 									options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
 									disabled={loading}
 									value={this.state.department.value}
 									error={this.state.department.showError}
-									onChange={this.handleDepartmentChange}
+									onInput={this.handleDepartmentChange}
 								/>
 								<Form.Description error={this.state.department.showError}>
 									{this.state.department.showError && this.state.department.error}
