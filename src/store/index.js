@@ -69,15 +69,23 @@ SDK.onTyping((username, isTyping) => {
 const token = store.state.user && store.state.user.token;
 SDK.credentials.token = token;
 
-const getConfig = async() => {
-	const config = await (token ? SDK.config({ token }) : SDK.config());
-	const { room, agent } = config;
-	delete config.agent;
+const loadConfig = async(token) => {
+	const {
+		room,
+		agent,
+		resources: { sound: src = null } = {},
+		...config
+	} = await (token ? SDK.config({ token }) : SDK.config());
 
-	const { sound } = store.state;
-	sound.src = config.resources && config.resources.sound;
-
-	store.setState({ config, room, agent, sound });
+	await store.setState({
+		config,
+		room,
+		agent,
+		sound: { src, enabled: true, play: false },
+		theme: config.theme,
+		strings: config.messages,
+		settings: config.settings,
+	});
 };
 
 const initRoom = async() => {
@@ -107,24 +115,25 @@ const initRoom = async() => {
 };
 
 
+const dispatch = async(partialState) => {
+	await store.setState(partialState);
+
+	if (partialState.user) {
+		await loadConfig();
+	}
+
+	if (partialState.room) {
+		await initRoom();
+	}
+};
+
+
 const StoreContext = createContext();
 
 export class Provider extends Component {
 	static displayName = 'StoreProvider'
 
-	dispatch = async(partialState) => {
-		await store.setState(partialState);
-
-		if (partialState.user) {
-			getConfig();
-		}
-
-		if (partialState.room) {
-			initRoom();
-		}
-	}
-
-	state = { ...store.state, dispatch: this.dispatch }
+	state = { ...store.state, dispatch }
 
 	handleStoreChange = () => {
 		this.setState({ ...store.state });
@@ -133,7 +142,7 @@ export class Provider extends Component {
 	componentDidMount() {
 		store.on('change', this.handleStoreChange);
 
-		getConfig();
+		loadConfig();
 
 		if (store.state.room) {
 			initRoom();

@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { Component } from 'preact';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';

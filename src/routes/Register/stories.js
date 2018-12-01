@@ -1,16 +1,16 @@
-import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import Register from './component';
 
-import Register from '.';
 
 const screenCentered = (storyFn) => centered(() => (
 	<div style={{ display: 'flex', width: '365px', height: '500px', background: 'white' }}>
 		{storyFn()}
 	</div>
 ));
+
 
 storiesOf('Screen|Register', module)
 	.addDecorator(screenCentered)

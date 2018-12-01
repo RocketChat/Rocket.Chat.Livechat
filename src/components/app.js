@@ -1,11 +1,11 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
-
-import { store, Provider as StoreProvider, Consumer as StoreConsumer } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
-import Register from '../containers/register';
 import TriggersManager from '../lib/triggersManager';
+import Register from '../routes/Register';
+import { store, Provider as StoreProvider, Consumer as StoreConsumer } from '../store';
+
 
 export default class App extends Component {
 
@@ -34,21 +34,17 @@ export default class App extends Component {
 	}
 
 	renderScreen({ user, config, messages, triggered }) {
-		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online } = config;
+		const { settings: { registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online } = config;
 
 		if (!online) {
-			if (displayOfflineForm) {
-				return <LeaveMessage {...config} default path="/LeaveMessage" />;
-			}
 			return <LeaveMessage {...config} default path="/LeaveMessage" />;
-
 		}
 
 		const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
 		if ((user && user.token) || !showRegistrationForm || triggered) {
 			return <Home {...config} messages={messages} default path="/home" />;
 		}
-		return <Register {...config} default path="/register" />;
+		return <Register default path="/register" />;
 	}
 	render() {
 		return (
