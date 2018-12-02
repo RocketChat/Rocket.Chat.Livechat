@@ -1,9 +1,10 @@
-import { h, Component } from 'preact';
+import { Component } from 'preact';
+import SDK from '../../api';
+import { Consumer } from '../../store';
+import LeaveMessage from './component';
 
-import Leaveamessage from '../routes/leaveamessage';
-import SDK from '../api';
 
-export default class wrapped extends Component {
+export class LeaveMessageContainer extends Component {
 	async onSubmit(data) {
 		const { messages } = this.props;
 		this.setState({ loading: true });
@@ -29,7 +30,7 @@ export default class wrapped extends Component {
 	}
 	render({ theme, messages, ...props }) {
 		return (
-			<Leaveamessage
+			<LeaveMessage
 				{...props}
 				loading={this.state.loading}
 				color={theme.offlineColor}
@@ -46,3 +47,13 @@ export default class wrapped extends Component {
 		);
 	}
 }
+
+
+export const LeaveMessageConnector = ({ ref, ...props }) => (
+	<Consumer>
+		{(state) => <LeaveMessageContainer ref={ref} {...props} {...state} />}
+	</Consumer>
+);
+
+
+export default LeaveMessageConnector;

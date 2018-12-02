@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 import Home from '../containers/home';
-import LeaveMessage from '../containers/leaveamessage';
 import TriggersManager from '../lib/triggersManager';
+import LeaveMessage from '../routes/LeaveMessage';
 import Register from '../routes/Register';
 import { store, Provider as StoreProvider, Consumer as StoreConsumer } from '../store';
 
@@ -37,7 +37,7 @@ export default class App extends Component {
 		const { settings: { registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online } = config;
 
 		if (!online) {
-			return <LeaveMessage {...config} default path="/LeaveMessage" />;
+			return <LeaveMessage default path="/LeaveMessage" />;
 		}
 
 		const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);

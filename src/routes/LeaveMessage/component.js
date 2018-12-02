@@ -1,14 +1,13 @@
 import { h, Component } from 'preact';
 import { asyncEvery } from '../../components/helpers';
-import style from './style';
-import Header, {
-	Title, Content,
-} from 'components/Header';
+import styles from './styles';
+import Header, { Title, Content } from 'components/Header';
 import { Form, InputField, Item } from 'components/Form';
 import Button from 'components/Button';
 import * as Footer from 'components/Footer';
 
-export default class Home extends Component {
+
+export default class LeaveMessage extends Component {
 	async submit(event) {
 		event.preventDefault();
 		if (await this.validate()) {
@@ -44,13 +43,13 @@ export default class Home extends Component {
 	}
 
 	render({ color, title, message, loading, emailPlaceholder = 'insert your e-mail here...', namePlaceholder = 'insert your name here...', messsagePlaceholder = 'write your message...' }) {
-		return (<div class={style.container}>
+		return (<div class={styles.container}>
 			<Header color={color}>
 				<Content>
 					<Title>{title}</Title>
 				</Content>
 			</Header>
-			<main class={style.main}>
+			<main class={styles.main}>
 				<p>{message}</p>
 				<Form ref={(form) => this.formEl = form} onSubmit={this.submit} noValidate>
 					<InputField disabled={loading} required onChange={this.validate} ref={this.addToValidate} validations={['notNull']} name="name"
