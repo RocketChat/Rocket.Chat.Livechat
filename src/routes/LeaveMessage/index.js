@@ -1,3 +1,3 @@
-export { default as LeaveAMessage } from './component';
-export { LeaveAMessageContainer, LeaveAMessageConnector } from './container';
+export { default as LeaveMessage } from './component';
+export { LeaveMessageContainer, LeaveMessageConnector } from './container';
 export { default } from './container';

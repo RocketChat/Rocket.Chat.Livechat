@@ -5,53 +5,54 @@ import LeaveMessage from './component';
 
 
 export class LeaveMessageContainer extends Component {
-	async onSubmit(data) {
-		const { messages } = this.props;
-		this.setState({ loading: true });
-		let message;
+	handleSubmit = async(fields) => {
+		const { dispatch, successMessage } = this.props;
 
+		await dispatch({ loading: true });
 		try {
-			({ message } = await SDK.sendOfflineMessage(data));
-			message = (messages && messages.offlineSuccessMessage) || message;
+			const { message } = await SDK.sendOfflineMessage(fields);
+			console.log(successMessage || message);
 		} catch (error) {
-			({ message } = error.data);
+			const { message } = error.data;
+			console.error(message);
+		} finally {
+			await dispatch({ loading: false });
 		}
-		// eslint-disable-next-line no-alert
-		window.alert(message);
+	}
 
-		this.setState({ loading: false });
-	}
-	constructor() {
-		super();
-		this.state = {
-			loading: false,
-		};
-		this.onSubmit = this.onSubmit.bind(this);
-	}
-	render({ theme, messages, ...props }) {
-		return (
-			<LeaveMessage
-				{...props}
-				loading={this.state.loading}
-				color={theme.offlineColor}
-				title={theme.offlineTitle || I18n.t('Need help?')}
-				message={messages.offlineMessage || I18n.t('We are not online right now. Please, leave a message.')}
-				onSubmit={this.onSubmit}
-				// minimize={action('minimize')}
-				// fullScreen={action('fullScreen')}
-				// notification={action('notification')}
-				namePlaceholder={I18n.t('insert your name here...')}
-				emailPlaceholder={I18n.t('insert your e-mail here...')}
-				messsagePlaceholder={I18n.t('write your message...')}
-			/>
-		);
-	}
+	render = (props) => (
+		<LeaveMessage {...props} onSubmit={this.handleSubmit} />
+	)
 }
 
 
 export const LeaveMessageConnector = ({ ref, ...props }) => (
 	<Consumer>
-		{(state) => <LeaveMessageContainer ref={ref} {...props} {...state} />}
+		{({
+			theme: {
+				offlineTitle: title,
+				offlineColor: color,
+			} = {},
+			strings: {
+				offlineMessage: message,
+				offlineSuccessMessage: successMessage,
+			},
+			loading,
+			token,
+			dispatch,
+		}) => (
+			<LeaveMessageContainer
+				ref={ref}
+				{...props}
+				title={title || I18n.t('Leave a message')}
+				color={color}
+				message={message || I18n.t('We are not online right now. Please, leave a message.')}
+				successMessage={successMessage}
+				loading={loading}
+				token={token}
+				dispatch={dispatch}
+			/>
+		)}
 	</Consumer>
 );
 
