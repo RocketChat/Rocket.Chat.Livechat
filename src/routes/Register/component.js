@@ -25,7 +25,7 @@ export default class Register extends Component {
 
 	getValidableFields = () => Object.keys(this.validations)
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
-		.filter(Boolean);
+		.filter(Boolean)
 
 	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => (error || validation(value)), undefined)
 
@@ -123,7 +123,7 @@ export default class Register extends Component {
 		const valid = this.isValid();
 
 		return (
-			<div class={createClassName(styles, 'register')}>
+			<div className={createClassName(styles, 'register')}>
 				<Header color={color}>
 					<Header.Content>
 						<Header.Title>{title}</Header.Title>
@@ -163,7 +163,7 @@ export default class Register extends Component {
 								<Form.TextInput
 									id="email"
 									name="email"
-									placeholder="Insert your name here..."
+									placeholder="Insert your email here..."
 									disabled={loading}
 									value={this.state.email.value}
 									error={this.state.email.showError}

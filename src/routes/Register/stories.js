@@ -6,7 +6,7 @@ import Register from './component';
 
 
 const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px', height: '500px', background: 'white' }}>
+	<div style={{ display: 'flex', width: '365px', background: 'white' }}>
 		{storyFn()}
 	</div>
 ));
