@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
-import Home from '../containers/home';
 import TriggersManager from '../lib/triggersManager';
+import Chat from '../routes/Chat';
 import LeaveMessage from '../routes/LeaveMessage';
 import Register from '../routes/Register';
 import { store, Provider as StoreProvider, Consumer as StoreConsumer } from '../store';
@@ -42,7 +42,7 @@ export default class App extends Component {
 
 		const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
 		if ((user && user.token) || !showRegistrationForm || triggered) {
-			return <Home {...config} messages={messages} default path="/home" />;
+			return <Chat messages={messages} default path="/home" />;
 		}
 		return <Register default path="/register" />;
 	}

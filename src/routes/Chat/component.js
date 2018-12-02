@@ -1,15 +1,15 @@
-import { h, Component } from 'preact';
+import { Component } from 'preact';
 
-import style from './style';
-import * as Header from 'components/Header';
-import * as Footer from 'components/Footer';
-import Avatar from 'components/Avatar';
-import DropFiles from 'components/DropFiles';
-import Composer, { Action, Actions } from 'components/Composer';
-import Typing from 'components/TypingIndicator';
-import Messages from 'components/Messages';
-import { throttle, createClassName } from 'components/helpers';
-import Sound from 'components/Sound';
+import styles from './styles';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import Avatar from '../../components/Avatar';
+import DropFiles from '../../components/DropFiles';
+import Composer, { Action, Actions } from '../../components/Composer';
+import Typing from '../../components/TypingIndicator';
+import Messages from '../../components/Message';
+import { throttle, createClassName } from '../../components/helpers';
+import Sound from '../../components/Sound';
 
 import Smile from 'icons/smile.svg';
 import Plus from 'icons/plus.svg';
@@ -23,7 +23,9 @@ import NewWindow from 'icons/newWindow.svg';
 export const isBottom = (el) => el.scrollHeight - el.scrollTop === el.clientHeight;
 export const isTop = (el) => el.scrollTop === 0;
 const toBottom = (el) => el.scrollTop = el.scrollHeight;
-export default class Home extends Component {
+
+
+export default class Chat extends Component {
 	isBottom() {
 		return isBottom(this.el);
 	}
@@ -68,17 +70,17 @@ export default class Home extends Component {
 	}
 
 	renderNotification() {
-		if (this.props.sound.enabled) {
-			return <Bell width={20} />;
-		}
+		// if (this.props.sound.enabled) {
+		// 	return <Bell width={20} />;
+		// }
 
 		return <BellOff width={20} />;
 	}
 
 	render = ({ onUpload, onPlaySound, typingUsers, onSubmit, color, messages, user, src, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen, sound }) => (
-		<div class={style.container}>
-			<Sound onPlay={onPlaySound} src={sound.src} play={sound.play} />
-			<Header.default color={color}>
+		<div class={styles.container}>
+			{/* <Sound onPlay={onPlaySound} src={sound.src} play={sound.play} /> */}
+			<Header color={color}>
 				{src && <Header.Picture><Avatar src={src} /></Header.Picture>}
 				<Header.Content>
 					<Header.Title>{title}</Header.Title>
@@ -89,16 +91,18 @@ export default class Home extends Component {
 					<Header.Action onClick={minimize}><Arrow width={20} /></Header.Action>
 					<Header.Action onClick={fullScreen}><NewWindow width={20} /></Header.Action>
 				</Header.Actions>
-			</Header.default>
+			</Header>
+
 			<DropFiles onUpload={onUpload}>
-				<div className={createClassName(style, 'main', { atBottom: this.state.atBottom, loading: this.props.loading })}>
-					<div ref={this.bind} onScroll={this.handleScroll} className={createClassName(style, 'main__wrapper')}>
+				<div className={createClassName(styles, 'main', { atBottom: this.state.atBottom, loading: this.props.loading })}>
+					<div ref={this.bind} onScroll={this.handleScroll} className={createClassName(styles, 'main__wrapper')}>
 						<Messages messages={messages} user={user} />
 						{typingUsers && !!typingUsers.length && <Typing users={typingUsers} />}
 					</div>
 				</div>
 			</DropFiles>
-			<Footer.Main>
+
+			<Footer>
 				<Footer.Content>
 					<Composer onUpload={onUpload}
 						onSubmit={onSubmit}
@@ -119,8 +123,10 @@ export default class Home extends Component {
 						placeholder="insert your text here"
 					/>
 				</Footer.Content>
-				<Footer.Content><Footer.PoweredBy /></Footer.Content>
-			</Footer.Main>
+				<Footer.Content>
+					<Footer.PoweredBy />
+				</Footer.Content>
+			</Footer>
 		</div>
 	)
 }
