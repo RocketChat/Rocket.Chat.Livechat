@@ -137,14 +137,16 @@ class Wrapped extends Component {
 		const { state } = store;
 		const { room, token } = state;
 
-		if (room) {
-			const rid = room._id;
-			this.setState({ loading: true });
-			const messages = await SDK.loadMessages(rid, { token });
-			// eslint-disable-next-line react/no-did-mount-set-state
-			this.setState({ loading: false });
-			this.actions({ messages: (messages || []).reverse() });
+		if (!room) {
+			return;
 		}
+
+		const rid = room._id;
+		this.setState({ loading: true });
+		const messages = await SDK.loadMessages(rid, { token });
+		// eslint-disable-next-line react/no-did-mount-set-state
+		this.setState({ loading: false });
+		this.actions({ messages: (messages || []).reverse() });
 	}
 
 	render(props) {

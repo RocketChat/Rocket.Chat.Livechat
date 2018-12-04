@@ -6,7 +6,6 @@ const agentCacheExpiry = 3600000;
 let agentPromise;
 const getAgent = (triggerAction) => {
 	if (agentPromise) {
-		console.log('estou aqui');
 		return agentPromise;
 	}
 
@@ -104,7 +103,6 @@ class TriggersManager {
 				trigger.skip = true;
 
 				getAgent(action).then(async (agent) => {
-					store.setState({ triggered: true });
 					const message = {
 						msg: action.params.msg,
 						token,
@@ -113,14 +111,12 @@ class TriggersManager {
 						_id: createToken(),
 					}
 
-					store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+					store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 
 					// TODO: Need to think about the implementation below.. Is it possible that when the room is created, the available agent is not the same one that was previously selected?
-					/*
 					if (agent._id) {
 						store.setState({ agent });
 					}
-					*/
 
 					// TODO: parentCall
 					//parentCall('openWidget');
@@ -189,5 +185,4 @@ class TriggersManager {
 }
 
 const instance = new TriggersManager();
-//Object.freeze(instance);
 export default instance;

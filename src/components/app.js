@@ -13,30 +13,42 @@ export default class App extends Component {
 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
 	 *	@param {string} event.url	The newly routed URL
 	 */
+	handleTriggers(config) {
+		const { online, enabled } = config;
+
+		if (!(online && enabled)) {
+			return TriggersManager.setDisabled();
+		}
+
+		TriggersManager.setEnabled();
+		TriggersManager.start();
+	}
+
 	handleRoute = (/* ...args*/) => {
 		// this.currentUrl = args[0].url;
 	};
+
 	async componentDidMount() {
 		// console.log(await api.livechat.config());
 	}
 
 	renderScreen({ user, config, messages, triggered }) {
 		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online /* , departments */ } = config;
+		this.handleTriggers(config);
 
-		if (online) {
-			TriggersManager.start();
-
-			const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
-			if ((user && user.token) || !showRegistrationForm || triggered) {
-				return <Home {...config} messages={messages} default path="/home" />;
+		if (!online) {
+			if (displayOfflineForm) {
+				return <LeaveMessage {...config} default path="/LeaveMessage" />;
 			}
-			return <Register {...config} default path="/register" />;
-		}
-		if (displayOfflineForm) {
 			return <LeaveMessage {...config} default path="/LeaveMessage" />;
-		}
-		return <LeaveMessage {...config} default path="/LeaveMessage" />;
 
+		}
+
+		const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
+		if ((user && user.token) || !showRegistrationForm || triggered) {
+			return <Home {...config} messages={messages} default path="/home" />;
+		}
+		return <Register {...config} default path="/register" />;
 	}
 	render() {
 		return (
