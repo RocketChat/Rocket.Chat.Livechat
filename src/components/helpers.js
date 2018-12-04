@@ -110,9 +110,7 @@ export const setCookies = (rid, token) => {
 	document.cookie = 'rc_room_type=l; path=/';
 }
 
-export const createToken = () => {
-	return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-}
+export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
 
 export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ username }`);
 

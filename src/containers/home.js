@@ -3,7 +3,6 @@ import SDK from '../api';
 import { Consumer, store } from '../store';
 import Home from '../routes/home';
 import { getAvatarUrl } from '../components/helpers';
-import TriggersManager from '../lib/triggersManager';
 
 class Wrapped extends Component {
 	async getUser() {
