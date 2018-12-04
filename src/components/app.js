@@ -5,6 +5,7 @@ import Store, { Consumer } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
+import TriggersManager from '../lib/triggersManager';
 
 export default class App extends Component {
 
@@ -19,12 +20,14 @@ export default class App extends Component {
 		// console.log(await api.livechat.config());
 	}
 
-	renderScreen({ user, config, messages }) {
-		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online /*, departments*/ } = config;
+	renderScreen({ user, config, messages, triggered }) {
+		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online /* , departments */ } = config;
 
 		if (online) {
+			TriggersManager.start();
+
 			const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
-			if ((user && user.token) || !showRegistrationForm) {
+			if ((user && user.token) || !showRegistrationForm || triggered) {
 				return <Home {...config} messages={messages} default path="/home" />;
 			}
 			return <Register {...config} default path="/register" />;

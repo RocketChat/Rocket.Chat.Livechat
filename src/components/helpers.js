@@ -1,6 +1,9 @@
 import format from 'date-fns/format';
 import isToday from 'date-fns/is_today';
 
+// TODO: replace the hostUrl
+const hostUrl = 'http://localhost:3000';
+
 function flatMap(arr, mapFunc) {
 	const result = [];
 	for (const [index, elem] of arr.entries()) {
@@ -111,4 +114,8 @@ export const createToken = () => {
 	return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
-export const messagesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
+export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ username }`);
+
+export const getAttachmentUrl = (url) => (`${ hostUrl }${ url }`);
+
+export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];

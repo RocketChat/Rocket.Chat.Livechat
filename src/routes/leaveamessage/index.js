@@ -1,16 +1,10 @@
 import { h, Component } from 'preact';
-
 import { asyncEvery } from '../../components/helpers';
 import style from './style';
 import Header, {
-	Title, Content, Actions, Action,
+	Title, Content,
 } from 'components/Header';
 import { Form, InputField, Item } from 'components/Form';
-
-import Bell from 'icons/bell.svg';
-import Arrow from 'icons/arrow.svg';
-import NewWindow from 'icons/newWindow.svg';
-
 import Button from 'components/Button';
 import * as Footer from 'components/Footer';
 
@@ -49,7 +43,7 @@ export default class Home extends Component {
 		this.validate();
 	}
 
-	render({ color, title, message, minimize, fullScreen, notification, loading, emailPlaceholder = 'insert your e-mail here...', namePlaceholder = 'insert your name here...', messsagePlaceholder = 'write your message...' }) {
+	render({ color, title, message, loading, emailPlaceholder = 'insert your e-mail here...', namePlaceholder = 'insert your name here...', messsagePlaceholder = 'write your message...' }) {
 		return (<div class={style.container}>
 			<Header color={color}>
 				<Content>

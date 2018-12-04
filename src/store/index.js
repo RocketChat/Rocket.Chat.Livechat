@@ -1,145 +1,160 @@
-/* eslint-disable react/sort-comp */
-import { createContext } from 'preact-context';
 import { Component } from 'preact';
-import { EventEmitter } from 'tiny-events';
-import { insert, setCookies, createToken } from 'components/helpers';
+import { createContext } from 'preact-context';
+import { insert, setCookies, createToken, msgTypesNotDisplayed } from 'components/helpers';
 import SDK from '../api';
 import Commands from '../lib/commands';
+import Store from './Store';
 
-const e = new EventEmitter();
-const sound = { src: '', enabled: true, play: false };
-const defaultState = { token: createToken(), typing: [], config: { messages: {}, settings: {}, theme: {}, triggers: [], departments: [], resources: {} }, messages: [], user: {}, sound };
-let state = localStorage.getItem('store') ? { ...defaultState, ...JSON.parse(localStorage.getItem('store')) } : defaultState;
 
-export const Context = createContext({});
+const initialState = {
+	token: createToken(),
+	typing: [],
+	config: {
+		messages: {},
+		settings: {},
+		theme: {},
+		triggers: [],
+		departments: [],
+		resources: {},
+	},
+	messages: [],
+	user: null,
+	sound: {
+		src: '',
+		enabled: true,
+		play: false,
+	},
+};
 
-export const getState = () => state || defaultState;
-export const { Consumer } = Context;
+export const store = new Store(initialState);
+export const getState = () => store.state;
 
-const { user: { token } } = getState();
-if (token) {
-	SDK.credentials.token = token;
-}
+const commands = new Commands();
+let stream;
 
-let self;
+SDK.onMessage((message) => {
+	const { sound, user } = store.state;
 
-export default class UserWrap extends Component {
-	async initRoom(state) {
-		if (this.stream) { return; }
-		this.stream = SDK.connect();
-		await this.stream;
+	if (message.t === 'command') {
+		commands[message.msg] && commands[message.msg](store.state);
+	} else if (!msgTypesNotDisplayed.includes(message.t)) {
+		store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 
-		SDK.subscribeRoom(state.room._id);
-		const { sound, user } = state;
-		const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
-
-		SDK.onMessage((message) => {
-			if (message.t === 'command') {
-				this.commands[message.msg] && this.commands[message.msg](state);
-			} else if (!msgTypesNotDisplayed.includes(message.t)) {
-				this.emit({ messages: insert(getState().messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-
-				if (message.t === 'livechat-close') {
-					//parentCall('callback', 'chat-ended');
-				}
-				console.log(message);
-				if (sound.enabled && message.u._id !== user._id) {
-					sound.play = true;
-					return this.emit({ sound });
-				}
-			}
-		});
-
-		SDK.onTyping((username, isTyping) => {
-			const { typing, user } = this.state;
-
-			if (user && user.username && user.username === username) {
-				return;
-			}
-
-			if (typing.indexOf(username) === -1 && isTyping) {
-				typing.push(username);
-				return this.emit({ typing });
-			}
-
-			if (!isTyping) {
-				return this.emit({ typing: typing.filter((u) => u !== username) });
-			}
-		});
-
-		const { agent, room: { _id, servedBy } } = state;
-		if (!agent && servedBy) {
-			const agent = await SDK.agent({ rid: _id });
-			//we're changing the SDK.agent method to return de agent prop instead of the endpoint data
-			//so then we'll need to change this method, sending the { agent } object over the emit method
-			delete agent.success;
-
-			this.emit({ agent });
+		if (message.t === 'livechat-close') {
+			// parentCall('callback', 'chat-ended');
 		}
 
-		SDK.onAgentChange(state.room._id, (agent) => {
-			this.emit({ agent });
-		});
-
-		setCookies(state);
-	}
-
-
-	actions = (args) => {
-		this.setState(args);
-	}
-
-	async emit(newState) {
-		state = { ...defaultState, ...state, ...newState };
-		localStorage.setItem('store', JSON.stringify({ ...state, typing: [] }));
-
-		if (newState.user) {
-			self.getConfig();
-		}
-		if (newState.room) {
-			self.initRoom(state);
-		}
-
-		e.emit('change', state);
-	}
-
-	async getConfig() {
-		const { sound, user: { token } } = getState();
-		SDK.credentials.token = token;
-		const config = await (token ? SDK.config({ token }) : SDK.config());
-		const { agent } = config;
-		delete config.agent;
-
-		sound.src = config.resources && config.resources.sound;
-
-		this.emit({ config, room: config.room, agent, sound });
-		return config;
-	}
-
-	constructor() {
-		super();
-		this.state = state;
-		this.commands = new Commands();
-
-		self = this;
-	}
-
-	async componentDidMount() {
-		e.on('change', this.actions);
-		this.getConfig();
-		this.state = state;
-		if (state.room) {
-			this.initRoom(state);
+		if (sound.enabled && message.u._id !== user._id) {
+			sound.play = true;
+			return store.setState({ sound });
 		}
 	}
+});
+
+SDK.onTyping((username, isTyping) => {
+	const { typing, user } = store.state;
+
+	if (user && user.username && user.username === username) {
+		return;
+	}
+
+	if (typing.indexOf(username) === -1 && isTyping) {
+		typing.push(username);
+		return store.setState({ typing });
+	}
+
+	if (!isTyping) {
+		return store.setState({ typing: typing.filter((u) => u !== username) });
+	}
+});
+
+const token = store.state.user && store.state.user.token;
+SDK.credentials.token = token;
+
+const getConfig = async () => {
+	const config = await (token ? SDK.config({ token }) : SDK.config());
+	const { room, agent } = config;
+	delete config.agent;
+
+	const { sound } = store.state;
+	sound.src = config.resources && config.resources.sound;
+
+	store.setState({ config, room, agent, sound });
+};
+
+const initRoom = async () => {
+	if (stream) {
+		return;
+	}
+
+	stream = await SDK.connect();
+
+	const { token, agent, room: { _id, servedBy } } = store.state;
+
+	SDK.subscribeRoom(_id);
+
+	if (!agent && servedBy) {
+		const { agent } = await SDK.agent({ rid: _id });
+		// we're changing the SDK.agent method to return de agent prop instead of the endpoint data
+		// so then we'll need to change this method, sending the { agent } object over the emit method
+
+		store.setState({ agent });
+	}
+
+	SDK.onAgentChange(_id, (agent) => {
+		store.setState({ agent });
+	});
+
+	setCookies(_id, token);
+};
+
+
+const StoreContext = createContext();
+
+export class Provider extends Component {
+	static displayName = 'StoreProvider'
+
+	dispatch = async (partialState) => {
+		await store.setState(partialState);
+
+		if (partialState.user) {
+			getConfig();
+		}
+
+		if (partialState.room) {
+			initRoom();
+		}
+	}
+
+	state = { ...store.state, dispatch: this.dispatch }
+
+	handleStoreChange = () => {
+		this.setState({ ...store.state });
+	}
+
+	componentDidMount() {
+		store.on('change', this.handleStoreChange);
+
+		getConfig();
+
+		if (store.state.room) {
+			initRoom();
+		}
+	}
+
 	componentWillUnmount() {
-		e.removeListener(this.actions);
+		store.off('change', this.handleStoreChange);
 	}
-	render({ children }) {
-		return (
-			<Context.Provider value={{ ...this.state, dispatch: this.emit }}>
-				{children}
-			</Context.Provider>
-		);
-	}
+
+	render = ({ children }) => (
+		<StoreContext.Provider value={this.state}>
+			{children}
+		</StoreContext.Provider>
+	)
 }
+
+export class Consumer extends StoreContext.Consumer {
+	static displayName = 'StoreConsumer'
+}
+
+export default Provider;

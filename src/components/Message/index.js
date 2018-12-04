@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import md from './Markdown';
 import styles from './styles';
-import { createClassName } from '../helpers';
+import { createClassName, getAvatarUrl, getAttachmentUrl } from '../helpers';
 import Avatar from 'components/Avatar';
 import { parseDate, parseMessage } from 'components/helpers';
 
@@ -14,10 +14,8 @@ export const Body = ({ me, children, Element = 'div', group, ...args }) => (<Ele
 	{children}
 </Element>);
 
-const Attachments = ({ attachments }) => <img className={createClassName(styles, 'attachment', {})} src={`http://localhost:3000${ attachments[0].image_url }`} />;
-const src = (user) => {
-	return user && `http://localhost:3000/avatar/${ user.username }`;
-};
+const Attachments = ({ attachments }) => <img className={createClassName(styles, 'attachment', {})} src={getAttachmentUrl(attachments[0].image_url)} />;
+const src = (user) => user && user._id && getAvatarUrl(user.username);
 
 const Message = ({ el, me, group, message, ...args }) => (
 	<Body id={message._id} me={me} group={group} Element={el} {...args}>

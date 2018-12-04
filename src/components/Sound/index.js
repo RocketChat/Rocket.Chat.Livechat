@@ -5,19 +5,29 @@ export default class Sound extends Component {
 		this.audio.play();
 	}
 
-	constructor(props) {
-		super(props);
-		this.state = { play: false };
+	handleRef = (audio) => {
+		this.audio = audio;
 	}
 
-	componentDidUpdate(prevProps) {
-		if (this.props.play) {
+	componentDidMount() {
+		const { play, onPlay } = this.props;
+
+		if (play) {
 			this.play();
-			this.props.onPlay && this.props.onPlay();
+			onPlay && onPlay();
 		}
 	}
 
-	render({ src, ...args }) {
-		return <audio src={src} ref={ (audio) => { this.audio = audio } } type="audio/mpeg" />
+	componentDidUpdate() {
+		const { play, onPlay } = this.props;
+
+		if (play) {
+			this.play();
+			onPlay && onPlay();
+		}
+	}
+
+	render({ src }) {
+		return <audio src={src} ref={this.handleRef} type="audio/mpeg" />;
 	}
 }

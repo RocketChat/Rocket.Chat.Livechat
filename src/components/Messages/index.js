@@ -10,7 +10,7 @@ export default class Messages extends Component {
 					const next = arr[index + 1];
 					const group = next && next.u._id === el.u._id;
 					const { u = {}, _id } = el;
-					return <Message group={group} message={el} {...args} key={_id} el="li" me={u._id === user._id} />;
+					return <Message group={group} message={el} {...args} key={_id} el="li" me={user && user._id === u._id} />;
 				})
 			}</ol>
 		)

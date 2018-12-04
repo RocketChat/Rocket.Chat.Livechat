@@ -1,11 +1,13 @@
 import { h, Component } from 'preact';
 import SDK from '../api';
-import { Consumer, getState } from '../store';
+import { Consumer, store } from '../store';
 import Home from '../routes/home';
-let rid = '';
+import { getAvatarUrl } from '../components/helpers';
+import TriggersManager from '../lib/triggersManager';
+
 class Wrapped extends Component {
 	async getUser() {
-		const state = getState();
+		const { state } = store;
 		let { user } = state;
 		if (user && user.token) {
 			return user;
@@ -19,7 +21,7 @@ class Wrapped extends Component {
 	}
 
 	async getRoom(token) {
-		const state = getState();
+		const { state } = store;
 		let { room } = state;
 
 		if (!room) {
@@ -42,8 +44,7 @@ class Wrapped extends Component {
 		const { token } = stateUser;
 
 		this.getRoom(token).then(async (room) => {
-			const m = await SDK.sendMessage({ msg, token, rid: room._id });
-			console.log(m);
+			await SDK.sendMessage({ msg, token, rid: room._id });
 		});
 
 	}
@@ -52,7 +53,7 @@ class Wrapped extends Component {
 		if (this.state.ended) {
 			return;
 		}
-		const state = getState();
+		const { state } = store;
 		const { room, messages } = state;
 		const rid = room && room._id;
 
@@ -63,7 +64,7 @@ class Wrapped extends Component {
 	}
 
 	onUpload(files) {
-		const state = getState();
+		const { state } = store;
 		const { user: { token } } = state;
 
 		const sendFiles = (files, rid) => {
@@ -76,7 +77,7 @@ class Wrapped extends Component {
 					headers: { 'x-visitor-token': token },
 				});
 			});
-		}
+		};
 
 		this.getRoom(token).then((room) => {
 			const rid = room && room._id;
@@ -85,44 +86,16 @@ class Wrapped extends Component {
 	}
 
 	onPlaySound() {
-		const state = getState();
+		const { state } = store;
 		const sound = Object.assign(state.sound, { play: false });
 		this.actions({ sound });
 	}
 
 	notification() {
-		const state = getState();
+		const { state } = store;
 		const enabled = !state.sound.enabled;
 		const sound = Object.assign(state.sound, { enabled });
 		this.actions({ sound });
-	}
-
-	constructor() {
-		super();
-		this.state = {
-			loading: false,
-		};
-		const state = getState();
-		const { config: { settings: { fileUpload } } } = state;
-
-		this.sendMessage = this.sendMessage.bind(this);
-		this.onTop = this.onTop.bind(this);
-		this.onUpload = fileUpload && this.onUpload.bind(this);
-		this.onPlaySound = this.onPlaySound.bind(this);
-		this.notification = this.notification.bind(this);
-	}
-
-	async componentDidMount() {
-		const state = getState();
-		const { room, user: { token } } = state;
-
-		if (room) {
-			const rid = room._id;
-			this.setState({ loading: true });
-			const messages = await SDK.loadMessages(rid, { token });
-			this.setState({ loading: false });
-			this.actions({ messages: (messages || []).reverse() });
-		}
 	}
 
 	title(agent, theme) {
@@ -145,11 +118,40 @@ class Wrapped extends Component {
 		return username;
 	}
 
+	constructor() {
+		super();
+		this.state = {
+			loading: false,
+		};
+		const { state } = store;
+		const { config: { settings: { fileUpload } } } = state;
+
+		this.sendMessage = this.sendMessage.bind(this);
+		this.onTop = this.onTop.bind(this);
+		this.onUpload = fileUpload && this.onUpload.bind(this);
+		this.onPlaySound = this.onPlaySound.bind(this);
+		this.notification = this.notification.bind(this);
+	}
+
+	async componentDidMount() {
+		const { state } = store;
+		const { room, token } = state;
+
+		if (room) {
+			const rid = room._id;
+			this.setState({ loading: true });
+			const messages = await SDK.loadMessages(rid, { token });
+			// eslint-disable-next-line react/no-did-mount-set-state
+			this.setState({ loading: false });
+			this.actions({ messages: (messages || []).reverse() });
+		}
+	}
+
 	render(props) {
 		return (
 			<Consumer>
 				{
-					({ typing, user, dispatch, sound, config: { theme, settings, resources }, agent, messages }) => {
+					({ typing, user, dispatch, sound, config: { theme, settings }, agent, messages }) => {
 						this.actions = dispatch;
 						return (
 							<Home
@@ -165,7 +167,7 @@ class Wrapped extends Component {
 								uploads={settings.fileUpload}
 								title={this.title(agent, theme)}
 								subtitle={this.subTitle(agent)}
-								src={agent && `http://localhost:3000/avatar/${ agent.username }`}
+								src={agent && getAvatarUrl(agent.username)}
 								sound={sound}
 								onPlaySound={this.onPlaySound}
 								notification={this.notification}
