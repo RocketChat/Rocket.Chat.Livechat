@@ -21,6 +21,13 @@ storiesOf('Components|Header', module)
 			</Content>
 		</Header>
 	))
+	.add('with long text content', () => (
+		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
+			<Content>
+				{text('text', 'Need Help? '.repeat(100))}
+			</Content>
+		</Header>
+	))
 	.add('with title and subtitle', () => (
 		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
 			<Content>

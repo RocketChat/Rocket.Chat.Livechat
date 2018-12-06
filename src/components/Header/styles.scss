@@ -27,6 +27,10 @@ $header-padding: $default-padding;
 	&__content {
 		@extend .header__item;
 		flex: 1 1 auto;
+		overflow: hidden;
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
 
 		.header__title {
 			font-size: 16px;
