@@ -17,7 +17,7 @@ import Plus from 'icons/plus.svg';
 
 import Bell from 'icons/bell.svg';
 import BellOff from 'icons/bellOff.svg';
-import Arrow from 'icons/arrow.svg';
+import Arrow from 'icons/arrowDown.svg';
 import NewWindow from 'icons/newWindow.svg';
 
 export const isBottom = (el) => el.scrollHeight - el.scrollTop === el.clientHeight;

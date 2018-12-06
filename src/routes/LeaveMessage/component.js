@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import { Form, Validations } from '../../components/Form';
 import { createClassName } from '../../components/helpers';
 import Bell from '../../icons/bell.svg';
-import Arrow from '../../icons/arrow.svg';
+import Arrow from '../../icons/arrowDown.svg';
 import NewWindow from '../../icons/newWindow.svg';
 import styles from './styles';
 
