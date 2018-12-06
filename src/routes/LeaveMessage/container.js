@@ -36,7 +36,7 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 			strings: {
 				offlineMessage: message,
 				offlineSuccessMessage: successMessage,
-			},
+			} = {},
 			loading,
 			token,
 			dispatch,
