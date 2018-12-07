@@ -3,44 +3,49 @@ import styles from './styles';
 import { createClassName } from '../helpers';
 
 
-export const Header = ({ children, color, ...props }) => (
-	<header className={createClassName(styles, 'header')} style={{ backgroundColor: color }} {...props}>
+export const Header = ({ children, color, className, ...props }) => (
+	<header className={createClassName(styles, 'header', {}, [className])} style={{ backgroundColor: color }} {...props}>
 		{children}
 	</header>
 );
 
-export const Picture = ({ children, ...props }) => (
-	<div className={createClassName(styles, 'header__picture')} {...props}>
+export const Picture = ({ children, className, ...props }) => (
+	<div className={createClassName(styles, 'header__picture', {}, [className])} {...props}>
 		{children}
 	</div>
 );
 
-export const Content = ({ children, ...props }) => (
-	<div className={createClassName(styles, 'header__content')} {...props}>
+export const Content = ({ children, className, ...props }) => (
+	<div className={createClassName(styles, 'header__content', {}, [className])} {...props}>
 		{children}
 	</div>
 );
 
-export const Title = ({ children, ...props }) => (
-	<div className={createClassName(styles, 'header__title')} {...props}>
+export const Title = ({ children, className, ...props }) => (
+	<div className={createClassName(styles, 'header__title', {}, [className])} {...props}>
 		{children}
 	</div>
 );
 
-export const SubTitle = ({ children, ...props }) => (
-	<div className={createClassName(styles, 'header__subtitle')} {...props}>
+export const SubTitle = ({ children, className, ...props }) => (
+	<div
+		className={createClassName(styles, 'header__subtitle', {
+			children: children.length > 0,
+		}, [className])}
+		{...props}
+	>
 		{children}
 	</div>
 );
 
-export const Actions = ({ children, ...props }) => (
-	<nav className={createClassName(styles, 'header__actions')} {...props}>
+export const Actions = ({ children, className, ...props }) => (
+	<nav className={createClassName(styles, 'header__actions', {}, [className])} {...props}>
 		{children}
 	</nav>
 );
 
-export const Action = ({ children, ...props }) => (
-	<button className={createClassName(styles, 'header__action')} {...props}>
+export const Action = ({ children, className, ...props }) => (
+	<button className={createClassName(styles, 'header__action', {}, [className])} {...props}>
 		{children}
 	</button>
 );
