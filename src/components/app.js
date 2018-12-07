@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 
-import Store, { Consumer } from '../store';
+import Store, { Consumer, store } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
@@ -13,8 +13,13 @@ export default class App extends Component {
 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
 	 *	@param {string} event.url	The newly routed URL
 	 */
-	handleTriggers(config) {
-		const { online, enabled } = config;
+	handleRoute = (/* ...args*/) => {
+		// this.currentUrl = args[0].url;
+	};
+
+	handleTriggers() {
+		const { state } = store;
+		const { config: { online, enabled } } = state;
 
 		if (!(online && enabled)) {
 			return TriggersManager.setDisabled();
@@ -24,17 +29,12 @@ export default class App extends Component {
 		TriggersManager.start();
 	}
 
-	handleRoute = (/* ...args*/) => {
-		// this.currentUrl = args[0].url;
-	};
-
 	async componentDidMount() {
-		// console.log(await api.livechat.config());
+		this.handleTriggers();
 	}
 
 	renderScreen({ user, config, messages, triggered }) {
-		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online /* , departments */ } = config;
-		this.handleTriggers(config);
+		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online } = config;
 
 		if (!online) {
 			if (displayOfflineForm) {

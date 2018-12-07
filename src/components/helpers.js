@@ -114,6 +114,12 @@ export const createToken = () => (Math.random().toString(36).substring(2, 15) + 
 
 export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ username }`);
 
-export const getAttachmentUrl = (url) => (`${ hostUrl }${ url }`);
-
 export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
+
+export const getAttachmentsUrl = (attachments) => {
+	return attachments && attachments.map(attachment => {
+		const { image_url, video_url, audio_url } = attachment;
+		const assetUrl = image_url || video_url || audio_url;
+		return { ...attachment, attachment_url: `${ hostUrl }${ assetUrl }` };
+	});
+};

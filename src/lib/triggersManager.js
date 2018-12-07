@@ -9,7 +9,7 @@ const getAgent = (triggerAction) => {
 		return agentPromise;
 	}
 
-	agentPromise = new Promise(async (resolve, reject) => {
+	agentPromise = new Promise(async(resolve, reject) => {
 		const { params } = triggerAction;
 
 		if (params.sender === 'queue') {
@@ -102,7 +102,7 @@ class TriggersManager {
 			if (action.name === 'send-message') {
 				trigger.skip = true;
 
-				getAgent(action).then(async (agent) => {
+				getAgent(action).then(async(agent) => {
 					const message = {
 						msg: action.params.msg,
 						token,
@@ -111,7 +111,7 @@ class TriggersManager {
 						_id: createToken(),
 					}
 
-					store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+					store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg }) => ({ msg })) });
 
 					// TODO: Need to think about the implementation below.. Is it possible that when the room is created, the available agent is not the same one that was previously selected?
 					if (agent._id) {

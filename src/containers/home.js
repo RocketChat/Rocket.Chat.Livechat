@@ -42,7 +42,7 @@ class Wrapped extends Component {
 		const stateUser = await this.getUser();
 		const { token } = stateUser;
 
-		this.getRoom(token).then(async (room) => {
+		this.getRoom(token).then(async(room) => {
 			await SDK.sendMessage({ msg, token, rid: room._id });
 		});
 
@@ -67,7 +67,7 @@ class Wrapped extends Component {
 		const { user: { token } } = state;
 
 		const sendFiles = (files, rid) => {
-			files.forEach(async (file) => {
+			files.forEach(async(file) => {
 				const formData = new FormData();
 				formData.append('file', file);
 				await fetch(`http://localhost:3000/api/v1/livechat/upload/${ rid }`, {

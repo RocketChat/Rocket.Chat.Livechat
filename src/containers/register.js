@@ -38,7 +38,7 @@ class Wrapped extends Component {
 								hasNameField={props.settings.nameFieldRegistrationForm}
 								hasEmailField={props.settings.emailFieldRegistrationForm}
 								hasDepartmentField={props.settings.allowSwitchingDepartments}
-								departments={[]}
+								departments={props.departments}
 								loading={loading}
 								onSubmit={this.onSubmit}
 							/>

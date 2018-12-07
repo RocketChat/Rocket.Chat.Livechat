@@ -33,8 +33,6 @@ const commands = new Commands();
 let stream;
 
 SDK.onMessage((message) => {
-	const { sound, user } = store.state;
-
 	if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg](store.state);
 	} else if (!msgTypesNotDisplayed.includes(message.t)) {
@@ -44,6 +42,7 @@ SDK.onMessage((message) => {
 			// parentCall('callback', 'chat-ended');
 		}
 
+		const { sound, user } = store.state;
 		if (sound.enabled && message.u._id !== user._id) {
 			sound.play = true;
 			return store.setState({ sound });
