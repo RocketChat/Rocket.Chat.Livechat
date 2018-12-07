@@ -70,7 +70,7 @@ SDK.onTyping((username, isTyping) => {
 const token = store.state.user && store.state.user.token;
 SDK.credentials.token = token;
 
-const getConfig = async () => {
+const getConfig = async() => {
 	const config = await (token ? SDK.config({ token }) : SDK.config());
 	const { room, agent } = config;
 	delete config.agent;
@@ -81,7 +81,7 @@ const getConfig = async () => {
 	store.setState({ config, room, agent, sound });
 };
 
-const initRoom = async () => {
+const initRoom = async() => {
 	if (stream) {
 		return;
 	}
