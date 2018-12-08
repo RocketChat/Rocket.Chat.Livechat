@@ -6,7 +6,7 @@ import Register from './component';
 
 
 const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px', background: 'white' }}>
+	<div style={{ display: 'flex', width: '365px' }}>
 		{storyFn()}
 	</div>
 ));
@@ -38,9 +38,14 @@ storiesOf('Screen|Register', module)
 				},
 			])}
 			loading={boolean('loading', false)}
-			onToggleNotification={action('toggleNotification')}
-			onToggleMinimize={action('toggleMinimize')}
-			onToggleFullScreen={action('toggleFullScreen')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
 			onSubmit={action('submit')}
 		/>
 	))
@@ -67,9 +72,14 @@ storiesOf('Screen|Register', module)
 				},
 			])}
 			loading={boolean('loading', true)}
-			onToggleNotification={action('toggleNotification')}
-			onToggleMinimize={action('toggleMinimize')}
-			onToggleFullScreen={action('toggleFullScreen')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
 			onSubmit={action('submit')}
 		/>
 	))

@@ -1,15 +1,9 @@
-.leave-message {
-	flex: 1 1;
-	display: flex;
-    flex-direction: column;
-}
-
 .leave-message__main {
-	padding: 0 24px;
-	flex: 1 1 auto;
+	padding: 1rem 1.5rem 0;
 }
 
-.leave-message__main-message {
+.leave-message__message {
+	margin: 0 0 1rem 0;
 	font-weight: 500;
 	line-height: 1.5;
 }
