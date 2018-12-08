@@ -1,132 +1,122 @@
 import { Component } from 'preact';
-
-import styles from './styles';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import Avatar from '../../components/Avatar';
-import DropFiles from '../../components/DropFiles';
 import Composer, { Action, Actions } from '../../components/Composer';
-import Typing from '../../components/TypingIndicator';
-import Messages from '../../components/Message';
-import { throttle, createClassName } from '../../components/helpers';
+import DropFiles from '../../components/DropFiles';
+import Messages from '../../components/Messages';
+import Screen from '../../components/Screen';
 import Sound from '../../components/Sound';
+import TypingIndicator from '../../components/TypingIndicator';
+import { debounce, createClassName } from '../../components/helpers';
+import styles from './styles';
+import EmojiIcon from '../../icons/smile.svg';
+import PlusIcon from '../../icons/plus.svg';
+import SendIcon from '../../icons/send.svg';
 
-import Smile from 'icons/smile.svg';
-import Plus from 'icons/plus.svg';
 
-
-import Bell from 'icons/bell.svg';
-import BellOff from 'icons/bellOff.svg';
-import Arrow from 'icons/arrowDown.svg';
-import NewWindow from 'icons/newWindow.svg';
-
-export const isBottom = (el) => el.scrollHeight - el.scrollTop === el.clientHeight;
-export const isTop = (el) => el.scrollTop === 0;
 const toBottom = (el) => el.scrollTop = el.scrollHeight;
 
 
 export default class Chat extends Component {
-	isBottom() {
-		return isBottom(this.el);
-	}
-	bind(el) {
-		this.el = el;
+	handleSoundRef = (sound) => {
+		this.sound = sound;
 	}
 
-	handleScroll() {
+	handleMessagesContainerRef = (messagesContainer) => {
+		this.messagesContainer = messagesContainer;
+	}
 
-		const atBottom = isBottom(this.el);
+	handleScroll = debounce(() => {
+		const { clientHeight, scrollTop, scrollHeight } = this.messagesContainer;
+		const atTop = scrollTop === 0;
+		const atBottom = scrollHeight - scrollTop === clientHeight;
+
 		if (this.state.atBottom !== atBottom) {
 			this.setState({ atBottom });
 		}
 
-		if (isTop(this.el)) {
-			return this.props.onTop && this.props.onTop();
+		const { onTop, onBottom } = this.props;
+
+		if (atTop && onTop) {
+			return onTop();
 		}
 
-		if (atBottom) {
-			return this.props.onBottom && this.props.onBottom();
+		if (atBottom && onBottom) {
+			return onBottom();
 		}
+	}, 100)
 
-	}
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			atBottom: true,
-		};
-		this.handleScroll = this.handleScroll.bind(this);
-		this.bind = throttle(this.bind, 100).bind(this);
+	state = {
+		atBottom: true,
 	}
 
 	componentDidMount() {
-		toBottom(this.el);
+		toBottom(this.messagesContainer);
 	}
 
 	componentDidUpdate() {
 		if (this.state.atBottom) {
-			toBottom(this.el);
+			toBottom(this.messagesContainer);
 		}
 	}
 
-	renderNotification() {
-		// if (this.props.sound.enabled) {
-		// 	return <Bell width={20} />;
-		// }
-
-		return <BellOff width={20} />;
-	}
-
-	render = ({ onUpload, onPlaySound, typingUsers, onSubmit, color, messages, user, src, title, subtitle, uploads, emoji = true, notification, minimize, fullScreen, sound }) => (
-		<div class={styles.container}>
-			{/* <Sound onPlay={onPlaySound} src={sound.src} play={sound.play} /> */}
-			<Header color={color}>
-				{src && <Header.Picture><Avatar src={src} /></Header.Picture>}
-				<Header.Content>
-					<Header.Title>{title}</Header.Title>
-					<Header.SubTitle>{subtitle}</Header.SubTitle>
-				</Header.Content>
-				<Header.Actions>
-					<Header.Action onClick={notification}>{this.renderNotification()}</Header.Action>
-					<Header.Action onClick={minimize}><Arrow width={20} /></Header.Action>
-					<Header.Action onClick={fullScreen}><NewWindow width={20} /></Header.Action>
-				</Header.Actions>
-			</Header>
-
+	render = ({
+		color,
+		title,
+		agent,
+		sound,
+		user,
+		loading,
+		onUpload,
+		onPlaySound,
+		typingUsers,
+		onSubmit,
+		messages,
+		uploads = false,
+		emoji = false,
+		...props
+	}, {
+		atBottom = true,
+	}) => (
+		<Screen
+			color={color}
+			title={title || I18n.t('Need help?')}
+			agent={agent}
+			nopadding
+			footer={(
+				<Composer onUpload={onUpload}
+					onSubmit={onSubmit}
+					pre={emoji && (
+						<Actions>
+							<Action>
+								<EmojiIcon width={20} />
+							</Action>
+						</Actions>
+					)}
+					post={(
+						<Actions>
+							{uploads && (
+								<Action>
+									<PlusIcon width={20} />
+								</Action>
+							)}
+							<Action>
+								<SendIcon width={20} />
+							</Action>
+						</Actions>
+					)}
+				/>
+			)}
+			className={createClassName(styles, 'chat')}
+			{...props}
+		>
+			<Sound ref={this.handleSoundRef} onPlay={onPlaySound} src={sound.src} play={sound.play} />
 			<DropFiles onUpload={onUpload}>
-				<div className={createClassName(styles, 'main', { atBottom: this.state.atBottom, loading: this.props.loading })}>
-					<div ref={this.bind} onScroll={this.handleScroll} className={createClassName(styles, 'main__wrapper')}>
+				<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
+					<div ref={this.handleMessagesContainerRef} onScroll={this.handleScroll} className={createClassName(styles, 'chat__wrapper')}>
 						<Messages messages={messages} user={user} />
-						{typingUsers && !!typingUsers.length && <Typing users={typingUsers} />}
+						{typingUsers && !!typingUsers.length && <TypingIndicator users={typingUsers} />}
 					</div>
 				</div>
 			</DropFiles>
-
-			<Footer>
-				<Footer.Content>
-					<Composer onUpload={onUpload}
-						onSubmit={onSubmit}
-						pre={
-							emoji && <Actions>
-								<Action>
-									<Smile width="20" />
-								</Action>
-							</Actions>
-						}
-						post={
-							uploads && <Actions>
-								<Action>
-									<Plus width="20" />
-								</Action>
-							</Actions>
-						}
-						placeholder="insert your text here"
-					/>
-				</Footer.Content>
-				<Footer.Content>
-					<Footer.PoweredBy />
-				</Footer.Content>
-			</Footer>
-		</div>
+		</Screen>
 	)
 }

@@ -4,36 +4,41 @@ import { Consumer, store } from '../../store';
 import Chat from './component';
 
 
-let rid = '';
-class Wrapped extends Component {
-	async getUser() {
+class ChatContainer extends Component {
+	rid = ''
+
+	getUser = async() => {
+		const { dispatch } = this.props;
+
 		const { state } = store;
 		let { user } = state;
 		if (user && user.token) {
 			return user;
 		}
-		this.setState({ loading: true });
+		dispatch({ loading: true });
 		const { defaultToken } = state;
 		user = await SDK.grantVisitor({ visitor: { token: defaultToken } });
-		this.setState({ loading: false });
-		this.actions({ user });
+		dispatch({ loading: false });
+		dispatch({ user });
 		return user;
 	}
 
-	async getRoomId(token) {
-		if (!rid) {
+	getRoomId = async(token) => {
+		const { dispatch } = this.props;
+
+		if (!this.rid) {
 			try {
 				const room = await SDK.room({ token });
-				rid = room._id;
-				this.actions({ room });
+				this.rid = room._id;
+				dispatch({ room });
 			} catch (error) {
 				throw error;
 			}
 		}
-		return rid;
+		return this.rid;
 	}
 
-	async sendMessage(msg) {
+	sendMessage = async(msg) => {
 		if (msg.trim() === '') {
 			return;
 		}
@@ -47,19 +52,21 @@ class Wrapped extends Component {
 
 	}
 
-	async onTop() {
+	onTop = async() => {
+		const { dispatch } = this.props;
+
 		if (this.state.ended) {
 			return;
 		}
 		const { state } = store;
 		const { messages } = state;
 		this.setState({ loading: true });
-		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
+		const moreMessages = await SDK.loadMessages(this.rid, { limit: messages.length + 10 });
 		this.setState({ loading: false, ended: messages.length + 10 >= moreMessages.length });
-		this.actions({ messages: (moreMessages || []).reverse() });
+		dispatch({ messages: (moreMessages || []).reverse() });
 	}
 
-	onUpload(files) {
+	onUpload = (files) => {
 		const { state } = store;
 		const { user: { token } } = state;
 
@@ -67,7 +74,7 @@ class Wrapped extends Component {
 			files.forEach(async(file) => {
 				const formData = new FormData();
 				formData.append('file', file);
-				await fetch(`http://localhost:3000/api/v1/livechat/upload/${ rid }`, {
+				await fetch(`http://localhost:3000/api/v1/livechat/upload/${ this.rid }`, {
 					body: formData,
 					method: 'POST',
 					headers: { 'x-visitor-token': token },
@@ -80,48 +87,27 @@ class Wrapped extends Component {
 		});
 	}
 
-	onPlaySound() {
+	onPlaySound = () => {
+		const { dispatch } = this.props;
 		const { state } = store;
 		const sound = Object.assign(state.sound, { play: false });
-		this.actions({ sound });
+		dispatch({ sound });
 	}
 
-	notification() {
+	notification = () => {
+		const { dispatch } = this.props;
 		const { state } = store;
 		const enabled = !state.sound.enabled;
 		const sound = Object.assign(state.sound, { enabled });
-		this.actions({ sound });
+		dispatch({ sound });
 	}
 
-	title(agent, theme) {
-		if (agent) {
-			return agent.name;
-		}
-		return (theme && theme.title) || I18n.t('Need help?');
-	}
-
-	subTitle(agent) {
-		if (!agent) {
-			return;
-		}
-
-		const { username, emails } = agent;
-		if (emails && emails[0]) {
-			return emails[0].address;
-		}
-
-		return username;
-	}
-
-	constructor() {
-		super();
-		this.state = {
-			loading: false,
-		};
+	constructor(props) {
+		super(props);
 		const { state } = store;
 		const { config: { settings: { fileUpload } } } = state;
 
-		rid = state.room && state.room._id;
+		this.rid = state.room && state.room._id;
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onTop = this.onTop.bind(this);
 		this.onUpload = fileUpload && this.onUpload.bind(this);
@@ -130,46 +116,73 @@ class Wrapped extends Component {
 	}
 
 	async componentDidMount() {
+		const { dispatch } = this.props;
 		const { state } = store;
 		const { token } = state.user;
 
-		if (rid) {
+		if (this.rid) {
 			// eslint-disable-next-line react/no-did-mount-set-state
 			this.setState({ loading: true });
-			const messages = await SDK.loadMessages(rid, { token });
+			const messages = await SDK.loadMessages(this.rid, { token });
 			// eslint-disable-next-line react/no-did-mount-set-state
 			this.setState({ loading: false });
-			this.actions({ messages: (messages || []).reverse() });
+			dispatch({ messages: (messages || []).reverse() });
 		}
 	}
 
-	render(props) {
-		return (
-			<Consumer>
-				{
-					({ typing, user, dispatch, sound, config: { theme, settings }, agent, messages }) => {
-						this.actions = dispatch;
-						return (
-							<Chat
-								{...props}
-								onTop={this.onTop}
-								user={user}
-								typingUsers={typing}
-								loading={this.state.loading}
-								onSubmit={this.sendMessage}
-								color={theme.color}
-								onUpload={this.onUpload}
-								messages={messages}
-								uploads={settings.fileUpload}
-								title={this.title(agent, theme)}
-								subtitle={this.subTitle(agent)}
-								src={agent && `http://localhost:3000/avatar/${ agent.username }`}
-								sound={sound}
-								onPlaySound={this.onPlaySound}
-								notification={this.notification}
-							/>);
-					}}
-			</Consumer>);
-	}
+	render = (props) => (
+		<Chat
+			{...props}
+			onTop={this.onTop}
+			onSubmit={this.sendMessage}
+			onUpload={this.onUpload}
+			onPlaySound={this.onPlaySound}
+			notification={this.notification}
+		/>
+	)
 }
-export default Wrapped;
+
+export const ChatConnector = ({ ref, ...props }) => (
+	<Consumer>
+		{({
+			theme: {
+				color,
+				title,
+			} = {},
+			settings: {
+				fileUpload: uploads,
+			} = {},
+			agent,
+			sound,
+			user,
+			messages,
+			loading,
+			typing: typingUsers,
+			dispatch,
+		}) => (
+			<ChatContainer
+				ref={ref}
+				{...props}
+				color={color}
+				title={title || I18n.t('Need help?')}
+				agent={agent && {
+					name: agent.name,
+					status: agent.status,
+					email: agent.emails && agent.emails[0] && agent.emails[0].address,
+					username: agent.username,
+					avatarSrc: `http://localhost:3000/avatar/${ agent.username }`,
+				}}
+				sound={sound}
+				user={user}
+				messages={messages}
+				emoji={false}
+				uploads={uploads}
+				typingUsers={typingUsers}
+				loading={loading}
+				dispatch={dispatch}
+			/>
+		)}
+	</Consumer>
+);
+
+export default ChatConnector;
