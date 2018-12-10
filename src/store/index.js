@@ -113,7 +113,7 @@ const StoreContext = createContext();
 export class Provider extends Component {
 	static displayName = 'StoreProvider'
 
-	dispatch = async (partialState) => {
+	dispatch = async(partialState) => {
 		await store.setState(partialState);
 
 		if (partialState.user) {
