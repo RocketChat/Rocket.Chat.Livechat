@@ -1,10 +1,11 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 
-import Store, { Consumer } from '../store';
+import Store, { Consumer, store } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
+import TriggersManager from '../lib/triggersManager';
 
 export default class App extends Component {
 
@@ -15,25 +16,39 @@ export default class App extends Component {
 	handleRoute = (/* ...args*/) => {
 		// this.currentUrl = args[0].url;
 	};
-	async componentDidMount() {
-		// console.log(await api.livechat.config());
+
+	handleTriggers() {
+		const { state } = store;
+		const { config: { online, enabled } } = state;
+
+		if (!(online && enabled)) {
+			return TriggersManager.enabled = false;
+		}
+
+		TriggersManager.enabled = true;
+		TriggersManager.init();
 	}
 
-	renderScreen({ user, config, messages }) {
-		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online /* , departments */ } = config;
+	async componentDidMount() {
+		this.handleTriggers();
+	}
 
-		if (online) {
-			const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
-			if ((user && user.token) || !showRegistrationForm) {
-				return <Home {...config} messages={messages} default path="/home" />;
+	renderScreen({ user, config, messages, triggered }) {
+		const { settings: { displayOfflineForm, registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online } = config;
+
+		if (!online) {
+			if (displayOfflineForm) {
+				return <LeaveMessage {...config} default path="/LeaveMessage" />;
 			}
-			return <Register {...config} default path="/register" />;
-		}
-		if (displayOfflineForm) {
 			return <LeaveMessage {...config} default path="/LeaveMessage" />;
-		}
-		return <LeaveMessage {...config} default path="/LeaveMessage" />;
 
+		}
+
+		const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
+		if ((user && user.token) || !showRegistrationForm || triggered) {
+			return <Home {...config} messages={messages} default path="/home" />;
+		}
+		return <Register {...config} default path="/register" />;
 	}
 	render() {
 		return (

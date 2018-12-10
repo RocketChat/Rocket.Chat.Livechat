@@ -1,34 +1,37 @@
 import { h, Component } from 'preact';
 import SDK from '../api';
-import { Consumer, getState } from '../store';
+import { Consumer, store } from '../store';
 import Home from '../routes/home';
-let rid = '';
+import { getAvatarUrl } from '../components/helpers';
+
 class Wrapped extends Component {
 	async getUser() {
-		const state = getState();
+		const { state } = store;
 		let { user } = state;
 		if (user && user.token) {
 			return user;
 		}
 		this.setState({ loading: true });
-		const { defaultToken } = state;
-		user = await SDK.grantVisitor({ visitor: { token: defaultToken } });
+		const { token } = state;
+		user = await SDK.grantVisitor({ visitor: { token } });
 		this.setState({ loading: false });
 		this.actions({ user });
 		return user;
 	}
 
-	async getRoomId(token) {
-		if (!rid) {
+	async getRoom(token) {
+		const { state } = store;
+		let { room } = state;
+
+		if (!room) {
 			try {
-				const room = await SDK.room({ token });
-				rid = room._id;
+				room = await SDK.room({ token });
 				this.actions({ room });
 			} catch (error) {
 				throw error;
 			}
 		}
-		return rid;
+		return room;
 	}
 
 	async sendMessage(msg) {
@@ -39,8 +42,8 @@ class Wrapped extends Component {
 		const stateUser = await this.getUser();
 		const { token } = stateUser;
 
-		this.getRoomId(token).then(async(rid) => {
-			await SDK.sendMessage({ msg, token, rid });
+		this.getRoom(token).then(async(room) => {
+			await SDK.sendMessage({ msg, token, rid: room._id });
 		});
 
 	}
@@ -49,8 +52,10 @@ class Wrapped extends Component {
 		if (this.state.ended) {
 			return;
 		}
-		const state = getState();
-		const { messages } = state;
+		const { state } = store;
+		const { room, messages } = state;
+		const rid = room && room._id;
+
 		this.setState({ loading: true });
 		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
 		this.setState({ loading: false, ended: messages.length + 10 >= moreMessages.length });
@@ -58,10 +63,10 @@ class Wrapped extends Component {
 	}
 
 	onUpload(files) {
-		const state = getState();
+		const { state } = store;
 		const { user: { token } } = state;
 
-		const sendFiles = (files) => {
+		const sendFiles = (files, rid) => {
 			files.forEach(async(file) => {
 				const formData = new FormData();
 				formData.append('file', file);
@@ -73,19 +78,20 @@ class Wrapped extends Component {
 			});
 		};
 
-		this.getRoomId(token).then(() => {
-			sendFiles(files);
+		this.getRoom(token).then((room) => {
+			const rid = room && room._id;
+			sendFiles(files, rid);
 		});
 	}
 
 	onPlaySound() {
-		const state = getState();
+		const { state } = store;
 		const sound = Object.assign(state.sound, { play: false });
 		this.actions({ sound });
 	}
 
 	notification() {
-		const state = getState();
+		const { state } = store;
 		const enabled = !state.sound.enabled;
 		const sound = Object.assign(state.sound, { enabled });
 		this.actions({ sound });
@@ -116,10 +122,9 @@ class Wrapped extends Component {
 		this.state = {
 			loading: false,
 		};
-		const state = getState();
+		const { state } = store;
 		const { config: { settings: { fileUpload } } } = state;
 
-		rid = state.room && state.room._id;
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onTop = this.onTop.bind(this);
 		this.onUpload = fileUpload && this.onUpload.bind(this);
@@ -128,17 +133,19 @@ class Wrapped extends Component {
 	}
 
 	async componentDidMount() {
-		const state = getState();
-		const { token } = state.user;
+		const { state } = store;
+		const { room, token } = state;
 
-		if (rid) {
-			// eslint-disable-next-line react/no-did-mount-set-state
-			this.setState({ loading: true });
-			const messages = await SDK.loadMessages(rid, { token });
-			// eslint-disable-next-line react/no-did-mount-set-state
-			this.setState({ loading: false });
-			this.actions({ messages: (messages || []).reverse() });
+		if (!room) {
+			return;
 		}
+
+		const rid = room._id;
+		this.setState({ loading: true });
+		const messages = await SDK.loadMessages(rid, { token });
+		// eslint-disable-next-line react/no-did-mount-set-state
+		this.setState({ loading: false });
+		this.actions({ messages: (messages || []).reverse() });
 	}
 
 	render(props) {
@@ -161,7 +168,7 @@ class Wrapped extends Component {
 								uploads={settings.fileUpload}
 								title={this.title(agent, theme)}
 								subtitle={this.subTitle(agent)}
-								src={agent && `http://localhost:3000/avatar/${ agent.username }`}
+								src={agent && getAvatarUrl(agent.username)}
 								sound={sound}
 								onPlaySound={this.onPlaySound}
 								notification={this.notification}

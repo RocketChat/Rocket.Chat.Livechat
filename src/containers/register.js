@@ -8,9 +8,9 @@ class Wrapped extends Component {
 	async onSubmit(args) {
 		this.setState({ loading: true });
 		const state = getState();
-		const { defaultToken } = state;
+		const { token } = state;
 
-		const user = await SDK.grantVisitor({ visitor: { ...args, token: defaultToken } });
+		const user = await SDK.grantVisitor({ visitor: { ...args, token } });
 		this.setState({ loading: false });
 		this.actions({ user });
 	}
@@ -38,7 +38,7 @@ class Wrapped extends Component {
 								hasNameField={props.settings.nameFieldRegistrationForm}
 								hasEmailField={props.settings.emailFieldRegistrationForm}
 								hasDepartmentField={props.settings.allowSwitchingDepartments}
-								departments={[]}
+								departments={props.departments}
 								loading={loading}
 								onSubmit={this.onSubmit}
 							/>
