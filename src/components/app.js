@@ -22,11 +22,11 @@ export default class App extends Component {
 		const { config: { online, enabled } } = state;
 
 		if (!(online && enabled)) {
-			return TriggersManager.setDisabled();
+			return TriggersManager.enabled = false;
 		}
 
-		TriggersManager.setEnabled();
-		TriggersManager.start();
+		TriggersManager.enabled = true;
+		TriggersManager.init();
 	}
 
 	async componentDidMount() {

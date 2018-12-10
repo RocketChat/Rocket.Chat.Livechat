@@ -54,18 +54,18 @@ const getAgent = (triggerAction) => {
 class TriggersManager {
 	constructor() {
 		if (!TriggersManager.instance) {
-			this.started = false;
-			this.requests = [];
-			this.triggers = [];
-			this.enabled = true;
+			this._started = false;
+			this._requests = [];
+			this._triggers = [];
+			this._enabled = true;
 			TriggersManager.instance = this;
 		}
 
 		return TriggersManager.instance;
 	}
 
-	start() {
-		if (this.started) {
+	init() {
+		if (this._started) {
 			return;
 		}
 
@@ -77,11 +77,11 @@ class TriggersManager {
 			return;
 		}
 
-		this.started = true;
-		this.triggers = [...triggers];
+		this._started = true;
+		this._triggers = [...triggers];
 
 		firedTriggers.forEach((triggerId) => {
-			this.triggers.forEach((trigger) => {
+			this._triggers.forEach((trigger) => {
 				if (trigger._id === triggerId) {
 					trigger.skip = true;
 				}
@@ -94,7 +94,7 @@ class TriggersManager {
 	fire(trigger) {
 		const { state } = store;
 		const { token, user, firedTriggers = [] } = state;
-		if (!this.enabled || user) { // need to think about testing user obj here..
+		if (!this._enabled || user) { // need to think about testing user obj here..
 			return;
 		}
 
@@ -132,8 +132,8 @@ class TriggersManager {
 	};
 
 	processRequest(request) {
-		this.requests.push(request);
-		if (!this.started) {
+		this._requests.push(request);
+		if (!this._started) {
 			return;
 		}
 
@@ -141,7 +141,7 @@ class TriggersManager {
 	}
 
 	processTriggers() {
-		this.triggers.forEach((trigger) => {
+		this._triggers.forEach((trigger) => {
 			if (trigger.skip) {
 				return;
 			}
@@ -150,13 +150,13 @@ class TriggersManager {
 			trigger.conditions.forEach((condition) => {
 				switch (condition.name) {
 					case 'page-url':
-						this.requests.forEach(function(request) {
+						this._requests.forEach(function(request) {
 							const hrefRegExp = new RegExp(condition.value, 'g');
 							if (request.location.href.match(hrefRegExp)) {
 								self.fire(trigger);
 							}
 						});
-						this.requests = [];
+						this._requests = [];
 						break;
 					case 'time-on-site':
 						if (trigger.timeout) {
@@ -171,16 +171,12 @@ class TriggersManager {
 		});
 	}
 
-	setTriggers(triggers) {
-		this.triggers = [...triggers];
+	set triggers(newTriggers) {
+		this._triggers = [...newTriggers];
 	}
 
-	setDisabled() {
-		this.enabled = false;
-	}
-
-	setEnabled() {
-		this.enabled = true;
+	set enabled(value) {
+		this._enabled = value;
 	}
 }
 
