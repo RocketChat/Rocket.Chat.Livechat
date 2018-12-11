@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import md from './Markdown';
 import styles from './styles';
 import { createClassName, parseDate, parseMessage } from '../helpers';
@@ -28,6 +27,12 @@ const Message = ({ _id, el, msg, ts, me, group, avatarUrl, attachmentsUrl, ...ar
 		</Container>
 	</Body>
 );
+
+
+Message.Body = Body;
+Message.Container = Container;
+Message.Content = Content;
+Message.Text = Text;
 
 
 export default Message;
