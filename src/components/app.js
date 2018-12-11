@@ -5,6 +5,7 @@ import Store, { Consumer } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
+import CustomFields from '../lib/CustomFields';
 
 export default class App extends Component {
 
@@ -15,8 +16,14 @@ export default class App extends Component {
 	handleRoute = (/* ...args*/) => {
 		// this.currentUrl = args[0].url;
 	};
-	async componentDidMount() {
-		// console.log(await api.livechat.config());
+
+	componentDidMount() {
+		CustomFields.init();
+		CustomFields.setCustomField('telefone', '88800000');
+	}
+
+	componentWillUnmount() {
+		CustomFields.reset();
 	}
 
 	renderScreen({ user, config, messages }) {
