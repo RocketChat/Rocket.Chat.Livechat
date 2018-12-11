@@ -55,7 +55,6 @@ class CustomFields {
 		}
 
 		const { token } = SDK.credentials;
-		console.log({ token, key, value, overwrite });
 		SDK.sendCustomField({ token, key, value, overwrite });
 	}
 }
