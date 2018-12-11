@@ -5,7 +5,8 @@ import Store, { Consumer, store } from '../store';
 import Home from '../containers/home';
 import LeaveMessage from '../containers/leaveamessage';
 import Register from '../containers/register';
-import TriggersManager from '../lib/triggersManager';
+import CustomFields from '../lib/customFields';
+import Triggers from '../lib/triggers';
 
 export default class App extends Component {
 
@@ -17,20 +18,25 @@ export default class App extends Component {
 		// this.currentUrl = args[0].url;
 	};
 
+	componentDidMount() {
+		this.handleTriggers();
+		CustomFields.init();
+	}
+
+	componentWillUnmount() {
+		CustomFields.reset();
+	}
+
 	handleTriggers() {
 		const { state } = store;
 		const { config: { online, enabled } } = state;
 
 		if (!(online && enabled)) {
-			return TriggersManager.enabled = false;
+			return Triggers.enabled = false;
 		}
 
-		TriggersManager.enabled = true;
-		TriggersManager.init();
-	}
-
-	async componentDidMount() {
-		this.handleTriggers();
+		Triggers.enabled = true;
+		Triggers.init();
 	}
 
 	renderScreen({ user, config, messages, triggered }) {

@@ -51,17 +51,17 @@ const getAgent = (triggerAction) => {
 	return agentPromise;
 }
 
-class TriggersManager {
+class Triggers {
 	constructor() {
-		if (!TriggersManager.instance) {
+		if (!Triggers.instance) {
 			this._started = false;
 			this._requests = [];
 			this._triggers = [];
 			this._enabled = true;
-			TriggersManager.instance = this;
+			Triggers.instance = this;
 		}
 
-		return TriggersManager.instance;
+		return Triggers.instance;
 	}
 
 	init() {
@@ -150,7 +150,7 @@ class TriggersManager {
 			trigger.conditions.forEach((condition) => {
 				switch (condition.name) {
 					case 'page-url':
-						this._requests.forEach(function(request) {
+						this._requests.forEach((request) => {
 							const hrefRegExp = new RegExp(condition.value, 'g');
 							if (request.location.href.match(hrefRegExp)) {
 								self.fire(trigger);
@@ -180,5 +180,5 @@ class TriggersManager {
 	}
 }
 
-const instance = new TriggersManager();
+const instance = new Triggers();
 export default instance;
