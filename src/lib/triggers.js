@@ -9,7 +9,7 @@ const getAgent = (triggerAction) => {
 		return agentPromise;
 	}
 
-	agentPromise = new Promise(async (resolve, reject) => {
+	agentPromise = new Promise(async(resolve, reject) => {
 		const { params } = triggerAction;
 
 		if (params.sender === 'queue') {
@@ -102,7 +102,7 @@ class Triggers {
 			if (action.name === 'send-message') {
 				trigger.skip = true;
 
-				getAgent(action).then(async (agent) => {
+				getAgent(action).then(async(agent) => {
 					const message = {
 						msg: action.params.msg,
 						token,
