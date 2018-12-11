@@ -150,7 +150,7 @@ class Triggers {
 			trigger.conditions.forEach((condition) => {
 				switch (condition.name) {
 					case 'page-url':
-						this._requests.forEach(function (request) {
+						this._requests.forEach((request) => {
 							const hrefRegExp = new RegExp(condition.value, 'g');
 							if (request.location.href.match(hrefRegExp)) {
 								self.fire(trigger);
