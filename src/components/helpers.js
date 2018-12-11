@@ -1,6 +1,9 @@
 import format from 'date-fns/format';
 import isToday from 'date-fns/is_today';
 
+// TODO: replace the hostUrl
+const hostUrl = 'http://localhost:3000';
+
 function flatMap(arr, mapFunc) {
 	const result = [];
 	for (const [index, elem] of arr.entries()) {
@@ -99,12 +102,24 @@ export const parseMessage = (args, msg) => {
 		default:
 			return msg;
 	}
-};
+}
 
-export const setCookies = ({ room, user }) => {
-	if (room && user && user.token) {
-		document.cookie = `rc_rid=${ room._id }; path=/`;
-		document.cookie = `rc_token=${ user.token }; path=/`;
-		document.cookie = 'rc_room_type=l; path=/';
-	}
+export const setCookies = (rid, token) => {
+	document.cookie = `rc_rid=${ rid }; path=/`;
+	document.cookie = `rc_token=${ token }; path=/`;
+	document.cookie = 'rc_room_type=l; path=/';
+}
+
+export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
+
+export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ username }`);
+
+export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
+
+export const getAttachmentsUrl = (attachments) => {
+	return attachments && attachments.map(attachment => {
+		const { image_url, video_url, audio_url } = attachment;
+		const assetUrl = image_url || video_url || audio_url;
+		return { ...attachment, attachment_url: `${ hostUrl }${ assetUrl }` };
+	});
 };

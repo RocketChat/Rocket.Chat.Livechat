@@ -1,12 +1,12 @@
 import { h } from 'preact';
 import styles from './styles';
-import { createClassName } from '../helpers';
+import { createClassName, getAvatarUrl } from '../helpers';
 import Avatar from '../Avatar';
 import * as Message from '../Message';
 
 
 export const TypingAvatar = ({ users = [] }) => (<div className={createClassName(styles, 'avatar-container')}>{
-	users.map((src) => <Avatar src={`http://localhost:3000/avatar/${ src }`} className={[styles.avatar]} />)
+	users.map((src) => <Avatar src={getAvatarUrl(src)} className={[styles.avatar]} />)
 }
 </div>);
 

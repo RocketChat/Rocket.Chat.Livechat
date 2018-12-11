@@ -1,13 +1,13 @@
 import { Component } from 'preact';
 import { createContext } from 'preact-context';
-import { insert, setCookies } from 'components/helpers';
+import { insert, setCookies, createToken, msgTypesNotDisplayed } from 'components/helpers';
 import SDK from '../api';
 import Commands from '../lib/commands';
 import Store from './Store';
 
 
 const initialState = {
-	defaultToken: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+	token: createToken(),
 	typing: [],
 	config: {
 		messages: {},
@@ -29,15 +29,10 @@ const initialState = {
 export const store = new Store(initialState);
 export const getState = () => store.state;
 
-
 const commands = new Commands();
 let stream;
 
-const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
-
 SDK.onMessage((message) => {
-	const { sound, user } = store.state;
-
 	if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg](store.state);
 	} else if (!msgTypesNotDisplayed.includes(message.t)) {
@@ -47,6 +42,7 @@ SDK.onMessage((message) => {
 			// parentCall('callback', 'chat-ended');
 		}
 
+		const { sound, user } = store.state;
 		if (sound.enabled && message.u._id !== user._id) {
 			sound.play = true;
 			return store.setState({ sound });
@@ -92,9 +88,10 @@ const initRoom = async() => {
 
 	stream = await SDK.connect();
 
-	SDK.subscribeRoom(store.state.room._id);
+	const { token, agent, room: { _id, servedBy } } = store.state;
 
-	const { agent, room: { _id, servedBy } } = store.state;
+	SDK.subscribeRoom(_id);
+
 	if (!agent && servedBy) {
 		const { agent } = await SDK.agent({ rid: _id });
 		// we're changing the SDK.agent method to return de agent prop instead of the endpoint data
@@ -103,11 +100,11 @@ const initRoom = async() => {
 		store.setState({ agent });
 	}
 
-	SDK.onAgentChange(store.state.room._id, (agent) => {
+	SDK.onAgentChange(_id, (agent) => {
 		store.setState({ agent });
 	});
 
-	setCookies(store.state);
+	setCookies(_id, token);
 };
 
 
