@@ -38,7 +38,7 @@ export default class App extends Component {
 		CustomFields.reset();
 	}
 
-	renderScreen({ user, config, messages, triggered }) {
+	renderScreen({ user, config, triggered }) {
 		const { settings: { registrationForm, nameFieldRegistrationForm, emailFieldRegistrationForm }, online } = config;
 
 		if (!online) {
@@ -47,7 +47,7 @@ export default class App extends Component {
 
 		const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
 		if ((user && user.token) || !showRegistrationForm || triggered) {
-			return <Chat messages={messages} default path="/home" />;
+			return <Chat default path="/home" />;
 		}
 		return <Register default path="/register" />;
 	}
@@ -59,7 +59,8 @@ export default class App extends Component {
 						{(state) => (
 							<Router onChange={this.handleRoute}>
 								{this.renderScreen(state)}
-							</Router>)}
+							</Router>
+						)}
 					</StoreConsumer>
 				</div>
 			</StoreProvider>
