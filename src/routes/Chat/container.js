@@ -5,7 +5,7 @@ import { getAvatarUrl } from '../../components/helpers';
 import Chat from './component';
 
 
-class ChatContainer extends Component {
+export class ChatContainer extends Component {
 	rid = ''
 
 	getUser = async() => {
