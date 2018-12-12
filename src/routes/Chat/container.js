@@ -1,144 +1,106 @@
 import { Component } from 'preact';
 import SDK from '../../api';
-import { Consumer, store } from '../../store';
-import { getAvatarUrl } from '../../components/helpers';
+import { Consumer } from '../../store';
+import { getAvatarUrl, uploadFile } from '../../components/helpers';
 import Chat from './component';
 
 
 export class ChatContainer extends Component {
-	rid = ''
+	loadMessages = async() => {
+		const { dispatch, user: { token } = {}, room: { _id: rid } = {} } = this.props;
+
+		await dispatch({ loading: true });
+
+		if (rid) {
+			const messages = await SDK.loadMessages(rid, { token });
+			dispatch({ messages: (messages || []).reverse() });
+		}
+
+		await dispatch({ loading: false });
+	}
 
 	getUser = async() => {
-		const { dispatch } = this.props;
+		const { dispatch, token, user } = this.props;
 
-		const { state } = store;
-		let { user } = state;
 		if (user && user.token) {
 			return user;
 		}
-		dispatch({ loading: true });
-		const { defaultToken } = state;
-		user = await SDK.grantVisitor({ visitor: { token: defaultToken } });
-		dispatch({ loading: false });
-		dispatch({ user });
-		return user;
+
+		const newUser = await SDK.grantVisitor({ visitor: { token } });
+		dispatch({ user: newUser });
+
+		return newUser;
 	}
 
-	getRoomId = async(token) => {
-		const { dispatch } = this.props;
+	getRoom = async() => {
+		const { dispatch, token, room } = this.props;
 
-		if (!this.rid) {
-			try {
-				const room = await SDK.room({ token });
-				this.rid = room._id;
-				dispatch({ room });
-			} catch (error) {
-				throw error;
-			}
+		if (room) {
+			return room;
 		}
-		return this.rid;
+
+		const newRoom = await SDK.room({ token });
+		dispatch({ room: newRoom, messages: [], noMoreMessages: false });
+		return newRoom;
 	}
 
-	sendMessage = async(msg) => {
+	handleTop = async() => {
+		const { dispatch, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
+
+		if (noMoreMessages) {
+			return;
+		}
+
+		dispatch({ loading: true });
+		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
+		dispatch({ noMoreMessages: messages.length + 10 >= moreMessages.length });
+		dispatch({ messages: (moreMessages || []).reverse() });
+		dispatch({ loading: false });
+	}
+
+	handleSubmit = async(msg) => {
 		if (msg.trim() === '') {
 			return;
 		}
 
-		const stateUser = await this.getUser();
-		const { token } = stateUser;
-
-		this.getRoomId(token).then(async(rid) => {
-			await SDK.sendMessage({ msg, token, rid });
-		});
-
+		const { token } = await this.getUser();
+		const { _id: rid } = await this.getRoom();
+		await SDK.sendMessage({ msg, token, rid });
 	}
 
-	onTop = async() => {
-		const { dispatch } = this.props;
+	handleUpload = async(files) => {
+		const { token } = await this.getUser();
+		const { _id: rid } = await this.getRoom();
 
-		if (this.state.ended) {
-			return;
-		}
-		const { state } = store;
-		const { messages } = state;
-		this.setState({ loading: true });
-		const moreMessages = await SDK.loadMessages(this.rid, { limit: messages.length + 10 });
-		this.setState({ loading: false, ended: messages.length + 10 >= moreMessages.length });
-		dispatch({ messages: (moreMessages || []).reverse() });
+		files.forEach(async(file) => await uploadFile({ token, rid, file }));
 	}
 
-	onUpload = (files) => {
-		const { state } = store;
-		const { user: { token } } = state;
+	createToggleNotificationsHandler = (enabled) => () => {
+		const { dispatch, sound = {} } = this.props;
+		dispatch({ sound: { ...sound, enabled } });
+	};
 
-		const sendFiles = (files) => {
-			files.forEach(async(file) => {
-				const formData = new FormData();
-				formData.append('file', file);
-				await fetch(`http://localhost:3000/api/v1/livechat/upload/${ this.rid }`, {
-					body: formData,
-					method: 'POST',
-					headers: { 'x-visitor-token': token },
-				});
-			});
-		};
+	handleEnableNotifications = this.createToggleNotificationsHandler(true)
+	handleDisableNotifications = this.createToggleNotificationsHandler(false)
 
-		this.getRoomId(token).then(() => {
-			sendFiles(files);
-		});
+	handlePlaySound = () => {
+		const { dispatch, sound = {} } = this.props;
+		dispatch({ sound: { ...sound, play: false } });
 	}
 
-	onPlaySound = () => {
-		const { dispatch } = this.props;
-		const { state } = store;
-		const sound = Object.assign(state.sound, { play: false });
-		dispatch({ sound });
-	}
-
-	notification = () => {
-		const { dispatch } = this.props;
-		const { state } = store;
-		const enabled = !state.sound.enabled;
-		const sound = Object.assign(state.sound, { enabled });
-		dispatch({ sound });
-	}
-
-	constructor(props) {
-		super(props);
-		const { state } = store;
-		const { config: { settings: { fileUpload } } } = state;
-
-		this.rid = state.room && state.room._id;
-		this.sendMessage = this.sendMessage.bind(this);
-		this.onTop = this.onTop.bind(this);
-		this.onUpload = fileUpload && this.onUpload.bind(this);
-		this.onPlaySound = this.onPlaySound.bind(this);
-		this.notification = this.notification.bind(this);
-	}
-
-	async componentDidMount() {
-		const { dispatch } = this.props;
-		const { state } = store;
-		const { token } = state.user;
-
-		if (this.rid) {
-			// eslint-disable-next-line react/no-did-mount-set-state
-			this.setState({ loading: true });
-			const messages = await SDK.loadMessages(this.rid, { token });
-			// eslint-disable-next-line react/no-did-mount-set-state
-			this.setState({ loading: false });
-			dispatch({ messages: (messages || []).reverse() });
-		}
+	componentDidMount() {
+		this.loadMessages();
 	}
 
 	render = (props) => (
 		<Chat
 			{...props}
-			onTop={this.onTop}
-			onSubmit={this.sendMessage}
-			onUpload={this.onUpload}
-			onPlaySound={this.onPlaySound}
-			notification={this.notification}
+			onTop={this.handleTop}
+			onSubmit={this.handleSubmit}
+			onUpload={this.handleUpload}
+			onEnableNotifications={this.handleEnableNotifications}
+			onDisableNotifications={this.handleDisableNotifications}
+			onPlaySound={this.handlePlaySound}
 		/>
 	)
 }
@@ -159,7 +121,9 @@ export const ChatConnector = ({ ref, ...props }) => (
 			agent,
 			sound,
 			user,
+			room,
 			messages,
+			noMoreMessages,
 			typing,
 			loading,
 			dispatch,
@@ -168,16 +132,18 @@ export const ChatConnector = ({ ref, ...props }) => (
 				ref={ref}
 				{...props}
 				color={color}
+				notificationsEnabled={sound && sound.enabled}
 				title={title || I18n.t('Need help?')}
 				sound={sound}
-				user={user && {
+				user={user ? {
 					_id: user._id,
+					token: user.token,
 					avatar: {
 						description: user.username,
 						src: getAvatarUrl(user.username),
 					},
-				}}
-				agent={agent && {
+				} : undefined}
+				agent={agent ? {
 					_id: agent._id,
 					name: agent.name,
 					status: agent.status,
@@ -187,8 +153,10 @@ export const ChatConnector = ({ ref, ...props }) => (
 						description: agent.username,
 						src: getAvatarUrl(agent.username),
 					},
-				}}
+				} : undefined}
+				room={room}
 				messages={messages}
+				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}
 				typingAvatars={Array.isArray(typing) ? typing.map((username) => ({

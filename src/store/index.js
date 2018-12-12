@@ -71,7 +71,6 @@ SDK.credentials.token = token;
 
 const loadConfig = async(token) => {
 	const {
-		room,
 		agent,
 		resources: { sound: src = null } = {},
 		...config
@@ -79,8 +78,7 @@ const loadConfig = async(token) => {
 
 	await store.setState({
 		config,
-		room,
-		agent,
+		agent: agent || store.state.agent,
 		sound: { src, enabled: true, play: false },
 	});
 };

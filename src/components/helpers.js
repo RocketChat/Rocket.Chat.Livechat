@@ -102,13 +102,13 @@ export const parseMessage = (args, msg) => {
 		default:
 			return msg;
 	}
-}
+};
 
 export const setCookies = (rid, token) => {
 	document.cookie = `rc_rid=${ rid }; path=/`;
 	document.cookie = `rc_token=${ token }; path=/`;
 	document.cookie = 'rc_room_type=l; path=/';
-}
+};
 
 export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
 
@@ -116,10 +116,17 @@ export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ u
 
 export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
 
-export const getAttachmentsUrl = (attachments) => {
-	return attachments && attachments.map(attachment => {
-		const { image_url, video_url, audio_url } = attachment;
-		const assetUrl = image_url || video_url || audio_url;
-		return { ...attachment, attachment_url: `${ hostUrl }${ assetUrl }` };
+export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
+	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url;
+	return { ...attachment, attachment_url: `${ hostUrl }${ assetUrl }` };
+});
+
+export const uploadFile = async({ token, rid, file }) => {
+	const formData = new FormData();
+	formData.append('file', file);
+	await fetch(`http://localhost:3000/api/v1/livechat/upload/${ rid }`, {
+		method: 'POST',
+		headers: { 'x-visitor-token': token },
+		body: formData,
 	});
 };
