@@ -82,9 +82,6 @@ const loadConfig = async(token) => {
 		room,
 		agent,
 		sound: { src, enabled: true, play: false },
-		theme: config.theme,
-		strings: config.messages,
-		settings: config.settings,
 	});
 };
 

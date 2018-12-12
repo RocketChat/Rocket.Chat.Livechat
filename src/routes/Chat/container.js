@@ -147,19 +147,21 @@ class ChatContainer extends Component {
 export const ChatConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
-			theme: {
-				color,
-				title,
-			} = {},
-			settings: {
-				fileUpload: uploads,
-			} = {},
+			config: {
+				settings: {
+					fileUpload: uploads,
+				} = {},
+				theme: {
+					color,
+					title,
+				} = {},
+			},
 			agent,
 			sound,
 			user,
 			messages,
-			loading,
 			typing,
+			loading,
 			dispatch,
 		}) => (
 			<ChatContainer

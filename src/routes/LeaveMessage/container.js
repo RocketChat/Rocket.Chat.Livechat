@@ -29,13 +29,15 @@ export class LeaveMessageContainer extends Component {
 export const LeaveMessageConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
-			theme: {
-				offlineTitle: title,
-				offlineColor: color,
-			} = {},
-			strings: {
-				offlineMessage: message,
-				offlineSuccessMessage: successMessage,
+			config: {
+				messages: {
+					offlineMessage: message,
+					offlineSuccessMessage: successMessage,
+				} = {},
+				theme: {
+					offlineTitle: title,
+					offlineColor: color,
+				} = {},
 			} = {},
 			loading,
 			token,

@@ -26,20 +26,20 @@ export class RegisterContainer extends Component {
 export const RegisterConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
-			theme: {
-				title,
-				color,
-			} = {},
-			strings: {
-				registrationFormMessage: message,
-			} = {},
-			settings: {
-				nameFieldRegistrationForm: hasNameField,
-				emailFieldRegistrationForm: hasEmailField,
-				allowSwitchingDepartments: hasDepartmentField,
-			} = {},
 			config: {
 				departments = {},
+				message: {
+					registrationFormMessage: message,
+				} = {},
+				settings: {
+					nameFieldRegistrationForm: hasNameField,
+					emailFieldRegistrationForm: hasEmailField,
+					allowSwitchingDepartments: hasDepartmentField,
+				} = {},
+				theme: {
+					title,
+					color,
+				} = {},
 			} = {},
 			loading = false,
 			token,
