@@ -1,11 +1,11 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
-import TriggersManager from '../lib/triggersManager';
 import Chat from '../routes/Chat';
 import LeaveMessage from '../routes/LeaveMessage';
 import Register from '../routes/Register';
 import { store, Provider as StoreProvider, Consumer as StoreConsumer } from '../store';
-
+import CustomFields from '../lib/customFields';
+import Triggers from '../lib/triggers';
 
 export default class App extends Component {
 
@@ -15,22 +15,27 @@ export default class App extends Component {
 	 */
 	handleRoute = (/* ...args*/) => {
 		// this.currentUrl = args[0].url;
-	};
+	}
 
 	handleTriggers() {
 		const { state } = store;
 		const { config: { online, enabled } } = state;
 
 		if (!(online && enabled)) {
-			return TriggersManager.enabled = false;
+			return Triggers.enabled = false;
 		}
 
-		TriggersManager.enabled = true;
-		TriggersManager.init();
+		Triggers.enabled = true;
+		Triggers.init();
 	}
 
-	async componentDidMount() {
+	componentDidMount() {
 		this.handleTriggers();
+		CustomFields.init();
+	}
+
+	componentWillUnmount() {
+		CustomFields.reset();
 	}
 
 	renderScreen({ user, config, messages, triggered }) {
