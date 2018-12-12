@@ -38,6 +38,9 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				emailFieldRegistrationForm: hasEmailField,
 				allowSwitchingDepartments: hasDepartmentField,
 			} = {},
+			config: {
+				departments = {},
+			} = {},
 			loading = false,
 			token,
 			dispatch,
@@ -51,7 +54,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}
-				departments={[]}
+				departments={departments}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}
