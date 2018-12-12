@@ -4,7 +4,6 @@ import DropFiles from '../../components/DropFiles';
 import Messages from '../../components/Messages';
 import Screen from '../../components/Screen';
 import Sound from '../../components/Sound';
-import TypingIndicator from '../../components/TypingIndicator';
 import { debounce, createClassName } from '../../components/helpers';
 import styles from './styles';
 import EmojiIcon from '../../icons/smile.svg';
@@ -61,13 +60,13 @@ export default class Chat extends Component {
 	render = ({
 		color,
 		title,
-		agent,
 		sound,
 		user,
+		agent,
+		typingAvatars,
 		loading,
 		onUpload,
 		onPlaySound,
-		typingUsers,
 		onSubmit,
 		messages,
 		uploads = false,
@@ -111,9 +110,17 @@ export default class Chat extends Component {
 			<Sound ref={this.handleSoundRef} onPlay={onPlaySound} src={sound.src} play={sound.play} />
 			<DropFiles onUpload={onUpload}>
 				<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
-					<div ref={this.handleMessagesContainerRef} onScroll={this.handleScroll} className={createClassName(styles, 'chat__wrapper')}>
-						<Messages messages={messages} user={user} />
-						{typingUsers && !!typingUsers.length && <TypingIndicator users={typingUsers} />}
+					<div
+						ref={this.handleMessagesContainerRef}
+						onScroll={this.handleScroll}
+						className={createClassName(styles, 'chat__wrapper')}
+					>
+						<Messages
+							user={user}
+							agent={agent}
+							messages={messages}
+							typingAvatars={typingAvatars}
+						/>
 					</div>
 				</div>
 			</DropFiles>

@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import SDK from '../../api';
 import { Consumer, store } from '../../store';
+import { getAvatarUrl } from '../../components/helpers';
 import Chat from './component';
 
 
@@ -142,6 +143,7 @@ class ChatContainer extends Component {
 	)
 }
 
+
 export const ChatConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
@@ -157,7 +159,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			user,
 			messages,
 			loading,
-			typing: typingUsers,
+			typing,
 			dispatch,
 		}) => (
 			<ChatContainer
@@ -165,24 +167,38 @@ export const ChatConnector = ({ ref, ...props }) => (
 				{...props}
 				color={color}
 				title={title || I18n.t('Need help?')}
+				sound={sound}
+				user={user && {
+					_id: user._id,
+					avatar: {
+						description: user.username,
+						src: getAvatarUrl(user.username),
+					},
+				}}
 				agent={agent && {
+					_id: agent._id,
 					name: agent.name,
 					status: agent.status,
 					email: agent.emails && agent.emails[0] && agent.emails[0].address,
 					username: agent.username,
-					avatarSrc: `http://localhost:3000/avatar/${ agent.username }`,
+					avatar: {
+						description: agent.username,
+						src: getAvatarUrl(agent.username),
+					},
 				}}
-				sound={sound}
-				user={user}
 				messages={messages}
 				emoji={false}
 				uploads={uploads}
-				typingUsers={typingUsers}
+				typingAvatars={Array.isArray(typing) ? typing.map((username) => ({
+					description: username,
+					src: getAvatarUrl(username),
+				})) : []}
 				loading={loading}
 				dispatch={dispatch}
 			/>
 		)}
 	</Consumer>
 );
+
 
 export default ChatConnector;

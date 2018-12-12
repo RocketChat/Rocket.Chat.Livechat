@@ -52,9 +52,9 @@ export class Screen extends Component {
 	}) => (
 		<div className={createClassName(styles, 'screen', { rounded: !windowed }, [className])}>
 			<Header color={color}>
-				{agent && (
+				{agent && agent.avatar && (
 					<Header.Picture>
-						<Avatar src={agent.avatarSrc} />
+						<Avatar src={agent.avatar.src} description={agent.avatar.description} />
 					</Header.Picture>
 				)}
 

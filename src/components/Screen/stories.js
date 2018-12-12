@@ -37,7 +37,10 @@ storiesOf('Components|Screen', module)
 				name: 'Guilherme Gazzo',
 				status: 'away',
 				email: 'guilherme.gazzo@rocket.chat',
-				avatarSrc: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
+				avatar: {
+					description: 'guilherme.gazzo',
+					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
+				},
 			})}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
