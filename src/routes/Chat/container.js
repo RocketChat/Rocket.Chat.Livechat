@@ -9,17 +9,33 @@ export class ChatContainer extends Component {
 	loadMessages = async() => {
 		const { dispatch, token, room: { _id: rid } = {} } = this.props;
 
-		await dispatch({ loading: true });
-
-		if (rid) {
-			const messages = await SDK.loadMessages(rid, { token });
-			dispatch({ messages: (messages || []).reverse() });
+		if (!rid) {
+			return;
 		}
 
+		await dispatch({ loading: true });
+		const messages = await SDK.loadMessages(rid, { token });
+		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
 		await dispatch({ loading: false });
 	}
 
-	getUser = async() => {
+	loadMoreMessages = async() => {
+		const { dispatch, token, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
+
+		if (!rid || noMoreMessages) {
+			return;
+		}
+
+		await dispatch({ loading: true });
+		const moreMessages = await SDK.loadMessages(rid, { token, limit: messages.length + 10 });
+		await dispatch({
+			messages: (moreMessages || []).reverse(),
+			noMoreMessages: messages.length + 10 >= moreMessages.length,
+		});
+		await dispatch({ loading: false });
+	}
+
+	grantUser = async() => {
 		const { dispatch, token, user } = this.props;
 
 		if (user && user.token) {
@@ -28,8 +44,6 @@ export class ChatContainer extends Component {
 
 		const newUser = await SDK.grantVisitor({ visitor: { token } });
 		dispatch({ user: newUser });
-
-		return newUser;
 	}
 
 	getRoom = async() => {
@@ -44,18 +58,8 @@ export class ChatContainer extends Component {
 		return newRoom;
 	}
 
-	handleTop = async() => {
-		const { dispatch, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
-
-		if (noMoreMessages) {
-			return;
-		}
-
-		dispatch({ loading: true });
-		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
-		dispatch({ noMoreMessages: messages.length + 10 >= moreMessages.length });
-		dispatch({ messages: (moreMessages || []).reverse() });
-		dispatch({ loading: false });
+	handleTop = () => {
+		this.loadMoreMessages();
 	}
 
 	handleSubmit = async(msg) => {
@@ -63,14 +67,17 @@ export class ChatContainer extends Component {
 			return;
 		}
 
-		const { token } = await this.getUser();
+		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
+		const { token } = this.props;
+
 		await SDK.sendMessage({ msg, token, rid });
 	}
 
 	handleUpload = async(files) => {
-		const { token } = await this.getUser();
+		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
+		const { token } = this.props;
 
 		files.forEach(async(file) => await uploadFile({ token, rid, file }));
 	}
@@ -128,7 +135,6 @@ export const ChatConnector = ({ ref, ...props }) => (
 				token={token}
 				user={user ? {
 					_id: user._id,
-					token: user.token,
 					avatar: {
 						description: user.username,
 						src: getAvatarUrl(user.username),

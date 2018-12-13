@@ -19,7 +19,7 @@ export const Messages = ({
 				<Message
 					el="li"
 					key={messageId}
-					me={userId === messageUserId}
+					me={userId && userId === messageUserId}
 					group={messageUserId === nextMessageUserId}
 					avatarUrl={(userId === messageUserId && userAvatar.src) ||
 						(agentId === messageUserId && agentAvatar.src)}
