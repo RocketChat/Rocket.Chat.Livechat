@@ -118,6 +118,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					title,
 				} = {},
 			},
+			token,
 			agent,
 			sound,
 			user,
@@ -135,6 +136,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				notificationsEnabled={sound && sound.enabled}
 				title={title || I18n.t('Need help?')}
 				sound={sound}
+				token={token}
 				user={user ? {
 					_id: user._id,
 					token: user.token,
