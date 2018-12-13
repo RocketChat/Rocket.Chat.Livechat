@@ -7,7 +7,7 @@ import Chat from './component';
 
 export class ChatContainer extends Component {
 	loadMessages = async() => {
-		const { dispatch, user: { token } = {}, room: { _id: rid } = {} } = this.props;
+		const { dispatch, token, room: { _id: rid } = {} } = this.props;
 
 		await dispatch({ loading: true });
 
@@ -75,14 +75,6 @@ export class ChatContainer extends Component {
 		files.forEach(async(file) => await uploadFile({ token, rid, file }));
 	}
 
-	createToggleNotificationsHandler = (enabled) => () => {
-		const { dispatch, sound = {} } = this.props;
-		dispatch({ sound: { ...sound, enabled } });
-	};
-
-	handleEnableNotifications = this.createToggleNotificationsHandler(true)
-	handleDisableNotifications = this.createToggleNotificationsHandler(false)
-
 	handlePlaySound = () => {
 		const { dispatch, sound = {} } = this.props;
 		dispatch({ sound: { ...sound, play: false } });
@@ -98,8 +90,6 @@ export class ChatContainer extends Component {
 			onTop={this.handleTop}
 			onSubmit={this.handleSubmit}
 			onUpload={this.handleUpload}
-			onEnableNotifications={this.handleEnableNotifications}
-			onDisableNotifications={this.handleDisableNotifications}
 			onPlaySound={this.handlePlaySound}
 		/>
 	)
@@ -133,7 +123,6 @@ export const ChatConnector = ({ ref, ...props }) => (
 				ref={ref}
 				{...props}
 				color={color}
-				notificationsEnabled={sound && sound.enabled}
 				title={title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}

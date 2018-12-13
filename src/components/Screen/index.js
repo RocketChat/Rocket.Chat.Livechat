@@ -4,6 +4,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import StatusIndicator from '../StatusIndicator';
 import { createClassName } from '../helpers';
+import { Consumer } from '../../store';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
 import NotificationsDisabledIcon from '../../icons/bellOff.svg';
 import MinimizeIcon from '../../icons/arrowDown.svg';
@@ -116,4 +117,50 @@ export class Screen extends Component {
 	);
 }
 
-export default Screen;
+
+export class ScreenContainer extends Component {
+	handleEnableNotifications = () => {
+		const { dispatch, sound = {}, onEnableNotifications } = this.props;
+		dispatch({ sound: { ...sound, enabled: true } });
+		onEnableNotifications && onEnableNotifications();
+	}
+
+	handleDisableNotifications = () => {
+		const { dispatch, sound = {}, onDisableNotifications } = this.props;
+		dispatch({ sound: { ...sound, enabled: true } });
+		onDisableNotifications && onDisableNotifications();
+	}
+
+	render = (props) => (
+		<Screen
+			{...props}
+			onEnableNotifications={this.handleEnableNotifications}
+			onDisableNotifications={this.handleDisableNotifications}
+			onMinimize={this.handleMinimize}
+			onRestore={this.handleRestore}
+			onOpenWindow={this.handleOpenWindow}
+		/>
+	)
+}
+
+
+export const ScreenConnector = ({ ref, ...props }) => (
+	<Consumer>
+		{({
+			sound = {},
+			dispatch,
+		}) => (
+			<ScreenContainer
+				ref={ref}
+				{...props}
+				notificationsEnabled={sound.enabled}
+				minimized={false}
+				windowed={false}
+				sound={sound}
+				dispatch={dispatch}
+			/>
+		)}
+	</Consumer>
+);
+
+export default ScreenContainer;
