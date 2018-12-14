@@ -1,6 +1,6 @@
 import SDK from '../api';
 import { store } from '../store';
-import { insert, createToken } from 'components/helpers';
+import { insert, createToken, asyncForEach } from 'components/helpers';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -91,13 +91,14 @@ class Triggers {
 		this.processTriggers();
 	}
 
-	fire(trigger) {
+	async fire(trigger) {
 		const { token, user, firedTriggers = [] } = store.state;
 		if (!this._enabled || user) { // need to think about testing user obj here..
 			return;
 		}
+		const { actions } = trigger;
 
-		trigger.actions.forEach((action) => {
+		await asyncForEach(actions, (action) => {
 			if (action.name === 'send-message') {
 				trigger.skip = true;
 
