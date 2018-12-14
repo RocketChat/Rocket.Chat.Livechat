@@ -1,5 +1,6 @@
 import { Component } from 'preact';
 import SDK from '../../api';
+import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
 import Register from './component';
 
@@ -10,8 +11,8 @@ export class RegisterContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			const user = await SDK.grantVisitor({ visitor: { ...fields, token } });
-			await dispatch({ token: user.token, user });
+			await SDK.grantVisitor({ visitor: { ...fields, token } });
+			await loadConfig();
 		} finally {
 			await dispatch({ loading: false });
 		}

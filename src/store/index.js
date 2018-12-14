@@ -1,8 +1,6 @@
 import { Component } from 'preact';
 import { createContext } from 'preact-context';
-import { insert, setCookies, createToken, msgTypesNotDisplayed } from 'components/helpers';
-import SDK from '../api';
-import Commands from '../lib/commands';
+import { createToken } from '../components/helpers';
 import Store from './Store';
 
 
@@ -28,99 +26,12 @@ const initialState = {
 
 export const store = new Store(initialState);
 
-const commands = new Commands();
-let stream;
-
-SDK.onMessage((message) => {
-	if (message.t === 'command') {
-		commands[message.msg] && commands[message.msg](store.state);
-	} else if (!msgTypesNotDisplayed.includes(message.t)) {
-		store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-
-		if (message.t === 'livechat-close') {
-			// parentCall('callback', 'chat-ended');
-		}
-
-		const { sound, user } = store.state;
-		if (sound.enabled && message.u._id !== user._id) {
-			sound.play = true;
-			return store.setState({ sound });
-		}
-	}
-});
-
-SDK.onTyping((username, isTyping) => {
-	const { typing, user } = store.state;
-
-	if (user && user.username && user.username === username) {
-		return;
-	}
-
-	if (typing.indexOf(username) === -1 && isTyping) {
-		typing.push(username);
-		return store.setState({ typing });
-	}
-
-	if (!isTyping) {
-		return store.setState({ typing: typing.filter((u) => u !== username) });
-	}
-});
-
-const token = store.state.user && store.state.user.token;
-SDK.credentials.token = token;
-
-const loadConfig = async(token) => {
-	const {
-		agent,
-		resources: { sound: src = null } = {},
-		...config
-	} = await (token ? SDK.config({ token }) : SDK.config());
-
-	await store.setState({
-		config,
-		agent: agent || store.state.agent,
-		sound: { src, enabled: true, play: false },
+if (process.env.NODE_ENV === 'development') {
+	store.on('change', (state, prevState, partialState) => {
+		// eslint-disable-next-line no-console
+		console.log('%cstore.setState %c%o', 'color: blue', 'color: initial', partialState);
 	});
-};
-
-const initRoom = async() => {
-	if (stream) {
-		return;
-	}
-
-	stream = await SDK.connect();
-
-	const { token, agent, room: { _id, servedBy } } = store.state;
-
-	SDK.subscribeRoom(_id);
-
-	if (!agent && servedBy) {
-		const { agent } = await SDK.agent({ rid: _id });
-		// we're changing the SDK.agent method to return de agent prop instead of the endpoint data
-		// so then we'll need to change this method, sending the { agent } object over the emit method
-
-		store.setState({ agent });
-	}
-
-	SDK.onAgentChange(_id, (agent) => {
-		store.setState({ agent });
-	});
-
-	setCookies(_id, token);
-};
-
-
-const dispatch = async(partialState) => {
-	await store.setState(partialState);
-
-	if (partialState.user) {
-		await loadConfig();
-	}
-
-	if (partialState.room) {
-		await initRoom();
-	}
-};
+}
 
 
 const StoreContext = createContext();
@@ -128,7 +39,7 @@ const StoreContext = createContext();
 export class Provider extends Component {
 	static displayName = 'StoreProvider'
 
-	state = { ...store.state, dispatch }
+	state = { ...store.state, dispatch: store.setState.bind(store) }
 
 	handleStoreChange = () => {
 		this.setState({ ...store.state });
@@ -136,12 +47,6 @@ export class Provider extends Component {
 
 	componentDidMount() {
 		store.on('change', this.handleStoreChange);
-
-		loadConfig();
-
-		if (store.state.room) {
-			initRoom();
-		}
 	}
 
 	componentWillUnmount() {

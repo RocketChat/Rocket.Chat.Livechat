@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import SDK from '../../api';
 import { Consumer } from '../../store';
+import { loadConfig, initRoom } from '../../lib/main';
 import { getAvatarUrl, uploadFile } from '../../components/helpers';
 import Chat from './component';
 
@@ -36,14 +37,14 @@ export class ChatContainer extends Component {
 	}
 
 	grantUser = async() => {
-		const { dispatch, token, user } = this.props;
+		const { token, user } = this.props;
 
-		if (user && user.token) {
+		if (user) {
 			return user;
 		}
 
-		const newUser = await SDK.grantVisitor({ visitor: { token } });
-		dispatch({ user: newUser });
+		await SDK.grantVisitor({ visitor: { token } });
+		await loadConfig();
 	}
 
 	getRoom = async() => {
@@ -54,7 +55,9 @@ export class ChatContainer extends Component {
 		}
 
 		const newRoom = await SDK.room({ token });
-		dispatch({ room: newRoom, messages: [], noMoreMessages: false });
+		await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
+		await initRoom();
+
 		return newRoom;
 	}
 
@@ -70,7 +73,6 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { token } = this.props;
-
 		await SDK.sendMessage({ msg, token, rid });
 	}
 

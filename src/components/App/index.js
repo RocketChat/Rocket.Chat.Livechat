@@ -4,10 +4,14 @@ import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
+import { loadConfig } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
 
+
 export class App extends Component {
+
+	state = { initialized: false }
 
 	handleRoute = () => {}
 
@@ -21,17 +25,23 @@ export class App extends Component {
 		}
 	}
 
-	componentDidMount() {
+	async initialize() {
+		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();
+		this.setState({ initialized: true });
 	}
 
-	componentDidUpdate() {
-		this.handleTriggers();
+	async finalize() {
+		CustomFields.reset();
+	}
+
+	componentDidMount() {
+		this.initialize();
 	}
 
 	componentWillUnmount() {
-		CustomFields.reset();
+		this.finalize();
 	}
 
 	renderScreen() {
@@ -49,7 +59,7 @@ export class App extends Component {
 		return <Register default path="/register" />;
 	}
 
-	render = () => (
+	render = () => (this.state.initialized &&
 		<Router onChange={this.handleRoute}>
 			{this.renderScreen()}
 		</Router>
