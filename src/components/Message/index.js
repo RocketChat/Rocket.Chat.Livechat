@@ -1,21 +1,33 @@
 import md from './Markdown';
 import styles from './styles';
+import Avatar from '../../components/Avatar';
 import { createClassName, parseDate, parseMessage } from '../helpers';
-import Avatar from 'components/Avatar';
 
-export const Container = ({ children, ...args }) => (<div {...args} className={createClassName(styles, 'message__container', {})}>{children}</div>);
-export const Text = ({ children, me, ...args }) => (<div {...args} className={createClassName(styles, 'message__text', { me })}>{children}</div>);
 
-export const Content = ({ children, me, ...args }) => (<div {...args} className={createClassName(styles, 'message__content', { me })} >{children}</div>);
+export const Body = ({ me, children, Element = 'div', group, className, ...args }) => (
+	<Element className={createClassName(styles, 'message', { me, group }, [className])} {...args}>
+		{children}
+	</Element>
+);
 
-export const Body = ({ me, children, Element = 'div', group, ...args }) => (<Element className={createClassName(styles, 'message', { me, group })} {...args}>
-	{children}
-</Element>);
+export const Container = ({ children, className, ...args }) => (
+	<div {...args} className={createClassName(styles, 'message__container', {}, [className])}>{children}</div>
+);
 
-const Attachments = ({ attachments }) => <img className={createClassName(styles, 'attachment', {})} src={attachments[0].attachment_url} />;
+export const Text = ({ children, me, className, ...args }) => (
+	<div {...args} className={createClassName(styles, 'message__text', { me }, [className])}>{children}</div>
+);
 
-const Message = ({ _id, el, msg, ts, me, group, avatarUrl, attachmentsUrl, ...args }) => (
-	<Body id={_id} me={me} group={group} Element={el} {...args}>
+export const Content = ({ children, me, className, ...args }) => (
+	<div {...args} className={createClassName(styles, 'message__content', { me }, [className])}>{children}</div>
+);
+
+export const Attachments = ({ attachments, className }) => (
+	<img className={createClassName(styles, 'attachment', {}, [className])} src={attachments[0].attachment_url} />
+);
+
+const Message = ({ _id, el, msg, ts, me, group, avatarUrl, attachmentsUrl, className, ...args }) => (
+	<Body id={_id} me={me} group={group} Element={el} className={className}>
 		<Container>
 			{!me && <Avatar src={avatarUrl} className={createClassName(styles, 'avatar', { group })} />}
 			<Content me={me}>
