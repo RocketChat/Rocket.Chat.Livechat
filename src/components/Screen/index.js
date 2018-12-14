@@ -41,12 +41,7 @@ export class Screen extends Component {
 
 	render = ({
 		color,
-		agent: {
-			avatar: agentAvatar = {},
-			name: agentName,
-			email: agentEmail,
-			status: agentStatus,
-		} = {},
+		agent,
 		title,
 		notificationsEnabled = true,
 		minimized = false,
@@ -58,16 +53,18 @@ export class Screen extends Component {
 	}) => (
 		<div className={createClassName(styles, 'screen', { rounded: !windowed }, [className])}>
 			<Header color={color}>
-				<Header.Picture>
-					<Avatar src={agentAvatar.src} description={agentAvatar.description} />
-				</Header.Picture>
+				{agent && agent.avatar && (
+					<Header.Picture>
+						<Avatar src={agent.avatar.src} description={agent.avatar.description} />
+					</Header.Picture>
+				)}
 
 				<Header.Content>
-					<Header.Title>{agentName || title}</Header.Title>
-					{agentEmail && (
+					<Header.Title>{agent ? agent.name : title}</Header.Title>
+					{agent && (
 						<Header.SubTitle className={createClassName(styles, 'screen__header-subtitle')}>
-							<StatusIndicator status={agentStatus} />
-							<span>{agentEmail}</span>
+							<StatusIndicator status={agent.status} />
+							<span>{agent.email}</span>
 						</Header.SubTitle>
 					)}
 				</Header.Content>
