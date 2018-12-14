@@ -32,6 +32,6 @@ export default class Store extends EventEmitter {
 		this._state = await reducer({ ...prevState, ...partialState }, prevState);
 		// TODO: remove typing
 		localStorage.setItem(this.localStorageKey, JSON.stringify({ ...this._state, typing: [] }));
-		this.emit('change', this._state, prevState);
+		this.emit('change', this._state, prevState, partialState);
 	}
 }

@@ -1,6 +1,6 @@
 import SDK from '../api';
 import { store } from '../store';
-import { insert, createToken, asyncForEach } from 'components/helpers';
+import { insert, createToken, asyncForEach } from '../components/helpers';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -69,8 +69,7 @@ class Triggers {
 			return;
 		}
 
-		const { state } = store;
-		const { token, firedTriggers = [], config: { triggers } } = state;
+		const { token, firedTriggers = [], config: { triggers } } = store.state;
 		SDK.credentials.token = token;
 
 		if (!(triggers && triggers.length > 0)) {
