@@ -43,7 +43,7 @@ export class Screen extends Component {
 		color,
 		agent,
 		title,
-		notificationsEnabled = true,
+		notificationsEnabled,
 		minimized = false,
 		windowed = false,
 		nopadding = false,
@@ -120,15 +120,13 @@ export class Screen extends Component {
 
 export class ScreenContainer extends Component {
 	handleEnableNotifications = () => {
-		const { dispatch, sound = {}, onEnableNotifications } = this.props;
+		const { dispatch, sound = {} } = this.props;
 		dispatch({ sound: { ...sound, enabled: true } });
-		onEnableNotifications && onEnableNotifications();
 	}
 
 	handleDisableNotifications = () => {
-		const { dispatch, sound = {}, onDisableNotifications } = this.props;
-		dispatch({ sound: { ...sound, enabled: true } });
-		onDisableNotifications && onDisableNotifications();
+		const { dispatch, sound = {} } = this.props;
+		dispatch({ sound: { ...sound, enabled: false } });
 	}
 
 	render = (props) => (
@@ -163,4 +161,4 @@ export const ScreenConnector = ({ ref, ...props }) => (
 	</Consumer>
 );
 
-export default ScreenContainer;
+export default ScreenConnector;
