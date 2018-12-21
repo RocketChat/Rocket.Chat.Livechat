@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import Arrow from '../../icons/arrow.svg';
+import Arrow from '../../icons/arrowDown.svg';
 import styles from './style';
 import { createClassName } from '../helpers';
 

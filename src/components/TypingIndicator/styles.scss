@@ -3,23 +3,10 @@
 @import '~styles/helpers';
 
 
-.avatar-container {
-    margin: 0 5px;
-    display: flex;
-}
-
-.avatar {
-    margin: 0 -5px;
-    box-shadow: -2px 0 1px 0px #00000082;
-    &:first-child {
-        box-shadow: none;
-    }
-}
-
-.typing-indicator {
+.typing__dots {
     text-align: center;
 
-    & &__dot {
+    .typing__dot {
         display: inline-block;
         vertical-align: middle;
         width: 8px;
@@ -31,10 +18,25 @@
 
         &:nth-of-type(2) {
             animation-delay: 0.3s;
-        }
+		}
+
         &:nth-of-type(3) {
             animation-delay: 0.6s;
         }
+    }
+}
+
+.typing__avatar-container {
+    margin: 0 5px;
+    display: flex;
+}
+
+.typing__avatar {
+    margin: 0 -5px;
+	box-shadow: -2px 0 1px 0px #00000082;
+
+    &:first-child {
+        box-shadow: none;
     }
 }
 

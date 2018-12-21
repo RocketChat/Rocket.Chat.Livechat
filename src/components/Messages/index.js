@@ -1,20 +1,35 @@
-import { h, Component } from 'preact';
-import Message from 'components/Message';
-import { getAvatarUrl, getAttachmentsUrl } from '../helpers';
+import Message from '../Message';
+import TypingIndicator from '../TypingIndicator';
+import { createClassName, getAttachmentsUrl } from '../helpers';
+import styles from './styles';
 
-export default class Messages extends Component {
 
-	render({ messages, user, ...args }) {
-		return (
-			<ol style="padding:0;">{
-				messages.map((message, index, arr) => {
-					const next = arr[index + 1];
-					const { u = {}, _id, attachments } = message;
-					const group = next && next.u._id === u._id;
-					const username = u._id && u.username;
-					return <Message {...message} group={group} key={_id} el="li" me={user && user._id === u._id} avatarUrl={getAvatarUrl(username)} attachmentsUrl={getAttachmentsUrl(attachments)} />;
-				})
-			}</ol>
-		)
-	}
-}
+export const Messages = ({
+	user = {},
+	agent = {},
+	messages = [],
+	typingAvatars = [],
+}) => (
+	<ol className={createClassName(styles, 'messages')}>
+		{messages.map((message, index, arr) => {
+			const nextMessage = arr[index + 1];
+
+			return (
+				<Message
+					el="li"
+					key={message._id}
+					me={user._id && user._id === message.u._id}
+					group={nextMessage && message.u._id === nextMessage.u._id}
+					avatarUrl={(user._id === message.u._id && user.avatar && user.avatar.src) ||
+						(agent._id === message.u._id && agent.avatar && agent.avatar.src)}
+					attachmentsUrl={getAttachmentsUrl(message.attachments)}
+					{...message}
+				/>
+			);
+		})}
+		{typingAvatars && !!typingAvatars.length && <TypingIndicator avatars={typingAvatars} />}
+	</ol>
+);
+
+
+export default Messages;

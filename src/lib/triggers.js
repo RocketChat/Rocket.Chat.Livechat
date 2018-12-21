@@ -1,6 +1,6 @@
 import SDK from '../api';
 import { store } from '../store';
-import { insert, createToken } from 'components/helpers';
+import { insert, createToken, asyncForEach } from '../components/helpers';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -32,7 +32,7 @@ const getAgent = (triggerAction) => {
 				return reject(error);
 			}
 
-			store.setState({ 'triggerAgent': { agent, ts: Date.now() } });
+			store.setState({ triggerAgent: { agent, ts: Date.now() } });
 			resolve(agent);
 		} else if (params.sender === 'custom') {
 			resolve({
@@ -49,7 +49,7 @@ const getAgent = (triggerAction) => {
 	}, agentCacheExpiry);
 
 	return agentPromise;
-}
+};
 
 class Triggers {
 	constructor() {
@@ -69,8 +69,7 @@ class Triggers {
 			return;
 		}
 
-		const { state } = store;
-		const { token, firedTriggers = [], config: { triggers } } = state;
+		const { token, firedTriggers = [], config: { triggers } } = store.state;
 		SDK.credentials.token = token;
 
 		if (!(triggers && triggers.length > 0)) {
@@ -91,14 +90,14 @@ class Triggers {
 		this.processTriggers();
 	}
 
-	fire(trigger) {
-		const { state } = store;
-		const { token, user, firedTriggers = [] } = state;
+	async fire(trigger) {
+		const { token, user, firedTriggers = [] } = store.state;
 		if (!this._enabled || user) { // need to think about testing user obj here..
 			return;
 		}
+		const { actions } = trigger;
 
-		trigger.actions.forEach((action) => {
+		await asyncForEach(actions, (action) => {
 			if (action.name === 'send-message') {
 				trigger.skip = true;
 
@@ -109,7 +108,7 @@ class Triggers {
 						u: agent,
 						ts: new Date(),
 						_id: createToken(),
-					}
+					};
 
 					store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg }) => ({ msg })) });
 
@@ -119,7 +118,7 @@ class Triggers {
 					}
 
 					// TODO: parentCall
-					//parentCall('openWidget');
+					// parentCall('openWidget');
 				});
 			}
 		});
@@ -127,9 +126,9 @@ class Triggers {
 		if (trigger.runOnce) {
 			trigger.skip = true;
 			firedTriggers.push(trigger._id);
-			store.setState({ firedTriggers })
+			store.setState({ firedTriggers });
 		}
-	};
+	}
 
 	processRequest(request) {
 		this._requests.push(request);
@@ -164,7 +163,7 @@ class Triggers {
 						}
 						trigger.timeout = setTimeout(() => {
 							this.fire(trigger);
-						}, parseInt(condition.value) * 1000);
+						}, parseInt(condition.value, 10) * 1000);
 						break;
 				}
 			});

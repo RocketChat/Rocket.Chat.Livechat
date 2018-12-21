@@ -18,6 +18,7 @@ $header-padding: $default-padding;
 
 	&__item {
 		margin: 0 $header-padding / 2;
+		flex: 0 0 auto;
 	}
 
 	&__picture {
@@ -26,22 +27,29 @@ $header-padding: $default-padding;
 
 	&__content {
 		@extend .header__item;
-		flex: 1 1 auto;
+		flex-grow: 1;
+		flex-shrink: 1;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 
 		.header__title {
 			font-size: 16px;
 			font-weight: 500;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		.header__subtitle {
 			font-size: 14px;
 			font-weight: 500;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 
 	&__actions {
 		@extend .header__item;
-		flex: 0 0 auto;
 		display: flex;
 
 		.header__action {

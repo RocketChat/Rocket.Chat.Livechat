@@ -7,7 +7,7 @@ import Header, { Picture, Content, SubTitle, Title, Actions, Action } from '.';
 import Avatar from '../Avatar';
 import StatusIndicator, { statuses } from '../StatusIndicator';
 import Bell from 'icons/bell.svg';
-import Arrow from 'icons/arrow.svg';
+import Arrow from 'icons/arrowDown.svg';
 import NewWindow from 'icons/newWindow.svg';
 import bertieBartonAvatar from '../Avatar/bertieBarton.png';
 
@@ -18,6 +18,13 @@ storiesOf('Components|Header', module)
 		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
 			<Content>
 				{text('text', 'Need Help?')}
+			</Content>
+		</Header>
+	))
+	.add('with long text content', () => (
+		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
+			<Content>
+				{text('text', 'Need Help? '.repeat(100))}
 			</Content>
 		</Header>
 	))

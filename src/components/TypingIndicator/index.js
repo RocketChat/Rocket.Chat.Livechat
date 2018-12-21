@@ -1,28 +1,37 @@
-import { h } from 'preact';
 import styles from './styles';
-import { createClassName, getAvatarUrl } from '../helpers';
+import { createClassName } from '../helpers';
 import Avatar from '../Avatar';
-import * as Message from '../Message';
+import Message from '../Message';
 
 
-export const TypingAvatar = ({ users = [] }) => (<div className={createClassName(styles, 'avatar-container')}>{
-	users.map((src) => <Avatar src={getAvatarUrl(src)} className={[styles.avatar]} />)
-}
-</div>);
-
-export const TypingIndicator = ({ children }) => (
-	<div aria-label={children} class={createClassName(styles, 'typing-indicator')}>
-		<span class={createClassName(styles, 'typing-indicator__dot')} />
-		<span class={createClassName(styles, 'typing-indicator__dot')} />
-		<span class={createClassName(styles, 'typing-indicator__dot')} />
+export const TypingDots = ({ children }) => (
+	<div aria-label={children} class={createClassName(styles, 'typing__dots')}>
+		<span class={createClassName(styles, 'typing__dot')} />
+		<span class={createClassName(styles, 'typing__dot')} />
+		<span class={createClassName(styles, 'typing__dot')} />
 	</div>
 );
 
-const Typing = ({ users, description }) => (<Message.Body>
-	<Message.Container>
-		<TypingAvatar users={users} />
-		<Message.Content><Message.Text><TypingIndicator>{description}</TypingIndicator></Message.Text></Message.Content>
-	</Message.Container>
-</Message.Body>);
 
-export default Typing;
+const TypingAvatar = ({ avatars = [] }) => (
+	<div className={createClassName(styles, 'typing__avatar-container')}>
+		{avatars.map((avatar) => <Avatar src={avatar.src} description={avatar.description} className={createClassName(styles, 'typing__avatar')} />)}
+	</div>
+);
+
+
+export const TypingIndicator = ({ avatars = [], children }) => (
+	<Message.Body>
+		<Message.Container>
+			<TypingAvatar avatars={avatars} />
+			<Message.Content>
+				<Message.Text>
+					<TypingDots>{children}</TypingDots>
+				</Message.Text>
+			</Message.Content>
+		</Message.Container>
+	</Message.Body>
+);
+
+
+export default TypingIndicator;
