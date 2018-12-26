@@ -17,6 +17,7 @@ class CustomFields {
 			return;
 		}
 
+		this._initiated = true;
 		const { state } = store;
 		const { token } = state;
 		SDK.credentials.token = token;

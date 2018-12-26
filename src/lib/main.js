@@ -2,7 +2,7 @@ import SDK from '../api';
 import store from '../store';
 import { insert, msgTypesNotDisplayed, setCookies } from '../components/helpers';
 import Commands from './commands';
-
+import { parentCall } from './parentCall';
 
 const commands = new Commands();
 
@@ -13,7 +13,7 @@ SDK.onMessage((message) => {
 		store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 
 		if (message.t === 'livechat-close') {
-			// parentCall('callback', 'chat-ended');
+			parentCall('callback', 'chat-ended');
 		}
 
 		const { sound, user } = store.state;

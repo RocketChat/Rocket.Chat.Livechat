@@ -22,6 +22,14 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
+	iframe: {
+		isWidgetOpened: false,
+		guest: {
+			name: null,
+			email: null,
+			token: null
+		}
+	}
 };
 
 export const store = new Store(initialState);

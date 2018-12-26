@@ -115,6 +115,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 				theme: {
 					color,
 					title,
+					customColor,
+					customFontColor,
 				} = {},
 			},
 			token,
@@ -131,7 +133,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 			<ChatContainer
 				ref={ref}
 				{...props}
-				color={color}
+				color={customColor || color}
+				fontColor={customFontColor}
 				title={title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}

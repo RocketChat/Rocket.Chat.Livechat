@@ -43,6 +43,7 @@ export class Screen extends Component {
 		color,
 		agent,
 		title,
+		fontColor,
 		notificationsEnabled,
 		minimized = false,
 		windowed = false,

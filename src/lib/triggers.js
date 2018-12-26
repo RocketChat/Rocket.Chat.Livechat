@@ -1,6 +1,7 @@
 import SDK from '../api';
 import { store } from '../store';
 import { insert, createToken, asyncForEach } from '../components/helpers';
+import { parentCall } from './parentCall';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -117,8 +118,7 @@ class Triggers {
 						store.setState({ agent });
 					}
 
-					// TODO: parentCall
-					// parentCall('openWidget');
+					parentCall('openWidget');
 				});
 			}
 		});

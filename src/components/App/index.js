@@ -7,6 +7,8 @@ import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../stor
 import { loadConfig } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
+import Hooks from '../../lib/hooks';
+import { parentCall } from '../../lib/parentCall';
 
 
 export class App extends Component {
@@ -29,7 +31,9 @@ export class App extends Component {
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();
+		Hooks.init();
 		this.setState({ initialized: true });
+		parentCall('ready');
 	}
 
 	async finalize() {
