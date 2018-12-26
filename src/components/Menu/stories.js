@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
-
-import Menu, { Group, Item } from '.';
 import Button from '../Button';
+import { PopoverContainer } from '../Popover';
+import Menu, { Group, Item, PopoverMenu } from '.';
 
 const defaultMenuItemText = 'A menu item';
 const defaultAnotherMenuItemText = 'Another menu item';
@@ -37,6 +37,19 @@ storiesOf('Components|Menu', module)
 				</Group>
 			</Menu>
 		</div>
+	))
+	.add('popover', () => (
+		<PopoverContainer>
+			<PopoverMenu
+				// eslint-disable-next-line react/jsx-no-bind
+				trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
+			>
+				<Group title="Server options">
+					<Item>Reload</Item>
+					<Item danger>Delete</Item>
+				</Group>
+			</PopoverMenu>
+		</PopoverContainer>
 	))
 ;
 
