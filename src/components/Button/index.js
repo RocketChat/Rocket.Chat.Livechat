@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { createClassName } from '../helpers';
 import styles from './styles';
 
-const Button = ({ children, disabled, outline, danger, stack, small, loading, ...args }) => (
+export const Button = ({ children, disabled, outline, danger, stack, small, loading, ...args }) => (
 	<button {...args} disabled={disabled} className={createClassName(styles, 'button', {
 		disabled,
 		outline,
@@ -16,6 +16,11 @@ const Button = ({ children, disabled, outline, danger, stack, small, loading, ..
 	</button>
 );
 
-export default Button;
 
 export const Group = ({ children }) => <div className={styles.group}>{ children }</div>;
+
+
+Button.Group = Group;
+
+
+export default Button;
