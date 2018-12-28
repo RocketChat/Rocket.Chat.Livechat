@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { createClassName, normalizeDOMRect } from '../helpers';
 import { PopoverTrigger } from '../Popover';
 import styles from './styles';
@@ -35,6 +34,15 @@ class PopoverMenuWrapper extends Component {
 		this.menuRef = ref;
 	}
 
+	handleClick = ({ target }) => {
+		if (!target.closest(`.${ styles.menu__item }`)) {
+			return;
+		}
+
+		const { dismiss } = this.props;
+		dismiss();
+	}
+
 	componentDidMount() {
 		const { triggerBounds, overlayBounds } = this.props;
 		const menuBounds = normalizeDOMRect(this.menuRef.getDOMNode().getBoundingClientRect());
@@ -65,6 +73,7 @@ class PopoverMenuWrapper extends Component {
 			ref={this.handleRef}
 			style={{ position: 'absolute', ...this.state.position }}
 			placement={this.state.placement}
+			onClickCapture={this.handleClick}
 		>
 			{children}
 		</Menu>
@@ -79,8 +88,9 @@ export const PopoverMenu = ({ children, trigger, overlayed }) => (
 		}}
 	>
 		{trigger}
-		{({ triggerBounds, overlayBounds }) => (
+		{({ dismiss, triggerBounds, overlayBounds }) => (
 			<PopoverMenuWrapper
+				dismiss={dismiss}
 				triggerBounds={triggerBounds}
 				overlayBounds={overlayBounds}
 			>

@@ -49,9 +49,9 @@ storiesOf('Components|Menu/PopoverMenu', module)
 				// eslint-disable-next-line react/jsx-no-bind
 				trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
 			>
-				<Group title="Server options">
+				<Group>
 					<Item>Reload</Item>
-					<Item danger>Delete</Item>
+					<Item danger>Delete...</Item>
 				</Group>
 			</PopoverMenu>
 		</PopoverContainer>
@@ -63,9 +63,9 @@ storiesOf('Components|Menu/PopoverMenu', module)
 				// eslint-disable-next-line react/jsx-no-bind
 				trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
 			>
-				<Group title="Server options">
+				<Group>
 					<Item>Reload</Item>
-					<Item danger>Delete</Item>
+					<Item danger>Delete...</Item>
 				</Group>
 			</PopoverMenu>
 		</PopoverContainer>
