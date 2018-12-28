@@ -1,3 +1,4 @@
+import { Component } from 'preact';
 import { createClassName, normalizeDOMRect } from '../helpers';
 import { PopoverTrigger } from '../Popover';
 import styles from './styles';
