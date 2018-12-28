@@ -72,8 +72,12 @@ class PopoverMenuWrapper extends Component {
 }
 
 
-export const PopoverMenu = ({ children, trigger }) => (
-	<PopoverTrigger>
+export const PopoverMenu = ({ children, trigger, overlayed }) => (
+	<PopoverTrigger
+		overlayProps={{
+			className: overlayed ? createClassName(styles, 'popover-menu__overlay') : null,
+		}}
+	>
 		{trigger}
 		{({ triggerBounds, overlayBounds }) => (
 			<PopoverMenuWrapper

@@ -38,9 +38,28 @@ storiesOf('Components|Menu', module)
 			</Menu>
 		</div>
 	))
-	.add('popover', () => (
+;
+
+storiesOf('Components|Menu/PopoverMenu', module)
+	.addDecorator(centered)
+	.addDecorator(withKnobs)
+	.add('default', () => (
 		<PopoverContainer>
 			<PopoverMenu
+				// eslint-disable-next-line react/jsx-no-bind
+				trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
+			>
+				<Group title="Server options">
+					<Item>Reload</Item>
+					<Item danger>Delete</Item>
+				</Group>
+			</PopoverMenu>
+		</PopoverContainer>
+	))
+	.add('with overlay', () => (
+		<PopoverContainer>
+			<PopoverMenu
+				overlayed
 				// eslint-disable-next-line react/jsx-no-bind
 				trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
 			>
