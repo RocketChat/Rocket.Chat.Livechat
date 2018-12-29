@@ -115,6 +115,10 @@ export const ChatConnector = ({ ref, ...props }) => (
 				theme: {
 					color,
 					title,
+				} = {},
+			},
+			iframe: {
+				theme: {
 					customColor,
 					customFontColor,
 				} = {},

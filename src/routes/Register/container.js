@@ -42,6 +42,15 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					color,
 				} = {},
 			} = {},
+			iframe: {
+				guest: {
+					department: hasDepartmentDefault
+				} = {},
+				theme: {
+					customColor,
+					customFontColor,
+				} = {},
+			} = {},
 			loading = false,
 			token,
 			dispatch,
@@ -50,11 +59,13 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				ref={ref}
 				{...props}
 				title={title || I18n.t('Need help?')}
-				color={color}
+				color={customColor || color}
+				fontColor={customFontColor}
 				message={message || I18n.t('Please, tell us some informations to start the chat')}
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}
+				hasDepartmentDefault={hasDepartmentDefault}
 				departments={departments}
 				loading={loading}
 				token={token}

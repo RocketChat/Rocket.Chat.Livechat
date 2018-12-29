@@ -2,7 +2,6 @@ import Triggers from './triggers';
 import CustomFields from './customFields';
 import { store } from '../store';
 import SDK from '../api';
-import { parentCall } from './parentCall';
 import { createToken } from '../components/helpers';
 import { loadConfig } from '../lib/main';
 
@@ -11,8 +10,8 @@ const createOrUpdateGuest = async(guest) => {
 	await loadConfig();
 };
 
-const updateIframeData = (data) => {
-	const { iframe: { guest }, user: _id, token } = store.state;
+const updateIframeGuestData = (data) => {
+	const { iframe, iframe: { guest }, user: _id, token } = store.state;
 	store.setState({ iframe: { ...iframe, guest: { ...guest, ...data } } });
 
 	if (!_id) {
@@ -29,11 +28,14 @@ const api = {
 			Triggers.processRequest(info);
 		}
 
-		const { token, room: { _id } } = store.state;
-		//SDK.credentials.token = token;
+		const { token, room } = store.state;
+		// TODO: Need to change this behavior... But we need to change the endpoint on backend side before....
+		if (!room) {
+			return;
+		}
 
 		const { change, title, location: { href } } = info;
-		SDK.sendVisitorNavigation({ token, rid: _id, page: { change, title, location: { href } } });
+		SDK.sendVisitorNavigation({ token, rid: _id, pageInfo: { change, title, location: { href } } });
 	},
 
 	setCustomField(key, value, overwrite = true) {
@@ -41,22 +43,20 @@ const api = {
 	},
 
 	setTheme(newTheme = {}) {
-		const { config: { theme } } = store.state;
-
+		const { iframe, iframe: { theme } } = store.state;
 		if (newTheme.color) {
-			store.setState({ config: { theme: { ...theme, customColor: newTheme.color } } });
+			store.setState({ iframe: { ...iframe, theme: { ...theme, customColor: newTheme.color } } });
 		}
 		if (newTheme.fontColor) {
-			store.setState({ config: { theme: { ...theme, customFontColor: newTheme.fontColor } } });
+			store.setState({ iframe: { ...iframe, theme: { ...theme, customFontColor: newTheme.fontColor } } });
 		}
 	},
 
 	setDepartment(department) {
-		const { iframe, config: { departments } } = store.state;
-
-		const deptExists = departments && !!departments.filter(dept => (dept._id === department));
+		const { config: { departments = [] } } = store.state;
+		const deptExists = departments.some(dept => dept._id === department);
 		if (deptExists) {
-			store.setState({ iframe: { ...iframe, department } });
+			updateIframeGuestData({ department })
 		}
 	},
 
@@ -76,21 +76,20 @@ const api = {
 	},
 
 	async setGuestToken(token) {
-		const { token: localToken, iframe: { guest } } = store.state;
+		const { token: localToken, iframe, iframe: { guest } } = store.state;
 		if (token === localToken) {
 			return;
 		}
-
 		store.setState({ token, iframe: { ...iframe, guest: { ...guest, token } } });
 		await loadConfig();
 	},
 
 	setGuestName(name) {
-		updateIframeData({ name });
+		updateIframeGuestData({ name });
 	},
 
 	setGuestEmail(email) {
-		updateIframeData({ email });
+		updateIframeGuestData({ email });
 	},
 
 	registerGuest(data = {}) {
@@ -103,7 +102,7 @@ const api = {
 		}
 
 		if (data.department) {
-			Api.setDepartment(data.department);
+			this.setDepartment(data.department);
 		}
 
 		createOrUpdateGuest(data);

@@ -24,11 +24,8 @@ const initialState = {
 	},
 	iframe: {
 		isWidgetOpened: false,
-		guest: {
-			name: null,
-			email: null,
-			token: null
-		}
+		guest: {},
+		theme: {}
 	}
 };
 

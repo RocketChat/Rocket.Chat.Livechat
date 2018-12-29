@@ -82,7 +82,7 @@ export const loadConfig = async() => {
 		room: prevRoom,
 		user: prevUser,
 	} = store.state;
-
+	console.log(token);
 	SDK.credentials.token = token;
 
 	const {
@@ -95,9 +95,9 @@ export const loadConfig = async() => {
 
 	await store.setState({
 		config,
-		agent: agent || prevAgent,
-		room: room || prevRoom,
-		user: user || prevUser,
+		agent: agent, //|| prevAgent,
+		room: room, //|| prevRoom,
+		user: user, //|| prevUser,
 		sound: { src, enabled: true, play: false },
 	});
 
