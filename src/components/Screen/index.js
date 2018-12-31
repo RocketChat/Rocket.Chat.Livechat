@@ -146,8 +146,8 @@ export const ScreenConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
 			sound = {},
-			dispatch,
-		}) => (
+			dispatch = () => {},
+		} = {}) => (
 			<ScreenContainer
 				ref={ref}
 				{...props}
