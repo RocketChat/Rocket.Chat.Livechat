@@ -1,8 +1,9 @@
 @import '~styles/variables';
+@import '~styles/colors';
 
 .footer {
 	width: 100%;
-	color: #9EA2A8;
+	color: $color-text-grey;
 	padding: 4px 8px;
 	display: flex;
 	justify-content: space-between;
@@ -21,7 +22,7 @@
 		border: none;
 		padding: 0;
 		cursor: pointer;
-		color: #9EA2A8;
+		color: $color-text-grey;
 		font-size: 10px;
 		font-weight: bold;
 		text-align: left;
@@ -46,8 +47,15 @@
 	align-self: flex-end;
 	user-select: none;
 
-	&__logo {
+	.powered-by__logo {
 		margin: 0 5px;
 		vertical-align: middle;
+		--text-color: #{$color-text-grey};
+		--rocket-color: #{$color-text-grey};
+
+		&:hover {
+			--text-color: #2F343D;
+			--rocket-color: #DB2323;
+		}
 	}
 }
