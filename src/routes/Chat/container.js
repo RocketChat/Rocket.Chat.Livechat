@@ -89,6 +89,14 @@ export class ChatContainer extends Component {
 		dispatch({ sound: { ...sound, play: false } });
 	}
 
+	onChangeDepartment = () => {
+		// ...
+	}
+
+	onFinishChat = () => {
+		// ...
+	}
+
 	componentDidMount() {
 		this.loadMessages();
 	}
@@ -100,6 +108,9 @@ export class ChatContainer extends Component {
 			onSubmit={this.handleSubmit}
 			onUpload={this.handleUpload}
 			onPlaySound={this.handlePlaySound}
+			options={true}
+			onChangeDepartment={this.onChangeDepartment}
+			onFinishChat={this.onFinishChat}
 		/>
 	)
 }
