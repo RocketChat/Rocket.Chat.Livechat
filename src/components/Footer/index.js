@@ -19,7 +19,7 @@ export const Content = ({ children, ...props }) => (
 export const PoweredBy = (props) => (
 	<h3 className={createClassName(styles, 'powered-by')} {...props}>
 		Powered by
-		<a href="https://rocket.chat" target="_blank" rel="noopener noreferrer">
+		<a href="https://rocket.chat" target="_blank" rel="noopener noreferrer" translate="no">
 			<Logo title="Rocket.Chat" class={createClassName(styles, 'powered-by__logo')} width="60" />
 		</a>
 	</h3>
