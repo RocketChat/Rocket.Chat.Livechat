@@ -72,7 +72,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}
-				departments={departments}
+				departments={departments.filter(dept => dept.showOnRegistration)}
 				guestDepartment={guestDepartment}
 				loading={loading}
 				token={token}
