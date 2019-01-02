@@ -82,7 +82,7 @@ export const loadConfig = async() => {
 		room: prevRoom,
 		user: prevUser,
 	} = store.state;
-	console.log(token);
+
 	SDK.credentials.token = token;
 
 	const {

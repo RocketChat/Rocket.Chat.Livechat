@@ -52,12 +52,16 @@ const api = {
 		}
 	},
 
-	setDepartment(department) {
+	setDepartment(departmentValue) {
+		let department = null;
 		const { config: { departments = [] } } = store.state;
-		const deptExists = departments.some(dept => dept._id === department);
+
+		const deptExists = departments.some(dept => dept._id === departmentValue);
 		if (deptExists) {
-			updateIframeGuestData({ department })
+			department = departmentValue;
 		}
+
+		updateIframeGuestData({ department })
 	},
 
 	clearDepartment() {

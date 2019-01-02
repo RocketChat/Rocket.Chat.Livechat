@@ -60,7 +60,7 @@ export default class Register extends Component {
 	constructor(props) {
 		super(props);
 
-		const { hasNameField, hasEmailField, hasDepartmentField, departments } = props;
+		const { hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments } = props;
 
 		if (hasNameField) {
 			this.state.name = { value: '' };
@@ -77,7 +77,7 @@ export default class Register extends Component {
 		this.validateAll();
 	}
 
-	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departments }) {
+	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments }) {
 		if (hasNameField && !this.state.name) {
 			this.setState({ name: { value: '' } });
 		} else if (!hasNameField) {
@@ -90,9 +90,11 @@ export default class Register extends Component {
 			this.setState({ email: null });
 		}
 
-		const showDepartmentField = hasDepartmentField && departments && departments.length > 0;
-
-		if (showDepartmentField && !this.state.department) {
+		const departmentValue = departmentDefault || (departments && departments.length === 1 && departments[0]._id);
+		const showDepartmentField = hasDepartmentField && departments && departments.length > 1;
+		if (departmentValue) {
+			this.setState({ department: { value: departmentValue } });
+		} else if (showDepartmentField && !this.state.department) {
 			this.setState({ department: { value: '' } });
 		} else if (!showDepartmentField) {
 			this.setState({ department: null });

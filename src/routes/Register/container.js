@@ -18,8 +18,15 @@ export class RegisterContainer extends Component {
 		}
 	}
 
+	getDepartmentDefault() {
+		const { guestDepartment, departments } = this.props;
+		if (departments && departments.some((dept) => dept._id === guestDepartment)) {
+			return guestDepartment;
+		}
+	}
+
 	render = (props) => (
-		<Register {...props} onSubmit={this.handleSubmit} />
+		<Register {...props} onSubmit={this.handleSubmit} departmentDefault={this.getDepartmentDefault()} />
 	)
 }
 
@@ -44,7 +51,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 			} = {},
 			iframe: {
 				guest: {
-					department: hasDepartmentDefault
+					department: guestDepartment
 				} = {},
 				theme: {
 					customColor,
@@ -65,8 +72,8 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}
-				hasDepartmentDefault={hasDepartmentDefault}
 				departments={departments}
+				guestDepartment={guestDepartment}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}
