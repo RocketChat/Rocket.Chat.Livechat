@@ -46,7 +46,7 @@ class PopoverMenuWrapper extends Component {
 
 	componentDidMount() {
 		const { triggerBounds, overlayBounds } = this.props;
-		const menuBounds = normalizeDOMRect(this.menuRef.getDOMNode().getBoundingClientRect());
+		const menuBounds = normalizeDOMRect(this.menuRef.base.getBoundingClientRect());
 
 		const menuWidth = menuBounds.right - menuBounds.left;
 		const menuHeight = menuBounds.bottom - menuBounds.top;

@@ -27,7 +27,7 @@ export class PopoverContainer extends Component {
 		let triggerBounds;
 
 		if (this.overlayRef) {
-			overlayBounds = normalizeDOMRect(this.overlayRef.getDOMNode().getBoundingClientRect());
+			overlayBounds = normalizeDOMRect(this.overlayRef.base.getBoundingClientRect());
 		}
 
 		if (currentTarget) {
