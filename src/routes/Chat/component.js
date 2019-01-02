@@ -83,9 +83,9 @@ export default class Chat extends Component {
 			title={title || I18n.t('Need help?')}
 			agent={agent}
 			nopadding
-			options
-			onChangeDepartment
-			onFinishChat
+			options={options}
+			onChangeDepartment={onChangeDepartment}
+			onFinishChat={onFinishChat}
 			footer={(
 				<Composer onUpload={onUpload}
 					onSubmit={onSubmit}
