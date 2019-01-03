@@ -4,7 +4,6 @@ import Logo from './logo.svg';
 import { createClassName } from '../helpers';
 import { PopoverMenu, Group, Item } from '../Menu';
 
-
 export const Footer = ({ children, ...props }) => (
 	<footer className={createClassName(styles, 'footer')} {...props}>
 		{children}

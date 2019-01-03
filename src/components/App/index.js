@@ -2,12 +2,12 @@ import { Component } from 'preact';
 import { Router } from 'preact-router';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
+import ChatFinished from '../../routes/ChatFinished';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { loadConfig } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
-
 
 export class App extends Component {
 
@@ -62,10 +62,10 @@ export class App extends Component {
 	render = () => (this.state.initialized &&
 		<Router onChange={this.handleRoute}>
 			{this.renderScreen()}
+			<ChatFinished path="/chat-finished" />
 		</Router>
 	)
 }
-
 
 const AppConnector = () => (
 	<StoreProvider>
@@ -86,6 +86,5 @@ const AppConnector = () => (
 		</div>
 	</StoreProvider>
 );
-
 
 export default AppConnector;

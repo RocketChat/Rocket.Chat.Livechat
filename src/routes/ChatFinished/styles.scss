@@ -1,0 +1,20 @@
+@import '~styles/colors';
+
+.chat-finished {
+	&__greeting {
+		height: 28px;
+		font-size: 22px;
+		font-weight: bold;
+		letter-spacing: 0;
+		line-height: 28px;
+	}
+
+	&__message {
+		color: $color-text-grey;
+		font-size: 16px;
+		font-weight: 500;
+		height: 48px;
+		letter-spacing: 0;
+		line-height: 24px;
+	}
+}

@@ -1,10 +1,10 @@
 import { Component } from 'preact';
+import { route } from 'preact-router';
 import SDK from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig, initRoom } from '../../lib/main';
 import { getAvatarUrl, uploadFile } from '../../components/helpers';
 import Chat from './component';
-
 
 export class ChatContainer extends Component {
 	loadMessages = async() => {
@@ -90,11 +90,33 @@ export class ChatContainer extends Component {
 	}
 
 	onChangeDepartment = () => {
-		// ...
+		//
 	}
 
-	onFinishChat = () => {
-		// ...
+	onFinishChat = async() => {
+		//TODO: Modal question is missing here..
+		const { token, room: { _id: rid } = {} } = this.props;
+
+		if (!rid) {
+			return;
+		}
+
+		const result = await SDK.closeChat({ rid });
+		//TODO: Modal question here to ask the user about the transcript..
+		route('/chat-finished');
+	}
+
+	canSwitchDepartment = () => {
+		const { config: { settings: { allowSwitchingDepartments }, departments } } = this.props;
+		return allowSwitchingDepartments && Department.find({ showOnRegistration: true }).count() > 1;
+	}
+
+	canFinishChat = () => {
+
+	}
+
+	showOptionsMenu = () => {
+		// onClick={(canClick && this.handler) || null}
 	}
 
 	componentDidMount() {
@@ -108,7 +130,7 @@ export class ChatContainer extends Component {
 			onSubmit={this.handleSubmit}
 			onUpload={this.handleUpload}
 			onPlaySound={this.handlePlaySound}
-			options={true}
+			options={this.showOptionsMenu()}
 			onChangeDepartment={this.onChangeDepartment}
 			onFinishChat={this.onFinishChat}
 		/>
