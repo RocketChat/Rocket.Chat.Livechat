@@ -1,6 +1,7 @@
 import loremIpsum from 'lorem-ipsum';
 import mem from 'mem';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import Modal from '.';
@@ -22,7 +23,7 @@ storiesOf('Components|Modal', module)
 	.add('opened', () => (
 		<div>
 			<LoremIpsum />
-			<Modal open={boolean('open', true)} animated={boolean('animated', false)}>
+			<Modal open={boolean('open', true)} animated={boolean('animated', false)} onDismiss={action('dismiss')}>
 				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
 			</Modal>
 		</div>
@@ -30,7 +31,7 @@ storiesOf('Components|Modal', module)
 	.add('closed', () => (
 		<div>
 			<LoremIpsum />
-			<Modal open={boolean('open', false)} animated={boolean('animated', false)}>
+			<Modal open={boolean('open', false)} animated={boolean('animated', false)} onDismiss={action('dismiss')}>
 				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
 			</Modal>
 		</div>
@@ -38,7 +39,7 @@ storiesOf('Components|Modal', module)
 	.add('animated', () => (
 		<div>
 			<LoremIpsum />
-			<Modal open={boolean('open', true)} animated={boolean('animated', true)}>
+			<Modal open={boolean('open', true)} animated={boolean('animated', true)} onDismiss={action('dismiss')}>
 				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
 			</Modal>
 		</div>
