@@ -87,7 +87,7 @@ export const parseDate = (ts) => format(ts, isToday(ts) ? 'HH:mm' : 'dddd HH:mm'
 export const systemMessage = (t) => (['s', 'p', 'f', 'r', 'au', 'ru', 'ul', 'wm', 'uj', 'livechat-close'].includes(t)) && 'system';
 
 export const parseMessage = (args, msg) => {
-	const { u: { username }, t } = args;
+	const { u: { username }, t, conversationFinishedMessage } = args;
 	switch (t) {
 		case 'r':
 			return I18n.t('Room_name_changed', { room_name: msg, user_by: username });
@@ -97,8 +97,8 @@ export const parseMessage = (args, msg) => {
 			return I18n.t('User_removed_by', { user_removed: msg, user_by: username });
 		case 'wm':
 			return I18n.t('Welcome', { user: username });
-		// case 'livechat-close':
-		// return (Livechat.conversationFinishedMessage) ? Livechat.conversationFinishedMessage : t('Conversation_finished');
+		 case 'livechat-close':
+			return `*${ conversationFinishedMessage }*`;
 		default:
 			return msg;
 	}
@@ -113,6 +113,8 @@ export const setCookies = (rid, token) => {
 export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
 
 export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ username }`);
+
+export const renderMessage = (message = {}) => (message.t !== 'command' && !msgTypesNotDisplayed.includes(message.t));
 
 export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
 

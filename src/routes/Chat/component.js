@@ -64,6 +64,7 @@ export default class Chat extends Component {
 		user,
 		agent,
 		typingAvatars,
+		conversationFinishedMessage,
 		loading,
 		onUpload,
 		onPlaySound,
@@ -89,6 +90,7 @@ export default class Chat extends Component {
 			footer={(
 				<Composer onUpload={onUpload}
 					onSubmit={onSubmit}
+					placeholder={I18n.t('Type your message here')}
 					pre={emoji && (
 						<Actions>
 							<Action>
@@ -126,6 +128,7 @@ export default class Chat extends Component {
 							agent={agent}
 							messages={messages}
 							typingAvatars={typingAvatars}
+							conversationFinishedMessage={conversationFinishedMessage}
 						/>
 					</div>
 				</div>

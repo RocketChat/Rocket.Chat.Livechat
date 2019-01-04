@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import SDK from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig, initRoom } from '../../lib/main';
-import { getAvatarUrl, uploadFile } from '../../components/helpers';
+import { getAvatarUrl, uploadFile, renderMessage } from '../../components/helpers';
 import Chat from './component';
 
 
@@ -123,6 +123,9 @@ export const ChatConnector = ({ ref, ...props }) => (
 				settings: {
 					fileUpload: uploads,
 				} = {},
+				messages: {
+					conversationFinishedMessage,
+				} = {},
 				theme: {
 					color,
 					title,
@@ -165,7 +168,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					},
 				} : undefined}
 				room={room}
-				messages={messages}
+				messages={messages.filter(message => renderMessage(message))}
 				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}
@@ -175,6 +178,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				})) : []}
 				loading={loading}
 				dispatch={dispatch}
+				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 			/>
 		)}
 	</Consumer>

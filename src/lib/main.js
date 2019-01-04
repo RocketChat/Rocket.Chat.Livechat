@@ -1,27 +1,31 @@
 import SDK from '../api';
 import store from '../store';
-import { insert, msgTypesNotDisplayed, setCookies } from '../components/helpers';
-import Commands from './commands';
+import { insert, setCookies } from '../components/helpers';
+import * as commands from './commands';
 
+const doPlaySound = (message) => {
+	const { sound, user } = store.state;
+	if (sound.enabled && message.u._id !== user._id) {
+		sound.play = true;
+		return store.setState({ sound });
+	}
+}
 
-const commands = new Commands();
-
-SDK.onMessage((message) => {
+const onNewMessage = (message) => {
 	if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg](store.state);
-	} else if (!msgTypesNotDisplayed.includes(message.t)) {
-		store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-
-		if (message.t === 'livechat-close') {
-			// parentCall('callback', 'chat-ended');
-		}
-
-		const { sound, user } = store.state;
-		if (sound.enabled && message.u._id !== user._id) {
-			sound.play = true;
-			return store.setState({ sound });
-		}
 	}
+
+	if (message.t === 'livechat-close') {
+
+		// parentCall('callback', 'chat-ended');
+	}
+}
+
+SDK.onMessage((message) => {
+	store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+	onNewMessage(message);
+	doPlaySound(message);
 });
 
 SDK.onTyping((username, isTyping) => {
