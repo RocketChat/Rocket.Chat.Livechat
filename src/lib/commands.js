@@ -1,6 +1,6 @@
 import SDK from '../api';
 
-export default class Commands {
+export default {
 
 	async promptTranscript(state) {
 		const { config: { settings }, user: { token, visitorEmails }, room: { _id } } = state;
@@ -24,7 +24,7 @@ export default class Commands {
 			});
 		});
 		*/
-
+		// TODO: add modal request
 		await SDK.requestTranscript(email, { token, rid: _id });
 	}
 }

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "GENERATE_SOURCEMAP=false preact build --json --no-prerender --optimize-minimize",
-    "serve": "yarn build && preact serve",
+    "serve": "preact build --json --no-prerender --optimize-minimize && preact serve",
     "dev": "preact watch",
     "lint": "eslint src",
     "test": "jest ./tests",
