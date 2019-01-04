@@ -73,7 +73,7 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { token } = this.props;
-		const message = await SDK.sendMessage({ msg, token, rid });
+		await SDK.sendMessage({ msg, token, rid });
 	}
 
 	handleUpload = async(files) => {
@@ -95,7 +95,7 @@ export class ChatContainer extends Component {
 
 	onFinishChat = async() => {
 		//TODO: Modal question is missing here..
-		const { dispatch, token, room: { _id: rid } = {} } = this.props;
+		const { dispatch, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
 			return;
