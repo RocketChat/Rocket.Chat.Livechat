@@ -6,25 +6,34 @@ import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
 export default class ChatFinished extends Component {
-
-	render({ color, title, mainMessage, hintMessage, onRedirectChat, ...props }) {
-
-		return (
-			<Screen
-				color={color}
-				title={title}
-				className={createClassName(styles, 'chat-finished')}
-				{...props}
-			>
-				<p className={createClassName(styles, 'chat-finished__greeting')}>{mainMessage}</p>
-				<p className={createClassName(styles, 'chat-finished__message')}>{hintMessage}</p>
-
-				<Form>
-					<Form.Item>
-						<Button onClick={onRedirectChat} stack>New Chat</Button>
-					</Form.Item>
-				</Form>
-			</Screen>
-		);
+	handleClick = () => {
+		const { onRedirectChat } = this.props;
+		onRedirectChat && onRedirectChat();
 	}
+
+	render = ({
+		color,
+		title,
+		greeting,
+		message,
+		// eslint-disable-next-line no-unused-vars
+		onRedirectChat,
+		...props
+	}) => (
+		<Screen
+			color={color}
+			title={title}
+			className={createClassName(styles, 'chat-finished')}
+			{...props}
+		>
+			<p className={createClassName(styles, 'chat-finished__greeting')}>{greeting}</p>
+			<p className={createClassName(styles, 'chat-finished__message')}>{message}</p>
+
+			<Form>
+				<Form.Item>
+					<Button onClick={this.handleClick} stack>New Chat</Button>
+				</Form.Item>
+			</Form>
+		</Screen>
+	)
 }
