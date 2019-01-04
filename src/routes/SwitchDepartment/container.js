@@ -5,31 +5,29 @@ import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
 import SwitchDepartment from './component';
 
+
 export class SwitchDepartmentContainer extends Component {
 	handleSubmit = async(fields) => {
 		const { dispatch, room: { _id: rid } = {} } = this.props;
 		const { department } = fields;
 
-		// TODO: call the modal component -> t('Are_you_sure_do_you_want_switch_the_department'),
-		// If Yes...
+		// TODO: Modal t('Are_you_sure_do_you_want_switch_the_department')
 
 		await dispatch({ loading: true });
 		try {
 			const result = await SDK.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
-				// TODO: add modal component here..
-				//return Modal t('No_available_agents_to_transfer')
+				// TODO: Modal t('No_available_agents_to_transfer')
 				return;
 			}
 
-			// TODO: add modal component here..
-			//Modal t('Department_switched'),
+			// TODO: Modal t('Department_switched')
 			await dispatch({ department });
 			await loadConfig();
 			route('/');
 		} catch (error) {
-			// TODO: call the modal component -> error
+			// TODO: Modal error
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -46,7 +44,6 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 			config: {
 				departments = {},
 				theme: {
-					title,
 					color,
 				} = {},
 			} = {},
