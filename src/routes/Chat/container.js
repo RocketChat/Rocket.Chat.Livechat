@@ -73,7 +73,7 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { token } = this.props;
-		await SDK.sendMessage({ msg, token, rid });
+		const message = await SDK.sendMessage({ msg, token, rid });
 	}
 
 	handleUpload = async(files) => {
@@ -90,33 +90,42 @@ export class ChatContainer extends Component {
 	}
 
 	onChangeDepartment = () => {
-		//
+		route('/switch-department');
 	}
 
 	onFinishChat = async() => {
 		//TODO: Modal question is missing here..
-		const { token, room: { _id: rid } = {} } = this.props;
+		const { dispatch, token, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
 			return;
 		}
 
-		const result = await SDK.closeChat({ rid });
-		//TODO: Modal question here to ask the user about the transcript..
-		route('/chat-finished');
+		await dispatch({ loading: true });
+		try {
+			await SDK.closeChat({ rid });
+		} catch (error) {
+			console.error(error);
+		} finally {
+			await loadConfig();
+			await dispatch({ loading: false });
+			//TODO: Modal question here to ask the user about the transcript..
+			route('/chat-finished');
+		}
 	}
 
 	canSwitchDepartment = () => {
-		const { config: { settings: { allowSwitchingDepartments }, departments } } = this.props;
-		return allowSwitchingDepartments && Department.find({ showOnRegistration: true }).count() > 1;
+		const { allowSwitchingDepartments, departments = {} } = this.props;
+		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
 	}
 
 	canFinishChat = () => {
-
+		const { room } = this.props;
+		return room !== undefined;
 	}
 
 	showOptionsMenu = () => {
-		// onClick={(canClick && this.handler) || null}
+		return this.canSwitchDepartment() || this.canFinishChat();
 	}
 
 	componentDidMount() {
@@ -131,8 +140,8 @@ export class ChatContainer extends Component {
 			onUpload={this.handleUpload}
 			onPlaySound={this.handlePlaySound}
 			options={this.showOptionsMenu()}
-			onChangeDepartment={this.onChangeDepartment}
-			onFinishChat={this.onFinishChat}
+			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
+			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 		/>
 	)
 }
@@ -144,11 +153,13 @@ export const ChatConnector = ({ ref, ...props }) => (
 			config: {
 				settings: {
 					fileUpload: uploads,
+					allowSwitchingDepartments,
 				} = {},
 				theme: {
 					color,
 					title,
 				} = {},
+				departments = {},
 			},
 			token,
 			agent,
@@ -197,6 +208,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 				})) : []}
 				loading={loading}
 				dispatch={dispatch}
+				departments={departments}
+				allowSwitchingDepartments={allowSwitchingDepartments}
 			/>
 		)}
 	</Consumer>

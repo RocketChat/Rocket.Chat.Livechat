@@ -38,8 +38,8 @@ const OptionsTrigger = ({ pop }) => (
 export const Options = ({ onChangeDepartment, onFinishChat }) => (
 	<PopoverMenu trigger={OptionsTrigger} overlayed>
 		<Group>
-			<Item onClick={onChangeDepartment}>Change department</Item>
-			<Item danger onClick={onFinishChat}>Finish this chat</Item>
+			{onChangeDepartment && <Item onClick={onChangeDepartment}>Change department</Item>}
+			{onFinishChat && <Item danger onClick={onFinishChat}>Finish this chat</Item>}
 		</Group>
 	</PopoverMenu>
 );

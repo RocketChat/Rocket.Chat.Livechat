@@ -6,10 +6,27 @@ import Register from './component';
 
 
 export class RegisterContainer extends Component {
+
+	getDepartment = (fields = {}) => {
+		let { department } = fields;
+
+		if (department === '') {
+			const { departments = {}} = this.props;
+			const deptDefault = departments.filter((dept) => dept.showOnRegistration)[0];
+			if (deptDefault) {
+				department = deptDefault._id;
+			}
+		}
+
+		return department;
+	}
+
 	handleSubmit = async(fields) => {
 		const { dispatch, token } = this.props;
+		const department = this.getDepartment(fields);
+		Object.assign(fields, { department });
 
-		await dispatch({ loading: true });
+		await dispatch({ loading: true, department });
 		try {
 			await SDK.grantVisitor({ visitor: { ...fields, token } });
 			await loadConfig();
@@ -22,7 +39,6 @@ export class RegisterContainer extends Component {
 		<Register {...props} onSubmit={this.handleSubmit} />
 	)
 }
-
 
 export const RegisterConnector = ({ ref, ...props }) => (
 	<Consumer>
@@ -55,7 +71,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}
-				departments={departments}
+				departments={departments.filter((dept) => dept.showOnRegistration)}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}

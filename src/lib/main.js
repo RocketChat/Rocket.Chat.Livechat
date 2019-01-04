@@ -50,11 +50,11 @@ export const initRoom = async() => {
 		return;
 	}
 
-	if (stream) {
-		return;
+	if (!stream) {
+		stream = await SDK.connect();
 	}
 
-	stream = await SDK.connect();
+	SDK.unsubscribeAll();
 
 	const { token, agent, room: { _id: rid, servedBy } } = store.state;
 	SDK.subscribeRoom(rid);
@@ -95,10 +95,12 @@ export const loadConfig = async() => {
 
 	await store.setState({
 		config,
-		agent: agent || prevAgent,
-		room: room || prevRoom,
-		user: user || prevUser,
+		agent: agent, //|| prevAgent,
+		room: room, //|| prevRoom,
+		user: user, //|| prevUser,
 		sound: { src, enabled: true, play: false },
+		messages: [],
+		noMoreMessages: false
 	});
 
 	await initRoom();

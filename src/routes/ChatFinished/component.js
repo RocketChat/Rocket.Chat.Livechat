@@ -7,7 +7,7 @@ import styles from './styles';
 
 export default class ChatFinished extends Component {
 
-	render({ color, title, greeting, message, onRedirectChat, ...props }) {
+	render({ color, title, mainMessage, hintMessage, onRedirectChat, ...props }) {
 
 		return (
 			<Screen
@@ -16,8 +16,8 @@ export default class ChatFinished extends Component {
 				className={createClassName(styles, 'chat-finished')}
 				{...props}
 			>
-                <p className={createClassName(styles, 'chat-finished__greeting')}>{greeting}</p>
-                <p className={createClassName(styles, 'chat-finished__message')}>{message}</p>
+				<p className={createClassName(styles, 'chat-finished__greeting')}>{mainMessage}</p>
+				<p className={createClassName(styles, 'chat-finished__message')}>{hintMessage}</p>
 
 				<Form>
 					<Form.Item>
