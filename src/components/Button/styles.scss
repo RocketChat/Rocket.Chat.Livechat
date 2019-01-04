@@ -43,7 +43,8 @@ $button-loading-color: #ffffff;
 		border-color: $color;
 		background: $color;
 
-		&.button--outline {
+		&.button--outline,
+		&.button--nude {
 			color: $color;
 
 			&.button--loading::after {
@@ -94,6 +95,15 @@ $button-loading-color: #ffffff;
 
 	&--outline {
 		background: none;
+	}
+
+	&--nude {
+		background: none;
+		border-color: transparent;
+
+		&:focus {
+			box-shadow: none;
+		}
 	}
 
 	&--stack {

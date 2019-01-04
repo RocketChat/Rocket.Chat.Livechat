@@ -15,6 +15,7 @@ storiesOf('Components|Button', module)
 		<Button
 			disabled={boolean('disabled', false)}
 			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
@@ -27,6 +28,7 @@ storiesOf('Components|Button', module)
 		<Button
 			disabled={boolean('disabled', true)}
 			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
@@ -39,6 +41,20 @@ storiesOf('Components|Button', module)
 		<Button
 			disabled={boolean('disabled', false)}
 			outline={boolean('outline', true)}
+			nude={boolean('nude', false)}
+			danger={boolean('danger', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
+	))
+	.add('nude', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			nude={boolean('nude', true)}
 			danger={boolean('danger', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
@@ -51,6 +67,7 @@ storiesOf('Components|Button', module)
 		<Button
 			disabled={boolean('disabled', false)}
 			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
 			danger={boolean('danger', true)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
@@ -63,6 +80,7 @@ storiesOf('Components|Button', module)
 		<Button
 			disabled={boolean('disabled', false)}
 			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
 			stack={boolean('stack', true)}
 			small={boolean('small', false)}
@@ -75,6 +93,7 @@ storiesOf('Components|Button', module)
 		<Button
 			disabled={boolean('disabled', false)}
 			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', true)}
@@ -87,6 +106,7 @@ storiesOf('Components|Button', module)
 		<Button
 			disabled={boolean('disabled', false)}
 			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
