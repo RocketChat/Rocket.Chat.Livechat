@@ -49,6 +49,11 @@ export default class SwitchDepartment extends Component {
 		}
 	}
 
+	handleCancelClick = () => {
+		const { onCancel } = this.props;
+		onCancel && onCancel();
+	}
+
 	constructor(props) {
 		super(props);
 
@@ -96,7 +101,8 @@ export default class SwitchDepartment extends Component {
 					</Form.Item>
 
 					<Form.Item>
-						<Button loading={loading} disabled={!valid || loading} stack>Change</Button>
+						<Button loading={loading} disabled={!valid || loading} stack>Start chat</Button>
+						<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>Cancel</Button>
 					</Form.Item>
 				</Form>
 			</Screen>

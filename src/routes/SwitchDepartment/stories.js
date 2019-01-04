@@ -35,6 +35,7 @@ storiesOf('Screen|SwitchDepartment', module)
 			])}
 			loading={boolean('loading', false)}
 			onSubmit={action('submit')}
+			onCancel={action('cancel')}
 		/>
 	))
 	.add('loading', () => (
@@ -58,6 +59,7 @@ storiesOf('Screen|SwitchDepartment', module)
 			])}
 			loading={boolean('loading', true)}
 			onSubmit={action('submit')}
+			onCancel={action('cancel')}
 		/>
 	))
 ;

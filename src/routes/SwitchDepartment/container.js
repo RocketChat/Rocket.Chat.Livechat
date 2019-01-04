@@ -33,8 +33,12 @@ export class SwitchDepartmentContainer extends Component {
 		}
 	}
 
+	handleCancel = () => {
+		history.go(-1);
+	}
+
 	render = (props) => (
-		<SwitchDepartment {...props} onSubmit={this.handleSubmit} />
+		<SwitchDepartment {...props} onSubmit={this.handleSubmit} onCancel={this.handleCancel} />
 	)
 }
 
