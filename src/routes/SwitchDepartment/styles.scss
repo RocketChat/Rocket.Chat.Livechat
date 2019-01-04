@@ -1,11 +1,13 @@
 @import '~styles/colors';
 
+
 .switch-department {
 	&__message {
+		margin: 0.5rem 0 1.5rem;
 		color: $color-text-dark;
-		font-size: 16px;
+		font-size: 1rem;
 		font-weight: 500;
 		letter-spacing: 0;
-		line-height: 24px;
+		line-height: 1.5rem;
 	}
 }
