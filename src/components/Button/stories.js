@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
@@ -17,6 +16,7 @@ storiesOf('Components|Button', module)
 			outline={boolean('outline', false)}
 			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
 			onClick={action('clicked')}
@@ -30,6 +30,7 @@ storiesOf('Components|Button', module)
 			outline={boolean('outline', false)}
 			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
 			onClick={action('clicked')}
@@ -43,6 +44,7 @@ storiesOf('Components|Button', module)
 			outline={boolean('outline', true)}
 			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
 			onClick={action('clicked')}
@@ -56,6 +58,7 @@ storiesOf('Components|Button', module)
 			outline={boolean('outline', false)}
 			nude={boolean('nude', true)}
 			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
 			onClick={action('clicked')}
@@ -69,6 +72,21 @@ storiesOf('Components|Button', module)
 			outline={boolean('outline', false)}
 			nude={boolean('nude', false)}
 			danger={boolean('danger', true)}
+			secondary={boolean('secondary', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			onClick={action('clicked')}
+		>
+			{text('text', buttonText)}
+		</Button>
+	))
+	.add('secondary', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
+			danger={boolean('danger', false)}
+			secondary={boolean('secondary', true)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
 			onClick={action('clicked')}
@@ -82,6 +100,7 @@ storiesOf('Components|Button', module)
 			outline={boolean('outline', false)}
 			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
 			stack={boolean('stack', true)}
 			small={boolean('small', false)}
 			onClick={action('clicked')}
@@ -95,6 +114,7 @@ storiesOf('Components|Button', module)
 			outline={boolean('outline', false)}
 			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', true)}
 			onClick={action('clicked')}
@@ -108,6 +128,7 @@ storiesOf('Components|Button', module)
 			outline={boolean('outline', false)}
 			nude={boolean('nude', false)}
 			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
 			loading={boolean('loading', true)}
