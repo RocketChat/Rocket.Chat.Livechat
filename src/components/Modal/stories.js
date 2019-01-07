@@ -1,9 +1,9 @@
 import loremIpsum from 'lorem-ipsum';
 import mem from 'mem';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 import Modal from '.';
 
 
@@ -20,18 +20,10 @@ const LoremIpsum = ({ padding = '5rem', count = 5, units = 'paragraphs', ...opti
 storiesOf('Components|Modal', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('opened', () => (
+	.add('normal', () => (
 		<div>
 			<LoremIpsum />
 			<Modal open={boolean('open', true)} animated={boolean('animated', false)} onDismiss={action('dismiss')}>
-				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
-			</Modal>
-		</div>
-	))
-	.add('closed', () => (
-		<div>
-			<LoremIpsum />
-			<Modal open={boolean('open', false)} animated={boolean('animated', false)} onDismiss={action('dismiss')}>
 				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
 			</Modal>
 		</div>
