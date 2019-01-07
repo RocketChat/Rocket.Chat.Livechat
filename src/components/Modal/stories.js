@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import Button from '../Button';
 import Modal from '.';
 
 
@@ -46,6 +47,39 @@ storiesOf('Components|Modal', module)
 				onDismiss={action('dismiss')}
 			>
 				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
+			</Modal>
+		</div>
+	))
+	.add('disallow dismiss by overlay', () => (
+		<div>
+			<LoremIpsum />
+			<Modal
+				open={boolean('open', true)}
+				animated={boolean('animated', false)}
+				dismissByOverlay={false}
+				onDismiss={action('dismiss')}
+			>
+				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
+			</Modal>
+		</div>
+	))
+	.add('message box', () => (
+		<div>
+			<LoremIpsum />
+			<Modal
+				open={boolean('open', true)}
+				animated={boolean('animated', true)}
+				dismissByOverlay={false}
+				onDismiss={action('dismiss')}
+			>
+				<Modal.Message>
+					Are you sure that you want
+					to finish this chat?
+				</Modal.Message>
+				<Button.Group>
+					<Button outline secondary onClick={action('no')}>No</Button>
+					<Button danger onClick={action('yes')}>Yes</Button>
+				</Button.Group>
 			</Modal>
 		</div>
 	))

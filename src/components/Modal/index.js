@@ -4,6 +4,10 @@ import { createClassName } from '../helpers';
 
 
 export class Modal extends Component {
+	static defaultProps = {
+		dismissByOverlay: true,
+	}
+
 	handleKeyDown = ({ key }) => {
 		if (key === 'Escape') {
 			this.triggerDismiss();
@@ -11,11 +15,13 @@ export class Modal extends Component {
 	}
 
 	handleTouchStart = () => {
-		this.triggerDismiss();
+		const { dismissByOverlay } = this.props;
+		dismissByOverlay && this.triggerDismiss();
 	}
 
 	handleMouseDown = () => {
-		this.triggerDismiss();
+		const { dismissByOverlay } = this.props;
+		dismissByOverlay && this.triggerDismiss();
 	}
 
 	triggerDismiss = () => {
@@ -49,5 +55,16 @@ export class Modal extends Component {
 		) : null
 	)
 }
+
+
+export const ModalMessage = ({ children }) => (
+	<div className={createClassName(styles, 'modal__message')}>
+		{children}
+	</div>
+);
+
+
+Modal.Message = ModalMessage;
+
 
 export default Modal;
