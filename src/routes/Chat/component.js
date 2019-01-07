@@ -72,6 +72,9 @@ export default class Chat extends Component {
 		messages,
 		uploads = false,
 		emoji = false,
+		options,
+		onChangeDepartment,
+		onFinishChat,
 		...props
 	}, {
 		atBottom = true,
@@ -82,6 +85,9 @@ export default class Chat extends Component {
 			fontColor={fontColor}
 			agent={agent}
 			nopadding
+			options={options}
+			onChangeDepartment={onChangeDepartment}
+			onFinishChat={onFinishChat}
 			footer={(
 				<Composer onUpload={onUpload}
 					onSubmit={onSubmit}

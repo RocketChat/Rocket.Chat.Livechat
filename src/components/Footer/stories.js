@@ -1,9 +1,10 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-
-import * as Footer from '.';
 import Composer from '../Composer';
+import { PopoverContainer } from '../Popover';
+import Footer from '.';
+
 
 const stickyFooterDecorator = (storyFn) => (
 	<div
@@ -27,21 +28,23 @@ const stickyFooterDecorator = (storyFn) => (
 storiesOf('Components|Footer', module)
 	.addDecorator(stickyFooterDecorator)
 	.add('simple', () => (
-		<Footer.Main>
+		<Footer>
 			<Footer.Content>
 				<Footer.PoweredBy />
 			</Footer.Content>
-		</Footer.Main>
+		</Footer>
 	))
 	.add('with Composer and options', () => (
-		<Footer.Main>
-			<Footer.Content>
-				<Composer placeholder="Insert your text here" />
-			</Footer.Content>
-			<Footer.Content>
-				<Footer.Options onClick={action('options clicked')} />
-				<Footer.PoweredBy />
-			</Footer.Content>
-		</Footer.Main>
+		<PopoverContainer>
+			<Footer>
+				<Footer.Content>
+					<Composer placeholder="Insert your text here" />
+				</Footer.Content>
+				<Footer.Content>
+					<Footer.Options onChangeDepartment={action('change-department')} onFinishChat={action('finish-chat')} />
+					<Footer.PoweredBy />
+				</Footer.Content>
+			</Footer>
+		</PopoverContainer>
 	))
 ;
