@@ -9,7 +9,6 @@ import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
-import * as RocketChat from '../../lib/rocketchat.js';
 
 
 export class App extends Component {
