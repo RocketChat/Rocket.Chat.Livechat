@@ -20,14 +20,20 @@ export class Modal extends Component {
 
 	triggerDismiss = () => {
 		const { onDismiss } = this.props;
-		onDismiss && onDismiss();
+		this.mounted && onDismiss && onDismiss();
 	}
 
 	componentDidMount() {
+		this.mounted = true;
 		window.addEventListener('keydown', this.handleKeyDown, false);
+		const { timeout } = this.props;
+		if (Number.isFinite(timeout) && timeout > 0) {
+			setTimeout(() => this.triggerDismiss(), timeout);
+		}
 	}
 
 	componentWillUnmount() {
+		this.mounted = false;
 		window.removeEventListener('keydown', this.handleKeyDown, false);
 	}
 

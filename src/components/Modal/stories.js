@@ -2,7 +2,7 @@ import loremIpsum from 'lorem-ipsum';
 import mem from 'mem';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import Modal from '.';
 
@@ -32,6 +32,19 @@ storiesOf('Components|Modal', module)
 		<div>
 			<LoremIpsum />
 			<Modal open={boolean('open', true)} animated={boolean('animated', true)} onDismiss={action('dismiss')}>
+				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
+			</Modal>
+		</div>
+	))
+	.add('timeout', () => (
+		<div>
+			<LoremIpsum />
+			<Modal
+				open={boolean('open', true)}
+				animated={boolean('animated', false)}
+				timeout={number('timeout', 3000)}
+				onDismiss={action('dismiss')}
+			>
 				{text('content', memedIpsum({ count: 1, units: 'paragraphs' }))}
 			</Modal>
 		</div>
