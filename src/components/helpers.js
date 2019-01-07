@@ -130,3 +130,5 @@ export const uploadFile = async({ token, rid, file }) => {
 		body: formData,
 	});
 };
+
+export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));

@@ -11,6 +11,7 @@ import MinimizeIcon from '../../icons/arrowDown.svg';
 import RestoreIcon from '../../icons/arrowUp.svg';
 import OpenWindowIcon from '../../icons/newWindow.svg';
 import styles from './styles';
+import { PopoverContainer } from '../Popover';
 
 
 export class Screen extends Component {
@@ -50,6 +51,9 @@ export class Screen extends Component {
 		nopadding = false,
 		children,
 		footer,
+		options,
+		onChangeDepartment,
+		onFinishChat,
 		className,
 	}) => (
 		<div className={createClassName(styles, 'screen', { rounded: !windowed }, [className])}>
@@ -103,16 +107,21 @@ export class Screen extends Component {
 			)}
 
 			{!minimized && (
-				<Footer>
-					{footer && (
+				<PopoverContainer>
+					<Footer>
+						{footer && (
+							<Footer.Content>
+								{footer}
+							</Footer.Content>
+						)}
 						<Footer.Content>
-							{footer}
+							{options && (
+								<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} />
+							)}
+							<Footer.PoweredBy />
 						</Footer.Content>
-					)}
-					<Footer.Content>
-						<Footer.PoweredBy />
-					</Footer.Content>
-				</Footer>
+					</Footer>
+				</PopoverContainer>
 			)}
 		</div>
 	);
@@ -147,8 +156,8 @@ export const ScreenConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
 			sound = {},
-			dispatch,
-		}) => (
+			dispatch = () => {},
+		} = {}) => (
 			<ScreenContainer
 				ref={ref}
 				{...props}
