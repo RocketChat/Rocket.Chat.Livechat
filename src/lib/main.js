@@ -95,9 +95,9 @@ export const loadConfig = async() => {
 
 	await store.setState({
 		config,
-		agent: agent, //|| prevAgent,
-		room: room, //|| prevRoom,
-		user: user, //|| prevUser,
+		agent: agent,
+		room: room,
+		user: user,
 		sound: { src, enabled: true, play: false },
 	});
 
