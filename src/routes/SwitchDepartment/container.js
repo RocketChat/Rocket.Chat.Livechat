@@ -16,7 +16,6 @@ export class SwitchDepartmentContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			console.log(rid);
 			const result = await SDK.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
@@ -36,9 +35,7 @@ export class SwitchDepartmentContainer extends Component {
 	}
 
 	handleCancel = () => {
-		const { redirect } = this.props;
-		const redirectTo = `/${ redirect }`;
-		route(redirectTo);
+		history.go(-1);
 	}
 
 	render = (props) => (
