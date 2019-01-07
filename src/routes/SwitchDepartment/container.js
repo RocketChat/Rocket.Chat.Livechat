@@ -8,13 +8,15 @@ import SwitchDepartment from './component';
 
 export class SwitchDepartmentContainer extends Component {
 	handleSubmit = async(fields) => {
-		const { dispatch, room: { _id: rid } = {} } = this.props;
+		const { redirect, dispatch, room: { _id: rid } = {} } = this.props;
 		const { department } = fields;
+		const redirectTo = `/${ redirect }`;
 
 		// TODO: Modal t('Are_you_sure_do_you_want_switch_the_department')
 
 		await dispatch({ loading: true });
 		try {
+			console.log(rid);
 			const result = await SDK.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
@@ -25,7 +27,7 @@ export class SwitchDepartmentContainer extends Component {
 			// TODO: Modal t('Department_switched')
 			await dispatch({ department });
 			await loadConfig();
-			route('/');
+			route(redirectTo);
 		} catch (error) {
 			// TODO: Modal error
 		} finally {
@@ -34,7 +36,9 @@ export class SwitchDepartmentContainer extends Component {
 	}
 
 	handleCancel = () => {
-		// TODO
+		const { redirect } = this.props;
+		const redirectTo = `/${ redirect }`;
+		route(redirectTo);
 	}
 
 	render = (props) => (

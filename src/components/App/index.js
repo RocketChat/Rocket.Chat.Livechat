@@ -64,7 +64,7 @@ export class App extends Component {
 		<Router onChange={this.handleRoute}>
 			{this.renderScreen()}
 			<ChatFinished path="/chat-finished" />
-			<SwitchDepartment path="/switch-department" />
+			<SwitchDepartment path="/switch-department/:redirect" />
 		</Router>
 	)
 }

@@ -35,10 +35,11 @@ const OptionsTrigger = ({ pop }) => (
 );
 
 
-export const Options = ({ onChangeDepartment, onFinishChat }) => (
+export const Options = ({ onChangeDepartment, onFinishChat, onRemoveUserData }) => (
 	<PopoverMenu trigger={OptionsTrigger} overlayed>
 		<Group>
 			{onChangeDepartment && <Item onClick={onChangeDepartment}>Change department</Item>}
+			{onRemoveUserData && <Item onClick={onRemoveUserData}>Forget/Remove my personal data</Item>}
 			{onFinishChat && <Item danger onClick={onFinishChat}>Finish this chat</Item>}
 		</Group>
 	</PopoverMenu>

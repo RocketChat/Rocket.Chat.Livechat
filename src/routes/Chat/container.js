@@ -90,7 +90,8 @@ export class ChatContainer extends Component {
 	}
 
 	onChangeDepartment = () => {
-		route('/switch-department');
+		const redirect = `/switch-department${ this.props.path }`;
+		route(redirect);
 	}
 
 	onFinishChat = async() => {
@@ -114,14 +115,34 @@ export class ChatContainer extends Component {
 		}
 	}
 
+	onRemoveUserData = async() => {
+		//TODO: Modal question is missing here..
+		//This feature depends on this PR: https://github.com/RocketChat/Rocket.Chat.js.SDK/pull/45
+		await dispatch({ loading: true });
+		try {
+			await SDK.deleteVisitor();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			await loadConfig();
+			await dispatch({ loading: false });
+			route('/chat-finished');
+		}
+	}
+
 	canSwitchDepartment = () => {
-		const { allowSwitchingDepartments, departments = {} } = this.props;
-		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
+		const { allowSwitchingDepartments, room, departments = {} } = this.props;
+		return allowSwitchingDepartments && room && departments.filter((dept) => dept.showOnRegistration).length > 1;
 	}
 
 	canFinishChat = () => {
 		const { room } = this.props;
 		return room !== undefined;
+	}
+
+	canRemoveUserData = () => {
+		const { forceAcceptDataProcessingConsent } = this.props;
+		return forceAcceptDataProcessingConsent;
 	}
 
 	showOptionsMenu = () => {
@@ -142,6 +163,7 @@ export class ChatContainer extends Component {
 			options={this.showOptionsMenu()}
 			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
+			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
 		/>
 	)
 }
@@ -154,6 +176,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				settings: {
 					fileUpload: uploads,
 					allowSwitchingDepartments,
+					forceAcceptDataProcessingConsent
 				} = {},
 				messages: {
 					conversationFinishedMessage,

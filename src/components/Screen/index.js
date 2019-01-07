@@ -53,6 +53,7 @@ export class Screen extends Component {
 		options,
 		onChangeDepartment,
 		onFinishChat,
+		onRemoveUserData,
 		className,
 	}) => (
 		<div className={createClassName(styles, 'screen', { rounded: !windowed }, [className])}>
@@ -115,7 +116,7 @@ export class Screen extends Component {
 						)}
 						<Footer.Content>
 							{options && (
-								<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} />
+								<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} onRemoveUserData={onRemoveUserData} />
 							)}
 							<Footer.PoweredBy />
 						</Footer.Content>
