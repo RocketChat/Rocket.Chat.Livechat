@@ -14,7 +14,7 @@ const getAgent = (triggerAction) => {
 
 		if (params.sender === 'queue') {
 			const { state } = store;
-			const { token, triggerAgent } = state;
+			const { triggerAgent } = state;
 
 			if (triggerAgent) {
 				const cacheAgent = triggerAgent;

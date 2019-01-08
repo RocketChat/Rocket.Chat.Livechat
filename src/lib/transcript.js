@@ -1,5 +1,4 @@
 import SDK from '../api';
-import { route } from 'preact-router';
 import store from '../store';
 import ModalManager from '../components/Modal/manager';
 
@@ -27,7 +26,7 @@ const promptTranscript = async() => {
 	const message = transcriptMessage || 'Would you like a copy if this chat emailed'; // (TAPi18n.__('Would_you_like_a_copy_if_this_chat_emailed'));
 
 	return ModalManager.confirm({
-		text: transcriptMessage,
+		text: message,
 	}).then(async(result) => {
 		if ((typeof result.success === 'boolean') && result.success) {
 			return await SDK.requestTranscript(email, { token, rid: _id });

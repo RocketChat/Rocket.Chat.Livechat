@@ -10,7 +10,7 @@ import { closeChat } from '../../lib/main';
 
 export class ChatContainer extends Component {
 	loadMessages = async() => {
-		const { dispatch, token, room: { _id: rid } = {} } = this.props;
+		const { dispatch, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
 			return;
@@ -23,7 +23,7 @@ export class ChatContainer extends Component {
 	}
 
 	loadMoreMessages = async() => {
-		const { dispatch, token, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
+		const { dispatch, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
 
 		if (!rid || noMoreMessages) {
 			return;
@@ -50,7 +50,7 @@ export class ChatContainer extends Component {
 	}
 
 	getRoom = async() => {
-		const { dispatch, token, room } = this.props;
+		const { dispatch, room } = this.props;
 
 		if (room) {
 			return room;

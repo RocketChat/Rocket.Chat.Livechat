@@ -1,7 +1,5 @@
 import { Component } from 'preact';
-import SDK from '../../api';
-import { route } from 'preact-router';
-import { loadConfig } from '../../lib/main';
+// import { route } from 'preact-router';
 import { Consumer } from '../../store';
 import GDPR from './component';
 
@@ -9,7 +7,7 @@ import GDPR from './component';
 export class GDPRContainer extends Component {
 
 	handleClick = async(fields) => {
-		const { dispatch, gdpr } = this.props;
+		const { dispatch } = this.props;
 
         await dispatch({ loading: true, gdpr: { accepted: true } });
 		await dispatch({ loading: false });
