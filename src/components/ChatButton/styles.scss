@@ -1,0 +1,36 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+
+.chat-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	box-sizing: border-box;
+	border: none;
+	outline: none;
+	border-radius: 4px;
+	margin: 15px 28px;
+	padding: 0.8rem;
+	height: 54px;
+	width: 54px;
+
+	background-color: $color-blue;
+	color: #ffffff;
+	box-shadow: 0 7px 16px 0 rgba(0, 0, 0, 0.2);
+
+	cursor: pointer;
+	transition: color $default-time-animation,
+		background $default-time-animation,
+		trasform $default-time-animation;
+
+	svg {
+		flex: 1;
+	}
+
+	&:active {
+		opacity: .9;
+		transform: translateY(2px);
+	}
+}
