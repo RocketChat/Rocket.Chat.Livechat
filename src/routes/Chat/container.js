@@ -5,6 +5,8 @@ import { Consumer } from '../../store';
 import { loadConfig, initRoom } from '../../lib/main';
 import { getAvatarUrl, uploadFile, renderMessage } from '../../components/helpers';
 import Chat from './component';
+import ModalManager from '../../components/Modal/manager';
+import { closeChat } from '../../lib/main';
 
 export class ChatContainer extends Component {
 	loadMessages = async() => {
@@ -15,7 +17,7 @@ export class ChatContainer extends Component {
 		}
 
 		await dispatch({ loading: true });
-		const messages = await SDK.loadMessages(rid, { token });
+		const messages = await SDK.loadMessages(rid);
 		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
 		await dispatch({ loading: false });
 	}
@@ -28,7 +30,7 @@ export class ChatContainer extends Component {
 		}
 
 		await dispatch({ loading: true });
-		const moreMessages = await SDK.loadMessages(rid, { token, limit: messages.length + 10 });
+		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
 		await dispatch({
 			messages: (moreMessages || []).reverse(),
 			noMoreMessages: messages.length + 10 >= moreMessages.length,
@@ -54,7 +56,7 @@ export class ChatContainer extends Component {
 			return room;
 		}
 
-		const newRoom = await SDK.room({ token });
+		const newRoom = await SDK.room();
 		await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
 		await initRoom();
 
@@ -73,7 +75,7 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { token } = this.props;
-		await SDK.sendMessage({ msg, token, rid });
+		const { message } = await SDK.sendMessage({ msg, token, rid });
 	}
 
 	handleUpload = async(files) => {
@@ -90,12 +92,10 @@ export class ChatContainer extends Component {
 	}
 
 	onChangeDepartment = () => {
-		const redirect = `/switch-department${ this.props.path }`;
-		route(redirect);
+		route('/switch-department');
 	}
 
-	onFinishChat = async() => {
-		//TODO: Modal question is missing here..
+	doFinishChat = async() => {
 		const { dispatch, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
@@ -108,16 +108,24 @@ export class ChatContainer extends Component {
 		} catch (error) {
 			console.error(error);
 		} finally {
-			await loadConfig();
 			await dispatch({ loading: false });
-			//TODO: Modal question here to ask the user about the transcript..
-			route('/chat-finished');
+			await closeChat();
 		}
 	}
 
-	onRemoveUserData = async() => {
-		//TODO: Modal question is missing here..
-		//This feature depends on this PR: https://github.com/RocketChat/Rocket.Chat.js.SDK/pull/45
+	onFinishChat = () => {
+		ModalManager.confirm({
+			text: 'Are you sure you want\ to finish this chat?',
+		}).then((result) => {
+			if ((typeof result.success === 'boolean') && result.success) {
+				this.doFinishChat();
+			}
+		});
+	}
+
+	doRemoveUserData = async() => {
+		const { dispatch } = this.props;
+
 		await dispatch({ loading: true });
 		try {
 			await SDK.deleteVisitor();
@@ -128,6 +136,16 @@ export class ChatContainer extends Component {
 			await dispatch({ loading: false });
 			route('/chat-finished');
 		}
+	}
+
+	onRemoveUserData = async() => {
+		ModalManager.confirm({
+			text: 'Are you sure you want\ to remove all of your personal data?',
+		}).then((result) => {
+			if ((typeof result.success === 'boolean') && result.success) {
+				this.doRemoveUserData();
+			}
+		});
 	}
 
 	canSwitchDepartment = () => {
@@ -141,12 +159,12 @@ export class ChatContainer extends Component {
 	}
 
 	canRemoveUserData = () => {
-		const { forceAcceptDataProcessingConsent } = this.props;
-		return forceAcceptDataProcessingConsent;
+		const { allowRemoveUserData } = this.props;
+		return allowRemoveUserData;
 	}
 
 	showOptionsMenu = () => {
-		return this.canSwitchDepartment() || this.canFinishChat();
+		return this.canSwitchDepartment() || this.canFinishChat() || this.canRemoveUserData();
 	}
 
 	componentDidMount() {
@@ -176,7 +194,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				settings: {
 					fileUpload: uploads,
 					allowSwitchingDepartments,
-					forceAcceptDataProcessingConsent
+					forceAcceptDataProcessingConsent: allowRemoveUserData
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -237,6 +255,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				departments={departments}
 				allowSwitchingDepartments={allowSwitchingDepartments}
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
+				allowRemoveUserData={allowRemoveUserData}
 			/>
 		)}
 	</Consumer>

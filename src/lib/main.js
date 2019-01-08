@@ -2,7 +2,7 @@ import SDK from '../api';
 import { route } from 'preact-router';
 import store from '../store';
 import { insert, setCookies } from '../components/helpers';
-import * as commands from './commands';
+import { handleTranscript } from './transcript';
 
 const doPlaySound = (message) => {
 	const { sound, user } = store.state;
@@ -13,13 +13,9 @@ const doPlaySound = (message) => {
 }
 
 const onNewMessage = async(message) => {
-	if (message.t === 'command') {
-		commands[message.msg] && commands[message.msg](store.state);
-	}
 
 	if (message.t === 'livechat-close') {
-		await loadConfig();
-		route('/chat-finished');
+		closeChat();
 		// TODO: parentCall here
 		// parentCall('callback', 'chat-ended');
 	}
@@ -67,15 +63,17 @@ export const initRoom = async() => {
 	SDK.subscribeRoom(rid);
 
 	if (!agent && servedBy) {
-		const { agent } = await SDK.agent({ rid });
-		// we're changing the SDK.agent method to return de agent prop instead of the endpoint data
-		// so then we'll need to change this method, sending the { agent } object over the emit method
-
+		const agent = await SDK.agent({ rid });
 		store.setState({ agent });
 	}
 
 	SDK.onAgentChange(rid, (agent) => {
 		store.setState({ agent });
+	});
+
+	SDK.onAgentStatusChange(rid, (status) => {
+		const { agent } = store.state;
+		store.setState({ agent: { ...agent, status} });
 	});
 
 	setCookies(rid, token);
@@ -85,9 +83,6 @@ export const initRoom = async() => {
 export const loadConfig = async() => {
 	const {
 		token,
-		agent: prevAgent,
-		room: prevRoom,
-		user: prevUser,
 	} = store.state;
 
 	SDK.credentials.token = token;
@@ -112,3 +107,17 @@ export const loadConfig = async() => {
 
 	await initRoom();
 };
+
+export const closeChat = async() => {
+	await handleTranscript();
+	await loadConfig();
+	return route('/chat-finished');
+};
+
+export const survey = async() => {
+	// TODO: Implement survey feedback form
+	// route('survey-feedback');
+};
+
+
+

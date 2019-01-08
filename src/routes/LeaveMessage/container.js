@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import SDK from '../../api';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
-
+import ModalManager from '../../components/Modal/manager';
 
 export class LeaveMessageContainer extends Component {
 	handleSubmit = async(fields) => {
@@ -10,8 +10,10 @@ export class LeaveMessageContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			const { message } = await SDK.sendOfflineMessage(fields);
-			console.log(successMessage || message);
+			const message = await SDK.sendOfflineMessage(fields);
+			ModalManager.alert({
+				text: successMessage || message
+			});
 		} catch (error) {
 			const { message } = error.data;
 			console.error(message);

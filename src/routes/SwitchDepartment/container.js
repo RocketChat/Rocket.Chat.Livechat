@@ -4,31 +4,50 @@ import { route } from 'preact-router';
 import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
 import SwitchDepartment from './component';
+import ModalManager from '../../components/Modal/manager';
 
 
 export class SwitchDepartmentContainer extends Component {
-	handleSubmit = async(fields) => {
-		const { redirect, dispatch, room: { _id: rid } = {} } = this.props;
-		const { department } = fields;
-		const redirectTo = `/${ redirect }`;
 
-		// TODO: Modal t('Are_you_sure_do_you_want_switch_the_department')
+	confirmChangeDepartment = async() => {
+		return ModalManager.confirm({
+			text: I18n.t('Are you sure you want to switch the department?'),
+		}).then(async(result) => {
+			return typeof result.success === 'boolean' && result.success;
+		});
+	}
+
+	handleSubmit = async(fields) => {
+		const { dispatch, room: { _id: rid } = {} } = this.props;
+		const { department } = fields;
+
+		const confirm = await this.confirmChangeDepartment();
+		if (!confirm) {
+			return;
+		}
 
 		await dispatch({ loading: true });
 		try {
 			const result = await SDK.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
-				// TODO: Modal t('No_available_agents_to_transfer')
-				return;
+				return ModalManager.alert({
+					text: I18n.t('No available agents to transfer'),
+				});
 			}
 
-			// TODO: Modal t('Department_switched')
+			return ModalManager.alert({
+				text: I18n.t('Department switched'),
+			});
+
 			await dispatch({ department });
 			await loadConfig();
-			route(redirectTo);
+			history.go(-1);
 		} catch (error) {
-			// TODO: Modal error
+			console.error(error);
+			return ModalManager.alert({
+				text: error,
+			});
 		} finally {
 			await dispatch({ loading: false });
 		}

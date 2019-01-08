@@ -27,7 +27,7 @@ const getAgent = (triggerAction) => {
 
 			let agent;
 			try {
-				({ agent } = await SDK.nextAgent({ token }));
+				(agent = await SDK.nextAgent());
 			} catch (error) {
 				return reject(error);
 			}

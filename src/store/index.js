@@ -23,6 +23,9 @@ const initialState = {
 		play: false,
 	},
 	department: null,
+	gdpr: {
+		accepted: false
+	},
 };
 
 export const store = new Store(initialState);
