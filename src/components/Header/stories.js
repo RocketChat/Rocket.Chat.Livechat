@@ -67,13 +67,21 @@ storiesOf('Components|Header', module)
 		<Header color={color('color', '#175CC4')}>
 			<Picture>
 				<Avatar src={bertieBartonAvatar} />
+				<StatusIndicator style={{
+					position: 'absolute',
+					right: '-2px',
+					bottom: '-1px',
+					borderWidth: '2px',
+				  borderStyle: 'solid',
+				  borderColor: '#175CC4' }} status={select('status', statuses, 'online')}
+				/>
 			</Picture>
 
 			<Content>
-				<Title>{text('title', '@bertie.barton')}</Title>
+				<Title>{text('title', 'Bertie Barton')}</Title>
 				<SubTitle>
-					<StatusIndicator status={select('status', statuses, 'online')} />
-					<span style={{ margin: '5px' }}>{text('subtitle', 'Available')}</span>
+					<div style={{ margin: '2px' }}>{text('subtitle', 'bertie.barton@rocket.chat')}</div>
+					<div style={{ margin: '2px' }}>{text('subtitle', '+ 55 42423 24242')}</div>
 				</SubTitle>
 			</Content>
 
