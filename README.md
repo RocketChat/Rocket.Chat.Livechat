@@ -4,27 +4,27 @@
 
 ``` bash
 # install dependencies
-npm install
+yarn
 
 # serve with hot reload at localhost:8080
-npm run dev
+yarn dev
 
 # build for production with minification
-npm run build
+yarn build
 
 # test the production build locally
-npm run serve
+yarn serve
 
 # run tests with jest and preact-render-spy
-npm run test
+yarn test
 
 # run the storybook
-npm run storybook
+yarn storybook
+
+# before commit run
+yarn i18n
 ```
-### before commit run
-```bash
-npm run i18n
-```
+
 ## Screens:
 ![image](https://user-images.githubusercontent.com/5263975/44279585-497b2980-a228-11e8-81a2-36bc3389549e.png)
 ![image](https://user-images.githubusercontent.com/5263975/44279599-5730af00-a228-11e8-8873-553ef53ee25a.png)
