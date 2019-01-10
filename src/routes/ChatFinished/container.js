@@ -33,7 +33,7 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 				title={I18n.t('Chat Finished')}
 				color={color}
 				greeting={greeting || I18n.t('Thanks for talking with us')}
-				message={I18n.t('If you have any other question, just press the button below to start a new chat.')}
+				message={I18n.t('If you have any other questions, just press the button below to start a new chat.')}
 			/>
 		)}
 	</Consumer>
