@@ -1,110 +1,106 @@
 {
-  "name": "rocket.chat.livechat",
-  "version": "0.0.1-1",
-  "license": "MIT",
-  "scripts": {
-    "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "GENERATE_SOURCEMAP=false preact build --json --no-prerender --optimize-minimize",
-    "serve": "preact build --json --no-prerender --optimize-minimize && preact serve",
-    "dev": "preact watch",
-    "lint": "eslint src",
-    "test": "jest ./tests",
-    "coverage": "jest --coverage",
-    "storybook": "start-storybook -p 9001 -c .storybook",
-    "i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
-    "deploy-storybook": "storybook-to-ghpages"
-  },
-  "eslintIgnore": [
-    "build/*"
-  ],
-  "i18n": {
-    "autoTranslateTags": [
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "p"
-    ],
-    "ignorePatterns": [
-      "story.js"
-    ]
-  },
-  "devDependencies": {
-    "@storybook/addon-actions": "^3.4.11",
-    "@storybook/addon-centered": "^3.4.10",
-    "@storybook/addon-console": "^1.1.0",
-    "@storybook/addon-knobs": "^3.4.10",
-    "@storybook/addon-options": "^3.4.10",
-    "@storybook/addon-viewport": "^3.4.10",
-    "@storybook/react": "^3.4.10",
-    "@storybook/storybook-deployer": "^2.3.0",
-    "css-loader": "^1.0.0",
-    "desvg": "^1.0.2",
-    "desvg-loader": "^0.1.0",
-    "eslint": "^4.9.0",
-    "eslint-config-synacor": "^2.0.2",
-    "i18nline": "^2.0.1",
-    "identity-obj-proxy": "^3.0.0",
-    "if-env": "^1.0.0",
-    "image-webpack-loader": "^4.3.1",
-    "jest": "^21.2.1",
-    "lorem-ipsum": "^1.0.6",
-    "node-sass": "^4.9.3",
-    "preact-cli": "^3.0.0-next.14",
-    "preact-compat": "^3.18.4",
-    "preact-render-spy": "^1.2.1",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.22.1",
-    "svg-loader": "0.0.2",
-    "webpack": "^3.12.0",
-    "webpack-bundle-analyzer": "^3.0.2"
-  },
-  "dependencies": {
-    "@kossnocorp/desvg": "^0.2.0",
-    "@rocket.chat/sdk": "^1.0.0-alpha.18",
-    "date-fns": "^1.29.0",
-    "desvg": "^1.0.2",
-    "desvg-loader": "^0.1.0",
-    "fast-async": "^6.3.8",
-    "i18n": "^0.8.3",
-    "i18nline": "^2.0.1",
-    "markdown-it": "^8.4.2",
-    "msgpack": "^1.0.2",
-    "preact": "^8.2.6",
-    "preact-context": "^1.1.1",
-    "preact-i18nline": "^2.0.0",
-    "preact-router": "^2.5.7",
-    "tiny-events": "^1.0.1"
-  },
-  "jest": {
-    "verbose": true,
-    "setupFiles": [
-      "<rootDir>/src/tests/__mocks__/browserMocks.js"
-    ],
-    "testURL": "http://localhost:8080",
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "identity-obj-proxy",
-      "^./style$": "identity-obj-proxy",
-      "^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
-      "^react$": "preact-compat",
-      "^react-dom$": "preact-compat",
-      "^create-react-class$": "preact-compat/lib/create-react-class",
-      "^react-addons-css-transition-group$": "preact-css-transition-group"
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie < 11"
-  ]
+	"name": "rocket.chat.livechat",
+	"version": "0.0.1-1",
+	"license": "MIT",
+	"scripts": {
+		"start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+		"build": "GENERATE_SOURCEMAP=false preact build --json --no-prerender --optimize-minimize",
+		"serve": "preact build --json --no-prerender --optimize-minimize && preact serve",
+		"dev": "preact watch",
+		"lint": "eslint src",
+		"test": "jest ./tests",
+		"coverage": "jest --coverage",
+		"storybook": "start-storybook -p 9001 -c .storybook",
+		"i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
+		"deploy-storybook": "storybook-to-ghpages"
+	},
+	"eslintIgnore": [
+		"build/*"
+	],
+	"i18n": {
+		"autoTranslateTags": [
+			"h1",
+			"h2",
+			"h3",
+			"h4",
+			"h5",
+			"h6",
+			"p"
+		],
+		"ignorePatterns": [
+			"story.js"
+		]
+	},
+	"devDependencies": {
+		"@storybook/addon-actions": "^3.4.11",
+		"@storybook/addon-centered": "^3.4.10",
+		"@storybook/addon-console": "^1.1.0",
+		"@storybook/addon-knobs": "^3.4.10",
+		"@storybook/addon-options": "^3.4.10",
+		"@storybook/addon-viewport": "^3.4.10",
+		"@storybook/react": "^3.4.10",
+		"@storybook/storybook-deployer": "^2.3.0",
+		"css-loader": "^1.0.0",
+		"desvg-loader": "^0.1.0",
+		"eslint": "^4.9.0",
+		"eslint-config-synacor": "^2.0.2",
+		"identity-obj-proxy": "^3.0.0",
+		"if-env": "^1.0.0",
+		"image-webpack-loader": "^4.3.1",
+		"jest": "^21.2.1",
+		"lorem-ipsum": "^1.0.6",
+		"node-sass": "^4.9.3",
+		"preact-cli": "^3.0.0-next.14",
+		"preact-compat": "^3.18.4",
+		"preact-render-spy": "^1.2.1",
+		"sass-loader": "^7.1.0",
+		"style-loader": "^0.22.1",
+		"svg-loader": "0.0.2",
+		"webpack-bundle-analyzer": "^3.0.2"
+	},
+	"dependencies": {
+		"@kossnocorp/desvg": "^0.2.0",
+		"@rocket.chat/sdk": "^1.0.0-alpha.18",
+		"date-fns": "^1.29.0",
+		"desvg": "^1.0.2",
+		"fast-async": "^6.3.8",
+		"i18n": "^0.8.3",
+		"i18nline": "^2.0.1",
+		"markdown-it": "^8.4.2",
+		"msgpack": "^1.0.2",
+		"preact": "^8.2.6",
+		"preact-context": "^1.1.1",
+		"preact-i18nline": "^2.0.0",
+		"preact-router": "^2.5.7",
+		"tiny-events": "^1.0.1"
+	},
+	"jest": {
+		"verbose": true,
+		"setupFiles": [
+			"<rootDir>/src/tests/__mocks__/browserMocks.js"
+		],
+		"testURL": "http://localhost:8080",
+		"moduleFileExtensions": [
+			"js",
+			"jsx"
+		],
+		"moduleDirectories": [
+			"node_modules"
+		],
+		"moduleNameMapper": {
+			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
+			"\\.(css|less|scss)$": "identity-obj-proxy",
+			"^./style$": "identity-obj-proxy",
+			"^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
+			"^react$": "preact-compat",
+			"^react-dom$": "preact-compat",
+			"^create-react-class$": "preact-compat/lib/create-react-class",
+			"^react-addons-css-transition-group$": "preact-css-transition-group"
+		}
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not ie < 11"
+	]
 }
