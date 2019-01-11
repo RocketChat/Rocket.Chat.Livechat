@@ -7,17 +7,16 @@ import styles from './styles';
 
 export default class GDPR extends Component {
 	handleClick = () => {
-		const { onClick } = this.props;
-		onClick && onClick();
+		const { onAgree } = this.props;
+		onAgree && onAgree();
 	}
 
 	render = ({
 		color,
 		title,
-        consentText,
-        instructions,
-        loading,
-        onClick,
+		consentText,
+		// eslint-disable-next-line no-unused-vars
+		onAgree,
 		...props
 	}) => (
 		<Screen
@@ -27,13 +26,13 @@ export default class GDPR extends Component {
 			{...props}
 		>
 			<p className={createClassName(styles, 'gdpr__consent-text')}>{consentText}</p>
-			<p className={createClassName(styles, 'gdpr__instructions')}>{instructions}</p>
+			<p className={createClassName(styles, 'gdpr__instructions')}>
+				Go to <strong>menu options → forget/remove my data</strong> to request the immediate removal of your data.
+			</p>
 
-			<Form>
-				<Form.Item>
-					<Button onClick={this.handleClick} stack>I Agree</Button>
-				</Form.Item>
-			</Form>
+			<Button.Group>
+				<Button onClick={this.handleClick} stack>I Agree</Button>
+			</Button.Group>
 		</Screen>
 	)
 }

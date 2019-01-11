@@ -1,17 +1,11 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered';
 import { withKnobs, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { screenCentered } from '../helpers.stories';
 import ChatFinished from './component';
 
 
-const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px' }}>
-		{storyFn()}
-	</div>
-));
-
-storiesOf('Screen|ChatFinished', module)
+storiesOf('Routes|ChatFinished', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

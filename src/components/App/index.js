@@ -4,7 +4,7 @@ import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
 import SwitchDepartment from '../../routes/SwitchDepartment';
-import GDPR from '../../routes/GDPR';
+import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { loadConfig } from '../../lib/main';
@@ -51,20 +51,26 @@ export class App extends Component {
 	}
 
 	renderScreen() {
-		const { user, config, triggered, gdpr } = this.props;
-		const { accepted: gdprAccepted } = gdpr;
-		const { settings: {
-				registrationForm,
-				nameFieldRegistrationForm,
-				emailFieldRegistrationForm,
-				forceAcceptDataProcessingConsent: gdprRequired
+		const {
+			config: {
+				settings: {
+					registrationForm,
+					nameFieldRegistrationForm,
+					emailFieldRegistrationForm,
+					forceAcceptDataProcessingConsent: gdprRequired,
+				},
+				online,
 			},
-			online,
-		} = config;
+			gdpr: {
+				accepted: gdprAccepted,
+			},
+			triggered,
+			user,
+		} = this.props;
 
-		//Temporary implementation, the best approach for this resource is handling the the Router component
+		// Temporary implementation, the best approach for this resource is handling the the Router component
 		if (gdprRequired && !gdprAccepted) {
-			return <GDPR default path="/gdpr" />;
+			return <GDPRAgreement default path="/gdpr" />;
 		}
 
 		if (!online) {
@@ -99,9 +105,9 @@ const AppConnector = () => (
 				}) => (
 					<App
 						config={config}
-						user={user}
-						triggered={triggered}
 						gdpr={gdpr}
+						triggered={triggered}
+						user={user}
 					/>
 				)}
 			</StoreConsumer>

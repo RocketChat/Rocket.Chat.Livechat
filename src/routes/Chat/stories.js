@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
+import { screenCentered } from '../helpers.stories';
 import Chat from './component';
 import soundSrc from '../../components/Sound/chime.mp3';
 
@@ -42,13 +42,8 @@ const messages = [
 	{ u: { _id: 1 }, ts: new Date(), msg: 'Veri soluta suscipit mel no' },
 ];
 
-const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px', height: '500px' }}>
-		{storyFn()}
-	</div>
-));
 
-storiesOf('Screen|Chat', module)
+storiesOf('Routes|Chat', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('loading', () => (

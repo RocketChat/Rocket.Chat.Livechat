@@ -76,7 +76,7 @@ export default class Chat extends Component {
 		input && input.click();
 	}
 
-	handleOnChangeFileUploadInput = (event) => {
+	handleOnChangeFileUploadInput = () => {
 		const files = [this.inputFileUploadRef.value];
 		return this.props.onUpload && this.props.onUpload(files);
 	}
@@ -153,7 +153,7 @@ export default class Chat extends Component {
 			{...props}
 		>
 			<Sound ref={this.handleSoundRef} onPlay={onPlaySound} src={sound.src} play={sound.play} />
-			<FileUploadInput hidden={true} ref={this.handleInputFileUploadRef} onChange={this.handleOnChangeFileUploadInput} />
+			<FileUploadInput hidden ref={this.handleInputFileUploadRef} onChange={this.handleOnChangeFileUploadInput} />
 			<DropFiles onUpload={onUpload}>
 				<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 					<div
