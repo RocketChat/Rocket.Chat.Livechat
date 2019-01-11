@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>ic-close@2x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="20" height="20"></rect>
+    </defs>
+    <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="livechat-writing" transform="translate(-339.000000, -150.000000)">
+            <g id="notification" transform="translate(0.000000, 146.000000)">
+                <g id="ic-close" transform="translate(339.000000, 4.000000)">
+                    <g id="icon/cross--white">
+                        <g id="16x16/edit--dark" stroke-width="1" fill-rule="evenodd">
+                            <g id="20x20/edit--dark">
+                                <mask id="mask-2" fill="white">
+                                    <use xlink:href="#path-1"></use>
+                                </mask>
+                                <g id="Mask"></g>
+                            </g>
+                        </g>
+                        <path d="M6,6 L14.0710678,14.0710678" id="Line" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="square"></path>
+                        <path d="M6,6 L14.0710678,14.0710678" id="Line" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="square" transform="translate(10.035534, 10.035534) scale(-1, 1) translate(-10.035534, -10.035534) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
