@@ -10,6 +10,10 @@ export default (config/* , env, helpers */) => {
 
 	config.mode = 'production';
 
+	config.performance = {
+		hints: false,
+	};
+
 	config.optimization = {
 		sideEffects: false,
 		minimizer: [
@@ -106,7 +110,11 @@ export default (config/* , env, helpers */) => {
 		'process.title': 'browser',
 	};
 
-	config.plugins.push(new BundleAnalyzerPlugin({ openAnalyzer: false }));
+	config.plugins.push(new BundleAnalyzerPlugin({
+		analyzerMode: 'disabled',
+		generateStatsFile: true,
+		statsFilename: 'stats.json',
+	}));
 
 	return config;
 };

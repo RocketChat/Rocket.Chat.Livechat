@@ -4,31 +4,37 @@ const webpack = require('webpack');
 
 
 const patchBabelLoader = (config) => {
-	const babelLoader = config.module.rules.find(({ loader }) => /babel-loader/.test(loader));
-	const { loader, test, enforce, include, exclude, options, query } = babelLoader;
+	config.module.rules = config.module.rules.map((rule) => {
+		if (rule.loader === 'babel-loader') {
+			const { enforce, test, loader, options } = rule;
 
-	config.module.rules = [
-		...config.module.rules.filter((loader) => loader !== babelLoader),
-		{
-			test,
-			enforce,
-			include,
-			exclude,
-			use: [
-				{ loader, options: options || query },
-				{ loader: 'preact-i18nline/webpack-loader' },
-			],
-		},
-	];
+			return {
+				enforce,
+				test,
+				use: [
+					{ loader, options },
+					{ loader: 'preact-i18nline/webpack-loader' },
+				],
+			};
+		}
 
-	return config;
+		if (Array.isArray(rule.use) && rule.use.find(({ loader }) => loader === 'babel-loader')) {
+			return {
+				...rule,
+				use: [
+					...rule.use,
+					{ loader: 'preact-i18nline/webpack-loader' },
+				],
+			};
+		}
+
+		return rule;
+	});
 };
 
 const patchFileLoader = (config) => {
 	const fileLoader = config.module.rules.find(({ loader }) => /file-loader|url-loader/.test(loader));
 	fileLoader.test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
-
-	return config;
 };
 
 module.exports = (config/* , env */) => {
@@ -49,8 +55,8 @@ module.exports = (config/* , env */) => {
 		}
 	);
 
-	config = patchBabelLoader(config);
-	config = patchFileLoader(config);
+	patchBabelLoader(config);
+	patchFileLoader(config);
 
 	config.module.rules.push({
 		test: /\.svg$/,
