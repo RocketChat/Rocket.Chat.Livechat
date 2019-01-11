@@ -8,13 +8,13 @@ import ModalManager from '../../components/Modal/manager';
 
 export class SwitchDepartmentContainer extends Component {
 
-	confirmChangeDepartment = async() => {
-		return ModalManager.confirm({
+	confirmChangeDepartment = async() => (
+		ModalManager.confirm({
 			text: I18n.t('Are you sure you want to switch the department?'),
-		}).then(async(result) => {
-			return typeof result.success === 'boolean' && result.success;
-		});
-	}
+		}).then(async(result) => (
+			typeof result.success === 'boolean' && result.success
+		))
+	)
 
 	handleSubmit = async(fields) => {
 		const { dispatch, room: { _id: rid } = {} } = this.props;

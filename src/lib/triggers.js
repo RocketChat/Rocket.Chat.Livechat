@@ -1,5 +1,5 @@
 import SDK from '../api';
-import { store } from '../store';
+import store from '../store';
 import { insert, createToken, asyncForEach } from '../components/helpers';
 
 const agentCacheExpiry = 3600000;

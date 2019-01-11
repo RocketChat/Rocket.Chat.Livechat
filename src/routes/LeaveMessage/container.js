@@ -4,6 +4,7 @@ import { Consumer } from '../../store';
 import LeaveMessage from './component';
 import ModalManager from '../../components/Modal/manager';
 
+
 export class LeaveMessageContainer extends Component {
 	handleSubmit = async(fields) => {
 		const { dispatch, successMessage } = this.props;
@@ -12,7 +13,7 @@ export class LeaveMessageContainer extends Component {
 		try {
 			const message = await SDK.sendOfflineMessage(fields);
 			ModalManager.alert({
-				text: successMessage || message
+				text: successMessage || message,
 			});
 		} catch (error) {
 			const { message } = error.data;

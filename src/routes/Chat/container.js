@@ -2,11 +2,11 @@ import { Component } from 'preact';
 import { route } from 'preact-router';
 import SDK from '../../api';
 import { Consumer } from '../../store';
-import { loadConfig, initRoom } from '../../lib/main';
+import { closeChat, initRoom, loadConfig } from '../../lib/main';
 import { getAvatarUrl, uploadFile, renderMessage } from '../../components/helpers';
 import Chat from './component';
 import ModalManager from '../../components/Modal/manager';
-import { closeChat } from '../../lib/main';
+
 
 export class ChatContainer extends Component {
 	loadMessages = async() => {
@@ -75,7 +75,7 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { token } = this.props;
-		const { message } = await SDK.sendMessage({ msg, token, rid });
+		await SDK.sendMessage({ msg, token, rid });
 	}
 
 	handleUpload = async(files) => {
@@ -115,7 +115,7 @@ export class ChatContainer extends Component {
 
 	onFinishChat = () => {
 		ModalManager.confirm({
-			text: 'Are you sure you want\ to finish this chat?',
+			text: 'Are you sure you want to finish this chat?',
 		}).then((result) => {
 			if ((typeof result.success === 'boolean') && result.success) {
 				this.doFinishChat();
@@ -140,7 +140,7 @@ export class ChatContainer extends Component {
 
 	onRemoveUserData = async() => {
 		ModalManager.confirm({
-			text: 'Are you sure you want\ to remove all of your personal data?',
+			text: 'Are you sure you want to remove all of your personal data?',
 		}).then((result) => {
 			if ((typeof result.success === 'boolean') && result.success) {
 				this.doRemoveUserData();
@@ -163,9 +163,9 @@ export class ChatContainer extends Component {
 		return allowRemoveUserData;
 	}
 
-	showOptionsMenu = () => {
-		return this.canSwitchDepartment() || this.canFinishChat() || this.canRemoveUserData();
-	}
+	showOptionsMenu = () => (
+		this.canSwitchDepartment() || this.canFinishChat() || this.canRemoveUserData()
+	)
 
 	componentDidMount() {
 		this.loadMessages();
@@ -194,7 +194,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				settings: {
 					fileUpload: uploads,
 					allowSwitchingDepartments,
-					forceAcceptDataProcessingConsent: allowRemoveUserData
+					forceAcceptDataProcessingConsent: allowRemoveUserData,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -242,7 +242,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					},
 				} : undefined}
 				room={room}
-				messages={messages.filter(message => renderMessage(message))}
+				messages={messages.filter((message) => renderMessage(message))}
 				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}

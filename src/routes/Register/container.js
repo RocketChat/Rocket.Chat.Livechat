@@ -11,7 +11,7 @@ export class RegisterContainer extends Component {
 		let { department } = fields;
 
 		if (department === '') {
-			const { departments = {}} = this.props;
+			const { departments = {} } = this.props;
 			const deptDefault = departments.filter((dept) => dept.showOnRegistration)[0];
 			if (deptDefault) {
 				department = deptDefault._id;

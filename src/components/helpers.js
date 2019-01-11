@@ -114,9 +114,9 @@ export const createToken = () => (Math.random().toString(36).substring(2, 15) + 
 
 export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ username }`);
 
-export const renderMessage = (message = {}) => (message.t !== 'command' && !msgTypesNotDisplayed.includes(message.t));
-
 export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
+
+export const renderMessage = (message = {}) => (message.t !== 'command' && !msgTypesNotDisplayed.includes(message.t));
 
 export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
 	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url;

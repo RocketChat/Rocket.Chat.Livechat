@@ -51,12 +51,8 @@ export const PasswordInput = ({
 );
 
 export class FileUploadInput extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			value: null
-		}
+	state = {
+		value: null,
 	}
 
 	get value() {
@@ -72,7 +68,7 @@ export class FileUploadInput extends Component {
 	}
 
 	handleChange = (event) => {
-		this.setState({value: event.target.files[0]})
+		this.setState({ value: event.target.files[0] });
 
 		const { onChange } = this.props;
 		onChange && onChange(event);
@@ -80,11 +76,11 @@ export class FileUploadInput extends Component {
 
 	render() {
 		const {
-			value,
 			disabled,
 			error,
 			hidden,
 			small,
+			// eslint-disable-next-line no-unused-vars
 			onChange,
 			...args
 		} = this.props;
@@ -101,7 +97,7 @@ export class FileUploadInput extends Component {
 				].join(' ')}
 				{...args}
 			/>
-		)
+		);
 	}
 }
 

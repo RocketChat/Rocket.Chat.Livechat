@@ -4,45 +4,6 @@ import store from '../store';
 import { insert, setCookies } from '../components/helpers';
 import { handleTranscript } from './transcript';
 
-const doPlaySound = (message) => {
-	const { sound, user } = store.state;
-	if (sound.enabled && message.u._id !== user._id) {
-		sound.play = true;
-		return store.setState({ sound });
-	}
-}
-
-const onNewMessage = async(message) => {
-
-	if (message.t === 'livechat-close') {
-		closeChat();
-		// TODO: parentCall here
-		// parentCall('callback', 'chat-ended');
-	}
-}
-
-SDK.onMessage((message) => {
-	store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-	onNewMessage(message);
-	doPlaySound(message);
-});
-
-SDK.onTyping((username, isTyping) => {
-	const { typing, user } = store.state;
-
-	if (user && user.username && user.username === username) {
-		return;
-	}
-
-	if (typing.indexOf(username) === -1 && isTyping) {
-		typing.push(username);
-		return store.setState({ typing });
-	}
-
-	if (!isTyping) {
-		return store.setState({ typing: typing.filter((u) => u !== username) });
-	}
-});
 
 let stream;
 
@@ -73,7 +34,7 @@ export const initRoom = async() => {
 
 	SDK.onAgentStatusChange(rid, (status) => {
 		const { agent } = store.state;
-		store.setState({ agent: { ...agent, status} });
+		store.setState({ agent: { ...agent, status } });
 	});
 
 	setCookies(rid, token);
@@ -97,12 +58,12 @@ export const loadConfig = async() => {
 
 	await store.setState({
 		config,
-		agent: agent,
-		room: room,
-		user: user,
+		agent,
+		room,
+		user,
 		sound: { src, enabled: true, play: false },
 		messages: [],
-		noMoreMessages: false
+		noMoreMessages: false,
 	});
 
 	await initRoom();
@@ -119,5 +80,42 @@ export const survey = async() => {
 	// route('survey-feedback');
 };
 
+const doPlaySound = (message) => {
+	const { sound, user } = store.state;
+	if (sound.enabled && message.u._id !== user._id) {
+		sound.play = true;
+		return store.setState({ sound });
+	}
+};
 
+const onNewMessage = async(message) => {
 
+	if (message.t === 'livechat-close') {
+		closeChat();
+		// TODO: parentCall here
+		// parentCall('callback', 'chat-ended');
+	}
+};
+
+SDK.onMessage((message) => {
+	store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+	onNewMessage(message);
+	doPlaySound(message);
+});
+
+SDK.onTyping((username, isTyping) => {
+	const { typing, user } = store.state;
+
+	if (user && user.username && user.username === username) {
+		return;
+	}
+
+	if (typing.indexOf(username) === -1 && isTyping) {
+		typing.push(username);
+		return store.setState({ typing });
+	}
+
+	if (!isTyping) {
+		return store.setState({ typing: typing.filter((u) => u !== username) });
+	}
+});

@@ -24,7 +24,7 @@ const initialState = {
 	},
 	department: null,
 	gdpr: {
-		accepted: false
+		accepted: false,
 	},
 };
 

@@ -1,9 +1,9 @@
 import { Component } from 'preact';
 import Button from '../../components/Button';
-import Form from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles';
+
 
 export default class GDPR extends Component {
 	handleClick = () => {

@@ -2,18 +2,6 @@ import SDK from '../api';
 import store from '../store';
 import ModalManager from '../components/Modal/manager';
 
-export const handleTranscript = async() => {
-    const { config: { settings: { transcript} = {} } } = store.state;
-
-    if (!transcript) {
-		return;
-	}
-
-    const result = await promptTranscript();
-    if (result && result.success) {
-        transcriptSentAlert(result.message);
-    }
-};
 
 const promptTranscript = async() => {
 	const { config: { messages: { transcriptMessage } }, user: { token, visitorEmails }, room: { _id } } = store.state;
@@ -34,9 +22,21 @@ const promptTranscript = async() => {
 	});
 };
 
-const transcriptSentAlert = (message) => {
-	return ModalManager.alert({
-        text: message,
-        timeout: 1000,
-	});
+const transcriptSentAlert = (message) => ModalManager.alert({
+	text: message,
+	timeout: 1000,
+});
+
+
+export const handleTranscript = async() => {
+	const { config: { settings: { transcript } = {} } } = store.state;
+
+	if (!transcript) {
+		return;
+	}
+
+	const result = await promptTranscript();
+	if (result && result.success) {
+		transcriptSentAlert(result.message);
+	}
 };
