@@ -26,7 +26,7 @@ export default class GDPR extends Component {
 			{...props}
 		>
 			<p className={createClassName(styles, 'gdpr__consent-text')}>{consentText}</p>
-			<p className={createClassName(styles, 'gdpr__instructions')}>
+			<p className={createClassName(styles, 'gdpr__instructions')} translate="no">
 				Go to <strong>menu options → forget/remove my data</strong> to request the immediate removal of your data.
 			</p>
 

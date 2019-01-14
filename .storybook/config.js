@@ -1,14 +1,14 @@
-import { configure } from '@storybook/react';
+import { addDecorator, configure } from '@storybook/react';
 import { setConsoleOptions } from '@storybook/addon-console';
-import { setOptions } from '@storybook/addon-options';
+import { withOptions } from '@storybook/addon-options';
 
 
-setOptions({
+addDecorator(withOptions({
   name: 'RocketChat Livechat',
 	url: 'https://github.com/RocketChat/Rocket.Chat.Livechat',
   hierarchySeparator: /\//,
   hierarchyRootSeparator: /\|/,
-});
+}));
 
 setConsoleOptions({
 	panelExclude: [],
