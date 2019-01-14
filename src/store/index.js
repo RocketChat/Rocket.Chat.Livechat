@@ -22,6 +22,7 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
+	alerts: [],
 };
 
 export const store = new Store(initialState);

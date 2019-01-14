@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+import Alert from '../Alert';
 import Avatar from '../Avatar';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -41,6 +42,10 @@ export class Screen extends Component {
 		onOpenWindow && onOpenWindow();
 	}
 
+	handleRef = (ref) => {
+		this.headerRef = ref;
+	}
+
 	render = ({
 		color,
 		agent,
@@ -54,10 +59,20 @@ export class Screen extends Component {
 		options,
 		onChangeDepartment,
 		onFinishChat,
+		onDismissAlert,
 		className,
+		alerts,
 	}) => (
 		<div className={createClassName(styles, 'screen', { rounded: !windowed }, [className])}>
-			<Header color={color}>
+			<Header
+				ref={this.handleRef}
+				color={color}
+				post={
+					<Header.Post headerRef={this.headerRef}>
+						{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
+					</Header.Post>
+				}
+			>
 				{agent && agent.avatar && (
 					<Header.Picture>
 						<Avatar src={agent.avatar.src} description={agent.avatar.description} />
@@ -147,6 +162,11 @@ export class ScreenContainer extends Component {
 		dispatch({ sound: { ...sound, enabled: false } });
 	}
 
+	handleDismissAlert = (id) => {
+		const { dispatch, alerts = [] } = this.props;
+		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
+	}
+
 	render = (props) => (
 		<Screen
 			{...props}
@@ -155,6 +175,7 @@ export class ScreenContainer extends Component {
 			onMinimize={this.handleMinimize}
 			onRestore={this.handleRestore}
 			onOpenWindow={this.handleOpenWindow}
+			onDismissAlert={this.handleDismissAlert}
 		/>
 	)
 }
@@ -164,6 +185,7 @@ export const ScreenConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
 			sound = {},
+			alerts = [],
 			dispatch = () => {},
 		} = {}) => (
 			<ScreenContainer
@@ -173,6 +195,7 @@ export const ScreenConnector = ({ ref, ...props }) => (
 				minimized={false}
 				windowed={false}
 				sound={sound}
+				alerts={alerts}
 				dispatch={dispatch}
 			/>
 		)}
