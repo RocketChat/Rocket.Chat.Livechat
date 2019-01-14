@@ -103,5 +103,10 @@
 		"> 1%",
 		"last 2 versions",
 		"not ie < 11"
-	]
+	],
+	"storybook-deployer": {
+		"gitUsername": "Guilherme Gazzo",
+		"gitEmail": "guilherme.gazzo@rocket.chat",
+		"commitMessage": "Deploy Storybook to GitHub Pages [skip ci]"
+	}
 }

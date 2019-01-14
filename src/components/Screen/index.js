@@ -1,8 +1,10 @@
 import { Component } from 'preact';
+import Alert from '../Alert';
 import Avatar from '../Avatar';
 import Header from '../Header';
 import Footer from '../Footer';
 import StatusIndicator from '../StatusIndicator';
+import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
 import { Consumer } from '../../store';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
@@ -40,6 +42,10 @@ export class Screen extends Component {
 		onOpenWindow && onOpenWindow();
 	}
 
+	handleRef = (ref) => {
+		this.headerRef = ref;
+	}
+
 	render = ({
 		color,
 		agent,
@@ -54,10 +60,20 @@ export class Screen extends Component {
 		onChangeDepartment,
 		onFinishChat,
 		onRemoveUserData,
+		onDismissAlert,
 		className,
+		alerts,
 	}) => (
 		<div className={createClassName(styles, 'screen', { rounded: !windowed }, [className])}>
-			<Header color={color}>
+			<Header
+				ref={this.handleRef}
+				color={color}
+				post={
+					<Header.Post headerRef={this.headerRef}>
+						{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
+					</Header.Post>
+				}
+			>
 				{agent && agent.avatar && (
 					<Header.Picture>
 						<Avatar src={agent.avatar.src} description={agent.avatar.description} />
@@ -73,31 +89,39 @@ export class Screen extends Component {
 						</Header.SubTitle>
 					)}
 				</Header.Content>
-				<Header.Actions>
-					<Header.Action
-						title={notificationsEnabled ? 'Disable notifications' : 'Enable notifications'}
-						onClick={notificationsEnabled ? this.triggerDisableNotifications : this.triggerEnableNotifications}
-					>
-						{notificationsEnabled ?
-							<NotificationsEnabledIcon width={20} /> :
-							<NotificationsDisabledIcon width={20} />
-						}
-					</Header.Action>
-					<Header.Action
-						title={minimized ? 'Restore' : 'Minimize'}
-						onClick={minimized ? this.triggerRestore : this.triggerMinimize}
-					>
-						{minimized ?
-							<RestoreIcon width={20} /> :
-							<MinimizeIcon width={20} />
-						}
-					</Header.Action>
-					{!windowed && (
-						<Header.Action title={'Open in a new window'} onClick={this.triggerOpenWindow}>
-							<OpenWindowIcon width={20} />
+				<Tooltip.Container>
+					<Header.Actions>
+						<Header.Action
+							aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
+							onClick={notificationsEnabled ? this.triggerDisableNotifications : this.triggerEnableNotifications}
+						>
+							<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')}>
+								{notificationsEnabled ?
+									<NotificationsEnabledIcon width={20} /> :
+									<NotificationsDisabledIcon width={20} />
+								}
+							</Tooltip.Trigger>
 						</Header.Action>
-					)}
-				</Header.Actions>
+						<Header.Action
+							aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
+							onClick={minimized ? this.triggerRestore : this.triggerMinimize}
+						>
+							<Tooltip.Trigger content={I18n.t('Minimize chat')}>
+								{minimized ?
+									<RestoreIcon width={20} /> :
+									<MinimizeIcon width={20} />
+								}
+							</Tooltip.Trigger>
+						</Header.Action>
+						{!windowed && (
+							<Header.Action aria-label={I18n.t('Open in a new window')} onClick={this.triggerOpenWindow}>
+								<Tooltip.Trigger content={I18n.t('Expand chat')}>
+									<OpenWindowIcon width={20} />
+								</Tooltip.Trigger>
+							</Header.Action>
+						)}
+					</Header.Actions>
+				</Tooltip.Container>
 			</Header>
 
 			{!minimized && (
@@ -139,6 +163,11 @@ export class ScreenContainer extends Component {
 		dispatch({ sound: { ...sound, enabled: false } });
 	}
 
+	handleDismissAlert = (id) => {
+		const { dispatch, alerts = [] } = this.props;
+		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
+	}
+
 	render = (props) => (
 		<Screen
 			{...props}
@@ -147,6 +176,7 @@ export class ScreenContainer extends Component {
 			onMinimize={this.handleMinimize}
 			onRestore={this.handleRestore}
 			onOpenWindow={this.handleOpenWindow}
+			onDismissAlert={this.handleDismissAlert}
 		/>
 	)
 }
@@ -156,6 +186,7 @@ export const ScreenConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
 			sound = {},
+			alerts = [],
 			dispatch = () => {},
 		} = {}) => (
 			<ScreenContainer
@@ -165,6 +196,7 @@ export const ScreenConnector = ({ ref, ...props }) => (
 				minimized={false}
 				windowed={false}
 				sound={sound}
+				alerts={alerts}
 				dispatch={dispatch}
 			/>
 		)}

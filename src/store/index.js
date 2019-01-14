@@ -26,6 +26,7 @@ const initialState = {
 	gdpr: {
 		accepted: false,
 	},
+	alerts: [],
 };
 
 export const store = new Store(initialState);

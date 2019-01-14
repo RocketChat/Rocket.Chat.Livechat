@@ -74,7 +74,7 @@ Tooltip.Container = Container;
 
 export const Trigger = ({ children, content }) => (
 	<TooltipContext.Consumer>
-		{({ showTooltip, hideTooltip }) => cloneElement(children, {
+		{({ showTooltip, hideTooltip }) => cloneElement(children[0], {
 			onMouseEnter: (event) => showTooltip(event, content),
 			onMouseLeave: (event) => hideTooltip(event),
 			onFocusCapture: (event) => showTooltip(event, content),
