@@ -5,7 +5,7 @@ import { Consumer } from '../../store';
 import { closeChat, initRoom, loadConfig } from '../../lib/main';
 import { getAvatarUrl, uploadFile, renderMessage } from '../../components/helpers';
 import Chat from './component';
-import ModalManager from '../../components/Modal/manager';
+import { ModalManager } from '../../components/Modal';
 
 
 export class ChatContainer extends Component {

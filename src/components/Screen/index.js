@@ -63,6 +63,7 @@ export class Screen extends Component {
 		onDismissAlert,
 		className,
 		alerts,
+		modal,
 	}) => (
 		<div className={createClassName(styles, 'screen', { rounded: !windowed }, [className])}>
 			<Header
@@ -130,6 +131,8 @@ export class Screen extends Component {
 				</main>
 			)}
 
+			{modal}
+
 			{!minimized && (
 				<PopoverContainer>
 					<Footer>
@@ -187,6 +190,7 @@ export const ScreenConnector = ({ ref, ...props }) => (
 		{({
 			sound = {},
 			alerts = [],
+			modal = null,
 			dispatch = () => {},
 		} = {}) => (
 			<ScreenContainer
@@ -197,6 +201,7 @@ export const ScreenConnector = ({ ref, ...props }) => (
 				windowed={false}
 				sound={sound}
 				alerts={alerts}
+				modal={modal}
 				dispatch={dispatch}
 			/>
 		)}

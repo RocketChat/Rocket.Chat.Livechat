@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import SDK from '../../api';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
-import ModalManager from '../../components/Modal/manager';
+import { ModalManager } from '../../components/Modal';
 
 
 export class LeaveMessageContainer extends Component {

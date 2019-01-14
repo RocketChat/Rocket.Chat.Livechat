@@ -1,6 +1,6 @@
 import SDK from '../api';
 import store from '../store';
-import ModalManager from '../components/Modal/manager';
+import { ModalManager } from '../components/Modal';
 
 
 const promptTranscript = async() => {
