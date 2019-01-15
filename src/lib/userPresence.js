@@ -1,5 +1,5 @@
 import store from '../store';
-
+import SDK from '../api';
 
 const docActivityEvents = ['mousemove', 'mousedown', 'touchend', 'keydown'];
 let timer;
@@ -61,22 +61,22 @@ const userPrensence = {
 		this.stopTimer();
 	},
 
-	setOnline() {
+	async setOnline() {
 		self.startTimer();
 		if (oldStatus === 'online') {
 			return;
 		}
 		oldStatus = 'online';
-		// TODO: Update livechat status -> new sDK method
+		await SDK.updateVisitorStatus('online');
 	},
 
-	setAway() {
+	async setAway() {
 		self.stopTimer();
 		if (oldStatus === 'away') {
 			return;
 		}
 		oldStatus = 'away';
-		// TODO: Update livechat status -> new sDK method
+		await SDK.updateVisitorStatus('away');
 	},
 };
 
