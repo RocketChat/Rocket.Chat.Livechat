@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, color, select, text, boolean } from '@storybook/addon-knobs';
 
-import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post } from '.';
+import Header, { Picture, Content, SubTitle, Title, Actions, Action, CustomField, Post } from '.';
 import Avatar from '../Avatar';
 import StatusIndicator, { statuses } from '../StatusIndicator';
 import { Alert } from '../Alert';
@@ -123,6 +123,36 @@ storiesOf('Components|Header', module)
 					<StatusIndicator status={select('status', statuses, 'online')} />
 					<span style={{ margin: '5px' }}>{text('subtitle', 'Available')}</span>
 				</SubTitle>
+			</Content>
+
+			<Actions>
+				<Action onClick={action('notifications')}>
+					<Bell width={20} />
+				</Action>
+				<Action onClick={action('minimize')}>
+					<Arrow width={20} />
+				</Action>
+				<Action onClick={action('fullscreen')}>
+					<NewWindow width={20} />
+				</Action>
+			</Actions>
+		</Header>
+	))
+	.add('for user chat with custom fields', () => (
+		<Header color={color('color', '#175CC4')}>
+			<Picture>
+				<Avatar src={bertieBartonAvatar} />
+			</Picture>
+
+			<Content>
+				<Title>{text('title', '@bertie.barton')}</Title>
+				<SubTitle>
+					<StatusIndicator status={select('status', statuses, 'online')} />
+					<span style={{ margin: '5px' }}>{text('email', 'bertie.barton@rocket.chat')}</span>
+				</SubTitle>
+				<CustomField>
+					<span style={{ margin: '5px' }}>{text('custom', '+ 55 42423 24242')}</span>
+				</CustomField>
 			</Content>
 
 			<Actions>

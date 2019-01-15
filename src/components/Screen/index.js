@@ -89,6 +89,11 @@ export class Screen extends Component {
 							<span>{agent.email}</span>
 						</Header.SubTitle>
 					)}
+					{agent && agent.phone && (
+						<Header.CustomField className={createClassName(styles, 'screen__header-custom')}>
+							<span>{agent.phone}</span>
+						</Header.CustomField>
+					)}
 				</Header.Content>
 				<Tooltip.Container>
 					<Header.Actions>

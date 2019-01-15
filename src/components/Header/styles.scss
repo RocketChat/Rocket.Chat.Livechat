@@ -5,7 +5,7 @@ $header-padding: $default-padding;
 
 .header {
 	width: 100%;
-	height: 56px;
+	height: 70px;
 	padding: 0 $header-padding / 2;
 	background: $color-dark-blue;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -41,6 +41,13 @@ $header-padding: $default-padding;
 		}
 
 		.header__subtitle {
+			font-size: 14px;
+			font-weight: 500;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.header__custom {
 			font-size: 14px;
 			font-weight: 500;
 			overflow: hidden;

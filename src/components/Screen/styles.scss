@@ -22,6 +22,15 @@
 	}
 }
 
+.screen__header-custom {
+	margin: 0 -0.1rem;
+
+	& > * {
+		margin: 0 0.1rem;
+	}
+}
+
+
 .screen__main {
 	flex: 1 1 auto;
 	display: flex;

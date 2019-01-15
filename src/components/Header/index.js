@@ -39,6 +39,17 @@ export const SubTitle = ({ children, className, ...props }) => (
 	</div>
 );
 
+export const CustomField = ({ children, className, ...props }) => (
+	<div
+		className={createClassName(styles, 'header__custom', {
+			children: children.length > 0,
+		}, [className])}
+		{...props}
+	>
+		{children}
+	</div>
+);
+
 export const Actions = ({ children, className, ...props }) => (
 	<nav className={createClassName(styles, 'header__actions', {}, [className])} {...props}>
 		{children}
@@ -73,6 +84,7 @@ Header.Picture = Picture;
 Header.Content = Content;
 Header.Title = Title;
 Header.SubTitle = SubTitle;
+Header.CustomField = CustomField;
 Header.Actions = Actions;
 Header.Action = Action;
 Header.Post = Post;
