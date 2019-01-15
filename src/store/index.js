@@ -23,6 +23,7 @@ const initialState = {
 		play: false,
 	},
 	alerts: [],
+	connecting: false,
 };
 
 export const store = new Store(initialState);

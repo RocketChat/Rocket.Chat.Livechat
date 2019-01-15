@@ -70,6 +70,7 @@ export class ChatContainer extends Component {
 			return;
 		}
 
+		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { token } = this.props;
@@ -77,6 +78,7 @@ export class ChatContainer extends Component {
 	}
 
 	handleUpload = async(files) => {
+		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { token } = this.props;
@@ -137,6 +139,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			noMoreMessages,
 			typing,
 			loading,
+			connecting,
 			dispatch,
 		}) => (
 			<ChatContainer
@@ -174,6 +177,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					src: getAvatarUrl(username),
 				})) : []}
 				loading={loading}
+				connecting={connecting}
 				dispatch={dispatch}
 			/>
 		)}

@@ -27,4 +27,8 @@ export default class Commands {
 
 		await SDK.requestTranscript(email, { token, rid: _id });
 	}
+
+	connected(state, setState) {
+		setState({ connecting: false });
+	}
 }

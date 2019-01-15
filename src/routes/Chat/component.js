@@ -65,6 +65,7 @@ export default class Chat extends Component {
 		agent,
 		typingAvatars,
 		loading,
+		connecting,
 		onUpload,
 		onPlaySound,
 		onSubmit,
@@ -89,6 +90,7 @@ export default class Chat extends Component {
 			footer={(
 				<Composer onUpload={onUpload}
 					onSubmit={onSubmit}
+					connecting={connecting}
 					pre={emoji && (
 						<Actions>
 							<Action>

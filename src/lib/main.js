@@ -8,7 +8,7 @@ const commands = new Commands();
 
 SDK.onMessage((message) => {
 	if (message.t === 'command') {
-		commands[message.msg] && commands[message.msg](store.state);
+		commands[message.msg] && commands[message.msg](store.state, store.setState);
 	} else if (!msgTypesNotDisplayed.includes(message.t)) {
 		store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
 
@@ -56,7 +56,7 @@ export const initRoom = async() => {
 
 	stream = await SDK.connect();
 
-	const { token, agent, room: { _id: rid, servedBy } } = store.state;
+	const { token, agent, room: { _id: rid, servedBy }, config: { settings: { showConnecting } } } = store.state;
 	SDK.subscribeRoom(rid);
 
 	if (!agent && servedBy) {
@@ -72,6 +72,10 @@ export const initRoom = async() => {
 	});
 
 	setCookies(rid, token);
+
+	if (showConnecting) {
+		store.setState({ connecting: true });
+	}
 };
 
 
