@@ -67,6 +67,15 @@ export class ChatContainer extends Component {
 		this.loadMoreMessages();
 	}
 
+	handleChangeText = async(text) => {
+		const { user, room } = this.props;
+		if (!(user.username && room._id)) {
+			return;
+		}
+
+		await SDK.notifyVisitorTyping(room._id, user.username, text.length > 0);
+	}
+
 	handleSubmit = async(msg) => {
 		if (msg.trim() === '') {
 			return;
@@ -74,10 +83,9 @@ export class ChatContainer extends Component {
 
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
-		const { alerts, dispatch, token } = this.props;
+		const { alerts, dispatch, token, user } = this.props;
 		try {
-			const message = await SDK.sendMessage({ msg, token, rid });
-			console.log(message);
+			await SDK.sendMessage({ msg, token, rid });
 			// TODO: check the room id to ensure that the state room id and the message room id are the same
 			// Otherwise, it's necessary to reset/reload the local room
 		} catch (error) {
@@ -85,6 +93,7 @@ export class ChatContainer extends Component {
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: insert(alerts, alert) });
 		}
+		await SDK.notifyVisitorTyping(rid, user.username, false);
 
 	}
 
@@ -189,6 +198,7 @@ export class ChatContainer extends Component {
 		<Chat
 			{...props}
 			onTop={this.handleTop}
+			onChangeText={this.handleChangeText}
 			onSubmit={this.handleSubmit}
 			onUpload={this.handleUpload}
 			onPlaySound={this.handlePlaySound}
@@ -240,6 +250,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				token={token}
 				user={user ? {
 					_id: user._id,
+					username: user.username,
 					avatar: {
 						description: user.username,
 						src: getAvatarUrl(user.username),
