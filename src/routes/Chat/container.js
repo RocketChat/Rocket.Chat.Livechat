@@ -69,7 +69,7 @@ export class ChatContainer extends Component {
 
 	handleChangeText = async(text) => {
 		const { user, room } = this.props;
-		if (!(user.username && room._id)) {
+		if (!(user && user.username && room && room._id)) {
 			return;
 		}
 
