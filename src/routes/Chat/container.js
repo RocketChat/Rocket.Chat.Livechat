@@ -65,6 +65,15 @@ export class ChatContainer extends Component {
 		this.loadMoreMessages();
 	}
 
+	handleChangeText = async(text) => {
+		const { user, room } = this.props;
+		if (!(user.username && room._id)) {
+			return;
+		}
+
+		await SDK.notifyVisitorTyping(room._id, user.username, text.length > 0);
+	}
+
 	handleSubmit = async(msg) => {
 		if (msg.trim() === '') {
 			return;
@@ -72,8 +81,9 @@ export class ChatContainer extends Component {
 
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
-		const { token } = this.props;
+		const { token, user } = this.props;
 		await SDK.sendMessage({ msg, token, rid });
+		await SDK.notifyVisitorTyping(rid, user.username, false);
 	}
 
 	handleUpload = async(files) => {
@@ -105,6 +115,7 @@ export class ChatContainer extends Component {
 		<Chat
 			{...props}
 			onTop={this.handleTop}
+			onChangeText={this.handleChangeText}
 			onSubmit={this.handleSubmit}
 			onUpload={this.handleUpload}
 			onPlaySound={this.handlePlaySound}
@@ -148,6 +159,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				token={token}
 				user={user ? {
 					_id: user._id,
+					username: user.username,
 					avatar: {
 						description: user.username,
 						src: getAvatarUrl(user.username),
