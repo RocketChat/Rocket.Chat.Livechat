@@ -30,6 +30,8 @@ export class RegisterContainer extends Component {
 		try {
 			await SDK.grantVisitor({ visitor: { ...fields, token } });
 			await loadConfig();
+			// TODO: parencall here
+			// parentCall('callback', ['pre-chat-form-submit', fields]);
 		} finally {
 			await dispatch({ loading: false });
 		}

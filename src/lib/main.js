@@ -38,6 +38,8 @@ export const initRoom = async() => {
 	});
 
 	setCookies(rid, token);
+	// TODO: parentCall here
+	// parentCall('callback', 'chat-started');
 };
 
 
@@ -63,6 +65,7 @@ export const loadConfig = async() => {
 		user,
 		sound: { src, enabled: true, play: false },
 		messages: [],
+		alerts: [],
 		noMoreMessages: false,
 	});
 

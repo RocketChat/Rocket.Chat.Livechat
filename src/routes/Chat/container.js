@@ -3,7 +3,7 @@ import { route } from 'preact-router';
 import SDK from '../../api';
 import { Consumer } from '../../store';
 import { closeChat, initRoom, loadConfig } from '../../lib/main';
-import { getAvatarUrl, uploadFile, renderMessage } from '../../components/helpers';
+import { createToken, insert, getAvatarUrl, uploadFile, renderMessage } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 
@@ -74,8 +74,18 @@ export class ChatContainer extends Component {
 
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
-		const { token } = this.props;
-		await SDK.sendMessage({ msg, token, rid });
+		const { alerts, dispatch, token } = this.props;
+		try {
+			const message = await SDK.sendMessage({ msg, token, rid });
+			console.log(message);
+			// TODO: check the room id to ensure that the state room id and the message room id are the same
+			// Otherwise, it's necessary to reset/reload the local room
+		} catch (error) {
+			const { message: reason } = error.data;
+			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
+			await dispatch({ alerts: insert(alerts, alert) });
+		}
+
 	}
 
 	handleUpload = async(files) => {
@@ -96,7 +106,7 @@ export class ChatContainer extends Component {
 	}
 
 	doFinishChat = async() => {
-		const { dispatch, room: { _id: rid } = {} } = this.props;
+		const { alerts, dispatch, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
 			return;
@@ -107,6 +117,8 @@ export class ChatContainer extends Component {
 			await SDK.closeChat({ rid });
 		} catch (error) {
 			console.error(error);
+			const alert = { id: createToken(), children: 'Error closing chat.', error: true, timeout: 0 };
+			await dispatch({ alerts: insert(alerts, alert) });
 		} finally {
 			await dispatch({ loading: false });
 			await closeChat();
@@ -124,13 +136,15 @@ export class ChatContainer extends Component {
 	}
 
 	doRemoveUserData = async() => {
-		const { dispatch } = this.props;
+		const { alerts, dispatch } = this.props;
 
 		await dispatch({ loading: true });
 		try {
 			await SDK.deleteVisitor();
 		} catch (error) {
 			console.error(error);
+			const alert = { id: createToken(), children: 'Error removing user data.', error: true, timeout: 0 };
+			await dispatch({ alerts: insert(alerts, alert) });
 		} finally {
 			await loadConfig();
 			await dispatch({ loading: false });
@@ -215,6 +229,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			typing,
 			loading,
 			dispatch,
+			alerts,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -256,6 +271,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				allowSwitchingDepartments={allowSwitchingDepartments}
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
+				alerts={alerts}
 			/>
 		)}
 	</Consumer>

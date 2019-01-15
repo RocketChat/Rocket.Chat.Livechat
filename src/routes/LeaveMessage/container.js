@@ -2,22 +2,24 @@ import { Component } from 'preact';
 import SDK from '../../api';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
-import { ModalManager } from '../../components/Modal';
-
+import { insert, createToken } from '../../components/helpers';
 
 export class LeaveMessageContainer extends Component {
 	handleSubmit = async(fields) => {
-		const { dispatch, successMessage } = this.props;
+		const { alerts, dispatch, successMessage } = this.props;
 
 		await dispatch({ loading: true });
 		try {
 			const message = await SDK.sendOfflineMessage(fields);
-			ModalManager.alert({
-				text: successMessage || message,
-			});
+			const success = { id: createToken(), children: successMessage || message, success: true, timeout: 5000 };
+			await dispatch({ alerts: insert(alerts, success) });
+			// TODO: parentCall here
+			// parentCall('callback', ['offline-form-submit', fields]);
 		} catch (error) {
 			const { message } = error.data;
 			console.error(message);
+			const alert = { id: createToken(), children: message, error: true, timeout: 0 };
+			await dispatch({ alerts: insert(alerts, alert) });
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -45,6 +47,7 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 			loading,
 			token,
 			dispatch,
+			alerts,
 		}) => (
 			<LeaveMessageContainer
 				ref={ref}
@@ -56,6 +59,7 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 				loading={loading}
 				token={token}
 				dispatch={dispatch}
+				alerts={alerts}
 			/>
 		)}
 	</Consumer>
