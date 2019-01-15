@@ -22,6 +22,10 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
+	department: null,
+	gdpr: {
+		accepted: false,
+	},
 	alerts: [],
 };
 

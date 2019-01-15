@@ -6,6 +6,15 @@ module.exports = (baseConfig, env, config) => {
 
 	config = webpackOverride(config, env);
 
+	config.resolve.alias = Object.assign(
+		config.resolve.alias,
+		{
+			'React': 'preact-compat',
+			'react': 'preact-compat',
+			'react-dom': 'preact-compat',
+		}
+	);
+
 	config.module.rules = config.module.rules.filter(({ loader }) => !/json-loader/.test(loader));
 
 	config.module.rules.push({

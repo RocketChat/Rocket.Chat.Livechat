@@ -162,12 +162,21 @@ $form-input-select-arrow-color: $color-text-light;
 	}
 }
 
-.form__input-text,
-.form__input-password {
-	@include form__input-box;
+.form__input {
+	&-text,
+	&-password,
+	&-file {
+		@include form__input-box;
 
-	&::placeholder {
-		color: $form-input-placeholder-color;
+		&::placeholder {
+			color: $form-input-placeholder-color;
+		}
+	}
+}
+
+.form__input-file {
+	&--hidden {
+		display: none;
 	}
 }
 
