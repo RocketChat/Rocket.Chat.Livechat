@@ -56,12 +56,12 @@ const api = {
 		let department = null;
 		const { config: { departments = [] } } = store.state;
 
-		const deptExists = departments.some(dept => dept._id === departmentValue);
+		const deptExists = departments.some((dept) => dept._id === departmentValue);
 		if (deptExists) {
 			department = departmentValue;
 		}
 
-		updateIframeGuestData({ department })
+		updateIframeGuestData({ department });
 	},
 
 	clearDepartment() {
@@ -145,7 +145,7 @@ class Hooks {
 		this._started = false;
 		window.removeEventListener('message', onNewMessage, false);
 	}
-};
+}
 
 const instance = new Hooks();
 export default instance;

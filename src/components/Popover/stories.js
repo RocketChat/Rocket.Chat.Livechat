@@ -1,9 +1,8 @@
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, object } from '@storybook/addon-knobs';
 import Button from '../Button';
 import { PopoverContainer, PopoverTrigger } from '.';
-import { object } from '@storybook/addon-knobs/dist/vue';
 
 
 storiesOf('Components|Popover', module)

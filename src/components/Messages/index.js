@@ -9,6 +9,7 @@ export const Messages = ({
 	agent = {},
 	messages = [],
 	typingAvatars = [],
+	conversationFinishedMessage,
 }) => (
 	<ol className={createClassName(styles, 'messages')}>
 		{messages.map((message, index, arr) => {
@@ -23,6 +24,7 @@ export const Messages = ({
 					avatarUrl={(user._id === message.u._id && user.avatar && user.avatar.src) ||
 						(agent._id === message.u._id && agent.avatar && agent.avatar.src)}
 					attachmentsUrl={getAttachmentsUrl(message.attachments)}
+					conversationFinishedMessage={conversationFinishedMessage}
 					{...message}
 				/>
 			);

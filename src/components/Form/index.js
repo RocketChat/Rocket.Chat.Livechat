@@ -5,6 +5,7 @@ import {
 	TextInput,
 	PasswordInput,
 	SelectInput,
+	FileUploadInput,
 } from './inputs';
 
 
@@ -119,6 +120,7 @@ export class InputField extends Component {
 		text: TextInput,
 		password: PasswordInput,
 		select: SelectInput,
+		file: FileUploadInput,
 	}[type], { error: !!error, ...args });
 
 	renderDescription = ({ description, error }) => (
@@ -152,6 +154,7 @@ export {
 	TextInput,
 	PasswordInput,
 	SelectInput,
+	FileUploadInput,
 };
 
 Form.Item = Item;
@@ -161,6 +164,7 @@ Form.Description = Description;
 Form.TextInput = TextInput;
 Form.PasswordInput = PasswordInput;
 Form.SelectInput = SelectInput;
+Form.FileUploadInput = FileUploadInput;
 
 export const Validations = {
 	nonEmpty: (value) => (!value ? 'Field required' : undefined),

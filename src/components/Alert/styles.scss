@@ -1,0 +1,58 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+$alert-color: $color-text-lighter;
+$alert-font-family: $font-family;
+$alert-success-background-color: $color-green;
+$alert-warning-background-color: $color-yellow;
+$alert-error-background-color: $color-red;
+
+.alert {
+	width: 100%;
+	height: 28px;
+	padding: 6px 16px;
+	color: $alert-color;
+	font-size: 12px;
+	font-family: $alert-font-family;
+	font-weight: 600;
+	overflow: hidden;
+	letter-spacing: 0;
+	line-height: 16px;
+	background-color: $alert-success-background-color;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	
+	&__content {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	&--success {
+		background-color: $alert-success-background-color;
+	}
+	
+	&--warning {
+		background-color: $alert-warning-background-color;
+	}
+
+	&--error {
+		background-color: $alert-error-background-color;
+	}
+
+	&__close {
+		padding: 0;
+		background: none;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		display: flex;
+	
+		&:active {
+			opacity: .9;
+			transform: translateY(1px);
+		}
+	}
+	
+}

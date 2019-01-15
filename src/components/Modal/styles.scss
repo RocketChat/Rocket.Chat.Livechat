@@ -1,51 +1,65 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
+
+$modal-padding: $default-padding;
+$modal-border-radius: 2 * $default-border-radius;
+$modal-shadow: 0 7px 16px 0 rgba(0, 0, 0, 0.1);
+$modal-background-color: $bg-color-white;
+
+$modal-overlay-background-color: rgba(255, 255, 255, 0.52);
+
+
 :global(.is-blurred) {
-    filter: blur(2px);
+	filter: blur(2px);
+}
+
+.modal__overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: $modal-overlay-background-color;
 }
 
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:100%;
-  height: 100%;
-  background: transparent;
+	max-width: 80%;
+	min-width: 150px;
+	max-height: 80%;
+	position:fixed;
+	padding: $modal-padding;
+	background-color: $modal-background-color;
+	height: auto;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	box-shadow: $modal-shadow;
+	border-radius: $modal-border-radius;
+	overflow-y: auto;
 
-  &--overlay {
-    background: rgba(0, 0, 0, 0.6);
-  }
-
+	&--animated {
+		animation-name: fadeInUp;
+		animation-duration: $default-time-animation;
+	}
 }
 
-.container {
-    max-width: 80%;
-    min-width: 150px;
-    max-height: 80%;
-    position:fixed;
-    padding: $default-padding;
-    background: $bg-color-white;
-    height: auto;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    box-shadow: 0 10px 25px 0px rgba(0, 0, 0, 0.15);
-    border-radius: $default-border-radius;
-
-    &--animated {
-        animation-name: fadeInUp;
-        animation-duration: $default-time-animation;
-    }
+.modal__message {
+	margin-bottom: 1.75rem;
+	color: $color-text-dark;
+	font-size: 1rem;
+	font-weight: 500;
+	text-align: center;
+	line-height: 1.5;
 }
 
 @keyframes fadeInUp {
-    0% {
-        opacity:0;
-        transform:translate3d(-50%,100%,0)
-    }
-    to {
-        opacity:1;
-        transform: translate(-50%,-50%);
-    }
+	0% {
+		opacity: 0;
+		transform: translate3d(-50%, 100%, 0)
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, -50%);
+	}
 }

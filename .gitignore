@@ -2,6 +2,5 @@
 /build
 /stats.json
 /*.log
-*.lock
 coverage
 package-lock.json

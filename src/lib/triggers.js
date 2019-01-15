@@ -1,5 +1,5 @@
 import SDK from '../api';
-import { store } from '../store';
+import store from '../store';
 import { insert, createToken, asyncForEach } from '../components/helpers';
 import { parentCall } from './parentCall';
 
@@ -15,7 +15,7 @@ const getAgent = (triggerAction) => {
 
 		if (params.sender === 'queue') {
 			const { state } = store;
-			const { token, triggerAgent } = state;
+			const { triggerAgent } = state;
 
 			if (triggerAgent) {
 				const cacheAgent = triggerAgent;
@@ -28,7 +28,7 @@ const getAgent = (triggerAction) => {
 
 			let agent;
 			try {
-				({ agent } = await SDK.nextAgent({ token }));
+				(agent = await SDK.nextAgent());
 			} catch (error) {
 				return reject(error);
 			}

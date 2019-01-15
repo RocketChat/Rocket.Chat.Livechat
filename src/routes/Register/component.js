@@ -60,7 +60,7 @@ export default class Register extends Component {
 	constructor(props) {
 		super(props);
 
-		const { hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments } = props;
+		const { hasNameField, hasEmailField, hasDepartmentField, departments } = props;
 
 		if (hasNameField) {
 			this.state.name = { value: '' };
@@ -73,9 +73,9 @@ export default class Register extends Component {
 		if (hasDepartmentField && departments) {
 
 			if (departments.length > 1) {
-				this.state.department = { value: ''};
+				this.state.department = { value: '' };
 			} else if (departments.length === 1) {
-				this.state.department = { value: departments[0]._id};
+				this.state.department = { value: departments[0]._id };
 			} else {
 				this.state.department = null;
 			}

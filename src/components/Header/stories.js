@@ -1,11 +1,12 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, color, select, text } from '@storybook/addon-knobs';
+import { withKnobs, color, select, text, boolean } from '@storybook/addon-knobs';
 
-import Header, { Picture, Content, SubTitle, Title, Actions, Action } from '.';
+import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post } from '.';
 import Avatar from '../Avatar';
 import StatusIndicator, { statuses } from '../StatusIndicator';
+import { Alert } from '../Alert';
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrowDown.svg';
 import NewWindow from 'icons/newWindow.svg';
@@ -49,6 +50,53 @@ storiesOf('Components|Header', module)
 	))
 	.add('with actions', () => (
 		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
+			<Content>
+				{text('text', 'Chat finished')}
+			</Content>
+
+			<Actions>
+				<Action onClick={action('notifications')}>
+					<Bell width={20} />
+				</Action>
+				<Action onClick={action('minimize')}>
+					<Arrow width={20} />
+				</Action>
+			</Actions>
+		</Header>
+	))
+	.add('with multiple alerts', () => (
+		<Header
+			color={color('color', '#175CC4')}
+			post={
+				<Post>
+					<Alert
+						success={boolean('success', true)}
+						onDismiss={action('clicked')}
+					>
+						{text('text', 'Success')}
+					</Alert>
+					<Alert
+						warning={boolean('warning', true)}
+						onDismiss={action('clicked')}
+					>
+						{text('text', 'Warning')}
+					</Alert>
+					<Alert
+						error={boolean('error', true)}
+						onDismiss={action('clicked')}
+					>
+						{text('text', 'Error')}
+					</Alert>
+					<Alert
+						error={boolean('error', true)}
+						color={color('color', '#175CC4')}
+						onDismiss={action('clicked')}
+					>
+						{text('text', 'Custom color')}
+					</Alert>
+				</Post>
+			}
+		>
 			<Content>
 				{text('text', 'Chat finished')}
 			</Content>

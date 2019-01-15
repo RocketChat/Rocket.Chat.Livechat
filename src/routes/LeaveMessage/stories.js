@@ -1,17 +1,11 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { screenCentered } from '../helpers.stories';
 import LeaveMessage from './component';
 
 
-const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px' }}>
-		{storyFn()}
-	</div>
-));
-
-storiesOf('Screen|Leave a message', module)
+storiesOf('Routes|Leave a message', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

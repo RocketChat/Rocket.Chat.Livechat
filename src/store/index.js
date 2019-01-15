@@ -25,8 +25,13 @@ const initialState = {
 	iframe: {
 		isWidgetOpened: false,
 		guest: {},
-		theme: {}
-	}
+		theme: {},
+	},
+	department: null,
+	gdpr: {
+		accepted: false,
+	},
+	alerts: [],
 };
 
 export const store = new Store(initialState);
