@@ -9,7 +9,7 @@ import styles from './styles';
 import EmojiIcon from '../../icons/smile.svg';
 import PlusIcon from '../../icons/plus.svg';
 import SendIcon from '../../icons/send.svg';
-
+import { FileUploadInput } from '../../components/Form/inputs';
 
 const toBottom = (el) => el.scrollTop = el.scrollHeight;
 
@@ -19,8 +19,16 @@ export default class Chat extends Component {
 		this.sound = sound;
 	}
 
+	handleInputFileUploadRef = (ref) => {
+		this.inputFileUploadRef = ref;
+	}
+
 	handleMessagesContainerRef = (messagesContainer) => {
 		this.messagesContainer = messagesContainer;
+	}
+
+	handleInputRef = (ref) => {
+		this.inputRef = ref;
 	}
 
 	handleScroll = debounce(() => {
@@ -47,6 +55,32 @@ export default class Chat extends Component {
 		atBottom: true,
 	}
 
+	handleSendClick = (event) => {
+		event.preventDefault();
+
+		if (this.props.onSubmit) {
+			const { value: msg } = this.inputRef;
+			this.props.onSubmit(msg);
+		}
+	}
+
+	handleUploadClick = (event) => {
+		event.preventDefault();
+
+		const { onUpload } = this.props;
+		if (!onUpload) {
+			return;
+		}
+
+		const { input } = this.inputFileUploadRef;
+		input && input.click();
+	}
+
+	handleOnChangeFileUploadInput = () => {
+		const files = [this.inputFileUploadRef.value];
+		return this.props.onUpload && this.props.onUpload(files);
+	}
+
 	componentDidMount() {
 		toBottom(this.messagesContainer);
 	}
@@ -64,6 +98,7 @@ export default class Chat extends Component {
 		user,
 		agent,
 		typingAvatars,
+		conversationFinishedMessage,
 		loading,
 		onUpload,
 		onPlaySound,
@@ -74,6 +109,7 @@ export default class Chat extends Component {
 		options,
 		onChangeDepartment,
 		onFinishChat,
+		onRemoveUserData,
 		...props
 	}, {
 		atBottom = true,
@@ -86,9 +122,12 @@ export default class Chat extends Component {
 			options={options}
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
+			onRemoveUserData={onRemoveUserData}
 			footer={(
 				<Composer onUpload={onUpload}
 					onSubmit={onSubmit}
+					placeholder={I18n.t('Type your message here')}
+					ref={this.handleInputRef}
 					pre={emoji && (
 						<Actions>
 							<Action>
@@ -99,11 +138,11 @@ export default class Chat extends Component {
 					post={(
 						<Actions>
 							{uploads && (
-								<Action>
+								<Action onClick={this.handleUploadClick}>
 									<PlusIcon width={20} />
 								</Action>
 							)}
-							<Action>
+							<Action onClick={this.handleSendClick}>
 								<SendIcon width={20} />
 							</Action>
 						</Actions>
@@ -114,6 +153,7 @@ export default class Chat extends Component {
 			{...props}
 		>
 			<Sound ref={this.handleSoundRef} onPlay={onPlaySound} src={sound.src} play={sound.play} />
+			<FileUploadInput hidden ref={this.handleInputFileUploadRef} onChange={this.handleOnChangeFileUploadInput} />
 			<DropFiles onUpload={onUpload}>
 				<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 					<div
@@ -126,6 +166,7 @@ export default class Chat extends Component {
 							agent={agent}
 							messages={messages}
 							typingAvatars={typingAvatars}
+							conversationFinishedMessage={conversationFinishedMessage}
 						/>
 					</div>
 				</div>

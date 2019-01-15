@@ -4,8 +4,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import Button from '../Button';
-import Modal from '.';
+import Modal from './component';
 
 
 const memedIpsum = mem(loremIpsum);
@@ -63,24 +62,26 @@ storiesOf('Components|Modal', module)
 			</Modal>
 		</div>
 	))
-	.add('message box', () => (
+	.add('confirm', () => (
 		<div>
 			<LoremIpsum />
-			<Modal
-				open={boolean('open', true)}
-				animated={boolean('animated', true)}
-				dismissByOverlay={false}
-				onDismiss={action('dismiss')}
-			>
-				<Modal.Message>
-					Are you sure that you want
-					to finish this chat?
-				</Modal.Message>
-				<Button.Group>
-					<Button outline secondary onClick={action('no')}>No</Button>
-					<Button danger onClick={action('yes')}>Yes</Button>
-				</Button.Group>
-			</Modal>
+			<Modal.Confirm
+				text={text('text', 'Are you ok?')}
+				confirmButtonText={text('confirmButtonText', 'Yes')}
+				cancelButtonText={text('cancelButtonText', 'No')}
+				onConfirm={action('confirm')}
+				onCancel={action('cancel')}
+			/>
+		</div>
+	))
+	.add('alert', () => (
+		<div>
+			<LoremIpsum />
+			<Modal.Alert
+				text={text('text', 'You look great today.')}
+				buttonText={text('buttonText', 'OK')}
+				onConfirm={action('confirm')}
+			/>
 		</div>
 	))
 ;
