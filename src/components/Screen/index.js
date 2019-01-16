@@ -124,31 +124,27 @@ export class Screen extends Component {
 				</Tooltip.Container>
 			</Header>
 
-			{!minimized && (
-				<main className={createClassName(styles, 'screen__main', { nopadding })}>
-					{children}
-				</main>
-			)}
+			<main className={createClassName(styles, 'screen__main', { nopadding })}>
+				{children}
+			</main>
 
 			{modal}
 
-			{!minimized && (
-				<PopoverContainer>
-					<Footer>
-						{footer && (
-							<Footer.Content>
-								{footer}
-							</Footer.Content>
-						)}
+			<PopoverContainer>
+				<Footer>
+					{footer && (
 						<Footer.Content>
-							{options && (
-								<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} onRemoveUserData={onRemoveUserData} />
-							)}
-							<Footer.PoweredBy />
+							{footer}
 						</Footer.Content>
-					</Footer>
-				</PopoverContainer>
-			)}
+					)}
+					<Footer.Content>
+						{options && (
+							<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} onRemoveUserData={onRemoveUserData} />
+						)}
+						<Footer.PoweredBy />
+					</Footer.Content>
+				</Footer>
+			</PopoverContainer>
 		</div>
 	);
 }

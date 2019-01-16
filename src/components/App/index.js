@@ -39,6 +39,16 @@ export class App extends Component {
 		dispatch({ sound: { ...sound, enabled: false } });
 	}
 
+	handleMinimize = () => {
+		const { dispatch } = this.props;
+		dispatch({ minimized: true });
+	}
+
+	handleRestore = () => {
+		const { dispatch } = this.props;
+		dispatch({ minimized: false });
+	}
+
 	handleDismissAlert = (id) => {
 		const { dispatch, alerts = [] } = this.props;
 		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
@@ -46,8 +56,8 @@ export class App extends Component {
 
 	getScreenProps = () => ({
 		notificationsEnabled: this.props.sound && this.props.sound.enabled,
-		minimized: false,
-		windowed: false,
+		minimized: this.props.minimized,
+		windowed: this.props.windowed,
 		sound: this.props.sound,
 		alerts: this.props.alerts,
 		modal: this.props.modal,
@@ -133,6 +143,8 @@ const AppConnector = () => (
 					triggered,
 					gdpr,
 					sound,
+					minimized,
+					windowed,
 					alerts,
 					modal,
 					dispatch,
@@ -143,6 +155,8 @@ const AppConnector = () => (
 						triggered={triggered}
 						user={user}
 						sound={sound}
+						minimized={minimized}
+						windowed={windowed}
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
