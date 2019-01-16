@@ -41,6 +41,10 @@ $composer-padding: 12px;
             max-width: 100%;
             overflow: hidden;
         }
+
+        &--connecting {
+            cursor: default;
+        }
     }
 }
 

@@ -100,6 +100,7 @@ export default class Chat extends Component {
 		typingAvatars,
 		conversationFinishedMessage,
 		loading,
+		connecting,
 		onUpload,
 		onPlaySound,
 		onChangeText,
@@ -127,6 +128,7 @@ export default class Chat extends Component {
 			footer={(
 				<Composer onUpload={onUpload}
 					onSubmit={onSubmit}
+					connecting={connecting}
 					onChange={onChangeText}
 					placeholder={I18n.t('Type your message here')}
 					ref={this.handleInputRef}

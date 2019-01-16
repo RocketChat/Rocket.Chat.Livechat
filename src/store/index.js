@@ -27,6 +27,7 @@ const initialState = {
 		accepted: false,
 	},
 	alerts: [],
+	connecting: false,
 };
 
 export const store = new Store(initialState);
