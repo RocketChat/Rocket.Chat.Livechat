@@ -1,6 +1,7 @@
 @import '~styles/variables';
 @import '~styles/colors';
 
+
 .footer {
 	width: 100%;
 	color: $color-text-grey;
@@ -8,7 +9,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: stretch;
-	font-size: 10px;
+	font-size: 0.625rem;
 	flex: 0 0 auto;
 	flex-direction: column;
 
@@ -23,11 +24,11 @@
 		padding: 0;
 		cursor: pointer;
 		color: $color-text-grey;
-		font-size: 10px;
+		font-size: 0.625rem;
 		font-weight: bold;
 		text-align: left;
 		letter-spacing: 0.2px;
-		line-height: 16px;
+		line-height: 1;
 		transition: trasform $default-time-animation;
 		user-select: none;
 

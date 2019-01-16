@@ -12,6 +12,7 @@ $button-small-padding: (0.25 * $default-gap - $default-border / 2) (1.5 * $defau
 $button-color: $color-text-lighter;
 $button-background-color: $color-blue;
 $button-danger-background-color: $color-dark-red;
+$button-secondary-background-color: $color-text-grey;
 
 $button-font-family: $font-family;
 $button-font-size: 0.875rem;
@@ -43,7 +44,8 @@ $button-loading-color: #ffffff;
 		border-color: $color;
 		background: $color;
 
-		&.button--outline {
+		&.button--outline,
+		&.button--nude {
 			color: $color;
 
 			&.button--loading::after {
@@ -92,8 +94,21 @@ $button-loading-color: #ffffff;
 		@include state($button-danger-background-color);
 	}
 
+	&--secondary {
+		@include state($button-secondary-background-color);
+	}
+
 	&--outline {
 		background: none;
+	}
+
+	&--nude {
+		background: none;
+		border-color: transparent;
+
+		&:focus {
+			box-shadow: none;
+		}
 	}
 
 	&--stack {
