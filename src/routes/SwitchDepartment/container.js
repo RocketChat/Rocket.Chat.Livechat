@@ -1,10 +1,10 @@
 import { Component } from 'preact';
 import SDK from '../../api';
 import { loadConfig } from '../../lib/main';
-import history from '../../history';
 import { Consumer } from '../../store';
 import SwitchDepartment from './component';
 import { ModalManager } from '../../components/Modal';
+import { createToken, insert } from '../../components/helpers';
 
 
 export class SwitchDepartmentContainer extends Component {
@@ -18,7 +18,7 @@ export class SwitchDepartmentContainer extends Component {
 	}
 
 	handleSubmit = async(fields) => {
-		const { dispatch, room: { _id: rid } = {} } = this.props;
+		const { alerts, dispatch, room: { _id: rid } = {} } = this.props;
 		const { department } = fields;
 
 		const confirm = await this.confirmChangeDepartment();
@@ -31,24 +31,20 @@ export class SwitchDepartmentContainer extends Component {
 			const result = await SDK.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
-				return ModalManager.alert({
-					text: I18n.t('No available agents to transfer'),
-				});
+				await dispatch({ alerts: insert(alerts, { id: createToken(), children: I18n.t('No available agents to transfer'), warning: true, timeout: 5000 }) });
 			}
 
 			await dispatch({ department });
 			await loadConfig();
 
-			await ModalManager.alert({
+			ModalManager.alert({
 				text: I18n.t('Department switched'),
 			});
 
 			history.go(-1);
 		} catch (error) {
 			console.error(error);
-			return ModalManager.alert({
-				text: error,
-			});
+			await dispatch({ alerts: insert(alerts, { id: createToken(), children: I18n.t('No available agents to transfer'), warning: true, timeout: 5000 }) });
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -76,6 +72,7 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 			loading = false,
 			department,
 			dispatch,
+			alerts,
 		}) => (
 			<SwitchDepartmentContainer
 				ref={ref}
@@ -87,6 +84,7 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 				departments={departments.filter((dept) => dept.showOnRegistration && dept._id !== department)}
 				dispatch={dispatch}
 				room={room}
+				alerts={alerts}
 			/>
 		)}
 	</Consumer>
