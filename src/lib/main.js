@@ -3,8 +3,9 @@ import { route } from 'preact-router';
 import store from '../store';
 import { insert, setCookies } from '../components/helpers';
 import { handleTranscript } from './transcript';
+import Commands from './commands';
 
-
+const commands = new Commands();
 let stream;
 
 export const initRoom = async() => {
@@ -97,13 +98,15 @@ const onNewMessage = async(message) => {
 		closeChat();
 		// TODO: parentCall here
 		// parentCall('callback', 'chat-ended');
+	} else if (message.t === 'command') {
+		commands[message.msg] && commands[message.msg]();
 	}
 };
 
-SDK.onMessage((message) => {
-	store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-	onNewMessage(message);
-	doPlaySound(message);
+SDK.onMessage(async(message) => {
+	await store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+	await onNewMessage(message);
+	await doPlaySound(message);
 });
 
 SDK.onTyping((username, isTyping) => {

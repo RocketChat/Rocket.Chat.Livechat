@@ -89,4 +89,7 @@ storiesOf('Components|Composer', module)
 			}
 		/>
 	))
+	.add('connecting', () => (
+		<Composer connecting />
+	))
 ;

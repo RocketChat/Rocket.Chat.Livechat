@@ -50,14 +50,14 @@ export class ChatContainer extends Component {
 	}
 
 	getRoom = async() => {
-		const { dispatch, room } = this.props;
+		const { dispatch, room, showConnecting } = this.props;
 
 		if (room) {
 			return room;
 		}
 
 		const newRoom = await SDK.room();
-		await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
+		await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
 		await initRoom();
 
 		return newRoom;
@@ -69,7 +69,7 @@ export class ChatContainer extends Component {
 
 	handleChangeText = async(text) => {
 		const { user, room } = this.props;
-		if (!(user.username && room._id)) {
+		if (!(user && user.username && room && room._id)) {
 			return;
 		}
 
@@ -81,6 +81,7 @@ export class ChatContainer extends Component {
 			return;
 		}
 
+		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
@@ -98,6 +99,7 @@ export class ChatContainer extends Component {
 	}
 
 	handleUpload = async(files) => {
+		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { token } = this.props;
@@ -219,6 +221,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					fileUpload: uploads,
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
+					showConnecting,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -238,6 +241,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			noMoreMessages,
 			typing,
 			loading,
+			connecting,
 			dispatch,
 			alerts,
 		}) => (
@@ -277,6 +281,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 					src: getAvatarUrl(username),
 				})) : []}
 				loading={loading}
+				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
+				connecting={connecting} // param to show or hide "connecting"
 				dispatch={dispatch}
 				departments={departments}
 				allowSwitchingDepartments={allowSwitchingDepartments}
