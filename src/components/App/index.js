@@ -1,5 +1,10 @@
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
+import history from '../../history';
+import { loadConfig } from '../../lib/main';
+import CustomFields from '../../lib/customFields';
+import Triggers from '../../lib/triggers';
+import userPresence from '../../lib/userPresence';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
@@ -7,14 +12,9 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { loadConfig } from '../../lib/main';
-import CustomFields from '../../lib/customFields';
-import Triggers from '../../lib/triggers';
-import userPresence from '../../lib/userPresence';
-import history from '../../history';
 
 
-export class App extends Component {
+class App extends Component {
 
 	state = { initialized: false }
 
@@ -112,18 +112,24 @@ export class App extends Component {
 		this.finalize();
 	}
 
-	render = (props, { initialized }) => {
+	render = ({
+		minimized,
+		windowed,
+		sound = {},
+		alerts,
+		modal,
+	}, { initialized }) => {
 		if (!initialized) {
 			return null;
 		}
 
 		const screenProps = {
-			notificationsEnabled: this.props.sound && this.props.sound.enabled,
-			minimized: this.props.minimized,
-			windowed: this.props.windowed,
-			sound: this.props.sound,
-			alerts: this.props.alerts,
-			modal: this.props.modal,
+			notificationsEnabled: sound.enabled,
+			minimized,
+			windowed,
+			sound,
+			alerts,
+			modal,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
