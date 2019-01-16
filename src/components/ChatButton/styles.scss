@@ -2,7 +2,24 @@
 @import '~styles/variables';
 
 
+$chat-button-border-radius: 4px;
+$chat-button-margin: 15px 28px;
+$chat-button-padding: 12px;
+$chat-button-size: 54px;
+$chat-button-background-color: $color-blue;
+$chat-button-color: $color-text-lighter;
+$chat-button-shadow: 0 7px 16px 0 rgba(0, 0, 0, 0.2);
+
+$chat-button-badge-size: 1.5rem;
+$chat-button-badge-background-color: $color-red;
+$chat-button-badge-color: $color-text-lighter;
+$chat-button-badge-font-family: $font-family;
+$chat-button-badge-font-size: 0.8125rem;
+$chat-button-badge-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+
 .chat-button {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -10,15 +27,15 @@
 	box-sizing: border-box;
 	border: none;
 	outline: none;
-	border-radius: 4px;
-	margin: 15px 28px;
-	padding: 0.8rem;
-	height: 54px;
-	width: 54px;
+	border-radius: $chat-button-border-radius;
+	margin: $chat-button-margin;
+	padding: $chat-button-padding;
+	height: $chat-button-size;
+	width: $chat-button-size;
 
-	background-color: $color-blue;
-	color: #ffffff;
-	box-shadow: 0 7px 16px 0 rgba(0, 0, 0, 0.2);
+	background-color: $chat-button-background-color;
+	color: $chat-button-color;
+	box-shadow: $chat-button-shadow;
 
 	cursor: pointer;
 	transition: color $default-time-animation,
@@ -32,5 +49,26 @@
 	&:active {
 		opacity: .9;
 		transform: translateY(2px);
+	}
+
+	&__badge {
+		position: absolute;
+		right: (-$chat-button-badge-size / 4);
+		top: (-$chat-button-badge-size / 4);
+		min-width: $chat-button-badge-size;
+		height: $chat-button-badge-size;
+		padding: 0 ($chat-button-badge-font-size / 2);
+
+		background-color: $chat-button-badge-background-color;
+		box-shadow: $chat-button-badge-shadow;
+		border-radius: ($chat-button-badge-size / 2);
+
+		color: $chat-button-badge-color;
+		font-family: $chat-button-badge-font-family;
+		font-size: $chat-button-badge-font-size;
+		font-weight: bold;
+		letter-spacing: 0;
+		line-height: $chat-button-badge-size;
+		text-align: center;
 	}
 }
