@@ -6,6 +6,7 @@ import {
 	PasswordInput,
 	SelectInput,
 	FileUploadInput,
+	ExperienceRating,
 } from './inputs';
 
 
@@ -165,6 +166,7 @@ Form.TextInput = TextInput;
 Form.PasswordInput = PasswordInput;
 Form.SelectInput = SelectInput;
 Form.FileUploadInput = FileUploadInput;
+Form.ExperienceRating = ExperienceRating;
 
 export const Validations = {
 	nonEmpty: (value) => (!value ? 'Field required' : undefined),

@@ -233,3 +233,62 @@ textarea.form__input-text {
 		pointer-events: none;
 	}
 }
+
+.form__input-experience-rating {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	align-items: flex-start;
+	margin-bottom: $form-item-margin-bottom;
+
+	&__item {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+
+	&__input-container {
+		width: 48px;
+		height: 48px;
+		text-align: center;
+		line-height: 66px;
+		border-radius: 50%;
+		margin-bottom: 4px;
+		transition: background $default-time-animation;
+
+		&--checked {
+			background: #E1E5E8;
+		}
+	}
+
+	&__input {
+		display: none;
+	}
+
+	&__label {
+		width: 36px;
+		height: 36px;
+		color: #2F343D;
+		font-size: 36px;
+		text-align: center;
+		letter-spacing: 0;
+		line-height: 36px;
+		cursor: pointer;
+		user-select: none;
+
+		&:hover {
+			opacity: 0.9;
+		}
+	}
+
+	&__description {
+		color: #9EA2A8;
+		font-size: 10px;
+		font-weight: bold;
+		letter-spacing: 0.2px;
+		line-height: 16px;
+	}
+}
