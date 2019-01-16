@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+import { route } from 'preact-router';
 import SDK from '../../api';
 import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
@@ -32,6 +33,7 @@ export class RegisterContainer extends Component {
 			await loadConfig();
 			// TODO: parencall here
 			// parentCall('callback', ['pre-chat-form-submit', fields]);
+			route('/');
 		} finally {
 			await dispatch({ loading: false });
 		}

@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import SDK from '../../api';
 import { loadConfig } from '../../lib/main';
+import history from '../../history';
 import { Consumer } from '../../store';
 import SwitchDepartment from './component';
 import { ModalManager } from '../../components/Modal';
@@ -38,7 +39,7 @@ export class SwitchDepartmentContainer extends Component {
 			await dispatch({ department });
 			await loadConfig();
 
-			ModalManager.alert({
+			await ModalManager.alert({
 				text: I18n.t('Department switched'),
 			});
 

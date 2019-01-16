@@ -1,5 +1,5 @@
 import { Component } from 'preact';
-import { Router } from 'preact-router';
+import { Router, route } from 'preact-router';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
@@ -11,13 +11,49 @@ import { loadConfig } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
 import userPresence from '../../lib/userPresence';
+import history from '../../history';
 
 
 export class App extends Component {
 
 	state = { initialized: false }
 
-	handleRoute = () => {}
+	handleRoute = async() => {
+		const {
+			config: {
+				settings: {
+					registrationForm,
+					nameFieldRegistrationForm,
+					emailFieldRegistrationForm,
+					forceAcceptDataProcessingConsent: gdprRequired,
+				},
+				online,
+			},
+			gdpr: {
+				accepted: gdprAccepted,
+			},
+			triggered,
+			user,
+		} = this.props;
+
+		if (gdprRequired && !gdprAccepted) {
+			return route('/gdpr');
+		}
+
+		if (!online) {
+			return route('/leave-message');
+		}
+
+		const showRegistrationForm = (
+			(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm)) &&
+			!triggered &&
+			!(user && user.token)
+		);
+
+		if (showRegistrationForm) {
+			return route('/register');
+		}
+	}
 
 	handleTriggers() {
 		const { config: { online, enabled } } = this.props;
@@ -54,21 +90,6 @@ export class App extends Component {
 		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
 	}
 
-	getScreenProps = () => ({
-		notificationsEnabled: this.props.sound && this.props.sound.enabled,
-		minimized: this.props.minimized,
-		windowed: this.props.windowed,
-		sound: this.props.sound,
-		alerts: this.props.alerts,
-		modal: this.props.modal,
-		onEnableNotifications: this.handleEnableNotifications,
-		onDisableNotifications: this.handleDisableNotifications,
-		onMinimize: this.handleMinimize,
-		onRestore: this.handleRestore,
-		onOpenWindow: this.handleOpenWindow,
-		onDismissAlert: this.handleDismissAlert,
-	})
-
 	async initialize() {
 		await loadConfig();
 		this.handleTriggers();
@@ -91,46 +112,37 @@ export class App extends Component {
 		this.finalize();
 	}
 
-	renderScreen = ({
-		config: {
-			settings: {
-				registrationForm,
-				nameFieldRegistrationForm,
-				emailFieldRegistrationForm,
-				forceAcceptDataProcessingConsent: gdprRequired,
-			},
-			online,
-		},
-		gdpr: {
-			accepted: gdprAccepted,
-		},
-		triggered,
-		user,
-	}) => {
-		// Temporary implementation, the best approach for this resource is handling the the Router component
-		if (gdprRequired && !gdprAccepted) {
-			return <GDPRAgreement default path="/gdpr" {...this.getScreenProps()} />;
+	render = (props, { initialized }) => {
+		if (!initialized) {
+			return null;
 		}
 
-		if (!online) {
-			return <LeaveMessage default path="/LeaveMessage" {...this.getScreenProps()} />;
-		}
+		const screenProps = {
+			notificationsEnabled: this.props.sound && this.props.sound.enabled,
+			minimized: this.props.minimized,
+			windowed: this.props.windowed,
+			sound: this.props.sound,
+			alerts: this.props.alerts,
+			modal: this.props.modal,
+			onEnableNotifications: this.handleEnableNotifications,
+			onDisableNotifications: this.handleDisableNotifications,
+			onMinimize: this.handleMinimize,
+			onRestore: this.handleRestore,
+			onOpenWindow: this.handleOpenWindow,
+			onDismissAlert: this.handleDismissAlert,
+		};
 
-		const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
-		if ((user && user.token) || !showRegistrationForm || triggered) {
-			return <Chat default path="/home" {...this.getScreenProps()} />;
-		}
-
-		return <Register default path="/register" {...this.getScreenProps()} />;
+		return (
+			<Router history={history} onChange={this.handleRoute}>
+				<Chat default path="/" {...screenProps} />
+				<Register path="/register" {...screenProps} />
+				<LeaveMessage path="/leave-message" {...screenProps} />
+				<GDPRAgreement path="/gdpr" {...screenProps} />
+				<ChatFinished path="/chat-finished" {...screenProps} />
+				<SwitchDepartment path="/switch-department" {...screenProps} />
+			</Router>
+		);
 	}
-
-	render = (props, { initialized }) => initialized && (
-		<Router onChange={this.handleRoute}>
-			{this.renderScreen(props)}
-			<ChatFinished path="/chat-finished" {...this.getScreenProps()} />
-			<SwitchDepartment path="/switch-department" {...this.getScreenProps()} />
-		</Router>
-	)
 }
 
 const AppConnector = () => (
