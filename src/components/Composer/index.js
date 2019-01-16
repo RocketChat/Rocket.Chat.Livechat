@@ -108,7 +108,16 @@ export class Composer extends Component {
 		selection.addRange(range);
 	}
 
-	render({ pre, post, placeholder, value, onChange, onSubmit, onUpload, ...args }) {
+	render({ pre, post, placeholder, value, connecting, onChange, onSubmit, onUpload, ...args }) {
+		if (connecting) {
+			return (
+				<div className={createClassName(styles, 'composer')} {...args}>
+					<div data-placeholder={I18n.t('Connecting to an agent...')}
+						className={createClassName(styles, 'composer__input', { connecting })}
+					/>
+				</div>
+			);
+		}
 		return (
 			<div className={createClassName(styles, 'composer')} {...args}>
 				{pre}

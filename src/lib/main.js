@@ -4,45 +4,8 @@ import store from '../store';
 import { insert, msgTypesNotDisplayed, setCookies } from '../components/helpers';
 import { handleTranscript } from './transcript';
 import Commands from './commands';
-import { parentCall } from './parentCall';
 
 const commands = new Commands();
-
-SDK.onMessage((message) => {
-	if (message.t === 'command') {
-		commands[message.msg] && commands[message.msg](store.state);
-	} else if (!msgTypesNotDisplayed.includes(message.t)) {
-		store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-
-		if (message.t === 'livechat-close') {
-			parentCall('callback', 'chat-ended');
-		}
-
-		const { sound, user } = store.state;
-		if (sound.enabled && message.u._id !== user._id) {
-			sound.play = true;
-			return store.setState({ sound });
-		}
-	}
-});
-
-SDK.onTyping((username, isTyping) => {
-	const { typing, user } = store.state;
-
-	if (user && user.username && user.username === username) {
-		return;
-	}
-
-	if (typing.indexOf(username) === -1 && isTyping) {
-		typing.push(username);
-		return store.setState({ typing });
-	}
-
-	if (!isTyping) {
-		return store.setState({ typing: typing.filter((u) => u !== username) });
-	}
-});
-
 let stream;
 
 export const initRoom = async() => {
@@ -135,13 +98,15 @@ const onNewMessage = async(message) => {
 		closeChat();
 		// TODO: parentCall here
 		// parentCall('callback', 'chat-ended');
+	} else if (message.t === 'command') {
+		commands[message.msg] && commands[message.msg]();
 	}
 };
 
-SDK.onMessage((message) => {
-	store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-	onNewMessage(message);
-	doPlaySound(message);
+SDK.onMessage(async(message) => {
+	await store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
+	await onNewMessage(message);
+	await doPlaySound(message);
 });
 
 SDK.onTyping((username, isTyping) => {

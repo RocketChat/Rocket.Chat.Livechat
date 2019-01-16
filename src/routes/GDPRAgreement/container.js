@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+import { route } from 'preact-router';
 import { Consumer } from '../../store';
 import GDPRAgreement from './component';
 
@@ -8,6 +9,7 @@ export class GDPRContainer extends Component {
 	handleAgree = async() => {
 		const { dispatch } = this.props;
 		await dispatch({ gdpr: { accepted: true } });
+		route('/');
 	}
 
 	render = (props) => (

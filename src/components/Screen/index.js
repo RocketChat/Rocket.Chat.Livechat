@@ -6,7 +6,6 @@ import Footer from '../Footer';
 import StatusIndicator from '../StatusIndicator';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
-import { Consumer } from '../../store';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
 import NotificationsDisabledIcon from '../../icons/bellOff.svg';
 import MinimizeIcon from '../../icons/arrowDown.svg';
@@ -125,87 +124,29 @@ export class Screen extends Component {
 				</Tooltip.Container>
 			</Header>
 
-			{!minimized && (
-				<main className={createClassName(styles, 'screen__main', { nopadding })}>
-					{children}
-				</main>
-			)}
+			<main className={createClassName(styles, 'screen__main', { nopadding })}>
+				{children}
+			</main>
 
 			{modal}
 
-			{!minimized && (
-				<PopoverContainer>
-					<Footer>
-						{footer && (
-							<Footer.Content>
-								{footer}
-							</Footer.Content>
-						)}
+			<PopoverContainer>
+				<Footer>
+					{footer && (
 						<Footer.Content>
-							{options && (
-								<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} onRemoveUserData={onRemoveUserData} />
-							)}
-							<Footer.PoweredBy />
+							{footer}
 						</Footer.Content>
-					</Footer>
-				</PopoverContainer>
-			)}
+					)}
+					<Footer.Content>
+						{options && (
+							<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} onRemoveUserData={onRemoveUserData} />
+						)}
+						<Footer.PoweredBy />
+					</Footer.Content>
+				</Footer>
+			</PopoverContainer>
 		</div>
 	);
 }
 
-
-export class ScreenContainer extends Component {
-	handleEnableNotifications = () => {
-		const { dispatch, sound = {} } = this.props;
-		dispatch({ sound: { ...sound, enabled: true } });
-	}
-
-	handleDisableNotifications = () => {
-		const { dispatch, sound = {} } = this.props;
-		dispatch({ sound: { ...sound, enabled: false } });
-	}
-
-	handleDismissAlert = (id) => {
-		const { dispatch, alerts = [] } = this.props;
-		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
-	}
-
-	render = (props) => (
-		<Screen
-			{...props}
-			onEnableNotifications={this.handleEnableNotifications}
-			onDisableNotifications={this.handleDisableNotifications}
-			onMinimize={this.handleMinimize}
-			onRestore={this.handleRestore}
-			onOpenWindow={this.handleOpenWindow}
-			onDismissAlert={this.handleDismissAlert}
-		/>
-	)
-}
-
-
-export const ScreenConnector = ({ ref, ...props }) => (
-	<Consumer>
-		{({
-			sound = {},
-			alerts = [],
-			modal = null,
-			dispatch = () => {},
-		} = {}) => (
-			<ScreenContainer
-				ref={ref}
-				{...props}
-				notificationsEnabled={sound.enabled}
-				minimized={false}
-				windowed={false}
-				sound={sound}
-				alerts={alerts}
-				modal={modal}
-				dispatch={dispatch}
-			/>
-		)}
-	</Consumer>
-);
-
-export default ScreenConnector;
+export default Screen;

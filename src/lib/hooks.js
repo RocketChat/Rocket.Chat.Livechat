@@ -35,7 +35,7 @@ const api = {
 		}
 
 		const { change, title, location: { href } } = info;
-		SDK.sendVisitorNavigation({ token, rid: _id, pageInfo: { change, title, location: { href } } });
+		SDK.sendVisitorNavigation({ token, rid: room._id, pageInfo: { change, title, location: { href } } });
 	},
 
 	setCustomField(key, value, overwrite = true) {
