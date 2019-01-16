@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, boolean, color, text, object, array } from '@storybook/addon-knobs';
+import { withKnobs, array, boolean, color, object, text } from '@storybook/addon-knobs';
 import { Screen } from '.';
 
 
