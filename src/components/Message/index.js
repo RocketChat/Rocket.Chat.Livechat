@@ -1,8 +1,8 @@
 import md from './Markdown';
+import Attachments from './Attachments';
 import styles from './styles';
 import Avatar from '../../components/Avatar';
 import { createClassName, parseDate, parseMessage } from '../helpers';
-
 
 export const Body = ({ me, children, Element = 'div', group, className, ...args }) => (
 	<Element className={createClassName(styles, 'message', { me, group }, [className])} {...args}>
@@ -20,10 +20,6 @@ export const Text = ({ children, me, className, ...args }) => (
 
 export const Content = ({ children, me, className, ...args }) => (
 	<div {...args} className={createClassName(styles, 'message__content', { me }, [className])}>{children}</div>
-);
-
-export const Attachments = ({ attachments, className }) => (
-	<img className={createClassName(styles, 'attachment', {}, [className])} src={attachments[0].attachment_url} />
 );
 
 const Message = ({ _id, el, msg, ts, me, group, avatarUrl, attachmentsUrl, className, ...args }) => (
@@ -45,6 +41,6 @@ Message.Body = Body;
 Message.Container = Container;
 Message.Content = Content;
 Message.Text = Text;
-
+Message.Attachments = Attachments;
 
 export default Message;
