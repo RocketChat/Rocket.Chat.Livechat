@@ -44,11 +44,18 @@ const api = {
 
 	setTheme(newTheme = {}) {
 		const { iframe, iframe: { theme } } = store.state;
+		let themeObj;
+
 		if (newTheme.color) {
-			store.setState({ iframe: { ...iframe, theme: { ...theme, customColor: newTheme.color } } });
+			themeObj = Object.assign({}, { customColor: newTheme.color });
 		}
+
 		if (newTheme.fontColor) {
-			store.setState({ iframe: { ...iframe, theme: { ...theme, customFontColor: newTheme.fontColor } } });
+			themeObj = Object.assign({}, themeObj, { customFontColor: newTheme.fontColor });
+		}
+
+		if (themeObj) {
+			store.setState({ iframe: { ...iframe, theme: { ...theme, ...themeObj } } });
 		}
 	},
 
