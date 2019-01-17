@@ -118,7 +118,7 @@ export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation
 export const renderMessage = (message = {}) => (message.t !== 'command' && !msgTypesNotDisplayed.includes(message.t));
 
 export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
-	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url;
+	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url || attachment.title_link;
 	return { ...attachment, attachment_url: `${ Livechat.client.host }${ assetUrl }` };
 });
 
