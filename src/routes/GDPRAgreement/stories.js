@@ -3,11 +3,9 @@ import { withKnobs, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { screenCentered } from '../helpers.stories';
 import GDPRAgreement from './component';
+import constants from '../../lib/constants';
 
-
-const defaultConsentText = 'The controller of your personal data is Rocket.Chat Technologies Corp., with registered ' +
-	'office at 2711 Centerville Road, Suite 400, Wilmington, Delaware, USA. To start the chat you agree that your ' +
-	'personal data shall be processed and trasmitted in accordance with the General Data Protection Regulation (GDPR).';
+const { gdpr: { consentText: defaultConsentText } } = constants;
 
 storiesOf('Routes|GDPRAgreement', module)
 	.addDecorator(screenCentered)
