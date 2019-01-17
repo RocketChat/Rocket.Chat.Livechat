@@ -3,7 +3,7 @@ import { route } from 'preact-router';
 import SDK from '../../api';
 import { Consumer } from '../../store';
 import { closeChat, initRoom, loadConfig } from '../../lib/main';
-import { createToken, insert, getAvatarUrl, uploadFile, renderMessage } from '../../components/helpers';
+import { createToken, insert, getAvatarUrl, renderMessage } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 
@@ -87,10 +87,9 @@ export class ChatContainer extends Component {
 		const { alerts, dispatch, token, user } = this.props;
 		try {
 			await SDK.sendMessage({ msg, token, rid });
-			// TODO: check the room id to ensure that the state room id and the message room id are the same
-			// Otherwise, it's necessary to reset/reload the local room
 		} catch (error) {
-			const { message: reason } = error.data;
+			await loadConfig();
+			const { data: { error: reason } } = error;
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: insert(alerts, alert) });
 		}
@@ -98,13 +97,34 @@ export class ChatContainer extends Component {
 
 	}
 
+	doFileUpload = async(rid, file) => {
+		const { alerts, dispatch } = this.props;
+
+		try {
+			await SDK.uploadFile({ rid, file });
+		} catch (error) {
+			const { data: { reason, sizeAllowed } } = error;
+
+			let message = I18n.t('FileUpload Error');
+			switch (reason) {
+				case 'error-type-not-allowed':
+					message = I18n.t('Media Types Not Accepted.');
+					break;
+				case 'error-size-not-allowed':
+					message = I18n.t('File exceeds allowed size of __size__.', { size: sizeAllowed });
+			}
+
+			const alert = { id: createToken(), children: message, error: true, timeout: 5000 };
+			await dispatch({ alerts: insert(alerts, alert) });
+		}
+	};
+
 	handleUpload = async(files) => {
 		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
-		const { token } = this.props;
 
-		files.forEach(async(file) => await uploadFile({ token, rid, file }));
+		files.forEach(async(file) => await this.doFileUpload(rid, file));
 	}
 
 	handlePlaySound = () => {

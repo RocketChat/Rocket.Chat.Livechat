@@ -16,7 +16,7 @@ export class LeaveMessageContainer extends Component {
 			// TODO: parentCall here
 			// parentCall('callback', ['offline-form-submit', fields]);
 		} catch (error) {
-			const { message } = error.data;
+			const { data: { message } } = error;
 			console.error(message);
 			const alert = { id: createToken(), children: message, error: true, timeout: 0 };
 			await dispatch({ alerts: insert(alerts, alert) });

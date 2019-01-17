@@ -9,7 +9,7 @@ const commands = new Commands();
 let stream;
 
 export const initRoom = async() => {
-	const { room } = store.state;
+	const { room, config: { settings: showConnecting } } = store.state;
 
 	if (!room) {
 		return;
@@ -24,9 +24,14 @@ export const initRoom = async() => {
 	const { token, agent, room: { _id: rid, servedBy } } = store.state;
 	SDK.subscribeRoom(rid);
 
-	if (!agent && servedBy) {
-		const agent = await SDK.agent({ rid });
-		store.setState({ agent });
+	let roomAgent = agent;
+	if (!roomAgent) {
+		if (servedBy) {
+			roomAgent = await SDK.agent({ rid });
+			store.setState({ roomAgent });
+		}
+
+		store.setState({ connecting: !roomAgent && showConnecting });
 	}
 
 	SDK.onAgentChange(rid, (agent) => {
@@ -35,7 +40,7 @@ export const initRoom = async() => {
 
 	SDK.onAgentStatusChange(rid, (status) => {
 		const { agent } = store.state;
-		store.setState({ agent: { ...agent, status } });
+		agent && store.setState({ agent: { ...agent, status } });
 	});
 
 	setCookies(rid, token);
@@ -77,11 +82,6 @@ export const closeChat = async() => {
 	await handleTranscript();
 	await loadConfig();
 	return route('/chat-finished');
-};
-
-export const survey = async() => {
-	// TODO: Implement survey feedback form
-	// route('survey-feedback');
 };
 
 const doPlaySound = (message) => {
