@@ -5,7 +5,7 @@ import { Consumer } from '../../store';
 import SwitchDepartment from './component';
 import { ModalManager } from '../../components/Modal';
 import { createToken, insert } from '../../components/helpers';
-
+import history from '../../history';
 
 export class SwitchDepartmentContainer extends Component {
 
@@ -31,13 +31,13 @@ export class SwitchDepartmentContainer extends Component {
 			const result = await SDK.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
-				await dispatch({ alerts: insert(alerts, { id: createToken(), children: I18n.t('No available agents to transfer'), warning: true, timeout: 5000 }) });
+				throw I18n.t('No available agents to transfer');
 			}
 
 			await dispatch({ department });
 			await loadConfig();
 
-			ModalManager.alert({
+			await ModalManager.alert({
 				text: I18n.t('Department switched'),
 			});
 

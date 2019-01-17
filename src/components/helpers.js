@@ -123,14 +123,4 @@ export const getAttachmentsUrl = (attachments) => attachments && attachments.map
 	return { ...attachment, attachment_url: `${ hostUrl }${ assetUrl }` };
 });
 
-export const uploadFile = async({ token, rid, file }) => {
-	const formData = new FormData();
-	formData.append('file', file);
-	await fetch(`http://localhost:3000/api/v1/livechat/upload/${ rid }`, {
-		method: 'POST',
-		headers: { 'x-visitor-token': token },
-		body: formData,
-	});
-};
-
 export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));
