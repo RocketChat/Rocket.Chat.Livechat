@@ -1,4 +1,4 @@
-import SDK from '../api';
+import { Livechat } from '../api';
 import store from '../store';
 
 class CustomFields {
@@ -20,7 +20,7 @@ class CustomFields {
 		this._initiated = true;
 		const { state } = store;
 		const { token } = state;
-		SDK.credentials.token = token;
+		Livechat.credentials.token = token;
 
 		store.on('change', this.handleStoreChange);
 	}
@@ -55,8 +55,8 @@ class CustomFields {
 			return;
 		}
 
-		const { token } = SDK.credentials;
-		SDK.sendCustomField({ token, key, value, overwrite });
+		const { token } = Livechat.credentials;
+		Livechat.sendCustomField({ token, key, value, overwrite });
 	}
 }
 

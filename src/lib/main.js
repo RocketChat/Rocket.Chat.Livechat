@@ -1,60 +1,20 @@
-import SDK from '../api';
+import { Livechat } from '../api';
 import { route } from 'preact-router';
 import store from '../store';
-import { insert, msgTypesNotDisplayed, setCookies } from '../components/helpers';
+import { insert, setCookies } from '../components/helpers';
 import { handleTranscript } from './transcript';
 import Commands from './commands';
+import { parentCall } from './parentCall';
 
 const commands = new Commands();
 let stream;
-
-export const initRoom = async() => {
-	const { room, config: { settings: showConnecting } } = store.state;
-
-	if (!room) {
-		return;
-	}
-
-	if (!stream) {
-		stream = await SDK.connect();
-	}
-
-	SDK.unsubscribeAll();
-
-	const { token, agent, room: { _id: rid, servedBy } } = store.state;
-	SDK.subscribeRoom(rid);
-
-	let roomAgent = agent;
-	if (!roomAgent) {
-		if (servedBy) {
-			roomAgent = await SDK.agent({ rid });
-			store.setState({ roomAgent });
-		}
-
-		store.setState({ connecting: !roomAgent && showConnecting });
-	}
-
-	SDK.onAgentChange(rid, (agent) => {
-		store.setState({ agent });
-	});
-
-	SDK.onAgentStatusChange(rid, (status) => {
-		const { agent } = store.state;
-		agent && store.setState({ agent: { ...agent, status } });
-	});
-
-	setCookies(rid, token);
-	// TODO: parentCall here
-	// parentCall('callback', 'chat-started');
-};
-
 
 export const loadConfig = async() => {
 	const {
 		token,
 	} = store.state;
 
-	SDK.credentials.token = token;
+	Livechat.credentials.token = token;
 
 	const {
 		agent,
@@ -62,7 +22,7 @@ export const loadConfig = async() => {
 		guest: user,
 		resources: { sound: src = null } = {},
 		...config
-	} = await SDK.config({ token });
+	} = await Livechat.config({ token });
 
 	await store.setState({
 		config,
@@ -74,8 +34,6 @@ export const loadConfig = async() => {
 		alerts: [],
 		noMoreMessages: false,
 	});
-
-	await initRoom();
 };
 
 export const closeChat = async() => {
@@ -84,44 +42,85 @@ export const closeChat = async() => {
 	return route('/chat-finished');
 };
 
-const doPlaySound = (message) => {
-	const { sound, user } = store.state;
-	if (sound.enabled && message.u._id !== user._id) {
-		sound.play = true;
-		return store.setState({ sound });
-	}
-};
-
-const onNewMessage = async(message) => {
-
+const processMessage = async(message) => {
 	if (message.t === 'livechat-close') {
 		closeChat();
-		// TODO: parentCall here
-		// parentCall('callback', 'chat-ended');
+		parentCall('callback', 'chat-ended');
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	}
 };
 
-SDK.onMessage(async(message) => {
-	await store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-	await onNewMessage(message);
-	await doPlaySound(message);
-});
+const doPlaySound = async(message) => {
+	const { sound, user } = store.state;
 
-SDK.onTyping((username, isTyping) => {
-	const { typing, user } = store.state;
-
-	if (user && user.username && user.username === username) {
+	if (!sound.enabled || message.u._id === user._id) {
 		return;
 	}
 
-	if (typing.indexOf(username) === -1 && isTyping) {
-		typing.push(username);
-		return store.setState({ typing });
+	await store.setState({ sound: { ...sound, play: true } });
+};
+
+export const initRoom = async() => {
+	const { room, config: { settings: showConnecting } } = store.state;
+
+	if (!room) {
+		return;
 	}
 
-	if (!isTyping) {
-		return store.setState({ typing: typing.filter((u) => u !== username) });
+	if (!stream) {
+		stream = await Livechat.connect();
 	}
-});
+
+	Livechat.unsubscribeAll();
+
+	const { token, agent, room: { _id: rid, servedBy } } = store.state;
+	Livechat.subscribeRoom(rid);
+
+	let roomAgent = agent;
+	if (!roomAgent) {
+		if (servedBy) {
+			roomAgent = await Livechat.agent({ rid });
+			store.setState({ roomAgent });
+		}
+
+		store.setState({ connecting: !roomAgent && showConnecting });
+	}
+
+	Livechat.onAgentChange(rid, (agent) => {
+		store.setState({ agent });
+	});
+
+	Livechat.onAgentStatusChange(rid, (status) => {
+		const { agent } = store.state;
+		agent && store.setState({ agent: { ...agent, status } });
+	});
+
+	Livechat.onTyping((username, isTyping) => {
+		const { typing, user } = store.state;
+
+		if (user && user.username && user.username === username) {
+			return;
+		}
+
+		if (typing.indexOf(username) === -1 && isTyping) {
+			typing.push(username);
+			return store.setState({ typing });
+		}
+
+		if (!isTyping) {
+			return store.setState({ typing: typing.filter((u) => u !== username) });
+		}
+	});
+
+	Livechat.onMessage(async(message) => {
+		await store.setState({
+			messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })),
+		});
+		await processMessage(message);
+		await doPlaySound(message);
+	});
+
+	setCookies(rid, token);
+	parentCall('callback', 'chat-started');
+};

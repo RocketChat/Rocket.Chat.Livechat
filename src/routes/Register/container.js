@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
-import SDK from '../../api';
+import { Livechat } from '../../api';
+import { parentCall } from '../../lib/parentCall';
 import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
 import Register from './component';
@@ -29,10 +30,9 @@ export class RegisterContainer extends Component {
 
 		await dispatch({ loading: true, department });
 		try {
-			await SDK.grantVisitor({ visitor: { ...fields, token } });
+			await Livechat.grantVisitor({ visitor: { ...fields, token } });
 			await loadConfig();
-			// TODO: parencall here
-			// parentCall('callback', ['pre-chat-form-submit', fields]);
+			parentCall('callback', ['pre-chat-form-submit', fields]);
 			route('/');
 		} finally {
 			await dispatch({ loading: false });

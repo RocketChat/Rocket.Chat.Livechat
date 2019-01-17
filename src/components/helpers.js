@@ -1,8 +1,7 @@
 import format from 'date-fns/format';
 import isToday from 'date-fns/is_today';
+import { Livechat } from '../api';
 
-// TODO: replace the hostUrl
-const hostUrl = 'http://localhost:3000';
 
 function flatMap(arr, mapFunc) {
 	const result = [];
@@ -112,7 +111,7 @@ export const setCookies = (rid, token) => {
 
 export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
 
-export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ username }`);
+export const getAvatarUrl = (username) => (username && `${ Livechat.client.host }/avatar/${ username }`);
 
 export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
 
@@ -120,7 +119,7 @@ export const renderMessage = (message = {}) => (message.t !== 'command' && !msgT
 
 export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
 	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url;
-	return { ...attachment, attachment_url: `${ hostUrl }${ assetUrl }` };
+	return { ...attachment, attachment_url: `${ Livechat.client.host }${ assetUrl }` };
 });
 
 export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));

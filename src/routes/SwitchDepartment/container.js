@@ -1,5 +1,5 @@
 import { Component } from 'preact';
-import SDK from '../../api';
+import { Livechat } from '../../api';
 import { loadConfig } from '../../lib/main';
 import history from '../../history';
 import { Consumer } from '../../store';
@@ -28,7 +28,7 @@ export class SwitchDepartmentContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			const result = await SDK.transferChat({ rid, department });
+			const result = await Livechat.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
 				return ModalManager.alert({

@@ -1,4 +1,4 @@
-import SDK from '../api';
+import { Livechat } from '../api';
 import store from '../store';
 import { insert, createToken, asyncForEach } from '../components/helpers';
 import { parentCall } from './parentCall';
@@ -28,7 +28,7 @@ const getAgent = (triggerAction) => {
 
 			let agent;
 			try {
-				(agent = await SDK.nextAgent());
+				(agent = await Livechat.nextAgent());
 			} catch (error) {
 				return reject(error);
 			}
@@ -71,7 +71,7 @@ class Triggers {
 		}
 
 		const { token, firedTriggers = [], config: { triggers } } = store.state;
-		SDK.credentials.token = token;
+		Livechat.credentials.token = token;
 
 		if (!(triggers && triggers.length > 0)) {
 			return;

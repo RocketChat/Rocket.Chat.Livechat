@@ -1,3 +1,7 @@
-import Livechat from '@rocket.chat/sdk/lib/clients/Livechat';
-const livechat = new Livechat({ host: 'http://localhost:3000', protocol: 'ddp' });
-export default livechat;
+import LivechatClient from '@rocket.chat/sdk/lib/clients/Livechat';
+
+export let Livechat;
+
+export const initializeLivechat = (...args) => {
+	Livechat = new LivechatClient(...args);
+};

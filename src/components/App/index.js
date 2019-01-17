@@ -1,5 +1,13 @@
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
+import { initializeLivechat } from '../../api';
+import history from '../../history';
+import { loadConfig } from '../../lib/main';
+import CustomFields from '../../lib/customFields';
+import Triggers from '../../lib/triggers';
+import Hooks from '../../lib/hooks';
+import { parentCall } from '../../lib/parentCall';
+import userPresence from '../../lib/userPresence';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
@@ -7,14 +15,6 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { loadConfig } from '../../lib/main';
-import CustomFields from '../../lib/customFields';
-import Triggers from '../../lib/triggers';
-import Hooks from '../../lib/hooks';
-import { parentCall } from '../../lib/parentCall';
-
-import userPresence from '../../lib/userPresence';
-import history from '../../history';
 
 
 export class App extends Component {
@@ -94,6 +94,7 @@ export class App extends Component {
 	}
 
 	async initialize() {
+		initializeLivechat({ host: 'http://192.168.0.10:3000', protocol: 'ddp' });
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();

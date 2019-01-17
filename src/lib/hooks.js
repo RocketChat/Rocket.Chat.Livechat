@@ -1,12 +1,12 @@
 import Triggers from './triggers';
 import CustomFields from './customFields';
 import { store } from '../store';
-import SDK from '../api';
+import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
 import { loadConfig } from '../lib/main';
 
 const createOrUpdateGuest = async(guest) => {
-	await SDK.grantVisitor({ visitor: { ...guest } });
+	await Livechat.grantVisitor({ visitor: { ...guest } });
 	await loadConfig();
 };
 
@@ -35,7 +35,7 @@ const api = {
 		}
 
 		const { change, title, location: { href } } = info;
-		SDK.sendVisitorNavigation({ token, rid: room._id, pageInfo: { change, title, location: { href } } });
+		Livechat.sendVisitorNavigation({ token, rid: room._id, pageInfo: { change, title, location: { href } } });
 	},
 
 	setCustomField(key, value, overwrite = true) {
