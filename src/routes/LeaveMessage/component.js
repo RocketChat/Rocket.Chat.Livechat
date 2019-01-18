@@ -62,7 +62,7 @@ export default class LeaveMessage extends Component {
 		this.validateAll();
 	}
 
-	render({ color, title, message: messageProp, loading, ...props }, { name, email, message }) {
+	render({ color, title, message: messageProp, unavailableMessage, displayOfflineForm, loading, ...props }, { name, email, message }) {
 		const valid = this.isValid();
 
 		return (
@@ -72,68 +72,70 @@ export default class LeaveMessage extends Component {
 				className={createClassName(styles, 'leave-message')}
 				{...props}
 			>
-				<p className={createClassName(styles, 'leave-message__main-message')}>{messageProp}</p>
+				<p className={createClassName(styles, 'leave-message__main-message')}>{displayOfflineForm ? messageProp : unavailableMessage}</p>
 
-				<Form onSubmit={this.handleSubmit}>
-					{name && (
+				{displayOfflineForm &&
+					<Form onSubmit={this.handleSubmit}>
+						{name && (
+							<Form.Item>
+								<Form.Label error={name.showError} htmlFor="name">Name *</Form.Label>
+								<Form.TextInput
+									id="name"
+									name="name"
+									placeholder="Insert your name here..."
+									disabled={loading}
+									value={name.value}
+									error={name.showError}
+									onInput={this.handleNameChange}
+								/>
+								<Form.Description error={name.showError}>
+									{name.showError && name.error}
+								</Form.Description>
+							</Form.Item>
+						)}
+
+						{email && (
+							<Form.Item>
+								<Form.Label error={email.showError} htmlFor="email">Email *</Form.Label>
+								<Form.TextInput
+									id="email"
+									name="email"
+									placeholder="Insert your email here..."
+									disabled={loading}
+									value={email.value}
+									error={email.showError}
+									onInput={this.handleEmailChange}
+								/>
+								<Form.Description error={email.showError}>
+									{email.showError && email.error}
+								</Form.Description>
+							</Form.Item>
+						)}
+
+						{message && (
+							<Form.Item>
+								<Form.Label error={message.showError} htmlFor="message">Message *</Form.Label>
+								<Form.TextInput
+									id="message"
+									name="message"
+									placeholder="Write your message..."
+									multiple={4}
+									disabled={loading}
+									value={message.value}
+									error={message.showError}
+									onInput={this.handleMessageChange}
+								/>
+								<Form.Description error={message.showError}>
+									{message.showError && message.error}
+								</Form.Description>
+							</Form.Item>
+						)}
+
 						<Form.Item>
-							<Form.Label error={name.showError} htmlFor="name">Name *</Form.Label>
-							<Form.TextInput
-								id="name"
-								name="name"
-								placeholder="Insert your name here..."
-								disabled={loading}
-								value={name.value}
-								error={name.showError}
-								onInput={this.handleNameChange}
-							/>
-							<Form.Description error={name.showError}>
-								{name.showError && name.error}
-							</Form.Description>
+							<Button loading={loading} disabled={!valid || loading} stack>Send</Button>
 						</Form.Item>
-					)}
-
-					{email && (
-						<Form.Item>
-							<Form.Label error={email.showError} htmlFor="email">Email *</Form.Label>
-							<Form.TextInput
-								id="email"
-								name="email"
-								placeholder="Insert your email here..."
-								disabled={loading}
-								value={email.value}
-								error={email.showError}
-								onInput={this.handleEmailChange}
-							/>
-							<Form.Description error={email.showError}>
-								{email.showError && email.error}
-							</Form.Description>
-						</Form.Item>
-					)}
-
-					{message && (
-						<Form.Item>
-							<Form.Label error={message.showError} htmlFor="message">Message *</Form.Label>
-							<Form.TextInput
-								id="message"
-								name="message"
-								placeholder="Write your message..."
-								multiple={4}
-								disabled={loading}
-								value={message.value}
-								error={message.showError}
-								onInput={this.handleMessageChange}
-							/>
-							<Form.Description error={message.showError}>
-								{message.showError && message.error}
-							</Form.Description>
-						</Form.Item>
-					)}
-
-					<Form.Item>
-						<Button loading={loading} disabled={!valid || loading} stack>Send</Button>
-					</Form.Item>
-				</Form>
+					</Form>
+				}
 			</Screen>
 		);
 	}
