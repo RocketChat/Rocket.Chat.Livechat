@@ -69,6 +69,56 @@ storiesOf('Components|Screen', module)
 			{text('content', 'Content')}
 		</Screen>
 	))
+	.add('with agent (email)', () => (
+		<Screen
+			color={color('color', '#175CC4')}
+			agent={object('agent', {
+				name: 'Guilherme Gazzo',
+				status: 'away',
+				email: 'guilherme.gazzo@rocket.chat',
+				avatar: {
+					description: 'guilherme.gazzo',
+					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
+				},
+			})}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			{text('content', 'Content')}
+		</Screen>
+	))
+	.add('with agent (phone)', () => (
+		<Screen
+			color={color('color', '#175CC4')}
+			agent={object('agent', {
+				name: 'Guilherme Gazzo',
+				status: 'away',
+				phone: '+ 55 42423 24242',
+				avatar: {
+					description: 'guilherme.gazzo',
+					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
+				},
+			})}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			{text('content', 'Content')}
+		</Screen>
+	))
 	.add('with agent', () => (
 		<Screen
 			color={color('color', '#175CC4')}
@@ -76,6 +126,7 @@ storiesOf('Components|Screen', module)
 				name: 'Guilherme Gazzo',
 				status: 'away',
 				email: 'guilherme.gazzo@rocket.chat',
+				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
 					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',

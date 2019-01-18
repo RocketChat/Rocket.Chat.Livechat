@@ -56,14 +56,6 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 	border-radius: 4px;
 }
 
-.screen__header-subtitle {
-	margin: 0 -0.1rem;
-
-	& > * {
-		margin: 0 0.1rem;
-	}
-}
-
 .screen__main {
 	flex: 1 1 auto;
 	display: flex;

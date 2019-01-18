@@ -295,6 +295,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 						description: agent.username,
 						src: getAvatarUrl(agent.username),
 					},
+					phone: agent.customFields && agent.customFields.phone,
 				} : undefined}
 				room={room}
 				messages={messages.filter((message) => renderMessage(message))}

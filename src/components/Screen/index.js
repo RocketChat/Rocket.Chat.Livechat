@@ -4,7 +4,6 @@ import Avatar from '../Avatar';
 import ChatButton from '../ChatButton';
 import Header from '../Header';
 import Footer from '../Footer';
-import StatusIndicator from '../StatusIndicator';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
@@ -19,6 +18,11 @@ import { PopoverContainer } from '../Popover';
 class ScreenHeader extends Component {
 	handleRef = (ref) => {
 		this.headerRef = ref;
+	}
+
+	largeHeader = () => {
+		const { agent } = this.props;
+		return !!(agent && agent.email && agent.phone);
 	}
 
 	render = ({
@@ -44,20 +48,27 @@ class ScreenHeader extends Component {
 					{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
 				</Header.Post>
 			}
+			large={this.largeHeader()}
 		>
 			{agent && agent.avatar && (
 				<Header.Picture>
-					<Avatar src={agent.avatar.src} description={agent.avatar.description} />
+					<Avatar
+						src={agent.avatar.src}
+						description={agent.avatar.description}
+						status={agent.status}
+						large={this.largeHeader()}
+						statusBorderColor={color}
+					/>
 				</Header.Picture>
 			)}
 
 			<Header.Content>
 				<Header.Title>{agent ? agent.name : title}</Header.Title>
 				{agent && (
-					<Header.SubTitle className={createClassName(styles, 'screen__header-subtitle')}>
-						<StatusIndicator status={agent.status} />
-						<span>{agent.email}</span>
-					</Header.SubTitle>
+					<Header.SubTitle>{agent.email}</Header.SubTitle>
+				)}
+				{agent && agent.phone && (
+					<Header.CustomField>{agent.phone}</Header.CustomField>
 				)}
 			</Header.Content>
 			<Tooltip.Container>
