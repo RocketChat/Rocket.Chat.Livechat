@@ -73,17 +73,19 @@ class ScreenHeader extends Component {
 							}
 						</Tooltip.Trigger>
 					</Header.Action>
-					<Header.Action
-						aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
-						onClick={minimized ? onRestore : onMinimize}
-					>
-						<Tooltip.Trigger content={I18n.t('Minimize chat')}>
-							{minimized ?
-								<RestoreIcon width={20} /> :
-								<MinimizeIcon width={20} />
-							}
-						</Tooltip.Trigger>
-					</Header.Action>
+					{!windowed && (
+						<Header.Action
+							aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
+							onClick={minimized ? onRestore : onMinimize}
+						>
+							<Tooltip.Trigger content={I18n.t('Minimize chat')}>
+								{minimized ?
+									<RestoreIcon width={20} /> :
+									<MinimizeIcon width={20} />
+								}
+							</Tooltip.Trigger>
+						</Header.Action>
+					)}
 					{!windowed && (
 						<Header.Action aria-label={I18n.t('Open in a new window')} onClick={onOpenWindow}>
 							<Tooltip.Trigger content={I18n.t('Expand chat')}>
@@ -151,7 +153,7 @@ const ScreenInner = ({
 	onFinishChat,
 	onRemoveUserData,
 }) => (
-	<div className={createClassName(styles, 'screen__inner', { minimized, rounded: !windowed }, [className])}>
+	<div className={createClassName(styles, 'screen__inner', {}, [className])}>
 		<ScreenHeader
 			color={color}
 			alerts={alerts}
@@ -209,7 +211,7 @@ export const Screen = ({
 	onFinishChat,
 	onRemoveUserData,
 }) => (
-	<div className={createClassName(styles, 'screen')}>
+	<div className={createClassName(styles, 'screen', { minimized, windowed })}>
 		<ScreenInner
 			color={color}
 			agent={agent}
@@ -219,7 +221,7 @@ export const Screen = ({
 			windowed={windowed}
 			nopadding={nopadding}
 			children={children}
-			foote={footer}
+			footer={footer}
 			options={options}
 			className={className}
 			alerts={alerts}

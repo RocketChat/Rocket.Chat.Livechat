@@ -1,8 +1,13 @@
 import EventEmitter from 'wolfy87-eventemitter';
 
 
-const WIDGET_OPEN_WIDTH = 320;
-const WIDGET_OPEN_HEIGHT = 350;
+const log = process.env.NODE_ENV === 'development' ?
+	(...args) => console.log('%cwidget%c', 'color: red', 'color: initial', ...args) :
+	() => {};
+
+
+const WIDGET_OPEN_WIDTH = 365;
+const WIDGET_OPEN_HEIGHT = 510;
 const WIDGET_MINIMIZED_WIDTH = 54;
 const WIDGET_MINIMIZED_HEIGHT = 54;
 const WIDGET_MARGIN = 16;
@@ -74,8 +79,8 @@ function closeWidget() {
 
 	widget.dataset.state = 'closed';
 	widget.style.height = widgetHeightClosed;
-	widget.style.right = '50px';
-	widget.style.bottom = '0px';
+	widget.style.right = '0';
+	widget.style.bottom = '0';
 	callHook('widgetClosed');
 
 	emitCallback('chat-minimized');
@@ -101,6 +106,8 @@ function openWidget() {
 }
 
 const api = {
+	popup: null,
+
 	ready() {
 		ready = true;
 		if (hookQueue.length > 0) {
@@ -110,51 +117,42 @@ const api = {
 			hookQueue = [];
 		}
 	},
-	toggleWindow(/* forceClose*/) {
+
+	minimizeWindow() {
+		closeWidget();
+	},
+
+	restoreWindow() {
+		if (api.popup && api.popup.closed !== true) {
+			api.popup.close();
+			api.popup = null;
+		}
+		openWidget();
+	},
+
+	toggleWindow() {
 		if (widget.dataset.state === 'closed') {
 			openWidget();
 		} else {
 			closeWidget();
 		}
 	},
-	restoreWindow() {
-		if (widget.dataset.state === 'closed') {
-			openWidget();
-		}
-	},
-	startDragWindow(offset) {
-		if (widget.dataset.state !== 'opened') {
-			return;
-		}
-		this.dragOffset = offset;
-	},
-	stopDragWindow() {
-		if (widget.dataset.state !== 'opened') {
-			return;
-		}
-		this.dragOffset = null;
-	},
-	dragWindow(displacement) {
-		if (!this.dragOffset) {
-			return;
-		}
 
-		const right = parseInt(widget.style.right.replace(/px$/, ''), 10);
-		const bottom = parseInt(widget.style.bottom.replace(/px$/, ''), 10);
-		widget.style.right = `${ right - (displacement.x - this.dragOffset.x) }px`;
-		widget.style.bottom = `${ bottom - (displacement.y - this.dragOffset.y) }px`;
-	},
 	openPopout() {
 		closeWidget();
-		const popup = window.open(`${ config.url }?mode=popout`, 'livechat-popout', 'width=400, height=450, toolbars=no');
-		popup.focus();
+		api.popup = window.open(`${ config.url }?mode=popout`, 'livechat-popout',
+			`width=${ WIDGET_OPEN_WIDTH }, height=${ WIDGET_OPEN_HEIGHT }, toolbars=no`);
+		api.popup.focus();
 	},
+
 	openWidget() {
 		openWidget();
 	},
+
 	removeWidget() {
-		document.getElementsByTagName('body')[0].removeChild(widget);
+		document.body.removeChild(widget);
 	},
+
 	callback(eventName, data) {
 		emitCallback(eventName, data);
 	},
@@ -241,10 +239,10 @@ function init(url) {
 	chatWidget.style.borderTopLeftRadius = '5px';
 	chatWidget.style.borderTopRightRadius = '5px';
 	chatWidget.style.bottom = '0';
-	chatWidget.style.right = '50px';
+	chatWidget.style.right = '0';
 	chatWidget.style.zIndex = '12345';
 
-	document.getElementsByTagName('body')[0].appendChild(chatWidget);
+	document.body.appendChild(chatWidget);
 
 	widget = document.querySelector('.rocketchat-widget');
 	iframe = document.getElementById('rocketchat-iframe');
@@ -253,6 +251,7 @@ function init(url) {
 		if (typeof msg.data === 'object' && msg.data.src !== undefined && msg.data.src === 'rocketchat') {
 			if (api[msg.data.fn] !== undefined && typeof api[msg.data.fn] === 'function') {
 				const args = [].concat(msg.data.args || []);
+				log(msg.data.fn, ...args);
 				api[msg.data.fn].apply(null, args);
 			}
 		}
@@ -266,7 +265,7 @@ function init(url) {
 			chatWidget.style.width = '100%';
 		} else {
 			chatWidget.style.left = 'auto';
-			chatWidget.style.right = '50px';
+			chatWidget.style.right = '0';
 			chatWidget.style.width = widgetWidth;
 		}
 	}

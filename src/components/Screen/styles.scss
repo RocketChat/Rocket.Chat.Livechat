@@ -23,6 +23,26 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 	.screen__chat-button {
 		box-shadow: $screen-box-shadow;
 	}
+
+	&--minimized {
+		.screen__inner {
+			display: none;
+		}
+	}
+
+	&--windowed {
+		padding: 0;
+		box-shadow: none;
+
+		.screen__inner {
+			margin: 0;
+			border-radius: 0;
+		}
+
+		.screen__chat-button {
+			display: none;
+		}
+	}
 }
 
 .screen__inner {
@@ -33,14 +53,7 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 	align-items: stretch;
 	background-color: $bg-color-white;
 	overflow: hidden;
-
-	&--minimized {
-		display: none;
-	}
-
-	&--rounded {
-		border-radius: 4px;
-	}
+	border-radius: 4px;
 }
 
 .screen__header-subtitle {

@@ -20,7 +20,10 @@ import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../stor
 
 export class App extends Component {
 
-	state = { initialized: false }
+	state = {
+		initialized: false,
+		windowed: false,
+	}
 
 	handleRoute = async() => {
 		const {
@@ -80,13 +83,21 @@ export class App extends Component {
 	}
 
 	handleMinimize = () => {
+		parentCall('minimizeWindow');
 		const { dispatch } = this.props;
 		dispatch({ minimized: true });
 	}
 
 	handleRestore = () => {
+		parentCall('restoreWindow');
 		const { dispatch } = this.props;
-		dispatch({ minimized: false });
+		dispatch({ minimized: false, undocked: false });
+	}
+
+	handleOpenWindow = () => {
+		parentCall('openPopout');
+		const { dispatch } = this.props;
+		dispatch({ undocked: true });
 	}
 
 	handleDismissAlert = (id) => {
@@ -95,8 +106,10 @@ export class App extends Component {
 	}
 
 	async initialize() {
-		const { serverUrl } = process.env.NODE_ENV === 'development' ?
-			'http://localhost:3000' : queryString.parse(window.location.search);
+		const {
+			serverUrl = process.env.NODE_ENV === 'development' && 'http://localhost:3000',
+		} = queryString.parse(window.location.search);
+
 		initializeLivechat({ host: serverUrl, protocol: 'ddp' });
 		await loadConfig();
 		this.handleTriggers();
@@ -106,11 +119,19 @@ export class App extends Component {
 
 		this.setState({ initialized: true });
 		parentCall('ready');
+
+		const { minimized } = this.props;
+		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
 	}
 
 	async finalize() {
 		CustomFields.reset();
 		userPresence.reset();
+	}
+
+	componentWillMount() {
+		const windowed = queryString.parse(window.location.search).mode === 'popout';
+		this.setState({ windowed });
 	}
 
 	componentDidMount() {
@@ -121,18 +142,24 @@ export class App extends Component {
 		this.finalize();
 	}
 
-	render = (props, { initialized }) => {
+	render = ({
+		sound,
+		undocked,
+		minimized,
+		alerts,
+		modal,
+	}, { initialized, windowed }) => {
 		if (!initialized) {
 			return null;
 		}
 
 		const screenProps = {
-			notificationsEnabled: this.props.sound && this.props.sound.enabled,
-			minimized: this.props.minimized,
-			windowed: this.props.windowed,
-			sound: this.props.sound,
-			alerts: this.props.alerts,
-			modal: this.props.modal,
+			notificationsEnabled: sound && sound.enabled,
+			minimized: !windowed && (minimized || undocked),
+			windowed,
+			sound,
+			alerts,
+			modal,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
@@ -164,8 +191,8 @@ const AppConnector = () => (
 					triggered,
 					gdpr,
 					sound,
+					undocked,
 					minimized,
-					windowed,
 					alerts,
 					modal,
 					dispatch,
@@ -176,8 +203,8 @@ const AppConnector = () => (
 						triggered={triggered}
 						user={user}
 						sound={sound}
+						undocked={undocked}
 						minimized={minimized}
-						windowed={windowed}
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
