@@ -23,7 +23,6 @@ let smallScreen = false;
 let bodyStyle;
 let scrollPosition;
 
-const widgetWidth = `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
 const widgetHeightOpened = `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN }px`;
 const widgetHeightClosed = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
 
@@ -67,42 +66,99 @@ function callHook(action, params) {
 	iframe.contentWindow.postMessage(data, '*');
 }
 
+const updateWidgetStyle = () => {
+	if (smallScreen && widget.dataset.state === 'opened') {
+		scrollPosition = document.body.scrollTop;
+		bodyStyle = document.body.style.cssText;
+		document.body.style.cssText += `overflow: hidden; height: 100%; width: 100%; position: fixed; top: ${ scrollPosition }px;`;
+	} else {
+		document.body.style.cssText = bodyStyle;
+		document.body.scrollTop = scrollPosition;
+	}
+
+	if (widget.dataset.state === 'opened') {
+		widget.style.left = smallScreen ? '0' : 'auto';
+		widget.style.width = smallScreen ? '100vw' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
+		widget.style.height = smallScreen ? '100vh' : `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
+		widget.style.minHeight = smallScreen ? `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px` : 'auto';
+	} else {
+		widget.style.left = 'auto';
+		widget.style.width = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_WIDTH + WIDGET_MARGIN }px`;
+		widget.style.height = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
+		widget.style.minHeight = 'auto';
+	}
+};
+
+const createWidget = (url) => {
+	log('createWidget');
+
+	widget = document.createElement('div');
+	widget.className = 'rocketchat-widget';
+	widget.style.position = 'fixed';
+	widget.style.width = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_WIDTH + WIDGET_MARGIN }px`;
+	widget.style.height = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
+	widget.style.border = '1px solid red';
+	widget.style.boxSizing = 'border-box';
+	widget.style.bottom = '0';
+	widget.style.right = '0';
+	widget.style.zIndex = '12345';
+	widget.dataset.state = 'closed';
+
+	const container = document.createElement('div');
+	container.className = 'rocketchat-container';
+	container.style.width = '100%';
+	container.style.height = '100%';
+
+	iframe = document.createElement('iframe');
+	iframe.id = 'rocketchat-iframe';
+	iframe.allowTransparency = 'true';
+	iframe.src = url;
+	iframe.style.width = '100%';
+	iframe.style.height = '100%';
+	iframe.style.border = 'none';
+	iframe.style.backgroundColor = 'transparent';
+
+	container.appendChild(iframe);
+	widget.appendChild(container);
+	document.body.appendChild(widget);
+
+	const handleMediaQueryTest = ({ matches }) => {
+		if (!widget) {
+			return;
+		}
+
+		smallScreen = matches;
+		updateWidgetStyle();
+	};
+
+	const mediaQueryList = window.matchMedia('screen and (max-device-width: 480px)');
+	mediaQueryList.addListener(handleMediaQueryTest);
+	handleMediaQueryTest(mediaQueryList);
+};
+
+const openWidget = () => {
+	if (widget.dataset.state === 'opened') {
+		return;
+	}
+
+	widget.dataset.state = 'opened';
+	updateWidgetStyle();
+
+	iframe.focus();
+	callHook('widgetOpened');
+	emitCallback('chat-maximized');
+};
+
 function closeWidget() {
 	if (widget.dataset.state === 'closed') {
 		return;
 	}
 
-	if (smallScreen) {
-		document.body.style.cssText = bodyStyle;
-		document.body.scrollTop = scrollPosition;
-	}
-
 	widget.dataset.state = 'closed';
-	widget.style.height = widgetHeightClosed;
-	widget.style.right = '0';
-	widget.style.bottom = '0';
+	updateWidgetStyle();
+
 	callHook('widgetClosed');
-
 	emitCallback('chat-minimized');
-}
-
-function openWidget() {
-	if (widget.dataset.state === 'opened') {
-		return;
-	}
-
-	if (smallScreen) {
-		scrollPosition = document.body.scrollTop;
-		bodyStyle = document.body.style.cssText;
-		document.body.style.cssText += `overflow: hidden; height: 100%; width: 100%; position: fixed; top:${ scrollPosition }px;`;
-	}
-
-	widget.dataset.state = 'opened';
-	widget.style.height = widgetHeightOpened;
-	callHook('widgetOpened');
-	document.querySelector('.rocketchat-widget iframe').focus();
-
-	emitCallback('chat-maximized');
 }
 
 const api = {
@@ -128,14 +184,6 @@ const api = {
 			api.popup = null;
 		}
 		openWidget();
-	},
-
-	toggleWindow() {
-		if (widget.dataset.state === 'closed') {
-			openWidget();
-		} else {
-			closeWidget();
-		}
 	},
 
 	openPopout() {
@@ -206,77 +254,43 @@ const currentPage = {
 	title: null,
 };
 
-function trackNavigation() {
+const attachMessageListener = () => {
+	window.addEventListener('message', (msg) => {
+		if (typeof msg.data === 'object' && msg.data.src !== undefined && msg.data.src === 'rocketchat') {
+			if (api[msg.data.fn] !== undefined && typeof api[msg.data.fn] === 'function') {
+				const args = [].concat(msg.data.args || []);
+				log(`api.${ msg.data.fn }`, ...args);
+				api[msg.data.fn].apply(null, args);
+			}
+		}
+	}, false);
+};
+
+const trackNavigation = () => {
 	setInterval(() => {
 		if (document.location.href !== currentPage.href) {
 			pageVisited('url');
 			currentPage.href = document.location.href;
 		}
+
 		if (document.title !== currentPage.title) {
 			pageVisited('title');
 			currentPage.title = document.title;
 		}
 	}, 800);
-}
+};
 
-function init(url) {
+const init = (url) => {
 	if (!url) {
 		return;
 	}
 
 	config.url = url;
 
-	const chatWidget = document.createElement('div');
-	chatWidget.dataset.state = 'closed';
-	chatWidget.className = 'rocketchat-widget';
-	chatWidget.innerHTML = `${ '<div class="rocketchat-container" style="width:100%;height:100%">' +
-		'<iframe id="rocketchat-iframe" src="' }${ url }" style="width:100%;height:100%;border:none;background-color:transparent" allowTransparency="true"></iframe> ` +
-		'</div><div class="rocketchat-overlay"></div>';
-
-	chatWidget.style.position = 'fixed';
-	chatWidget.style.width = widgetWidth;
-	chatWidget.style.height = widgetHeightClosed;
-	chatWidget.style.borderTopLeftRadius = '5px';
-	chatWidget.style.borderTopRightRadius = '5px';
-	chatWidget.style.bottom = '0';
-	chatWidget.style.right = '0';
-	chatWidget.style.zIndex = '12345';
-
-	document.body.appendChild(chatWidget);
-
-	widget = document.querySelector('.rocketchat-widget');
-	iframe = document.getElementById('rocketchat-iframe');
-
-	window.addEventListener('message', (msg) => {
-		if (typeof msg.data === 'object' && msg.data.src !== undefined && msg.data.src === 'rocketchat') {
-			if (api[msg.data.fn] !== undefined && typeof api[msg.data.fn] === 'function') {
-				const args = [].concat(msg.data.args || []);
-				log(msg.data.fn, ...args);
-				api[msg.data.fn].apply(null, args);
-			}
-		}
-	}, false);
-
-	function mediaqueryresponse(mql) {
-		if (mql.matches) {
-			smallScreen = true;
-			chatWidget.style.left = '0';
-			chatWidget.style.right = '0';
-			chatWidget.style.width = '100%';
-		} else {
-			chatWidget.style.left = 'auto';
-			chatWidget.style.right = '0';
-			chatWidget.style.width = widgetWidth;
-		}
-	}
-
-	const mql = window.matchMedia('screen and (max-device-width: 480px)');
-	mediaqueryresponse(mql);
-	mql.addListener(mediaqueryresponse);
-
-	// track user navigation
+	createWidget(url);
+	attachMessageListener();
 	trackNavigation();
-}
+};
 
 if (typeof window.initRocket !== 'undefined') {
 	console.warn('initRocket is now deprecated. Please update the livechat code.');

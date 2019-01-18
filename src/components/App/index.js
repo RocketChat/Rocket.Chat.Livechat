@@ -192,7 +192,7 @@ const AppConnector = () => (
 					gdpr,
 					sound,
 					undocked,
-					minimized,
+					minimized = true,
 					alerts,
 					modal,
 					dispatch,
