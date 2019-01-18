@@ -6,7 +6,7 @@ import { Screen } from '.';
 
 
 const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px', background: 'white' }}>
+	<div style={{ display: 'flex', width: '365px' }}>
 		{storyFn()}
 	</div>
 ));

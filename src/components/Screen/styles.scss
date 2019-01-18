@@ -1,6 +1,31 @@
 @import '~styles/colors';
 
+
+$screen-padding: 16px;
+$screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
+
+
 .screen {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	padding: $screen-padding;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: flex-end;
+	overflow: hidden;
+
+	.screen__inner {
+		box-shadow: $screen-box-shadow;
+	}
+
+	.screen__chat-button {
+		margin-top: $screen-padding;
+		box-shadow: $screen-box-shadow;
+	}
+}
+
+.screen__inner {
 	width: 100%;
 	flex: 1 1;
 	display: flex;
@@ -8,6 +33,10 @@
 	align-items: stretch;
 	background-color: $bg-color-white;
 	overflow: hidden;
+
+	&--minimized {
+		display: none;
+	}
 
 	&--rounded {
 		border-radius: 4px;
