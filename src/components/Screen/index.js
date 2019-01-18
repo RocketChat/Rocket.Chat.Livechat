@@ -45,6 +45,11 @@ export class Screen extends Component {
 		this.headerRef = ref;
 	}
 
+	largeHeader = () => {
+		const { agent } = this.props;
+		return !!(agent && agent.phone);
+	}
+
 	render = ({
 		color,
 		agent,
@@ -73,20 +78,21 @@ export class Screen extends Component {
 						{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
 					</Header.Post>
 				}
+				large={this.largeHeader()}
 			>
 				{agent && agent.avatar && (
 					<Header.Picture>
-						<Avatar src={agent.avatar.src} description={agent.avatar.description} />
+						<Avatar src={agent.avatar.src} description={agent.avatar.description} large={this.largeHeader()} />
 					</Header.Picture>
 				)}
 
 				<Header.Content>
 					<Header.Title>{agent ? agent.name : title}</Header.Title>
 					{agent && (
-						<Header.SubTitle className={createClassName(styles, 'screen__header-subtitle')}>
-							<StatusIndicator status={agent.status} />
-							<span>{agent.email}</span>
-						</Header.SubTitle>
+						<Header.SubTitle>{agent.email}</Header.SubTitle>
+					)}
+					{agent && agent.phone && (
+						<Header.CustomField>{agent.phone}</Header.CustomField>
 					)}
 				</Header.Content>
 				<Tooltip.Container>

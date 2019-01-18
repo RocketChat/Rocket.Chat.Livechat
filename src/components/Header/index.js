@@ -3,8 +3,8 @@ import styles from './styles';
 import { createClassName } from '../helpers';
 
 
-export const Header = ({ children, color, className, post, ...props }) => (
-	<header className={createClassName(styles, 'header', {}, [className])} style={{ backgroundColor: color }} {...props}>
+export const Header = ({ children, color, className, post, large, ...props }) => (
+	<header className={createClassName(styles, 'header', { large }, [className])} style={{ backgroundColor: color }} {...props}>
 		{children}
 		{post}
 	</header>
@@ -69,6 +69,15 @@ export const Post = ({ children, className, headerRef, ...props }) => {
 	);
 };
 
+export const CustomField = ({ children, className, ...props }) => (
+	<div
+		className={createClassName(styles, 'header__custom-field', {}, [className])}
+		{...props}
+	>
+		{children}
+	</div>
+);
+
 Header.Picture = Picture;
 Header.Content = Content;
 Header.Title = Title;
@@ -76,5 +85,6 @@ Header.SubTitle = SubTitle;
 Header.Actions = Actions;
 Header.Action = Action;
 Header.Post = Post;
+Header.CustomField = CustomField;
 
 export default Header;
