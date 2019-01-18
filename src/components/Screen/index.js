@@ -3,7 +3,6 @@ import Alert from '../Alert';
 import Avatar from '../Avatar';
 import Header from '../Header';
 import Footer from '../Footer';
-import StatusIndicator from '../StatusIndicator';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
@@ -47,7 +46,7 @@ export class Screen extends Component {
 
 	largeHeader = () => {
 		const { agent } = this.props;
-		return !!(agent && agent.phone);
+		return !!(agent && agent.email && agent.phone);
 	}
 
 	render = ({
@@ -82,7 +81,13 @@ export class Screen extends Component {
 			>
 				{agent && agent.avatar && (
 					<Header.Picture>
-						<Avatar src={agent.avatar.src} description={agent.avatar.description} large={this.largeHeader()} />
+						<Avatar
+							src={agent.avatar.src}
+							description={agent.avatar.description}
+							status={agent.status}
+							large={this.largeHeader()}
+							statusBorderColor={color}
+						/>
 					</Header.Picture>
 				)}
 

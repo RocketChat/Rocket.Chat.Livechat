@@ -1,11 +1,10 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, color, select, text, boolean } from '@storybook/addon-knobs';
+import { withKnobs, color, text, boolean } from '@storybook/addon-knobs';
 
 import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post, CustomField } from '.';
 import Avatar from '../Avatar';
-import StatusIndicator, { statuses } from '../StatusIndicator';
 import { Alert } from '../Alert';
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrowDown.svg';
@@ -114,7 +113,7 @@ storiesOf('Components|Header', module)
 	.add('for user chat', () => (
 		<Header color={color('color', '#175CC4')}>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} />
+				<Avatar src={bertieBartonAvatar} status={'busy'} />
 			</Picture>
 
 			<Content>
@@ -140,7 +139,7 @@ storiesOf('Components|Header', module)
 	.add('with custom field', () => (
 		<Header color={color('color', '#175CC4')} large>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} large />
+				<Avatar src={bertieBartonAvatar} large status={'away'} statusBorderColor={'#175CC4'} />
 			</Picture>
 
 			<Content>
@@ -188,7 +187,7 @@ storiesOf('Components|Header', module)
 			large
 		>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} large />
+				<Avatar src={bertieBartonAvatar} large status={'online'} />
 			</Picture>
 
 			<Content>
