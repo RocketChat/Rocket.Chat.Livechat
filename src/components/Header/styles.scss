@@ -68,4 +68,12 @@ $header-padding: $default-padding;
 			}
 		}
 	}
+
+	&__post {
+		position: absolute;
+		top: 56px;
+		left: 0;
+		width: 100%;
+		z-index: 10;
+	}
 }

@@ -1,18 +1,11 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { screenCentered } from '../helpers.stories';
 import Register from './component';
 
 
-const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px' }}>
-		{storyFn()}
-	</div>
-));
-
-
-storiesOf('Screen|Register', module)
+storiesOf('Routes|Register', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

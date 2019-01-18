@@ -1,11 +1,11 @@
 import { Component } from 'preact';
+import Alert from '../Alert';
 import Avatar from '../Avatar';
 import Header from '../Header';
 import Footer from '../Footer';
 import StatusIndicator from '../StatusIndicator';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
-import { Consumer } from '../../store';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
 import NotificationsDisabledIcon from '../../icons/bellOff.svg';
 import MinimizeIcon from '../../icons/arrowDown.svg';
@@ -41,6 +41,10 @@ export class Screen extends Component {
 		onOpenWindow && onOpenWindow();
 	}
 
+	handleRef = (ref) => {
+		this.headerRef = ref;
+	}
+
 	render = ({
 		color,
 		agent,
@@ -54,10 +58,22 @@ export class Screen extends Component {
 		options,
 		onChangeDepartment,
 		onFinishChat,
+		onRemoveUserData,
+		onDismissAlert,
 		className,
+		alerts,
+		modal,
 	}) => (
 		<div className={createClassName(styles, 'screen', { rounded: !windowed }, [className])}>
-			<Header color={color}>
+			<Header
+				ref={this.handleRef}
+				color={color}
+				post={
+					<Header.Post headerRef={this.headerRef}>
+						{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
+					</Header.Post>
+				}
+			>
 				{agent && agent.avatar && (
 					<Header.Picture>
 						<Avatar src={agent.avatar.src} description={agent.avatar.description} />
@@ -108,75 +124,29 @@ export class Screen extends Component {
 				</Tooltip.Container>
 			</Header>
 
-			{!minimized && (
-				<main className={createClassName(styles, 'screen__main', { nopadding })}>
-					{children}
-				</main>
-			)}
+			<main className={createClassName(styles, 'screen__main', { nopadding })}>
+				{children}
+			</main>
 
-			{!minimized && (
-				<PopoverContainer>
-					<Footer>
-						{footer && (
-							<Footer.Content>
-								{footer}
-							</Footer.Content>
-						)}
+			{modal}
+
+			<PopoverContainer>
+				<Footer>
+					{footer && (
 						<Footer.Content>
-							{options && (
-								<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} />
-							)}
-							<Footer.PoweredBy />
+							{footer}
 						</Footer.Content>
-					</Footer>
-				</PopoverContainer>
-			)}
+					)}
+					<Footer.Content>
+						{options && (
+							<Footer.Options onChangeDepartment={onChangeDepartment} onFinishChat={onFinishChat} onRemoveUserData={onRemoveUserData} />
+						)}
+						<Footer.PoweredBy />
+					</Footer.Content>
+				</Footer>
+			</PopoverContainer>
 		</div>
 	);
 }
 
-
-export class ScreenContainer extends Component {
-	handleEnableNotifications = () => {
-		const { dispatch, sound = {} } = this.props;
-		dispatch({ sound: { ...sound, enabled: true } });
-	}
-
-	handleDisableNotifications = () => {
-		const { dispatch, sound = {} } = this.props;
-		dispatch({ sound: { ...sound, enabled: false } });
-	}
-
-	render = (props) => (
-		<Screen
-			{...props}
-			onEnableNotifications={this.handleEnableNotifications}
-			onDisableNotifications={this.handleDisableNotifications}
-			onMinimize={this.handleMinimize}
-			onRestore={this.handleRestore}
-			onOpenWindow={this.handleOpenWindow}
-		/>
-	)
-}
-
-
-export const ScreenConnector = ({ ref, ...props }) => (
-	<Consumer>
-		{({
-			sound = {},
-			dispatch = () => {},
-		} = {}) => (
-			<ScreenContainer
-				ref={ref}
-				{...props}
-				notificationsEnabled={sound.enabled}
-				minimized={false}
-				windowed={false}
-				sound={sound}
-				dispatch={dispatch}
-			/>
-		)}
-	</Consumer>
-);
-
-export default ScreenConnector;
+export default Screen;

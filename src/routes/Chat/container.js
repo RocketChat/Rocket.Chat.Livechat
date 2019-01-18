@@ -1,34 +1,36 @@
 import { Component } from 'preact';
+import { route } from 'preact-router';
 import SDK from '../../api';
 import { Consumer } from '../../store';
-import { loadConfig, initRoom } from '../../lib/main';
-import { getAvatarUrl, uploadFile } from '../../components/helpers';
+import { closeChat, initRoom, loadConfig } from '../../lib/main';
+import { createToken, insert, getAvatarUrl, renderMessage } from '../../components/helpers';
 import Chat from './component';
+import { ModalManager } from '../../components/Modal';
 
 
 export class ChatContainer extends Component {
 	loadMessages = async() => {
-		const { dispatch, token, room: { _id: rid } = {} } = this.props;
+		const { dispatch, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
 			return;
 		}
 
 		await dispatch({ loading: true });
-		const messages = await SDK.loadMessages(rid, { token });
+		const messages = await SDK.loadMessages(rid);
 		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
 		await dispatch({ loading: false });
 	}
 
 	loadMoreMessages = async() => {
-		const { dispatch, token, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
+		const { dispatch, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
 
 		if (!rid || noMoreMessages) {
 			return;
 		}
 
 		await dispatch({ loading: true });
-		const moreMessages = await SDK.loadMessages(rid, { token, limit: messages.length + 10 });
+		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
 		await dispatch({
 			messages: (moreMessages || []).reverse(),
 			noMoreMessages: messages.length + 10 >= moreMessages.length,
@@ -48,14 +50,14 @@ export class ChatContainer extends Component {
 	}
 
 	getRoom = async() => {
-		const { dispatch, token, room } = this.props;
+		const { dispatch, room, showConnecting } = this.props;
 
 		if (room) {
 			return room;
 		}
 
-		const newRoom = await SDK.room({ token });
-		await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
+		const newRoom = await SDK.room();
+		await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
 		await initRoom();
 
 		return newRoom;
@@ -65,23 +67,64 @@ export class ChatContainer extends Component {
 		this.loadMoreMessages();
 	}
 
+	handleChangeText = async(text) => {
+		const { user, room } = this.props;
+		if (!(user && user.username && room && room._id)) {
+			return;
+		}
+
+		await SDK.notifyVisitorTyping(room._id, user.username, text.length > 0);
+	}
+
 	handleSubmit = async(msg) => {
 		if (msg.trim() === '') {
 			return;
 		}
 
+		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
-		const { token } = this.props;
-		await SDK.sendMessage({ msg, token, rid });
+		const { alerts, dispatch, token, user } = this.props;
+		try {
+			await SDK.sendMessage({ msg, token, rid });
+		} catch (error) {
+			await loadConfig();
+			const { data: { error: reason } } = error;
+			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
+			await dispatch({ alerts: insert(alerts, alert) });
+		}
+		await SDK.notifyVisitorTyping(rid, user.username, false);
+
 	}
 
+	doFileUpload = async(rid, file) => {
+		const { alerts, dispatch } = this.props;
+
+		try {
+			await SDK.uploadFile({ rid, file });
+		} catch (error) {
+			const { data: { reason, sizeAllowed } } = error;
+
+			let message = I18n.t('FileUpload Error');
+			switch (reason) {
+				case 'error-type-not-allowed':
+					message = I18n.t('Media Types Not Accepted.');
+					break;
+				case 'error-size-not-allowed':
+					message = I18n.t('File exceeds allowed size of __size__.', { size: sizeAllowed });
+			}
+
+			const alert = { id: createToken(), children: message, error: true, timeout: 5000 };
+			await dispatch({ alerts: insert(alerts, alert) });
+		}
+	};
+
 	handleUpload = async(files) => {
+		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
-		const { token } = this.props;
 
-		files.forEach(async(file) => await uploadFile({ token, rid, file }));
+		files.forEach(async(file) => await this.doFileUpload(rid, file));
 	}
 
 	handlePlaySound = () => {
@@ -90,12 +133,84 @@ export class ChatContainer extends Component {
 	}
 
 	onChangeDepartment = () => {
-		// ...
+		route('/switch-department');
+	}
+
+	doFinishChat = async() => {
+		const { alerts, dispatch, room: { _id: rid } = {} } = this.props;
+
+		if (!rid) {
+			return;
+		}
+
+		await dispatch({ loading: true });
+		try {
+			await SDK.closeChat({ rid });
+		} catch (error) {
+			console.error(error);
+			const alert = { id: createToken(), children: 'Error closing chat.', error: true, timeout: 0 };
+			await dispatch({ alerts: insert(alerts, alert) });
+		} finally {
+			await dispatch({ loading: false });
+			await closeChat();
+		}
 	}
 
 	onFinishChat = () => {
-		// ...
+		ModalManager.confirm({
+			text: 'Are you sure you want to finish this chat?',
+		}).then((result) => {
+			if ((typeof result.success === 'boolean') && result.success) {
+				this.doFinishChat();
+			}
+		});
 	}
+
+	doRemoveUserData = async() => {
+		const { alerts, dispatch } = this.props;
+
+		await dispatch({ loading: true });
+		try {
+			await SDK.deleteVisitor();
+		} catch (error) {
+			console.error(error);
+			const alert = { id: createToken(), children: 'Error removing user data.', error: true, timeout: 0 };
+			await dispatch({ alerts: insert(alerts, alert) });
+		} finally {
+			await loadConfig();
+			await dispatch({ loading: false });
+			route('/chat-finished');
+		}
+	}
+
+	onRemoveUserData = async() => {
+		ModalManager.confirm({
+			text: 'Are you sure you want to remove all of your personal data?',
+		}).then((result) => {
+			if ((typeof result.success === 'boolean') && result.success) {
+				this.doRemoveUserData();
+			}
+		});
+	}
+
+	canSwitchDepartment = () => {
+		const { allowSwitchingDepartments, room, departments = {} } = this.props;
+		return allowSwitchingDepartments && room && departments.filter((dept) => dept.showOnRegistration).length > 1;
+	}
+
+	canFinishChat = () => {
+		const { room } = this.props;
+		return room !== undefined;
+	}
+
+	canRemoveUserData = () => {
+		const { allowRemoveUserData } = this.props;
+		return allowRemoveUserData;
+	}
+
+	showOptionsMenu = () => (
+		this.canSwitchDepartment() || this.canFinishChat() || this.canRemoveUserData()
+	)
 
 	componentDidMount() {
 		this.loadMessages();
@@ -105,12 +220,14 @@ export class ChatContainer extends Component {
 		<Chat
 			{...props}
 			onTop={this.handleTop}
+			onChangeText={this.handleChangeText}
 			onSubmit={this.handleSubmit}
 			onUpload={this.handleUpload}
 			onPlaySound={this.handlePlaySound}
-			options={true}
-			onChangeDepartment={this.onChangeDepartment}
-			onFinishChat={this.onFinishChat}
+			options={this.showOptionsMenu()}
+			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
+			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
+			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
 		/>
 	)
 }
@@ -122,11 +239,18 @@ export const ChatConnector = ({ ref, ...props }) => (
 			config: {
 				settings: {
 					fileUpload: uploads,
+					allowSwitchingDepartments,
+					forceAcceptDataProcessingConsent: allowRemoveUserData,
+					showConnecting,
+				} = {},
+				messages: {
+					conversationFinishedMessage,
 				} = {},
 				theme: {
 					color,
 					title,
 				} = {},
+				departments = {},
 			},
 			token,
 			agent,
@@ -137,7 +261,9 @@ export const ChatConnector = ({ ref, ...props }) => (
 			noMoreMessages,
 			typing,
 			loading,
+			connecting,
 			dispatch,
+			alerts,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -148,6 +274,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				token={token}
 				user={user ? {
 					_id: user._id,
+					username: user.username,
 					avatar: {
 						description: user.username,
 						src: getAvatarUrl(user.username),
@@ -165,7 +292,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					},
 				} : undefined}
 				room={room}
-				messages={messages}
+				messages={messages.filter((message) => renderMessage(message))}
 				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}
@@ -174,7 +301,14 @@ export const ChatConnector = ({ ref, ...props }) => (
 					src: getAvatarUrl(username),
 				})) : []}
 				loading={loading}
+				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
+				connecting={connecting} // param to show or hide "connecting"
 				dispatch={dispatch}
+				departments={departments}
+				allowSwitchingDepartments={allowSwitchingDepartments}
+				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
+				allowRemoveUserData={allowRemoveUserData}
+				alerts={alerts}
 			/>
 		)}
 	</Consumer>

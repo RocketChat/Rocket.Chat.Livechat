@@ -7,10 +7,52 @@ $message-margin: 8px;
 
 .attachment {
     max-width: 100%;
-    border-radius: $default-border-radius;
-    box-shadow: 0px 0px $default-border-radius 0px $color-text-grey;
-    max-height: 250px;
+    &__image {
+        border-radius: $default-border-radius;
+        box-shadow: 0px 0px $default-border-radius 0px $color-text-grey;
+        max-height: 250px;
+    }
+    &__video {
+        max-height: 250px;
+    }
+    &__no-preview {
+        min-width: 180px;
+        max-width: 280px;
+        height: 56px;
+        background: $bg-color-light;
+        border-radius: $default-border-radius;
+        color: $color-text-dark;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 16px;
+        padding: $message-padding;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+
+        &__title {
+            display: block;
+            flex: 1 1 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin: 0 $message-margin;
+        }
+
+        &__download {
+            color: $color-text-light;
+            &:hover {
+                color: $color-blue;
+            }
+        }
+    }
+
+    &:not(:first-child) {
+        margin-top: 8px;
+    }
 }
+
 .avatar--group {
     visibility: hidden;
 }

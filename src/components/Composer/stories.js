@@ -1,14 +1,12 @@
-import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { text, withKnobsOptions } from '@storybook/addon-knobs';
+import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-
 import Smile from 'icons/smile';
 import Plus from 'icons/plus';
 import Send from 'icons/send';
-
 import Composer, { Actions, Action } from '.';
+
 
 storiesOf('Components|Composer', module)
 	.addDecorator((storyFn) => (
@@ -16,7 +14,7 @@ storiesOf('Components|Composer', module)
 			{storyFn()}
 		</div>
 	))
-	.addDecorator(withKnobsOptions({
+	.addDecorator(withKnobs({
 		escapeHTML: false,
 	}))
 	.addDecorator(centered)
@@ -90,5 +88,8 @@ storiesOf('Components|Composer', module)
 				</Actions>
 			}
 		/>
+	))
+	.add('connecting', () => (
+		<Composer connecting />
 	))
 ;

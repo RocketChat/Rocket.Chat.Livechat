@@ -22,6 +22,12 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
+	department: null,
+	gdpr: {
+		accepted: false,
+	},
+	alerts: [],
+	connecting: false,
 };
 
 export const store = new Store(initialState);

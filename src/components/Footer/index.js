@@ -4,7 +4,6 @@ import Logo from './logo.svg';
 import { createClassName } from '../helpers';
 import { PopoverMenu, Group, Item } from '../Menu';
 
-
 export const Footer = ({ children, ...props }) => (
 	<footer className={createClassName(styles, 'footer')} {...props}>
 		{children}
@@ -36,11 +35,12 @@ const OptionsTrigger = ({ pop }) => (
 );
 
 
-export const Options = ({ onChangeDepartment, onFinishChat }) => (
+export const Options = ({ onChangeDepartment, onFinishChat, onRemoveUserData }) => (
 	<PopoverMenu trigger={OptionsTrigger} overlayed>
 		<Group>
-			<Item onClick={onChangeDepartment}>Change department</Item>
-			<Item danger onClick={onFinishChat}>Finish this chat</Item>
+			{onChangeDepartment && <Item onClick={onChangeDepartment}>Change department</Item>}
+			{onRemoveUserData && <Item onClick={onRemoveUserData}>Forget/Remove my personal data</Item>}
+			{onFinishChat && <Item danger onClick={onFinishChat}>Finish this chat</Item>}
 		</Group>
 	</PopoverMenu>
 );
