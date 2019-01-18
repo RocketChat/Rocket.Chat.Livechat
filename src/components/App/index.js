@@ -94,7 +94,7 @@ export class App extends Component {
 	}
 
 	async initialize() {
-		initializeLivechat({ host: 'http://192.168.0.10:3000', protocol: 'ddp' });
+		initializeLivechat({ host: 'http://localhost:3000', protocol: 'ddp' });
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();

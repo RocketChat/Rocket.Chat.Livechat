@@ -17,10 +17,10 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 
 	.screen__inner {
 		box-shadow: $screen-box-shadow;
+		margin-bottom: $screen-padding;
 	}
 
 	.screen__chat-button {
-		margin-top: $screen-padding;
 		box-shadow: $screen-box-shadow;
 	}
 }
