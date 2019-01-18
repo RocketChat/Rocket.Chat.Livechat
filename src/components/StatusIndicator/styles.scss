@@ -1,12 +1,31 @@
 @import '~styles/colors';
 
+$status-indicator-size-small: 10px;
+$status-indicator-size-medium: 12px;
+$status-indicator-size-large: 14px;
+
 .status {
   display: inline-flex;
   align-self: center;
-  height: 0.75em;
-  width: 0.75em;
+  height: $status-indicator-size-medium;
+  width: $status-indicator-size-medium;
   border-radius: 50%;
   background-color: $bg-color-grey;
+
+  &--border {
+    border-width: 2px;
+    border-style: solid;
+  }
+
+  &--small {
+    height: $status-indicator-size-small;
+    width: $status-indicator-size-small;
+  }
+
+  &--large {
+    height: $status-indicator-size-large;
+    width: $status-indicator-size-large;
+  }
 
   &--status {
     &-online {
