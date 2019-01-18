@@ -5,6 +5,7 @@ class CustomFields {
 	constructor() {
 		if (!CustomFields.instance) {
 			this._initiated = false;
+			this._started = false;
 			this._queue = {};
 			CustomFields.instance = this;
 		}
@@ -18,8 +19,7 @@ class CustomFields {
 		}
 
 		this._initiated = true;
-		const { state } = store;
-		const { token } = state;
+		const { token } = store.state;
 		Livechat.credentials.token = token;
 
 		store.on('change', this.handleStoreChange);
@@ -27,6 +27,7 @@ class CustomFields {
 
 	reset() {
 		this._initiated = false;
+		this._started = false;
 		this._queue = {};
 		store.off('change', this.handleStoreChange);
 	}
@@ -34,8 +35,9 @@ class CustomFields {
 	handleStoreChange(state, prevState) {
 		const { user } = state;
 		const { user: prevUser } = prevState;
+
 		if (!prevUser && user && user._id) {
-			CustomFields.instance._initiated = true;
+			CustomFields.instance._started = true;
 			CustomFields.instance.processCustomFields();
 		}
 	}
@@ -50,7 +52,7 @@ class CustomFields {
 	}
 
 	setCustomField(key, value, overwrite = true) {
-		if (!this._initiated) {
+		if (!this._started) {
 			this._queue[key] = { value, overwrite };
 			return;
 		}
