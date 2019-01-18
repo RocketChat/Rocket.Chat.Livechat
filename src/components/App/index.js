@@ -110,7 +110,7 @@ export class App extends Component {
 			serverUrl = process.env.NODE_ENV === 'development' && 'http://localhost:3000',
 		} = queryString.parse(window.location.search);
 
-		initializeLivechat({ host: serverUrl, protocol: 'ddp' });
+		await initializeLivechat({ host: serverUrl, protocol: 'ddp' });
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();

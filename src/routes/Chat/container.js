@@ -2,10 +2,11 @@ import { Component } from 'preact';
 import { route } from 'preact-router';
 import { Livechat } from '../../api';
 import { Consumer } from '../../store';
-import { closeChat, initRoom, loadConfig } from '../../lib/main';
+import { loadConfig } from '../../lib/main';
 import { createToken, insert, getAvatarUrl, renderMessage } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
+import { initRoom, closeChat } from './room';
 
 
 export class ChatContainer extends Component {
@@ -18,6 +19,7 @@ export class ChatContainer extends Component {
 
 		await dispatch({ loading: true });
 		const messages = await Livechat.loadMessages(rid);
+		await initRoom();
 		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
 		await dispatch({ loading: false });
 	}
@@ -151,6 +153,7 @@ export class ChatContainer extends Component {
 		} finally {
 			await dispatch({ loading: false });
 			await closeChat();
+			route('/chat-finished');
 		}
 	}
 
