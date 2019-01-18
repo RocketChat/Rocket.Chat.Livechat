@@ -28,10 +28,11 @@ export const initRoom = async() => {
 	if (!roomAgent) {
 		if (servedBy) {
 			roomAgent = await SDK.agent({ rid });
-			store.setState({ roomAgent });
+			await store.setState({ agent: roomAgent });
 		}
 
-		store.setState({ connecting: !roomAgent && showConnecting });
+		const connecting = !roomAgent && showConnecting;
+		store.setState({ connecting });
 	}
 
 	SDK.onAgentChange(rid, (agent) => {
