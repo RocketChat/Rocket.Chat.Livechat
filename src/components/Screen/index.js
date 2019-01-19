@@ -118,25 +118,23 @@ const ScreenFooter = ({
 	onFinishChat,
 	onRemoveUserData,
 }) => (
-	<PopoverContainer>
-		<Footer>
-			{footer && (
-				<Footer.Content>
-					{footer}
-				</Footer.Content>
-			)}
+	<Footer>
+		{footer && (
 			<Footer.Content>
-				{options && (
-					<Footer.Options
-						onChangeDepartment={onChangeDepartment}
-						onFinishChat={onFinishChat}
-						onRemoveUserData={onRemoveUserData}
-					/>
-				)}
-				<Footer.PoweredBy />
+				{footer}
 			</Footer.Content>
-		</Footer>
-	</PopoverContainer>
+		)}
+		<Footer.Content>
+			{options && (
+				<Footer.Options
+					onChangeDepartment={onChangeDepartment}
+					onFinishChat={onFinishChat}
+					onRemoveUserData={onRemoveUserData}
+				/>
+			)}
+			<Footer.PoweredBy />
+		</Footer.Content>
+	</Footer>
 );
 
 
@@ -165,35 +163,37 @@ const ScreenInner = ({
 	onRemoveUserData,
 }) => (
 	<div className={createClassName(styles, 'screen__inner', {}, [className])}>
-		<ScreenHeader
-			color={color}
-			alerts={alerts}
-			agent={agent}
-			title={title}
-			notificationsEnabled={notificationsEnabled}
-			minimized={minimized}
-			windowed={windowed}
-			onDismissAlert={onDismissAlert}
-			onEnableNotifications={onEnableNotifications}
-			onDisableNotifications={onDisableNotifications}
-			onMinimize={onMinimize}
-			onRestore={onRestore}
-			onOpenWindow={onOpenWindow}
-		/>
+		<PopoverContainer>
+			<ScreenHeader
+				color={color}
+				alerts={alerts}
+				agent={agent}
+				title={title}
+				notificationsEnabled={notificationsEnabled}
+				minimized={minimized}
+				windowed={windowed}
+				onDismissAlert={onDismissAlert}
+				onEnableNotifications={onEnableNotifications}
+				onDisableNotifications={onDisableNotifications}
+				onMinimize={onMinimize}
+				onRestore={onRestore}
+				onOpenWindow={onOpenWindow}
+			/>
 
-		<main className={createClassName(styles, 'screen__main', { nopadding })}>
-			{children}
-		</main>
+			<main className={createClassName(styles, 'screen__main', { nopadding })}>
+				{children}
+			</main>
 
-		{modal}
+			{modal}
 
-		<ScreenFooter
-			footer={footer}
-			options={options}
-			onChangeDepartment={onChangeDepartment}
-			onFinishChat={onFinishChat}
-			onRemoveUserData={onRemoveUserData}
-		/>
+			<ScreenFooter
+				footer={footer}
+				options={options}
+				onChangeDepartment={onChangeDepartment}
+				onFinishChat={onFinishChat}
+				onRemoveUserData={onRemoveUserData}
+			/>
+		</PopoverContainer>
 	</div>
 );
 
