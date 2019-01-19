@@ -2,7 +2,7 @@ import EventEmitter from 'wolfy87-eventemitter';
 
 
 const log = process.env.NODE_ENV === 'development' ?
-	(...args) => console.log('%cwidget%c', 'color: red', 'color: initial', ...args) :
+	(...args) => window.console.log('%cwidget%c', 'color: red', 'color: initial', ...args) :
 	() => {};
 
 
@@ -22,9 +22,6 @@ let ready = false;
 let smallScreen = false;
 let bodyStyle;
 let scrollPosition;
-
-const widgetHeightOpened = `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN }px`;
-const widgetHeightClosed = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
 
 const validCallbacks = [
 	'chat-maximized',
@@ -66,17 +63,19 @@ function callHook(action, params) {
 	iframe.contentWindow.postMessage(data, '*');
 }
 
-const updateWidgetStyle = () => {
-	if (smallScreen && widget.dataset.state === 'opened') {
-		scrollPosition = document.body.scrollTop;
+const updateWidgetStyle = (isOpened) => {
+	if (smallScreen && isOpened) {
+		scrollPosition = document.documentElement.scrollTop;
 		bodyStyle = document.body.style.cssText;
 		document.body.style.cssText += `overflow: hidden; height: 100%; width: 100%; position: fixed; top: ${ scrollPosition }px;`;
 	} else {
 		document.body.style.cssText = bodyStyle;
-		document.body.scrollTop = scrollPosition;
+		if (smallScreen) {
+			document.documentElement.scrollTop = scrollPosition;
+		}
 	}
 
-	if (widget.dataset.state === 'opened') {
+	if (isOpened) {
 		widget.style.left = smallScreen ? '0' : 'auto';
 		widget.style.width = smallScreen ? '100vw' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
 		widget.style.height = smallScreen ? '100vh' : `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
@@ -90,15 +89,11 @@ const updateWidgetStyle = () => {
 };
 
 const createWidget = (url) => {
-	log('createWidget');
-
 	widget = document.createElement('div');
 	widget.className = 'rocketchat-widget';
 	widget.style.position = 'fixed';
 	widget.style.width = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_WIDTH + WIDGET_MARGIN }px`;
 	widget.style.height = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
-	widget.style.border = '1px solid red';
-	widget.style.boxSizing = 'border-box';
 	widget.style.bottom = '0';
 	widget.style.right = '0';
 	widget.style.zIndex = '12345';
@@ -128,7 +123,7 @@ const createWidget = (url) => {
 		}
 
 		smallScreen = matches;
-		updateWidgetStyle();
+		updateWidgetStyle(widget.dataset.state === 'opened');
 	};
 
 	const mediaQueryList = window.matchMedia('screen and (max-device-width: 480px)');
@@ -141,8 +136,8 @@ const openWidget = () => {
 		return;
 	}
 
+	updateWidgetStyle(true);
 	widget.dataset.state = 'opened';
-	updateWidgetStyle();
 
 	iframe.focus();
 	callHook('widgetOpened');
@@ -154,8 +149,8 @@ function closeWidget() {
 		return;
 	}
 
+	updateWidgetStyle(false);
 	widget.dataset.state = 'closed';
-	updateWidgetStyle();
 
 	callHook('widgetClosed');
 	emitCallback('chat-minimized');
@@ -188,8 +183,8 @@ const api = {
 
 	openPopout() {
 		closeWidget();
-		api.popup = window.open(`${ config.url }?mode=popout`, 'livechat-popout',
-			`width=${ WIDGET_OPEN_WIDTH }, height=${ WIDGET_OPEN_HEIGHT }, toolbars=no`);
+		api.popup = window.open(`${ config.url }${ config.url.lastIndexOf('?') > -1 ? '&' : '?' }mode=popout`,
+			'livechat-popout', `width=${ WIDGET_OPEN_WIDTH }, height=${ WIDGET_OPEN_HEIGHT }, toolbars=no`);
 		api.popup.focus();
 	},
 
