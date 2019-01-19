@@ -65,31 +65,31 @@ export const initRoom = async() => {
 		agent && store.setState({ agent: { ...agent, status } });
 	});
 
-	Livechat.onTyping((username, isTyping) => {
-		const { typing, user } = store.state;
-
-		if (user && user.username && user.username === username) {
-			return;
-		}
-
-		if (typing.indexOf(username) === -1 && isTyping) {
-			typing.push(username);
-			return store.setState({ typing });
-		}
-
-		if (!isTyping) {
-			return store.setState({ typing: typing.filter((u) => u !== username) });
-		}
-	});
-
-	Livechat.onMessage(async(message) => {
-		await store.setState({
-			messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })),
-		});
-		await processMessage(message);
-		await doPlaySound(message);
-	});
-
 	setCookies(rid, token);
 	parentCall('callback', 'chat-started');
 };
+
+Livechat.onTyping((username, isTyping) => {
+	const { typing, user } = store.state;
+
+	if (user && user.username && user.username === username) {
+		return;
+	}
+
+	if (typing.indexOf(username) === -1 && isTyping) {
+		typing.push(username);
+		return store.setState({ typing });
+	}
+
+	if (!isTyping) {
+		return store.setState({ typing: typing.filter((u) => u !== username) });
+	}
+});
+
+Livechat.onMessage(async(message) => {
+	await store.setState({
+		messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })),
+	});
+	await processMessage(message);
+	await doPlaySound(message);
+});

@@ -136,7 +136,15 @@ export class ChatContainer extends Component {
 		route('/switch-department');
 	}
 
-	doFinishChat = async() => {
+	onFinishChat = async() => {
+		const { success } = await ModalManager.confirm({
+			text: 'Are you sure you want to finish this chat?',
+		});
+
+		if (!success) {
+			return;
+		}
+
 		const { alerts, dispatch, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
@@ -157,17 +165,15 @@ export class ChatContainer extends Component {
 		}
 	}
 
-	onFinishChat = () => {
-		ModalManager.confirm({
-			text: 'Are you sure you want to finish this chat?',
-		}).then((result) => {
-			if ((typeof result.success === 'boolean') && result.success) {
-				this.doFinishChat();
-			}
+	onRemoveUserData = async() => {
+		const { success } = await ModalManager.confirm({
+			text: 'Are you sure you want to remove all of your personal data?',
 		});
-	}
 
-	doRemoveUserData = async() => {
+		if (!success) {
+			return;
+		}
+
 		const { alerts, dispatch } = this.props;
 
 		await dispatch({ loading: true });
@@ -182,16 +188,6 @@ export class ChatContainer extends Component {
 			await dispatch({ loading: false });
 			route('/chat-finished');
 		}
-	}
-
-	onRemoveUserData = async() => {
-		ModalManager.confirm({
-			text: 'Are you sure you want to remove all of your personal data?',
-		}).then((result) => {
-			if ((typeof result.success === 'boolean') && result.success) {
-				this.doRemoveUserData();
-			}
-		});
 	}
 
 	canSwitchDepartment = () => {
