@@ -50,9 +50,11 @@ export const initRoom = async() => {
 		if (servedBy) {
 			roomAgent = await Livechat.agent({ rid });
 			store.setState({ roomAgent });
+			await store.setState({ agent: roomAgent });
 		}
 
-		store.setState({ connecting: !roomAgent && showConnecting });
+		const connecting = !!(!roomAgent && showConnecting);
+		store.setState({ connecting });
 	}
 
 	Livechat.onAgentChange(rid, (agent) => {
