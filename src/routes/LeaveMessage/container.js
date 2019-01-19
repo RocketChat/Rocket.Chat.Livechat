@@ -38,10 +38,14 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 				messages: {
 					offlineMessage: message,
 					offlineSuccessMessage: successMessage,
+					offlineUnavailableMessage: unavailableMessage,
 				} = {},
 				theme: {
 					offlineTitle: title,
 					offlineColor: color,
+				} = {},
+				settings: {
+					displayOfflineForm,
 				} = {},
 			} = {},
 			loading,
@@ -56,10 +60,12 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 				color={color}
 				message={message || I18n.t('We are not online right now. Please, leave a message.')}
 				successMessage={successMessage}
+				unavailableMessage={unavailableMessage}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}
 				alerts={alerts}
+				displayOfflineForm={displayOfflineForm}
 			/>
 		)}
 	</Consumer>

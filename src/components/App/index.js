@@ -1,7 +1,7 @@
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
-import { initializeLivechat } from '../../api';
+import { Livechat } from '../../api';
 import history from '../../history';
 import { loadConfig } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
@@ -106,11 +106,7 @@ export class App extends Component {
 	}
 
 	async initialize() {
-		const {
-			serverUrl = process.env.NODE_ENV === 'development' && 'http://localhost:3000',
-		} = queryString.parse(window.location.search);
-
-		await initializeLivechat({ host: serverUrl, protocol: 'ddp' });
+		await Livechat.connect();
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();
