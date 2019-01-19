@@ -26,40 +26,42 @@ export class App extends Component {
 	}
 
 	handleRoute = async() => {
-		const {
-			config: {
-				settings: {
-					registrationForm,
-					nameFieldRegistrationForm,
-					emailFieldRegistrationForm,
-					forceAcceptDataProcessingConsent: gdprRequired,
+		setTimeout(() => {
+			const {
+				config: {
+					settings: {
+						registrationForm,
+						nameFieldRegistrationForm,
+						emailFieldRegistrationForm,
+						forceAcceptDataProcessingConsent: gdprRequired,
+					},
+					online,
 				},
-				online,
-			},
-			gdpr: {
-				accepted: gdprAccepted,
-			},
-			triggered,
-			user,
-		} = this.props;
+				gdpr: {
+					accepted: gdprAccepted,
+				},
+				triggered,
+				user,
+			} = this.props;
 
-		if (gdprRequired && !gdprAccepted) {
-			return route('/gdpr');
-		}
+			if (gdprRequired && !gdprAccepted) {
+				return route('/gdpr');
+			}
 
-		if (!online) {
-			return route('/leave-message');
-		}
+			if (!online) {
+				return route('/leave-message');
+			}
 
-		const showRegistrationForm = (
-			(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm)) &&
-			!triggered &&
-			!(user && user.token)
-		);
+			const showRegistrationForm = (
+				(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm)) &&
+				!triggered &&
+				!(user && user.token)
+			);
 
-		if (showRegistrationForm) {
-			return route('/register');
-		}
+			if (showRegistrationForm) {
+				return route('/register');
+			}
+		}, 100);
 	}
 
 	handleTriggers() {
