@@ -12,18 +12,21 @@ export const Messages = ({
 	messages = [],
 	typingAvatars = [],
 	conversationFinishedMessage,
+	lastReadMessageId,
 }) => (
 	<ol className={createClassName(styles, 'messages')}>
 		{messages.map((message, index, arr) => {
+			const previousMessage = arr[index - 1];
 			const nextMessage = arr[index + 1];
 
 			let showDateSeparator = false;
-			if (nextMessage && !isSameDay(message.ts, nextMessage.ts)) {
+			if (!previousMessage || !isSameDay(message.ts, previousMessage.ts)) {
 				showDateSeparator = true;
 			}
 
 			return (
 				<div>
+					{showDateSeparator && <Separator date={message.ts} />}
 					<Message
 						el="li"
 						key={message._id}
@@ -35,13 +38,12 @@ export const Messages = ({
 						conversationFinishedMessage={conversationFinishedMessage}
 						{...message}
 					/>
-					{showDateSeparator && <Separator date={nextMessage.ts} />}
+					{lastReadMessageId && nextMessage && lastReadMessageId === message._id && <Separator unread />}
 				</div>
 			);
 		})}
 		{typingAvatars && !!typingAvatars.length && <TypingIndicator avatars={typingAvatars} />}
 	</ol>
 );
-
 
 export default Messages;

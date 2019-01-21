@@ -28,6 +28,7 @@ const initialState = {
 	},
 	alerts: [],
 	connecting: false,
+	visible: true,
 };
 
 export const store = new Store(initialState);

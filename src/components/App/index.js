@@ -13,6 +13,18 @@ import Triggers from '../../lib/triggers';
 import userPresence from '../../lib/userPresence';
 import history from '../../history';
 
+let hidden = null;
+let visibilityChange = null;
+if (typeof document.hidden !== 'undefined') {
+	hidden = 'hidden';
+	visibilityChange = 'visibilitychange';
+} else if (typeof document.msHidden !== 'undefined') {
+	hidden = 'msHidden';
+	visibilityChange = 'msvisibilitychange';
+} else if (typeof document.webkitHidden !== 'undefined') {
+	hidden = 'webkitHidden';
+	visibilityChange = 'webkitvisibilitychange';
+}
 
 export class App extends Component {
 
@@ -90,6 +102,11 @@ export class App extends Component {
 		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
 	}
 
+	handleVisibilityChange = () => {
+		const { dispatch } = this.props;
+		dispatch({ visible: !document[hidden] });
+	}
+
 	async initialize() {
 		await loadConfig();
 		this.handleTriggers();
@@ -106,10 +123,12 @@ export class App extends Component {
 
 	componentDidMount() {
 		this.initialize();
+		document.addEventListener(visibilityChange, this.handleVisibilityChange);
 	}
 
 	componentWillUnmount() {
 		this.finalize();
+		document.removeEventListener(visibilityChange, this.handleVisibilityChange);
 	}
 
 	render = (props, { initialized }) => {

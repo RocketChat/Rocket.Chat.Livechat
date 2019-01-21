@@ -7,8 +7,9 @@ import { createToken, insert, getAvatarUrl, renderMessage } from '../../componen
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 
-
 export class ChatContainer extends Component {
+	state = { lastReadMessageId: null }
+
 	loadMessages = async() => {
 		const { dispatch, room: { _id: rid } = {} } = this.props;
 
@@ -216,7 +217,18 @@ export class ChatContainer extends Component {
 		this.loadMessages();
 	}
 
-	render = (props) => (
+	componentWillReceiveProps(nextProps) {
+		const { messages, visible } = this.props;
+		if (nextProps.messages && messages) {
+			const nextLastMessage = nextProps.messages[nextProps.messages.length - 1];
+			const lastMessage = messages[messages.length - 1];
+			if (visible && nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) {
+				this.setState({ lastReadMessageId: nextLastMessage._id });
+			}
+		}
+	}
+
+	render = (props, state) => (
 		<Chat
 			{...props}
 			onTop={this.handleTop}
@@ -228,6 +240,7 @@ export class ChatContainer extends Component {
 			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
+			lastReadMessageId={state.lastReadMessageId}
 		/>
 	)
 }
@@ -264,6 +277,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			connecting,
 			dispatch,
 			alerts,
+			visible,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -310,6 +324,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
 				alerts={alerts}
+				visible={visible}
 			/>
 		)}
 	</Consumer>

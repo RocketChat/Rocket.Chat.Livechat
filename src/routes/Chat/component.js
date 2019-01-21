@@ -112,6 +112,7 @@ export default class Chat extends Component {
 		onChangeDepartment,
 		onFinishChat,
 		onRemoveUserData,
+		lastReadMessageId,
 		...props
 	}, {
 		atBottom = true,
@@ -171,6 +172,7 @@ export default class Chat extends Component {
 							messages={messages}
 							typingAvatars={typingAvatars}
 							conversationFinishedMessage={conversationFinishedMessage}
+							lastReadMessageId={lastReadMessageId}
 						/>
 					</div>
 				</div>
