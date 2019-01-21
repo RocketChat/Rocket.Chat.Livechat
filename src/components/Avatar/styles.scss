@@ -3,7 +3,7 @@
 
 $avatar-size-small: 20px;
 $avatar-size-medium: 32px;
-$avatar-size-large: 38px;
+$avatar-size-large: 46px;
 
 .avatar {
     background-color: $bg-color-grey;
@@ -11,9 +11,8 @@ $avatar-size-large: 38px;
     background-position: right;
     background-repeat: no-repeat;
     background-size: contain;
-
-    border-radius: 2px;
-    overflow: hidden;
+    position: relative;
+    border-radius: $default-border-radius;
 
     width: $avatar-size-medium;
     height: $avatar-size-medium;
@@ -25,18 +24,37 @@ $avatar-size-large: 38px;
     }
 
     &--small {
-        width: 20px;
-        height: 20px;
+        width: $avatar-size-small;
+        height: $avatar-size-small;
     }
 
     &--large {
-        width: 38px;
-        height: 38px;
+        width: $avatar-size-large;
+        height: $avatar-size-large;
     }
 
     & &__image {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: $default-border-radius;
+    }
+
+    &__status {
+        position: absolute;
+        bottom: -3px;
+        right: -2px;
+        overflow: hidden;
+        display: flex;
+
+        &--small {
+            bottom: -2px;
+            right: -2px;
+        }
+
+        &--large {
+            bottom: -4px;
+            right: -2px;
+        }
     }
 }

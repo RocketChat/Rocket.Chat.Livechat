@@ -10,4 +10,7 @@ storiesOf('Components|StatusIndicator', module)
 	.add('online', () => <StatusIndicator status="online" />)
 	.add('away', () => <StatusIndicator status="away" />)
 	.add('busy', () => <StatusIndicator status="busy" />)
+	.add('small', () => <StatusIndicator small status="online" />)
+	.add('large', () => <StatusIndicator large status="online" />)
+	.add('border color', () => <StatusIndicator borderColor={'red'} status="online" />)
 ;
