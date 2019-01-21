@@ -1,5 +1,6 @@
 import { Livechat } from '../../api';
 import { store } from '../../store';
+import { route } from 'preact-router';
 import { insert, setCookies } from '../../components/helpers';
 import Commands from '../../lib/commands';
 import { loadConfig } from '../../lib/main';
@@ -12,12 +13,13 @@ const commands = new Commands();
 export const closeChat = async() => {
 	await handleTranscript();
 	await loadConfig();
+	parentCall('callback', 'chat-ended');
+	route('/chat-finished');
 };
 
 const processMessage = async(message) => {
 	if (message.t === 'livechat-close') {
 		closeChat();
-		parentCall('callback', 'chat-ended');
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	}
