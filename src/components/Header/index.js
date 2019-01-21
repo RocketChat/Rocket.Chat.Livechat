@@ -56,10 +56,7 @@ export const Post = ({ children, className, headerRef, ...props }) => {
 	if (headerRef) {
 		const bounds = headerRef.base.getBoundingClientRect();
 		style = {
-			top: bounds.bottom,
-			left: bounds.left,
-			right: bounds.right,
-			width: bounds.width,
+			top: bounds.height,
 		};
 	}
 	return (
