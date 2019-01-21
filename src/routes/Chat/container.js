@@ -161,7 +161,6 @@ export class ChatContainer extends Component {
 		} finally {
 			await dispatch({ loading: false });
 			await closeChat();
-			route('/chat-finished');
 		}
 	}
 
