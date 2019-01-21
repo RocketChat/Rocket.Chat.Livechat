@@ -1,0 +1,45 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+.separator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: $default-gap 0;
+
+    &__text {
+        height: 16px;
+        font-size: 10px;
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 0.2px;
+        line-height: 16px;
+        padding: 0 8px;
+    }
+
+    &__line {
+        display: flex;
+        flex: 1;
+        border: 0;
+        border-top-width: 2px;
+        border-style: solid;
+    }
+
+    &--date {
+        .separator__text {
+            color: $color-text-grey;
+        }
+        .separator__line {
+            border-color: $bg-color-grey;
+        }
+    }
+
+    &--unread {
+        .separator__text {
+            color: $color-red;
+        }
+        .separator__line {
+            border-color: $color-red;
+        }
+    }
+}
