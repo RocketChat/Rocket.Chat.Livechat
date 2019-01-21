@@ -36,6 +36,7 @@ export class App extends Component {
 						forceAcceptDataProcessingConsent: gdprRequired,
 					},
 					online,
+					departments = [],
 				},
 				gdpr: {
 					accepted: gdprAccepted,
@@ -52,8 +53,10 @@ export class App extends Component {
 				return route('/leave-message');
 			}
 
+			const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
+
 			const showRegistrationForm = (
-				(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm)) &&
+				(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)) &&
 				!triggered &&
 				!(user && user.token)
 			);
