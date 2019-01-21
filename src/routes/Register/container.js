@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
-import SDK from '../../api';
+import { Livechat } from '../../api';
+import { parentCall } from '../../lib/parentCall';
 import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
 import Register from './component';
@@ -29,18 +30,24 @@ export class RegisterContainer extends Component {
 
 		await dispatch({ loading: true, department });
 		try {
-			await SDK.grantVisitor({ visitor: { ...fields, token } });
+			await Livechat.grantVisitor({ visitor: { ...fields, token } });
 			await loadConfig();
-			// TODO: parencall here
-			// parentCall('callback', ['pre-chat-form-submit', fields]);
+			parentCall('callback', ['pre-chat-form-submit', fields]);
 			route('/');
 		} finally {
 			await dispatch({ loading: false });
 		}
 	}
 
+	getDepartmentDefault() {
+		const { guestDepartment, departments } = this.props;
+		if (departments && departments.some((dept) => dept._id === guestDepartment)) {
+			return guestDepartment;
+		}
+	}
+
 	render = (props) => (
-		<Register {...props} onSubmit={this.handleSubmit} />
+		<Register {...props} onSubmit={this.handleSubmit} departmentDefault={this.getDepartmentDefault()} />
 	)
 }
 
@@ -62,6 +69,15 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					color,
 				} = {},
 			} = {},
+			iframe: {
+				guest: {
+					department: guestDepartment,
+				} = {},
+				theme: {
+					customColor,
+					customFontColor,
+				} = {},
+			} = {},
 			loading = false,
 			token,
 			dispatch,
@@ -70,12 +86,14 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				ref={ref}
 				{...props}
 				title={title || I18n.t('Need help?')}
-				color={color}
+				color={customColor || color}
+				fontColor={customFontColor}
 				message={message || I18n.t('Please, tell us some informations to start the chat')}
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}
 				departments={departments.filter((dept) => dept.showOnRegistration)}
+				guestDepartment={guestDepartment}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}

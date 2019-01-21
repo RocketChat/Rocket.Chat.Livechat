@@ -1,5 +1,6 @@
 import { Component } from 'preact';
-import SDK from '../../api';
+import { Livechat } from '../../api';
+import { parentCall } from '../../lib/parentCall';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
 import { insert, createToken } from '../../components/helpers';
@@ -10,11 +11,10 @@ export class LeaveMessageContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			const message = await SDK.sendOfflineMessage(fields);
+			const message = await Livechat.sendOfflineMessage(fields);
 			const success = { id: createToken(), children: successMessage || message, success: true, timeout: 5000 };
 			await dispatch({ alerts: insert(alerts, success) });
-			// TODO: parentCall here
-			// parentCall('callback', ['offline-form-submit', fields]);
+			parentCall('callback', ['offline-form-submit', fields]);
 		} catch (error) {
 			const { data: { message } } = error;
 			console.error(message);

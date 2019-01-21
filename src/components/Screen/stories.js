@@ -6,7 +6,7 @@ import { Screen } from '.';
 
 
 const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px', background: 'white' }}>
+	<div style={{ display: 'flex', width: '365px', height: '510px' }}>
 		{storyFn()}
 	</div>
 ));
@@ -21,13 +21,45 @@ const alerts = [
 storiesOf('Components|Screen', module)
 	.addDecorator(withKnobs)
 	.addDecorator(screenCentered)
-	.add('simple', () => (
+	.add('normal', () => (
 		<Screen
 			color={color('color', '#175CC4')}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
 			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			{text('content', 'Content')}
+		</Screen>
+	))
+	.add('minimized', () => (
+		<Screen
+			color={color('color', '#175CC4')}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', true)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			{text('content', 'Content')}
+		</Screen>
+	))
+	.add('windowed', () => (
+		<Screen
+			color={color('color', '#175CC4')}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			windowed={boolean('windowed', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}

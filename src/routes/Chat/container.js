@@ -1,12 +1,13 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
 import format from 'date-fns/format';
-import SDK from '../../api';
+import { Livechat } from '../../api';
 import { Consumer } from '../../store';
-import { closeChat, initRoom, loadConfig } from '../../lib/main';
+import { loadConfig } from '../../lib/main';
 import { createToken, insert, getAvatarUrl, renderMessage } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
+import { initRoom, closeChat } from './room';
 
 const UNREAD_MESSAGES_ALERT_ID = 'UNREAD_MESSAGES';
 
@@ -21,7 +22,8 @@ export class ChatContainer extends Component {
 		}
 
 		await dispatch({ loading: true });
-		const messages = await SDK.loadMessages(rid);
+		const messages = await Livechat.loadMessages(rid);
+		await initRoom();
 		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
 		await dispatch({ loading: false });
 
@@ -39,7 +41,7 @@ export class ChatContainer extends Component {
 		}
 
 		await dispatch({ loading: true });
-		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
+		const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
 		await dispatch({
 			messages: (moreMessages || []).reverse(),
 			noMoreMessages: messages.length + 10 >= moreMessages.length,
@@ -54,7 +56,7 @@ export class ChatContainer extends Component {
 			return user;
 		}
 
-		await SDK.grantVisitor({ visitor: { token } });
+		await Livechat.grantVisitor({ visitor: { token } });
 		await loadConfig();
 	}
 
@@ -65,7 +67,7 @@ export class ChatContainer extends Component {
 			return room;
 		}
 
-		const newRoom = await SDK.room();
+		const newRoom = await Livechat.room();
 		await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
 		await initRoom();
 
@@ -82,7 +84,7 @@ export class ChatContainer extends Component {
 			return;
 		}
 
-		await SDK.notifyVisitorTyping(room._id, user.username, text.length > 0);
+		await Livechat.notifyVisitorTyping(room._id, user.username, text.length > 0);
 	}
 
 	handleSubmit = async(msg) => {
@@ -90,19 +92,18 @@ export class ChatContainer extends Component {
 			return;
 		}
 
-		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
 		try {
-			await SDK.sendMessage({ msg, token, rid });
+			await Livechat.sendMessage({ msg, token, rid });
 		} catch (error) {
 			await loadConfig();
 			const { data: { error: reason } } = error;
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: insert(alerts, alert) });
 		}
-		await SDK.notifyVisitorTyping(rid, user.username, false);
+		await Livechat.notifyVisitorTyping(rid, user.username, false);
 
 	}
 
@@ -110,7 +111,7 @@ export class ChatContainer extends Component {
 		const { alerts, dispatch } = this.props;
 
 		try {
-			await SDK.uploadFile({ rid, file });
+			await Livechat.uploadFile({ rid, file });
 		} catch (error) {
 			const { data: { reason, sizeAllowed } } = error;
 
@@ -129,7 +130,6 @@ export class ChatContainer extends Component {
 	};
 
 	handleUpload = async(files) => {
-		// TODO: both grantUser and getRoom ends up calling initRoom
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 
@@ -145,7 +145,15 @@ export class ChatContainer extends Component {
 		route('/switch-department');
 	}
 
-	doFinishChat = async() => {
+	onFinishChat = async() => {
+		const { success } = await ModalManager.confirm({
+			text: 'Are you sure you want to finish this chat?',
+		});
+
+		if (!success) {
+			return;
+		}
+
 		const { alerts, dispatch, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
@@ -154,7 +162,7 @@ export class ChatContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			await SDK.closeChat({ rid });
+			await Livechat.closeChat({ rid });
 		} catch (error) {
 			console.error(error);
 			const alert = { id: createToken(), children: 'Error closing chat.', error: true, timeout: 0 };
@@ -165,22 +173,20 @@ export class ChatContainer extends Component {
 		}
 	}
 
-	onFinishChat = () => {
-		ModalManager.confirm({
-			text: 'Are you sure you want to finish this chat?',
-		}).then((result) => {
-			if ((typeof result.success === 'boolean') && result.success) {
-				this.doFinishChat();
-			}
+	onRemoveUserData = async() => {
+		const { success } = await ModalManager.confirm({
+			text: 'Are you sure you want to remove all of your personal data?',
 		});
-	}
 
-	doRemoveUserData = async() => {
+		if (!success) {
+			return;
+		}
+
 		const { alerts, dispatch } = this.props;
 
 		await dispatch({ loading: true });
 		try {
-			await SDK.deleteVisitor();
+			await Livechat.deleteVisitor();
 		} catch (error) {
 			console.error(error);
 			const alert = { id: createToken(), children: 'Error removing user data.', error: true, timeout: 0 };
@@ -190,16 +196,6 @@ export class ChatContainer extends Component {
 			await dispatch({ loading: false });
 			route('/chat-finished');
 		}
-	}
-
-	onRemoveUserData = async() => {
-		ModalManager.confirm({
-			text: 'Are you sure you want to remove all of your personal data?',
-		}).then((result) => {
-			if ((typeof result.success === 'boolean') && result.success) {
-				this.doRemoveUserData();
-			}
-		});
 	}
 
 	canSwitchDepartment = () => {
@@ -291,6 +287,12 @@ export const ChatConnector = ({ ref, ...props }) => (
 				} = {},
 				departments = {},
 			},
+			iframe: {
+				theme: {
+					customColor,
+					customFontColor,
+				} = {},
+			},
 			token,
 			agent,
 			sound,
@@ -308,7 +310,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 			<ChatContainer
 				ref={ref}
 				{...props}
-				color={color}
+				color={customColor || color}
+				fontColor={customFontColor}
 				title={title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}
@@ -317,7 +320,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					username: user.username,
 					avatar: {
 						description: user.username,
-						src: getAvatarUrl(user.username),
+						src: getAvatarUrl((user.name && user.name.trim().split(' ')[0]) || user.username),
 					},
 				} : undefined}
 				agent={agent ? {

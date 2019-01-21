@@ -2,12 +2,12 @@
 @import 'grid';
 @import 'variables';
 
+
 html, body {
 	height: 100%;
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background: #FAFAFA;
 	font-family: $font-family;
 	font-weight: 400;
 	color: #444;
@@ -20,17 +20,17 @@ html, body {
 }
 
 *::-webkit-scrollbar {
-  width: 5px;
+	width: 5px;
 
-  &-thumb {
-	background: $color-text-grey;
-	border-radius: 5px;
-  }
+	&-thumb {
+		background: $color-text-grey;
+		border-radius: 5px;
+	}
 
-  &-track {
+	&-track {
 		background: $color-text-light;
 		border-radius: 5px;
-  }
+	}
 }
 
 #app {

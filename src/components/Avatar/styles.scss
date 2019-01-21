@@ -1,60 +1,65 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
+
 $avatar-size-small: 20px;
 $avatar-size-medium: 32px;
 $avatar-size-large: 46px;
 
 .avatar {
-    background-color: $bg-color-grey;
-    background-image: url(./profile.png);
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: contain;
-    position: relative;
-    border-radius: $default-border-radius;
+	flex: 0 0 auto;
+	background-color: $bg-color-grey;
+	background-image: url(./profile.png);
+	background-position: right;
+	background-repeat: no-repeat;
+	background-size: contain;
+	position: relative;
+	border-radius: $default-border-radius;
+	width: $avatar-size-medium;
+	height: $avatar-size-medium;
 
-    width: $avatar-size-medium;
-    height: $avatar-size-medium;
+	&--nobg {
+		background: none;
+	}
 
-    flex: 0 0 auto;
+	&--small {
+		width: $avatar-size-small;
+		height: $avatar-size-small;
+	}
 
-    &--nobg {
-        background: none;
-    }
+	&--large {
+		width: $avatar-size-large;
+		height: $avatar-size-large;
+	}
 
-    &--small {
-        width: $avatar-size-small;
-        height: $avatar-size-small;
-    }
+	& &__image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: $default-border-radius;
+		opacity: 1;
+		transition: opacity linear $default-time-animation;
 
-    &--large {
-        width: $avatar-size-large;
-        height: $avatar-size-large;
-    }
+		&--loading {
+			opacity: 0;
+		}
+	}
 
-    & &__image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: $default-border-radius;
-    }
+	&__status {
+		position: absolute;
+		bottom: -3px;
+		right: -2px;
+		overflow: hidden;
+		display: flex;
 
-    &__status {
-        position: absolute;
-        bottom: -3px;
-        right: -2px;
-        overflow: hidden;
-        display: flex;
+		&--small {
+			bottom: -2px;
+			right: -2px;
+		}
 
-        &--small {
-            bottom: -2px;
-            right: -2px;
-        }
-
-        &--large {
-            bottom: -4px;
-            right: -2px;
-        }
-    }
+		&--large {
+			bottom: -4px;
+			right: -2px;
+		}
+	}
 }

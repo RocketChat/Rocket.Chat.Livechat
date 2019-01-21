@@ -3,12 +3,10 @@
 
 
 $chat-button-border-radius: 4px;
-$chat-button-margin: 15px 28px;
 $chat-button-padding: 12px;
 $chat-button-size: 54px;
 $chat-button-background-color: $color-blue;
 $chat-button-color: $color-text-lighter;
-$chat-button-shadow: 0 7px 16px 0 rgba(0, 0, 0, 0.2);
 
 $chat-button-badge-size: 1.5rem;
 $chat-button-badge-background-color: $color-red;
@@ -28,14 +26,12 @@ $chat-button-badge-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 	border: none;
 	outline: none;
 	border-radius: $chat-button-border-radius;
-	margin: $chat-button-margin;
 	padding: $chat-button-padding;
 	height: $chat-button-size;
 	width: $chat-button-size;
 
 	background-color: $chat-button-background-color;
 	color: $chat-button-color;
-	box-shadow: $chat-button-shadow;
 
 	cursor: pointer;
 	transition: color $default-time-animation,

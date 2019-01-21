@@ -1,8 +1,7 @@
 import format from 'date-fns/format';
 import isToday from 'date-fns/is_today';
+import { Livechat } from '../api';
 
-// TODO: replace the hostUrl
-const hostUrl = 'http://localhost:3000';
 
 function flatMap(arr, mapFunc) {
 	const result = [];
@@ -87,18 +86,24 @@ export const parseDate = (ts) => format(ts, isToday(ts) ? 'HH:mm' : 'dddd HH:mm'
 export const systemMessage = (t) => (['s', 'p', 'f', 'r', 'au', 'ru', 'ul', 'wm', 'uj', 'livechat-close'].includes(t)) && 'system';
 
 export const parseMessage = (args, msg) => {
-	const { u: { username }, t, conversationFinishedMessage } = args;
+	const systemMarkdown = (msg) => (`*${ msg }*`);
+
+	const { t, conversationFinishedMessage } = args;
 	switch (t) {
 		case 'r':
-			return I18n.t('Room_name_changed', { room_name: msg, user_by: username });
+			return systemMarkdown(I18n.t('Room name changed'));
 		case 'au':
-			return I18n.t('User_added_by', { user_added: msg, user_by: username });
+			return systemMarkdown(I18n.t('User added by'));
 		case 'ru':
-			return I18n.t('User_removed_by', { user_removed: msg, user_by: username });
+			return systemMarkdown(I18n.t('User removed by'));
+		case 'ul':
+			return systemMarkdown(I18n.t('User left'));
+		case 'uj':
+			return systemMarkdown(I18n.t('User joined'));
 		case 'wm':
-			return I18n.t('Welcome', { user: username });
+			return systemMarkdown(I18n.t('Welcome'));
 		 case 'livechat-close':
-			return `*${ conversationFinishedMessage }*`;
+			return systemMarkdown(conversationFinishedMessage);
 		default:
 			return msg;
 	}
@@ -112,7 +117,7 @@ export const setCookies = (rid, token) => {
 
 export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
 
-export const getAvatarUrl = (username) => (username && `${ hostUrl }/avatar/${ username }`);
+export const getAvatarUrl = (username) => (username && `${ Livechat.client.host }/avatar/${ username }`);
 
 export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
 
@@ -120,7 +125,7 @@ export const renderMessage = (message = {}) => (message.t !== 'command' && !msgT
 
 export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
 	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url || attachment.title_link;
-	return { ...attachment, attachment_url: `${ hostUrl }${ assetUrl }` };
+	return { ...attachment, attachment_url: `${ Livechat.client.host }${ assetUrl }` };
 });
 
 export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));

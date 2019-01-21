@@ -1,6 +1,51 @@
 @import '~styles/colors';
 
+
+$screen-padding: 16px;
+$screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
+
+
 .screen {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	padding: $screen-padding;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: flex-end;
+	overflow: hidden;
+
+	.screen__inner {
+		box-shadow: $screen-box-shadow;
+		margin-bottom: $screen-padding;
+	}
+
+	.screen__chat-button {
+		box-shadow: $screen-box-shadow;
+	}
+
+	&--minimized {
+		.screen__inner {
+			display: none;
+		}
+	}
+
+	&--windowed {
+		padding: 0;
+		box-shadow: none;
+
+		.screen__inner {
+			margin: 0;
+			border-radius: 0;
+		}
+
+		.screen__chat-button {
+			display: none;
+		}
+	}
+}
+
+.screen__inner {
 	width: 100%;
 	flex: 1 1;
 	display: flex;
@@ -8,10 +53,7 @@
 	align-items: stretch;
 	background-color: $bg-color-white;
 	overflow: hidden;
-
-	&--rounded {
-		border-radius: 4px;
-	}
+	border-radius: 4px;
 }
 
 .screen__main {
