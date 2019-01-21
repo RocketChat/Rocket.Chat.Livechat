@@ -22,6 +22,11 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
+	iframe: {
+		isWidgetOpened: false,
+		guest: {},
+		theme: {},
+	},
 	department: null,
 	gdpr: {
 		accepted: false,

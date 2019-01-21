@@ -94,6 +94,7 @@ export default class Chat extends Component {
 	render = ({
 		color,
 		title,
+		fontColor,
 		sound,
 		user,
 		agent,
@@ -119,6 +120,7 @@ export default class Chat extends Component {
 		<Screen
 			color={color}
 			title={title || I18n.t('Need help?')}
+			fontColor={fontColor}
 			agent={agent}
 			nopadding
 			options={options}

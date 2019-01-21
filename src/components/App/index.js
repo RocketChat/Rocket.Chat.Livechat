@@ -1,5 +1,14 @@
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
+import queryString from 'query-string';
+import { Livechat } from '../../api';
+import history from '../../history';
+import { loadConfig } from '../../lib/main';
+import CustomFields from '../../lib/customFields';
+import Triggers from '../../lib/triggers';
+import Hooks from '../../lib/hooks';
+import { parentCall } from '../../lib/parentCall';
+import userPresence from '../../lib/userPresence';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
@@ -7,52 +16,55 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { loadConfig } from '../../lib/main';
-import CustomFields from '../../lib/customFields';
-import Triggers from '../../lib/triggers';
-import userPresence from '../../lib/userPresence';
-import history from '../../history';
 
 
 export class App extends Component {
 
-	state = { initialized: false }
+	state = {
+		initialized: false,
+		windowed: false,
+	}
 
 	handleRoute = async() => {
-		const {
-			config: {
-				settings: {
-					registrationForm,
-					nameFieldRegistrationForm,
-					emailFieldRegistrationForm,
-					forceAcceptDataProcessingConsent: gdprRequired,
+		setTimeout(() => {
+			const {
+				config: {
+					settings: {
+						registrationForm,
+						nameFieldRegistrationForm,
+						emailFieldRegistrationForm,
+						forceAcceptDataProcessingConsent: gdprRequired,
+					},
+					online,
+					departments = [],
 				},
-				online,
-			},
-			gdpr: {
-				accepted: gdprAccepted,
-			},
-			triggered,
-			user,
-		} = this.props;
+				gdpr: {
+					accepted: gdprAccepted,
+				},
+				triggered,
+				user,
+			} = this.props;
 
-		if (gdprRequired && !gdprAccepted) {
-			return route('/gdpr');
-		}
+			if (gdprRequired && !gdprAccepted) {
+				return route('/gdpr');
+			}
 
-		if (!online) {
-			return route('/leave-message');
-		}
+			if (!online) {
+				return route('/leave-message');
+			}
 
-		const showRegistrationForm = (
-			(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm)) &&
-			!triggered &&
-			!(user && user.token)
-		);
+			const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
 
-		if (showRegistrationForm) {
-			return route('/register');
-		}
+			const showRegistrationForm = (
+				(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)) &&
+				!triggered &&
+				!(user && user.token)
+			);
+
+			if (showRegistrationForm) {
+				return route('/register');
+			}
+		}, 100);
 	}
 
 	handleTriggers() {
@@ -76,13 +88,21 @@ export class App extends Component {
 	}
 
 	handleMinimize = () => {
+		parentCall('minimizeWindow');
 		const { dispatch } = this.props;
 		dispatch({ minimized: true });
 	}
 
 	handleRestore = () => {
+		parentCall('restoreWindow');
 		const { dispatch } = this.props;
-		dispatch({ minimized: false });
+		dispatch({ minimized: false, undocked: false });
+	}
+
+	handleOpenWindow = () => {
+		parentCall('openPopout');
+		const { dispatch } = this.props;
+		dispatch({ undocked: true });
 	}
 
 	handleDismissAlert = (id) => {
@@ -91,17 +111,28 @@ export class App extends Component {
 	}
 
 	async initialize() {
+		await Livechat.connect();
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();
+		Hooks.init();
 		userPresence.init();
 
 		this.setState({ initialized: true });
+		parentCall('ready');
+
+		const { minimized } = this.props;
+		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
 	}
 
 	async finalize() {
 		CustomFields.reset();
 		userPresence.reset();
+	}
+
+	componentWillMount() {
+		const windowed = queryString.parse(window.location.search).mode === 'popout';
+		this.setState({ windowed });
 	}
 
 	componentDidMount() {
@@ -112,18 +143,24 @@ export class App extends Component {
 		this.finalize();
 	}
 
-	render = (props, { initialized }) => {
+	render = ({
+		sound,
+		undocked,
+		minimized,
+		alerts,
+		modal,
+	}, { initialized, windowed }) => {
 		if (!initialized) {
 			return null;
 		}
 
 		const screenProps = {
-			notificationsEnabled: this.props.sound && this.props.sound.enabled,
-			minimized: this.props.minimized,
-			windowed: this.props.windowed,
-			sound: this.props.sound,
-			alerts: this.props.alerts,
-			modal: this.props.modal,
+			notificationsEnabled: sound && sound.enabled,
+			minimized: !windowed && (minimized || undocked),
+			windowed,
+			sound,
+			alerts,
+			modal,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
@@ -155,8 +192,8 @@ const AppConnector = () => (
 					triggered,
 					gdpr,
 					sound,
-					minimized,
-					windowed,
+					undocked,
+					minimized = true,
 					alerts,
 					modal,
 					dispatch,
@@ -167,8 +204,8 @@ const AppConnector = () => (
 						triggered={triggered}
 						user={user}
 						sound={sound}
+						undocked={undocked}
 						minimized={minimized}
-						windowed={windowed}
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
