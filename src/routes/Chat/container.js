@@ -281,7 +281,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					username: user.username,
 					avatar: {
 						description: user.username,
-						src: getAvatarUrl(user.username),
+						src: getAvatarUrl((user.name && user.name.trim().split(' ')[0]) || user.username),
 					},
 				} : undefined}
 				agent={agent ? {

@@ -27,6 +27,7 @@
   visibility: visible;
   opacity: 1;
   transition: opacity $default-time-animation;
+  z-index: 15;
 
   &--hidden {
     visibility: hidden;
