@@ -6,6 +6,8 @@ import { createToken } from '../components/helpers';
 import { loadConfig } from '../lib/main';
 
 const createOrUpdateGuest = async(guest) => {
+	const { token } = guest;
+	token && await store.setState({ token });
 	await Livechat.grantVisitor({ visitor: { ...guest } });
 	await loadConfig();
 };
@@ -113,7 +115,7 @@ const api = {
 		}
 
 		if (data.department) {
-			this.setDepartment(data.department);
+			api.setDepartment(data.department);
 		}
 
 		createOrUpdateGuest(data);
