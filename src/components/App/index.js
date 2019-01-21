@@ -102,9 +102,9 @@ export class App extends Component {
 		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
 	}
 
-	handleVisibilityChange = () => {
+	handleVisibilityChange = async() => {
 		const { dispatch } = this.props;
-		dispatch({ visible: !document[hidden] });
+		await dispatch({ visible: !document[hidden] });
 	}
 
 	async initialize() {

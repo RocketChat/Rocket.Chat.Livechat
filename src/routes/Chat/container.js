@@ -1,11 +1,14 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
+import format from 'date-fns/format';
 import SDK from '../../api';
 import { Consumer } from '../../store';
 import { closeChat, initRoom, loadConfig } from '../../lib/main';
 import { createToken, insert, getAvatarUrl, renderMessage } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
+
+const UNREAD_MESSAGES_ALERT_ID = 'UNREAD_MESSAGES';
 
 export class ChatContainer extends Component {
 	state = { lastReadMessageId: null }
@@ -21,6 +24,11 @@ export class ChatContainer extends Component {
 		const messages = await SDK.loadMessages(rid);
 		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
 		await dispatch({ loading: false });
+
+		if (messages && messages.length) {
+			const lastMessage = messages[messages.length - 1];
+			this.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+		}
 	}
 
 	loadMoreMessages = async() => {
@@ -128,9 +136,9 @@ export class ChatContainer extends Component {
 		files.forEach(async(file) => await this.doFileUpload(rid, file));
 	}
 
-	handlePlaySound = () => {
+	handlePlaySound = async() => {
 		const { dispatch, sound = {} } = this.props;
-		dispatch({ sound: { ...sound, play: false } });
+		await dispatch({ sound: { ...sound, play: false } });
 	}
 
 	onChangeDepartment = () => {
@@ -217,13 +225,31 @@ export class ChatContainer extends Component {
 		this.loadMessages();
 	}
 
-	componentWillReceiveProps(nextProps) {
+	async componentWillReceiveProps(nextProps) {
+		const { lastReadMessageId } = this.state;
 		const { messages, visible } = this.props;
-		if (nextProps.messages && messages) {
+
+		// show unread messages alert, e.g. "1 new message since..."
+		if (nextProps.visible && visible !== nextProps.visible && nextProps.messages.length > 0 && lastReadMessageId) {
+			const { alerts, dispatch } = this.props;
+			const lastReadMessageIndex = nextProps.messages.findIndex((item) => item._id === lastReadMessageId);
+			const unreadMessages = nextProps.messages.slice(lastReadMessageIndex + 1);
+			if (unreadMessages.length > 0) {
+				const lastReadMessage = nextProps.messages[lastReadMessageIndex];
+				const message = `${ unreadMessages.length } new ${ unreadMessages.length === 1 ? 'message' : 'messages' } since ${ format(lastReadMessage.ts, 'HH:mm [on] MMMM Do') }`;
+				const alert = { id: UNREAD_MESSAGES_ALERT_ID, children: message, success: true, timeout: 0 };
+				const newAlerts = alerts.filter((item) => item.id !== UNREAD_MESSAGES_ALERT_ID);
+				await dispatch({ alerts: insert(newAlerts, alert) });
+			}
+
+		// set last read message id
+		} else if (nextProps.messages && messages && nextProps.messages.length !== messages.length) {
 			const nextLastMessage = nextProps.messages[nextProps.messages.length - 1];
 			const lastMessage = messages[messages.length - 1];
-			if (visible && nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) {
-				this.setState({ lastReadMessageId: nextLastMessage._id });
+			if (nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) {
+				if (visible) {
+					this.setState({ lastReadMessageId: nextLastMessage._id });
+				}
 			}
 		}
 	}
