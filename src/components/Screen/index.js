@@ -32,6 +32,7 @@ class ScreenHeader extends Component {
 		title,
 		notificationsEnabled,
 		minimized,
+		expanded,
 		windowed,
 		onDismissAlert,
 		onEnableNotifications,
@@ -84,7 +85,7 @@ class ScreenHeader extends Component {
 							}
 						</Tooltip.Trigger>
 					</Header.Action>
-					{!windowed && (
+					{(expanded || !windowed) && (
 						<Header.Action
 							aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
 							onClick={minimized ? onRestore : onMinimize}
@@ -97,7 +98,7 @@ class ScreenHeader extends Component {
 							</Tooltip.Trigger>
 						</Header.Action>
 					)}
-					{!windowed && (
+					{(!expanded && !windowed) && (
 						<Header.Action aria-label={I18n.t('Open in a new window')} onClick={onOpenWindow}>
 							<Tooltip.Trigger content={I18n.t('Expand chat')}>
 								<OpenWindowIcon width={20} />
@@ -144,6 +145,7 @@ const ScreenInner = ({
 	title,
 	notificationsEnabled,
 	minimized,
+	expanded,
 	windowed,
 	nopadding,
 	children,
@@ -171,6 +173,7 @@ const ScreenInner = ({
 				title={title}
 				notificationsEnabled={notificationsEnabled}
 				minimized={minimized}
+				expanded={expanded}
 				windowed={windowed}
 				onDismissAlert={onDismissAlert}
 				onEnableNotifications={onEnableNotifications}
@@ -204,6 +207,7 @@ export const Screen = ({
 	title,
 	notificationsEnabled,
 	minimized = false,
+	expanded = false,
 	windowed = false,
 	nopadding = false,
 	children,
@@ -222,13 +226,14 @@ export const Screen = ({
 	onFinishChat,
 	onRemoveUserData,
 }) => (
-	<div className={createClassName(styles, 'screen', { minimized, windowed })}>
+	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<ScreenInner
 			color={color}
 			agent={agent}
 			title={title}
 			notificationsEnabled={notificationsEnabled}
 			minimized={minimized}
+			expanded={expanded}
 			windowed={windowed}
 			nopadding={nopadding}
 			children={children}
