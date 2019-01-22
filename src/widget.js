@@ -78,13 +78,12 @@ const updateWidgetStyle = (isOpened) => {
 	if (isOpened) {
 		widget.style.left = smallScreen ? '0' : 'auto';
 		widget.style.width = smallScreen ? '100vw' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
-		widget.style.height = smallScreen ? '100vh' : `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
-		widget.style.minHeight = smallScreen ? `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px` : 'auto';
+		widget.style.height = smallScreen ? '100vh' :
+			`${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
 	} else {
 		widget.style.left = 'auto';
 		widget.style.width = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_WIDTH + WIDGET_MARGIN }px`;
 		widget.style.height = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
-		widget.style.minHeight = 'auto';
 	}
 };
 
@@ -94,6 +93,7 @@ const createWidget = (url) => {
 	widget.style.position = 'fixed';
 	widget.style.width = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_WIDTH + WIDGET_MARGIN }px`;
 	widget.style.height = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
+	widget.style.maxHeight = '100vh';
 	widget.style.bottom = '0';
 	widget.style.right = '0';
 	widget.style.zIndex = '12345';
@@ -124,6 +124,7 @@ const createWidget = (url) => {
 
 		smallScreen = matches;
 		updateWidgetStyle(widget.dataset.state === 'opened');
+		callHook('setExpanded', smallScreen);
 	};
 
 	const mediaQueryList = window.matchMedia('screen and (max-device-width: 480px)');

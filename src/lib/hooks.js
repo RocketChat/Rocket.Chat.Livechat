@@ -88,6 +88,10 @@ const api = {
 		store.setState({ iframe: { ...iframe, isWidgetOpened: false } });
 	},
 
+	setExpanded(expanded) {
+		store.setState({ expanded });
+	},
+
 	async setGuestToken(token) {
 		const { token: localToken, iframe, iframe: { guest } } = store.state;
 		if (token === localToken) {
