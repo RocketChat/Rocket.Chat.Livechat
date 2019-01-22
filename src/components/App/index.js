@@ -16,19 +16,7 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-
-let hidden = null;
-let visibilityChange = null;
-if (typeof document.hidden !== 'undefined') {
-	hidden = 'hidden';
-	visibilityChange = 'visibilitychange';
-} else if (typeof document.msHidden !== 'undefined') {
-	hidden = 'msHidden';
-	visibilityChange = 'msvisibilitychange';
-} else if (typeof document.webkitHidden !== 'undefined') {
-	hidden = 'webkitHidden';
-	visibilityChange = 'webkitvisibilitychange';
-}
+import { visibility } from '../helpers';
 
 export class App extends Component {
 
@@ -124,7 +112,7 @@ export class App extends Component {
 
 	handleVisibilityChange = async() => {
 		const { dispatch } = this.props;
-		await dispatch({ visible: !document[hidden] });
+		await dispatch({ visible: !document[visibility.hidden] });
 	}
 
 	async initialize() {
@@ -154,12 +142,12 @@ export class App extends Component {
 
 	componentDidMount() {
 		this.initialize();
-		document.addEventListener(visibilityChange, this.handleVisibilityChange);
+		document.addEventListener(visibility.event, this.handleVisibilityChange);
 	}
 
 	componentWillUnmount() {
 		this.finalize();
-		document.removeEventListener(visibilityChange, this.handleVisibilityChange);
+		document.removeEventListener(visibility.event, this.handleVisibilityChange);
 	}
 
 	render = ({

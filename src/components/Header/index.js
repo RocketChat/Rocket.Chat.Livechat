@@ -51,20 +51,11 @@ export const Action = ({ children, className, ...props }) => (
 	</button>
 );
 
-export const Post = ({ children, className, headerRef, ...props }) => {
-	let style = {};
-	if (headerRef) {
-		const bounds = headerRef.base.getBoundingClientRect();
-		style = {
-			top: bounds.height,
-		};
-	}
-	return (
-		<div className={createClassName(styles, 'header__post', {}, [className])} style={style} {...props}>
-			{children}
-		</div>
-	);
-};
+export const Post = ({ children, className, ...props }) => (
+	<div className={createClassName(styles, 'header__post', {}, [className])} {...props}>
+		{children}
+	</div>
+);
 
 export const CustomField = ({ children, className, ...props }) => (
 	<div

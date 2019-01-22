@@ -129,3 +129,19 @@ export const getAttachmentsUrl = (attachments) => attachments && attachments.map
 });
 
 export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));
+
+let hidden = null;
+let event = null;
+if (typeof document.hidden !== 'undefined') {
+	hidden = 'hidden';
+	event = 'visibilitychange';
+} else if (typeof document.msHidden !== 'undefined') {
+	hidden = 'msHidden';
+	event = 'msvisibilitychange';
+} else if (typeof document.webkitHidden !== 'undefined') {
+	hidden = 'webkitHidden';
+	event = 'webkitvisibilitychange';
+}
+export const visibility = {
+	hidden, event,
+};

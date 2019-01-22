@@ -19,10 +19,7 @@ export const Messages = ({
 			const previousMessage = arr[index - 1];
 			const nextMessage = arr[index + 1];
 
-			let showDateSeparator = false;
-			if (!previousMessage || !isSameDay(message.ts, previousMessage.ts)) {
-				showDateSeparator = true;
-			}
+			const showDateSeparator = !previousMessage || !isSameDay(message.ts, previousMessage.ts);
 
 			return (
 				<div>

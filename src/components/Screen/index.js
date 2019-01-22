@@ -16,10 +16,6 @@ import { PopoverContainer } from '../Popover';
 
 
 class ScreenHeader extends Component {
-	handleRef = (ref) => {
-		this.headerRef = ref;
-	}
-
 	largeHeader = () => {
 		const { agent } = this.props;
 		return !!(agent && agent.email && agent.phone);
@@ -44,7 +40,7 @@ class ScreenHeader extends Component {
 			ref={this.handleRef}
 			color={color}
 			post={
-				<Header.Post headerRef={this.headerRef}>
+				<Header.Post>
 					{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
 				</Header.Post>
 			}
