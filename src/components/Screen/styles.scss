@@ -4,7 +4,6 @@
 $screen-padding: 16px;
 $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
 
-
 .screen {
 	display: flex;
 	width: 100%;
@@ -30,6 +29,7 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 		}
 	}
 
+	&--expanded,
 	&--windowed {
 		padding: 0;
 		box-shadow: none;
@@ -57,10 +57,11 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 }
 
 .screen__main {
-	flex: 1 1 auto;
+	flex: 1 0 0;
 	display: flex;
 	flex-direction: column;
 	padding: 1rem 1rem 0;
+	overflow-y: auto;
 
 	&--nopadding {
 		padding: 0;

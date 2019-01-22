@@ -22,7 +22,6 @@ export class App extends Component {
 
 	state = {
 		initialized: false,
-		windowed: false,
 	}
 
 	handleRoute = async() => {
@@ -130,11 +129,6 @@ export class App extends Component {
 		userPresence.reset();
 	}
 
-	componentWillMount() {
-		const windowed = queryString.parse(window.location.search).mode === 'popout';
-		this.setState({ windowed });
-	}
-
 	componentDidMount() {
 		this.initialize();
 	}
@@ -147,17 +141,21 @@ export class App extends Component {
 		sound,
 		undocked,
 		minimized,
+		expanded,
 		alerts,
 		modal,
-	}, { initialized, windowed }) => {
+	}, { initialized }) => {
 		if (!initialized) {
 			return null;
 		}
 
+		const poppedOut = queryString.parse(window.location.search).mode === 'popout';
+
 		const screenProps = {
 			notificationsEnabled: sound && sound.enabled,
-			minimized: !windowed && (minimized || undocked),
-			windowed,
+			minimized: !poppedOut && (minimized || undocked),
+			expanded: !minimized && expanded,
+			windowed: !minimized && poppedOut,
 			sound,
 			alerts,
 			modal,
@@ -194,6 +192,7 @@ const AppConnector = () => (
 					sound,
 					undocked,
 					minimized = true,
+					expanded = false,
 					alerts,
 					modal,
 					dispatch,
@@ -206,6 +205,7 @@ const AppConnector = () => (
 						sound={sound}
 						undocked={undocked}
 						minimized={minimized}
+						expanded={expanded}
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}

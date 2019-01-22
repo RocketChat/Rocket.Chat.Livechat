@@ -27,6 +27,7 @@ storiesOf('Components|Screen', module)
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
@@ -43,6 +44,24 @@ storiesOf('Components|Screen', module)
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', true)}
+			expanded={boolean('expanded', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			{text('content', 'Content')}
+		</Screen>
+	))
+	.add('expanded', () => (
+		<Screen
+			color={color('color', '#175CC4')}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', true)}
 			windowed={boolean('windowed', false)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
@@ -59,6 +78,7 @@ storiesOf('Components|Screen', module)
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
@@ -84,6 +104,7 @@ storiesOf('Components|Screen', module)
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
@@ -109,6 +130,7 @@ storiesOf('Components|Screen', module)
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
@@ -135,6 +157,7 @@ storiesOf('Components|Screen', module)
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
@@ -151,6 +174,7 @@ storiesOf('Components|Screen', module)
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
 			alerts={array('alerts', alerts)}
 			onEnableNotifications={action('enableNotifications')}
