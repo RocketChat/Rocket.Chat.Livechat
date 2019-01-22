@@ -36,6 +36,8 @@ $header-height-large: 77px;
 		text-overflow: ellipsis;
 
 		.header__title {
+			overflow: hidden;
+			text-overflow: ellipsis;
 			font-size: 16px;
 			font-weight: 500;
 			line-height: 1.5;
