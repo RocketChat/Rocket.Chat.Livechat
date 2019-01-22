@@ -139,9 +139,7 @@ const openWidget = () => {
 
 	updateWidgetStyle(true);
 	widget.dataset.state = 'opened';
-
 	iframe.focus();
-	callHook('widgetOpened');
 	emitCallback('chat-maximized');
 };
 
@@ -152,8 +150,6 @@ function closeWidget() {
 
 	updateWidgetStyle(false);
 	widget.dataset.state = 'closed';
-
-	callHook('widgetClosed');
 	emitCallback('chat-minimized');
 }
 

@@ -78,16 +78,6 @@ const api = {
 		store.setState({ iframe: { ...iframe, department: null } });
 	},
 
-	widgetOpened() {
-		const { iframe } = store.state;
-		store.setState({ iframe: { ...iframe, isWidgetOpened: true } });
-	},
-
-	widgetClosed() {
-		const { iframe } = store.state;
-		store.setState({ iframe: { ...iframe, isWidgetOpened: false } });
-	},
-
 	setExpanded(expanded) {
 		store.setState({ expanded });
 	},
