@@ -23,7 +23,11 @@ storiesOf('Components|Screen', module)
 	.addDecorator(screenCentered)
 	.add('normal', () => (
 		<Screen
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
@@ -40,7 +44,11 @@ storiesOf('Components|Screen', module)
 	))
 	.add('minimized', () => (
 		<Screen
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', true)}
@@ -57,7 +65,11 @@ storiesOf('Components|Screen', module)
 	))
 	.add('expanded', () => (
 		<Screen
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
@@ -74,7 +86,11 @@ storiesOf('Components|Screen', module)
 	))
 	.add('windowed', () => (
 		<Screen
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
@@ -91,14 +107,18 @@ storiesOf('Components|Screen', module)
 	))
 	.add('with agent (email)', () => (
 		<Screen
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			agent={object('agent', {
 				name: 'Guilherme Gazzo',
 				status: 'away',
 				email: 'guilherme.gazzo@rocket.chat',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
+					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
 				},
 			})}
 			title={text('title', 'Title')}
@@ -117,14 +137,18 @@ storiesOf('Components|Screen', module)
 	))
 	.add('with agent (phone)', () => (
 		<Screen
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			agent={object('agent', {
 				name: 'Guilherme Gazzo',
 				status: 'away',
 				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
+					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
 				},
 			})}
 			title={text('title', 'Title')}
@@ -143,7 +167,11 @@ storiesOf('Components|Screen', module)
 	))
 	.add('with agent', () => (
 		<Screen
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			agent={object('agent', {
 				name: 'Guilherme Gazzo',
 				status: 'away',
@@ -151,7 +179,7 @@ storiesOf('Components|Screen', module)
 				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
+					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
 				},
 			})}
 			title={text('title', 'Title')}
@@ -170,7 +198,11 @@ storiesOf('Components|Screen', module)
 	))
 	.add('with multiple alerts', () => (
 		<Screen
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
