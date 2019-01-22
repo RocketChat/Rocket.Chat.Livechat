@@ -223,28 +223,26 @@ export class ChatContainer extends Component {
 
 	async componentWillReceiveProps(nextProps) {
 		const { lastReadMessageId } = this.state;
-		const { messages, visible } = this.props;
+		const { messages, alerts, dispatch } = this.props;
 
-		// show unread messages alert, e.g. "1 new message since..."
-		if (nextProps.visible && visible !== nextProps.visible && nextProps.messages.length > 0 && lastReadMessageId) {
-			const { alerts, dispatch } = this.props;
-			const lastReadMessageIndex = nextProps.messages.findIndex((item) => item._id === lastReadMessageId);
-			const unreadMessages = nextProps.messages.slice(lastReadMessageIndex + 1);
-			if (unreadMessages.length > 0) {
-				const lastReadMessage = nextProps.messages[lastReadMessageIndex];
-				const message = `${ unreadMessages.length } new ${ unreadMessages.length === 1 ? 'message' : 'messages' } since ${ format(lastReadMessage.ts, 'HH:mm [on] MMMM Do') }`;
-				const alert = { id: UNREAD_MESSAGES_ALERT_ID, children: message, success: true, timeout: 0 };
-				const newAlerts = alerts.filter((item) => item.id !== UNREAD_MESSAGES_ALERT_ID);
-				await dispatch({ alerts: insert(newAlerts, alert) });
-			}
-
-		// set last read message id
-		} else if (nextProps.messages && messages && nextProps.messages.length !== messages.length) {
-			const nextLastMessage = nextProps.messages[nextProps.messages.length - 1];
-			const lastMessage = messages[messages.length - 1];
-			if (nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) {
-				if (visible) {
+		if (nextProps.messages && messages && nextProps.messages.length !== messages.length) {
+			if ((nextProps.minimized || !nextProps.visible) && lastReadMessageId) {
+				const lastReadMessageIndex = nextProps.messages.findIndex((item) => item._id === lastReadMessageId);
+				const unreadMessages = nextProps.messages.slice(lastReadMessageIndex + 1);
+				if (unreadMessages.length > 0) {
+					const lastReadMessage = nextProps.messages[lastReadMessageIndex];
+					const message = `${ unreadMessages.length } new ${ unreadMessages.length === 1 ? 'message' : 'messages' } since ${ format(lastReadMessage.ts, 'HH:mm [on] MMMM Do') }`;
+					const alert = { id: UNREAD_MESSAGES_ALERT_ID, children: message, success: true, timeout: 0 };
+					const newAlerts = alerts.filter((item) => item.id !== UNREAD_MESSAGES_ALERT_ID);
+					await dispatch({ alerts: insert(newAlerts, alert), unread: unreadMessages.length });
+				}
+			} else if (nextProps.visible && !nextProps.minimized) {
+				const nextLastMessage = nextProps.messages[nextProps.messages.length - 1];
+				const lastMessage = messages[messages.length - 1];
+				if (nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) {
 					this.setState({ lastReadMessageId: nextLastMessage._id });
+					const newAlerts = alerts.filter((item) => item.id !== UNREAD_MESSAGES_ALERT_ID);
+					await dispatch({ alerts: newAlerts, unread: null });
 				}
 			}
 		}
@@ -306,6 +304,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			dispatch,
 			alerts,
 			visible,
+			unread,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -354,6 +353,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				allowRemoveUserData={allowRemoveUserData}
 				alerts={alerts}
 				visible={visible}
+				unread={unread}
 			/>
 		)}
 	</Consumer>

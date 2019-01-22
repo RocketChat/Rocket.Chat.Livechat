@@ -27,5 +27,6 @@ export const loadConfig = async() => {
 		alerts: [],
 		noMoreMessages: false,
 		visible: true,
+		unread: null,
 	});
 };

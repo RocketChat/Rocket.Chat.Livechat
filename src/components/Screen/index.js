@@ -208,6 +208,7 @@ export const Screen = ({
 	className,
 	alerts,
 	modal,
+	unread,
 	onDismissAlert,
 	onEnableNotifications,
 	onDisableNotifications,
@@ -248,6 +249,7 @@ export const Screen = ({
 			open={!minimized}
 			onClick={minimized ? onRestore : onMinimize}
 			className={createClassName(styles, 'screen__chat-button')}
+			badge={unread}
 		/>
 	</div>
 );
