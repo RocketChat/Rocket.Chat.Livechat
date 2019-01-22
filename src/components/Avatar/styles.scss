@@ -37,12 +37,7 @@ $avatar-size-large: 46px;
 		height: 100%;
 		object-fit: cover;
 		border-radius: $default-border-radius;
-		opacity: 1;
-		transition: opacity linear $default-time-animation;
-
-		&--loading {
-			opacity: 0;
-		}
+		color: transparent;
 	}
 
 	&__status {
