@@ -51,7 +51,6 @@ $header-height-large: 77px;
 			font-weight: 500;
 			line-height: 1.5;
 			letter-spacing: normal;
-			color: #ffffff;
 		}
 
 		.header__custom-field {
@@ -62,7 +61,6 @@ $header-height-large: 77px;
 			font-weight: 500;
 			line-height: 1.67;
 			letter-spacing: normal;
-			color: #ffffff;
 		}
 	}
 
@@ -78,7 +76,7 @@ $header-height-large: 77px;
 			display: flex;
 			justify-content: center;
 			flex: 0 0 auto;
-			color: $color-text-lighter;
+			color: inherit;
 
 			&:active {
 				opacity: .9;
