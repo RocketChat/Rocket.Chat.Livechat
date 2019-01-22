@@ -26,12 +26,23 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 					color,
 				} = {},
 			} = {},
+			iframe: {
+				theme: {
+					color: customColor,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				} = {},
+			} = {},
 		}) => (
 			<ChatFinishedContainer
 				ref={ref}
 				{...props}
+				theme={{
+					color: customColor || color,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				}}
 				title={I18n.t('Chat Finished')}
-				color={color}
 				greeting={greeting || I18n.t('Thanks for talking with us')}
 				message={I18n.t('If you have any other questions, just press the button below to start a new chat.')}
 			/>

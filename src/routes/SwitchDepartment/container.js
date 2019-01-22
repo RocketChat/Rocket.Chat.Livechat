@@ -68,6 +68,13 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 					color,
 				} = {},
 			} = {},
+			iframe: {
+				theme: {
+					color: customColor,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				} = {},
+			} = {},
 			room = {},
 			loading = false,
 			department,
@@ -77,8 +84,12 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 			<SwitchDepartmentContainer
 				ref={ref}
 				{...props}
+				theme={{
+					color: customColor || color,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				}}
 				title={I18n.t('Change Department')}
-				color={color}
 				loading={loading}
 				message={I18n.t('Choose a department')}
 				departments={departments.filter((dept) => dept.showOnRegistration && dept._id !== department)}

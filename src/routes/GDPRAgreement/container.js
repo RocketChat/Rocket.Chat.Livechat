@@ -31,13 +31,24 @@ export const GDPRConnector = ({ ref, ...props }) => (
 					dataProcessingConsentText: consentText,
 				} = {},
 			} = {},
+			iframe: {
+				theme: {
+					color: customColor,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				} = {},
+			} = {},
 			dispatch,
 		}) => (
 			<GDPRContainer
 				ref={ref}
 				{...props}
+				theme={{
+					color: customColor || color,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				}}
 				title={I18n.t('GDPR')}
-				color={color}
 				dispatch={dispatch}
 				consentText={consentText || defaultConsentText}
 			/>

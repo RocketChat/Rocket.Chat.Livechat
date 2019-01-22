@@ -44,21 +44,19 @@ const api = {
 		CustomFields.setCustomField(key, value, overwrite);
 	},
 
-	setTheme(newTheme = {}) {
+	setTheme({ color, fontColor, iconColor } = {}) {
 		const { iframe, iframe: { theme } } = store.state;
-		let themeObj;
-
-		if (newTheme.color) {
-			themeObj = Object.assign({}, { customColor: newTheme.color });
-		}
-
-		if (newTheme.fontColor) {
-			themeObj = Object.assign({}, themeObj, { customFontColor: newTheme.fontColor });
-		}
-
-		if (themeObj) {
-			store.setState({ iframe: { ...iframe, theme: { ...theme, ...themeObj } } });
-		}
+		store.setState({
+			iframe: {
+				...iframe,
+				theme: {
+					...theme,
+					color,
+					fontColor,
+					iconColor,
+				},
+			},
+		});
 	},
 
 	setDepartment(departmentValue) {
