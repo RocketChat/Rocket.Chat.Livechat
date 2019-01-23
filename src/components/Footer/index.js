@@ -3,6 +3,9 @@ import styles from './styles';
 import Logo from './logo.svg';
 import { createClassName } from '../helpers';
 import { PopoverMenu, Group, Item } from '../Menu';
+import ChangeIcon from '../../icons/change.svg';
+import RemoveIcon from '../../icons/remove.svg';
+import FinishIcon from '../../icons/finish.svg';
 
 export const Footer = ({ children, ...props }) => (
 	<footer className={createClassName(styles, 'footer')} {...props}>
@@ -38,9 +41,9 @@ const OptionsTrigger = ({ pop }) => (
 export const Options = ({ onChangeDepartment, onFinishChat, onRemoveUserData }) => (
 	<PopoverMenu trigger={OptionsTrigger} overlayed>
 		<Group>
-			{onChangeDepartment && <Item onClick={onChangeDepartment}>Change department</Item>}
-			{onRemoveUserData && <Item onClick={onRemoveUserData}>Forget/Remove my personal data</Item>}
-			{onFinishChat && <Item danger onClick={onFinishChat}>Finish this chat</Item>}
+			{onChangeDepartment && <Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Item>}
+			{onRemoveUserData && <Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my personal data')}</Item>}
+			{onFinishChat && <Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Item>}
 		</Group>
 	</PopoverMenu>
 );
