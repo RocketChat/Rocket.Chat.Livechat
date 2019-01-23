@@ -1,45 +1,52 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
+
+$separator-text-font-size: 0.625rem;
+$separator-text-letter-spacing: 0.2px;
+$separator-line-width: 2px;
+$separator-date-text-color: $color-text-grey;
+$separator-date-line-color: $bg-color-grey;
+$separator-unread-text-color: $color-red;
+$separator-unread-line-color: $color-red;
+
 .separator {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: $default-gap 0;
+	margin: $default-gap 0;
 
     &__text {
-        height: 16px;
-        font-size: 10px;
+        height: 1rem;
+        font-size: $separator-text-font-size;
         font-weight: bold;
         text-align: center;
-        letter-spacing: 0.2px;
-        line-height: 16px;
-        padding: 0 8px;
+        letter-spacing: $separator-text-letter-spacing;
+        line-height: 1rem;
+        padding: 0 0.5rem;
     }
 
     &__line {
         display: flex;
         flex: 1;
-        border: 0;
-        border-top-width: 2px;
-        border-style: solid;
-    }
+		border-width: 0;
+		border-top: $separator-line-width solid;
+	}
 
-    &--date {
-        .separator__text {
-            color: $color-text-grey;
+	@mixin state($text-color, $line-color) {
+		.separator__text {
+            color: $text-color;
         }
         .separator__line {
-            border-color: $bg-color-grey;
+            border-color: $line-color;
         }
+	}
+
+    &--date {
+        @include state($separator-date-text-color, $separator-date-line-color);
     }
 
     &--unread {
-        .separator__text {
-            color: $color-red;
-        }
-        .separator__line {
-            border-color: $color-red;
-        }
+        @include state($separator-unread-text-color, $separator-unread-line-color);
     }
 }
