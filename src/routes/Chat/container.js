@@ -232,7 +232,13 @@ export class ChatContainer extends Component {
 				const unreadMessages = nextProps.messages.slice(lastReadMessageIndex + 1);
 				if (unreadMessages.length > 0) {
 					const lastReadMessage = nextProps.messages[lastReadMessageIndex];
-					const message = `${ unreadMessages.length } new ${ unreadMessages.length === 1 ? 'message' : 'messages' } since ${ format(lastReadMessage.ts, 'HH:mm [on] MMMM Do') }`;
+					const message = I18n.t({
+						one: 'One new message since %{since}',
+						other: '%{count} new messages since %{since}',
+					}, {
+						count: unreadMessages.length,
+						since: format(lastReadMessage.ts, 'HH:mm [on] MMMM Do'),
+					});
 					const alert = { id: UNREAD_MESSAGES_ALERT_ID, children: message, success: true, timeout: 0 };
 					const newAlerts = alerts.filter((item) => item.id !== UNREAD_MESSAGES_ALERT_ID);
 					await dispatch({ alerts: insert(newAlerts, alert), unread: unreadMessages.length });
