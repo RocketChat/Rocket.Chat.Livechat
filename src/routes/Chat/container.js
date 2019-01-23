@@ -41,13 +41,14 @@ export class ChatContainer extends Component {
 	}
 
 	grantUser = async() => {
-		const { token, user } = this.props;
+		const { token, user, guest } = this.props;
 
 		if (user) {
 			return user;
 		}
 
-		await Livechat.grantVisitor({ visitor: { token } });
+		const visitor = { token, ...guest };
+		await Livechat.grantVisitor({ visitor });
 		await loadConfig();
 	}
 
@@ -254,6 +255,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					fontColor: customFontColor,
 					iconColor: customIconColor,
 				} = {},
+				guest,
 			} = {},
 			token,
 			agent,
@@ -317,6 +319,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
 				alerts={alerts}
+				guest={guest}
 			/>
 		)}
 	</Consumer>
