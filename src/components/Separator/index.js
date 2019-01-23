@@ -1,5 +1,4 @@
 import format from 'date-fns/format';
-
 import styles from './styles';
 import { createClassName } from '../helpers';
 
