@@ -3,8 +3,20 @@ import styles from './styles';
 import { createClassName } from '../helpers';
 
 
-export const Header = ({ children, color, className, post, large, ...props }) => (
-	<header className={createClassName(styles, 'header', { large }, [className])} style={{ backgroundColor: color }} {...props}>
+export const Header = ({
+	children,
+	theme: { color: backgroundColor, fontColor: color } = {},
+	className,
+	post,
+	large,
+	style,
+	...props
+}) => (
+	<header
+		className={createClassName(styles, 'header', { large }, [className])}
+		style={(style || backgroundColor || color) ? { ...(style || {}), backgroundColor, color } : null}
+		{...props}
+	>
 		{children}
 		{post}
 	</header>

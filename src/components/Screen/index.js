@@ -22,12 +22,13 @@ class ScreenHeader extends Component {
 	}
 
 	render = ({
-		color,
+		theme,
 		alerts,
 		agent,
 		title,
 		notificationsEnabled,
 		minimized,
+		expanded,
 		windowed,
 		onDismissAlert,
 		onEnableNotifications,
@@ -38,7 +39,7 @@ class ScreenHeader extends Component {
 	}) => (
 		<Header
 			ref={this.handleRef}
-			color={color}
+			theme={theme}
 			post={
 				<Header.Post>
 					{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
@@ -53,7 +54,7 @@ class ScreenHeader extends Component {
 						description={agent.avatar.description}
 						status={agent.status}
 						large={this.largeHeader()}
-						statusBorderColor={color}
+						statusBorderColor={theme.color || '#175CC4'} // TODO: remove this hardcoded color code
 					/>
 				</Header.Picture>
 			)}
@@ -80,7 +81,7 @@ class ScreenHeader extends Component {
 							}
 						</Tooltip.Trigger>
 					</Header.Action>
-					{!windowed && (
+					{(expanded || !windowed) && (
 						<Header.Action
 							aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
 							onClick={minimized ? onRestore : onMinimize}
@@ -93,7 +94,7 @@ class ScreenHeader extends Component {
 							</Tooltip.Trigger>
 						</Header.Action>
 					)}
-					{!windowed && (
+					{(!expanded && !windowed) && (
 						<Header.Action aria-label={I18n.t('Open in a new window')} onClick={onOpenWindow}>
 							<Tooltip.Trigger content={I18n.t('Expand chat')}>
 								<OpenWindowIcon width={20} />
@@ -135,11 +136,12 @@ const ScreenFooter = ({
 
 
 const ScreenInner = ({
-	color,
+	theme,
 	agent,
 	title,
 	notificationsEnabled,
 	minimized,
+	expanded,
 	windowed,
 	nopadding,
 	children,
@@ -161,12 +163,13 @@ const ScreenInner = ({
 	<div className={createClassName(styles, 'screen__inner', {}, [className])}>
 		<PopoverContainer>
 			<ScreenHeader
-				color={color}
+				theme={theme}
 				alerts={alerts}
 				agent={agent}
 				title={title}
 				notificationsEnabled={notificationsEnabled}
 				minimized={minimized}
+				expanded={expanded}
 				windowed={windowed}
 				onDismissAlert={onDismissAlert}
 				onEnableNotifications={onEnableNotifications}
@@ -195,11 +198,12 @@ const ScreenInner = ({
 
 
 export const Screen = ({
-	color,
+	theme = {},
 	agent,
 	title,
 	notificationsEnabled,
 	minimized = false,
+	expanded = false,
 	windowed = false,
 	nopadding = false,
 	children,
@@ -219,13 +223,14 @@ export const Screen = ({
 	onFinishChat,
 	onRemoveUserData,
 }) => (
-	<div className={createClassName(styles, 'screen', { minimized, windowed })}>
+	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<ScreenInner
-			color={color}
+			theme={theme}
 			agent={agent}
 			title={title}
 			notificationsEnabled={notificationsEnabled}
 			minimized={minimized}
+			expanded={expanded}
 			windowed={windowed}
 			nopadding={nopadding}
 			children={children}
@@ -247,6 +252,7 @@ export const Screen = ({
 
 		<ChatButton
 			open={!minimized}
+			theme={theme}
 			onClick={minimized ? onRestore : onMinimize}
 			className={createClassName(styles, 'screen__chat-button')}
 			badge={unread}

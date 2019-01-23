@@ -1,5 +1,5 @@
 {
-	"name": "rocket.chat.livechat",
+	"name": "@rocket.chat/livechat",
 	"version": "0.0.1-1",
 	"license": "MIT",
 	"scripts": {

@@ -57,7 +57,7 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 				ref={ref}
 				{...props}
 				title={title || I18n.t('Leave a message')}
-				color={color}
+				theme={{ color }}
 				message={message || I18n.t('We are not online right now. Please, leave a message.')}
 				successMessage={successMessage}
 				unavailableMessage={unavailableMessage}

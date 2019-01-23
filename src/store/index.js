@@ -23,7 +23,6 @@ const initialState = {
 		play: false,
 	},
 	iframe: {
-		isWidgetOpened: false,
 		guest: {},
 		theme: {},
 	},

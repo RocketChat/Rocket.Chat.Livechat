@@ -6,36 +6,31 @@ import StatusIndicator from '../StatusIndicator';
 
 export class Avatar extends Component {
 	state = {
-		loading: true,
-	}
-
-	handleLoad = () => {
-		this.setState({ loading: false });
+		errored: false,
 	}
 
 	handleError = () => {
-		this.setState({ loading: null });
+		this.setState({ errored: true });
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.src !== this.props.src) {
-			this.setState({ loading: true });
+			this.setState({ errored: false });
 		}
 	}
 
-	render = ({ small, large, src, description, status, statusBorderColor = '#ffffff', className, ...args }, { loading }) => (
+	render = ({ small, large, src, description, status, statusBorderColor = '#ffffff', className, ...args }, { errored }) => (
 		<div
 			aria-label="User picture"
-			className={createClassName(styles, 'avatar', { small, large, nobg: (src && loading === false) }, [className])}
+			className={createClassName(styles, 'avatar', { small, large, nobg: src && !errored }, [className])}
 			{...args}
 		>
-			{(src && typeof loading === 'boolean') && (
+			{(src && !errored) && (
 				<img
 					src={src}
 					alt={description}
-					className={createClassName(styles, 'avatar__image', { loading })}
-					onLoad={loading && this.handleLoad}
-					onError={loading && this.handleError}
+					className={createClassName(styles, 'avatar__image')}
+					onError={this.handleError}
 				/>
 			)}
 

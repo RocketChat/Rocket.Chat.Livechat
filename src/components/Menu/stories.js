@@ -6,6 +6,10 @@ import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
 import Button from '../Button';
 import { PopoverContainer } from '../Popover';
 import Menu, { Group, Item, PopoverMenu } from '.';
+import BellIcon from '../../icons/bell.svg';
+import CloseIcon from '../../icons/close.svg';
+import FinishIcon from '../../icons/finish.svg';
+import ChangeIcon from '../../icons/change.svg';
 
 const defaultMenuItemText = 'A menu item';
 const defaultAnotherMenuItemText = 'Another menu item';
@@ -136,6 +140,16 @@ storiesOf('Components|Menu/Item', module)
 			<Group title={text('group title', '')}>
 				<Item disabled onClick={action('clicked')}>{text('item text', defaultMenuItemText)}</Item>
 				<Item>{defaultAnotherMenuItemText}</Item>
+			</Group>
+		</Menu>
+	))
+	.add('with icon', () => (
+		<Menu hidden={boolean('hidden menu', false)}>
+			<Group title={text('group title', '')}>
+				<Item onClick={action('clicked')} icon={CloseIcon}>{text('item text', 'Simple')}</Item>
+				<Item primary onClick={action('clicked')} icon={ChangeIcon}>{text('item text', 'Primary')}</Item>
+				<Item danger onClick={action('clicked')} icon={FinishIcon}>{text('item text', 'Danger')}</Item>
+				<Item disabled onClick={action('clicked')} icon={BellIcon}>{text('item text', 'Disabled')}</Item>
 			</Group>
 		</Menu>
 	))
