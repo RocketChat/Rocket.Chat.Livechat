@@ -9,6 +9,10 @@
     "connecting_to_an_agent_5d1a34c4": "Connecting to an agent...",
     "consent_text_d2a81a6c": "%{consent_text}",
     "conversation_finished_6a0f2811": "Conversation finished",
+    "count_new_messages_since_since_47c9d2a0": {
+      "one": "One new message since %{since}",
+      "other": "%{count} new messages since %{since}"
+    },
     "department_switched_cff305cf": "Department switched",
     "disable_notifications_dd6a3180": "Disable notifications",
     "display_offline_form_message_prop_unavailable_mess_3dd5cb9c": "%{display_offline_form_message_prop_unavailable_message}",

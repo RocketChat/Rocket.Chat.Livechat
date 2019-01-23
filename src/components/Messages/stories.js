@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
-import { withKnobs, object } from '@storybook/addon-knobs';
+import { withKnobs, number, object } from '@storybook/addon-knobs';
 import { Messages } from '.';
 
 
@@ -52,7 +52,7 @@ storiesOf('Components|Messages', module)
 			agent={object('agent', agent)}
 			messages={object('messages', messages)}
 			typingAvatars={object('typingAvatars', [])}
-			lastReadMessageId={object('lastReadMessageId', 8)}
+			lastReadMessageId={number('lastReadMessageId', 8)}
 		/>
 	))
 	.add('with typing user', () => (
@@ -60,6 +60,7 @@ storiesOf('Components|Messages', module)
 			user={object('user', user)}
 			agent={object('agent', agent)}
 			messages={object('messages', messages)}
+			lastReadMessageId={number('lastReadMessageId', 8)}
 			typingAvatars={object('typingAvatars', typingAvatars)}
 		/>
 	))
