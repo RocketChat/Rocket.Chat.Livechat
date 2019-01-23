@@ -26,7 +26,7 @@ class ScreenHeader extends Component {
 	}
 
 	render = ({
-		color,
+		theme,
 		alerts,
 		agent,
 		title,
@@ -43,7 +43,7 @@ class ScreenHeader extends Component {
 	}) => (
 		<Header
 			ref={this.handleRef}
-			color={color}
+			theme={theme}
 			post={
 				<Header.Post headerRef={this.headerRef}>
 					{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
@@ -58,7 +58,7 @@ class ScreenHeader extends Component {
 						description={agent.avatar.description}
 						status={agent.status}
 						large={this.largeHeader()}
-						statusBorderColor={color}
+						statusBorderColor={theme.color || '#175CC4'} // TODO: remove this hardcoded color code
 					/>
 				</Header.Picture>
 			)}
@@ -140,7 +140,7 @@ const ScreenFooter = ({
 
 
 const ScreenInner = ({
-	color,
+	theme,
 	agent,
 	title,
 	notificationsEnabled,
@@ -167,7 +167,7 @@ const ScreenInner = ({
 	<div className={createClassName(styles, 'screen__inner', {}, [className])}>
 		<PopoverContainer>
 			<ScreenHeader
-				color={color}
+				theme={theme}
 				alerts={alerts}
 				agent={agent}
 				title={title}
@@ -202,7 +202,7 @@ const ScreenInner = ({
 
 
 export const Screen = ({
-	color,
+	theme = {},
 	agent,
 	title,
 	notificationsEnabled,
@@ -228,7 +228,7 @@ export const Screen = ({
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<ScreenInner
-			color={color}
+			theme={theme}
 			agent={agent}
 			title={title}
 			notificationsEnabled={notificationsEnabled}
@@ -255,6 +255,7 @@ export const Screen = ({
 
 		<ChatButton
 			open={!minimized}
+			theme={theme}
 			onClick={minimized ? onRestore : onMinimize}
 			className={createClassName(styles, 'screen__chat-button')}
 		/>

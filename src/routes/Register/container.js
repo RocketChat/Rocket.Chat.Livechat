@@ -74,8 +74,9 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					department: guestDepartment,
 				} = {},
 				theme: {
-					customColor,
-					customFontColor,
+					color: customColor,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
 				} = {},
 			} = {},
 			loading = false,
@@ -85,9 +86,12 @@ export const RegisterConnector = ({ ref, ...props }) => (
 			<RegisterContainer
 				ref={ref}
 				{...props}
+				theme={{
+					color: customColor || color,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				}}
 				title={title || I18n.t('Need help?')}
-				color={customColor || color}
-				fontColor={customFontColor}
 				message={message || I18n.t('Please, tell us some informations to start the chat')}
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
