@@ -21,13 +21,41 @@ export const Action = ({ children, onClick, ...args }) => (
 	>{children}</button>
 );
 
+const findLastTextNode = (node) => {
+	if (node.nodeType === Node.TEXT_NODE) {
+		return node;
+	}
+	const children = node.childNodes;
+	for (let i = children.length - 1; i >= 0; i--) {
+		const textNode = findLastTextNode(children[i]);
+		if (textNode !== null) {
+			return textNode;
+		}
+	}
+	return null;
+};
+
+const replaceCaret = (el) => {
+	// Place the caret at the end of the element
+	const target = findLastTextNode(el);
+	// do not move caret if element was not focused
+	const isTargetFocused = document.activeElement === el;
+	if (target !== null && target.nodeValue !== null && isTargetFocused) {
+		const range = document.createRange();
+		const sel = window.getSelection();
+		range.setStart(target, target.nodeValue.length);
+		range.collapse(true);
+		sel.removeAllRanges();
+		sel.addRange(range);
+		if (el instanceof HTMLElement) {
+			el.focus();
+		}
+	}
+};
+
 export class Composer extends Component {
 	bind = (el) => {
 		this.el = el;
-	}
-
-	get value() {
-		return this.el.innerText;
 	}
 
 	handleInput = (onChange) => () => {
@@ -106,6 +134,36 @@ export class Composer extends Component {
 		const selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
+	}
+
+	constructor(props) {
+		super(props);
+		this.value = this.props.value;
+	}
+
+	// we only update composer if connecting prop changed or if value length changed from 0 to 1 or 1 to 0
+	// everything else is managed by this.el
+	shouldComponentUpdate(nextProps) {
+		const { connecting, value } = this.props;
+		if (nextProps.connecting !== connecting) {
+			return true;
+		}
+		if ((nextProps.value.length > 0 && value.length === 0) || (nextProps.value.length === 0 && value.length > 0)) {
+			return true;
+		}
+		return false;
+	}
+
+	componentDidUpdate() {
+		const { el } = this;
+		if (!el) {
+			return;
+		}
+	
+		if (this.props.value !== el.innerHTML) {
+		  el.innerHTML = this.value = this.props.value;
+		}
+		replaceCaret(el);
 	}
 
 	render({ pre, post, placeholder, value, connecting, onChange, onSubmit, onUpload, ...args }) {
