@@ -255,6 +255,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					fontColor: customFontColor,
 					iconColor: customIconColor,
 				} = {},
+				guest,
 			} = {},
 			token,
 			agent,
@@ -318,6 +319,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
 				alerts={alerts}
+				guest={guest}
 			/>
 		)}
 	</Consumer>
