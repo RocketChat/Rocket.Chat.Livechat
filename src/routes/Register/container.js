@@ -40,9 +40,9 @@ export class RegisterContainer extends Component {
 	}
 
 	getDepartmentDefault() {
-		const { guestDepartment, departments } = this.props;
-		if (departments && departments.some((dept) => dept._id === guestDepartment)) {
-			return guestDepartment;
+		const { departmentDefault, departments } = this.props;
+		if (departments && departments.some((dept) => dept._id === departmentDefault)) {
+			return departmentDefault;
 		}
 	}
 
@@ -101,7 +101,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				departments={departments.filter((dept) => dept.showOnRegistration)}
 				nameDefault={guestName}
 				emailDefault={guestEmail}
-				guestDepartment={guestDepartment}
+				departmentDefault={guestDepartment}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}
