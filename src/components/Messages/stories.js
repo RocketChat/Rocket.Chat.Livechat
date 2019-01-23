@@ -21,16 +21,19 @@ const agent = {
 };
 
 const messages = [
-	{ _id: 1, u: { _id: 1 }, ts: new Date('01/01/2019'), msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
-	{ _id: 2, u: { _id: 2 }, ts: new Date('01/01/2019'), msg: 'Putent appareat te sea, dico recusabo pri te' },
-	{ _id: 3, u: { _id: 2 }, ts: new Date('01/01/2019'), msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
-	{ _id: 4, u: { _id: 2 }, ts: new Date('01/01/2019'), msg: 'Movet doming ad ius, mel id adversarium disputationi' },
-	{ _id: 5, u: { _id: 1 }, ts: new Date('01/02/2019'), msg: 'Adhuc latine et nec' },
-	{ _id: 6, u: { _id: 2 }, ts: new Date('01/02/2019'), msg: 'Vis at verterem adversarium concludaturque' },
-	{ _id: 7, u: { _id: 2 }, ts: new Date('01/02/2019'), msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
-	{ _id: 8, u: { _id: 2 }, ts: new Date('01/02/2019'), msg: 'Invidunt repudiandae has eu' },
-	{ _id: 9, u: { _id: 1 }, ts: new Date('01/02/2019'), msg: 'Veri soluta suscipit mel no' },
-];
+	{ _id: 1, u: { _id: 1 }, msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
+	{ _id: 2, u: { _id: 2 }, msg: 'Putent appareat te sea, dico recusabo pri te' },
+	{ _id: 3, u: { _id: 2 }, msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
+	{ _id: 4, u: { _id: 2 }, msg: 'Movet doming ad ius, mel id adversarium disputationi' },
+	{ _id: 5, u: { _id: 1 }, msg: 'Adhuc latine et nec' },
+	{ _id: 6, u: { _id: 2 }, msg: 'Vis at verterem adversarium concludaturque' },
+	{ _id: 7, u: { _id: 2 }, msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
+	{ _id: 8, u: { _id: 2 }, msg: 'Invidunt repudiandae has eu' },
+	{ _id: 9, u: { _id: 1 }, msg: 'Veri soluta suscipit mel no' },
+].map((message, i) => ({
+	...message,
+	ts: new Date(Date.now() - (15 - i) * 60000),
+}));
 
 const typingAvatars = [
 	{
@@ -49,7 +52,7 @@ storiesOf('Components|Messages', module)
 			agent={object('agent', agent)}
 			messages={object('messages', messages)}
 			typingAvatars={object('typingAvatars', [])}
-			lastReadMessageId={8}
+			lastReadMessageId={object('lastReadMessageId', 8)}
 		/>
 	))
 	.add('with typing user', () => (

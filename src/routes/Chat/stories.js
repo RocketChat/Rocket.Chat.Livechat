@@ -31,16 +31,19 @@ const agent = {
 };
 
 const messages = [
-	{ u: { _id: 1 }, ts: new Date('01/01/2019'), msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
-	{ u: { _id: 2 }, ts: new Date('01/01/2019'), msg: 'Putent appareat te sea, dico recusabo pri te' },
-	{ u: { _id: 2 }, ts: new Date('01/02/2019'), msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
-	{ u: { _id: 2 }, ts: new Date('01/02/2019'), msg: 'Movet doming ad ius, mel id adversarium disputationi' },
-	{ u: { _id: 1 }, ts: new Date('01/03/2019'), msg: 'Adhuc latine et nec' },
-	{ u: { _id: 2 }, ts: new Date('01/03/2019'), msg: 'Vis at verterem adversarium concludaturque' },
-	{ u: { _id: 2 }, ts: new Date('01/04/2019'), msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
-	{ u: { _id: 2 }, ts: new Date('01/04/2019'), msg: 'Invidunt repudiandae has eu' },
-	{ u: { _id: 1 }, ts: new Date('01/06/2019'), msg: 'Veri soluta suscipit mel no' },
-];
+	{ u: { _id: 1 }, msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
+	{ u: { _id: 2 }, msg: 'Putent appareat te sea, dico recusabo pri te' },
+	{ u: { _id: 2 }, msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
+	{ u: { _id: 2 }, msg: 'Movet doming ad ius, mel id adversarium disputationi' },
+	{ u: { _id: 1 }, msg: 'Adhuc latine et nec' },
+	{ u: { _id: 2 }, msg: 'Vis at verterem adversarium concludaturque' },
+	{ u: { _id: 2 }, msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
+	{ u: { _id: 2 }, msg: 'Invidunt repudiandae has eu' },
+	{ u: { _id: 1 }, msg: 'Veri soluta suscipit mel no' },
+].map((message, i) => ({
+	...message,
+	ts: new Date(Date.now() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)),
+}));
 
 
 storiesOf('Routes|Chat', module)
