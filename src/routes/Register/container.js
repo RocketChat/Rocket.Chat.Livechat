@@ -72,6 +72,8 @@ export const RegisterConnector = ({ ref, ...props }) => (
 			iframe: {
 				guest: {
 					department: guestDepartment,
+					name: guestName,
+					email: guestEmail,
 				} = {},
 				theme: {
 					color: customColor,
@@ -97,6 +99,8 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}
 				departments={departments.filter((dept) => dept.showOnRegistration)}
+				nameDefault={guestName}
+				emailDefault={guestEmail}
 				guestDepartment={guestDepartment}
 				loading={loading}
 				token={token}

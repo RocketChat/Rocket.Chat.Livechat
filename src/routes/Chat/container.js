@@ -41,13 +41,14 @@ export class ChatContainer extends Component {
 	}
 
 	grantUser = async() => {
-		const { token, user } = this.props;
+		const { token, user, guest } = this.props;
 
 		if (user) {
 			return user;
 		}
 
-		await Livechat.grantVisitor({ visitor: { token } });
+		const visitor = { token, ...guest };
+		await Livechat.grantVisitor({ visitor });
 		await loadConfig();
 	}
 

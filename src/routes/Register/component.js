@@ -84,15 +84,17 @@ export default class Register extends Component {
 		this.validateAll();
 	}
 
-	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments }) {
-		if (hasNameField && !this.state.name) {
-			this.setState({ name: { value: '' } });
+	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments, nameDefault, emailDefault }) {
+		const nameValue = nameDefault || '';
+		if (hasNameField && (!this.state.name || this.state.name !== nameValue)) {
+			this.setState({ name: { value: nameValue } });
 		} else if (!hasNameField) {
 			this.setState({ name: null });
 		}
 
-		if (hasEmailField && !this.state.email) {
-			this.setState({ email: { value: '' } });
+		const emailValue = emailDefault || '';
+		if (hasEmailField && (!this.state.email || this.state.name !== emailValue)) {
+			this.setState({ email: { value: emailValue } });
 		} else if (!hasEmailField) {
 			this.setState({ email: null });
 		}
