@@ -1,19 +1,15 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
-import format from 'date-fns/format';
 import { Livechat } from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
+import constants from '../../lib/constants';
 import { createToken, insert, getAvatarUrl, renderMessage } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 import { initRoom, closeChat } from './room';
 
-const UNREAD_MESSAGES_ALERT_ID = 'UNREAD_MESSAGES';
-
 export class ChatContainer extends Component {
-	state = { lastReadMessageId: null }
-
 	loadMessages = async() => {
 		const { dispatch, room: { _id: rid } = {} } = this.props;
 
@@ -222,40 +218,23 @@ export class ChatContainer extends Component {
 		this.loadMessages();
 	}
 
-	async componentWillReceiveProps(nextProps) {
-		const { lastReadMessageId } = this.state;
+	async componentWillReceiveProps({ messages: nextMessages, visible: nextVisible, minimized: nextMinimized }) {
 		const { messages, alerts, dispatch } = this.props;
 
-		if (nextProps.messages && messages && nextProps.messages.length !== messages.length) {
-			if ((nextProps.minimized || !nextProps.visible) && lastReadMessageId) {
-				const lastReadMessageIndex = nextProps.messages.findIndex((item) => item._id === lastReadMessageId);
-				const unreadMessages = nextProps.messages.slice(lastReadMessageIndex + 1);
-				if (unreadMessages.length > 0) {
-					const lastReadMessage = nextProps.messages[lastReadMessageIndex];
-					const message = I18n.t({
-						one: 'One new message since %{since}',
-						other: '%{count} new messages since %{since}',
-					}, {
-						count: unreadMessages.length,
-						since: format(lastReadMessage.ts, 'HH:mm [on] MMMM Do'),
-					});
-					const alert = { id: UNREAD_MESSAGES_ALERT_ID, children: message, success: true, timeout: 0 };
-					const newAlerts = alerts.filter((item) => item.id !== UNREAD_MESSAGES_ALERT_ID);
-					await dispatch({ alerts: insert(newAlerts, alert), unread: unreadMessages.length });
-				}
-			} else if (nextProps.visible && !nextProps.minimized) {
-				const nextLastMessage = nextProps.messages[nextProps.messages.length - 1];
-				const lastMessage = messages[messages.length - 1];
-				if (nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) {
-					this.setState({ lastReadMessageId: nextLastMessage._id });
-					const newAlerts = alerts.filter((item) => item.id !== UNREAD_MESSAGES_ALERT_ID);
-					await dispatch({ alerts: newAlerts, unread: null });
-				}
+		if (nextMessages && messages && nextMessages.length !== messages.length && nextVisible && !nextMinimized) {
+			const nextLastMessage = nextMessages[nextMessages.length - 1];
+			const lastMessage = messages[messages.length - 1];
+			if (
+				(nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) ||
+				(nextMessages.length === 1 && messages.length === 0)
+			) {
+				const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
+				await dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
 			}
 		}
 	}
 
-	render = (props, state) => (
+	render = (props) => (
 		<Chat
 			{...props}
 			onTop={this.handleTop}
@@ -267,7 +246,6 @@ export class ChatContainer extends Component {
 			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
-			lastReadMessageId={state.lastReadMessageId}
 		/>
 	)
 }
@@ -314,6 +292,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			alerts,
 			visible,
 			unread,
+			lastReadMessageId,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -366,6 +345,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				alerts={alerts}
 				visible={visible}
 				unread={unread}
+				lastReadMessageId={lastReadMessageId}
 				guest={guest}
 			/>
 		)}
