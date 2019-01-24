@@ -23,6 +23,11 @@ export default class Chat extends Component {
 	}
 
 	handleScroll = debounce(() => {
+		if (!this.messagesContainer) {
+			// component was unmounted
+			return;
+		}
+
 		const { clientHeight, scrollTop, scrollHeight } = this.messagesContainer;
 		const atTop = scrollTop === 0;
 		const atBottom = scrollHeight - scrollTop === clientHeight;
