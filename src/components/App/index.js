@@ -16,7 +16,7 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-
+import { visibility } from '../helpers';
 
 export class App extends Component {
 
@@ -109,6 +109,11 @@ export class App extends Component {
 		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
 	}
 
+	handleVisibilityChange = async() => {
+		const { dispatch } = this.props;
+		await dispatch({ visible: !visibility.hidden });
+	}
+
 	async initialize() {
 		await Livechat.connect();
 		await loadConfig();
@@ -131,10 +136,13 @@ export class App extends Component {
 
 	componentDidMount() {
 		this.initialize();
+		visibility.addListener(this.handleVisibilityChange);
+		this.handleVisibilityChange();
 	}
 
 	componentWillUnmount() {
 		this.finalize();
+		visibility.removeListener(this.handleVisibilityChange);
 	}
 
 	render = ({

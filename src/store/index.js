@@ -32,6 +32,8 @@ const initialState = {
 	},
 	alerts: [],
 	connecting: false,
+	visible: true,
+	unread: null,
 };
 
 export const store = new Store(initialState);

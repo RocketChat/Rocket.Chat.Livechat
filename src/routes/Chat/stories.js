@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
+import { withKnobs, boolean, color, number, object, text } from '@storybook/addon-knobs';
 import { screenCentered } from '../helpers.stories';
 import Chat from './component';
 import soundSrc from '../../components/Sound/chime.mp3';
@@ -31,16 +31,19 @@ const agent = {
 };
 
 const messages = [
-	{ u: { _id: 1 }, ts: new Date(), msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
-	{ u: { _id: 2 }, ts: new Date(), msg: 'Putent appareat te sea, dico recusabo pri te' },
-	{ u: { _id: 2 }, ts: new Date(), msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
-	{ u: { _id: 2 }, ts: new Date(), msg: 'Movet doming ad ius, mel id adversarium disputationi' },
-	{ u: { _id: 1 }, ts: new Date(), msg: 'Adhuc latine et nec' },
-	{ u: { _id: 2 }, ts: new Date(), msg: 'Vis at verterem adversarium concludaturque' },
-	{ u: { _id: 2 }, ts: new Date(), msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
-	{ u: { _id: 2 }, ts: new Date(), msg: 'Invidunt repudiandae has eu' },
-	{ u: { _id: 1 }, ts: new Date(), msg: 'Veri soluta suscipit mel no' },
-];
+	{ _id: 1, u: { _id: 1 }, msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
+	{ _id: 2, u: { _id: 2 }, msg: 'Putent appareat te sea, dico recusabo pri te' },
+	{ _id: 3, u: { _id: 2 }, msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
+	{ _id: 4, u: { _id: 2 }, msg: 'Movet doming ad ius, mel id adversarium disputationi' },
+	{ _id: 5, u: { _id: 1 }, msg: 'Adhuc latine et nec' },
+	{ _id: 6, u: { _id: 2 }, msg: 'Vis at verterem adversarium concludaturque' },
+	{ _id: 7, u: { _id: 2 }, msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
+	{ _id: 8, u: { _id: 2 }, msg: 'Invidunt repudiandae has eu' },
+	{ _id: 9, u: { _id: 1 }, msg: 'Veri soluta suscipit mel no' },
+].map((message, i) => ({
+	...message,
+	ts: new Date(Date.now() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)),
+}));
 
 
 storiesOf('Routes|Chat', module)
@@ -87,6 +90,7 @@ storiesOf('Routes|Chat', module)
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
 			windowed={boolean('windowed', false)}
+			lastReadMessageId={number('lastReadMessageId', 8)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
@@ -118,6 +122,7 @@ storiesOf('Routes|Chat', module)
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
 			windowed={boolean('windowed', false)}
+			lastReadMessageId={number('lastReadMessageId', 8)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}

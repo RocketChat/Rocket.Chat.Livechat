@@ -16,10 +16,6 @@ import { PopoverContainer } from '../Popover';
 
 
 class ScreenHeader extends Component {
-	handleRef = (ref) => {
-		this.headerRef = ref;
-	}
-
 	largeHeader = () => {
 		const { agent } = this.props;
 		return !!(agent && agent.email && agent.phone);
@@ -45,7 +41,7 @@ class ScreenHeader extends Component {
 			ref={this.handleRef}
 			theme={theme}
 			post={
-				<Header.Post headerRef={this.headerRef}>
+				<Header.Post>
 					{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
 				</Header.Post>
 			}
@@ -216,6 +212,7 @@ export const Screen = ({
 	className,
 	alerts,
 	modal,
+	unread,
 	onDismissAlert,
 	onEnableNotifications,
 	onDisableNotifications,
@@ -258,6 +255,7 @@ export const Screen = ({
 			theme={theme}
 			onClick={minimized ? onRestore : onMinimize}
 			className={createClassName(styles, 'screen__chat-button')}
+			badge={unread}
 		/>
 	</div>
 );
