@@ -10,8 +10,12 @@ storiesOf('Routes|Register', module)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<Register
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Need help?')}
-			color={color('color', '#C1272D')}
 			message={text('message', 'Please, tell us some informations to start the chat')}
 			hasNameField={boolean('hasNameField', true)}
 			hasEmailField={boolean('hasEmailField', true)}
@@ -44,8 +48,12 @@ storiesOf('Routes|Register', module)
 	))
 	.add('loading', () => (
 		<Register
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Need help?')}
-			color={color('color', '#C1272D')}
 			message={text('message', 'Please, tell us some informations to start the chat')}
 			hasNameField={boolean('hasNameField', true)}
 			hasEmailField={boolean('hasEmailField', true)}

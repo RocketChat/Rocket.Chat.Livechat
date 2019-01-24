@@ -52,7 +52,11 @@ storiesOf('Routes|Chat', module)
 	.addDecorator(withKnobs)
 	.add('loading', () => (
 		<Chat
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
@@ -78,7 +82,11 @@ storiesOf('Routes|Chat', module)
 	))
 	.add('normal', () => (
 		<Chat
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
@@ -105,7 +113,11 @@ storiesOf('Routes|Chat', module)
 	))
 	.add('with typing user', () => (
 		<Chat
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
