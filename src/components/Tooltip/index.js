@@ -3,6 +3,7 @@ import createContext from 'preact-context';
 import styles from './styles';
 import { createClassName } from '../helpers';
 
+
 const getPositioningStyle = (placement, { left, top, right, bottom }) => {
 	switch (placement) {
 		case 'left':
@@ -12,6 +13,8 @@ const getPositioningStyle = (placement, { left, top, right, bottom }) => {
 			};
 
 		case 'top':
+		case 'top-left':
+		case 'top-right':
 			return {
 				left: `${ (left + right) / 2 }px`,
 				top: `${ top }px`,
@@ -24,6 +27,8 @@ const getPositioningStyle = (placement, { left, top, right, bottom }) => {
 			};
 
 		case 'bottom':
+		case 'bottom-left':
+		case 'bottom-right':
 		default:
 			return {
 				left: `${ (left + right) / 2 }px`,
@@ -31,6 +36,7 @@ const getPositioningStyle = (placement, { left, top, right, bottom }) => {
 			};
 	}
 };
+
 
 export const Tooltip = ({ children, hidden = false, placement, floating = false, triggerBounds, ...props }) => (
 	<div
@@ -42,16 +48,18 @@ export const Tooltip = ({ children, hidden = false, placement, floating = false,
 	</div>
 );
 
+
 const TooltipContext = createContext();
 
-export class Container extends Component {
+
+export class TooltipContainer extends Component {
 	state = {
 		tooltip: null,
 	}
 
-	showTooltip = (event, content) => {
+	showTooltip = (event, { content, placement = 'bottom' }) => {
 		const triggerBounds = event.target.getBoundingClientRect();
-		this.setState({ tooltip: <Tooltip floating placement="bottom" triggerBounds={triggerBounds}>{content}</Tooltip> });
+		this.setState({ tooltip: <Tooltip floating placement={placement} triggerBounds={triggerBounds}>{content}</Tooltip> });
 	}
 
 	hideTooltip = () => {
@@ -70,20 +78,18 @@ export class Container extends Component {
 	}
 }
 
-Tooltip.Container = Container;
 
-export const Trigger = ({ children, content }) => (
+export const TooltipTrigger = ({ children, content, placement }) => (
 	<TooltipContext.Consumer>
 		{({ showTooltip, hideTooltip }) => cloneElement(children[0], {
-			onMouseEnter: (event) => showTooltip(event, content),
+			onMouseEnter: (event) => showTooltip(event, { content, placement }),
 			onMouseLeave: (event) => hideTooltip(event),
-			onFocusCapture: (event) => showTooltip(event, content),
+			onFocusCapture: (event) => showTooltip(event, { content, placement }),
 			onBlurCapture: (event) => hideTooltip(event),
 		})}
 	</TooltipContext.Consumer>
 );
 
-Tooltip.Trigger = Trigger;
 
 export const withTooltip = (component) => {
 	const TooltipConnection = ({ tooltip, ...props }) => (
@@ -95,5 +101,10 @@ export const withTooltip = (component) => {
 
 	return TooltipConnection;
 };
+
+
+Tooltip.Container = TooltipContainer;
+Tooltip.Trigger = TooltipTrigger;
+
 
 export default Tooltip;
