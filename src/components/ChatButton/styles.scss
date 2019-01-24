@@ -1,4 +1,5 @@
 @import '~styles/colors';
+@import '~styles/helpers';
 @import '~styles/variables';
 
 
@@ -7,6 +8,7 @@ $chat-button-padding: 12px;
 $chat-button-size: 54px;
 $chat-button-background-color: $color-blue;
 $chat-button-color: $color-text-lighter;
+$chat-button-active-displacement: 2px;
 
 $chat-button-badge-size: 1.5rem;
 $chat-button-badge-background-color: $color-red;
@@ -42,10 +44,7 @@ $chat-button-badge-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 		flex: 1;
 	}
 
-	&:active {
-		opacity: .9;
-		transform: translateY(2px);
-	}
+	@include pressable-button($chat-button-active-displacement);
 
 	&__badge {
 		position: absolute;

@@ -1,4 +1,5 @@
 @import '~styles/colors';
+@import '~styles/helpers';
 @import '~styles/variables';
 
 
@@ -83,28 +84,10 @@ $button-loading-color: #ffffff;
 	user-select: none;
 
 	@include state($button-background-color);
+	@include pressable-button($button-active-displacement, $button-border-width);
 
 	&:focus {
 		box-shadow: 0 0 5px rgba(#000000, 0.5);
-	}
-
-	&:active {
-		opacity: .9;
-		transform: translateY($button-active-displacement);
-	}
-
-	&:active::before {
-		top: (-($button-border-width + $button-active-displacement));
-	}
-
-	&::before {
-		content: "";
-		position: absolute;
-		top: (-$button-border-width);
-		left: (-$button-border-width);
-		right: (-$button-border-width);
-		bottom: (-$button-border-width);
-		cursor: pointer;
 	}
 
 	&--danger {
