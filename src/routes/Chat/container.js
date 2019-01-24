@@ -246,7 +246,6 @@ export class ChatContainer extends Component {
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
 			onSoundStop={this.handleSoundStop}
-			lastReadMessageId={state.lastReadMessageId}
 		/>
 	)
 }
