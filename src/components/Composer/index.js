@@ -143,14 +143,20 @@ export class Composer extends Component {
 
 	// we only update composer if connecting prop changed or if value length changed from 0 to 1 or 1 to 0
 	// everything else is managed by this.el
-	shouldComponentUpdate(nextProps) {
+	shouldComponentUpdate({ connecting: nextConnecting, value: nextValue }) {
 		const { connecting, value } = this.props;
-		if (nextProps.connecting !== connecting) {
+
+		if (nextConnecting !== connecting) {
 			return true;
 		}
-		if ((nextProps.value.length > 0 && value.length === 0) || (nextProps.value.length === 0 && value.length > 0)) {
+
+		const nextValueEmpty = !nextValue || nextValue.length === 0;
+		const valueEmpty = !value || value.length === 0;
+
+		if (nextValueEmpty !== valueEmpty) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -159,7 +165,7 @@ export class Composer extends Component {
 		if (!el) {
 			return;
 		}
-	
+
 		if (this.props.value !== el.innerHTML) {
 		  el.innerHTML = this.value = this.props.value;
 		}
