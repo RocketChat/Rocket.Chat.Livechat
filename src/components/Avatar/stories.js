@@ -25,7 +25,6 @@ storiesOf('Components|Avatar', module)
 			large={boolean('large', true)}
 			description={text('description', avatarDescription)}
 			status={select('status', avatarStatuses, null)}
-			statusBorderColor={text('statusBorderColor', '')}
 		/>
 	))
 	.add('medium', () => (
@@ -35,7 +34,6 @@ storiesOf('Components|Avatar', module)
 			large={boolean('large', false)}
 			description={text('description', avatarDescription)}
 			status={select('status', avatarStatuses, null)}
-			statusBorderColor={text('statusBorderColor', '')}
 		/>
 	))
 	.add('small', () => (
@@ -45,7 +43,6 @@ storiesOf('Components|Avatar', module)
 			large={boolean('large', false)}
 			description={text('description', avatarDescription)}
 			status={select('status', avatarStatuses, null)}
-			statusBorderColor={text('statusBorderColor', '')}
 		/>
 	))
 	.add('as placeholder', () => (
@@ -55,14 +52,12 @@ storiesOf('Components|Avatar', module)
 				large
 				description={text('description', avatarDescription)}
 				status={select('status', avatarStatuses, null)}
-				statusBorderColor={text('statusBorderColor', '')}
 				style={{ margin: '0.5rem' }}
 			/>
 			<Avatar
 				src={text('src', '')}
 				description={text('description', avatarDescription)}
 				status={select('status', avatarStatuses, null)}
-				statusBorderColor={text('statusBorderColor', '')}
 				style={{ margin: '0.5rem' }}
 			/>
 			<Avatar
@@ -70,7 +65,6 @@ storiesOf('Components|Avatar', module)
 				small
 				description={text('description', avatarDescription)}
 				status={select('status', avatarStatuses, null)}
-				statusBorderColor={text('statusBorderColor', '')}
 				style={{ margin: '0.5rem' }}
 			/>
 		</div>
@@ -82,7 +76,6 @@ storiesOf('Components|Avatar', module)
 				large
 				description={text('description', avatarDescription)}
 				status={'offline'}
-				statusBorderColor={text('statusBorderColor', '#fff')}
 				style={{ margin: '0.5rem' }}
 			/>
 			<Avatar
@@ -90,7 +83,6 @@ storiesOf('Components|Avatar', module)
 				large
 				description={text('description', avatarDescription)}
 				status={'away'}
-				statusBorderColor={text('statusBorderColor', '#fff')}
 				style={{ margin: '0.5rem' }}
 			/>
 			<Avatar
@@ -98,7 +90,6 @@ storiesOf('Components|Avatar', module)
 				large
 				description={text('description', avatarDescription)}
 				status={'busy'}
-				statusBorderColor={text('statusBorderColor', '#fff')}
 				style={{ margin: '0.5rem' }}
 			/>
 			<Avatar
@@ -106,7 +97,6 @@ storiesOf('Components|Avatar', module)
 				large
 				description={text('description', avatarDescription)}
 				status={'online'}
-				statusBorderColor={text('statusBorderColor', '#fff')}
 				style={{ margin: '0.5rem' }}
 			/>
 		</div>

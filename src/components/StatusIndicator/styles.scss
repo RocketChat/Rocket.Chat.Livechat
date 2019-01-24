@@ -12,9 +12,10 @@ $status-indicator-size-large: 14px;
   border-radius: 50%;
   background-color: $bg-color-grey;
 
-  &--border {
+  &--bordered {
     border-width: 2px;
-    border-style: solid;
+		border-style: solid;
+		border-color: var(--color, transparent);
   }
 
   &--small {

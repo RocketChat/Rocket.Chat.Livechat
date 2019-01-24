@@ -12,5 +12,5 @@ storiesOf('Components|StatusIndicator', module)
 	.add('busy', () => <StatusIndicator status="busy" />)
 	.add('small', () => <StatusIndicator small status="online" />)
 	.add('large', () => <StatusIndicator large status="online" />)
-	.add('border color', () => <StatusIndicator borderColor={'red'} status="online" />)
+	.add('bordered', () => <StatusIndicator bordered status="online" />)
 ;

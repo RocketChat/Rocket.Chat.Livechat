@@ -3,6 +3,8 @@
 @import '~styles/variables';
 
 
+$header-background-color: $color-dark-blue;
+$header-color: $color-text-lighter;
 $header-padding: $default-padding;
 $header-height: 56px;
 $header-height-large: 77px;
@@ -13,13 +15,13 @@ $header-action-active-displacement: 2px;
 	width: 100%;
 	height: $header-height;
 	padding: 0 $header-padding / 2;
-	background: $color-dark-blue;
+	background-color: var(--color, $header-background-color);
+	color: var(--font-color, $header-color);
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex: 0 0 auto;
-	color: $bg-color-white;
 	font-size: 16px;
 
 	&__item {

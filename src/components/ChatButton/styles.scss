@@ -6,7 +6,7 @@
 $chat-button-border-radius: 4px;
 $chat-button-padding: 12px;
 $chat-button-size: 54px;
-$chat-button-background-color: $color-blue;
+$chat-button-background-color: $color-dark-blue;
 $chat-button-color: $color-text-lighter;
 $chat-button-active-displacement: 2px;
 
@@ -31,14 +31,13 @@ $chat-button-badge-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 	padding: $chat-button-padding;
 	height: $chat-button-size;
 	width: $chat-button-size;
-
-	background-color: $chat-button-background-color;
-	color: $chat-button-color;
+	background-color: var(--color, $chat-button-background-color);
+	color: var(--icon-color, $chat-button-color);
 
 	cursor: pointer;
 	transition: color $default-time-animation,
-		background $default-time-animation,
-		trasform $default-time-animation;
+		background-color $default-time-animation,
+		transform $default-time-animation;
 
 	svg {
 		flex: 1;
