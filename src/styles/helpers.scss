@@ -20,8 +20,7 @@ $breakpoints: (
   }
 }
 
-@mixin keyframes( $animationName )
-{
+@mixin keyframes( $animationName ) {
     @-webkit-keyframes #{$animationName} {
         @content;
     }
@@ -34,4 +33,28 @@ $breakpoints: (
     @keyframes #{$animationName} {
         @content;
     }
+}
+
+
+@mixin pressable-button($displacement: 2px, $border-width: 0) {
+	position: relative;
+
+	&:active {
+		opacity: .9;
+		transform: translateY($displacement);
+	}
+
+	&:active::before {
+		top: (-($border-width + $displacement));
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: (-$border-width);
+		left: (-$border-width);
+		right: (-$border-width);
+		bottom: (-$border-width);
+		cursor: pointer;
+	}
 }

@@ -1,5 +1,6 @@
-@import '~styles/variables';
 @import '~styles/colors';
+@import '~styles/helpers';
+@import '~styles/variables';
 
 
 .footer {
@@ -32,10 +33,7 @@
 		transition: trasform $default-time-animation;
 		user-select: none;
 
-		&:active {
-			opacity: .9;
-			transform: translateY(2px);
-		}
+		@include pressable-button(2px);
 	}
 }
 

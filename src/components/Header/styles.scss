@@ -1,9 +1,13 @@
 @import '~styles/colors';
+@import '~styles/helpers';
 @import '~styles/variables';
+
 
 $header-padding: $default-padding;
 $header-height: 56px;
 $header-height-large: 77px;
+
+$header-action-active-displacement: 2px;
 
 .header {
 	width: 100%;
@@ -78,10 +82,7 @@ $header-height-large: 77px;
 			flex: 0 0 auto;
 			color: inherit;
 
-			&:active {
-				opacity: .9;
-				transform: translateY(2px);
-			}
+			@include pressable-button($header-action-active-displacement, 0);
 		}
 	}
 

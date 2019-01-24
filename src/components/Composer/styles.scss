@@ -1,5 +1,7 @@
 @import '~styles/colors';
+@import '~styles/helpers';
 @import '~styles/variables';
+
 
 $composer-padding: 12px;
 
@@ -68,7 +70,5 @@ $composer-padding: 12px;
         outline: none;
     }
 
-    &:active {
-        transform: translateY(1px);
-    }
+    @include pressable-button(1px);
 }
