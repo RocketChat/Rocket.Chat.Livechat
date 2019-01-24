@@ -130,18 +130,41 @@ export const getAttachmentsUrl = (attachments) => attachments && attachments.map
 
 export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));
 
-let hidden = null;
-let event = null;
-if (typeof document.hidden !== 'undefined') {
-	hidden = 'hidden';
-	event = 'visibilitychange';
-} else if (typeof document.msHidden !== 'undefined') {
-	hidden = 'msHidden';
-	event = 'msvisibilitychange';
-} else if (typeof document.webkitHidden !== 'undefined') {
-	hidden = 'webkitHidden';
-	event = 'webkitvisibilitychange';
-}
-export const visibility = {
-	hidden, event,
-};
+
+export const visibility = (() => {
+	if (typeof document.hidden !== 'undefined') {
+		return {
+			get hidden() {
+				return document.hidden;
+			},
+			addListener: (f) => document.addEventListener('visibilitychange', f, false),
+			removeListener: (f) => document.removeEventListener('visibilitychange', f, false),
+		};
+	}
+
+	if (typeof document.msHidden !== 'undefined') {
+		return {
+			get hidden() {
+				return document.msHidden;
+			},
+			addListener: (f) => document.addEventListener('msvisibilitychange', f, false),
+			removeListener: (f) => document.removeEventListener('msvisibilitychange', f, false),
+		};
+	}
+
+	if (typeof document.webkitHidden !== 'undefined') {
+		return {
+			get hidden() {
+				return document.webkitHidden;
+			},
+			addListener: (f) => document.addEventListener('webkitvisibilitychange', f, false),
+			removeListener: (f) => document.removeEventListener('webkitvisibilitychange', f, false),
+		};
+	}
+
+	return {
+		hidden: true,
+		addListener: () => {},
+		removeListener: () => {},
+	};
+})();

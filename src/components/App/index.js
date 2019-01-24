@@ -111,7 +111,7 @@ export class App extends Component {
 
 	handleVisibilityChange = async() => {
 		const { dispatch } = this.props;
-		await dispatch({ visible: !document[visibility.hidden] });
+		await dispatch({ visible: !visibility.hidden });
 	}
 
 	async initialize() {
@@ -136,12 +136,13 @@ export class App extends Component {
 
 	componentDidMount() {
 		this.initialize();
-		document.addEventListener(visibility.event, this.handleVisibilityChange);
+		visibility.addListener(this.handleVisibilityChange);
+		this.handleVisibilityChange();
 	}
 
 	componentWillUnmount() {
 		this.finalize();
-		document.removeEventListener(visibility.event, this.handleVisibilityChange);
+		visibility.removeListener(this.handleVisibilityChange);
 	}
 
 	render = ({
