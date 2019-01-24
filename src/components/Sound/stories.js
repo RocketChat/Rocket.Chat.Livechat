@@ -1,31 +1,27 @@
-import path from 'path';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
-import { withKnobs, boolean, selectV2 as select } from '@storybook/addon-knobs';
+import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import Sound from '.';
+import { action } from '@storybook/addon-actions';
 
-
-const req = require.context('./', true, /\.mp3$/);
-const soundSet = req.keys()
-	.map((filename) => ({
-		name: path.basename(filename, '.mp3'),
-		src: req(filename),
-	}))
-	.reduce((set, { name, src }) => ({ ...set, [name]: src }), {});
-
-const soundsSelect = Object.keys(soundSet)
-	.reduce((obj, value) => ({ ...obj, [value]: value }), {});
 
 storiesOf('Components|Sound', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('all', ({ name = select('src', soundsSelect, 'chime') }) => (
-		<div style={{ textAlign: 'center' }}>
-			<Sound src={soundSet[name]} play={boolean('play', false)} />
-			<p>{name}</p>
-			<p style={{ fontStyle: 'italic', fontSize: '.75rem' }}>
-				Check the <code>play</code> knob to trigger the sound
-			</p>
-		</div>
+	.add('short', () => (
+		<Sound
+			src={text('src', 'https://open.rocket.chat/sounds/chime.mp3')}
+			play={boolean('play', false)}
+			onStart={action('start')}
+			onStop={action('stop')}
+		/>
+	))
+	.add('long', () => (
+		<Sound
+			src={text('src', 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3')}
+			play={boolean('play', false)}
+			onStart={action('start')}
+			onStop={action('stop')}
+		/>
 	))
 ;
