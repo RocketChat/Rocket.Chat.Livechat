@@ -1,0 +1,69 @@
+@import '~styles/colors';
+@import '~styles/helpers';
+@import '~styles/variables';
+
+
+$chat-button-border-radius: 4px;
+$chat-button-padding: 12px;
+$chat-button-size: 54px;
+$chat-button-background-color: $color-blue;
+$chat-button-color: $color-text-lighter;
+$chat-button-active-displacement: 2px;
+
+$chat-button-badge-size: 1.5rem;
+$chat-button-badge-background-color: $color-red;
+$chat-button-badge-color: $color-text-lighter;
+$chat-button-badge-font-family: $font-family;
+$chat-button-badge-font-size: 0.8125rem;
+$chat-button-badge-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+
+.chat-button {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	box-sizing: border-box;
+	border: none;
+	outline: none;
+	border-radius: $chat-button-border-radius;
+	padding: $chat-button-padding;
+	height: $chat-button-size;
+	width: $chat-button-size;
+
+	background-color: $chat-button-background-color;
+	color: $chat-button-color;
+
+	cursor: pointer;
+	transition: color $default-time-animation,
+		background $default-time-animation,
+		trasform $default-time-animation;
+
+	svg {
+		flex: 1;
+	}
+
+	@include pressable-button($chat-button-active-displacement);
+
+	&__badge {
+		position: absolute;
+		right: (-$chat-button-badge-size / 4);
+		top: (-$chat-button-badge-size / 4);
+		min-width: $chat-button-badge-size;
+		height: $chat-button-badge-size;
+		padding: 0 ($chat-button-badge-font-size / 2);
+
+		background-color: $chat-button-badge-background-color;
+		box-shadow: $chat-button-badge-shadow;
+		border-radius: ($chat-button-badge-size / 2);
+
+		color: $chat-button-badge-color;
+		font-family: $chat-button-badge-font-family;
+		font-size: $chat-button-badge-font-size;
+		font-weight: bold;
+		letter-spacing: 0;
+		line-height: $chat-button-badge-size;
+		text-align: center;
+	}
+}

@@ -1,12 +1,13 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
-import SDK from '../../api';
+import { Livechat } from '../../api';
 import { Consumer } from '../../store';
-import { closeChat, initRoom, loadConfig } from '../../lib/main';
-import { createToken, insert, getAvatarUrl, uploadFile, renderMessage } from '../../components/helpers';
+import { loadConfig } from '../../lib/main';
+import constants from '../../lib/constants';
+import { createToken, insert, getAvatarUrl, renderMessage } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
-
+import { initRoom, closeChat } from './room';
 
 export class ChatContainer extends Component {
 	loadMessages = async() => {
@@ -17,9 +18,15 @@ export class ChatContainer extends Component {
 		}
 
 		await dispatch({ loading: true });
-		const messages = await SDK.loadMessages(rid);
+		const messages = await Livechat.loadMessages(rid);
+		await initRoom();
 		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
 		await dispatch({ loading: false });
+
+		if (messages && messages.length) {
+			const lastMessage = messages[messages.length - 1];
+			this.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+		}
 	}
 
 	loadMoreMessages = async() => {
@@ -30,7 +37,7 @@ export class ChatContainer extends Component {
 		}
 
 		await dispatch({ loading: true });
-		const moreMessages = await SDK.loadMessages(rid, { limit: messages.length + 10 });
+		const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
 		await dispatch({
 			messages: (moreMessages || []).reverse(),
 			noMoreMessages: messages.length + 10 >= moreMessages.length,
@@ -39,25 +46,26 @@ export class ChatContainer extends Component {
 	}
 
 	grantUser = async() => {
-		const { token, user } = this.props;
+		const { token, user, guest } = this.props;
 
 		if (user) {
 			return user;
 		}
 
-		await SDK.grantVisitor({ visitor: { token } });
+		const visitor = { token, ...guest };
+		await Livechat.grantVisitor({ visitor });
 		await loadConfig();
 	}
 
 	getRoom = async() => {
-		const { dispatch, room } = this.props;
+		const { dispatch, room, showConnecting } = this.props;
 
 		if (room) {
 			return room;
 		}
 
-		const newRoom = await SDK.room();
-		await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
+		const newRoom = await Livechat.room();
+		await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
 		await initRoom();
 
 		return newRoom;
@@ -69,11 +77,11 @@ export class ChatContainer extends Component {
 
 	handleChangeText = async(text) => {
 		const { user, room } = this.props;
-		if (!(user.username && room._id)) {
+		if (!(user && user.username && room && room._id)) {
 			return;
 		}
 
-		await SDK.notifyVisitorTyping(room._id, user.username, text.length > 0);
+		await Livechat.notifyVisitorTyping(room._id, user.username, text.length > 0);
 	}
 
 	handleSubmit = async(msg) => {
@@ -85,36 +93,64 @@ export class ChatContainer extends Component {
 		const { _id: rid } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
 		try {
-			await SDK.sendMessage({ msg, token, rid });
-			// TODO: check the room id to ensure that the state room id and the message room id are the same
-			// Otherwise, it's necessary to reset/reload the local room
+			await Livechat.sendMessage({ msg, token, rid });
 		} catch (error) {
-			const { message: reason } = error.data;
+			await loadConfig();
+			const { data: { error: reason } } = error;
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: insert(alerts, alert) });
 		}
-		await SDK.notifyVisitorTyping(rid, user.username, false);
+		await Livechat.notifyVisitorTyping(rid, user.username, false);
 
 	}
+
+	doFileUpload = async(rid, file) => {
+		const { alerts, dispatch } = this.props;
+
+		try {
+			await Livechat.uploadFile({ rid, file });
+		} catch (error) {
+			const { data: { reason, sizeAllowed } } = error;
+
+			let message = I18n.t('FileUpload Error');
+			switch (reason) {
+				case 'error-type-not-allowed':
+					message = I18n.t('Media Types Not Accepted.');
+					break;
+				case 'error-size-not-allowed':
+					message = I18n.t('File exceeds allowed size of __size__.', { size: sizeAllowed });
+			}
+
+			const alert = { id: createToken(), children: message, error: true, timeout: 5000 };
+			await dispatch({ alerts: insert(alerts, alert) });
+		}
+	};
 
 	handleUpload = async(files) => {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
-		const { token } = this.props;
 
-		files.forEach(async(file) => await uploadFile({ token, rid, file }));
+		files.forEach(async(file) => await this.doFileUpload(rid, file));
 	}
 
-	handlePlaySound = () => {
+	handlePlaySound = async() => {
 		const { dispatch, sound = {} } = this.props;
-		dispatch({ sound: { ...sound, play: false } });
+		await dispatch({ sound: { ...sound, play: false } });
 	}
 
 	onChangeDepartment = () => {
 		route('/switch-department');
 	}
 
-	doFinishChat = async() => {
+	onFinishChat = async() => {
+		const { success } = await ModalManager.confirm({
+			text: 'Are you sure you want to finish this chat?',
+		});
+
+		if (!success) {
+			return;
+		}
+
 		const { alerts, dispatch, room: { _id: rid } = {} } = this.props;
 
 		if (!rid) {
@@ -123,7 +159,7 @@ export class ChatContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			await SDK.closeChat({ rid });
+			await Livechat.closeChat({ rid });
 		} catch (error) {
 			console.error(error);
 			const alert = { id: createToken(), children: 'Error closing chat.', error: true, timeout: 0 };
@@ -134,22 +170,20 @@ export class ChatContainer extends Component {
 		}
 	}
 
-	onFinishChat = () => {
-		ModalManager.confirm({
-			text: 'Are you sure you want to finish this chat?',
-		}).then((result) => {
-			if ((typeof result.success === 'boolean') && result.success) {
-				this.doFinishChat();
-			}
+	onRemoveUserData = async() => {
+		const { success } = await ModalManager.confirm({
+			text: 'Are you sure you want to remove all of your personal data?',
 		});
-	}
 
-	doRemoveUserData = async() => {
+		if (!success) {
+			return;
+		}
+
 		const { alerts, dispatch } = this.props;
 
 		await dispatch({ loading: true });
 		try {
-			await SDK.deleteVisitor();
+			await Livechat.deleteVisitor();
 		} catch (error) {
 			console.error(error);
 			const alert = { id: createToken(), children: 'Error removing user data.', error: true, timeout: 0 };
@@ -159,16 +193,6 @@ export class ChatContainer extends Component {
 			await dispatch({ loading: false });
 			route('/chat-finished');
 		}
-	}
-
-	onRemoveUserData = async() => {
-		ModalManager.confirm({
-			text: 'Are you sure you want to remove all of your personal data?',
-		}).then((result) => {
-			if ((typeof result.success === 'boolean') && result.success) {
-				this.doRemoveUserData();
-			}
-		});
 	}
 
 	canSwitchDepartment = () => {
@@ -192,6 +216,22 @@ export class ChatContainer extends Component {
 
 	componentDidMount() {
 		this.loadMessages();
+	}
+
+	async componentWillReceiveProps({ messages: nextMessages, visible: nextVisible, minimized: nextMinimized }) {
+		const { messages, alerts, dispatch } = this.props;
+
+		if (nextMessages && messages && nextMessages.length !== messages.length && nextVisible && !nextMinimized) {
+			const nextLastMessage = nextMessages[nextMessages.length - 1];
+			const lastMessage = messages[messages.length - 1];
+			if (
+				(nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) ||
+				(nextMessages.length === 1 && messages.length === 0)
+			) {
+				const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
+				await dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
+			}
+		}
 	}
 
 	render = (props) => (
@@ -219,6 +259,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					fileUpload: uploads,
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
+					showConnecting,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -229,6 +270,14 @@ export const ChatConnector = ({ ref, ...props }) => (
 				} = {},
 				departments = {},
 			},
+			iframe: {
+				theme: {
+					color: customColor,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				} = {},
+				guest,
+			} = {},
 			token,
 			agent,
 			sound,
@@ -238,13 +287,21 @@ export const ChatConnector = ({ ref, ...props }) => (
 			noMoreMessages,
 			typing,
 			loading,
+			connecting,
 			dispatch,
 			alerts,
+			visible,
+			unread,
+			lastReadMessageId,
 		}) => (
 			<ChatContainer
 				ref={ref}
 				{...props}
-				color={color}
+				theme={{
+					color: customColor || color,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				}}
 				title={title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}
@@ -253,7 +310,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					username: user.username,
 					avatar: {
 						description: user.username,
-						src: getAvatarUrl(user.username),
+						src: getAvatarUrl((user.name && user.name.trim().split(' ')[0]) || user.username),
 					},
 				} : undefined}
 				agent={agent ? {
@@ -266,6 +323,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 						description: agent.username,
 						src: getAvatarUrl(agent.username),
 					},
+					phone: agent.customFields && agent.customFields.phone,
 				} : undefined}
 				room={room}
 				messages={messages.filter((message) => renderMessage(message))}
@@ -277,12 +335,18 @@ export const ChatConnector = ({ ref, ...props }) => (
 					src: getAvatarUrl(username),
 				})) : []}
 				loading={loading}
+				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
+				connecting={connecting} // param to show or hide "connecting"
 				dispatch={dispatch}
 				departments={departments}
 				allowSwitchingDepartments={allowSwitchingDepartments}
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
 				alerts={alerts}
+				visible={visible}
+				unread={unread}
+				lastReadMessageId={lastReadMessageId}
+				guest={guest}
 			/>
 		)}
 	</Consumer>

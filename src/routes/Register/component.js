@@ -70,30 +70,39 @@ export default class Register extends Component {
 			this.state.email = { value: '' };
 		}
 
-		if (hasDepartmentField && departments && departments.length > 0) {
-			this.state.department = { value: '' };
+		if (hasDepartmentField && departments) {
+
+			if (departments.length > 1) {
+				this.state.department = { value: '' };
+			} else if (departments.length === 1) {
+				this.state.department = { value: departments[0]._id };
+			} else {
+				this.state.department = null;
+			}
 		}
 
 		this.validateAll();
 	}
 
-	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departments }) {
-		if (hasNameField && !this.state.name) {
-			this.setState({ name: { value: '' } });
+	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments, nameDefault, emailDefault }) {
+		const nameValue = nameDefault || '';
+		if (hasNameField && (!this.state.name || this.state.name !== nameValue)) {
+			this.setState({ name: { value: nameValue } });
 		} else if (!hasNameField) {
 			this.setState({ name: null });
 		}
 
-		if (hasEmailField && !this.state.email) {
-			this.setState({ email: { value: '' } });
+		const emailValue = emailDefault || '';
+		if (hasEmailField && (!this.state.email || this.state.name !== emailValue)) {
+			this.setState({ email: { value: emailValue } });
 		} else if (!hasEmailField) {
 			this.setState({ email: null });
 		}
 
-		const showDepartmentField = hasDepartmentField && departments && departments.length > 0;
-
-		if (showDepartmentField && !this.state.department) {
-			this.setState({ department: { value: '' } });
+		const departmentValue = departmentDefault || (departments && departments.length === 1 && departments[0]._id) || '';
+		const showDepartmentField = hasDepartmentField && departments && departments.length > 1;
+		if (showDepartmentField && (!this.state.department || this.state.department !== departmentValue)) {
+			this.setState({ department: { value: departmentValue } });
 		} else if (!showDepartmentField) {
 			this.setState({ department: null });
 		}

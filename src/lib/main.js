@@ -1,46 +1,8 @@
-import SDK from '../api';
-import { route } from 'preact-router';
+import format from 'date-fns/format';
+import { Livechat } from '../api';
 import store from '../store';
-import { insert, setCookies } from '../components/helpers';
-import { handleTranscript } from './transcript';
-
-
-let stream;
-
-export const initRoom = async() => {
-	const { room } = store.state;
-
-	if (!room) {
-		return;
-	}
-
-	if (!stream) {
-		stream = await SDK.connect();
-	}
-
-	SDK.unsubscribeAll();
-
-	const { token, agent, room: { _id: rid, servedBy } } = store.state;
-	SDK.subscribeRoom(rid);
-
-	if (!agent && servedBy) {
-		const agent = await SDK.agent({ rid });
-		store.setState({ agent });
-	}
-
-	SDK.onAgentChange(rid, (agent) => {
-		store.setState({ agent });
-	});
-
-	SDK.onAgentStatusChange(rid, (status) => {
-		const { agent } = store.state;
-		store.setState({ agent: { ...agent, status } });
-	});
-
-	setCookies(rid, token);
-	// TODO: parentCall here
-	// parentCall('callback', 'chat-started');
-};
+import { insert } from '../components/helpers';
+import constants from '../lib/constants';
 
 
 export const loadConfig = async() => {
@@ -48,7 +10,7 @@ export const loadConfig = async() => {
 		token,
 	} = store.state;
 
-	SDK.credentials.token = token;
+	Livechat.credentials.token = token;
 
 	const {
 		agent,
@@ -56,7 +18,7 @@ export const loadConfig = async() => {
 		guest: user,
 		resources: { sound: src = null } = {},
 		...config
-	} = await SDK.config({ token });
+	} = await Livechat.config({ token });
 
 	await store.setState({
 		config,
@@ -67,58 +29,32 @@ export const loadConfig = async() => {
 		messages: [],
 		alerts: [],
 		noMoreMessages: false,
+		visible: true,
+		unread: null,
 	});
-
-	await initRoom();
 };
 
-export const closeChat = async() => {
-	await handleTranscript();
-	await loadConfig();
-	return route('/chat-finished');
-};
+export const processUnread = async() => {
+	const { minimized, visible, messages } = store.state;
+	if (minimized || !visible) {
+		const { alerts, lastReadMessageId } = store.state;
+		const lastReadMessageIndex = messages.findIndex((item) => item._id === lastReadMessageId);
+		const unreadMessages = messages.slice(lastReadMessageIndex + 1);
+	
+		if (lastReadMessageIndex !== -1) {
+			const lastReadMessage = messages[lastReadMessageIndex];
+			const alertMessage = I18n.t({
+				one: 'One new message since %{since}',
+				other: '%{count} new messages since %{since}',
+			}, {
+				count: unreadMessages.length,
+				since: format(lastReadMessage.ts, 'HH:mm [on] MMMM Do'),
+			});
+			const alert = { id: constants.unreadMessagesAlertId, children: alertMessage, success: true, timeout: 0 };
+			const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
+			await store.setState({ alerts: insert(newAlerts, alert) });
+		}
 
-export const survey = async() => {
-	// TODO: Implement survey feedback form
-	// route('survey-feedback');
-};
-
-const doPlaySound = (message) => {
-	const { sound, user } = store.state;
-	if (sound.enabled && message.u._id !== user._id) {
-		sound.play = true;
-		return store.setState({ sound });
+		await store.setState({ unread: unreadMessages.length });
 	}
 };
-
-const onNewMessage = async(message) => {
-
-	if (message.t === 'livechat-close') {
-		closeChat();
-		// TODO: parentCall here
-		// parentCall('callback', 'chat-ended');
-	}
-};
-
-SDK.onMessage((message) => {
-	store.setState({ messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })) });
-	onNewMessage(message);
-	doPlaySound(message);
-});
-
-SDK.onTyping((username, isTyping) => {
-	const { typing, user } = store.state;
-
-	if (user && user.username && user.username === username) {
-		return;
-	}
-
-	if (typing.indexOf(username) === -1 && isTyping) {
-		typing.push(username);
-		return store.setState({ typing });
-	}
-
-	if (!isTyping) {
-		return store.setState({ typing: typing.filter((u) => u !== username) });
-	}
-});

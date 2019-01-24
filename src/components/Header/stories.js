@@ -1,11 +1,9 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, color, select, text, boolean } from '@storybook/addon-knobs';
-
-import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post } from '.';
+import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
+import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post, CustomField } from '.';
 import Avatar from '../Avatar';
-import StatusIndicator, { statuses } from '../StatusIndicator';
 import { Alert } from '../Alert';
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrowDown.svg';
@@ -16,21 +14,39 @@ import bertieBartonAvatar from '../Avatar/bertieBarton.png';
 storiesOf('Components|Header', module)
 	.addDecorator(withKnobs)
 	.add('with text content', () => (
-		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
+		<Header
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
+			onClick={action('clicked')}
+		>
 			<Content>
 				{text('text', 'Need Help?')}
 			</Content>
 		</Header>
 	))
 	.add('with long text content', () => (
-		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
+		<Header
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
+			onClick={action('clicked')}
+		>
 			<Content>
 				{text('text', 'Need Help? '.repeat(100))}
 			</Content>
 		</Header>
 	))
 	.add('with title and subtitle', () => (
-		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
+		<Header
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
+			onClick={action('clicked')}
+		>
 			<Content>
 				<Title>{text('title', 'Rocket.Chat')}</Title>
 				<SubTitle>{text('subtitle', 'Livechat')}</SubTitle>
@@ -38,7 +54,13 @@ storiesOf('Components|Header', module)
 		</Header>
 	))
 	.add('with picture', () => (
-		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
+		<Header
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
+			onClick={action('clicked')}
+		>
 			<Picture>
 				<Bell width={20} />
 			</Picture>
@@ -49,7 +71,13 @@ storiesOf('Components|Header', module)
 		</Header>
 	))
 	.add('with actions', () => (
-		<Header color={color('color', '#175CC4')} onClick={action('clicked')}>
+		<Header
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
+			onClick={action('clicked')}
+		>
 			<Content>
 				{text('text', 'Chat finished')}
 			</Content>
@@ -66,7 +94,10 @@ storiesOf('Components|Header', module)
 	))
 	.add('with multiple alerts', () => (
 		<Header
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
 			post={
 				<Post>
 					<Alert
@@ -112,17 +143,142 @@ storiesOf('Components|Header', module)
 		</Header>
 	))
 	.add('for user chat', () => (
-		<Header color={color('color', '#175CC4')}>
+		<Header
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
+		>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} />
+				<Avatar src={bertieBartonAvatar} status={'busy'} />
 			</Picture>
 
 			<Content>
 				<Title>{text('title', '@bertie.barton')}</Title>
 				<SubTitle>
-					<StatusIndicator status={select('status', statuses, 'online')} />
-					<span style={{ margin: '5px' }}>{text('subtitle', 'Available')}</span>
+					{text('subtitle', 'bertie.barton@rocket.chat')}
 				</SubTitle>
+			</Content>
+
+			<Actions>
+				<Action onClick={action('notifications')}>
+					<Bell width={20} />
+				</Action>
+				<Action onClick={action('minimize')}>
+					<Arrow width={20} />
+				</Action>
+				<Action onClick={action('fullscreen')}>
+					<NewWindow width={20} />
+				</Action>
+			</Actions>
+		</Header>
+	))
+	.add('with custom field', () => (
+		<Header
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
+			large
+		>
+			<Picture>
+				<Avatar src={bertieBartonAvatar} large status={'away'} statusBorderColor={color('theme.color', '')} />
+			</Picture>
+
+			<Content>
+				<Title>{text('title', 'Bertie Barton')}</Title>
+				<SubTitle>
+					{text('subtitle', 'bertie.barton@rocket.chat')}
+				</SubTitle>
+				<CustomField>
+					{text('custom', '+ 55 42423 24242')}
+				</CustomField>
+			</Content>
+
+			<Actions>
+				<Action onClick={action('notifications')}>
+					<Bell width={20} />
+				</Action>
+				<Action onClick={action('minimize')}>
+					<Arrow width={20} />
+				</Action>
+				<Action onClick={action('fullscreen')}>
+					<NewWindow width={20} />
+				</Action>
+			</Actions>
+		</Header>
+	))
+	.add('with custom field and alert', () => (
+		<Header
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+			}}
+			post={
+				<Post>
+					<Alert
+						success={boolean('success', true)}
+						onDismiss={action('clicked')}
+					>
+						{text('text', 'Success')}
+					</Alert>
+					<Alert
+						warning={boolean('warning', true)}
+						onDismiss={action('clicked')}
+					>
+						{text('text', 'Warning')}
+					</Alert>
+				</Post>
+			}
+			large
+		>
+			<Picture>
+				<Avatar src={bertieBartonAvatar} large status={'online'} />
+			</Picture>
+
+			<Content>
+				<Title>{text('title', 'Bertie Barton')}</Title>
+				<SubTitle>
+					{text('subtitle', 'bertie.barton@rocket.chat')}
+				</SubTitle>
+				<CustomField>
+					{text('custom', '+ 55 42423 24242')}
+				</CustomField>
+			</Content>
+
+			<Actions>
+				<Action onClick={action('notifications')}>
+					<Bell width={20} />
+				</Action>
+				<Action onClick={action('minimize')}>
+					<Arrow width={20} />
+				</Action>
+				<Action onClick={action('fullscreen')}>
+					<NewWindow width={20} />
+				</Action>
+			</Actions>
+		</Header>
+	))
+	.add('with theme', () => (
+		<Header
+			theme={{
+				color: color('theme.color', 'darkred'),
+				fontColor: color('theme.fontColor', 'peachpuff'),
+			}}
+			large
+		>
+			<Picture>
+				<Avatar src={bertieBartonAvatar} large status={'away'} statusBorderColor={color('theme.color', 'darkred')} />
+			</Picture>
+
+			<Content>
+				<Title>{text('title', 'Bertie Barton')}</Title>
+				<SubTitle>
+					{text('subtitle', 'bertie.barton@rocket.chat')}
+				</SubTitle>
+				<CustomField>
+					{text('custom', '+ 55 42423 24242')}
+				</CustomField>
 			</Content>
 
 			<Actions>

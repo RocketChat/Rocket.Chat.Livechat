@@ -1,11 +1,17 @@
 @import '~styles/colors';
+@import '~styles/helpers';
 @import '~styles/variables';
 
+
 $header-padding: $default-padding;
+$header-height: 56px;
+$header-height-large: 77px;
+
+$header-action-active-displacement: 2px;
 
 .header {
 	width: 100%;
-	height: 56px;
+	height: $header-height;
 	padding: 0 $header-padding / 2;
 	background: $color-dark-blue;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -34,17 +40,31 @@ $header-padding: $default-padding;
 		text-overflow: ellipsis;
 
 		.header__title {
-			font-size: 16px;
-			font-weight: 500;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			font-size: 16px;
+			font-weight: 500;
+			line-height: 1.5;
 		}
 
 		.header__subtitle {
-			font-size: 14px;
-			font-weight: 500;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			opacity: 0.7;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 1.5;
+			letter-spacing: normal;
+		}
+
+		.header__custom-field {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			opacity: 0.7;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 1.67;
+			letter-spacing: normal;
 		}
 	}
 
@@ -60,19 +80,26 @@ $header-padding: $default-padding;
 			display: flex;
 			justify-content: center;
 			flex: 0 0 auto;
-			color: $color-text-lighter;
+			color: inherit;
 
-			&:active {
-				opacity: .9;
-				transform: translateY(2px);
-			}
+			@include pressable-button($header-action-active-displacement, 0);
 		}
 	}
 
 	&__post {
 		position: absolute;
-		top: 56px;
+		top: $header-height;
 		left: 0;
+		right: 0;
 		width: 100%;
+		z-index: 10;
+	}
+
+	&--large {
+		height: $header-height-large;
+
+		.header__post {
+			top: $header-height-large;
+		}
 	}
 }

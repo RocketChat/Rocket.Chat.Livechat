@@ -1,5 +1,6 @@
 import { Component } from 'preact';
-import SDK from '../../api';
+import { Livechat } from '../../api';
+import { parentCall } from '../../lib/parentCall';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
 import { insert, createToken } from '../../components/helpers';
@@ -10,13 +11,12 @@ export class LeaveMessageContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			const message = await SDK.sendOfflineMessage(fields);
+			const message = await Livechat.sendOfflineMessage(fields);
 			const success = { id: createToken(), children: successMessage || message, success: true, timeout: 5000 };
 			await dispatch({ alerts: insert(alerts, success) });
-			// TODO: parentCall here
-			// parentCall('callback', ['offline-form-submit', fields]);
+			parentCall('callback', ['offline-form-submit', fields]);
 		} catch (error) {
-			const { message } = error.data;
+			const { data: { message } } = error;
 			console.error(message);
 			const alert = { id: createToken(), children: message, error: true, timeout: 0 };
 			await dispatch({ alerts: insert(alerts, alert) });
@@ -38,10 +38,14 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 				messages: {
 					offlineMessage: message,
 					offlineSuccessMessage: successMessage,
+					offlineUnavailableMessage: unavailableMessage,
 				} = {},
 				theme: {
 					offlineTitle: title,
 					offlineColor: color,
+				} = {},
+				settings: {
+					displayOfflineForm,
 				} = {},
 			} = {},
 			loading,
@@ -53,13 +57,15 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 				ref={ref}
 				{...props}
 				title={title || I18n.t('Leave a message')}
-				color={color}
+				theme={{ color }}
 				message={message || I18n.t('We are not online right now. Please, leave a message.')}
 				successMessage={successMessage}
+				unavailableMessage={unavailableMessage}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}
 				alerts={alerts}
+				displayOfflineForm={displayOfflineForm}
 			/>
 		)}
 	</Consumer>

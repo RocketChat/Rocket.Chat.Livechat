@@ -22,11 +22,19 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
+	iframe: {
+		guest: {},
+		theme: {},
+	},
 	department: null,
 	gdpr: {
 		accepted: false,
 	},
 	alerts: [],
+	connecting: false,
+	visible: true,
+	minimized: true,
+	unread: null,
 };
 
 export const store = new Store(initialState);

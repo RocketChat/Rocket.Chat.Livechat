@@ -1,4 +1,4 @@
-import SDK from '../api';
+import { Livechat } from '../api';
 import store from '../store';
 import { ModalManager } from '../components/Modal';
 
@@ -17,7 +17,7 @@ const promptTranscript = async() => {
 		text: message,
 	}).then(async(result) => {
 		if ((typeof result.success === 'boolean') && result.success) {
-			return await SDK.requestTranscript(email, { token, rid: _id });
+			return await Livechat.requestTranscript(email, { token, rid: _id });
 		}
 	});
 };

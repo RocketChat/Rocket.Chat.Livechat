@@ -1,6 +1,9 @@
-import SDK from '../api';
+import { route } from 'preact-router';
+import { Livechat } from '../api';
 import store from '../store';
 import { insert, createToken, asyncForEach } from '../components/helpers';
+import { parentCall } from './parentCall';
+import { processUnread } from './main';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -27,7 +30,7 @@ const getAgent = (triggerAction) => {
 
 			let agent;
 			try {
-				(agent = await SDK.nextAgent());
+				(agent = await Livechat.nextAgent());
 			} catch (error) {
 				return reject(error);
 			}
@@ -70,7 +73,7 @@ class Triggers {
 		}
 
 		const { token, firedTriggers = [], config: { triggers } } = store.state;
-		SDK.credentials.token = token;
+		Livechat.credentials.token = token;
 
 		if (!(triggers && triggers.length > 0)) {
 			return;
@@ -110,15 +113,16 @@ class Triggers {
 						_id: createToken(),
 					};
 
-					store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg }) => ({ msg })) });
+					await store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg }) => ({ msg })) });
+					await processUnread();
 
 					// TODO: Need to think about the implementation below.. Is it possible that when the room is created, the available agent is not the same one that was previously selected?
 					if (agent._id) {
-						store.setState({ agent });
+						await store.setState({ agent });
 					}
 
-					// TODO: parentCall
-					// parentCall('openWidget');
+					route('/');
+					parentCall('openWidget');
 				});
 			}
 		});

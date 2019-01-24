@@ -1,5 +1,7 @@
 @import '~styles/colors';
+@import '~styles/helpers';
 @import '~styles/variables';
+
 
 $alert-color: $color-text-lighter;
 $alert-font-family: $font-family;
@@ -22,7 +24,7 @@ $alert-error-background-color: $color-red;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	
+
 	&__content {
 		overflow: hidden;
 		white-space: nowrap;
@@ -32,7 +34,7 @@ $alert-error-background-color: $color-red;
 	&--success {
 		background-color: $alert-success-background-color;
 	}
-	
+
 	&--warning {
 		background-color: $alert-warning-background-color;
 	}
@@ -46,13 +48,11 @@ $alert-error-background-color: $color-red;
 		background: none;
 		border: none;
 		outline: none;
+		color: $alert-color;
 		cursor: pointer;
 		display: flex;
-	
-		&:active {
-			opacity: .9;
-			transform: translateY(1px);
-		}
+
+		@include pressable-button(1px);
 	}
-	
+
 }

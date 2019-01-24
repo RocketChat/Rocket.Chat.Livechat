@@ -11,7 +11,11 @@ storiesOf('Routes|Survey Feedback', module)
 	.add('normal', () => (
 		<SurveyFeedback
 			title={text('title', 'Chat finished')}
-			color={color('color', '#666666')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			message={text('message', 'How would you rate your experience?')}
 			loading={boolean('loading', false)}
 			notificationsEnabled={boolean('notificationsEnabled', true)}

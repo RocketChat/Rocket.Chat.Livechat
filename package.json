@@ -1,5 +1,5 @@
 {
-	"name": "rocket.chat.livechat",
+	"name": "@rocket.chat/livechat",
 	"version": "0.0.1-1",
 	"license": "MIT",
 	"scripts": {
@@ -13,7 +13,8 @@
 		"storybook": "start-storybook -p 9001 -c .storybook",
 		"i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
 		"deploy-storybook": "storybook-to-ghpages",
-		"bundle-analyzer": "webpack-bundle-analyzer build/stats.json"
+		"bundle-analyzer": "webpack-bundle-analyzer build/stats.json",
+		"build-widget": "webpack-cli src/widget.js -o widget.js --mode production"
 	},
 	"eslintIgnore": [
 		"build/*"
@@ -45,6 +46,7 @@
 		"desvg-loader": "^0.1.0",
 		"eslint": "^4.9.0",
 		"eslint-config-synacor": "^2.0.2",
+		"husky": "^1.3.1",
 		"identity-obj-proxy": "^3.0.0",
 		"if-env": "^1.0.0",
 		"image-webpack-loader": "^4.3.1",
@@ -57,14 +59,16 @@
 		"sass-loader": "^7.1.0",
 		"style-loader": "^0.22.1",
 		"svg-loader": "0.0.2",
-		"webpack-bundle-analyzer": "^3.0.2"
+		"webpack-bundle-analyzer": "^3.0.2",
+		"webpack-cli": "^3.2.1"
 	},
 	"dependencies": {
 		"@kossnocorp/desvg": "^0.2.0",
-		"@rocket.chat/sdk": "^1.0.0-alpha.21",
+		"@rocket.chat/sdk": "^1.0.0-alpha.22",
 		"date-fns": "^1.29.0",
 		"desvg": "^1.0.2",
 		"fast-async": "^6.3.8",
+		"history": "^4.7.2",
 		"i18n": "^0.8.3",
 		"i18nline": "^2.0.1",
 		"markdown-it": "^8.4.2",
@@ -73,7 +77,9 @@
 		"preact-context": "^1.1.1",
 		"preact-i18nline": "^2.0.0",
 		"preact-router": "^2.5.7",
-		"tiny-events": "^1.0.1"
+		"query-string": "5",
+		"tiny-events": "^1.0.1",
+		"wolfy87-eventemitter": "^5.2.5"
 	},
 	"jest": {
 		"verbose": true,
@@ -108,5 +114,10 @@
 		"gitUsername": "Guilherme Gazzo",
 		"gitEmail": "guilherme.gazzo@rocket.chat",
 		"commitMessage": "Deploy Storybook to GitHub Pages [skip ci]"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run i18n && git add -A src/i18n && npm run build-widget && git add -A widget.js"
+		}
 	}
 }

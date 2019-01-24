@@ -1,9 +1,22 @@
 import { createClassName } from '../helpers';
 import styles from './styles';
 
-export const Button = ({ children, disabled, outline, nude, danger, secondary, stack, small, loading, ...args }) => (
+
+export const Button = ({
+	children,
+	disabled,
+	outline,
+	nude,
+	danger,
+	secondary,
+	stack,
+	small,
+	loading,
+	className,
+	...props
+}) => (
 	<button
-		{...args}
+		{...props}
 		type={secondary ? 'button' : 'submit'}
 		disabled={disabled}
 		className={createClassName(styles, 'button', {
@@ -15,14 +28,16 @@ export const Button = ({ children, disabled, outline, nude, danger, secondary, s
 			stack,
 			small,
 			loading,
-		})}
+		}, [className])}
 	>
 		{children}
 	</button>
 );
 
 
-export const Group = ({ children }) => <div className={styles.group}>{ children }</div>;
+export const Group = ({ children }) => (
+	<div className={createClassName(styles, 'group')}>{children}</div>
+);
 
 
 Button.Group = Group;

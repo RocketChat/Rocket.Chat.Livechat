@@ -1,5 +1,7 @@
 import { Component } from 'preact';
-import SDK from '../../api';
+import { route } from 'preact-router';
+import { Livechat } from '../../api';
+import { parentCall } from '../../lib/parentCall';
 import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
 import Register from './component';
@@ -28,17 +30,24 @@ export class RegisterContainer extends Component {
 
 		await dispatch({ loading: true, department });
 		try {
-			await SDK.grantVisitor({ visitor: { ...fields, token } });
+			await Livechat.grantVisitor({ visitor: { ...fields, token } });
 			await loadConfig();
-			// TODO: parencall here
-			// parentCall('callback', ['pre-chat-form-submit', fields]);
+			parentCall('callback', ['pre-chat-form-submit', fields]);
+			route('/');
 		} finally {
 			await dispatch({ loading: false });
 		}
 	}
 
+	getDepartmentDefault() {
+		const { guestDepartment, departments } = this.props;
+		if (departments && departments.some((dept) => dept._id === guestDepartment)) {
+			return guestDepartment;
+		}
+	}
+
 	render = (props) => (
-		<Register {...props} onSubmit={this.handleSubmit} />
+		<Register {...props} onSubmit={this.handleSubmit} departmentDefault={this.getDepartmentDefault()} />
 	)
 }
 
@@ -60,6 +69,18 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					color,
 				} = {},
 			} = {},
+			iframe: {
+				guest: {
+					department: guestDepartment,
+					name: guestName,
+					email: guestEmail,
+				} = {},
+				theme: {
+					color: customColor,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				} = {},
+			} = {},
 			loading = false,
 			token,
 			dispatch,
@@ -67,13 +88,20 @@ export const RegisterConnector = ({ ref, ...props }) => (
 			<RegisterContainer
 				ref={ref}
 				{...props}
+				theme={{
+					color: customColor || color,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				}}
 				title={title || I18n.t('Need help?')}
-				color={color}
 				message={message || I18n.t('Please, tell us some informations to start the chat')}
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}
 				departments={departments.filter((dept) => dept.showOnRegistration)}
+				nameDefault={guestName}
+				emailDefault={guestEmail}
+				guestDepartment={guestDepartment}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}

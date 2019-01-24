@@ -1,5 +1,14 @@
 import { Component } from 'preact';
-import { Router } from 'preact-router';
+import { Router, route } from 'preact-router';
+import queryString from 'query-string';
+import { Livechat } from '../../api';
+import history from '../../history';
+import { loadConfig } from '../../lib/main';
+import CustomFields from '../../lib/customFields';
+import Triggers from '../../lib/triggers';
+import Hooks from '../../lib/hooks';
+import { parentCall } from '../../lib/parentCall';
+import userPresence from '../../lib/userPresence';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
@@ -7,16 +16,55 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { loadConfig } from '../../lib/main';
-import CustomFields from '../../lib/customFields';
-import Triggers from '../../lib/triggers';
-import userPresence from '../../lib/userPresence';
+import { visibility } from '../helpers';
 
 export class App extends Component {
 
-	state = { initialized: false }
+	state = {
+		initialized: false,
+	}
 
-	handleRoute = () => {}
+	handleRoute = async() => {
+		setTimeout(() => {
+			const {
+				config: {
+					settings: {
+						registrationForm,
+						nameFieldRegistrationForm,
+						emailFieldRegistrationForm,
+						forceAcceptDataProcessingConsent: gdprRequired,
+					},
+					online,
+					departments = [],
+				},
+				gdpr: {
+					accepted: gdprAccepted,
+				},
+				triggered,
+				user,
+			} = this.props;
+
+			if (gdprRequired && !gdprAccepted) {
+				return route('/gdpr');
+			}
+
+			if (!online) {
+				return route('/leave-message');
+			}
+
+			const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
+
+			const showRegistrationForm = (
+				(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)) &&
+				!triggered &&
+				!(user && user.token)
+			);
+
+			if (showRegistrationForm) {
+				return route('/register');
+			}
+		}, 100);
+	}
 
 	handleTriggers() {
 		const { config: { online, enabled } } = this.props;
@@ -28,13 +76,57 @@ export class App extends Component {
 		}
 	}
 
+	handleEnableNotifications = () => {
+		const { dispatch, sound = {} } = this.props;
+		dispatch({ sound: { ...sound, enabled: true } });
+	}
+
+	handleDisableNotifications = () => {
+		const { dispatch, sound = {} } = this.props;
+		dispatch({ sound: { ...sound, enabled: false } });
+	}
+
+	handleMinimize = () => {
+		parentCall('minimizeWindow');
+		const { dispatch } = this.props;
+		dispatch({ minimized: true });
+	}
+
+	handleRestore = () => {
+		parentCall('restoreWindow');
+		const { dispatch } = this.props;
+		dispatch({ minimized: false, undocked: false });
+	}
+
+	handleOpenWindow = () => {
+		parentCall('openPopout');
+		const { dispatch } = this.props;
+		dispatch({ undocked: true });
+	}
+
+	handleDismissAlert = (id) => {
+		const { dispatch, alerts = [] } = this.props;
+		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
+	}
+
+	handleVisibilityChange = async() => {
+		const { dispatch } = this.props;
+		await dispatch({ visible: !visibility.hidden });
+	}
+
 	async initialize() {
+		await Livechat.connect();
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();
+		Hooks.init();
 		userPresence.init();
 
 		this.setState({ initialized: true });
+		parentCall('ready');
+
+		const { minimized } = this.props;
+		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
 	}
 
 	async finalize() {
@@ -44,53 +136,56 @@ export class App extends Component {
 
 	componentDidMount() {
 		this.initialize();
+		visibility.addListener(this.handleVisibilityChange);
+		this.handleVisibilityChange();
 	}
 
 	componentWillUnmount() {
 		this.finalize();
+		visibility.removeListener(this.handleVisibilityChange);
 	}
 
-	renderScreen() {
-		const {
-			config: {
-				settings: {
-					registrationForm,
-					nameFieldRegistrationForm,
-					emailFieldRegistrationForm,
-					forceAcceptDataProcessingConsent: gdprRequired,
-				},
-				online,
-			},
-			gdpr: {
-				accepted: gdprAccepted,
-			},
-			triggered,
-			user,
-		} = this.props;
-
-		// Temporary implementation, the best approach for this resource is handling the the Router component
-		if (gdprRequired && !gdprAccepted) {
-			return <GDPRAgreement default path="/gdpr" />;
+	render = ({
+		sound,
+		undocked,
+		minimized,
+		expanded,
+		alerts,
+		modal,
+	}, { initialized }) => {
+		if (!initialized) {
+			return null;
 		}
 
-		if (!online) {
-			return <LeaveMessage default path="/LeaveMessage" />;
-		}
+		const poppedOut = queryString.parse(window.location.search).mode === 'popout';
 
-		const showRegistrationForm = registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm);
-		if ((user && user.token) || !showRegistrationForm || triggered) {
-			return <Chat default path="/home" />;
-		}
-		return <Register default path="/register" />;
+		const screenProps = {
+			notificationsEnabled: sound && sound.enabled,
+			minimized: !poppedOut && (minimized || undocked),
+			expanded: !minimized && expanded,
+			windowed: !minimized && poppedOut,
+			sound,
+			alerts,
+			modal,
+			onEnableNotifications: this.handleEnableNotifications,
+			onDisableNotifications: this.handleDisableNotifications,
+			onMinimize: this.handleMinimize,
+			onRestore: this.handleRestore,
+			onOpenWindow: this.handleOpenWindow,
+			onDismissAlert: this.handleDismissAlert,
+		};
+
+		return (
+			<Router history={history} onChange={this.handleRoute}>
+				<Chat default path="/" {...screenProps} />
+				<Register path="/register" {...screenProps} />
+				<LeaveMessage path="/leave-message" {...screenProps} />
+				<GDPRAgreement path="/gdpr" {...screenProps} />
+				<ChatFinished path="/chat-finished" {...screenProps} />
+				<SwitchDepartment path="/switch-department" {...screenProps} />
+			</Router>
+		);
 	}
-
-	render = () => (this.state.initialized &&
-		<Router onChange={this.handleRoute}>
-			{this.renderScreen()}
-			<ChatFinished path="/chat-finished" />
-			<SwitchDepartment path="/switch-department" />
-		</Router>
-	)
 }
 
 const AppConnector = () => (
@@ -102,12 +197,26 @@ const AppConnector = () => (
 					user,
 					triggered,
 					gdpr,
+					sound,
+					undocked,
+					minimized = true,
+					expanded = false,
+					alerts,
+					modal,
+					dispatch,
 				}) => (
 					<App
 						config={config}
 						gdpr={gdpr}
 						triggered={triggered}
 						user={user}
+						sound={sound}
+						undocked={undocked}
+						minimized={minimized}
+						expanded={expanded}
+						alerts={alerts}
+						modal={modal}
+						dispatch={dispatch}
 					/>
 				)}
 			</StoreConsumer>
