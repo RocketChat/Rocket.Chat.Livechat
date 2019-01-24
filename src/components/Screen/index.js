@@ -69,36 +69,37 @@ class ScreenHeader extends Component {
 			</Header.Content>
 			<Tooltip.Container>
 				<Header.Actions>
-					<Header.Action
-						aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
-						onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
-					>
-						<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')}>
+					<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')}>
+						<Header.Action
+							aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
+							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
+						>
 							{notificationsEnabled ?
 								<NotificationsEnabledIcon width={20} /> :
 								<NotificationsDisabledIcon width={20} />
 							}
-						</Tooltip.Trigger>
-					</Header.Action>
+						</Header.Action>
+					</Tooltip.Trigger>
 					{(expanded || !windowed) && (
-						<Header.Action
-							aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
-							onClick={minimized ? onRestore : onMinimize}
-						>
-							<Tooltip.Trigger content={I18n.t('Minimize chat')}>
+						<Tooltip.Trigger content={I18n.t('Minimize chat')}>
+							<Header.Action
+								aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
+								onClick={minimized ? onRestore : onMinimize}
+							>
+
 								{minimized ?
 									<RestoreIcon width={20} /> :
 									<MinimizeIcon width={20} />
 								}
-							</Tooltip.Trigger>
-						</Header.Action>
+							</Header.Action>
+						</Tooltip.Trigger>
 					)}
 					{(!expanded && !windowed) && (
-						<Header.Action aria-label={I18n.t('Open in a new window')} onClick={onOpenWindow}>
-							<Tooltip.Trigger content={I18n.t('Expand chat')}>
+						<Tooltip.Trigger content={I18n.t('Expand chat')}>
+							<Header.Action aria-label={I18n.t('Open in a new window')} onClick={onOpenWindow}>
 								<OpenWindowIcon width={20} />
-							</Tooltip.Trigger>
-						</Header.Action>
+							</Header.Action>
+						</Tooltip.Trigger>
 					)}
 				</Header.Actions>
 			</Tooltip.Container>
