@@ -10,8 +10,12 @@ storiesOf('Routes|ChatFinished', module)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<ChatFinished
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Chat Finished')}
-			color={color('color', '#C1272D')}
 			greeting={text('greeting', 'Thanks for talking with us')}
 			message={text('message', 'If you have any other questions, just press the button below to start a new chat.')}
 			onRedirectChat={action('redirectChat')}

@@ -43,7 +43,7 @@ $button-loading-color: #ffffff;
 }
 
 .button {
-	@mixin state($color) {
+	@mixin state($color, $alpha-color: rgba($color, 0.5)) {
 		border-color: $color;
 		background: $color;
 
@@ -52,7 +52,7 @@ $button-loading-color: #ffffff;
 			color: $color;
 
 			&.button--loading::after {
-					border-color: $color rgba($color, 0.5) rgba($color, 0.5) rgba($color, 0.5);
+					border-color: $color $alpha-color $alpha-color $alpha-color;
 			}
 		}
 	}
@@ -67,7 +67,7 @@ $button-loading-color: #ffffff;
 	border-radius: $button-border-radius;
 	padding: $button-padding;
 
-	color: $button-color;
+	color: var(--font-color, $button-color);
 	outline: none;
 
 	font-family: $button-font-family;
@@ -83,7 +83,7 @@ $button-loading-color: #ffffff;
 		transform $default-time-animation;
 	user-select: none;
 
-	@include state($button-background-color);
+	@include state(var(--color, $button-background-color), transparent);
 	@include pressable-button($button-active-displacement, $button-border-width);
 
 	&:focus {
@@ -91,10 +91,12 @@ $button-loading-color: #ffffff;
 	}
 
 	&--danger {
+		color: $button-color;
 		@include state($button-danger-background-color);
 	}
 
 	&--secondary {
+		color: $button-color;
 		@include state($button-secondary-background-color);
 	}
 
@@ -138,11 +140,16 @@ $button-loading-color: #ffffff;
 			width: $button-line-height;
 			height: $button-line-height;
 
+			border-color: var(--font-color, $button-loading-color) transparent transparent transparent;
+			animation: button-loading-rotation 1s linear infinite;
+		}
+
+		&.button--danger::after,
+		&.button--secondary::after {
 			border-color: $button-loading-color
 				rgba($button-loading-color, 0.5)
 				rgba($button-loading-color, 0.5)
 				rgba($button-loading-color, 0.5);
-			animation: button-loading-rotation 1s linear infinite;
 		}
 	}
 }

@@ -133,7 +133,7 @@ export class ChatContainer extends Component {
 		files.forEach(async(file) => await this.doFileUpload(rid, file));
 	}
 
-	handlePlaySound = async() => {
+	handleSoundStop = async() => {
 		const { dispatch, sound = {} } = this.props;
 		await dispatch({ sound: { ...sound, play: false } });
 	}
@@ -241,11 +241,12 @@ export class ChatContainer extends Component {
 			onChangeText={this.handleChangeText}
 			onSubmit={this.handleSubmit}
 			onUpload={this.handleUpload}
-			onPlaySound={this.handlePlaySound}
 			options={this.showOptionsMenu()}
 			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
+			onSoundStop={this.handleSoundStop}
+			lastReadMessageId={state.lastReadMessageId}
 		/>
 	)
 }

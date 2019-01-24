@@ -5,31 +5,35 @@ import Button from '../Button';
 import { PopoverContainer, PopoverTrigger } from '.';
 
 
+const centeredWithPopoverContainer = (storyFn) => (
+	<div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+		<PopoverContainer>
+			{centered(storyFn)}
+		</PopoverContainer>
+	</div>
+);
+
 storiesOf('Components|Popover', module)
 	.addDecorator(withKnobs)
-	.addDecorator(centered)
+	.addDecorator(centeredWithPopoverContainer)
 	.add('arbitrary renderer', () => (
-		<PopoverContainer>
-			<PopoverTrigger>
-				{({ pop }) => (
-					<Button onClick={pop}>More options...</Button>
-				)}
-				{({ dismiss, triggerBounds = {} }) => (
-					<Button style={{ position: 'absolute', left: triggerBounds.right, top: triggerBounds.bottom }} outline onClick={dismiss}>Close me</Button>
-				)}
-			</PopoverTrigger>
-		</PopoverContainer>
+		<PopoverTrigger>
+			{({ pop }) => (
+				<Button onClick={pop}>More options...</Button>
+			)}
+			{({ dismiss, triggerBounds = {} }) => (
+				<Button style={{ position: 'absolute', left: triggerBounds.right, top: triggerBounds.bottom }} outline onClick={dismiss}>Close me</Button>
+			)}
+		</PopoverTrigger>
 	))
 	.add('with overlay props', () => (
-		<PopoverContainer>
-			<PopoverTrigger overlayProps={object('overlayProps', { style: { backgroundColor: 'rgba(0, 0, 0, 0.5)' } })}>
-				{({ pop }) => (
-					<Button onClick={pop}>More options...</Button>
-				)}
-				{({ dismiss, triggerBounds = {} }) => (
-					<Button style={{ position: 'absolute', left: triggerBounds.right, top: triggerBounds.bottom }} outline onClick={dismiss}>Close me</Button>
-				)}
-			</PopoverTrigger>
-		</PopoverContainer>
+		<PopoverTrigger overlayProps={object('overlayProps', { style: { backgroundColor: 'rgba(0, 0, 0, 0.5)' } })}>
+			{({ pop }) => (
+				<Button onClick={pop}>More options...</Button>
+			)}
+			{({ dismiss, triggerBounds = {} }) => (
+				<Button style={{ position: 'absolute', left: triggerBounds.right, top: triggerBounds.bottom }} outline onClick={dismiss}>Close me</Button>
+			)}
+		</PopoverTrigger>
 	))
 ;

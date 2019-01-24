@@ -10,8 +10,12 @@ storiesOf('Routes|SwitchDepartment', module)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<SwitchDepartment
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Change Department')}
-			color={color('color', '#C1272D')}
 			message={text('message', 'Choose a department')}
 			departments={object('departments', [
 				{
@@ -34,8 +38,12 @@ storiesOf('Routes|SwitchDepartment', module)
 	))
 	.add('loading', () => (
 		<SwitchDepartment
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'Change Department')}
-			color={color('color', '#C1272D')}
 			message={text('message', 'Choose a department')}
 			departments={object('departments', [
 				{

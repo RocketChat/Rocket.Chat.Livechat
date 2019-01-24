@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
@@ -182,7 +181,7 @@ storiesOf('Components|Header', module)
 			large
 		>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} large status={'away'} statusBorderColor={color('theme.color', '')} />
+				<Avatar src={bertieBartonAvatar} large status={'away'} />
 			</Picture>
 
 			<Content>
@@ -268,7 +267,7 @@ storiesOf('Components|Header', module)
 			large
 		>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} large status={'away'} statusBorderColor={color('theme.color', 'darkred')} />
+				<Avatar src={bertieBartonAvatar} large status={'away'} />
 			</Picture>
 
 			<Content>

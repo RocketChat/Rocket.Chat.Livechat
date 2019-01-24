@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { Component } from 'preact';
 
 export default class Sound extends Component {
 	play = () => {
@@ -9,25 +9,32 @@ export default class Sound extends Component {
 		this.audio = audio;
 	}
 
-	componentDidMount() {
-		const { play, onPlay } = this.props;
+	handlePlayProp = () => {
+		const { play } = this.props;
 
 		if (play) {
-			this.play();
-			onPlay && onPlay();
+			this.audio.play();
+		} else if (!this.audio.ended) {
+			this.audio.pause();
+			this.audio.currentTime = 0;
 		}
+	}
+
+	componentDidMount() {
+		this.handlePlayProp();
 	}
 
 	componentDidUpdate() {
-		const { play, onPlay } = this.props;
-
-		if (play) {
-			this.play();
-			onPlay && onPlay();
-		}
+		this.handlePlayProp();
 	}
 
-	render({ src }) {
-		return <audio src={src} ref={this.handleRef} type="audio/mpeg" />;
-	}
+	render = ({ src, onStart, onStop }) => (
+		<audio
+			ref={this.handleRef}
+			src={src}
+			onPlay={onStart}
+			onEnded={onStop}
+			type="audio/mpeg"
+		/>
+	)
 }

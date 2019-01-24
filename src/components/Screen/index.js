@@ -4,6 +4,8 @@ import Avatar from '../Avatar';
 import ChatButton from '../ChatButton';
 import Header from '../Header';
 import Footer from '../Footer';
+import { PopoverContainer } from '../Popover';
+import Sound from '../Sound';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
@@ -12,7 +14,6 @@ import MinimizeIcon from '../../icons/arrowDown.svg';
 import RestoreIcon from '../../icons/arrowUp.svg';
 import OpenWindowIcon from '../../icons/newWindow.svg';
 import styles from './styles';
-import { PopoverContainer } from '../Popover';
 
 
 class ScreenHeader extends Component {
@@ -22,7 +23,6 @@ class ScreenHeader extends Component {
 	}
 
 	render = ({
-		theme,
 		alerts,
 		agent,
 		title,
@@ -39,7 +39,6 @@ class ScreenHeader extends Component {
 	}) => (
 		<Header
 			ref={this.handleRef}
-			theme={theme}
 			post={
 				<Header.Post>
 					{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
@@ -54,7 +53,7 @@ class ScreenHeader extends Component {
 						description={agent.avatar.description}
 						status={agent.status}
 						large={this.largeHeader()}
-						statusBorderColor={theme.color || '#175CC4'} // TODO: remove this hardcoded color code
+						statusBorder
 					/>
 				</Header.Picture>
 			)}
@@ -70,36 +69,37 @@ class ScreenHeader extends Component {
 			</Header.Content>
 			<Tooltip.Container>
 				<Header.Actions>
-					<Header.Action
-						aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
-						onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
-					>
-						<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')}>
+					<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')}>
+						<Header.Action
+							aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
+							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
+						>
 							{notificationsEnabled ?
 								<NotificationsEnabledIcon width={20} /> :
 								<NotificationsDisabledIcon width={20} />
 							}
-						</Tooltip.Trigger>
-					</Header.Action>
+						</Header.Action>
+					</Tooltip.Trigger>
 					{(expanded || !windowed) && (
-						<Header.Action
-							aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
-							onClick={minimized ? onRestore : onMinimize}
-						>
-							<Tooltip.Trigger content={I18n.t('Minimize chat')}>
+						<Tooltip.Trigger content={I18n.t('Minimize chat')}>
+							<Header.Action
+								aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
+								onClick={minimized ? onRestore : onMinimize}
+							>
+
 								{minimized ?
 									<RestoreIcon width={20} /> :
 									<MinimizeIcon width={20} />
 								}
-							</Tooltip.Trigger>
-						</Header.Action>
+							</Header.Action>
+						</Tooltip.Trigger>
 					)}
 					{(!expanded && !windowed) && (
-						<Header.Action aria-label={I18n.t('Open in a new window')} onClick={onOpenWindow}>
-							<Tooltip.Trigger content={I18n.t('Expand chat')}>
+						<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom-left">
+							<Header.Action aria-label={I18n.t('Open in a new window')} onClick={onOpenWindow}>
 								<OpenWindowIcon width={20} />
-							</Tooltip.Trigger>
-						</Header.Action>
+							</Header.Action>
+						</Tooltip.Trigger>
 					)}
 				</Header.Actions>
 			</Tooltip.Container>
@@ -136,7 +136,6 @@ const ScreenFooter = ({
 
 
 const ScreenInner = ({
-	theme,
 	agent,
 	title,
 	notificationsEnabled,
@@ -163,7 +162,6 @@ const ScreenInner = ({
 	<div className={createClassName(styles, 'screen__inner', {}, [className])}>
 		<PopoverContainer>
 			<ScreenHeader
-				theme={theme}
 				alerts={alerts}
 				agent={agent}
 				title={title}
@@ -213,6 +211,7 @@ export const Screen = ({
 	alerts,
 	modal,
 	unread,
+	sound,
 	onDismissAlert,
 	onEnableNotifications,
 	onDisableNotifications,
@@ -222,10 +221,17 @@ export const Screen = ({
 	onChangeDepartment,
 	onFinishChat,
 	onRemoveUserData,
+	onSoundStop,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
+		<style>{`
+			.${ styles.screen } {
+				${ theme.color ? `--color: ${ theme.color };` : '' }
+				${ theme.fontColor ? `--font-color: ${ theme.fontColor };` : '' }
+				${ theme.iconColor ? `--icon-color: ${ theme.iconColor };` : '' }
+			}
+		`}</style>
 		<ScreenInner
-			theme={theme}
 			agent={agent}
 			title={title}
 			notificationsEnabled={notificationsEnabled}
@@ -252,11 +258,12 @@ export const Screen = ({
 
 		<ChatButton
 			open={!minimized}
-			theme={theme}
 			onClick={minimized ? onRestore : onMinimize}
 			className={createClassName(styles, 'screen__chat-button')}
 			badge={unread}
 		/>
+
+		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} />}
 	</div>
 );
 

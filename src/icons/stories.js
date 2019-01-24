@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
 import { withKnobs, color } from '@storybook/addon-knobs';

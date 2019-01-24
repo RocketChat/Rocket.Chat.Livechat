@@ -2,106 +2,162 @@
 @import '~styles/variables';
 
 .tooltip {
-  --tail-size: 0.3125rem;
+	--tail-size: 0.3125rem;
 
-  position: relative;
-  padding: 0.5rem 0.75rem;
-  margin: 0.5rem;
-  border-radius: $default-border-radius;
+	position: relative;
+	padding: 0.5rem 0.75rem;
+	margin: 0.5rem;
+	border-radius: $default-border-radius;
 
-  background-color: $bg-color-darker;
-  box-shadow: 0 0 0.125rem 0 rgba($bg-color-dark, 0.08),
-    0 0 0.75rem 0 rgba($bg-color-dark, 0.12);
+	background-color: $bg-color-darker;
+	box-shadow: 0 0 0.125rem 0 rgba($bg-color-dark, 0.08),
+		0 0 0.75rem 0 rgba($bg-color-dark, 0.12);
 
-  color: $color-text-lighter;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 1rem;
-  text-align: center;
-  white-space: nowrap;
-  user-select: none;
-  pointer-events: none;
+	color: $color-text-lighter;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0;
+	line-height: 1rem;
+	text-align: center;
+	white-space: nowrap;
+	user-select: none;
+	pointer-events: none;
 
-  display: inline-block;
-  visibility: visible;
-  opacity: 1;
-  transition: opacity $default-time-animation;
-  z-index: 15;
+	display: inline-block;
+	visibility: visible;
+	opacity: 1;
+	transition: opacity $default-time-animation;
+	z-index: 15;
 
-  &--hidden {
-    visibility: hidden;
-    opacity: 0;
-  }
+	&--hidden {
+		visibility: hidden;
+		opacity: 0;
+	}
 
-  &--placement {
-    @mixin tail {
-      &::before {
-        content: "";
-        position: absolute;
-        border: var(--tail-size) solid $bg-color-darker;
-        @content;
-      }
-    }
+	&--placement {
+		@mixin tail {
+			&::before {
+				content: "";
+				position: absolute;
+				border: var(--tail-size) solid $bg-color-darker;
+				@content;
+			}
+		}
 
-    &-left {
-      @include tail {
-        left: 100%;
-        top: calc(50% - var(--tail-size));
-        border-top-color: transparent;
-        border-bottom-color: transparent;
-        border-right-color: transparent;
-      }
-    }
+		&-left {
+			@include tail {
+				left: 100%;
+				top: calc(50% - var(--tail-size));
+				border-top-color: transparent;
+				border-bottom-color: transparent;
+				border-right-color: transparent;
+			}
+		}
 
-    &-right {
-      @include tail {
-        right: 100%;
-        top: calc(50% - var(--tail-size));
-        border-top-color: transparent;
-        border-bottom-color: transparent;
-        border-left-color: transparent;
-      }
-    }
+		&-right {
+			@include tail {
+				right: 100%;
+				top: calc(50% - var(--tail-size));
+				border-top-color: transparent;
+				border-bottom-color: transparent;
+				border-left-color: transparent;
+			}
+		}
 
-    &-top {
-      @include tail {
-        left: calc(50% - var(--tail-size));
-        top: 100%;
-        border-left-color: transparent;
-        border-right-color: transparent;
-        border-bottom-color: transparent;
-      }
-    }
+		&-top {
+			@include tail {
+				left: calc(50% - var(--tail-size));
+				top: 100%;
+				border-left-color: transparent;
+				border-right-color: transparent;
+				border-bottom-color: transparent;
+			}
+		}
 
-    &-bottom {
-      @include tail {
-        left: calc(50% - var(--tail-size));
-        bottom: 100%;
-        border-left-color: transparent;
-        border-right-color: transparent;
-        border-top-color: transparent;
-      }
-    }
-  }
+		&-top-left {
+			@include tail {
+				right: $default-border-radius;
+				top: 100%;
+				border-left-color: transparent;
+				border-right-color: transparent;
+				border-bottom-color: transparent;
+			}
+		}
 
-  &--floating {
-    position: fixed;
-    margin: 0;
-    transform: translate(-50%, var(--tail-size));
+		&-top-right {
+			@include tail {
+				left: $default-border-radius;
+				top: 100%;
+				border-left-color: transparent;
+				border-right-color: transparent;
+				border-bottom-color: transparent;
+			}
+		}
 
-    &.tooltip--placement {
-      &-left {
-        transform: translate(calc(-100% - var(--tail-size)), -50%);
-      }
+		&-bottom {
+			@include tail {
+				left: calc(50% - var(--tail-size));
+				bottom: 100%;
+				border-left-color: transparent;
+				border-right-color: transparent;
+				border-top-color: transparent;
+			}
+		}
 
-      &-top {
-        transform: translate(-50%, calc(-100% - var(--tail-size)));
-      }
+		&-bottom-left {
+			@include tail {
+				right: $default-border-radius;
+				bottom: 100%;
+				border-left-color: transparent;
+				border-right-color: transparent;
+				border-top-color: transparent;
+			}
+		}
 
-      &-right {
-        transform: translate(var(--tail-size), -50%);
-      }
-    }
-  }
+		&-bottom-right {
+			@include tail {
+				left: $default-border-radius;
+				bottom: 100%;
+				border-left-color: transparent;
+				border-right-color: transparent;
+				border-top-color: transparent;
+			}
+		}
+	}
+
+	&--floating {
+		position: fixed;
+		margin: 0;
+		transform: translate(-50%, var(--tail-size));
+
+		&.tooltip--placement {
+			&-left {
+				transform: translate(calc(-100% - var(--tail-size)), -50%);
+			}
+
+			&-right {
+				transform: translate(var(--tail-size), -50%);
+			}
+
+			&-top {
+				transform: translate(-50%, calc(-100% - var(--tail-size)));
+			}
+
+			&-top-left {
+				transform: translate(calc(-100% + var(--tail-size)), calc(-100% - var(--tail-size)));
+			}
+
+			&-top-right {
+				transform: translate(calc(0% - var(--tail-size)), calc(-100% - var(--tail-size)));
+			}
+
+			&-bottom-left {
+				transform: translate(calc(-100% + var(--tail-size)), var(--tail-size));
+			}
+
+			&-bottom-right {
+				transform: translate(calc(0% - var(--tail-size)), var(--tail-size));
+			}
+		}
+	}
 }

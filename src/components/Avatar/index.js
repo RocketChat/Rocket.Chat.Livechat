@@ -19,7 +19,7 @@ export class Avatar extends Component {
 		}
 	}
 
-	render = ({ small, large, src, description, status, statusBorderColor = '#ffffff', className, ...args }, { errored }) => (
+	render = ({ small, large, src, description, status, className, ...args }, { errored }) => (
 		<div
 			aria-label="User picture"
 			className={createClassName(styles, 'avatar', { small, large, nobg: src && !errored }, [className])}
@@ -36,7 +36,7 @@ export class Avatar extends Component {
 
 			{status && (
 				<div className={createClassName(styles, 'avatar__status', { small, large })}>
-					<StatusIndicator status={status} small={small} large={large} borderColor={statusBorderColor} />
+					<StatusIndicator status={status} small={small} large={large} bordered />
 				</div>
 			)}
 		</div>

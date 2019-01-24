@@ -12,8 +12,12 @@ storiesOf('Routes|GDPRAgreement', module)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<GDPRAgreement
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', 'GDPR')}
-			color={color('color', '#C1272D')}
 			consentText={text('consentText', defaultConsentText)}
 			onAgree={action('agree')}
 		/>

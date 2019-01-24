@@ -3,7 +3,6 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, number, object, text } from '@storybook/addon-knobs';
 import { screenCentered } from '../helpers.stories';
 import Chat from './component';
-import soundSrc from '../../components/Sound/chime.mp3';
 
 
 const user = {
@@ -45,13 +44,19 @@ const messages = [
 	ts: new Date(Date.now() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)),
 }));
 
+const soundSrc = 'https://open.rocket.chat/sounds/beep.mp3';
+
 
 storiesOf('Routes|Chat', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('loading', () => (
 		<Chat
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
@@ -77,7 +82,11 @@ storiesOf('Routes|Chat', module)
 	))
 	.add('normal', () => (
 		<Chat
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
@@ -104,7 +113,11 @@ storiesOf('Routes|Chat', module)
 	))
 	.add('with typing user', () => (
 		<Chat
-			color={color('color', '#175CC4')}
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
