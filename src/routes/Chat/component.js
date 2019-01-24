@@ -14,10 +14,6 @@ import { FileUploadInput } from '../../components/Form/inputs';
 const toBottom = (el) => el.scrollTop = el.scrollHeight;
 
 export default class Chat extends Component {
-	handleSoundRef = (sound) => {
-		this.sound = sound;
-	}
-
 	handleInputFileUploadRef = (ref) => {
 		this.inputFileUploadRef = ref;
 	}
@@ -101,7 +97,6 @@ export default class Chat extends Component {
 		color,
 		title,
 		fontColor,
-		sound,
 		user,
 		agent,
 		typingAvatars,
@@ -109,7 +104,6 @@ export default class Chat extends Component {
 		loading,
 		connecting,
 		onUpload,
-		onPlaySound,
 		messages,
 		uploads = false,
 		emoji = false,
@@ -166,7 +160,6 @@ export default class Chat extends Component {
 			className={createClassName(styles, 'chat')}
 			{...props}
 		>
-			<Sound ref={this.handleSoundRef} onPlay={onPlaySound} src={sound.src} play={sound.play} />
 			<FileUploadInput hidden ref={this.handleInputFileUploadRef} onChange={this.handleOnChangeFileUploadInput} />
 			<DropFiles onUpload={onUpload}>
 				<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>

@@ -4,6 +4,8 @@ import Avatar from '../Avatar';
 import ChatButton from '../ChatButton';
 import Header from '../Header';
 import Footer from '../Footer';
+import { PopoverContainer } from '../Popover';
+import Sound from '../Sound';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
@@ -12,7 +14,6 @@ import MinimizeIcon from '../../icons/arrowDown.svg';
 import RestoreIcon from '../../icons/arrowUp.svg';
 import OpenWindowIcon from '../../icons/newWindow.svg';
 import styles from './styles';
-import { PopoverContainer } from '../Popover';
 
 
 class ScreenHeader extends Component {
@@ -213,6 +214,7 @@ export const Screen = ({
 	alerts,
 	modal,
 	unread,
+	sound,
 	onDismissAlert,
 	onEnableNotifications,
 	onDisableNotifications,
@@ -222,6 +224,7 @@ export const Screen = ({
 	onChangeDepartment,
 	onFinishChat,
 	onRemoveUserData,
+	onSoundStop,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<ScreenInner
@@ -257,6 +260,8 @@ export const Screen = ({
 			className={createClassName(styles, 'screen__chat-button')}
 			badge={unread}
 		/>
+
+		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} />}
 	</div>
 );
 
