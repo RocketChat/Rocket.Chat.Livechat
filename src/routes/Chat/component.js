@@ -3,7 +3,6 @@ import Composer, { Action, Actions } from '../../components/Composer';
 import DropFiles from '../../components/DropFiles';
 import Messages from '../../components/Messages';
 import Screen from '../../components/Screen';
-import Sound from '../../components/Sound';
 import { debounce, createClassName } from '../../components/helpers';
 import styles from './styles';
 import EmojiIcon from '../../icons/smile.svg';

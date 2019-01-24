@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';

@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import styles from './styles';
 import Logo from './logo.svg';
 import { createClassName } from '../helpers';
