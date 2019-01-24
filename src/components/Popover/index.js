@@ -54,9 +54,7 @@ export class PopoverContainer extends Component {
 	}
 
 	render = ({ children }, { renderer, overlayProps, overlayBounds, triggerBounds }) => (
-		<PopoverContext.Provider
-			value={{ open: this.open }}
-		>
+		<PopoverContext.Provider value={{ open: this.open }}>
 			<div className={createClassName(styles, 'popover__container')}>
 				{children}
 				<PopoverOverlay
