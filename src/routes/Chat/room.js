@@ -3,10 +3,9 @@ import { store } from '../../store';
 import { route } from 'preact-router';
 import { insert, setCookies } from '../../components/helpers';
 import Commands from '../../lib/commands';
-import { loadConfig } from '../../lib/main';
+import { loadConfig, processUnread } from '../../lib/main';
 import { parentCall } from '../../lib/parentCall';
 import { handleTranscript } from '../../lib/transcript';
-
 
 const commands = new Commands();
 
@@ -94,5 +93,6 @@ Livechat.onMessage(async(message) => {
 		messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })),
 	});
 	await processMessage(message);
+	await processUnread();
 	await doPlaySound(message);
 });
