@@ -4,7 +4,10 @@ import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import webpackOverride from './webpackOverride.config';
 
 
-export default (config/* , env, helpers */) => {
+export default (config, env/* , helpers */) => {
+	if (env.production) {
+		config.output.publicPath = '/new-livechat/';
+	}
 
 	config = webpackOverride(config);
 
