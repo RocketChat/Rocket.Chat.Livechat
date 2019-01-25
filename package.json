@@ -4,7 +4,10 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-		"build": "GENERATE_SOURCEMAP=false preact build --no-prerender --optimize-minimize",
+		"build:app": "GENERATE_SOURCEMAP=false preact build --no-prerender --optimize-minimize",
+		"build:widget": "webpack-cli src/widget.js -o build/rocketchat-livechat.min.js --mode production",
+		"build:pack": "tar -C build -czf build.tar.gz '.'",
+		"build": "run-s build:app build:widget build:pack",
 		"serve": "preact build --no-prerender --optimize-minimize && preact serve",
 		"dev": "preact watch",
 		"lint": "eslint src",
@@ -13,8 +16,7 @@
 		"storybook": "start-storybook -p 9001 -c .storybook",
 		"i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
 		"deploy-storybook": "storybook-to-ghpages",
-		"bundle-analyzer": "webpack-bundle-analyzer build/stats.json",
-		"build-widget": "webpack-cli src/widget.js -o widget.js --mode production"
+		"bundle-analyzer": "webpack-bundle-analyzer build/stats.json"
 	},
 	"eslintIgnore": [
 		"build/*"
@@ -53,6 +55,7 @@
 		"jest": "^21.2.1",
 		"lorem-ipsum": "^1.0.6",
 		"node-sass": "^4.9.3",
+		"npm-run-all": "^4.1.5",
 		"preact-cli": "^3.0.0-next.14",
 		"preact-compat": "^3.18.4",
 		"preact-render-spy": "^1.2.1",
@@ -117,7 +120,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "npm run i18n && git add -A src/i18n && npm run build-widget && git add -A widget.js"
+			"pre-commit": "run-s i18n build && git add -A src/i18n build.tar.gz"
 		}
 	}
 }

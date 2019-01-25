@@ -1,6 +1,5 @@
 /node_modules
 /build
-/stats.json
 /*.log
 coverage
 package-lock.json
