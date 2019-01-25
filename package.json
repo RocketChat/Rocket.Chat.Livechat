@@ -6,7 +6,7 @@
 		"start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
 		"build:app": "GENERATE_SOURCEMAP=false preact build --no-prerender --optimize-minimize",
 		"build:widget": "webpack-cli src/widget.js -o build/rocketchat-livechat.min.js --mode production",
-		"build:pack": "tar -C build -czf build.tar.gz '.'",
+		"build:pack": "cp widget-demo.html ./build && tar -C build -czf build.tar.gz '.'",
 		"build": "run-s build:app build:widget build:pack",
 		"serve": "preact build --no-prerender --optimize-minimize && preact serve",
 		"dev": "preact watch",
