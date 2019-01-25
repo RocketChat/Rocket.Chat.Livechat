@@ -3,7 +3,7 @@ import isToday from 'date-fns/is_today';
 import { Livechat } from '../api';
 
 
-function flatMap(arr, mapFunc) {
+export function flatMap(arr, mapFunc) {
 	const result = [];
 	for (const [index, elem] of arr.entries()) {
 		const x = mapFunc(elem, index, arr);
