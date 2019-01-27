@@ -13,6 +13,7 @@ import {
 	SelectInput,
 } from '.';
 import Button, { Group } from '../Button';
+import { ExperienceRating } from './inputs';
 
 
 storiesOf('Forms|TextInput', module)
@@ -557,6 +558,16 @@ storiesOf('Forms|Buttons', module)
 					<Button danger outline stack small={small} onClick={action('click c')}>{buttonTextC}</Button>
 				</Group>
 			</Item>
+		</Form>
+	))
+;
+
+storiesOf('Forms|Experience Rating', module)
+	.addDecorator(centered)
+	.addDecorator(withKnobs)
+	.add('normal', () => (
+		<Form>
+			<ExperienceRating />
 		</Form>
 	))
 ;
