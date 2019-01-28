@@ -1,4 +1,5 @@
 import { addDecorator, configure } from '@storybook/react';
+import { checkA11y } from '@storybook/addon-a11y';
 import { setConsoleOptions } from '@storybook/addon-console';
 import { withOptions } from '@storybook/addon-options';
 
@@ -9,6 +10,8 @@ addDecorator(withOptions({
   hierarchySeparator: /\//,
   hierarchyRootSeparator: /\|/,
 }));
+
+addDecorator(checkA11y);
 
 setConsoleOptions({
 	panelExclude: [],

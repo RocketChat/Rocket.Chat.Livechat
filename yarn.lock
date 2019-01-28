@@ -1184,6 +1184,21 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
+"@storybook/addon-a11y@4.2.0-alpha.10":
+  version "4.2.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-4.2.0-alpha.10.tgz#961b842fe92d64232183c7b5a0c08dfedac8fdea"
+  integrity sha512-pbK8GubbARsEKwoXJ9NeApngzR2UPYcsTgnTjjzEvzTqsl0uHqH9f4KOm3fRK2FieL3eyMC0/Iy29AiE/d6Lkw==
+  dependencies:
+    "@emotion/styled" "^0.10.6"
+    "@storybook/addons" "4.2.0-alpha.10"
+    "@storybook/client-logger" "4.2.0-alpha.10"
+    "@storybook/components" "4.2.0-alpha.10"
+    "@storybook/core-events" "4.2.0-alpha.10"
+    axe-core "^3.1.2"
+    core-js "^2.5.7"
+    global "^4.3.2"
+    prop-types "^15.6.2"
+
 "@storybook/addon-actions@^4.1.6":
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-4.1.11.tgz#8946ea78f050ae2d06a2f2231ec56d1831942e15"
@@ -1271,6 +1286,16 @@
     global "^4.3.2"
     util-deprecate "^1.0.2"
 
+"@storybook/addons@4.2.0-alpha.10":
+  version "4.2.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-4.2.0-alpha.10.tgz#0f62a9533acbbf7ed94cb71f7fa1d52185203faf"
+  integrity sha512-q4DEm7xynCGuzEaqb5mBvT/dfcCYVHjtbE2JbQFDBWqqfQSs1JxN20UP/BXuOczptbiMGoioPielk/KMCUWdhA==
+  dependencies:
+    "@storybook/channels" "4.2.0-alpha.10"
+    "@storybook/components" "4.2.0-alpha.10"
+    global "^4.3.2"
+    util-deprecate "^1.0.2"
+
 "@storybook/channel-postmessage@4.1.11":
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/@storybook/channel-postmessage/-/channel-postmessage-4.1.11.tgz#3320a5f3e05652466eff1c53843205c262a92dfb"
@@ -1285,10 +1310,20 @@
   resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-4.1.11.tgz#d161497fa3cd848cc9d518aa1c37052857e22e3c"
   integrity sha512-zYusY8cno4keMozn2lDpBgyNSOueFh+hrPETioSB5Z8Kd3F5OjM7681vJC8QA67yOBEie2hHk0CVxRpuxziMwA==
 
+"@storybook/channels@4.2.0-alpha.10":
+  version "4.2.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-4.2.0-alpha.10.tgz#2a1944e87de5137bc26d4700ae3d894b8140e155"
+  integrity sha512-OF0+CP4B9+dBcw8owkJfezZBl0NZa6gfR1RA1NRiXryJaR8y/S+356xNffJjdpQ/ngrEWWL4ceODuC37g6jbbA==
+
 "@storybook/client-logger@4.1.11":
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/@storybook/client-logger/-/client-logger-4.1.11.tgz#2b1e34e892045199592fdb01656e5dcdcd1999d7"
   integrity sha512-Xxy6sY7Zd405o28wUAhlpqY2FbSZsTrsN3g/uo4Mqo4XD2f0Z4wIv1GOuM5DI2KlHpHGI+36YPO2VFx5Bq+yiQ==
+
+"@storybook/client-logger@4.2.0-alpha.10":
+  version "4.2.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@storybook/client-logger/-/client-logger-4.2.0-alpha.10.tgz#6061c45daf100f0753895f599ac233da4d09c8a3"
+  integrity sha512-8vuVRSIbNUbYGY/5CZ7hUiSd8TPqTHj2AjqlSvvcYa0PjUhEcNZePCrjewSBQwXJcz5AYqEQugncxjnhiNGm2g==
 
 "@storybook/components@4.1.11":
   version "4.1.11"
@@ -1306,10 +1341,31 @@
     react-textarea-autosize "^7.0.4"
     render-fragment "^0.1.1"
 
+"@storybook/components@4.2.0-alpha.10":
+  version "4.2.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@storybook/components/-/components-4.2.0-alpha.10.tgz#e862883acbd94956962b637608c33b79cf23fb71"
+  integrity sha512-eG7k97AhS28hM7sOYS2f8hHqxWDi8vn2Stp9HuTSb691jh4frshQrqm29uo59iGjD+zKdLPIBp1OWzcO25GP4Q==
+  dependencies:
+    "@emotion/core" "^0.13.1"
+    "@emotion/provider" "^0.11.2"
+    "@emotion/styled" "^0.10.6"
+    global "^4.3.2"
+    lodash "^4.17.11"
+    prop-types "^15.6.2"
+    react-inspector "^2.3.0"
+    react-split-pane "^0.1.84"
+    react-textarea-autosize "^7.0.4"
+    render-fragment "^0.1.1"
+
 "@storybook/core-events@4.1.11":
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-4.1.11.tgz#78cfb2b4014ca27909421cdebfa9c96533929a5a"
   integrity sha512-rVb76xFLJkTFcBHL1oTdJW8O2N7q+Cc6Mo7v9u3TnM4WuRk08/GyzzO7sRvEg3Mvo59AOLu1uqYovRMo4tZEnQ==
+
+"@storybook/core-events@4.2.0-alpha.10":
+  version "4.2.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-4.2.0-alpha.10.tgz#033b8a7ed750cdd289499e1efb56a1ff22c44208"
+  integrity sha512-JJQAci79YGUW22B2+bgk2IFPqym7mJ8i5gVuYCbDvucEhW29wSm4ye0fqwK4WFB2cuGJlIeWlfOGST1fifwVuQ==
 
 "@storybook/core@4.1.11":
   version "4.1.11"
@@ -2358,6 +2414,11 @@ aws-sign2@~0.7.0:
 aws4@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
+
+axe-core@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-3.1.2.tgz#ca0aff897ebefca7552f97859dc1217c06c4f9e6"
+  integrity sha512-e1WVs0SQu3tM29J9a/mISGvlo2kdCStE+yffIAJF6eb42FS+eUFEVz9j4rgDeV2TAfPJmuOZdRetWYycIbK7Vg==
 
 axios@^0.18.0:
   version "0.18.0"
