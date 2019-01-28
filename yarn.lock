@@ -10739,6 +10739,7 @@ preact-context@^1.1.1:
 preact-i18nline@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/preact-i18nline/-/preact-i18nline-2.0.0.tgz#5771aee238fcbc68efb2721998764f0bda56be37"
+  integrity sha512-49AOtFcg7TOpzQU6zNNN5uGbIBNRnFJmBgE43VxUw+eTsk9QQme2Wj7m0jDVmO/4XT8Q+T4q4riZCHxMy5mY2g==
   dependencies:
     chalk "^2.3.2"
     esprima "^4.0.0"

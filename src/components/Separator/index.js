@@ -3,19 +3,21 @@ import styles from './styles';
 import { createClassName } from '../helpers';
 
 
-const Separator = ({ date, unread }) => {
+const Separator = ({ date, unread, el = 'div' }) => {
 	if (!date && !unread) {
 		return null;
 	}
 
+	const Element = el;
+
 	return (
-		<div class={createClassName(styles, 'separator', { date, unread })}>
-			<hr class={createClassName(styles, 'separator__line')} />
-			<span class={createClassName(styles, 'separator__text')}>
+		<Element className={createClassName(styles, 'separator', { date, unread })}>
+			<hr className={createClassName(styles, 'separator__line')} />
+			<span className={createClassName(styles, 'separator__text')}>
 				{date ? format(date, 'MMM DD, YYYY').toUpperCase() : I18n.t('unread messages')}
 			</span>
-			<hr class={createClassName(styles, 'separator__line')} />
-		</div>
+			<hr className={createClassName(styles, 'separator__line')} />
+		</Element>
 	);
 };
 

@@ -127,22 +127,23 @@ export class App extends Component {
 
 		const { minimized } = this.props;
 		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
+
+		visibility.addListener(this.handleVisibilityChange);
+		this.handleVisibilityChange();
 	}
 
 	async finalize() {
 		CustomFields.reset();
 		userPresence.reset();
+		visibility.removeListener(this.handleVisibilityChange);
 	}
 
 	componentDidMount() {
 		this.initialize();
-		visibility.addListener(this.handleVisibilityChange);
-		this.handleVisibilityChange();
 	}
 
 	componentWillUnmount() {
 		this.finalize();
-		visibility.removeListener(this.handleVisibilityChange);
 	}
 
 	render = ({

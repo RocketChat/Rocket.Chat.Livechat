@@ -5,6 +5,7 @@ import CloseIcon from '../../icons/close.svg';
 
 
 export const ChatButton = ({
+	text,
 	open = false,
 	badge,
 	className,
@@ -17,6 +18,7 @@ export const ChatButton = ({
 		type="button"
 		className={createClassName(styles, 'chat-button', { open }, [className])}
 		style={(style || backgroundColor || color) ? { ...(style || {}), backgroundColor, color } : null}
+		aria-label={text}
 	>
 		{badge && <span className={createClassName(styles, 'chat-button__badge')}>{badge}</span>}
 		{open ? <CloseIcon /> : <ChatIcon />}
