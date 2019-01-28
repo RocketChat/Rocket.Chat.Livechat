@@ -21,20 +21,6 @@
 	"eslintIgnore": [
 		"build/*"
 	],
-	"i18n": {
-		"autoTranslateTags": [
-			"h1",
-			"h2",
-			"h3",
-			"h4",
-			"h5",
-			"h6",
-			"p"
-		],
-		"ignorePatterns": [
-			"story.js"
-		]
-	},
 	"devDependencies": {
 		"@storybook/addon-actions": "^4.1.6",
 		"@storybook/addon-centered": "^4.1.6",
