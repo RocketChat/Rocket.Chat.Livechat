@@ -114,7 +114,13 @@ export class App extends Component {
 		await dispatch({ visible: !visibility.hidden });
 	}
 
+	handleLanguageChange = () => {
+		this.forceUpdate();
+	}
+
 	async initialize() {
+		// TODO: split these behaviors into composable components
+
 		await Livechat.connect();
 		await loadConfig();
 		this.handleTriggers();
@@ -130,12 +136,16 @@ export class App extends Component {
 
 		visibility.addListener(this.handleVisibilityChange);
 		this.handleVisibilityChange();
+
+		I18n.changeLocale((navigator.language || navigator.userLanguage).replace('-', '_'));
+		I18n.on('change', this.handleLanguageChange);
 	}
 
 	async finalize() {
 		CustomFields.reset();
 		userPresence.reset();
 		visibility.removeListener(this.handleVisibilityChange);
+		I18n.off('change', this.handleLanguageChange);
 	}
 
 	componentDidMount() {

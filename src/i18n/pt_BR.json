@@ -1,5 +1,5 @@
 {
-  "pt": {
+  "pt_BR": {
     "are_you_sure_you_want_to_switch_the_department_d50a0b08": "Are you sure you want to switch the department?",
     "change_department_1d671538": "Change department",
     "change_department_523a16e8": "Change Department",
@@ -27,6 +27,7 @@
     "minimize_chat_804b3135": "Minimize chat",
     "need_help_803a61": "Need help?",
     "no_available_agents_to_transfer_3ae30cec": "No available agents to transfer",
+    "options_3ab0ea65": "Options",
     "please_tell_us_some_informations_to_start_the_chat_7d6b71de": "Please, tell us some informations to start the chat",
     "powered_by_rocket_chat_4d7c2ab4": "Powered by Rocket.Chat",
     "restore_chat_3bfecf2b": "Restore chat",

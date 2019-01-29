@@ -34,7 +34,7 @@ export const PoweredBy = (props) => (
 
 const OptionsTrigger = ({ pop }) => (
 	<button className={createClassName(styles, 'footer__options')} onClick={pop}>
-		Options
+		{I18n.t('Options')}
 	</button>
 );
 
