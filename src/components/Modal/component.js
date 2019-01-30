@@ -67,8 +67,8 @@ export const ModalMessage = ({ children }) => (
 
 export const ConfirmationModal = ({
 	text,
-	confirmButtonText = 'Yes',
-	cancelButtonText = 'No',
+	confirmButtonText = I18n.t('Yes'),
+	cancelButtonText = I18n.t('No'),
 	onConfirm,
 	onCancel,
 	...props
@@ -83,7 +83,7 @@ export const ConfirmationModal = ({
 );
 
 
-export const AlertModal = ({ text, buttonText = 'Ok', onConfirm, ...props }) => (
+export const AlertModal = ({ text, buttonText = I18n.t('OK'), onConfirm, ...props }) => (
 	<Modal open animated dismissByOverlay={false} {...props}>
 		<Modal.Message>{text}</Modal.Message>
 		<Button.Group>

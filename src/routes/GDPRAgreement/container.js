@@ -2,10 +2,7 @@ import { Component } from 'preact';
 import { route } from 'preact-router';
 import { Consumer } from '../../store';
 import GDPRAgreement from './component';
-import constants from '../../lib/constants';
 
-
-const { gdpr: { consentText: defaultConsentText } } = constants;
 
 export class GDPRContainer extends Component {
 
@@ -50,7 +47,7 @@ export const GDPRConnector = ({ ref, ...props }) => (
 				}}
 				title={I18n.t('GDPR')}
 				dispatch={dispatch}
-				consentText={consentText || defaultConsentText}
+				consentText={consentText}
 			/>
 		)}
 	</Consumer>

@@ -3,9 +3,7 @@ import { withKnobs, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { screenCentered } from '../helpers.stories';
 import GDPRAgreement from './component';
-import constants from '../../lib/constants';
 
-const { gdpr: { consentText: defaultConsentText } } = constants;
 
 storiesOf('Routes|GDPRAgreement', module)
 	.addDecorator(screenCentered)
@@ -18,7 +16,8 @@ storiesOf('Routes|GDPRAgreement', module)
 				iconColor: color('theme.iconColor', ''),
 			}}
 			title={text('title', 'GDPR')}
-			consentText={text('consentText', defaultConsentText)}
+			consentText={text('consentText', '')}
+			instructions={text('instructions', '')}
 			onAgree={action('agree')}
 		/>
 	))

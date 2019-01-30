@@ -93,8 +93,8 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					fontColor: customFontColor,
 					iconColor: customIconColor,
 				}}
-				title={title || I18n.t('Need help?')}
-				message={message || I18n.t('Please, tell us some informations to start the chat')}
+				title={title}
+				message={message}
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
 				hasDepartmentField={hasDepartmentField}

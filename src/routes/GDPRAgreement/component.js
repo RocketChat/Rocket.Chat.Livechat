@@ -1,9 +1,25 @@
 import { Component } from 'preact';
+import MarkdownIt from 'markdown-it';
 import Button from '../../components/Button';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
+
+const md = new MarkdownIt({
+	linkify: false,
+	typographer: false,
+});
+
+const defaultConsentText = I18n.t(
+	'The controller of your personal data is [Company Name], with registered ' +
+	'office at [Company Address]. To start the chat you agree that your ' +
+	'personal data shall be processed and trasmitted in accordance with the General Data Protection Regulation (GDPR).'
+);
+
+const defaultInstructions = I18n.t(
+	'Go to **menu options → Forget/Remove my personal data** to request the immediate removal of your data.'
+);
 
 export default class GDPR extends Component {
 	handleClick = () => {
@@ -15,6 +31,7 @@ export default class GDPR extends Component {
 		color,
 		title,
 		consentText,
+		instructions,
 		// eslint-disable-next-line no-unused-vars
 		onAgree,
 		...props
@@ -25,10 +42,16 @@ export default class GDPR extends Component {
 			className={createClassName(styles, 'gdpr')}
 			{...props}
 		>
-			<p className={createClassName(styles, 'gdpr__consent-text')}>{consentText}</p>
-			<p className={createClassName(styles, 'gdpr__instructions')}>
-				Go to <strong>menu options → Forget/Remove my personal data</strong> to request the immediate removal of your data.
-			</p>
+			<p
+				className={createClassName(styles, 'gdpr__consent-text')}
+				// eslint-disable-next-line react/no-danger
+				dangerouslySetInnerHTML={{ __html: md.renderInline(consentText || defaultConsentText) }}
+			/>
+			<p
+				className={createClassName(styles, 'gdpr__instructions')}
+				// eslint-disable-next-line react/no-danger
+				dangerouslySetInnerHTML={{ __html: md.renderInline(instructions || defaultInstructions) }}
+			/>
 
 			<Button.Group>
 				<Button onClick={this.handleClick} stack>I Agree</Button>
