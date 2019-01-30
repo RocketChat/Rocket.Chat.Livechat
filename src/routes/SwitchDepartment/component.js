@@ -6,6 +6,9 @@ import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
 
+const defaultTitle = I18n.t('Change Department');
+const defaultMessage = I18n.t('Choose a department');
+
 export default class SwitchDepartment extends Component {
 	state = {
 		department: null,
@@ -76,11 +79,11 @@ export default class SwitchDepartment extends Component {
 		return (
 			<Screen
 				color={color}
-				title={title}
+				title={title || defaultTitle}
 				className={createClassName(styles, 'switch-department')}
 				{...props}
 			>
-				<p className={createClassName(styles, 'switch-department__message')}>{message}</p>
+				<p className={createClassName(styles, 'switch-department__message')}>{message || defaultMessage}</p>
 
 				<Form onSubmit={this.handleSubmit}>
 					<Form.Item>

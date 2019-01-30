@@ -180,7 +180,7 @@ export default class Register extends Component {
 					)}
 
 					<Form.Item>
-						<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start Chat')}</Button>
+						<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
 					</Form.Item>
 				</Form>
 			</Screen>

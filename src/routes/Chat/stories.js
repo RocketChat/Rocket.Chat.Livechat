@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, color, number, object, text } from '@storybook/addon-knobs';
-import { screenCentered } from '../helpers.stories';
+import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs';
+import { screenCentered, screenProps } from '../helpers.stories';
 import Chat from './component';
 
 
@@ -52,11 +52,6 @@ storiesOf('Routes|Chat', module)
 	.addDecorator(withKnobs)
 	.add('loading', () => (
 		<Chat
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
@@ -66,27 +61,15 @@ storiesOf('Routes|Chat', module)
 			emoji={boolean('emoji', false)}
 			uploads={boolean('uploads', false)}
 			loading={boolean('loading', true)}
-			notificationsEnabled={boolean('notificationsEnabled', true)}
-			minimized={boolean('minimized', false)}
-			windowed={boolean('windowed', false)}
-			onEnableNotifications={action('enableNotifications')}
-			onDisableNotifications={action('disableNotifications')}
-			onMinimize={action('minimize')}
-			onRestore={action('restore')}
-			onOpenWindow={action('openWindow')}
 			onTop={action('top')}
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			{...screenProps()}
 		/>
 	))
 	.add('normal', () => (
 		<Chat
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
@@ -96,28 +79,16 @@ storiesOf('Routes|Chat', module)
 			emoji={boolean('emoji', false)}
 			uploads={boolean('uploads', false)}
 			loading={boolean('loading', false)}
-			notificationsEnabled={boolean('notificationsEnabled', true)}
-			minimized={boolean('minimized', false)}
-			windowed={boolean('windowed', false)}
 			lastReadMessageId={number('lastReadMessageId', 8)}
-			onEnableNotifications={action('enableNotifications')}
-			onDisableNotifications={action('disableNotifications')}
-			onMinimize={action('minimize')}
-			onRestore={action('restore')}
-			onOpenWindow={action('openWindow')}
 			onTop={action('top')}
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			{...screenProps()}
 		/>
 	))
 	.add('with typing user', () => (
 		<Chat
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
 			user={object('user', user)}
@@ -132,19 +103,12 @@ storiesOf('Routes|Chat', module)
 			emoji={boolean('emoji', false)}
 			uploads={boolean('uploads', false)}
 			loading={boolean('loading', false)}
-			notificationsEnabled={boolean('notificationsEnabled', true)}
-			minimized={boolean('minimized', false)}
-			windowed={boolean('windowed', false)}
 			lastReadMessageId={number('lastReadMessageId', 8)}
-			onEnableNotifications={action('enableNotifications')}
-			onDisableNotifications={action('disableNotifications')}
-			onMinimize={action('minimize')}
-			onRestore={action('restore')}
-			onOpenWindow={action('openWindow')}
 			onTop={action('top')}
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			{...screenProps()}
 		/>
 	))
 ;
