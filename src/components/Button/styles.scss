@@ -80,7 +80,8 @@ $button-loading-color: #ffffff;
 	cursor: pointer;
 	transition: color $default-time-animation,
 		background-color $default-time-animation,
-		transform $default-time-animation;
+		border-color $default-time-animation,
+		transform $default-time-animation / 2;
 	user-select: none;
 
 	@include state(var(--color, $button-background-color), transparent);
