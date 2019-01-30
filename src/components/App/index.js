@@ -137,7 +137,14 @@ export class App extends Component {
 		visibility.addListener(this.handleVisibilityChange);
 		this.handleVisibilityChange();
 
-		I18n.changeLocale((navigator.language || navigator.userLanguage).replace('-', '_'));
+		const configLanguage = () => {
+			const { config: { settings: { language } = {} } = {} } = this.props;
+			return language;
+		};
+
+		const browserLanguage = () => (navigator.userLanguage || navigator.language);
+
+		I18n.changeLocale((configLanguage() || browserLanguage() || 'en').replace('-', '_'));
 		I18n.on('change', this.handleLanguageChange);
 	}
 
