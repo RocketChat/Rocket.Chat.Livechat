@@ -31,9 +31,10 @@ export const PoweredBy = (props) => (
 	</h3>
 );
 
+const handleMouseUp = ({ target }) => target.blur();
 
 const OptionsTrigger = ({ pop }) => (
-	<button className={createClassName(styles, 'footer__options')} onClick={pop}>
+	<button className={createClassName(styles, 'footer__options')} onClick={pop} onMouseUp={handleMouseUp}>
 		{I18n.t('Options')}
 	</button>
 );
