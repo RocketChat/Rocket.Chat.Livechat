@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
-import { withKnobs, array, boolean, color, object, text } from '@storybook/addon-knobs';
+import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
 import { Screen } from '.';
 
 
@@ -33,6 +33,7 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
+			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
@@ -54,6 +55,7 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', true)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
+			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
@@ -75,6 +77,7 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', true)}
 			windowed={boolean('windowed', false)}
+			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
@@ -96,6 +99,7 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', true)}
+			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
@@ -126,6 +130,7 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
+			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
@@ -156,6 +161,7 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
+			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
@@ -187,6 +193,7 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
+			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
@@ -208,7 +215,8 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
-			alerts={array('alerts', alerts)}
+			options={boolean('options', true)}
+			alerts={object('alerts', alerts)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}

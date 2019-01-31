@@ -1,35 +1,33 @@
 import styles from './styles';
 import Logo from './logo.svg';
 import { createClassName } from '../helpers';
-import { PopoverMenu, Group, Item } from '../Menu';
-import ChangeIcon from '../../icons/change.svg';
-import RemoveIcon from '../../icons/remove.svg';
-import FinishIcon from '../../icons/finish.svg';
+import { PopoverMenu } from '../Menu';
 
 
-export const Footer = ({ children, ...props }) => (
-	<footer className={createClassName(styles, 'footer')} {...props}>
+export const Footer = ({ children, className, ...props }) => (
+	<footer className={createClassName(styles, 'footer', {}, [className])} {...props}>
 		{children}
 	</footer>
 );
 
 
-export const Content = ({ children, ...props }) => (
-	<div className={createClassName(styles, 'footer__content')} {...props}>
+export const Content = ({ children, className, ...props }) => (
+	<div className={createClassName(styles, 'footer__content', {}, [className])} {...props}>
 		{children}
 	</div>
 );
 
 
-export const PoweredBy = (props) => (
-	<h3 className={createClassName(styles, 'powered-by')} {...props}>
+export const PoweredBy = ({ className, ...props }) => (
+	<h3 className={createClassName(styles, 'powered-by', {}, [className])} {...props}>
 		{I18n.t('Powered by Rocket.Chat').split('Rocket.Chat')[0]}
 		<a href="https://rocket.chat" target="_blank" rel="noopener noreferrer">
-			<Logo class={createClassName(styles, 'powered-by__logo')} width={60} role="img" aria-label="Rocket.Chat" />
+			<Logo className={createClassName(styles, 'powered-by__logo')} width={60} role="img" aria-label="Rocket.Chat" />
 		</a>
 		{I18n.t('Powered by Rocket.Chat').split('Rocket.Chat')[1]}
 	</h3>
 );
+
 
 const handleMouseUp = ({ target }) => target.blur();
 
@@ -40,18 +38,16 @@ const OptionsTrigger = ({ pop }) => (
 );
 
 
-export const Options = ({ onChangeDepartment, onFinishChat, onRemoveUserData }) => (
+export const Options = ({ children }) => (
 	<PopoverMenu trigger={OptionsTrigger} overlayed>
-		<Group>
-			{onChangeDepartment && <Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Item>}
-			{onRemoveUserData && <Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my personal data')}</Item>}
-			{onFinishChat && <Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Item>}
-		</Group>
+		{children}
 	</PopoverMenu>
 );
+
 
 Footer.Content = Content;
 Footer.PoweredBy = PoweredBy;
 Footer.Options = Options;
+
 
 export default Footer;

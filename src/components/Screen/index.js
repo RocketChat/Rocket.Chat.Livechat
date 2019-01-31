@@ -4,6 +4,7 @@ import Avatar from '../Avatar';
 import ChatButton from '../ChatButton';
 import Header from '../Header';
 import Footer from '../Footer';
+import Menu from '../Menu';
 import { PopoverContainer } from '../Popover';
 import Sound from '../Sound';
 import Tooltip from '../Tooltip';
@@ -13,6 +14,9 @@ import NotificationsDisabledIcon from '../../icons/bellOff.svg';
 import MinimizeIcon from '../../icons/arrowDown.svg';
 import RestoreIcon from '../../icons/arrowUp.svg';
 import OpenWindowIcon from '../../icons/newWindow.svg';
+import ChangeIcon from '../../icons/change.svg';
+import RemoveIcon from '../../icons/remove.svg';
+import FinishIcon from '../../icons/finish.svg';
 import styles from './styles';
 
 
@@ -122,11 +126,13 @@ const ScreenFooter = ({
 		)}
 		<Footer.Content>
 			{options && (
-				<Footer.Options
-					onChangeDepartment={onChangeDepartment}
-					onFinishChat={onFinishChat}
-					onRemoveUserData={onRemoveUserData}
-				/>
+				<Footer.Options>
+					<Menu.Group>
+						<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
+						<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
+						<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
+					</Menu.Group>
+				</Footer.Options>
 			)}
 			<Footer.PoweredBy />
 		</Footer.Content>
