@@ -24,19 +24,35 @@ const importTranslationsFrom = async(rocketChatSourceDir) => {
 	const newTranslations = oldTranslations
 		.map(({ language, strings }) => ({
 			language,
+			strings,
+			currentStrings: (() => {
+				try {
+					return require(`./src/i18n/${ language }.json`)[language];
+				} catch (e) {
+					return {};
+				}
+			})(),
+		}))
+		.map(({ language, strings, currentStrings }) => ({
+			language,
 			strings: {
 				...newStrings,
+				...currentStrings,
 				...(
 					Object.entries(strings)
 						.filter(([oldKey]) => !!mapKeys[oldKey])
-						.reduce((strings, [oldKey, oldString]) => ({ ...strings, [mapKeys[oldKey]]: oldString }), {})
+						.reduce((strings, [oldKey, oldString]) => ({
+							...strings,
+							[mapKeys[oldKey]]: oldString,
+						}), {})
 				),
 			},
 		}));
 
 	for (const { language, strings } of newTranslations) {
 		console.log(`Writing i18n file for language "${ language }"...`);
-		await promisify(fs.writeFile)(`${ __dirname }/src/i18n/${ language }.json`, JSON.stringify(strings, null, 2));
+		await promisify(fs.writeFile)(`${ __dirname }/src/i18n/${ language }.json`,
+			JSON.stringify({ [language]: strings }, null, 2));
 	}
 };
 
