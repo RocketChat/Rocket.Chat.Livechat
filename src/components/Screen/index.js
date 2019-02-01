@@ -81,12 +81,11 @@ class ScreenHeader extends Component {
 						</Header.Action>
 					</Tooltip.Trigger>
 					{(expanded || !windowed) && (
-						<Tooltip.Trigger content={I18n.t('Minimize chat')}>
+						<Tooltip.Trigger content={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}>
 							<Header.Action
-								aria-label={minimized ? I18n.t('Restore') : I18n.t('Minimize')}
+								aria-label={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}
 								onClick={minimized ? onRestore : onMinimize}
 							>
-
 								{minimized ?
 									<RestoreIcon width={20} /> :
 									<MinimizeIcon width={20} />
@@ -96,7 +95,7 @@ class ScreenHeader extends Component {
 					)}
 					{(!expanded && !windowed) && (
 						<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom-left">
-							<Header.Action aria-label={I18n.t('Open in a new window')} onClick={onOpenWindow}>
+							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
 								<OpenWindowIcon width={20} />
 							</Header.Action>
 						</Tooltip.Trigger>
@@ -257,6 +256,7 @@ export const Screen = ({
 		/>
 
 		<ChatButton
+			text={title}
 			open={!minimized}
 			onClick={minimized ? onRestore : onMinimize}
 			className={createClassName(styles, 'screen__chat-button')}

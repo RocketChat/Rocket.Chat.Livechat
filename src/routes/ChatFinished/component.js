@@ -5,6 +5,9 @@ import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
+const defaultGreeting = I18n.t('Thanks for talking with us');
+const defaultMessage = I18n.t('If you have any other questions, just press the button below to start a new chat.');
+
 export default class ChatFinished extends Component {
 	handleClick = () => {
 		const { onRedirectChat } = this.props;
@@ -26,8 +29,8 @@ export default class ChatFinished extends Component {
 			className={createClassName(styles, 'chat-finished')}
 			{...props}
 		>
-			<p className={createClassName(styles, 'chat-finished__greeting')}>{greeting}</p>
-			<p className={createClassName(styles, 'chat-finished__message')}>{message}</p>
+			<p className={createClassName(styles, 'chat-finished__greeting')}>{greeting || defaultGreeting}</p>
+			<p className={createClassName(styles, 'chat-finished__message')}>{message || defaultMessage}</p>
 
 			<Form>
 				<Form.Item>

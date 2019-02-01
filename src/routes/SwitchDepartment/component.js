@@ -6,6 +6,9 @@ import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
 
+const defaultTitle = I18n.t('Change Department');
+const defaultMessage = I18n.t('Choose a department');
+
 export default class SwitchDepartment extends Component {
 	state = {
 		department: null,
@@ -76,19 +79,21 @@ export default class SwitchDepartment extends Component {
 		return (
 			<Screen
 				color={color}
-				title={title}
+				title={title || defaultTitle}
 				className={createClassName(styles, 'switch-department')}
 				{...props}
 			>
-				<p className={createClassName(styles, 'switch-department__message')}>{message}</p>
+				<p className={createClassName(styles, 'switch-department__message')}>{message || defaultMessage}</p>
 
 				<Form onSubmit={this.handleSubmit}>
 					<Form.Item>
-						<Form.Label error={department && department.showError} htmlFor="department">Departments</Form.Label>
+						<Form.Label error={department && department.showError} htmlFor="department">
+							{I18n.t('Departments')}
+						</Form.Label>
 						<Form.SelectInput
 							id="department"
 							name="department"
-							placeholder="Choose a department..."
+							placeholder={I18n.t('Choose a department...')}
 							options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
 							disabled={loading}
 							value={department && department.value}
@@ -101,8 +106,8 @@ export default class SwitchDepartment extends Component {
 					</Form.Item>
 
 					<Form.Item>
-						<Button loading={loading} disabled={!valid || loading} stack>Start chat</Button>
-						<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>Cancel</Button>
+						<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
+						<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{I18n.t('Cancel')}</Button>
 					</Form.Item>
 				</Form>
 			</Screen>

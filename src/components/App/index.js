@@ -114,7 +114,13 @@ export class App extends Component {
 		await dispatch({ visible: !visibility.hidden });
 	}
 
+	handleLanguageChange = () => {
+		this.forceUpdate();
+	}
+
 	async initialize() {
+		// TODO: split these behaviors into composable components
+
 		await Livechat.connect();
 		await loadConfig();
 		this.handleTriggers();
@@ -127,22 +133,34 @@ export class App extends Component {
 
 		const { minimized } = this.props;
 		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
+
+		visibility.addListener(this.handleVisibilityChange);
+		this.handleVisibilityChange();
+
+		const configLanguage = () => {
+			const { config: { settings: { language } = {} } = {} } = this.props;
+			return language;
+		};
+
+		const browserLanguage = () => (navigator.userLanguage || navigator.language);
+
+		I18n.changeLocale((configLanguage() || browserLanguage() || 'en').replace('-', '_'));
+		I18n.on('change', this.handleLanguageChange);
 	}
 
 	async finalize() {
 		CustomFields.reset();
 		userPresence.reset();
+		visibility.removeListener(this.handleVisibilityChange);
+		I18n.off('change', this.handleLanguageChange);
 	}
 
 	componentDidMount() {
 		this.initialize();
-		visibility.addListener(this.handleVisibilityChange);
-		this.handleVisibilityChange();
 	}
 
 	componentWillUnmount() {
 		this.finalize();
-		visibility.removeListener(this.handleVisibilityChange);
 	}
 
 	render = ({
