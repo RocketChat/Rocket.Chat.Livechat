@@ -6,6 +6,7 @@ import ChangeIcon from '../../icons/change.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import FinishIcon from '../../icons/finish.svg';
 
+
 export const Footer = ({ children, ...props }) => (
 	<footer className={createClassName(styles, 'footer')} {...props}>
 		{children}
@@ -22,17 +23,18 @@ export const Content = ({ children, ...props }) => (
 
 export const PoweredBy = (props) => (
 	<h3 className={createClassName(styles, 'powered-by')} {...props}>
-		Powered by
-		<a href="https://rocket.chat" target="_blank" rel="noopener noreferrer" translate="no">
-			<Logo title="Rocket.Chat" class={createClassName(styles, 'powered-by__logo')} width="60" />
+		{I18n.t('Powered by Rocket.Chat').split('Rocket.Chat')[0]}
+		<a href="https://rocket.chat" starget="_blank" rel="noopener noreferrer">
+			<Logo class={createClassName(styles, 'powered-by__logo')} width={60} role="img" aria-label="Rocket.Chat" />
 		</a>
+		{I18n.t('Powered by Rocket.Chat').split('Rocket.Chat')[1]}
 	</h3>
 );
 
 
 const OptionsTrigger = ({ pop }) => (
 	<button className={createClassName(styles, 'footer__options')} onClick={pop}>
-		Options
+		{I18n.t('Options')}
 	</button>
 );
 

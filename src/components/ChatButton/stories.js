@@ -16,6 +16,7 @@ storiesOf('Components|ChatButton', module)
 				color: color('theme.color', ''),
 				iconColor: color('theme.iconColor', ''),
 			}}
+			text={text('text', 'Open chat')}
 			onClick={action('clicked')}
 		/>
 	))
@@ -27,6 +28,7 @@ storiesOf('Components|ChatButton', module)
 				color: color('theme.color', ''),
 				iconColor: color('theme.iconColor', ''),
 			}}
+			text={text('text', 'Open chat')}
 			onClick={action('clicked')}
 		/>
 	))
@@ -38,6 +40,7 @@ storiesOf('Components|ChatButton', module)
 				color: color('theme.color', 'darkred'),
 				iconColor: color('theme.iconColor', 'peachpuff'),
 			}}
+			text={text('text', 'Open chat')}
 			onClick={action('clicked')}
 		/>
 	))
@@ -49,6 +52,7 @@ storiesOf('Components|ChatButton', module)
 				color: color('theme.color', ''),
 				iconColor: color('theme.iconColor', ''),
 			}}
+			text={text('text', 'Close chat')}
 			onClick={action('clicked')}
 		/>
 	))

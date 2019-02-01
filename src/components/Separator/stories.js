@@ -50,7 +50,7 @@ storiesOf('Components|Separator', module)
 				unread={boolean('unread', true)}
 			/>
 			<Message me Element="div" {...{
-				_id: '9NSuEkEttArE2Ny6Q',
+				_id: '9NSuEkEttArE2Ny6R',
 				rid: 'oQAGfG32u3uGptekbyhHvK7uhhXh9DqKWH',
 				msg: 'Could you send me a print screen? http://open.rocket.chat/logo.png',
 				ts: new Date(),

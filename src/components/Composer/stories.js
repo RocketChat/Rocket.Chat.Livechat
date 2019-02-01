@@ -72,17 +72,17 @@ storiesOf('Components|Composer', module)
 			onUpload={action('upload')}
 			pre={
 				<Actions>
-					<Action onClick={action('click smile')}>
+					<Action text="Add emoji" onClick={action('click smile')}>
 						<Smile width="20" />
 					</Action>
-					<Action onClick={action('click send')}>
+					<Action text="Send" onClick={action('click send')}>
 						<Send color="#1D74F5" width="20" />
 					</Action>
 				</Actions>
 			}
 			post={
 				<Actions>
-					<Action onClick={action('click plus')}>
+					<Action text="Add attachment" onClick={action('click plus')}>
 						<Plus width="20" />
 					</Action>
 				</Actions>

@@ -6,6 +6,9 @@ import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
 
+const defaultTitle = I18n.t('Need help?');
+const defaultMessage = I18n.t('Please, tell us some informations to start the chat');
+
 export default class Register extends Component {
 	state = {
 		name: null,
@@ -114,20 +117,20 @@ export default class Register extends Component {
 		return (
 			<Screen
 				color={color}
-				title={title}
+				title={title || defaultTitle}
 				className={createClassName(styles, 'register')}
 				{...props}
 			>
-				<p className={createClassName(styles, 'register__message')}>{message}</p>
+				<p className={createClassName(styles, 'register__message')}>{message || defaultMessage}</p>
 
 				<Form onSubmit={this.handleSubmit}>
 					{name && (
 						<Form.Item>
-							<Form.Label error={name.showError} htmlFor="name">Name *</Form.Label>
+							<Form.Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Form.Label>
 							<Form.TextInput
 								id="name"
 								name="name"
-								placeholder="Insert your name here..."
+								placeholder={I18n.t('Insert your name here...')}
 								disabled={loading}
 								value={name.value}
 								error={name.showError}
@@ -141,11 +144,11 @@ export default class Register extends Component {
 
 					{email && (
 						<Form.Item>
-							<Form.Label error={email.showError} htmlFor="email">Email *</Form.Label>
+							<Form.Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Form.Label>
 							<Form.TextInput
 								id="email"
 								name="email"
-								placeholder="Insert your email here..."
+								placeholder={I18n.t('Insert your email here...')}
 								disabled={loading}
 								value={email.value}
 								error={email.showError}
@@ -159,11 +162,11 @@ export default class Register extends Component {
 
 					{department && (
 						<Form.Item>
-							<Form.Label error={department.showError} htmlFor="department">I need help with...</Form.Label>
+							<Form.Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Form.Label>
 							<Form.SelectInput
 								id="department"
 								name="department"
-								placeholder="Choose an option..."
+								placeholder={I18n.t('Choose an option...')}
 								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
 								disabled={loading}
 								value={department.value}
@@ -177,7 +180,7 @@ export default class Register extends Component {
 					)}
 
 					<Form.Item>
-						<Button loading={loading} disabled={!valid || loading} stack>Start Chat</Button>
+						<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
 					</Form.Item>
 				</Form>
 			</Screen>

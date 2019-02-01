@@ -89,9 +89,7 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 					fontColor: customFontColor,
 					iconColor: customIconColor,
 				}}
-				title={I18n.t('Change Department')}
 				loading={loading}
-				message={I18n.t('Choose a department')}
 				departments={departments.filter((dept) => dept.showOnRegistration && dept._id !== department)}
 				dispatch={dispatch}
 				room={room}

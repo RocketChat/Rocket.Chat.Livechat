@@ -118,7 +118,7 @@ export class ChatContainer extends Component {
 					message = I18n.t('Media Types Not Accepted.');
 					break;
 				case 'error-size-not-allowed':
-					message = I18n.t('File exceeds allowed size of __size__.', { size: sizeAllowed });
+					message = I18n.t('File exceeds allowed size of %{size}.', { size: sizeAllowed });
 			}
 
 			const alert = { id: createToken(), children: message, error: true, timeout: 5000 };

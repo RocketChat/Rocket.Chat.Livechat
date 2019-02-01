@@ -20,8 +20,8 @@ const TypingAvatar = ({ avatars = [] }) => (
 );
 
 
-export const TypingIndicator = ({ avatars = [], children }) => (
-	<Message.Body>
+export const TypingIndicator = ({ avatars = [], children, el }) => (
+	<Message.Body Element={el}>
 		<Message.Container>
 			<TypingAvatar avatars={avatars} />
 			<Message.Content>

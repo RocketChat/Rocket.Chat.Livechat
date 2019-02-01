@@ -9,15 +9,16 @@ const handleActionClick = (onClick) => (event) => {
 	onClick && onClick(event);
 };
 
-export const Actions = ({ children, ...args }) => (
-	<div className={createClassName(styles, 'composer__actions')} {...args}>{children}</div>
+export const Actions = ({ children, ...props }) => (
+	<div className={createClassName(styles, 'composer__actions')} {...props}>{children}</div>
 );
 
-export const Action = ({ children, onClick, ...args }) => (
+export const Action = ({ children, text, onClick, ...props }) => (
 	<button
-		onClick={handleActionClick(onClick)}
+		{...props}
 		className={createClassName(styles, 'composer__action')}
-		{...args}
+		aria-label={text}
+		onClick={handleActionClick(onClick)}
 	>{children}</button>
 );
 
