@@ -1,5 +1,7 @@
 {
   "uk": {
+    "are_you_sure_you_want_to_finish_this_chat_1db5c13b": "Are you sure you want to finish this chat?",
+    "are_you_sure_you_want_to_remove_all_of_your_person_426720f1": "Are you sure you want to remove all of your personal data?",
     "are_you_sure_you_want_to_switch_the_department_d50a0b08": "Are you sure you want to switch the department?",
     "cancel_caeb1e68": "Cancel",
     "change_department_1d671538": "Change department",
@@ -27,6 +29,7 @@
     "forget_remove_my_personal_data_309a5206": "Forget/Remove my personal data",
     "gdpr_8b366c2b": "GDPR",
     "go_to_menu_options_forget_remove_my_personal_data__99c40934": "Go to **menu options → Forget/Remove my personal data** to request the immediate removal of your data.",
+    "i_agree_df2ecbd4": "I Agree",
     "i_need_help_with_61054e21": "I need help with...",
     "if_you_have_any_other_questions_just_press_the_but_ceaadfa0": "If you have any other questions, just press the button below to start a new chat.",
     "insert_your_email_here_2e37fc94": "Insert your email here...",
