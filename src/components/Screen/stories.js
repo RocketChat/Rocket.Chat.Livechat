@@ -2,6 +2,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
+import Footer from '../Footer';
+import Menu from '../Menu';
 import { Screen } from '.';
 
 
@@ -33,14 +35,15 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
-			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
 			onRestore={action('restore')}
 			onOpenWindow={action('openWindow')}
 		>
-			{text('content', 'Content')}
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
 		</Screen>
 	))
 	.add('minimized', () => (
@@ -55,14 +58,15 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', true)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
-			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
 			onRestore={action('restore')}
 			onOpenWindow={action('openWindow')}
 		>
-			{text('content', 'Content')}
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
 		</Screen>
 	))
 	.add('expanded', () => (
@@ -77,14 +81,15 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', true)}
 			windowed={boolean('windowed', false)}
-			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
 			onRestore={action('restore')}
 			onOpenWindow={action('openWindow')}
 		>
-			{text('content', 'Content')}
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
 		</Screen>
 	))
 	.add('windowed', () => (
@@ -99,14 +104,15 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', true)}
-			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
 			onRestore={action('restore')}
 			onOpenWindow={action('openWindow')}
 		>
-			{text('content', 'Content')}
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
 		</Screen>
 	))
 	.add('with agent (email)', () => (
@@ -130,14 +136,15 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
-			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
 			onRestore={action('restore')}
 			onOpenWindow={action('openWindow')}
 		>
-			{text('content', 'Content')}
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
 		</Screen>
 	))
 	.add('with agent (phone)', () => (
@@ -161,14 +168,15 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
-			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
 			onRestore={action('restore')}
 			onOpenWindow={action('openWindow')}
 		>
-			{text('content', 'Content')}
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
 		</Screen>
 	))
 	.add('with agent', () => (
@@ -193,14 +201,15 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
-			options={boolean('options', true)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
 			onMinimize={action('minimize')}
 			onRestore={action('restore')}
 			onOpenWindow={action('openWindow')}
 		>
-			{text('content', 'Content')}
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
 		</Screen>
 	))
 	.add('with multiple alerts', () => (
@@ -215,7 +224,6 @@ storiesOf('Components|Screen', module)
 			minimized={boolean('minimized', false)}
 			expanded={boolean('expanded', false)}
 			windowed={boolean('windowed', false)}
-			options={boolean('options', true)}
 			alerts={object('alerts', alerts)}
 			onEnableNotifications={action('enableNotifications')}
 			onDisableNotifications={action('disableNotifications')}
@@ -224,7 +232,92 @@ storiesOf('Components|Screen', module)
 			onOpenWindow={action('openWindow')}
 			onDismissAlert={action('dismiss alert')}
 		>
-			{text('content', 'Content')}
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
+		</Screen>
+	))
+;
+
+storiesOf('Components|Screen/Footer', module)
+	.addDecorator(withKnobs)
+	.addDecorator(screenCentered)
+	.add('empty', () => (
+		<Screen
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			<Screen.Content />
+			<Screen.Footer />
+		</Screen>
+	))
+	.add('with children', () => (
+		<Screen
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			<Screen.Content />
+			<Screen.Footer>
+				{text('content', 'Lorem ipsum dolor sit amet, his id atqui repudiare.')}
+			</Screen.Footer>
+		</Screen>
+	))
+	.add('with options', () => (
+		<Screen
+			theme={{
+				color: color('theme.color', ''),
+				fontColor: color('theme.fontColor', ''),
+				iconColor: color('theme.iconColor', ''),
+			}}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			<Screen.Content />
+			<Screen.Footer
+				options={
+					<Footer.Options>
+						<Menu.Group>
+							<Menu.Item onClick={action('changeDepartment')}>{I18n.t('Change department')}</Menu.Item>
+							<Menu.Item onClick={action('removeUserData')}>{I18n.t('Forget/Remove my data')}</Menu.Item>
+							<Menu.Item danger onClick={action('finishChat')}>{I18n.t('Finish this chat')}</Menu.Item>
+						</Menu.Group>
+					</Footer.Options>
+				}
+			/>
 		</Screen>
 	))
 ;
