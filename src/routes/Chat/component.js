@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 import Composer, { Action, Actions } from '../../components/Composer';
-import DropFiles from '../../components/DropFiles';
+import FilesDropTarget from '../../components/FilesDropTarget';
 import Messages from '../../components/Messages';
 import Screen from '../../components/Screen';
 import { debounce, createClassName } from '../../components/helpers';
@@ -164,8 +164,8 @@ export default class Chat extends Component {
 			className={createClassName(styles, 'chat')}
 			{...props}
 		>
-			<FileUploadInput hidden ref={this.handleInputFileUploadRef} onChange={this.handleOnChangeFileUploadInput} />
-			<DropFiles onUpload={onUpload}>
+			<FilesDropTarget overlayed overlayText={I18n.t('Drop here to upload a file')} onUpload={onUpload}>
+				<FileUploadInput hidden ref={this.handleInputFileUploadRef} onChange={this.handleOnChangeFileUploadInput} />
 				<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 					<div
 						ref={this.handleMessagesContainerRef}
@@ -182,7 +182,7 @@ export default class Chat extends Component {
 						/>
 					</div>
 				</div>
-			</DropFiles>
+			</FilesDropTarget>
 		</Screen>
 	)
 }
