@@ -144,7 +144,7 @@ export class ChatContainer extends Component {
 
 	onFinishChat = async() => {
 		const { success } = await ModalManager.confirm({
-			text: 'Are you sure you want to finish this chat?',
+			text: I18n.t('Are you sure you want to finish this chat?'),
 		});
 
 		if (!success) {
@@ -172,7 +172,7 @@ export class ChatContainer extends Component {
 
 	onRemoveUserData = async() => {
 		const { success } = await ModalManager.confirm({
-			text: 'Are you sure you want to remove all of your personal data?',
+			text: I18n.t('Are you sure you want to remove all of your personal data?'),
 		});
 
 		if (!success) {

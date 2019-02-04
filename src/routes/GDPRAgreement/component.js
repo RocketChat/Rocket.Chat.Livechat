@@ -54,7 +54,7 @@ export default class GDPR extends Component {
 			/>
 
 			<Button.Group>
-				<Button onClick={this.handleClick} stack>I Agree</Button>
+				<Button onClick={this.handleClick} stack>{ I18n.t('I Agree') }</Button>
 			</Button.Group>
 		</Screen>
 	)

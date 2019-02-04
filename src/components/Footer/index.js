@@ -24,7 +24,7 @@ export const Content = ({ children, ...props }) => (
 export const PoweredBy = (props) => (
 	<h3 className={createClassName(styles, 'powered-by')} {...props}>
 		{I18n.t('Powered by Rocket.Chat').split('Rocket.Chat')[0]}
-		<a href="https://rocket.chat" starget="_blank" rel="noopener noreferrer">
+		<a href="https://rocket.chat" target="_blank" rel="noopener noreferrer">
 			<Logo class={createClassName(styles, 'powered-by__logo')} width={60} role="img" aria-label="Rocket.Chat" />
 		</a>
 		{I18n.t('Powered by Rocket.Chat').split('Rocket.Chat')[1]}
