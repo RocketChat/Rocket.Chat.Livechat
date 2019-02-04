@@ -144,7 +144,23 @@ export class App extends Component {
 
 		const browserLanguage = () => (navigator.userLanguage || navigator.language);
 
-		I18n.changeLocale((configLanguage() || browserLanguage() || 'en').replace('-', '_'));
+		const normalizeLanguageString = (languageString) => {
+			let [languageCode, countryCode] = languageString.split ? languageString.split(/[-_]/) : [];
+			if (!languageCode || languageCode.length !== 2) {
+				return 'en';
+			}
+			languageCode = languageCode.toLowerCase();
+
+			if (!countryCode || countryCode.length !== 2) {
+				countryCode = null;
+			} else {
+				countryCode = countryCode.toUpperCase();
+			}
+
+			return countryCode ? `${ languageCode }_${ countryCode }` : languageCode;
+		};
+
+		I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
 	}
 
