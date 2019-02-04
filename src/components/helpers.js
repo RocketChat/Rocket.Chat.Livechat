@@ -40,11 +40,17 @@ export async function asyncEvery(array, callback) {
 
 export const debounce = (func, delay) => {
 	let inDebounce;
-	return function(...args) {
+
+	function f(...args) {
 		const context = this;
 		clearTimeout(inDebounce);
 		inDebounce = setTimeout(() => func.apply(context, args), delay);
-	};
+		return context;
+	}
+
+	f.stop = () => clearTimeout(inDebounce);
+
+	return f;
 };
 
 export const throttle = (func, limit) => {
