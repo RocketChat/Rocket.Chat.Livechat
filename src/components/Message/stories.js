@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
 import { withKnobs, boolean, date, object, text } from '@storybook/addon-knobs';
+import { avatarResolver } from '../../helpers.stories';
 import Message from '.';
 
 
@@ -48,7 +49,7 @@ storiesOf('Components|Message', module)
 				username: text('u.username', 'guilherme.gazzo'),
 				name: text('u.name', 'Guilherme Albrech Gazzo'),
 			}}
-			avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+			avatarResolver={avatarResolver}
 		/>
 	))
 	.add('me', () => (
@@ -61,7 +62,7 @@ storiesOf('Components|Message', module)
 				username: text('u.username', 'guilherme.gazzo'),
 				name: text('u.name', 'Guilherme Albrech Gazzo'),
 			}}
-			avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+			avatarResolver={avatarResolver}
 		/>
 	))
 	.add('markdown', () => (
@@ -74,7 +75,7 @@ storiesOf('Components|Message', module)
 				username: text('u.username', 'guilherme.gazzo'),
 				name: text('u.name', 'Guilherme Albrech Gazzo'),
 			}}
-			avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+			avatarResolver={avatarResolver}
 		/>
 	))
 	.add('grouping', () => (
@@ -88,7 +89,7 @@ storiesOf('Components|Message', module)
 					username: text('u.username #1', 'guilherme.gazzo'),
 					name: text('u.name #1', 'Guilherme Albrech Gazzo'),
 				}}
-				avatarUrl={text('avatarUrl #1', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+				avatarResolver={avatarResolver}
 			/>
 			<Message
 				me={boolean('me #2', false)}
@@ -99,7 +100,7 @@ storiesOf('Components|Message', module)
 					username: text('u.username #2', 'guilherme.gazzo'),
 					name: text('u.name #2', 'Guilherme Albrech Gazzo'),
 				}}
-				avatarUrl={text('avatarUrl #2', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+				avatarResolver={avatarResolver}
 			/>
 		</div>
 	))
@@ -117,7 +118,7 @@ storiesOf('Components|Message/Attachments', module)
 				username: text('u.username', 'guilherme.gazzo'),
 				name: text('u.name', 'Guilherme Albrech Gazzo'),
 			}}
-			avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+			avatarResolver={avatarResolver}
 			attachmentsUrl={object('attachmentsUrl', [{
 				attachment_url: 'https://sample-videos.com/img/Sample-png-image-200kb.png',
 				image_url: 'https://sample-videos.com/img/Sample-png-image-200kb.png',
@@ -133,7 +134,7 @@ storiesOf('Components|Message/Attachments', module)
 				username: text('u.username', 'guilherme.gazzo'),
 				name: text('u.name', 'Guilherme Albrech Gazzo'),
 			}}
-			avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+			avatarResolver={avatarResolver}
 			attachmentsUrl={object('attachmentsUrl', [{
 				attachment_url: 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3',
 				audio_url: 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3',
@@ -149,7 +150,7 @@ storiesOf('Components|Message/Attachments', module)
 				username: text('u.username', 'guilherme.gazzo'),
 				name: text('u.name', 'Guilherme Albrech Gazzo'),
 			}}
-			avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+			avatarResolver={avatarResolver}
 			attachmentsUrl={object('attachmentsUrl', [{
 				attachment_url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
 				video_url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
@@ -168,7 +169,7 @@ storiesOf('Components|Message/Attachments', module)
 						username: text('u.username', 'guilherme.gazzo'),
 						name: text('u.name', 'Guilherme Albrech Gazzo'),
 					}}
-					avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+					avatarResolver={avatarResolver}
 					attachmentsUrl={object(`attachmentsUrl #${ key }`, [{
 						attachment_url: `http://localhost:3000/demo.${ extension }`,
 						title: 'attachment',
@@ -186,7 +187,7 @@ storiesOf('Components|Message/Attachments', module)
 				username: text('u.username', 'guilherme.gazzo'),
 				name: text('u.name', 'Guilherme Albrech Gazzo'),
 			}}
-			avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+			avatarResolver={avatarResolver}
 			attachmentsUrl={object('attachmentsUrl', [{
 				attachment_url: 'http://localhost:3000/demo.pdf',
 				title: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea',
@@ -202,7 +203,7 @@ storiesOf('Components|Message/Attachments', module)
 				username: text('u.username', 'guilherme.gazzo'),
 				name: text('u.name', 'Guilherme Albrech Gazzo'),
 			}}
-			avatarUrl={text('avatarUrl', '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32')}
+			avatarResolver={avatarResolver}
 			attachmentsUrl={object('attachmentsUrl', [
 				{
 					attachment_url: 'https://sample-videos.com/img/Sample-png-image-200kb.png',

@@ -247,9 +247,11 @@ export class ChatContainer extends Component {
 		}
 	}
 
-	render = (props) => (
+	render = ({ user, ...props }) => (
 		<Chat
 			{...props}
+			avatarResolver={getAvatarUrl}
+			uid={user._id}
 			onTop={this.handleTop}
 			onChangeText={this.handleChangeText}
 			onSubmit={this.handleSubmit}
@@ -318,24 +320,13 @@ export const ChatConnector = ({ ref, ...props }) => (
 				title={title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}
-				user={user ? {
-					_id: user._id,
-					username: user.username,
-					avatar: {
-						description: user.username,
-						src: getAvatarUrl((user.name && user.name.trim().split(' ')[0]) || user.username),
-					},
-				} : undefined}
+				user={user}
 				agent={agent ? {
 					_id: agent._id,
 					name: agent.name,
 					status: agent.status,
 					email: agent.emails && agent.emails[0] && agent.emails[0].address,
 					username: agent.username,
-					avatar: {
-						description: agent.username,
-						src: getAvatarUrl(agent.username),
-					},
 					phone: agent.customFields && agent.customFields.phone,
 				} : undefined}
 				room={room}
@@ -343,10 +334,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}
-				typingAvatars={Array.isArray(typing) ? typing.map((username) => ({
-					description: username,
-					src: getAvatarUrl(username),
-				})) : []}
+				typingUsernames={Array.isArray(typing) ? typing : []}
 				loading={loading}
 				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
 				connecting={connecting} // param to show or hide "connecting"

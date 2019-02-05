@@ -57,9 +57,10 @@ export const Message = ({
 	el,
 	msg,
 	ts,
+	u = {},
 	me,
 	group,
-	avatar,
+	avatarResolver = () => null,
 	attachmentsUrl,
 	className,
 	...props
@@ -67,8 +68,8 @@ export const Message = ({
 	<Body id={_id} me={me} group={group} el={el} className={className}>
 		<Container>
 			<Avatar
-				src={avatar && avatar.src}
-				description={avatar && avatar.description}
+				src={avatarResolver(u.username)}
+				description={u.username}
 				className={createClassName(styles, 'message__avatar')}
 			/>
 			<Content>

@@ -13,17 +13,23 @@ export const TypingDots = ({ children }) => (
 );
 
 
-const TypingAvatar = ({ avatars = [] }) => (
+const TypingAvatar = ({ avatarResolver = () => null, usernames = [] }) => (
 	<div className={createClassName(styles, 'typing__avatar-container')}>
-		{avatars.map((avatar) => <Avatar src={avatar.src} description={avatar.description} className={createClassName(styles, 'typing__avatar')} />)}
+		{usernames.map((username) => (
+			<Avatar
+				src={avatarResolver(username)}
+				description={username}
+				className={createClassName(styles, 'typing__avatar')}
+			/>
+		))}
 	</div>
 );
 
 
-export const TypingIndicator = ({ avatars = [], children, el }) => (
+export const TypingIndicator = ({ avatarResolver = () => null, usernames = [], children, el }) => (
 	<Message.Body Element={el}>
 		<Message.Container>
-			<TypingAvatar avatars={avatars} />
+			<TypingAvatar avatarResolver={avatarResolver} usernames={usernames} />
 			<Message.Content>
 				<Message.Text>
 					<TypingDots>{children}</TypingDots>

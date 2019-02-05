@@ -94,7 +94,7 @@ export const setCookies = (rid, token) => {
 
 export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
 
-export const getAvatarUrl = (username) => (username && `${ Livechat.client.host }/avatar/${ username }`);
+export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
 export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
 

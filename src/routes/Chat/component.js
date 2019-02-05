@@ -106,9 +106,10 @@ export default class Chat extends Component {
 		color,
 		title,
 		fontColor,
-		user,
-		agent,
-		typingAvatars,
+		uid,
+		agent = {},
+		typingUsernames,
+		avatarResolver,
 		conversationFinishedMessage,
 		loading,
 		connecting,
@@ -130,7 +131,13 @@ export default class Chat extends Component {
 			color={color}
 			title={title || I18n.t('Need help?')}
 			fontColor={fontColor}
-			agent={agent}
+			agent={{
+				...agent,
+				avatar: {
+					description: agent.username,
+					src: avatarResolver(agent.username),
+				},
+			}}
 			nopadding
 			options={options}
 			onChangeDepartment={onChangeDepartment}
@@ -149,10 +156,10 @@ export default class Chat extends Component {
 							className={createClassName(styles, 'chat__wrapper')}
 						>
 							<Messages
-								user={user}
-								agent={agent}
+								avatarResolver={avatarResolver}
+								uid={uid}
 								messages={messages}
-								typingAvatars={typingAvatars}
+								typingUsernames={typingUsernames}
 								conversationFinishedMessage={conversationFinishedMessage}
 								lastReadMessageId={lastReadMessageId}
 							/>
