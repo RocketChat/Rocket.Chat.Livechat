@@ -251,7 +251,7 @@ export class ChatContainer extends Component {
 		<Chat
 			{...props}
 			avatarResolver={getAvatarUrl}
-			uid={user._id}
+			uid={user && user._id}
 			onTop={this.handleTop}
 			onChangeText={this.handleChangeText}
 			onSubmit={this.handleSubmit}

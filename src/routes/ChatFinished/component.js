@@ -35,7 +35,7 @@ export default class ChatFinished extends Component {
 
 				<Form>
 					<Form.Item>
-						<Button onClick={this.handleClick} stack>New Chat</Button>
+						<Button onClick={this.handleClick} stack>{ I18n.t('New Chat') }</Button>
 					</Form.Item>
 				</Form>
 			</Screen.Content>
