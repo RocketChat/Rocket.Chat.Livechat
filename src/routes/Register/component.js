@@ -90,14 +90,14 @@ export default class Register extends Component {
 	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments, nameDefault, emailDefault }) {
 		const nameValue = nameDefault || '';
 		if (hasNameField && (!this.state.name || this.state.name !== nameValue)) {
-			this.setState({ name: { value: nameValue } });
+			this.setState({ name: { ...this.state.name, value: nameValue } });
 		} else if (!hasNameField) {
 			this.setState({ name: null });
 		}
 
 		const emailValue = emailDefault || '';
 		if (hasEmailField && (!this.state.email || this.state.name !== emailValue)) {
-			this.setState({ email: { value: emailValue } });
+			this.setState({ email: { ...this.state.email, value: emailValue } });
 		} else if (!hasEmailField) {
 			this.setState({ email: null });
 		}
@@ -105,7 +105,7 @@ export default class Register extends Component {
 		const departmentValue = departmentDefault || (departments && departments.length === 1 && departments[0]._id) || '';
 		const showDepartmentField = hasDepartmentField && departments && departments.length > 1;
 		if (showDepartmentField && (!this.state.department || this.state.department !== departmentValue)) {
-			this.setState({ department: { value: departmentValue } });
+			this.setState({ department: { ...this.state.department, value: departmentValue } });
 		} else if (!showDepartmentField) {
 			this.setState({ department: null });
 		}

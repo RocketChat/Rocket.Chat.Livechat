@@ -107,7 +107,7 @@ export default class Chat extends Component {
 		title,
 		fontColor,
 		uid,
-		agent = {},
+		agent,
 		typingUsernames,
 		avatarResolver,
 		conversationFinishedMessage,
@@ -131,15 +131,14 @@ export default class Chat extends Component {
 			color={color}
 			title={title || I18n.t('Need help?')}
 			fontColor={fontColor}
-			agent={{
+			agent={agent ? {
 				...agent,
 				avatar: {
 					description: agent.username,
 					src: avatarResolver(agent.username),
 				},
-			}}
+			} : null}
 			nopadding
-			options={options}
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
 			onRemoveUserData={onRemoveUserData}
@@ -167,15 +166,21 @@ export default class Chat extends Component {
 					</div>
 				</Screen.Content>
 				<Screen.Footer
-					options={(
+					options={options ? (
 						<Footer.Options>
 							<Menu.Group>
-								<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
-								<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
-								<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
+								{onChangeDepartment && (
+									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
+								)}
+								{onRemoveUserData && (
+									<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
+								)}
+								{onFinishChat && (
+									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
+								)}
 							</Menu.Group>
 						</Footer.Options>
-					)}
+					) : null}
 				>
 					<Composer onUpload={onUpload}
 						onSubmit={this.handleSubmit}

@@ -70,7 +70,7 @@ export default class SwitchDepartment extends Component {
 
 	componentWillReceiveProps() {
 		if (!this.state.department) {
-			this.setState({ department: { value: '' } });
+			this.setState({ department: { ...this.state.department, value: '' } });
 		}
 	}
 
