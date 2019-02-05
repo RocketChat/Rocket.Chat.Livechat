@@ -28,6 +28,7 @@ export const loadConfig = async() => {
 		sound: { src, enabled: true, play: false },
 		messages: [],
 		alerts: [],
+		typing: [],
 		noMoreMessages: false,
 		visible: true,
 		unread: null,
@@ -40,7 +41,7 @@ export const processUnread = async() => {
 		const { alerts, lastReadMessageId } = store.state;
 		const lastReadMessageIndex = messages.findIndex((item) => item._id === lastReadMessageId);
 		const unreadMessages = messages.slice(lastReadMessageIndex + 1);
-	
+
 		if (lastReadMessageIndex !== -1) {
 			const lastReadMessage = messages[lastReadMessageIndex];
 			const alertMessage = I18n.t({
