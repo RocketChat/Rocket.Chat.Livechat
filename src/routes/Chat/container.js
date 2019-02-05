@@ -4,7 +4,7 @@ import { Livechat } from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
 import constants from '../../lib/constants';
-import { createToken, insert, getAvatarUrl, renderMessage } from '../../components/helpers';
+import { createToken, debounce, getAvatarUrl, insert, renderMessage, throttle } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 import { initRoom, closeChat } from './room';
@@ -75,13 +75,22 @@ export class ChatContainer extends Component {
 		this.loadMoreMessages();
 	}
 
-	handleChangeText = async(text) => {
+	startTyping = throttle(async({ rid, username }) => {
+		await Livechat.notifyVisitorTyping(rid, username, true);
+		this.stopTypingDebounced({ rid, username });
+	}, 4500)
+
+	stopTyping = ({ rid, username }) => Livechat.notifyVisitorTyping(rid, username, false)
+
+	stopTypingDebounced = debounce(this.stopTyping, 5000)
+
+	handleChangeText = async() => {
 		const { user, room } = this.props;
 		if (!(user && user.username && room && room._id)) {
 			return;
 		}
 
-		await Livechat.notifyVisitorTyping(room._id, user.username, text.length > 0);
+		this.startTyping({ rid: room._id, username: user.username });
 	}
 
 	handleSubmit = async(msg) => {
@@ -93,7 +102,11 @@ export class ChatContainer extends Component {
 		const { _id: rid } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
 		try {
-			await Livechat.sendMessage({ msg, token, rid });
+			this.stopTypingDebounced.stop();
+			await Promise.all([
+				this.stopTyping({ rid, username: user.username }),
+				Livechat.sendMessage({ msg, token, rid }),
+			]);
 		} catch (error) {
 			await loadConfig();
 			const { data: { error: reason } } = error;
@@ -234,9 +247,11 @@ export class ChatContainer extends Component {
 		}
 	}
 
-	render = (props) => (
+	render = ({ user, ...props }) => (
 		<Chat
 			{...props}
+			avatarResolver={getAvatarUrl}
+			uid={user && user._id}
 			onTop={this.handleTop}
 			onChangeText={this.handleChangeText}
 			onSubmit={this.handleSubmit}
@@ -305,24 +320,13 @@ export const ChatConnector = ({ ref, ...props }) => (
 				title={title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}
-				user={user ? {
-					_id: user._id,
-					username: user.username,
-					avatar: {
-						description: user.username,
-						src: getAvatarUrl((user.name && user.name.trim().split(' ')[0]) || user.username),
-					},
-				} : undefined}
+				user={user}
 				agent={agent ? {
 					_id: agent._id,
 					name: agent.name,
 					status: agent.status,
 					email: agent.emails && agent.emails[0] && agent.emails[0].address,
 					username: agent.username,
-					avatar: {
-						description: agent.username,
-						src: getAvatarUrl(agent.username),
-					},
 					phone: agent.customFields && agent.customFields.phone,
 				} : undefined}
 				room={room}
@@ -330,10 +334,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}
-				typingAvatars={Array.isArray(typing) ? typing.map((username) => ({
-					description: username,
-					src: getAvatarUrl(username),
-				})) : []}
+				typingUsernames={Array.isArray(typing) ? typing : []}
 				loading={loading}
 				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
 				connecting={connecting} // param to show or hide "connecting"

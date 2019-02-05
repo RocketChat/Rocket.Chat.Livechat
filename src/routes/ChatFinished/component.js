@@ -29,14 +29,17 @@ export default class ChatFinished extends Component {
 			className={createClassName(styles, 'chat-finished')}
 			{...props}
 		>
-			<p className={createClassName(styles, 'chat-finished__greeting')}>{greeting || defaultGreeting}</p>
-			<p className={createClassName(styles, 'chat-finished__message')}>{message || defaultMessage}</p>
+			<Screen.Content>
+				<p className={createClassName(styles, 'chat-finished__greeting')}>{greeting || defaultGreeting}</p>
+				<p className={createClassName(styles, 'chat-finished__message')}>{message || defaultMessage}</p>
 
-			<Form>
-				<Form.Item>
-					<Button onClick={this.handleClick} stack>New Chat</Button>
-				</Form.Item>
-			</Form>
+				<Form>
+					<Form.Item>
+						<Button onClick={this.handleClick} stack>{ I18n.t('New Chat') }</Button>
+					</Form.Item>
+				</Form>
+			</Screen.Content>
+			<Screen.Footer />
 		</Screen>
 	)
 }

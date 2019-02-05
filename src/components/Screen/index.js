@@ -107,90 +107,25 @@ class ScreenHeader extends Component {
 }
 
 
-const ScreenFooter = ({
-	footer,
-	options,
-	onChangeDepartment,
-	onFinishChat,
-	onRemoveUserData,
-}) => (
-	<Footer>
-		{footer && (
-			<Footer.Content>
-				{footer}
-			</Footer.Content>
-		)}
-		<Footer.Content>
-			{options && (
-				<Footer.Options
-					onChangeDepartment={onChangeDepartment}
-					onFinishChat={onFinishChat}
-					onRemoveUserData={onRemoveUserData}
-				/>
-			)}
-			<Footer.PoweredBy />
-		</Footer.Content>
-	</Footer>
+export const ScreenContent = ({ children, nopadding }) => (
+	<main className={createClassName(styles, 'screen__main', { nopadding })}>
+		{children}
+	</main>
 );
 
 
-const ScreenInner = ({
-	agent,
-	title,
-	notificationsEnabled,
-	minimized,
-	expanded,
-	windowed,
-	nopadding,
-	children,
-	footer,
-	options,
-	className,
-	alerts,
-	modal,
-	onDismissAlert,
-	onEnableNotifications,
-	onDisableNotifications,
-	onMinimize,
-	onRestore,
-	onOpenWindow,
-	onChangeDepartment,
-	onFinishChat,
-	onRemoveUserData,
-}) => (
-	<div className={createClassName(styles, 'screen__inner', {}, [className])}>
-		<PopoverContainer>
-			<ScreenHeader
-				alerts={alerts}
-				agent={agent}
-				title={title}
-				notificationsEnabled={notificationsEnabled}
-				minimized={minimized}
-				expanded={expanded}
-				windowed={windowed}
-				onDismissAlert={onDismissAlert}
-				onEnableNotifications={onEnableNotifications}
-				onDisableNotifications={onDisableNotifications}
-				onMinimize={onMinimize}
-				onRestore={onRestore}
-				onOpenWindow={onOpenWindow}
-			/>
-
-			<main className={createClassName(styles, 'screen__main', { nopadding })}>
+export const ScreenFooter = ({ children, options }) => (
+	<Footer>
+		{children && (
+			<Footer.Content>
 				{children}
-			</main>
-
-			{modal}
-
-			<ScreenFooter
-				footer={footer}
-				options={options}
-				onChangeDepartment={onChangeDepartment}
-				onFinishChat={onFinishChat}
-				onRemoveUserData={onRemoveUserData}
-			/>
-		</PopoverContainer>
-	</div>
+			</Footer.Content>
+		)}
+		<Footer.Content>
+			{options}
+			<Footer.PoweredBy />
+		</Footer.Content>
+	</Footer>
 );
 
 
@@ -202,10 +137,7 @@ export const Screen = ({
 	minimized = false,
 	expanded = false,
 	windowed = false,
-	nopadding = false,
 	children,
-	footer,
-	options,
 	className,
 	alerts,
 	modal,
@@ -217,9 +149,6 @@ export const Screen = ({
 	onMinimize,
 	onRestore,
 	onOpenWindow,
-	onChangeDepartment,
-	onFinishChat,
-	onRemoveUserData,
 	onSoundStop,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
@@ -230,30 +159,29 @@ export const Screen = ({
 				${ theme.iconColor ? `--icon-color: ${ theme.iconColor };` : '' }
 			}
 		`}</style>
-		<ScreenInner
-			agent={agent}
-			title={title}
-			notificationsEnabled={notificationsEnabled}
-			minimized={minimized}
-			expanded={expanded}
-			windowed={windowed}
-			nopadding={nopadding}
-			children={children}
-			footer={footer}
-			options={options}
-			className={className}
-			alerts={alerts}
-			modal={modal}
-			onDismissAlert={onDismissAlert}
-			onEnableNotifications={onEnableNotifications}
-			onDisableNotifications={onDisableNotifications}
-			onMinimize={onMinimize}
-			onRestore={onRestore}
-			onOpenWindow={onOpenWindow}
-			onChangeDepartment={onChangeDepartment}
-			onFinishChat={onFinishChat}
-			onRemoveUserData={onRemoveUserData}
-		/>
+
+		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
+			<PopoverContainer>
+				<ScreenHeader
+					alerts={alerts}
+					agent={agent}
+					title={title}
+					notificationsEnabled={notificationsEnabled}
+					minimized={minimized}
+					expanded={expanded}
+					windowed={windowed}
+					onDismissAlert={onDismissAlert}
+					onEnableNotifications={onEnableNotifications}
+					onDisableNotifications={onDisableNotifications}
+					onMinimize={onMinimize}
+					onRestore={onRestore}
+					onOpenWindow={onOpenWindow}
+				/>
+
+				{modal}
+				{children}
+			</PopoverContainer>
+		</div>
 
 		<ChatButton
 			text={title}
@@ -266,6 +194,10 @@ export const Screen = ({
 		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} />}
 	</div>
 );
+
+
+Screen.Content = ScreenContent;
+Screen.Footer = ScreenFooter;
 
 
 export default Screen;

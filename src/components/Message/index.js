@@ -1,12 +1,12 @@
-import Attachments from './Attachments';
-import md from './Markdown';
 import Avatar from '../../components/Avatar';
-import { createClassName, parseDate, parseMessage } from '../helpers';
+import { createClassName } from '../helpers';
+import Attachments from './attachments';
+import { parseMessage, parseDate } from './parsers';
 import styles from './styles';
 
 
-export const Body = ({ me, children, Element = 'div', group, className, ...props }) => (
-	<Element className={createClassName(styles, 'message', { me, group }, [className])} {...props}>
+export const Body = ({ me, children, el: Element = 'div', group, className, ...props }) => (
+	<Element {...props} className={createClassName(styles, 'message', { me, group }, [className])}>
 		{children}
 	</Element>
 );
@@ -15,47 +15,68 @@ export const Container = ({ children, className, ...props }) => (
 	<div {...props} className={createClassName(styles, 'message__container', {}, [className])}>{children}</div>
 );
 
-export const Text = ({ children, me, className, ...props }) => (
-	<div {...props} className={createClassName(styles, 'message__text', { me }, [className])}>{children}</div>
+export const Content = ({ children, className, ...props }) => (
+	<div {...props} className={createClassName(styles, 'message__content', {}, [className])}>{children}</div>
 );
 
-export const Content = ({ children, me, className, ...props }) => (
-	<div {...props} className={createClassName(styles, 'message__content', { me }, [className])}>{children}</div>
+const createTextProps = ({ children, ...props }) => {
+	if (typeof children === 'string') {
+		return {
+			dangerouslySetInnerHTML: {
+				__html: parseMessage({ msg: children, ...props }),
+			},
+		};
+	}
+
+	if (Array.isArray(children) && typeof children[0] === 'string') {
+		return {
+			dangerouslySetInnerHTML: {
+				__html: parseMessage({ msg: children[0], ...props }),
+			},
+		};
+	}
+
+	return { children };
+};
+
+export const Text = ({ className, ...props }) => (
+	<div
+		className={createClassName(styles, 'message__text', {}, [className])}
+		{...createTextProps(props)}
+	/>
 );
 
-const Message = ({
+export const Time = ({ ts }) => (
+	<time dateTime={new Date(ts).toISOString()} className={createClassName(styles, 'message__time', {})}>
+		{parseDate(ts)}
+	</time>
+);
+
+export const Message = ({
 	_id,
 	el,
 	msg,
 	ts,
+	u = {},
 	me,
 	group,
-	avatar,
+	avatarResolver = () => null,
 	attachmentsUrl,
 	className,
 	...props
 }) => (
-	<Body id={_id} me={me} group={group} Element={el} className={className}>
+	<Body id={_id} me={me} group={group} el={el} className={className}>
 		<Container>
-			{!me && (
-				<Avatar
-					src={avatar && avatar.src}
-					description={avatar && avatar.description}
-					className={createClassName(styles, 'avatar', { group })}
-				/>
-			)}
-			<Content me={me}>
-				{msg && <Text me={me} dangerouslySetInnerHTML={{ __html: md.render(parseMessage(props, msg)) }} />}
+			<Avatar
+				src={avatarResolver(u.username)}
+				description={u.username}
+				className={createClassName(styles, 'message__avatar')}
+			/>
+			<Content>
+				{msg && <Text {...props}>{msg}</Text>}
 				{attachmentsUrl && attachmentsUrl.length && <Attachments attachments={attachmentsUrl} />}
-				<div className={createClassName(styles, 'message__time', {})}>{parseDate(ts)}</div>
+				<Time ts={ts} />
 			</Content>
-			{me && (
-				<Avatar
-					src={avatar && avatar.src}
-					description={avatar && avatar.description}
-					className={createClassName(styles, 'avatar', { group })}
-				/>
-			)}
 		</Container>
 	</Body>
 );
@@ -65,6 +86,8 @@ Message.Body = Body;
 Message.Container = Container;
 Message.Content = Content;
 Message.Text = Text;
+Message.Time = Time;
 Message.Attachments = Attachments;
+
 
 export default Message;

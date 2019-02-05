@@ -127,7 +127,7 @@ export default class LeaveMessage extends Component {
 				<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
 			</Form.Item>
 		</Form>
-	);
+	)
 
 	render = ({ color, title, message, unavailableMessage, hasForm, ...props }) => (
 		<Screen
@@ -136,11 +136,14 @@ export default class LeaveMessage extends Component {
 			className={createClassName(styles, 'leave-message')}
 			{...props}
 		>
-			<p className={createClassName(styles, 'leave-message__main-message')}>
-				{hasForm ? (message || defaultMessage) : (unavailableMessage || defaultUnavailableMessage)}
-			</p>
+			<Screen.Content>
+				<p className={createClassName(styles, 'leave-message__main-message')}>
+					{hasForm ? (message || defaultMessage) : (unavailableMessage || defaultUnavailableMessage)}
+				</p>
 
-			{hasForm && this.renderForm(this.props, this.state)}
+				{hasForm && this.renderForm(this.props, this.state)}
+			</Screen.Content>
+			<Screen.Footer />
 		</Screen>
 	)
 }

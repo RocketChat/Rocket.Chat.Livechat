@@ -2,15 +2,15 @@ import isSameDay from 'date-fns/is_same_day';
 import Message from '../Message';
 import Separator from '../Separator';
 import TypingIndicator from '../TypingIndicator';
-import { createClassName, flatMap, getAttachmentsUrl } from '../helpers';
+import { createClassName, flatMap, getAttachmentsUrl, memo } from '../helpers';
 import styles from './styles';
 
 
-export const Messages = ({
-	user = {},
-	agent = {},
+export const Messages = memo(({
+	avatarResolver = () => null,
+	uid,
+	typingUsernames = [],
 	messages = [],
-	typingAvatars = [],
 	conversationFinishedMessage,
 	lastReadMessageId,
 }) => (
@@ -26,14 +26,9 @@ export const Messages = ({
 				<Message
 					el="li"
 					key={message._id}
-					me={user._id && user._id === message.u._id}
+					me={uid && uid === message.u._id}
 					group={nextMessage && message.u._id === nextMessage.u._id}
-					avatar={{
-						src: (user._id === message.u._id && user.avatar && user.avatar.src) ||
-							(agent._id === message.u._id && agent.avatar && agent.avatar.src),
-						description: (user._id === message.u._id && user.avatar && user.avatar.description) ||
-							(agent._id === message.u._id && agent.avatar && agent.avatar.description),
-					}}
+					avatarResolver={avatarResolver}
 					attachmentsUrl={getAttachmentsUrl(message.attachments)}
 					conversationFinishedMessage={conversationFinishedMessage}
 					{...message}
@@ -41,8 +36,10 @@ export const Messages = ({
 				showUnreadSeparator && <Separator key="unread" el="li" unread />,
 			].filter(Boolean);
 		}, [])}
-		{typingAvatars && !!typingAvatars.length && <TypingIndicator el="li" avatars={typingAvatars} />}
+		{typingUsernames && !!typingUsernames.length && (
+			<TypingIndicator el="li" avatarResolver={avatarResolver} usernames={typingUsernames} />
+		)}
 	</ol>
-);
+));
 
 export default Messages;

@@ -42,20 +42,23 @@ export default class GDPR extends Component {
 			className={createClassName(styles, 'gdpr')}
 			{...props}
 		>
-			<p
-				className={createClassName(styles, 'gdpr__consent-text')}
-				// eslint-disable-next-line react/no-danger
-				dangerouslySetInnerHTML={{ __html: md.renderInline(consentText || defaultConsentText) }}
-			/>
-			<p
-				className={createClassName(styles, 'gdpr__instructions')}
-				// eslint-disable-next-line react/no-danger
-				dangerouslySetInnerHTML={{ __html: md.renderInline(instructions || defaultInstructions) }}
-			/>
+			<Screen.Content>
+				<p
+					className={createClassName(styles, 'gdpr__consent-text')}
+					// eslint-disable-next-line react/no-danger
+					dangerouslySetInnerHTML={{ __html: md.renderInline(consentText || defaultConsentText) }}
+				/>
+				<p
+					className={createClassName(styles, 'gdpr__instructions')}
+					// eslint-disable-next-line react/no-danger
+					dangerouslySetInnerHTML={{ __html: md.renderInline(instructions || defaultInstructions) }}
+				/>
 
-			<Button.Group>
-				<Button onClick={this.handleClick} stack>{ I18n.t('I Agree') }</Button>
-			</Button.Group>
+				<Button.Group>
+					<Button onClick={this.handleClick} stack>{ I18n.t('I Agree') }</Button>
+				</Button.Group>
+			</Screen.Content>
+			<Screen.Footer />
 		</Screen>
 	)
 }

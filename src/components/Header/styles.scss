@@ -17,12 +17,13 @@ $header-action-active-displacement: 2px;
 	padding: 0 $header-padding / 2;
 	background-color: var(--color, $header-background-color);
 	color: var(--font-color, $header-color);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 16px $bg-color-grey;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex: 0 0 auto;
 	font-size: 16px;
+	z-index: 1;
 
 	&__item {
 		margin: 0 $header-padding / 2;

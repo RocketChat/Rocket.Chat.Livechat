@@ -22,7 +22,11 @@ storiesOf('Components|Popover', module)
 				<Button onClick={pop}>More options...</Button>
 			)}
 			{({ dismiss, triggerBounds = {} }) => (
-				<Button style={{ position: 'absolute', left: triggerBounds.right, top: triggerBounds.bottom }} outline onClick={dismiss}>Close me</Button>
+				<Button
+					style={{ position: 'absolute', left: triggerBounds.right, top: triggerBounds.bottom }}
+					outline
+					onClick={dismiss}
+				>Close me</Button>
 			)}
 		</PopoverTrigger>
 	))
@@ -32,7 +36,11 @@ storiesOf('Components|Popover', module)
 				<Button onClick={pop}>More options...</Button>
 			)}
 			{({ dismiss, triggerBounds = {} }) => (
-				<Button style={{ position: 'absolute', left: triggerBounds.right, top: triggerBounds.bottom }} outline onClick={dismiss}>Close me</Button>
+				<Button
+					style={{ position: 'absolute', left: triggerBounds.right, top: triggerBounds.bottom }}
+					outline
+					onClick={dismiss}
+				>Close me</Button>
 			)}
 		</PopoverTrigger>
 	))

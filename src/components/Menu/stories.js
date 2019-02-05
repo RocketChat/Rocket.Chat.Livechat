@@ -43,35 +43,39 @@ storiesOf('Components|Menu', module)
 	))
 ;
 
-storiesOf('Components|Menu/PopoverMenu', module)
-	.addDecorator(centered)
-	.addDecorator(withKnobs)
-	.add('default', () => (
+const centeredWithPopoverContainer = (storyFn) => (
+	<div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
 		<PopoverContainer>
-			<PopoverMenu
-				// eslint-disable-next-line react/jsx-no-bind
-				trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
-			>
-				<Group>
-					<Item>Reload</Item>
-					<Item danger>Delete...</Item>
-				</Group>
-			</PopoverMenu>
+			{centered(storyFn)}
 		</PopoverContainer>
+	</div>
+);
+
+storiesOf('Components|Menu/PopoverMenu', module)
+	.addDecorator(withKnobs)
+	.addDecorator(centeredWithPopoverContainer)
+	.add('default', () => (
+		<PopoverMenu
+			// eslint-disable-next-line react/jsx-no-bind
+			trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
+		>
+			<Group>
+				<Item>Reload</Item>
+				<Item danger>Delete...</Item>
+			</Group>
+		</PopoverMenu>
 	))
 	.add('with overlay', () => (
-		<PopoverContainer>
-			<PopoverMenu
-				overlayed
-				// eslint-disable-next-line react/jsx-no-bind
-				trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
-			>
-				<Group>
-					<Item>Reload</Item>
-					<Item danger>Delete...</Item>
-				</Group>
-			</PopoverMenu>
-		</PopoverContainer>
+		<PopoverMenu
+			overlayed
+			// eslint-disable-next-line react/jsx-no-bind
+			trigger={({ pop }) => <Button onClick={pop}>More options...</Button>}
+		>
+			<Group>
+				<Item>Reload</Item>
+				<Item danger>Delete...</Item>
+			</Group>
+		</PopoverMenu>
 	))
 ;
 

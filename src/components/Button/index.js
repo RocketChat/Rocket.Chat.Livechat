@@ -2,6 +2,8 @@ import { createClassName } from '../helpers';
 import styles from './styles';
 
 
+const handleMouseUp = ({ target }) => target.blur();
+
 export const Button = ({
 	children,
 	disabled,
@@ -29,6 +31,7 @@ export const Button = ({
 			small,
 			loading,
 		}, [className])}
+		onMouseUp={handleMouseUp}
 	>
 		{children}
 	</button>

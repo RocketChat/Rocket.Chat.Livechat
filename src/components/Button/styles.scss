@@ -68,7 +68,6 @@ $button-loading-color: #ffffff;
 	padding: $button-padding;
 
 	color: var(--font-color, $button-color);
-	outline: none;
 
 	font-family: $button-font-family;
 	font-size: $button-font-size;
@@ -80,7 +79,8 @@ $button-loading-color: #ffffff;
 	cursor: pointer;
 	transition: color $default-time-animation,
 		background-color $default-time-animation,
-		transform $default-time-animation;
+		border-color $default-time-animation,
+		transform $default-time-animation / 2;
 	user-select: none;
 
 	@include state(var(--color, $button-background-color), transparent);
