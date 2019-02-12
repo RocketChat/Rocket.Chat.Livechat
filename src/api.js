@@ -8,3 +8,5 @@ const host = (
 );
 
 export const Livechat = new LivechatClient({ host, protocol: 'ddp' });
+
+export const useSsl = host.match(/^https/) !== null;
