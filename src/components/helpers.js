@@ -1,5 +1,4 @@
-import format from 'date-fns/format';
-import isToday from 'date-fns/is_today';
+import { Component, h } from 'preact';
 import { Livechat } from '../api';
 
 
@@ -41,11 +40,17 @@ export async function asyncEvery(array, callback) {
 
 export const debounce = (func, delay) => {
 	let inDebounce;
-	return function(...args) {
+
+	function f(...args) {
 		const context = this;
 		clearTimeout(inDebounce);
 		inDebounce = setTimeout(() => func.apply(context, args), delay);
-	};
+		return context;
+	}
+
+	f.stop = () => clearTimeout(inDebounce);
+
+	return f;
 };
 
 export const throttle = (func, limit) => {
@@ -81,34 +86,6 @@ export function sort(array, value) {
 
 export const insert = (array, el) => (array.splice(sort(array, el.ts), 0, el), array);
 
-export const parseDate = (ts) => format(ts, isToday(ts) ? 'HH:mm' : 'dddd HH:mm');
-
-export const systemMessage = (t) => (['s', 'p', 'f', 'r', 'au', 'ru', 'ul', 'wm', 'uj', 'livechat-close'].includes(t)) && 'system';
-
-export const parseMessage = (args, msg) => {
-	const systemMarkdown = (msg) => (`*${ msg }*`);
-
-	const { t, conversationFinishedMessage } = args;
-	switch (t) {
-		case 'r':
-			return systemMarkdown(I18n.t('Room name changed'));
-		case 'au':
-			return systemMarkdown(I18n.t('User added by'));
-		case 'ru':
-			return systemMarkdown(I18n.t('User removed by'));
-		case 'ul':
-			return systemMarkdown(I18n.t('User left'));
-		case 'uj':
-			return systemMarkdown(I18n.t('User joined'));
-		case 'wm':
-			return systemMarkdown(I18n.t('Welcome'));
-		 case 'livechat-close':
-			return systemMarkdown(conversationFinishedMessage);
-		default:
-			return msg;
-	}
-};
-
 export const setCookies = (rid, token) => {
 	document.cookie = `rc_rid=${ rid }; path=/`;
 	document.cookie = `rc_token=${ token }; path=/`;
@@ -117,7 +94,7 @@ export const setCookies = (rid, token) => {
 
 export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
 
-export const getAvatarUrl = (username) => (username && `${ Livechat.client.host }/avatar/${ username }`);
+export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
 export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
 
@@ -168,3 +145,36 @@ export const visibility = (() => {
 		removeListener: () => {},
 	};
 })();
+
+
+export const memo = (component) => class MemoizedComponent extends Component {
+	shouldComponentUpdate(nextProps) {
+		const { props } = this;
+
+		for (const key in props) {
+			if (key === 'children') {
+				continue;
+			}
+
+			if (props[key] !== nextProps[key]) {
+				return true;
+			}
+		}
+
+		for (const key in nextProps) {
+			if (key === 'children') {
+				continue;
+			}
+
+			if (!(key in props)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	render(props) {
+		return h(component, props);
+	}
+};

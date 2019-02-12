@@ -3,12 +3,11 @@ import { EventEmitter } from 'tiny-events';
 
 const { localStorage } = global;
 
-const identityReducer = (newState) => newState;
-
 export default class Store extends EventEmitter {
-	constructor(initialState = {}, localStorageKey = 'store') {
+	constructor(initialState = {}, { localStorageKey = 'store', dontPersist = [] } = {}) {
 		super();
 		this.localStorageKey = localStorageKey;
+		this.dontPersist = dontPersist;
 
 		let storedState;
 
@@ -27,10 +26,18 @@ export default class Store extends EventEmitter {
 		return this._state;
 	}
 
-	setState = async(partialState, reducer = identityReducer) => {
+	persist() {
+		const persistable = { ...this._state };
+		for (const ignoredKey of this.dontPersist) {
+			delete persistable[ignoredKey];
+		}
+		localStorage.setItem(this.localStorageKey, JSON.stringify(persistable));
+	}
+
+	setState(partialState) {
 		const prevState = this._state;
-		this._state = await reducer({ ...prevState, ...partialState }, prevState);
-		localStorage.setItem(this.localStorageKey, JSON.stringify(this._state));
+		this._state = { ...prevState, ...partialState };
+		this.persist();
 		this.emit('change', this._state, prevState, partialState);
 	}
 }

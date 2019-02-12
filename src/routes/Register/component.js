@@ -6,6 +6,9 @@ import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
 
+const defaultTitle = I18n.t('Need help?');
+const defaultMessage = I18n.t('Please, tell us some informations to start the chat');
+
 export default class Register extends Component {
 	state = {
 		name: null,
@@ -87,14 +90,14 @@ export default class Register extends Component {
 	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments, nameDefault, emailDefault }) {
 		const nameValue = nameDefault || '';
 		if (hasNameField && (!this.state.name || this.state.name !== nameValue)) {
-			this.setState({ name: { value: nameValue } });
+			this.setState({ name: { ...this.state.name, value: nameValue } });
 		} else if (!hasNameField) {
 			this.setState({ name: null });
 		}
 
 		const emailValue = emailDefault || '';
 		if (hasEmailField && (!this.state.email || this.state.name !== emailValue)) {
-			this.setState({ email: { value: emailValue } });
+			this.setState({ email: { ...this.state.email, value: emailValue } });
 		} else if (!hasEmailField) {
 			this.setState({ email: null });
 		}
@@ -102,7 +105,7 @@ export default class Register extends Component {
 		const departmentValue = departmentDefault || (departments && departments.length === 1 && departments[0]._id) || '';
 		const showDepartmentField = hasDepartmentField && departments && departments.length > 1;
 		if (showDepartmentField && (!this.state.department || this.state.department !== departmentValue)) {
-			this.setState({ department: { value: departmentValue } });
+			this.setState({ department: { ...this.state.department, value: departmentValue } });
 		} else if (!showDepartmentField) {
 			this.setState({ department: null });
 		}
@@ -114,72 +117,75 @@ export default class Register extends Component {
 		return (
 			<Screen
 				color={color}
-				title={title}
+				title={title || defaultTitle}
 				className={createClassName(styles, 'register')}
 				{...props}
 			>
-				<p className={createClassName(styles, 'register__message')}>{message}</p>
+				<Screen.Content>
+					<p className={createClassName(styles, 'register__message')}>{message || defaultMessage}</p>
 
-				<Form onSubmit={this.handleSubmit}>
-					{name && (
+					<Form onSubmit={this.handleSubmit}>
+						{name && (
+							<Form.Item>
+								<Form.Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Form.Label>
+								<Form.TextInput
+									id="name"
+									name="name"
+									placeholder={I18n.t('Insert your name here...')}
+									disabled={loading}
+									value={name.value}
+									error={name.showError}
+									onInput={this.handleNameChange}
+								/>
+								<Form.Description error={name.showError}>
+									{name.showError && name.error}
+								</Form.Description>
+							</Form.Item>
+						)}
+
+						{email && (
+							<Form.Item>
+								<Form.Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Form.Label>
+								<Form.TextInput
+									id="email"
+									name="email"
+									placeholder={I18n.t('Insert your email here...')}
+									disabled={loading}
+									value={email.value}
+									error={email.showError}
+									onInput={this.handleEmailChange}
+								/>
+								<Form.Description error={email.showError}>
+									{email.showError && email.error}
+								</Form.Description>
+							</Form.Item>
+						)}
+
+						{department && (
+							<Form.Item>
+								<Form.Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Form.Label>
+								<Form.SelectInput
+									id="department"
+									name="department"
+									placeholder={I18n.t('Choose an option...')}
+									options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
+									disabled={loading}
+									value={department.value}
+									error={department.showError}
+									onInput={this.handleDepartmentChange}
+								/>
+								<Form.Description error={department.showError}>
+									{department.showError && department.error}
+								</Form.Description>
+							</Form.Item>
+						)}
+
 						<Form.Item>
-							<Form.Label error={name.showError} htmlFor="name">Name *</Form.Label>
-							<Form.TextInput
-								id="name"
-								name="name"
-								placeholder="Insert your name here..."
-								disabled={loading}
-								value={name.value}
-								error={name.showError}
-								onInput={this.handleNameChange}
-							/>
-							<Form.Description error={name.showError}>
-								{name.showError && name.error}
-							</Form.Description>
+							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
 						</Form.Item>
-					)}
-
-					{email && (
-						<Form.Item>
-							<Form.Label error={email.showError} htmlFor="email">Email *</Form.Label>
-							<Form.TextInput
-								id="email"
-								name="email"
-								placeholder="Insert your email here..."
-								disabled={loading}
-								value={email.value}
-								error={email.showError}
-								onInput={this.handleEmailChange}
-							/>
-							<Form.Description error={email.showError}>
-								{email.showError && email.error}
-							</Form.Description>
-						</Form.Item>
-					)}
-
-					{department && (
-						<Form.Item>
-							<Form.Label error={department.showError} htmlFor="department">I need help with...</Form.Label>
-							<Form.SelectInput
-								id="department"
-								name="department"
-								placeholder="Choose an option..."
-								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
-								disabled={loading}
-								value={department.value}
-								error={department.showError}
-								onInput={this.handleDepartmentChange}
-							/>
-							<Form.Description error={department.showError}>
-								{department.showError && department.error}
-							</Form.Description>
-						</Form.Item>
-					)}
-
-					<Form.Item>
-						<Button loading={loading} disabled={!valid || loading} stack>Start Chat</Button>
-					</Form.Item>
-				</Form>
+					</Form>
+				</Screen.Content>
+				<Screen.Footer />
 			</Screen>
 		);
 	}

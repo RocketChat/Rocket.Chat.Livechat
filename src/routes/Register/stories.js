@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
+import { withKnobs, boolean, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { screenCentered } from '../helpers.stories';
+import { screenCentered, screenProps } from '../../helpers.stories';
 import Register from './component';
 
 
@@ -10,13 +10,8 @@ storiesOf('Routes|Register', module)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<Register
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
-			title={text('title', 'Need help?')}
-			message={text('message', 'Please, tell us some informations to start the chat')}
+			title={text('title', '')}
+			message={text('message', '')}
 			hasNameField={boolean('hasNameField', true)}
 			hasEmailField={boolean('hasEmailField', true)}
 			hasDepartmentField={boolean('hasDepartmentField', true)}
@@ -35,26 +30,14 @@ storiesOf('Routes|Register', module)
 				},
 			])}
 			loading={boolean('loading', false)}
-			notificationsEnabled={boolean('notificationsEnabled', true)}
-			minimized={boolean('minimized', false)}
-			windowed={boolean('windowed', false)}
-			onEnableNotifications={action('enableNotifications')}
-			onDisableNotifications={action('disableNotifications')}
-			onMinimize={action('minimize')}
-			onRestore={action('restore')}
-			onOpenWindow={action('openWindow')}
 			onSubmit={action('submit')}
+			{...screenProps()}
 		/>
 	))
 	.add('loading', () => (
 		<Register
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
-			title={text('title', 'Need help?')}
-			message={text('message', 'Please, tell us some informations to start the chat')}
+			title={text('title', '')}
+			message={text('message', '')}
 			hasNameField={boolean('hasNameField', true)}
 			hasEmailField={boolean('hasEmailField', true)}
 			hasDepartmentField={boolean('hasDepartmentField', true)}
@@ -73,15 +56,8 @@ storiesOf('Routes|Register', module)
 				},
 			])}
 			loading={boolean('loading', true)}
-			notificationsEnabled={boolean('notificationsEnabled', true)}
-			minimized={boolean('minimized', false)}
-			windowed={boolean('windowed', false)}
-			onEnableNotifications={action('enableNotifications')}
-			onDisableNotifications={action('disableNotifications')}
-			onMinimize={action('minimize')}
-			onRestore={action('restore')}
-			onOpenWindow={action('openWindow')}
 			onSubmit={action('submit')}
+			{...screenProps()}
 		/>
 	))
 ;

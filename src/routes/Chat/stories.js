@@ -1,44 +1,28 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, color, number, object, text } from '@storybook/addon-knobs';
-import { screenCentered } from '../helpers.stories';
+import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs';
+import { screenCentered, screenProps, avatarResolver } from '../../helpers.stories';
 import Chat from './component';
 
 
-const user = {
-	_id: 1,
-	name: 'Tasso Evangelista',
-	status: 'online',
-	email: 'tasso.evangelista@rocket.chat',
-	username: 'tasso.evangelista',
-	avatar: {
-		description: 'tasso.evangelista',
-		src: '//gravatar.com/avatar/5ddcdc159b17f4f79fd254a06d871c5a?s=32',
-	},
-};
-
 const agent = {
-	_id: 2,
 	name: 'Guilherme Gazzo',
 	status: 'online',
 	email: 'guilherme.gazzo@rocket.chat',
+	phone: '+55 99 99999 9999',
 	username: 'guilherme.gazzo',
-	avatar: {
-		description: 'guilherme.gazzo',
-		src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
-	},
 };
 
 const messages = [
-	{ _id: 1, u: { _id: 1 }, msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
-	{ _id: 2, u: { _id: 2 }, msg: 'Putent appareat te sea, dico recusabo pri te' },
-	{ _id: 3, u: { _id: 2 }, msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
-	{ _id: 4, u: { _id: 2 }, msg: 'Movet doming ad ius, mel id adversarium disputationi' },
-	{ _id: 5, u: { _id: 1 }, msg: 'Adhuc latine et nec' },
-	{ _id: 6, u: { _id: 2 }, msg: 'Vis at verterem adversarium concludaturque' },
-	{ _id: 7, u: { _id: 2 }, msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
-	{ _id: 8, u: { _id: 2 }, msg: 'Invidunt repudiandae has eu' },
-	{ _id: 9, u: { _id: 1 }, msg: 'Veri soluta suscipit mel no' },
+	{ _id: 1, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
+	{ _id: 2, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Putent appareat te sea, dico recusabo pri te' },
+	{ _id: 3, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
+	{ _id: 4, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Movet doming ad ius, mel id adversarium disputationi' },
+	{ _id: 5, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Adhuc latine et nec' },
+	{ _id: 6, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Vis at verterem adversarium concludaturque' },
+	{ _id: 7, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
+	{ _id: 8, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Invidunt repudiandae has eu' },
+	{ _id: 9, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Veri soluta suscipit mel no' },
 ].map((message, i) => ({
 	...message,
 	ts: new Date(Date.now() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)),
@@ -52,99 +36,61 @@ storiesOf('Routes|Chat', module)
 	.addDecorator(withKnobs)
 	.add('loading', () => (
 		<Chat
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
-			user={object('user', user)}
+			avatarResolver={avatarResolver}
+			uid={number('uid', 1)}
 			agent={object('agent', agent)}
 			messages={object('messages', [])}
-			typingAvatars={object('typingAvatars', [])}
+			typingUsernames={object('typingUsernames', [])}
 			emoji={boolean('emoji', false)}
 			uploads={boolean('uploads', false)}
 			loading={boolean('loading', true)}
-			notificationsEnabled={boolean('notificationsEnabled', true)}
-			minimized={boolean('minimized', false)}
-			windowed={boolean('windowed', false)}
-			onEnableNotifications={action('enableNotifications')}
-			onDisableNotifications={action('disableNotifications')}
-			onMinimize={action('minimize')}
-			onRestore={action('restore')}
-			onOpenWindow={action('openWindow')}
 			onTop={action('top')}
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			{...screenProps()}
 		/>
 	))
 	.add('normal', () => (
 		<Chat
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
-			user={object('user', user)}
+			avatarResolver={avatarResolver}
+			uid={number('uid', 1)}
 			agent={object('agent', agent)}
 			messages={object('messages', messages)}
-			typingAvatars={object('typingAvatars', [])}
+			typingUsernames={object('typingUsernames', [])}
 			emoji={boolean('emoji', false)}
 			uploads={boolean('uploads', false)}
 			loading={boolean('loading', false)}
-			notificationsEnabled={boolean('notificationsEnabled', true)}
-			minimized={boolean('minimized', false)}
-			windowed={boolean('windowed', false)}
 			lastReadMessageId={number('lastReadMessageId', 8)}
-			onEnableNotifications={action('enableNotifications')}
-			onDisableNotifications={action('disableNotifications')}
-			onMinimize={action('minimize')}
-			onRestore={action('restore')}
-			onOpenWindow={action('openWindow')}
 			onTop={action('top')}
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			{...screenProps()}
 		/>
 	))
 	.add('with typing user', () => (
 		<Chat
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
 			title={text('title', '')}
 			sound={{ src: soundSrc, play: false }}
-			user={object('user', user)}
+			avatarResolver={avatarResolver}
+			uid={number('uid', 1)}
 			agent={object('agent', agent)}
 			messages={object('messages', messages)}
-			typingAvatars={object('typingAvatars', [
-				{
-					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
-				},
-			])}
+			typingUsernames={object('typingUsernames', ['guilherme.gazzo'])}
 			emoji={boolean('emoji', false)}
 			uploads={boolean('uploads', false)}
 			loading={boolean('loading', false)}
-			notificationsEnabled={boolean('notificationsEnabled', true)}
-			minimized={boolean('minimized', false)}
-			windowed={boolean('windowed', false)}
 			lastReadMessageId={number('lastReadMessageId', 8)}
-			onEnableNotifications={action('enableNotifications')}
-			onDisableNotifications={action('disableNotifications')}
-			onMinimize={action('minimize')}
-			onRestore={action('restore')}
-			onOpenWindow={action('openWindow')}
 			onTop={action('top')}
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			{...screenProps()}
 		/>
 	))
 ;

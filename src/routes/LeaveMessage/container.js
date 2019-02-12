@@ -5,6 +5,7 @@ import { Consumer } from '../../store';
 import LeaveMessage from './component';
 import { insert, createToken } from '../../components/helpers';
 
+
 export class LeaveMessageContainer extends Component {
 	handleSubmit = async(fields) => {
 		const { alerts, dispatch, successMessage } = this.props;
@@ -56,16 +57,16 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 			<LeaveMessageContainer
 				ref={ref}
 				{...props}
-				title={title || I18n.t('Leave a message')}
+				title={title}
 				theme={{ color }}
-				message={message || I18n.t('We are not online right now. Please, leave a message.')}
+				message={message}
 				successMessage={successMessage}
 				unavailableMessage={unavailableMessage}
 				loading={loading}
 				token={token}
 				dispatch={dispatch}
 				alerts={alerts}
-				displayOfflineForm={displayOfflineForm}
+				hasForm={displayOfflineForm}
 			/>
 		)}
 	</Consumer>

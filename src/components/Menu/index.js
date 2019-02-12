@@ -61,7 +61,7 @@ class PopoverMenuWrapper extends Component {
 		const rightSpace = overlayBounds.right - triggerBounds.left;
 		const bottomSpace = overlayBounds.bottom - triggerBounds.bottom;
 
-		const left = menuWidth < rightSpace ? triggerBounds.left : null;
+		const left = menuWidth < rightSpace ? triggerBounds.left - overlayBounds.left : null;
 		const right = menuWidth < rightSpace ? null : overlayBounds.right - triggerBounds.right;
 
 		const top = menuHeight < bottomSpace ? triggerBounds.bottom : null;

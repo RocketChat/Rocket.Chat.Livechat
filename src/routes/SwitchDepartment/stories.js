@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { screenCentered } from '../helpers.stories';
+import { screenCentered, screenProps } from '../../helpers.stories';
 import SwitchDepartment from './component';
 
 
@@ -15,8 +15,8 @@ storiesOf('Routes|SwitchDepartment', module)
 				fontColor: color('theme.fontColor', ''),
 				iconColor: color('theme.iconColor', ''),
 			}}
-			title={text('title', 'Change Department')}
-			message={text('message', 'Choose a department')}
+			title={text('title', '')}
+			message={text('message', '')}
 			departments={object('departments', [
 				{
 					_id: 1,
@@ -34,17 +34,13 @@ storiesOf('Routes|SwitchDepartment', module)
 			loading={boolean('loading', false)}
 			onSubmit={action('submit')}
 			onCancel={action('cancel')}
+			{...screenProps()}
 		/>
 	))
 	.add('loading', () => (
 		<SwitchDepartment
-			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
-			}}
-			title={text('title', 'Change Department')}
-			message={text('message', 'Choose a department')}
+			title={text('title', '')}
+			message={text('message', '')}
 			departments={object('departments', [
 				{
 					_id: 1,
@@ -62,6 +58,7 @@ storiesOf('Routes|SwitchDepartment', module)
 			loading={boolean('loading', true)}
 			onSubmit={action('submit')}
 			onCancel={action('cancel')}
+			{...screenProps()}
 		/>
 	))
 ;

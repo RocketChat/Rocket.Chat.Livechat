@@ -6,6 +6,10 @@ import { createClassName } from '../../components/helpers';
 import styles from './styles';
 
 
+const defaultTitle = I18n.t('Leave a message');
+const defaultMessage = I18n.t('We are not online right now. Please, leave a message.');
+const defaultUnavailableMessage = ''; // TODO
+
 export default class LeaveMessage extends Component {
 	state = {
 		name: { value: '' },
@@ -62,81 +66,84 @@ export default class LeaveMessage extends Component {
 		this.validateAll();
 	}
 
-	render({ color, title, message: messageProp, unavailableMessage, displayOfflineForm, loading, ...props }, { name, email, message }) {
-		const valid = this.isValid();
+	renderForm = ({ loading, valid = this.isValid() }, { name, email, message }) => (
+		<Form onSubmit={this.handleSubmit}>
+			{name && (
+				<Form.Item>
+					<Form.Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Form.Label>
+					<Form.TextInput
+						id="name"
+						name="name"
+						placeholder={I18n.t('Insert your name here...')}
+						disabled={loading}
+						value={name.value}
+						error={name.showError}
+						onInput={this.handleNameChange}
+					/>
+					<Form.Description error={name.showError}>
+						{name.showError && name.error}
+					</Form.Description>
+				</Form.Item>
+			)}
 
-		return (
-			<Screen
-				color={color}
-				title={title}
-				className={createClassName(styles, 'leave-message')}
-				{...props}
-			>
-				<p className={createClassName(styles, 'leave-message__main-message')}>{displayOfflineForm ? messageProp : unavailableMessage}</p>
+			{email && (
+				<Form.Item>
+					<Form.Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Form.Label>
+					<Form.TextInput
+						id="email"
+						name="email"
+						placeholder={I18n.t('Insert your email here...')}
+						disabled={loading}
+						value={email.value}
+						error={email.showError}
+						onInput={this.handleEmailChange}
+					/>
+					<Form.Description error={email.showError}>
+						{email.showError && email.error}
+					</Form.Description>
+				</Form.Item>
+			)}
 
-				{displayOfflineForm &&
-					<Form onSubmit={this.handleSubmit}>
-						{name && (
-							<Form.Item>
-								<Form.Label error={name.showError} htmlFor="name">Name *</Form.Label>
-								<Form.TextInput
-									id="name"
-									name="name"
-									placeholder="Insert your name here..."
-									disabled={loading}
-									value={name.value}
-									error={name.showError}
-									onInput={this.handleNameChange}
-								/>
-								<Form.Description error={name.showError}>
-									{name.showError && name.error}
-								</Form.Description>
-							</Form.Item>
-						)}
+			{message && (
+				<Form.Item>
+					<Form.Label error={message.showError} htmlFor="message">{I18n.t('Message')} *</Form.Label>
+					<Form.TextInput
+						id="message"
+						name="message"
+						placeholder={I18n.t('Write your message...')}
+						multiple={4}
+						disabled={loading}
+						value={message.value}
+						error={message.showError}
+						onInput={this.handleMessageChange}
+					/>
+					<Form.Description error={message.showError}>
+						{message.showError && message.error}
+					</Form.Description>
+				</Form.Item>
+			)}
 
-						{email && (
-							<Form.Item>
-								<Form.Label error={email.showError} htmlFor="email">Email *</Form.Label>
-								<Form.TextInput
-									id="email"
-									name="email"
-									placeholder="Insert your email here..."
-									disabled={loading}
-									value={email.value}
-									error={email.showError}
-									onInput={this.handleEmailChange}
-								/>
-								<Form.Description error={email.showError}>
-									{email.showError && email.error}
-								</Form.Description>
-							</Form.Item>
-						)}
+			<Form.Item>
+				<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
+			</Form.Item>
+		</Form>
+	)
 
-						{message && (
-							<Form.Item>
-								<Form.Label error={message.showError} htmlFor="message">Message *</Form.Label>
-								<Form.TextInput
-									id="message"
-									name="message"
-									placeholder="Write your message..."
-									multiple={4}
-									disabled={loading}
-									value={message.value}
-									error={message.showError}
-									onInput={this.handleMessageChange}
-								/>
-								<Form.Description error={message.showError}>
-									{message.showError && message.error}
-								</Form.Description>
-							</Form.Item>
-						)}
+	render = ({ color, title, message, unavailableMessage, hasForm, ...props }) => (
+		<Screen
+			color={color}
+			title={title || defaultTitle}
+			className={createClassName(styles, 'leave-message')}
+			{...props}
+		>
+			<Screen.Content>
+				<p className={createClassName(styles, 'leave-message__main-message')}>
+					{hasForm ? (message || defaultMessage) : (unavailableMessage || defaultUnavailableMessage)}
+				</p>
 
-						<Form.Item>
-							<Button loading={loading} disabled={!valid || loading} stack>Send</Button>
-						</Form.Item>
-					</Form>
-				}
-			</Screen>
-		);
-	}
+				{hasForm && this.renderForm(this.props, this.state)}
+			</Screen.Content>
+			<Screen.Footer />
+		</Screen>
+	)
 }

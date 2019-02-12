@@ -114,7 +114,13 @@ export class App extends Component {
 		await dispatch({ visible: !visibility.hidden });
 	}
 
+	handleLanguageChange = () => {
+		this.forceUpdate();
+	}
+
 	async initialize() {
+		// TODO: split these behaviors into composable components
+
 		await Livechat.connect();
 		await loadConfig();
 		this.handleTriggers();
@@ -127,22 +133,50 @@ export class App extends Component {
 
 		const { minimized } = this.props;
 		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
+
+		visibility.addListener(this.handleVisibilityChange);
+		this.handleVisibilityChange();
+
+		const configLanguage = () => {
+			const { config: { settings: { language } = {} } = {} } = this.props;
+			return language;
+		};
+
+		const browserLanguage = () => (navigator.userLanguage || navigator.language);
+
+		const normalizeLanguageString = (languageString) => {
+			let [languageCode, countryCode] = languageString.split ? languageString.split(/[-_]/) : [];
+			if (!languageCode || languageCode.length !== 2) {
+				return 'en';
+			}
+			languageCode = languageCode.toLowerCase();
+
+			if (!countryCode || countryCode.length !== 2) {
+				countryCode = null;
+			} else {
+				countryCode = countryCode.toUpperCase();
+			}
+
+			return countryCode ? `${ languageCode }_${ countryCode }` : languageCode;
+		};
+
+		I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
+		I18n.on('change', this.handleLanguageChange);
 	}
 
 	async finalize() {
 		CustomFields.reset();
 		userPresence.reset();
+		visibility.removeListener(this.handleVisibilityChange);
+		I18n.off('change', this.handleLanguageChange);
 	}
 
 	componentDidMount() {
 		this.initialize();
-		visibility.addListener(this.handleVisibilityChange);
-		this.handleVisibilityChange();
 	}
 
 	componentWillUnmount() {
 		this.finalize();
-		visibility.removeListener(this.handleVisibilityChange);
 	}
 
 	render = ({

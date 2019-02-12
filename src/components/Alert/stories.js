@@ -7,16 +7,6 @@ const alertText = 'A simple alert';
 
 storiesOf('Components|Alert', module)
 	.addDecorator(withKnobs)
-	.add('simple', () => (
-		<Alert
-			success={boolean('success', false)}
-			warning={boolean('warning', false)}
-			error={boolean('error', false)}
-			onDismiss={action('clicked')}
-		>
-			{text('text', alertText)}
-		</Alert>
-	))
 	.add('success', () => (
 		<Alert
 			success={boolean('success', true)}

@@ -11,6 +11,7 @@ export const Alert = ({ children, success, warning, error, color, onDismiss, ...
 		<button
 			onClick={onDismiss}
 			className={createClassName(styles, 'alert__close')}
+			aria-label={I18n.t('Dismiss this alert')}
 		>
 			<CloseIcon width={20} />
 		</button>

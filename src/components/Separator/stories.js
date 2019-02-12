@@ -36,7 +36,7 @@ storiesOf('Components|Separator', module)
 	))
 	.add('with surrounding messages', () => (
 		<div>
-			<Message Element="div" {...{
+			<Message {...{
 				_id: '9NSuEkEttArE2Ny6Q',
 				rid: 'oQAGfG32u3uGptekbyhHvK7uhhXh9DqKWH',
 				msg: 'Could you send me a print screen? http://open.rocket.chat/logo.png',
@@ -49,7 +49,7 @@ storiesOf('Components|Separator', module)
 				date={date('date', null)}
 				unread={boolean('unread', true)}
 			/>
-			<Message me Element="div" {...{
+			<Message me {...{
 				_id: '9NSuEkEttArE2Ny6Q',
 				rid: 'oQAGfG32u3uGptekbyhHvK7uhhXh9DqKWH',
 				msg: 'Could you send me a print screen? http://open.rocket.chat/logo.png',

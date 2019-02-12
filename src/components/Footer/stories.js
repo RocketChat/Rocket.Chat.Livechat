@@ -1,7 +1,11 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import Composer from '../Composer';
+import Menu from '../Menu';
 import { PopoverContainer } from '../Popover';
+import ChangeIcon from '../../icons/change.svg';
+import RemoveIcon from '../../icons/remove.svg';
+import FinishIcon from '../../icons/finish.svg';
 import Footer from '.';
 
 
@@ -29,7 +33,13 @@ storiesOf('Components|Footer', module)
 				<Composer placeholder="Insert your text here" />
 			</Footer.Content>
 			<Footer.Content>
-				<Footer.Options onChangeDepartment={action('change-department')} onFinishChat={action('finish-chat')} />
+				<Footer.Options>
+					<Menu.Group>
+						<Menu.Item onClick={action('change-department')} icon={ChangeIcon}>Change department</Menu.Item>
+						<Menu.Item onClick={action('remove-user-data')} icon={RemoveIcon}>Forget/Remove my personal data</Menu.Item>
+						<Menu.Item danger onClick={action('finish-chat')} icon={FinishIcon}>Finish this chat</Menu.Item>
+					</Menu.Group>
+				</Footer.Options>
 				<Footer.PoweredBy />
 			</Footer.Content>
 		</Footer>
