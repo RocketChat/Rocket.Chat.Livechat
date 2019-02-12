@@ -27,7 +27,7 @@
 	visibility: visible;
 	opacity: 1;
 	transition: opacity $default-time-animation;
-	z-index: 15;
+	z-index: 20;
 
 	&--hidden {
 		visibility: hidden;
@@ -148,7 +148,7 @@
 			}
 
 			&-top-right {
-				transform: translate(calc(0% - var(--tail-size)), calc(-100% - var(--tail-size)));
+				transform: translate(calc(-100% - var(--tail-size)), calc(-100% - var(--tail-size)));
 			}
 
 			&-bottom-left {
@@ -156,7 +156,7 @@
 			}
 
 			&-bottom-right {
-				transform: translate(calc(0% - var(--tail-size)), var(--tail-size));
+				transform: translate(calc(-100% - var(--tail-size)), var(--tail-size));
 			}
 		}
 	}
