@@ -27,7 +27,7 @@
 	visibility: visible;
 	opacity: 1;
 	transition: opacity $default-time-animation;
-	// z-index: 1;
+	z-index: 20;
 
 	&--hidden {
 		visibility: hidden;
@@ -144,19 +144,19 @@
 			}
 
 			&-top-left {
-				transform: translate(calc(-100% + var(--tail-size)), calc(-50% - var(--tail-size)));
+				transform: translate(calc(-100% + var(--tail-size)), calc(-100% - var(--tail-size)));
 			}
 
 			&-top-right {
-				transform: translate(calc(0% - var(--tail-size)), calc(-50% - var(--tail-size)));
+				transform: translate(calc(-100% - var(--tail-size)), calc(-100% - var(--tail-size)));
 			}
 
 			&-bottom-left {
-				transform: translate(calc(-50% + var(--tail-size)), var(--tail-size));
+				transform: translate(calc(-100% + var(--tail-size)), var(--tail-size));
 			}
 
 			&-bottom-right {
-				transform: translate(calc(0% - var(--tail-size)), var(--tail-size));
+				transform: translate(calc(-100% - var(--tail-size)), var(--tail-size));
 			}
 		}
 	}
