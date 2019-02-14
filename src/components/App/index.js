@@ -1,7 +1,7 @@
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
-import { Livechat, useSsl } from '../../api';
+import { Livechat } from '../../api';
 import history from '../../history';
 import { loadConfig } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
@@ -120,7 +120,7 @@ export class App extends Component {
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
-		await Livechat.connect({ useSsl });
+		await Livechat.connect();
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();
