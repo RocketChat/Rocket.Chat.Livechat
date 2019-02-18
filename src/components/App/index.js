@@ -120,7 +120,6 @@ export class App extends Component {
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
-
 		await Livechat.connect();
 		await loadConfig();
 		this.handleTriggers();
