@@ -69,6 +69,7 @@
 		"preact-i18nline": "^2.0.0",
 		"preact-router": "^2.5.7",
 		"query-string": "6.2.0",
+		"react-responsive": "^6.1.1",
 		"tiny-events": "^1.0.1",
 		"wolfy87-eventemitter": "^5.2.5"
 	},

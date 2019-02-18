@@ -128,19 +128,19 @@
 	&--floating {
 		position: fixed;
 		margin: 0;
-		// transform: translate(-50%, var(--tail-size));
+		transform: translate(-50%, var(--tail-size));
 
 		&.tooltip--placement {
 			&-left {
 				transform: translate(calc(-100% - var(--tail-size)), -50%);
 			}
 
-			// &-right {
-			// 	transform: translate(var(--tail-size), -50%);
-			// }
+			&-right {
+				transform: translate(var(--tail-size), -50%);
+			}
 
 			&-top {
-				transform: translate(-50%, calc(-100% - var(--tail-size)));
+				transform: translate(-100%, calc(-100% - var(--tail-size)));
 			}
 
 			&-top-left {
