@@ -62,7 +62,6 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				settings: {
 					nameFieldRegistrationForm: hasNameField,
 					emailFieldRegistrationForm: hasEmailField,
-					allowSwitchingDepartments: hasDepartmentField,
 				} = {},
 				theme: {
 					title,
@@ -97,7 +96,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				message={message}
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}
-				hasDepartmentField={hasDepartmentField}
+				hasDepartmentField={departments && departments.some((dept) => dept.showOnRegistration)}
 				departments={departments.filter((dept) => dept.showOnRegistration)}
 				nameDefault={guestName}
 				emailDefault={guestEmail}
