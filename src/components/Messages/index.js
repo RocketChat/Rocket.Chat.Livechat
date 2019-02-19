@@ -26,8 +26,8 @@ export const Messages = memo(({
 				<Message
 					el="li"
 					key={message._id}
-					me={uid && uid === message.u._id}
-					group={nextMessage && message.u._id === nextMessage.u._id}
+					me={uid && message.u && uid === message.u._id}
+					group={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id}
 					avatarResolver={avatarResolver}
 					attachmentsUrl={getAttachmentsUrl(message.attachments)}
 					conversationFinishedMessage={conversationFinishedMessage}

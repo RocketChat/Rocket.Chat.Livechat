@@ -117,7 +117,7 @@ class Triggers {
 					await processUnread();
 
 					// TODO: Need to think about the implementation below.. Is it possible that when the room is created, the available agent is not the same one that was previously selected?
-					if (agent._id) {
+					if (agent && agent._id) {
 						await store.setState({ agent });
 					}
 
