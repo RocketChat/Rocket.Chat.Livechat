@@ -65,7 +65,6 @@ export class ChatContainer extends Component {
 		}
 
 		await dispatch({ loading: true });
-
 		try {
 			const newRoom = await Livechat.room();
 			await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
