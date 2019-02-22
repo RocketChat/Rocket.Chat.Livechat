@@ -58,17 +58,26 @@ export class ChatContainer extends Component {
 	}
 
 	getRoom = async() => {
-		const { dispatch, room, showConnecting } = this.props;
+		const { alerts, dispatch, room, showConnecting } = this.props;
 
 		if (room) {
 			return room;
 		}
 
-		const newRoom = await Livechat.room();
-		await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
-		await initRoom();
-
-		return newRoom;
+		await dispatch({ loading: true });
+		try {
+			const newRoom = await Livechat.room();
+			await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
+			await initRoom();
+			return newRoom;
+		} catch (error) {
+			const { data: { error: reason } } = error;
+			const alert = { id: createToken(), children: I18n.t('Error starting a new conversation: %{reason}', { reason }), error: true, timeout: 10000 };
+			await dispatch({ loading: false, alerts: insert(alerts, alert) });
+			throw error;
+		} finally {
+			await dispatch({ loading: false });
+		}
 	}
 
 	handleTop = () => {

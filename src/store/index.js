@@ -26,7 +26,6 @@ const initialState = {
 		guest: {},
 		theme: {},
 	},
-	department: null,
 	gdpr: {
 		accepted: false,
 	},

@@ -72,8 +72,8 @@ const api = {
 	},
 
 	clearDepartment() {
-		const { iframe } = store.state;
-		store.setState({ iframe: { ...iframe, department: null } });
+		const { iframe: { guest, ...iframe } } = store.state;
+		store.setState({ iframe: { ...iframe, guest: { ...guest, department: null } } });
 	},
 
 	setExpanded(expanded) {
