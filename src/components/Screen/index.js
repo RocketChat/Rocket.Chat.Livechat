@@ -15,9 +15,9 @@ import RestoreIcon from '../../icons/arrowUp.svg';
 import OpenWindowIcon from '../../icons/newWindow.svg';
 import styles from './styles';
 
-import DesktopBreakpoint from '../responsive_utilities/desktop_breakpoint';
-import TabletBreakpoint from '../responsive_utilities/tablet_breakpoint';
-import PhoneBreakpoint from '../responsive_utilities/phone_breakpoint';
+import DesktopBreakpoint from '../../responsive_utilities/desktop_breakpoint';
+import TabletBreakpoint from '../../responsive_utilities/tablet_breakpoint';
+import PhoneBreakpoint from '../../responsive_utilities/phone_breakpoint';
 
 
 class ScreenHeader extends Component {
