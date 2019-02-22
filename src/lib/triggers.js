@@ -17,7 +17,7 @@ const getAgent = (triggerAction) => {
 
 		if (params.sender === 'queue') {
 			const { state } = store;
-			const { triggerAgent } = state;
+			const { triggerAgent, iframe: { guest: { department } } } = state;
 
 			if (triggerAgent) {
 				const cacheAgent = triggerAgent;
@@ -30,7 +30,7 @@ const getAgent = (triggerAction) => {
 
 			let agent;
 			try {
-				(agent = await Livechat.nextAgent());
+				(agent = await Livechat.nextAgent(department));
 			} catch (error) {
 				return reject(error);
 			}
