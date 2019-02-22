@@ -23,6 +23,7 @@
     "drop_here_to_upload_a_file_e5f4dd60": "Drop here to upload a file",
     "email_22a7d52d": "Email",
     "enable_notifications_a3daf4b1": "Enable notifications",
+    "error_starting_a_new_conversation_reason_a1b491a1": "Error starting a new conversation: %{reason}",
     "expand_chat_a0045dbd": "Expand chat",
     "file_exceeds_allowed_size_of_size_bd65c389": "File exceeds allowed size of %{size}.",
     "fileupload_error_9eedee68": "FileUpload Error",
