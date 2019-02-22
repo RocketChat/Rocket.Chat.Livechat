@@ -17,11 +17,10 @@ const getAgent = (triggerAction) => {
 
 		if (params.sender === 'queue') {
 			const { state } = store;
-			const { triggerAgent } = state;
+			const { triggerAgent, iframe: { guest: { department } } } = state;
 
 			if (triggerAgent) {
 				const cacheAgent = triggerAgent;
-
 				// cache valid for 1h
 				if (cacheAgent.ts && Date.now() - cacheAgent.ts < agentCacheExpiry) {
 					return resolve(cacheAgent.agent);
@@ -30,7 +29,7 @@ const getAgent = (triggerAction) => {
 
 			let agent;
 			try {
-				(agent = await Livechat.nextAgent());
+				(agent = await Livechat.nextAgent(department));
 			} catch (error) {
 				return reject(error);
 			}
@@ -95,7 +94,7 @@ class Triggers {
 
 	async fire(trigger) {
 		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || user) { // need to think about testing user obj here..
+		if (!this._enabled || user) {
 			return;
 		}
 		const { actions } = trigger;
@@ -116,7 +115,6 @@ class Triggers {
 					await store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg }) => ({ msg })) });
 					await processUnread();
 
-					// TODO: Need to think about the implementation below.. Is it possible that when the room is created, the available agent is not the same one that was previously selected?
 					if (agent && agent._id) {
 						await store.setState({ agent });
 					}
