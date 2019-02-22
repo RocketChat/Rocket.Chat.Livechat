@@ -21,7 +21,6 @@ const getAgent = (triggerAction) => {
 
 			if (triggerAgent) {
 				const cacheAgent = triggerAgent;
-
 				// cache valid for 1h
 				if (cacheAgent.ts && Date.now() - cacheAgent.ts < agentCacheExpiry) {
 					return resolve(cacheAgent.agent);
@@ -95,7 +94,7 @@ class Triggers {
 
 	async fire(trigger) {
 		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || user) { // need to think about testing user obj here..
+		if (!this._enabled || user) {
 			return;
 		}
 		const { actions } = trigger;
@@ -116,7 +115,6 @@ class Triggers {
 					await store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg }) => ({ msg })) });
 					await processUnread();
 
-					// TODO: Need to think about the implementation below.. Is it possible that when the room is created, the available agent is not the same one that was previously selected?
 					if (agent && agent._id) {
 						await store.setState({ agent });
 					}
