@@ -72,7 +72,7 @@ const api = {
 	},
 
 	clearDepartment() {
-		const { iframe, iframe: { guest } } = store.state;
+		const { iframe: { guest, ...iframe } } = store.state;
 		store.setState({ iframe: { ...iframe, guest: { ...guest, department: null } } });
 	},
 
