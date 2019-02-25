@@ -21,6 +21,11 @@ const getPositioningStyle = (placement, { left, top, right, bottom }) => {
 			};
 
 		case 'right':
+			return {
+				left: `${ right }px`,
+				top: `${ (top + bottom) / 2 }px`,
+			};
+
 		case 'bottom':
 		case 'bottom-left':
 		case 'bottom-right':

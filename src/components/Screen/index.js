@@ -14,7 +14,6 @@ import MinimizeIcon from '../../icons/arrowDown.svg';
 import RestoreIcon from '../../icons/arrowUp.svg';
 import OpenWindowIcon from '../../icons/newWindow.svg';
 import styles from './styles';
-
 import DesktopBreakpoint from '../../responsive_utilities/desktop_breakpoint';
 import TabletBreakpoint from '../../responsive_utilities/tablet_breakpoint';
 import PhoneBreakpoint from '../../responsive_utilities/phone_breakpoint';
@@ -73,7 +72,7 @@ class ScreenHeader extends Component {
 			</Header.Content>
 			<Tooltip.Container>
 				<Header.Actions>
-					<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')} placement="bottom">
+					<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')}>
 						<Header.Action
 							aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
 							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
@@ -85,7 +84,7 @@ class ScreenHeader extends Component {
 						</Header.Action>
 					</Tooltip.Trigger>
 					{(expanded || !windowed) && (
-						<Tooltip.Trigger content={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')} placement="bottom">
+						<Tooltip.Trigger content={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}>
 							<Header.Action
 								aria-label={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}
 								onClick={minimized ? onRestore : onMinimize}
@@ -99,29 +98,28 @@ class ScreenHeader extends Component {
 					)}
 					{(!expanded && !windowed) && (
 						<div>
-							<DesktopBreakpoint>
-								<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom">
-									<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-										<OpenWindowIcon width={20} />
-									</Header.Action>
-								</Tooltip.Trigger>
-							</DesktopBreakpoint>
-							<TabletBreakpoint>
-								<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom">
-									<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-										<OpenWindowIcon width={20} />
-									</Header.Action>
-								</Tooltip.Trigger>
-							</TabletBreakpoint>
-							<PhoneBreakpoint>
-								<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom-left">
-									<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-										<OpenWindowIcon width={20} />
-									</Header.Action>
-								</Tooltip.Trigger>
-							</PhoneBreakpoint>
-						</div>
-						
+						<DesktopBreakpoint>
+							<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom">
+								<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
+									<OpenWindowIcon width={20} />
+								</Header.Action>
+							</Tooltip.Trigger>
+						</DesktopBreakpoint>
+						<TabletBreakpoint>
+							<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom">
+								<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
+									<OpenWindowIcon width={20} />
+								</Header.Action>
+							</Tooltip.Trigger>
+						</TabletBreakpoint>
+						<PhoneBreakpoint>
+							<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom-left">
+								<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
+									<OpenWindowIcon width={20} />
+								</Header.Action>
+							</Tooltip.Trigger>
+						</PhoneBreakpoint>
+					</div>
 					)}
 				</Header.Actions>
 			</Tooltip.Container>

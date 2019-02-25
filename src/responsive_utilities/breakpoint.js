@@ -1,4 +1,4 @@
-import preact from 'preact';
+import React from 'react';
 import MediaQuery from 'react-responsive';
 
 const breakpoints = {
@@ -7,7 +7,7 @@ const breakpoints = {
 	phone: '(max-width: 767px)',
 };
 
-const { string, object } = preact.PropTypes;
+const { string, object } = React.PropTypes;
 
 export default function Breakpoint(props) {
 	const breakpoint = breakpoints[props.name] || breakpoints.desktop;
@@ -18,7 +18,7 @@ export default function Breakpoint(props) {
 	);
 }
 
-preact.propTypes = {
+React.propTypes = {
 	name: string,
 	children: object,
 };
