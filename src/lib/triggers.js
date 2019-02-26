@@ -121,6 +121,7 @@ class Triggers {
 
 					route('/');
 					parentCall('openWidget');
+					store.setState({ minimized: false });
 				});
 			}
 		});
