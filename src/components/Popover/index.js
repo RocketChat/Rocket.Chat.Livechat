@@ -22,6 +22,12 @@ export class PopoverContainer extends Component {
 		renderer: null,
 	}
 
+	handleKeyDown = ({ key }) => {
+		if (key === 'Escape') {
+			this.dismiss();
+		}
+	}
+
 	open = (renderer, props, { currentTarget } = {}) => {
 		let overlayBounds;
 		let triggerBounds;
@@ -45,12 +51,22 @@ export class PopoverContainer extends Component {
 		if (currentTarget !== target) {
 			return;
 		}
-
+		
 		this.dismiss();
 	}
 
 	handleOverlayRef = (ref) => {
 		this.overlayRef = ref;
+	}
+
+	componentDidMount() {
+		this.mounted = true;
+		window.addEventListener('keydown', this.handleKeyDown, false);
+	}
+
+	componentWillUnmount() {
+		this.mounted = false;
+		window.removeEventListener('keydown', this.handleKeyDown, false);
 	}
 
 	render = ({ children }, { renderer, overlayProps, overlayBounds, triggerBounds }) => (
