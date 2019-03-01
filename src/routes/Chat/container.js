@@ -336,7 +336,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					status: agent.status,
 					email: agent.emails && agent.emails[0] && agent.emails[0].address,
 					username: agent.username,
-					phone: agent.customFields && agent.customFields.phone,
+					phone: (agent.phone && agent.phone[0] && agent.phone[0].phoneNumber) || (agent.customFields && agent.customFields.phone),
 				} : undefined}
 				room={room}
 				messages={messages.filter((message) => renderMessage(message))}
