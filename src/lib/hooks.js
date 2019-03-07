@@ -59,21 +59,17 @@ const api = {
 		});
 	},
 
-	setDepartment(departmentValue) {
-		let department = null;
+	setDepartment(value) {
 		const { config: { departments = [] } } = store.state;
 
-		const deptExists = departments.some((dept) => dept._id === departmentValue);
-		if (deptExists) {
-			department = departmentValue;
-		}
+		const dept = departments.find((dep) => dep._id === value || dep.name === value);
+		const department = (dept && dept._id) || '';
 
 		updateIframeGuestData({ department });
 	},
 
 	clearDepartment() {
-		const { iframe: { guest, ...iframe } } = store.state;
-		store.setState({ iframe: { ...iframe, guest: { ...guest, department: null } } });
+		updateIframeGuestData({ department: '' });
 	},
 
 	setExpanded(expanded) {
