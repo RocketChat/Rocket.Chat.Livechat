@@ -16,6 +16,21 @@ export const closeChat = async() => {
 	route('/chat-finished');
 };
 
+const storeMessage = async(message) => {
+	const { messages } = store.state;
+
+	const index = messages.findIndex((el) => el._id === message._id);
+
+	if (index !== -1) {
+		messages[index] = message;
+		return await store.setState({ messages });
+	}
+
+	await store.setState({
+		messages: insert(messages, message).filter(({ msg, attachments }) => ({ msg, attachments })),
+	});
+};
+
 const processMessage = async(message) => {
 	if (message.t === 'livechat-close') {
 		closeChat();
@@ -89,9 +104,7 @@ Livechat.onTyping((username, isTyping) => {
 });
 
 Livechat.onMessage(async(message) => {
-	await store.setState({
-		messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })),
-	});
+	await storeMessage(message);
 	await processMessage(message);
 	await processUnread();
 	await doPlaySound(message);
