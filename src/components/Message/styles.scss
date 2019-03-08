@@ -59,7 +59,7 @@ $message-attachment-gap: 8px;
 		color: $message-text-color;
 		border-radius: $message-text-border-radius;
 		font-size: $message-text-font-size;
-		word-break: break-word;
+		word-break: break-all;
 
 		a {
 			color: var(--color, $message-text-link-color);
