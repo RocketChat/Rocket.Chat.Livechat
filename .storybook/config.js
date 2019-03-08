@@ -1,17 +1,24 @@
-import { addDecorator, configure } from '@storybook/react';
-import { checkA11y } from '@storybook/addon-a11y';
+import { addDecorator, configure, addParameters } from '@storybook/react';
+import { withA11y } from '@storybook/addon-a11y';
 import { setConsoleOptions } from '@storybook/addon-console';
 import { withOptions } from '@storybook/addon-options';
+import { create } from '@storybook/theming';
 
 
-addDecorator(withOptions({
-  name: 'RocketChat Livechat',
-	url: 'https://github.com/RocketChat/Rocket.Chat.Livechat',
-  hierarchySeparator: /\//,
-  hierarchyRootSeparator: /\|/,
-}));
+addParameters({
+	options: {
+		theme: create({
+			base: 'dark',
+			brandTitle: 'Rocket.Chat Livechat',
+			brandImage: 'https://rocket.chat/images/default/logo--dark.svg',
+			brandUrl: 'https://github.com/RocketChat/Rocket.Chat.Livechat',
+		}),
+		hierarchySeparator: /\//,
+		hierarchyRootSeparator: /\|/,
+	},
+});
 
-addDecorator(checkA11y);
+addDecorator(withA11y);
 
 setConsoleOptions({
 	panelExclude: [],
