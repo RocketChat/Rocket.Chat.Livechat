@@ -4,7 +4,7 @@ import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
 import SwitchDepartment from './component';
 import { ModalManager } from '../../components/Modal';
-import { createToken, insert } from '../../components/helpers';
+import { createToken } from '../../components/helpers';
 import history from '../../history';
 
 export class SwitchDepartmentContainer extends Component {
@@ -44,7 +44,7 @@ export class SwitchDepartmentContainer extends Component {
 			history.go(-1);
 		} catch (error) {
 			console.error(error);
-			await dispatch({ alerts: insert(alerts, { id: createToken(), children: I18n.t('No available agents to transfer'), warning: true, timeout: 5000 }) });
+			await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('No available agents to transfer'), warning: true, timeout: 5000 }), alerts) });
 		} finally {
 			await dispatch({ loading: false });
 		}

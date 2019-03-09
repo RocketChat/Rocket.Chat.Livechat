@@ -1,7 +1,6 @@
 import format from 'date-fns/format';
 import { Livechat } from '../api';
 import store from '../store';
-import { insert } from '../components/helpers';
 import constants from '../lib/constants';
 
 
@@ -53,7 +52,7 @@ export const processUnread = async() => {
 			});
 			const alert = { id: constants.unreadMessagesAlertId, children: alertMessage, success: true, timeout: 0 };
 			const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
-			await store.setState({ alerts: insert(newAlerts, alert) });
+			await store.setState({ alerts: (newAlerts.push(alert), newAlerts) });
 		}
 
 		await store.setState({ unread: unreadMessages.length });
