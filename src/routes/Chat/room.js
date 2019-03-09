@@ -89,6 +89,10 @@ Livechat.onTyping((username, isTyping) => {
 });
 
 Livechat.onMessage(async(message) => {
+	if (message.ts instanceof Date) {
+		message.ts = message.ts.toISOString();
+	}
+
 	await store.setState({
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
