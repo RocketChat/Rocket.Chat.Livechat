@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/react';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date } from '@storybook/addon-knobs';
 import Separator from '.';
 import Message from '../Message';
