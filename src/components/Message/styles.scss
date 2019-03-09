@@ -61,6 +61,10 @@ $message-attachment-gap: 8px;
 		font-size: $message-text-font-size;
 		word-break: break-all;
 
+		&--system {
+			font-style: italic;
+		}
+
 		a {
 			color: var(--color, $message-text-link-color);
 			text-decoration: underline dotted;

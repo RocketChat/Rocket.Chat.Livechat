@@ -1,7 +1,7 @@
 import Avatar from '../../components/Avatar';
 import { createClassName } from '../helpers';
 import Attachments from './attachments';
-import { parseMessage, parseDate } from './parsers';
+import { parseMessage, parseDate, isSystemMessage } from './parsers';
 import styles from './styles';
 
 
@@ -19,32 +19,33 @@ export const Content = ({ children, className, ...props }) => (
 	<div {...props} className={createClassName(styles, 'message__content', {}, [className])}>{children}</div>
 );
 
-const createTextProps = ({ children, ...props }) => {
+export function Text({ children, className, ...props }) {
+	const message = { ...props };
+
 	if (typeof children === 'string') {
-		return {
-			dangerouslySetInnerHTML: {
-				__html: parseMessage({ msg: children, ...props }),
-			},
-		};
+		message.msg = children;
+	} else if (Array.isArray(children) && typeof children[0] === 'string') {
+		message.msg = children[0];
+	} else {
+		return (
+			<div className={createClassName(styles, 'message__text', {}, [className])}>
+				{children}
+			</div>
+		);
 	}
 
-	if (Array.isArray(children) && typeof children[0] === 'string') {
-		return {
-			dangerouslySetInnerHTML: {
-				__html: parseMessage({ msg: children[0], ...props }),
-			},
-		};
-	}
-
-	return { children };
-};
-
-export const Text = ({ className, ...props }) => (
-	<div
-		className={createClassName(styles, 'message__text', {}, [className])}
-		{...createTextProps(props)}
-	/>
-);
+	return (
+		<div
+			className={createClassName(styles, 'message__text', {
+				system: isSystemMessage(message),
+			}, [className])}
+			// eslint-disable-next-line react/no-danger
+			dangerouslySetInnerHTML={{
+				__html: parseMessage(message),
+			}}
+		/>
+	);
+}
 
 export const Time = ({ ts }) => (
 	<time dateTime={new Date(ts).toISOString()} className={createClassName(styles, 'message__time', {})}>

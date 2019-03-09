@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered/react';
-import { withKnobs, boolean, date, object, text } from '@storybook/addon-knobs';
+import { withKnobs, boolean, date, object, text, select } from '@storybook/addon-knobs';
 import { avatarResolver } from '../../helpers.stories';
 import Message from '.';
 
@@ -42,6 +42,28 @@ storiesOf('Components|Message', module)
 	.add('normal', () => (
 		<Message
 			me={boolean('me', false)}
+			group={boolean('group', false)}
+			msg={text('msg', 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea')}
+			ts={date('ts', now)}
+			u={{
+				username: text('u.username', 'guilherme.gazzo'),
+				name: text('u.name', 'Guilherme Albrech Gazzo'),
+			}}
+			avatarResolver={avatarResolver}
+		/>
+	))
+	.add('system', () => (
+		<Message
+			me={boolean('me', false)}
+			t={select('t', [
+				'r',
+				'au',
+				'ru',
+				'ul',
+				'uj',
+				'wm',
+				'livechat-close',
+			], 'wm')}
 			group={boolean('group', false)}
 			msg={text('msg', 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea')}
 			ts={date('ts', now)}
