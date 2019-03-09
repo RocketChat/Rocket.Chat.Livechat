@@ -1122,10 +1122,10 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
 
-"@rocket.chat/sdk@^1.0.0-alpha.22":
-  version "1.0.0-alpha.22"
-  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.22.tgz#e1ea41c9760566c6293842c61ed035986e61c186"
-  integrity sha512-AjEs4lhIrh/hgPlKaTAcOslHfjV2qjr1jRQE60s9CmDlwxvzy8fJB9OcrW19P6cr5bapjXqUtnQBpS77lddjZw==
+"@rocket.chat/sdk@^1.0.0-alpha.26":
+  version "1.0.0-alpha.26"
+  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.26.tgz#1676af65ee88b1b08ad323e82cb835f4585dae15"
+  integrity sha512-aZrIlM9+58CTSS5W68ecAWep9p/PkR0AuGe0zo9UF1w9ePS2U65NqglqUED93a8kZlcnjyQBX3e2+fIvwSXg9g==
   dependencies:
     "@types/event-emitter" "^0.3.2"
     "@types/eventemitter3" "^2.0.2"

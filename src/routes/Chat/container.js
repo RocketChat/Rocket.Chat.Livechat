@@ -4,7 +4,7 @@ import { Livechat } from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
 import constants from '../../lib/constants';
-import { createToken, debounce, getAvatarUrl, insert, renderMessage, throttle } from '../../components/helpers';
+import { createToken, debounce, getAvatarUrl, renderMessage, throttle } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 import { initRoom, closeChat } from './room';
@@ -73,7 +73,7 @@ export class ChatContainer extends Component {
 		} catch (error) {
 			const { data: { error: reason } } = error;
 			const alert = { id: createToken(), children: I18n.t('Error starting a new conversation: %{reason}', { reason }), error: true, timeout: 10000 };
-			await dispatch({ loading: false, alerts: insert(alerts, alert) });
+			await dispatch({ loading: false, alerts: (alerts.push(alert), alerts) });
 			throw error;
 		} finally {
 			await dispatch({ loading: false });
@@ -120,7 +120,7 @@ export class ChatContainer extends Component {
 			await loadConfig();
 			const { data: { error: reason } } = error;
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
-			await dispatch({ alerts: insert(alerts, alert) });
+			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
 		await Livechat.notifyVisitorTyping(rid, user.username, false);
 
@@ -144,7 +144,7 @@ export class ChatContainer extends Component {
 			}
 
 			const alert = { id: createToken(), children: message, error: true, timeout: 5000 };
-			await dispatch({ alerts: insert(alerts, alert) });
+			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
 	};
 
@@ -185,7 +185,7 @@ export class ChatContainer extends Component {
 		} catch (error) {
 			console.error(error);
 			const alert = { id: createToken(), children: 'Error closing chat.', error: true, timeout: 0 };
-			await dispatch({ alerts: insert(alerts, alert) });
+			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await dispatch({ loading: false });
 			await closeChat();
@@ -209,7 +209,7 @@ export class ChatContainer extends Component {
 		} catch (error) {
 			console.error(error);
 			const alert = { id: createToken(), children: 'Error removing user data.', error: true, timeout: 0 };
-			await dispatch({ alerts: insert(alerts, alert) });
+			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await loadConfig();
 			await dispatch({ loading: false });

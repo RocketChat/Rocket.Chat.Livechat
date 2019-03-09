@@ -3,7 +3,7 @@ import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
-import { insert, createToken } from '../../components/helpers';
+import { createToken } from '../../components/helpers';
 
 
 export class LeaveMessageContainer extends Component {
@@ -14,13 +14,13 @@ export class LeaveMessageContainer extends Component {
 		try {
 			const message = await Livechat.sendOfflineMessage(fields);
 			const success = { id: createToken(), children: successMessage || message, success: true, timeout: 5000 };
-			await dispatch({ alerts: insert(alerts, success) });
+			await dispatch({ alerts: (alerts.push(success), alerts) });
 			parentCall('callback', ['offline-form-submit', fields]);
 		} catch (error) {
 			const { data: { message } } = error;
 			console.error(message);
 			const alert = { id: createToken(), children: message, error: true, timeout: 0 };
-			await dispatch({ alerts: insert(alerts, alert) });
+			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await dispatch({ loading: false });
 		}
