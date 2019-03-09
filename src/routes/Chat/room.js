@@ -1,7 +1,7 @@
 import { Livechat } from '../../api';
 import { store } from '../../store';
 import { route } from 'preact-router';
-import { insert, setCookies } from '../../components/helpers';
+import { setCookies, upsert } from '../../components/helpers';
 import Commands from '../../lib/commands';
 import { loadConfig, processUnread } from '../../lib/main';
 import { parentCall } from '../../lib/parentCall';
@@ -14,21 +14,6 @@ export const closeChat = async() => {
 	await loadConfig();
 	parentCall('callback', 'chat-ended');
 	route('/chat-finished');
-};
-
-const storeMessage = async(message) => {
-	const { messages } = store.state;
-
-	const index = messages.findIndex((el) => el._id === message._id);
-
-	if (index !== -1) {
-		messages[index] = message;
-		return await store.setState({ messages });
-	}
-
-	await store.setState({
-		messages: insert(messages, message),
-	});
 };
 
 const processMessage = async(message) => {
@@ -104,7 +89,9 @@ Livechat.onTyping((username, isTyping) => {
 });
 
 Livechat.onMessage(async(message) => {
-	await storeMessage(message);
+	await store.setState({
+		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
+	});
 	await processMessage(message);
 	await processUnread();
 	await doPlaySound(message);
