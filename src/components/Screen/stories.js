@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
 import Footer from '../Footer';
 import Menu from '../Menu';
