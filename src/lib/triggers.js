@@ -112,7 +112,7 @@ class Triggers {
 						_id: createToken(),
 					};
 
-					await store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg }) => ({ msg })) });
+					await store.setState({ triggered: true, messages: insert(store.state.messages, message) });
 					await processUnread();
 
 					if (agent && agent._id) {

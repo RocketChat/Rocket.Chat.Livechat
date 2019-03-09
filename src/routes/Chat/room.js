@@ -27,7 +27,7 @@ const storeMessage = async(message) => {
 	}
 
 	await store.setState({
-		messages: insert(messages, message).filter(({ msg, attachments }) => ({ msg, attachments })),
+		messages: insert(messages, message),
 	});
 };
 
