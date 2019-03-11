@@ -1,7 +1,7 @@
 import { Livechat } from '../../api';
 import { store } from '../../store';
 import { route } from 'preact-router';
-import { insert, setCookies } from '../../components/helpers';
+import { setCookies, upsert } from '../../components/helpers';
 import Commands from '../../lib/commands';
 import { loadConfig, processUnread } from '../../lib/main';
 import { parentCall } from '../../lib/parentCall';
@@ -89,8 +89,12 @@ Livechat.onTyping((username, isTyping) => {
 });
 
 Livechat.onMessage(async(message) => {
+	if (message.ts instanceof Date) {
+		message.ts = message.ts.toISOString();
+	}
+
 	await store.setState({
-		messages: insert(store.state.messages, message).filter(({ msg, attachments }) => ({ msg, attachments })),
+		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
 	await processMessage(message);
 	await processUnread();

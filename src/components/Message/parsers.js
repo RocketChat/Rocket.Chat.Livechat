@@ -23,26 +23,34 @@ const strong = (md) => {
 md.use(strong);
 
 export const parseMessage = ({ msg, t, conversationFinishedMessage }) => {
-	const systemMarkdown = (msg) => (`*${ msg }*`);
-
 	switch (t) {
 		case 'r':
-			return systemMarkdown(I18n.t('Room name changed'));
+			return md.render(I18n.t('Room name changed'));
 		case 'au':
-			return systemMarkdown(I18n.t('User added by'));
+			return md.render(I18n.t('User added by'));
 		case 'ru':
-			return systemMarkdown(I18n.t('User removed by'));
+			return md.render(I18n.t('User removed by'));
 		case 'ul':
-			return systemMarkdown(I18n.t('User left'));
+			return md.render(I18n.t('User left'));
 		case 'uj':
-			return systemMarkdown(I18n.t('User joined'));
+			return md.render(I18n.t('User joined'));
 		case 'wm':
-			return systemMarkdown(I18n.t('Welcome'));
+			return md.render(I18n.t('Welcome'));
 		 case 'livechat-close':
-			return systemMarkdown(conversationFinishedMessage);
+			return md.render(conversationFinishedMessage || I18n.t('Conversation finished'));
 		default:
 			return md.render(msg);
 	}
 };
 
 export const parseDate = (ts) => format(ts, isToday(ts) ? 'HH:mm' : 'dddd HH:mm');
+
+export const isSystemMessage = ({ t }) => [
+	'r',
+	'au',
+	'ru',
+	'ul',
+	'uj',
+	'wm',
+	'livechat-close',
+].includes(t);

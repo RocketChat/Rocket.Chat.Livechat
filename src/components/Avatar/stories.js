@@ -1,4 +1,4 @@
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import Avatar from '.';
