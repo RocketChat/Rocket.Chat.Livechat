@@ -41,8 +41,16 @@ export class PopoverContainer extends Component {
 		this.setState({ renderer: null, overlayBounds: null, triggerBounds: null });
 	}
 
-	handleDismiss = ({ currentTarget, target }) => {
+	handleOverlayGesture = ({ currentTarget, target }) => {
 		if (currentTarget !== target) {
+			return;
+		}
+
+		this.dismiss();
+	}
+
+	handleKeyDown = ({ key }) => {
+		if (key !== 'Escape') {
 			return;
 		}
 
@@ -53,14 +61,24 @@ export class PopoverContainer extends Component {
 		this.overlayRef = ref;
 	}
 
+	componentDidMount() {
+		this.mounted = true;
+		window.addEventListener('keydown', this.handleKeyDown, false);
+	}
+
+	componentWillUnmount() {
+		this.mounted = false;
+		window.removeEventListener('keydown', this.handleKeyDown, false);
+	}
+
 	render = ({ children }, { renderer, overlayProps, overlayBounds, triggerBounds }) => (
 		<PopoverContext.Provider value={{ open: this.open }}>
 			<div className={createClassName(styles, 'popover__container')}>
 				{children}
 				<PopoverOverlay
 					ref={this.handleOverlayRef}
-					onMouseDown={this.handleDismiss}
-					onTouchStart={this.handleDismiss}
+					onMouseDown={this.handleOverlayGesture}
+					onTouchStart={this.handleOverlayGesture}
 					visible={!!renderer}
 					{...overlayProps}
 				>
