@@ -65,16 +65,17 @@ export const throttle = (func, limit) => {
 	};
 };
 
-export function sort(array, value) {
+export function getInsertIndex(array, item, ranking) {
+	const order = ranking(item);
 	let min = 0;
 	let max = array.length - 1;
 
 	while (min <= max) {
 		const guess = Math.floor((min + max) / 2);
-		const { ts } = array[guess];
-		if (ts < value) {
+		const guessedOrder = ranking(array[guess]);
+		if (guessedOrder < order) {
 			min = guess + 1;
-		} else if (ts > array[guess + 1]) {
+		} else if (guessedOrder > array[guess + 1]) {
 			return guess;
 		} else {
 			max = guess - 1;
@@ -84,7 +85,17 @@ export function sort(array, value) {
 	return array.length > 0 ? array.length : 0;
 }
 
-export const insert = (array, el) => (array.splice(sort(array, el.ts), 0, el), array);
+export function upsert(array, item, predicate, ranking) {
+	const index = array.findIndex(predicate);
+
+	if (index > -1) {
+		array[index] = item;
+		return array;
+	}
+
+	array.splice(getInsertIndex(array, item, ranking), 0, item);
+	return array;
+}
 
 export const setCookies = (rid, token) => {
 	document.cookie = `rc_rid=${ rid }; path=/`;

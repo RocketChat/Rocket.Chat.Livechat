@@ -1,7 +1,7 @@
 import { route } from 'preact-router';
 import { Livechat } from '../api';
 import store from '../store';
-import { insert, createToken, asyncForEach } from '../components/helpers';
+import { upsert, createToken, asyncForEach } from '../components/helpers';
 import { parentCall } from './parentCall';
 import { processUnread } from './main';
 
@@ -112,7 +112,10 @@ class Triggers {
 						_id: createToken(),
 					};
 
-					await store.setState({ triggered: true, messages: insert(store.state.messages, message).filter(({ msg }) => ({ msg })) });
+					await store.setState({
+						triggered: true,
+						messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
+					});
 					await processUnread();
 
 					if (agent && agent._id) {

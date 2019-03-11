@@ -22,12 +22,6 @@ export class PopoverContainer extends Component {
 		renderer: null,
 	}
 
-	handleKeyDown = ({ key }) => {
-		if (key === 'Escape') {
-			this.dismiss();
-		}
-	}
-
 	open = (renderer, props, { currentTarget } = {}) => {
 		let overlayBounds;
 		let triggerBounds;
@@ -47,11 +41,19 @@ export class PopoverContainer extends Component {
 		this.setState({ renderer: null, overlayBounds: null, triggerBounds: null });
 	}
 
-	handleDismiss = ({ currentTarget, target }) => {
+	handleOverlayGesture = ({ currentTarget, target }) => {
 		if (currentTarget !== target) {
 			return;
 		}
-		
+
+		this.dismiss();
+	}
+
+	handleKeyDown = ({ key }) => {
+		if (key !== 'Escape') {
+			return;
+		}
+
 		this.dismiss();
 	}
 
@@ -75,8 +77,8 @@ export class PopoverContainer extends Component {
 				{children}
 				<PopoverOverlay
 					ref={this.handleOverlayRef}
-					onMouseDown={this.handleDismiss}
-					onTouchStart={this.handleDismiss}
+					onMouseDown={this.handleOverlayGesture}
+					onTouchStart={this.handleOverlayGesture}
 					visible={!!renderer}
 					{...overlayProps}
 				>

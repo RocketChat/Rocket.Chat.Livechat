@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 import { boolean, color } from '@storybook/addon-knobs';
 
 

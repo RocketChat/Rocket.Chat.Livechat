@@ -2,16 +2,14 @@ const { ProvidePlugin } = require('webpack');
 const webpackOverride = require('../webpackOverride.config');
 
 
-module.exports = (baseConfig, env, config) => {
-
-	config = webpackOverride(config, env);
+module.exports = ({ config, mode }) => {
+	config = webpackOverride(config, mode);
 
 	config.resolve.alias = Object.assign(
 		config.resolve.alias,
 		{
-			'React': 'preact-compat',
-			'react': 'preact-compat',
-			'react-dom': 'preact-compat',
+			'react': `${ __dirname }/compat.js`,
+			'react-dom': `${ __dirname }/compat.js`,
 		}
 	);
 
