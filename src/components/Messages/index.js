@@ -35,7 +35,7 @@ export const Messages = memo(({
 				/>,
 				showUnreadSeparator && <Separator key="unread" el="li" unread />,
 			].filter(Boolean);
-		}, [])}
+		})}
 		{typingUsernames && !!typingUsernames.length && (
 			<TypingIndicator el="li" avatarResolver={avatarResolver} usernames={typingUsernames} />
 		)}
