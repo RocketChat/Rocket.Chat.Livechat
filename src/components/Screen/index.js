@@ -1,5 +1,5 @@
 import { Component } from 'preact';
-import Alert from '../Alert';
+import { Alert } from '../Alert';
 import Avatar from '../Avatar';
 import ChatButton from '../ChatButton';
 import Header from '../Header';
