@@ -1,4 +1,4 @@
-import Avatar from '../../components/Avatar';
+import { Avatar } from '../../components/Avatar';
 import { createClassName } from '../helpers';
 import Attachments from './attachments';
 import { parseMessage, parseDate, isSystemMessage } from './parsers';

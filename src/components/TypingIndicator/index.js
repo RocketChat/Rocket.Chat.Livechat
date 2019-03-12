@@ -1,6 +1,6 @@
 import styles from './styles';
 import { createClassName } from '../helpers';
-import Avatar from '../Avatar';
+import { Avatar } from '../Avatar';
 import Message from '../Message';
 
 

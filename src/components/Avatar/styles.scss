@@ -3,12 +3,15 @@
 
 
 $avatar-size-small: 20px;
+$avatar-status-indicator-size-small: 10px;
 $avatar-size-medium: 32px;
+$avatar-status-indicator-size-medium: 12px;
 $avatar-size-large: 46px;
+$avatar-status-indicator-size-large: 14px;
 
 .avatar {
 	flex: 0 0 auto;
-	background-color: $bg-color-grey;
+	background-color: #000000;
 	background-image: url(./profile.png);
 	background-position: right;
 	background-repeat: no-repeat;
@@ -17,6 +20,54 @@ $avatar-size-large: 46px;
 	border-radius: $default-border-radius;
 	width: $avatar-size-medium;
 	height: $avatar-size-medium;
+
+	&__image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: $default-border-radius;
+		color: transparent;
+	}
+
+	&__status {
+		position: absolute;
+		bottom: -3px;
+		right: -2px;
+		overflow: hidden;
+		height: $avatar-status-indicator-size-medium;
+		width: $avatar-status-indicator-size-medium;
+		border-radius: 50%;
+		background-color: $bg-color-grey;
+		border: 2px solid var(--color, transparent);
+
+		&--small {
+			bottom: -2px;
+			right: -2px;
+			height: $avatar-status-indicator-size-small;
+    	width: $avatar-status-indicator-size-small;
+		}
+
+		&--large {
+			bottom: -4px;
+			right: -2px;
+			height: $avatar-status-indicator-size-large;
+    	width: $avatar-status-indicator-size-large;
+		}
+
+		&--status {
+			&-online {
+				background-color: $color-green;
+			}
+
+			&-away {
+				background-color: $color-yellow;
+			}
+
+			&-busy {
+				background-color: $color-red;
+			}
+		}
+	}
 
 	&--nobg {
 		background: none;
@@ -30,31 +81,5 @@ $avatar-size-large: 46px;
 	&--large {
 		width: $avatar-size-large;
 		height: $avatar-size-large;
-	}
-
-	& &__image {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: $default-border-radius;
-		color: transparent;
-	}
-
-	&__status {
-		position: absolute;
-		bottom: -3px;
-		right: -2px;
-		overflow: hidden;
-		display: flex;
-
-		&--small {
-			bottom: -2px;
-			right: -2px;
-		}
-
-		&--large {
-			bottom: -4px;
-			right: -2px;
-		}
 	}
 }
