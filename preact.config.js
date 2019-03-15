@@ -6,7 +6,7 @@ import webpackOverride from './webpackOverride.config';
 
 export default (config, env/* , helpers */) => {
 	if (env.production) {
-		config.output.publicPath = '/livechat.0/';
+		config.output.publicPath = '/livechat/1.0.0/';
 	}
 
 	config = webpackOverride(config);
