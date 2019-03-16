@@ -135,6 +135,9 @@ export class App extends Component {
 
 		visibility.addListener(this.handleVisibilityChange);
 		this.handleVisibilityChange();
+		window.addEventListener('beforeunload', () => {
+			visibility.removeListener(this.handleVisibilityChange);
+		});
 
 		const configLanguage = () => {
 			const { config: { settings: { language } = {} } = {} } = this.props;
