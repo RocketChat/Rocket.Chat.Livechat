@@ -35,7 +35,8 @@ const doPlaySound = async(message) => {
 };
 
 export const initRoom = async() => {
-	const { room, config: { settings: showConnecting } } = store.state;
+	const { state } = store;
+	const { room, config: { settings: { showConnecting } } = {} } = state;
 
 	if (!room) {
 		return;
@@ -43,7 +44,7 @@ export const initRoom = async() => {
 
 	Livechat.unsubscribeAll();
 
-	const { token, agent, room: { _id: rid, servedBy } } = store.state;
+	const { token, agent, room: { _id: rid, servedBy } } = state;
 	Livechat.subscribeRoom(rid);
 
 	let roomAgent = agent;
@@ -53,7 +54,6 @@ export const initRoom = async() => {
 			store.setState({ roomAgent });
 			await store.setState({ agent: roomAgent });
 		}
-
 		const connecting = !!(!roomAgent && showConnecting);
 		store.setState({ connecting });
 	}
