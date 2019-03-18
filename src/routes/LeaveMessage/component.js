@@ -14,12 +14,14 @@ export default class LeaveMessage extends Component {
 	state = {
 		name: { value: '' },
 		email: { value: '' },
+		department: null,
 		message: { value: '' },
 	}
 
 	validations = {
 		name: [Validations.nonEmpty],
 		email: [Validations.nonEmpty, Validations.email],
+		department: [],
 		message: [Validations.nonEmpty],
 	}
 
@@ -47,6 +49,8 @@ export default class LeaveMessage extends Component {
 
 	handleEmailChange = this.handleFieldChange('email')
 
+	handleDepartmentChange = this.handleFieldChange('department')
+
 	handleMessageChange = this.handleFieldChange('message')
 
 	handleSubmit = (event) => {
@@ -63,10 +67,22 @@ export default class LeaveMessage extends Component {
 
 	constructor(props) {
 		super(props);
+
+		const { hasDepartmentField, departments } = props;
+
+		if (hasDepartmentField && departments) {
+
+			if (departments.length > 0) {
+				this.state.department = { value: '' };
+			} else {
+				this.state.department = null;
+			}
+		}
+
 		this.validateAll();
 	}
 
-	renderForm = ({ loading, valid = this.isValid() }, { name, email, message }) => (
+	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }) => (
 		<Form onSubmit={this.handleSubmit}>
 			{name && (
 				<Form.Item>
@@ -100,6 +116,25 @@ export default class LeaveMessage extends Component {
 					/>
 					<Form.Description error={email.showError}>
 						{email.showError && email.error}
+					</Form.Description>
+				</Form.Item>
+			)}
+
+			{department && (
+				<Form.Item>
+					<Form.Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Form.Label>
+					<Form.SelectInput
+						id="department"
+						name="department"
+						placeholder={I18n.t('Choose an option...')}
+						options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
+						disabled={loading}
+						value={department.value}
+						error={department.showError}
+						onInput={this.handleDepartmentChange}
+					/>
+					<Form.Description error={department.showError}>
+						{department.showError && department.error}
 					</Form.Description>
 				</Form.Item>
 			)}
