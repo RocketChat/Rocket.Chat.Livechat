@@ -14,8 +14,11 @@ export const Button = memo(({
 	stack,
 	small,
 	loading,
+	badge,
+	icon,
 	onClick,
 	className,
+	style = {},
 	children,
 }) => (
 	<button
@@ -23,6 +26,7 @@ export const Button = memo(({
 		disabled={disabled}
 		onClick={onClick}
 		onMouseUp={handleMouseUp}
+		aria-label={icon ? children[0] : null}
 		className={createClassName(styles, 'button', {
 			disabled,
 			outline,
@@ -32,8 +36,11 @@ export const Button = memo(({
 			stack,
 			small,
 			loading,
+			icon: !!icon,
 		}, [className])}
+		style={style}
 	>
-		{children}
+		{badge ? (<span className={createClassName(styles, 'button__badge')}>{badge}</span>) : null}
+		{icon || children}
 	</button>
 ));
