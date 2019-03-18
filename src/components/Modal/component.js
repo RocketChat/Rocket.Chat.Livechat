@@ -1,7 +1,8 @@
 import { Component } from 'preact';
 import styles from './styles';
 import { createClassName } from '../helpers';
-import Button from '../Button';
+import { Button } from '../Button';
+import { ButtonGroup } from '../ButtonGroup';
 
 
 export class Modal extends Component {
@@ -75,10 +76,10 @@ export const ConfirmationModal = ({
 }) => (
 	<Modal open animated dismissByOverlay={false} {...props}>
 		<Modal.Message>{text}</Modal.Message>
-		<Button.Group>
+		<ButtonGroup>
 			<Button outline secondary onClick={onCancel}>{cancelButtonText}</Button>
 			<Button danger onClick={onConfirm}>{confirmButtonText}</Button>
-		</Button.Group>
+		</ButtonGroup>
 	</Modal>
 );
 
@@ -86,9 +87,9 @@ export const ConfirmationModal = ({
 export const AlertModal = ({ text, buttonText = I18n.t('OK'), onConfirm, ...props }) => (
 	<Modal open animated dismissByOverlay={false} {...props}>
 		<Modal.Message>{text}</Modal.Message>
-		<Button.Group>
+		<ButtonGroup>
 			<Button secondary onClick={onConfirm}>{buttonText}</Button>
-		</Button.Group>
+		</ButtonGroup>
 	</Modal>
 );
 

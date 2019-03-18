@@ -1,5 +1,5 @@
 import { Component } from 'preact';
-import Button from '../../components/Button';
+import { Button } from '../../components/Button';
 import Form, { Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';

@@ -12,7 +12,8 @@ import {
 	PasswordInput,
 	SelectInput,
 } from '.';
-import Button, { Group } from '../Button';
+import { Button } from '../Button';
+import { ButtonGroup } from '../ButtonGroup';
 
 
 storiesOf('Forms|TextInput', module)
@@ -551,11 +552,11 @@ storiesOf('Forms|Buttons', module)
 				{!inline && error && <Error>{error}</Error>}
 			</Item>
 			<Item inline={inline}>
-				<Group>
+				<ButtonGroup>
 					<Button small={small} onClick={action('click a')}>{buttonTextA}</Button>
 					<Button danger small={small} onClick={action('click b')}>{buttonTextB}</Button>
 					<Button danger outline stack small={small} onClick={action('click c')}>{buttonTextC}</Button>
-				</Group>
+				</ButtonGroup>
 			</Item>
 		</Form>
 	))

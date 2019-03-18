@@ -2,7 +2,7 @@ import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import Tooltip, { withTooltip } from '.';
-import Button from '../Button';
+import { Button } from '../Button';
 
 const tooltipText = 'A simple tool tip';
 const tooltipHidden = false;
