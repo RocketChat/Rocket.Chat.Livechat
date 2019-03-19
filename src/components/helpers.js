@@ -109,7 +109,7 @@ export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }
 
 export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command'];
 
-export const renderMessage = (message = {}) => (!msgTypesNotRendered.includes(message.t));
+export const canRenderMessage = (message = {}) => (!msgTypesNotRendered.includes(message.t));
 
 export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
 	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url || attachment.title_link;

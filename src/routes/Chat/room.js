@@ -1,7 +1,7 @@
 import { Livechat } from '../../api';
 import { store } from '../../store';
 import { route } from 'preact-router';
-import { setCookies, upsert, renderMessage } from '../../components/helpers';
+import { setCookies, upsert, canRenderMessage } from '../../components/helpers';
 import Commands from '../../lib/commands';
 import { loadConfig, processUnread } from '../../lib/main';
 import { parentCall } from '../../lib/parentCall';
@@ -99,7 +99,7 @@ Livechat.onMessage(async(message) => {
 
 	await processMessage(message);
 
-	if (renderMessage(message) !== true) {
+	if (canRenderMessage(message) !== true) {
 		return;
 	}
 

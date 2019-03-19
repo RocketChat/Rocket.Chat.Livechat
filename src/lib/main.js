@@ -2,7 +2,7 @@ import format from 'date-fns/format';
 import { Livechat } from '../api';
 import store from '../store';
 import constants from '../lib/constants';
-import { renderMessage } from '../components/helpers';
+import { canRenderMessage } from '../components/helpers';
 
 export const loadConfig = async() => {
 	const {
@@ -38,7 +38,7 @@ export const processUnread = async() => {
 	const { minimized, visible, messages } = store.state;
 	if (minimized || !visible) {
 		const { alerts, lastReadMessageId } = store.state;
-		const renderedMessages = messages.filter((message) => renderMessage(message));
+		const renderedMessages = messages.filter((message) => canRenderMessage(message));
 		const lastReadMessageIndex = renderedMessages.findIndex((item) => item._id === lastReadMessageId);
 		const unreadMessages = renderedMessages.slice(lastReadMessageIndex + 1);
 
