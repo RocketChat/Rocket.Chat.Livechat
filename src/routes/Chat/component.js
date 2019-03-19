@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 import Composer, { Action, Actions } from '../../components/Composer';
-import FilesDropTarget from '../../components/FilesDropTarget';
+import { FilesDropTarget } from '../../components/FilesDropTarget';
 import Footer from '../../components/Footer';
 import Menu from '../../components/Menu';
 import Messages from '../../components/Messages';
