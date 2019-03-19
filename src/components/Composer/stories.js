@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import Smile from 'icons/smile';
 import Plus from 'icons/plus';
 import Send from 'icons/send';
-import Composer, { Actions, Action } from '.';
+import { Composer, ComposerActions, ComposerAction } from '.';
 
 
 storiesOf('Components|Composer', module)
@@ -71,21 +71,21 @@ storiesOf('Components|Composer', module)
 			onSubmit={action('submit')}
 			onUpload={action('upload')}
 			pre={
-				<Actions>
-					<Action text="Add emoji" onClick={action('click smile')}>
+				<ComposerActions>
+					<ComposerAction text="Add emoji" onClick={action('click smile')}>
 						<Smile width="20" />
-					</Action>
-					<Action text="Send" onClick={action('click send')}>
+					</ComposerAction>
+					<ComposerAction text="Send" onClick={action('click send')}>
 						<Send color="#1D74F5" width="20" />
-					</Action>
-				</Actions>
+					</ComposerAction>
+				</ComposerActions>
 			}
 			post={
-				<Actions>
-					<Action text="Add attachment" onClick={action('click plus')}>
+				<ComposerActions>
+					<ComposerAction text="Add attachment" onClick={action('click plus')}>
 						<Plus width="20" />
-					</Action>
-				</Actions>
+					</ComposerAction>
+				</ComposerActions>
 			}
 		/>
 	))

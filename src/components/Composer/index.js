@@ -9,11 +9,11 @@ const handleActionClick = (onClick) => (event) => {
 	onClick && onClick(event);
 };
 
-export const Actions = ({ children, ...props }) => (
+export const ComposerActions = ({ children, ...props }) => (
 	<div className={createClassName(styles, 'composer__actions')} {...props}>{children}</div>
 );
 
-export const Action = ({ children, text, onClick, ...props }) => (
+export const ComposerAction = ({ children, text, onClick, ...props }) => (
 	<button
 		{...props}
 		className={createClassName(styles, 'composer__action')}
@@ -203,5 +203,3 @@ export class Composer extends Component {
 		);
 	 }
 }
-
-export default Composer;

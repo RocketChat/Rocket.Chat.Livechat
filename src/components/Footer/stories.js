@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import Composer from '../Composer';
+import { Composer } from '../Composer';
 import Menu from '../Menu';
 import { PopoverContainer } from '../Popover';
 import ChangeIcon from '../../icons/change.svg';

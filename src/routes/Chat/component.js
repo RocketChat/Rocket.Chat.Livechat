@@ -1,5 +1,5 @@
 import { Component } from 'preact';
-import Composer, { Action, Actions } from '../../components/Composer';
+import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import Footer from '../../components/Footer';
 import Menu from '../../components/Menu';
@@ -189,25 +189,25 @@ export default class Chat extends Component {
 						placeholder={I18n.t('Type your message here')}
 						value={text}
 						pre={emoji && (
-							<Actions>
-								<Action>
+							<ComposerActions>
+								<ComposerAction>
 									<EmojiIcon width={20} />
-								</Action>
-							</Actions>
+								</ComposerAction>
+							</ComposerActions>
 						)}
 						post={(
-							<Actions>
+							<ComposerActions>
 								{text.length === 0 && uploads && (
-									<Action onClick={this.handleUploadClick}>
+									<ComposerAction onClick={this.handleUploadClick}>
 										<PlusIcon width={20} />
-									</Action>
+									</ComposerAction>
 								)}
 								{text.length > 0 && (
-									<Action onClick={this.handleSendClick}>
+									<ComposerAction onClick={this.handleSendClick}>
 										<SendIcon width={20} />
-									</Action>
+									</ComposerAction>
 								)}
-							</Actions>
+							</ComposerActions>
 						)}
 					/>
 				</Screen.Footer>
