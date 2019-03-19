@@ -1,7 +1,7 @@
 import { Component } from 'preact';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
-import Footer from '../../components/Footer';
+import { FooterOptions } from '../../components/Footer';
 import Menu from '../../components/Menu';
 import Messages from '../../components/Messages';
 import Screen from '../../components/Screen';
@@ -14,6 +14,7 @@ import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
 import { FileUploadInput } from '../../components/Form/inputs';
+
 
 const toBottom = (el) => el.scrollTop = el.scrollHeight;
 
@@ -167,7 +168,7 @@ export default class Chat extends Component {
 				</Screen.Content>
 				<Screen.Footer
 					options={options ? (
-						<Footer.Options>
+						<FooterOptions>
 							<Menu.Group>
 								{onChangeDepartment && (
 									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
@@ -179,7 +180,7 @@ export default class Chat extends Component {
 									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
 								)}
 							</Menu.Group>
-						</Footer.Options>
+						</FooterOptions>
 					) : null}
 				>
 					<Composer onUpload={onUpload}

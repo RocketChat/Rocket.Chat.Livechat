@@ -3,7 +3,7 @@ import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
 import Header from '../Header';
-import Footer from '../Footer';
+import { Footer, FooterContent, PoweredBy } from '../Footer';
 import { PopoverContainer } from '../Popover';
 import { Sound } from '../Sound';
 import Tooltip from '../Tooltip';
@@ -119,14 +119,14 @@ export const ScreenContent = ({ children, nopadding }) => (
 export const ScreenFooter = ({ children, options }) => (
 	<Footer>
 		{children && (
-			<Footer.Content>
+			<FooterContent>
 				{children}
-			</Footer.Content>
+			</FooterContent>
 		)}
-		<Footer.Content>
+		<FooterContent>
 			{options}
-			<Footer.PoweredBy />
-		</Footer.Content>
+			<PoweredBy />
+		</FooterContent>
 	</Footer>
 );
 

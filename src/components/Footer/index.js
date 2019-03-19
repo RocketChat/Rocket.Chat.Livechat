@@ -11,7 +11,7 @@ export const Footer = ({ children, className, ...props }) => (
 );
 
 
-export const Content = ({ children, className, ...props }) => (
+export const FooterContent = ({ children, className, ...props }) => (
 	<div className={createClassName(styles, 'footer__content', {}, [className])} {...props}>
 		{children}
 	</div>
@@ -38,16 +38,8 @@ const OptionsTrigger = ({ pop }) => (
 );
 
 
-export const Options = ({ children }) => (
+export const FooterOptions = ({ children }) => (
 	<PopoverMenu trigger={OptionsTrigger} overlayed>
 		{children}
 	</PopoverMenu>
 );
-
-
-Footer.Content = Content;
-Footer.PoweredBy = PoweredBy;
-Footer.Options = Options;
-
-
-export default Footer;
