@@ -7,9 +7,6 @@ $modal-border-radius: 2 * $default-border-radius;
 $modal-shadow: 0 7px 16px 0 rgba(0, 0, 0, 0.1);
 $modal-background-color: $bg-color-white;
 
-$modal-overlay-background-color: rgba(12, 13, 15, 0.2);
-
-
 :global(.is-blurred) {
 	filter: blur(2px);
 }
@@ -20,7 +17,7 @@ $modal-overlay-background-color: rgba(12, 13, 15, 0.2);
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: $modal-overlay-background-color;
+	background-color: $overlay-bg-color;
 	z-index: 10;
 }
 
