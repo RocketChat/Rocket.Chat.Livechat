@@ -106,7 +106,7 @@ export default class SwitchDepartment extends Component {
 							</Description>
 						</FormItem>
 						<FormItem>
-							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
+							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
 							<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{I18n.t('Cancel')}</Button>
 						</FormItem>
 					</Form>

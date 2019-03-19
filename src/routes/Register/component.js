@@ -181,7 +181,7 @@ export default class Register extends Component {
 						)}
 
 						<FormItem style={{ 'margin-bottom': '0' }}>
-							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
+							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
 						</FormItem>
 					</Form>
 				</Screen.Content>

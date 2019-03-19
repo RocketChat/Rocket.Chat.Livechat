@@ -155,7 +155,7 @@ export default class LeaveMessage extends Component {
 			)}
 
 			<FormItem>
-				<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
+				<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
 			</FormItem>
 		</Form>
 	)
