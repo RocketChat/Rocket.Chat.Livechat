@@ -1,25 +1,28 @@
+import mem from 'mem';
 import { Component } from 'preact';
 import { createClassName } from '../helpers';
-import { parse } from './parsing';
 import styles from './styles';
 
 
-const handleActionClick = (onClick) => (event) => {
-	event.preventDefault();
-	onClick && onClick(event);
+const escapeMap = {
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+	'"': '&quot;',
+	'\'': '&#x27;',
+	'`': '&#x60;',
 };
 
-export const ComposerActions = ({ children, ...props }) => (
-	<div className={createClassName(styles, 'composer__actions')} {...props}>{children}</div>
+const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
+
+const escapeHtml = mem(
+	(string) => string.replace(escapeRegex, (match) => escapeMap[match])
 );
 
-export const ComposerAction = ({ children, text, onClick, ...props }) => (
-	<button
-		{...props}
-		className={createClassName(styles, 'composer__action')}
-		aria-label={text}
-		onClick={handleActionClick(onClick)}
-	>{children}</button>
+const parse = (plainText) => (
+	[{ plain: plainText }]
+		.map(({ plain, html }) => (plain ? escapeHtml(plain) : (html || '')))
+		.join('')
 );
 
 const findLastTextNode = (node) => {
@@ -55,7 +58,7 @@ const replaceCaret = (el) => {
 };
 
 export class Composer extends Component {
-	bind = (el) => {
+	handleRef = (el) => {
 		this.el = el;
 	}
 
@@ -173,33 +176,34 @@ export class Composer extends Component {
 		replaceCaret(el);
 	}
 
-	render({ pre, post, placeholder, value, connecting, onChange, onSubmit, onUpload, ...args }) {
-		if (connecting) {
-			return (
-				<div className={createClassName(styles, 'composer')} {...args}>
-					<div data-placeholder={I18n.t('Connecting to an agent...')}
-						className={createClassName(styles, 'composer__input', { connecting })}
-					/>
-				</div>
-			);
-		}
-		return (
-			<div className={createClassName(styles, 'composer')} {...args}>
-				{pre}
-				<div
-					ref={this.bind}
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: parse(value) }}
-					data-placeholder={placeholder}
-					onInput={this.handleInput(onChange)}
-					onKeypress={this.handleKeypress(onSubmit)}
-					onPaste={this.handlePaste(onUpload)}
-					onDrop={this.handleDrop(onUpload)}
-					className={createClassName(styles, 'composer__input')}
-					contentEditable
-				/>
-				{post}
-			</div>
-		);
-	 }
+	render = ({ connecting, pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
+		<div className={createClassName(styles, 'composer', { connecting }, [className])} style={style}>
+			{connecting ? null : pre}
+			<div
+				ref={this.handleRef}
+				{...(
+					connecting ?
+						{
+							'data-placeholder': I18n.t('Connecting to an agent...'),
+						} :
+						{
+							dangerouslySetInnerHTML: {
+								__html: parse(value),
+							},
+							contentEditable: true,
+							'data-placeholder': placeholder,
+							onInput: this.handleInput(onChange),
+							onKeypress: this.handleKeypress(onSubmit),
+							onPaste: this.handlePaste(onUpload),
+							onDrop: this.handleDrop(onUpload),
+						}
+				)}
+				className={createClassName(styles, 'composer__input')}
+			/>
+			{connecting ? null : post}
+		</div>
+	)
 }
+
+export { ComposerAction } from './ComposerAction';
+export { ComposerActions } from './ComposerActions';
