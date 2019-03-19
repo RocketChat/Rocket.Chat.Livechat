@@ -25,7 +25,7 @@ export class Form extends Component {
 	}
 }
 
-export const Item = ({ children, inline, ...args }) => (
+export const FormItem = ({ children, inline, ...args }) => (
 	<div className={createClassName(styles, 'form__item', { inline })} {...args}>
 		{children}
 	</div>
@@ -132,7 +132,7 @@ export class InputField extends Component {
 		const { error } = this.state;
 
 		return (
-			<Item inline={inline}>
+			<FormItem inline={inline}>
 				{this.renderLabel({ error, ...args })}
 				{this.renderInput({
 					type,
@@ -143,33 +143,21 @@ export class InputField extends Component {
 					...args,
 				})}
 				{this.renderDescription({ error, ...args })}
-			</Item>
+			</FormItem>
 		);
 	}
 }
 
 
 export {
-	TextInput as Input,
 	TextInput,
 	PasswordInput,
 	SelectInput,
 	FileUploadInput,
 };
 
-Form.Item = Item;
-Form.Label = Label;
-Form.Description = Description;
-
-Form.TextInput = TextInput;
-Form.PasswordInput = PasswordInput;
-Form.SelectInput = SelectInput;
-Form.FileUploadInput = FileUploadInput;
-
 export const Validations = {
 	nonEmpty: (value) => (!value ? 'Field required' : undefined),
 
 	email: (value) => (!/^\S+@\S+\.\S+/.test(String(value).toLowerCase()) ? 'Invalid email' : null),
 };
-
-export default Form;

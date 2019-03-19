@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 import { Button } from '../../components/Button';
-import Form, { Validations } from '../../components/Form';
+import { Form, FormItem, Label, Description, SelectInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles';
@@ -87,11 +87,11 @@ export default class SwitchDepartment extends Component {
 					<p className={createClassName(styles, 'switch-department__message')}>{message || defaultMessage}</p>
 
 					<Form onSubmit={this.handleSubmit}>
-						<Form.Item>
-							<Form.Label error={department && department.showError} htmlFor="department">
+						<FormItem>
+							<Label error={department && department.showError} htmlFor="department">
 								{I18n.t('Departments')}
-							</Form.Label>
-							<Form.SelectInput
+							</Label>
+							<SelectInput
 								id="department"
 								name="department"
 								placeholder={I18n.t('Choose a department...')}
@@ -101,14 +101,14 @@ export default class SwitchDepartment extends Component {
 								error={department && department.showError}
 								onInput={this.handleDepartmentChange}
 							/>
-							<Form.Description error={department && department.showError}>
+							<Description error={department && department.showError}>
 								{department && department.showError && department.error}
-							</Form.Description>
-						</Form.Item>
-						<Form.Item>
+							</Description>
+						</FormItem>
+						<FormItem>
 							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
 							<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{I18n.t('Cancel')}</Button>
-						</Form.Item>
+						</FormItem>
 					</Form>
 				</Screen.Content>
 				<Screen.Footer />

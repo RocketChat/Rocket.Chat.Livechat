@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 import { Button } from '../../components/Button';
-import Form, { Validations } from '../../components/Form';
+import { Form, FormItem, Label, Description, TextInput, SelectInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import styles from './styles';
@@ -126,9 +126,9 @@ export default class Register extends Component {
 
 					<Form onSubmit={this.handleSubmit}>
 						{name && (
-							<Form.Item>
-								<Form.Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Form.Label>
-								<Form.TextInput
+							<FormItem>
+								<Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Label>
+								<TextInput
 									id="name"
 									name="name"
 									placeholder={I18n.t('Insert your name here...')}
@@ -137,16 +137,16 @@ export default class Register extends Component {
 									error={name.showError}
 									onInput={this.handleNameChange}
 								/>
-								<Form.Description error={name.showError}>
+								<Description error={name.showError}>
 									{name.showError && name.error}
-								</Form.Description>
-							</Form.Item>
+								</Description>
+							</FormItem>
 						)}
 
 						{email && (
-							<Form.Item>
-								<Form.Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Form.Label>
-								<Form.TextInput
+							<FormItem>
+								<Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Label>
+								<TextInput
 									id="email"
 									name="email"
 									placeholder={I18n.t('Insert your email here...')}
@@ -155,16 +155,16 @@ export default class Register extends Component {
 									error={email.showError}
 									onInput={this.handleEmailChange}
 								/>
-								<Form.Description error={email.showError}>
+								<Description error={email.showError}>
 									{email.showError && email.error}
-								</Form.Description>
-							</Form.Item>
+								</Description>
+							</FormItem>
 						)}
 
 						{department && (
-							<Form.Item>
-								<Form.Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Form.Label>
-								<Form.SelectInput
+							<FormItem>
+								<Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Label>
+								<SelectInput
 									id="department"
 									name="department"
 									placeholder={I18n.t('Choose an option...')}
@@ -174,15 +174,15 @@ export default class Register extends Component {
 									error={department.showError}
 									onInput={this.handleDepartmentChange}
 								/>
-								<Form.Description error={department.showError}>
+								<Description error={department.showError}>
 									{department.showError && department.error}
-								</Form.Description>
-							</Form.Item>
+								</Description>
+							</FormItem>
 						)}
 
-						<Form.Item style={{ 'margin-bottom': '0' }}>
+						<FormItem style={{ 'margin-bottom': '0' }}>
 							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
-						</Form.Item>
+						</FormItem>
 					</Form>
 				</Screen.Content>
 				<Screen.Footer />

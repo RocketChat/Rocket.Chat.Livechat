@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 import { Button } from '../../components/Button';
-import Form, { Validations } from '../../components/Form';
+import { Form, FormItem, Label, Description, TextInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import styles from './styles';
@@ -85,9 +85,9 @@ export default class LeaveMessage extends Component {
 	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }) => (
 		<Form onSubmit={this.handleSubmit}>
 			{name && (
-				<Form.Item>
-					<Form.Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Form.Label>
-					<Form.TextInput
+				<FormItem>
+					<Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Label>
+					<TextInput
 						name="name"
 						placeholder={I18n.t('Insert your name here...')}
 						disabled={loading}
@@ -95,16 +95,16 @@ export default class LeaveMessage extends Component {
 						error={name.showError}
 						onInput={this.handleNameChange}
 					/>
-					<Form.Description error={name.showError}>
+					<Description error={name.showError}>
 						{name.showError && name.error}
-					</Form.Description>
-				</Form.Item>
+					</Description>
+				</FormItem>
 			)}
 
 			{email && (
-				<Form.Item>
-					<Form.Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Form.Label>
-					<Form.TextInput
+				<FormItem>
+					<Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Label>
+					<TextInput
 						name="email"
 						placeholder={I18n.t('Insert your email here...')}
 						disabled={loading}
@@ -112,10 +112,10 @@ export default class LeaveMessage extends Component {
 						error={email.showError}
 						onInput={this.handleEmailChange}
 					/>
-					<Form.Description error={email.showError}>
+					<Description error={email.showError}>
 						{email.showError && email.error}
-					</Form.Description>
-				</Form.Item>
+					</Description>
+				</FormItem>
 			)}
 
 			{department && (
@@ -137,9 +137,9 @@ export default class LeaveMessage extends Component {
 			)}
 
 			{message && (
-				<Form.Item>
-					<Form.Label error={message.showError} htmlFor="message">{I18n.t('Message')} *</Form.Label>
-					<Form.TextInput
+				<FormItem>
+					<Label error={message.showError} htmlFor="message">{I18n.t('Message')} *</Label>
+					<TextInput
 						name="message"
 						placeholder={I18n.t('Write your message...')}
 						multiple={4}
@@ -148,15 +148,15 @@ export default class LeaveMessage extends Component {
 						error={message.showError}
 						onInput={this.handleMessageChange}
 					/>
-					<Form.Description error={message.showError}>
+					<Description error={message.showError}>
 						{message.showError && message.error}
-					</Form.Description>
-				</Form.Item>
+					</Description>
+				</FormItem>
 			)}
 
-			<Form.Item>
+			<FormItem>
 				<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
-			</Form.Item>
+			</FormItem>
 		</Form>
 	)
 
