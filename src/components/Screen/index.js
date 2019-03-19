@@ -5,7 +5,7 @@ import { Button } from '../Button';
 import Header from '../Header';
 import Footer from '../Footer';
 import { PopoverContainer } from '../Popover';
-import Sound from '../Sound';
+import { Sound } from '../Sound';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
