@@ -2,7 +2,7 @@ import format from 'date-fns/format';
 import { Livechat } from '../api';
 import store from '../store';
 import constants from '../lib/constants';
-
+import { renderMessage } from '../components/helpers';
 
 export const loadConfig = async() => {
 	const {
@@ -38,11 +38,12 @@ export const processUnread = async() => {
 	const { minimized, visible, messages } = store.state;
 	if (minimized || !visible) {
 		const { alerts, lastReadMessageId } = store.state;
-		const lastReadMessageIndex = messages.findIndex((item) => item._id === lastReadMessageId);
-		const unreadMessages = messages.slice(lastReadMessageIndex + 1);
+		const renderedMessages = messages.filter((message) => renderMessage(message));
+		const lastReadMessageIndex = renderedMessages.findIndex((item) => item._id === lastReadMessageId);
+		const unreadMessages = renderedMessages.slice(lastReadMessageIndex + 1);
 
 		if (lastReadMessageIndex !== -1) {
-			const lastReadMessage = messages[lastReadMessageIndex];
+			const lastReadMessage = renderedMessages[lastReadMessageIndex];
 			const alertMessage = I18n.t({
 				one: 'One new message since %{since}',
 				other: '%{count} new messages since %{since}',

@@ -1,7 +1,7 @@
 import { Livechat } from '../../api';
 import { store } from '../../store';
 import { route } from 'preact-router';
-import { setCookies, upsert } from '../../components/helpers';
+import { setCookies, upsert, renderMessage } from '../../components/helpers';
 import Commands from '../../lib/commands';
 import { loadConfig, processUnread } from '../../lib/main';
 import { parentCall } from '../../lib/parentCall';
@@ -96,7 +96,13 @@ Livechat.onMessage(async(message) => {
 	await store.setState({
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
+
 	await processMessage(message);
+
+	if (renderMessage(message) !== true) {
+		return;
+	}
+
 	await processUnread();
 	await doPlaySound(message);
 });
