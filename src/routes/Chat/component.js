@@ -13,14 +13,13 @@ import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
-import { FileUploadInput } from '../../components/Form/inputs';
 
 
 const toBottom = (el) => el.scrollTop = el.scrollHeight;
 
 export default class Chat extends Component {
-	handleInputFileUploadRef = (ref) => {
-		this.inputFileUploadRef = ref;
+	handleFilesDropTargetRef = (ref) => {
+		this.filesDropTarget = ref;
 	}
 
 	handleMessagesContainerRef = (messagesContainer) => {
@@ -57,10 +56,14 @@ export default class Chat extends Component {
 		text: '',
 	}
 
+	handleUploadClick = (event) => {
+		event.preventDefault();
+		this.filesDropTarget.browse();
+	}
+
 	handleSendClick = (event) => {
 		event.preventDefault();
-		const { text } = this.state;
-		this.handleSubmit(text);
+		this.handleSubmit(this.state.text);
 	}
 
 	handleSubmit = (text) => {
@@ -68,23 +71,6 @@ export default class Chat extends Component {
 			this.props.onSubmit(text);
 			this.setState({ text: '' });
 		}
-	}
-
-	handleUploadClick = (event) => {
-		event.preventDefault();
-
-		const { onUpload } = this.props;
-		if (!onUpload) {
-			return;
-		}
-
-		const { input } = this.inputFileUploadRef;
-		input && input.click();
-	}
-
-	handleOnChangeFileUploadInput = () => {
-		const files = [this.inputFileUploadRef.value];
-		return this.props.onUpload && this.props.onUpload(files);
 	}
 
 	handleChangeText = (text) => {
@@ -146,9 +132,13 @@ export default class Chat extends Component {
 			className={createClassName(styles, 'chat')}
 			{...props}
 		>
-			<FilesDropTarget overlayed overlayText={I18n.t('Drop here to upload a file')} onUpload={onUpload}>
+			<FilesDropTarget
+				ref={this.handleFilesDropTargetRef}
+				overlayed
+				overlayText={I18n.t('Drop here to upload a file')}
+				onUpload={onUpload}
+			>
 				<Screen.Content nopadding>
-					<FileUploadInput hidden ref={this.handleInputFileUploadRef} onChange={this.handleOnChangeFileUploadInput} />
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<div
 							ref={this.handleMessagesContainerRef}

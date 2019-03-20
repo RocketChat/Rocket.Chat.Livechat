@@ -46,8 +46,6 @@ export const Validations = {
 	email: (value) => (!/^\S+@\S+\.\S+/.test(String(value).toLowerCase()) ? 'Invalid email' : null),
 };
 
-export { FileUploadInput } from './inputs';
-
 export { TextInput } from './TextInput';
 export { PasswordInput } from './PasswordInput';
 export { SelectInput } from './SelectInput';

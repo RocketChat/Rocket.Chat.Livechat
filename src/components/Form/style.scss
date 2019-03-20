@@ -156,16 +156,3 @@ $form-input-disabled-opacity: $disabled-opacity;
 		color: $form-input-error-color;
 	}
 }
-
-.form__input-file {
-	@include form__input-box;
-
-	&::placeholder {
-		color: $form-input-placeholder-color;
-	}
-
-	&--hidden {
-		display: none;
-	}
-}
-
