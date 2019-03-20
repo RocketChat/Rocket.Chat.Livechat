@@ -88,7 +88,6 @@ export default class LeaveMessage extends Component {
 				<Form.Item>
 					<Form.Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Form.Label>
 					<Form.TextInput
-						id="name"
 						name="name"
 						placeholder={I18n.t('Insert your name here...')}
 						disabled={loading}
@@ -106,7 +105,6 @@ export default class LeaveMessage extends Component {
 				<Form.Item>
 					<Form.Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Form.Label>
 					<Form.TextInput
-						id="email"
 						name="email"
 						placeholder={I18n.t('Insert your email here...')}
 						disabled={loading}
@@ -124,7 +122,6 @@ export default class LeaveMessage extends Component {
 				<Form.Item>
 					<Form.Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Form.Label>
 					<Form.SelectInput
-						id="department"
 						name="department"
 						placeholder={I18n.t('Choose an option...')}
 						options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
@@ -143,7 +140,6 @@ export default class LeaveMessage extends Component {
 				<Form.Item>
 					<Form.Label error={message.showError} htmlFor="message">{I18n.t('Message')} *</Form.Label>
 					<Form.TextInput
-						id="message"
 						name="message"
 						placeholder={I18n.t('Write your message...')}
 						multiple={4}
