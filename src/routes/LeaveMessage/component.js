@@ -14,12 +14,14 @@ export default class LeaveMessage extends Component {
 	state = {
 		name: { value: '' },
 		email: { value: '' },
+		department: null,
 		message: { value: '' },
 	}
 
 	validations = {
 		name: [Validations.nonEmpty],
 		email: [Validations.nonEmpty, Validations.email],
+		department: [],
 		message: [Validations.nonEmpty],
 	}
 
@@ -47,6 +49,8 @@ export default class LeaveMessage extends Component {
 
 	handleEmailChange = this.handleFieldChange('email')
 
+	handleDepartmentChange = this.handleFieldChange('department')
+
 	handleMessageChange = this.handleFieldChange('message')
 
 	handleSubmit = (event) => {
@@ -63,16 +67,27 @@ export default class LeaveMessage extends Component {
 
 	constructor(props) {
 		super(props);
+
+		const { hasDepartmentField, departments } = props;
+
+		if (hasDepartmentField && departments) {
+
+			if (departments.length > 0) {
+				this.state.department = { value: '' };
+			} else {
+				this.state.department = null;
+			}
+		}
+
 		this.validateAll();
 	}
 
-	renderForm = ({ loading, valid = this.isValid() }, { name, email, message }) => (
+	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }) => (
 		<Form onSubmit={this.handleSubmit}>
 			{name && (
 				<Form.Item>
 					<Form.Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Form.Label>
 					<Form.TextInput
-						id="name"
 						name="name"
 						placeholder={I18n.t('Insert your name here...')}
 						disabled={loading}
@@ -90,7 +105,6 @@ export default class LeaveMessage extends Component {
 				<Form.Item>
 					<Form.Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Form.Label>
 					<Form.TextInput
-						id="email"
 						name="email"
 						placeholder={I18n.t('Insert your email here...')}
 						disabled={loading}
@@ -104,11 +118,28 @@ export default class LeaveMessage extends Component {
 				</Form.Item>
 			)}
 
+			{department && (
+				<Form.Item>
+					<Form.Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Form.Label>
+					<Form.SelectInput
+						name="department"
+						placeholder={I18n.t('Choose an option...')}
+						options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
+						disabled={loading}
+						value={department.value}
+						error={department.showError}
+						onInput={this.handleDepartmentChange}
+					/>
+					<Form.Description error={department.showError}>
+						{department.showError && department.error}
+					</Form.Description>
+				</Form.Item>
+			)}
+
 			{message && (
 				<Form.Item>
 					<Form.Label error={message.showError} htmlFor="message">{I18n.t('Message')} *</Form.Label>
 					<Form.TextInput
-						id="message"
 						name="message"
 						placeholder={I18n.t('Write your message...')}
 						multiple={4}

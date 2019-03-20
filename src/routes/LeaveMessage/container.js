@@ -36,6 +36,7 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
 			config: {
+				departments = {},
 				messages: {
 					offlineMessage: message,
 					offlineSuccessMessage: successMessage,
@@ -67,6 +68,8 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 				dispatch={dispatch}
 				alerts={alerts}
 				hasForm={displayOfflineForm}
+				hasDepartmentField={departments && departments.some((dept) => dept.showOnOfflineForm)}
+				departments={departments.filter((dept) => dept.showOnOfflineForm)}
 			/>
 		)}
 	</Consumer>
