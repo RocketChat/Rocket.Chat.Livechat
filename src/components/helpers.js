@@ -21,7 +21,7 @@ export const createClassName = (styles, elementName, modifiers = {}, classes = [
 	...(flatMap(Object.entries(modifiers), ([modifierKey, modifierValue]) => [
 		modifierValue && styles[`${ elementName }--${ modifierKey }`],
 		typeof modifierValue !== 'boolean' && styles[`${ elementName }--${ modifierKey }-${ modifierValue }`],
-	]).filter((className) => !!className)), ...classes].join(' ');
+	]).filter((className) => !!className)), ...classes.filter((className) => !!className)].join(' ');
 
 export async function asyncForEach(array, callback) {
 	for (let index = 0; index < array.length; index++) {

@@ -129,7 +129,6 @@ export default class Register extends Component {
 							<FormItem>
 								<Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Label>
 								<TextInput
-									id="name"
 									name="name"
 									placeholder={I18n.t('Insert your name here...')}
 									disabled={loading}
@@ -147,7 +146,6 @@ export default class Register extends Component {
 							<FormItem>
 								<Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Label>
 								<TextInput
-									id="email"
 									name="email"
 									placeholder={I18n.t('Insert your email here...')}
 									disabled={loading}
@@ -165,7 +163,6 @@ export default class Register extends Component {
 							<FormItem>
 								<Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Label>
 								<SelectInput
-									id="department"
 									name="department"
 									placeholder={I18n.t('Choose an option...')}
 									options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}

@@ -46,11 +46,6 @@ $form-input-line-height: 1.25rem;
 
 $form-input-disabled-opacity: $disabled-opacity;
 
-$form-input-select-arrow-size: $form-input-padding;
-$form-input-select-arrow-padding: $form-input-padding;
-
-$form-input-select-arrow-color: $color-text-light;
-
 .form__item {
 	display: flex;
 	flex-direction: column;
@@ -162,74 +157,15 @@ $form-input-select-arrow-color: $color-text-light;
 	}
 }
 
-.form__input {
-	&-text,
-	&-password,
-	&-file {
-		@include form__input-box;
-
-		&::placeholder {
-			color: $form-input-placeholder-color;
-		}
-	}
-}
-
 .form__input-file {
+	@include form__input-box;
+
+	&::placeholder {
+		color: $form-input-placeholder-color;
+	}
+
 	&--hidden {
 		display: none;
 	}
 }
 
-textarea.form__input-text {
-	resize: none;
-}
-
-.form__input-select {
-	position: relative;
-	display: flex;
-	flex: 1;
-
-	&__select {
-		@include form__input-box;
-
-		flex: 1;
-
-		padding-right: (3 * $form-input-select-arrow-padding + $form-input-select-arrow-size);
-
-		color: $form-input-color;
-
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
-
-		&::-ms-expand {
-			display: none;
-		}
-
-		&--placeholder {
-			color: $form-input-placeholder-color;
-		}
-
-		&--small {
-			padding-right: (3 * $form-input-select-arrow-padding + $form-input-select-arrow-size);
-		}
-	}
-
-	&__option {
-		color: $form-input-color;
-	}
-
-	&__arrow {
-		position: absolute;
-		right: $form-input-select-arrow-padding;
-		top: 50%;
-
-		width: $form-input-select-arrow-size;
-		height: $form-input-select-arrow-size;
-
-		color: $form-input-select-arrow-color;
-
-		transform: translateY(-50%) translateY(2px);
-		pointer-events: none;
-	}
-}

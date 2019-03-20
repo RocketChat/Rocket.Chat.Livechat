@@ -1,0 +1,6 @@
+@import '../style';
+
+
+.form__input-password {
+	@include form__input-box;
+}

@@ -142,7 +142,8 @@ export default class LeaveMessage extends Component {
 					<TextInput
 						name="message"
 						placeholder={I18n.t('Write your message...')}
-						multiple={4}
+						multiline
+						rows={4}
 						disabled={loading}
 						value={message.value}
 						error={message.showError}

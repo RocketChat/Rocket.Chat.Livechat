@@ -1,0 +1,11 @@
+@import '../style';
+
+
+.form__input-text,
+.form__input-textarea {
+	@include form__input-box;
+}
+
+.form__input-textarea {
+	resize: none;
+}

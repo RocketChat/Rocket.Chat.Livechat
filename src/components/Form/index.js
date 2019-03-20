@@ -1,28 +1,23 @@
 import { h, Component } from 'preact';
 import styles from './style';
-import { asyncForEach, createClassName } from '../helpers';
-import {
-	TextInput,
-	PasswordInput,
-	SelectInput,
-	FileUploadInput,
-} from './inputs';
+import { createClassName } from '../helpers';
 
 
 export class Form extends Component {
-	handleSubmit = (event) => {
+	static defaultHandleSubmit = (event) => {
 		event.preventDefault();
 	}
 
-	render() {
-		const { children, ...props } = this.props;
-
-		return (
-			<form noValidate onSubmit={this.handleSubmit} className={createClassName(styles, 'form')} {...props}>
-				{children}
-			</form>
-		);
-	}
+	render = ({ onSubmit, className, style = {}, children }) => (
+		<form
+			noValidate
+			onSubmit={onSubmit || Form.defaultHandleSubmit}
+			className={createClassName(styles, 'form', {}, [className])}
+			style={style}
+		>
+			{children}
+		</form>
+	)
 }
 
 export const FormItem = ({ children, inline, ...args }) => (
@@ -45,119 +40,14 @@ export const Description = ({ children, error, ...args }) => (
 
 export const Error = (props) => <Description error {...props} />;
 
-
-const builtinValidations = {
-	notNull: (value) => {
-		if (!value) {
-			throw 'Field required';
-		}
-	},
-
-	email: (value) => {
-		const re = /^\S+@\S+\.\S+/;
-		if (value && !re.test(String(value).toLowerCase())) {
-			throw 'Invalid email';
-		}
-	},
-};
-
-export class InputField extends Component {
-	handleChange = (onChange) => (event) => {
-		onChange && onChange(event);
-		this.validateAndChangeState();
-	}
-
-	validateAndChangeState = async() => {
-		try {
-			await this.validate(true);
-			this.setState({ error: false });
-		} catch (error) {
-			this.setState({ error });
-		}
-	}
-
-	validate = async(rethrowErrors = false) => {
-		const { base: { value } } = this.el;
-
-		const validations = this.props.validations || [];
-		if (this.props.required && ![].includes(builtinValidations.notNull)) {
-			validations.push(builtinValidations.notNull);
-		}
-
-		try {
-			await asyncForEach(validations, (validation) => {
-				if (typeof validation === 'string') {
-					return builtinValidations[validation](value);
-				}
-
-				validation(value);
-			});
-
-			return true;
-		} catch (error) {
-			if (rethrowErrors) {
-				throw error;
-			}
-
-			return false;
-		}
-	}
-
-	get value() {
-		const { base: { value } } = this.el;
-		return value;
-	}
-
-	state = {
-		error: false,
-	}
-
-	renderLabel = ({ label, required, error }) => (
-		label && <Label error={!!error}>{label}{required && ' *'}</Label>
-	)
-
-	renderInput = ({ type, error, ...args }) => h({
-		text: TextInput,
-		password: PasswordInput,
-		select: SelectInput,
-		file: FileUploadInput,
-	}[type], { error: !!error, ...args });
-
-	renderDescription = ({ description, error }) => (
-		(error || description) && <Description error={!!error}>{error || description}</Description>
-	)
-
-	render() {
-		const { type = 'text', name, onChange, inline, ...args } = this.props;
-		const { error } = this.state;
-
-		return (
-			<FormItem inline={inline}>
-				{this.renderLabel({ error, ...args })}
-				{this.renderInput({
-					type,
-					name,
-					ref: (el) => this.el = el,
-					error,
-					onChange: this.handleChange(onChange),
-					...args,
-				})}
-				{this.renderDescription({ error, ...args })}
-			</FormItem>
-		);
-	}
-}
-
-
-export {
-	TextInput,
-	PasswordInput,
-	SelectInput,
-	FileUploadInput,
-};
-
 export const Validations = {
 	nonEmpty: (value) => (!value ? 'Field required' : undefined),
 
 	email: (value) => (!/^\S+@\S+\.\S+/.test(String(value).toLowerCase()) ? 'Invalid email' : null),
 };
+
+export { FileUploadInput } from './inputs';
+
+export { TextInput } from './TextInput';
+export { PasswordInput } from './PasswordInput';
+export { SelectInput } from './SelectInput';

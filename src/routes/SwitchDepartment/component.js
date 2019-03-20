@@ -92,7 +92,6 @@ export default class SwitchDepartment extends Component {
 								{I18n.t('Departments')}
 							</Label>
 							<SelectInput
-								id="department"
 								name="department"
 								placeholder={I18n.t('Choose a department...')}
 								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
