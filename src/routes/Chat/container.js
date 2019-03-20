@@ -4,7 +4,7 @@ import { Livechat } from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
 import constants from '../../lib/constants';
-import { createToken, debounce, getAvatarUrl, renderMessage, throttle } from '../../components/helpers';
+import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 import { initRoom, closeChat } from './room';
@@ -346,7 +346,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					phone: (agent.phone && agent.phone[0] && agent.phone[0].phoneNumber) || (agent.customFields && agent.customFields.phone),
 				} : undefined}
 				room={room}
-				messages={messages.filter((message) => renderMessage(message))}
+				messages={messages.filter((message) => canRenderMessage(message))}
 				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}
