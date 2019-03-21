@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import { Button } from '../../components/Button';
-import { Form, FormItem, Label, Description, TextInput, Validations } from '../../components/Form';
+import { ButtonGroup } from '../../components/ButtonGroup';
+import { Form, FormField, SelectInput, TextInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import styles from './styles';
@@ -84,80 +85,85 @@ export default class LeaveMessage extends Component {
 
 	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }) => (
 		<Form onSubmit={this.handleSubmit}>
-			{name && (
-				<FormItem>
-					<Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Label>
-					<TextInput
-						name="name"
-						placeholder={I18n.t('Insert your name here...')}
-						disabled={loading}
-						value={name.value}
-						error={name.showError}
-						onInput={this.handleNameChange}
-					/>
-					<Description error={name.showError}>
-						{name.showError && name.error}
-					</Description>
-				</FormItem>
-			)}
+			{name ?
+				(
+					<FormField
+						required
+						label={I18n.t('Name')}
+						error={name.showError && name.error}
+					>
+						<TextInput
+							name="name"
+							value={name.value}
+							placeholder={I18n.t('Insert your name here...')}
+							disabled={loading}
+							onInput={this.handleNameChange}
+						/>
+					</FormField>
+				) :
+				null}
 
-			{email && (
-				<FormItem>
-					<Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Label>
-					<TextInput
-						name="email"
-						placeholder={I18n.t('Insert your email here...')}
-						disabled={loading}
-						value={email.value}
-						error={email.showError}
-						onInput={this.handleEmailChange}
-					/>
-					<Description error={email.showError}>
-						{email.showError && email.error}
-					</Description>
-				</FormItem>
-			)}
+			{email ?
+				(
+					<FormField
+						required
+						label={I18n.t('Email')}
+						error={email.showError && email.error}
+					>
+						<TextInput
+							name="email"
+							value={email.value}
+							placeholder={I18n.t('Insert your email here...')}
+							disabled={loading}
+							onInput={this.handleEmailChange}
+						/>
+					</FormField>
+				) :
+				null}
 
-			{department && (
-				<Form.Item>
-					<Form.Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Form.Label>
-					<Form.SelectInput
-						name="department"
-						placeholder={I18n.t('Choose an option...')}
-						options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
-						disabled={loading}
-						value={department.value}
-						error={department.showError}
-						onInput={this.handleDepartmentChange}
-					/>
-					<Form.Description error={department.showError}>
-						{department.showError && department.error}
-					</Form.Description>
-				</Form.Item>
-			)}
+			{department ?
+				(
+					<FormField
+						label={I18n.t('I need help with...')}
+						error={department.showError && department.error}
+					>
+						<SelectInput
+							name="department"
+							value={department.value}
+							options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
+							placeholder={I18n.t('Choose an option...')}
+							disabled={loading}
+							error={department.showError}
+							onInput={this.handleDepartmentChange}
+						/>
+					</FormField>
+				) :
+				null}
 
-			{message && (
-				<FormItem>
-					<Label error={message.showError} htmlFor="message">{I18n.t('Message')} *</Label>
-					<TextInput
-						name="message"
-						placeholder={I18n.t('Write your message...')}
-						multiline
-						rows={4}
-						disabled={loading}
-						value={message.value}
-						error={message.showError}
-						onInput={this.handleMessageChange}
-					/>
-					<Description error={message.showError}>
-						{message.showError && message.error}
-					</Description>
-				</FormItem>
-			)}
+			{message ?
+				(
+					<FormField
+						required
+						label={I18n.t('Message')}
+						error={message.showError && message.error}
+					>
+						<TextInput
+							name="message"
+							value={message.value}
+							multiline
+							rows={4}
+							placeholder={I18n.t('Write your message...')}
+							disabled={loading}
+							error={message.showError}
+							onInput={this.handleMessageChange}
+						/>
+					</FormField>
+				) :
+				null}
 
-			<FormItem>
+			<ButtonGroup>
 				<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
-			</FormItem>
+			</ButtonGroup>
 		</Form>
 	)
 

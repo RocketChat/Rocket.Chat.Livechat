@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { Form, FormItem } from '..';
+import { Form, FormField } from '..';
 import { SelectInput } from '.';
 
 
@@ -11,7 +11,7 @@ storiesOf('Forms|SelectInput', module)
 	.addDecorator(withKnobs)
 	.add('empty', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<SelectInput
 					value={text('value', '')}
 					options={object('options', [
@@ -26,12 +26,12 @@ storiesOf('Forms|SelectInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('selected', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<SelectInput
 					value={text('value', '2')}
 					options={object('options', [
@@ -46,12 +46,12 @@ storiesOf('Forms|SelectInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('disabled', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<SelectInput
 					value={text('value', '2')}
 					options={object('options', [
@@ -66,12 +66,12 @@ storiesOf('Forms|SelectInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('small', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<SelectInput
 					value={text('value', '2')}
 					options={object('options', [
@@ -86,12 +86,12 @@ storiesOf('Forms|SelectInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
-	.add('error', () => (
+	.add('with error', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<SelectInput
 					value={text('value', '2')}
 					options={object('options', [
@@ -106,7 +106,7 @@ storiesOf('Forms|SelectInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 ;

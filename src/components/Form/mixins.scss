@@ -1,33 +1,11 @@
-@import '~styles/colors';
 @import '~styles/variables';
+@import '~styles/colors';
 
-
-$form-item-margin-bottom: $default-gap;
-$form-item-inline-margin-left: $default-gap;
-
-$form-label-margin: ($default-gap / 3) 0;
-
-$form-label-color: $color-text-dark;
-$form-label-error-color: $color-red;
-
-$form-label-font-size: 0.75rem;
-$form-label-font-weight: 600;
-$form-label-line-height: 1rem;
-
-$form-description-margin: ($default-gap / 2) 0 0;
-
-$form-description-color: $color-text-grey;
-$form-description-error-color: $color-red;
-
-$form-description-font-size: 0.75rem;
-$form-description-font-weight: 500;
-$form-description-line-height: 1rem;
 
 $form-input-border-width: $default-border;
 $form-input-border-radius: $default-border-radius;
 $form-input-padding: (0.75 * $default-gap - $default-border);
 $form-input-small-padding: (0.25 * $default-gap - $default-border / 2) (0.75 * $default-gap - $default-border);
-
 $form-input-color: $color-text-dark;
 $form-input-placeholder-color: $color-text-light;
 $form-input-background-color: $bg-color-white;
@@ -38,78 +16,15 @@ $form-input-disabled-background-color: $bg-color-grey;
 $form-input-disabled-color: $color-text-light;
 $form-input-error-color: $color-red;
 $form-input-error-border-color: $color-red;
-
 $form-input-font-family: $font-family;
 $form-input-font-size: 0.875rem;
 $form-input-font-weight: 500;
 $form-input-line-height: 1.25rem;
-
 $form-input-disabled-opacity: $disabled-opacity;
 
-.form__item {
-	display: flex;
-	flex-direction: column;
-
-	width: 100%;
-	margin-bottom: $form-item-margin-bottom;
-
-	&--inline {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: flex-end;
-		align-items: center;
-
-		.form__label {
-			flex: 1 25%;
-		}
-
-		.form__label + .form__input {
-			flex: 3 75%;
-		}
-
-		.form__description {
-			flex: 0 75%;
-		}
-	}
-}
-
-.form__label {
-	margin: $form-label-margin;
-
-	color: $form-label-color;
-
-	font-size: $form-label-font-size;
-	font-weight: $form-label-font-weight;
-	text-align: left;
-	letter-spacing: 0;
-	line-height: $form-label-line-height;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-
-	transition: color $default-time-animation;
-
-	&--error {
-		color: $form-label-error-color;
-	}
-}
-
-.form__description {
-	margin: $form-description-margin;
-
-	color: $form-description-color;
-
-	font-size: $form-description-font-size;
-	font-weight: $form-description-font-weight;
-	line-height: $form-description-line-height;
-
-	transition: color $default-time-animation;
-
-	&--error {
-		color: $form-description-error-color;
-	}
-}
-
 @mixin form__input-box {
+	flex: 1 1 auto;
+
 	border: $form-input-border-width solid $form-input-border-color;
 	border-radius: $form-input-border-radius;
 	padding: $form-input-padding;

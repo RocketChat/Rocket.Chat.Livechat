@@ -1,11 +1,11 @@
-@import '../style';
+@import '../mixins';
 
 
 $form-input-select-arrow-size: $form-input-padding;
 $form-input-select-arrow-padding: $form-input-padding;
 $form-input-select-arrow-color: $color-text-light;
 
-.form__input-select {
+.select-input {
 	position: relative;
 	display: flex;
 	flex: 1;

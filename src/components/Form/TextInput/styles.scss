@@ -1,11 +1,10 @@
-@import '../style';
+@import '../mixins';
 
 
-.form__input-text,
-.form__input-textarea {
+.text-input {
 	@include form__input-box;
-}
 
-.form__input-textarea {
-	resize: none;
+	&--multiple {
+		resize: none;
+	}
 }

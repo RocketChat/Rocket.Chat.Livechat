@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { Form, FormItem } from '..';
+import { Form, FormField } from '..';
 import { PasswordInput } from '.';
 
 
@@ -11,7 +11,7 @@ storiesOf('Forms|PasswordInput', module)
 	.addDecorator(withKnobs)
 	.add('default', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<PasswordInput
 					value={text('value', '')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -21,12 +21,12 @@ storiesOf('Forms|PasswordInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('filled', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<PasswordInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -36,12 +36,12 @@ storiesOf('Forms|PasswordInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('disabled', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<PasswordInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -51,12 +51,12 @@ storiesOf('Forms|PasswordInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('small', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<PasswordInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -66,12 +66,12 @@ storiesOf('Forms|PasswordInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('with error', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<PasswordInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -81,7 +81,7 @@ storiesOf('Forms|PasswordInput', module)
 					onChange={action('change')}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 ;

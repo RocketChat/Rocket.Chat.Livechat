@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 import { Button } from '../../components/Button';
-import { Form, FormItem } from '../../components/Form';
+import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles';
@@ -33,11 +33,9 @@ export default class ChatFinished extends Component {
 				<p className={createClassName(styles, 'chat-finished__greeting')}>{greeting || defaultGreeting}</p>
 				<p className={createClassName(styles, 'chat-finished__message')}>{message || defaultMessage}</p>
 
-				<Form>
-					<FormItem>
-						<Button onClick={this.handleClick} stack>{ I18n.t('New Chat') }</Button>
-					</FormItem>
-				</Form>
+				<ButtonGroup>
+					<Button onClick={this.handleClick} stack>{ I18n.t('New Chat') }</Button>
+				</ButtonGroup>
 			</Screen.Content>
 			<Screen.Footer />
 		</Screen>

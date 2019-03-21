@@ -22,7 +22,7 @@ export const PasswordInput = memo(({
 		disabled={disabled}
 		onChange={onChange}
 		onInput={onInput}
-		className={createClassName(styles, 'form__input-password', { disabled, error, small }, [className])}
+		className={createClassName(styles, 'password-input', { disabled, error, small }, [className])}
 		style={style}
 	/>
 ));

@@ -1,6 +1,13 @@
 import { Component } from 'preact';
 import { Button } from '../../components/Button';
-import { Form, FormItem, Label, Description, TextInput, SelectInput, Validations } from '../../components/Form';
+import { ButtonGroup } from '../../components/ButtonGroup';
+import {
+	Form,
+	FormField,
+	TextInput,
+	SelectInput,
+	Validations,
+} from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import styles from './styles';
@@ -125,61 +132,63 @@ export default class Register extends Component {
 					<p className={createClassName(styles, 'register__message')}>{message || defaultMessage}</p>
 
 					<Form onSubmit={this.handleSubmit}>
-						{name && (
-							<FormItem>
-								<Label error={name.showError} htmlFor="name">{I18n.t('Name')} *</Label>
-								<TextInput
-									name="name"
-									placeholder={I18n.t('Insert your name here...')}
-									disabled={loading}
-									value={name.value}
-									error={name.showError}
-									onInput={this.handleNameChange}
-								/>
-								<Description error={name.showError}>
-									{name.showError && name.error}
-								</Description>
-							</FormItem>
-						)}
+						{name ?
+							(
+								<FormField
+									required
+									label={I18n.t('Name')}
+									error={name.showError && name.error}
+								>
+									<TextInput
+										name="name"
+										value={name.value}
+										placeholder={I18n.t('Insert your name here...')}
+										disabled={loading}
+										onInput={this.handleNameChange}
+									/>
+								</FormField>
+							) :
+							null}
 
-						{email && (
-							<FormItem>
-								<Label error={email.showError} htmlFor="email">{I18n.t('Email')} *</Label>
-								<TextInput
-									name="email"
-									placeholder={I18n.t('Insert your email here...')}
-									disabled={loading}
-									value={email.value}
-									error={email.showError}
-									onInput={this.handleEmailChange}
-								/>
-								<Description error={email.showError}>
-									{email.showError && email.error}
-								</Description>
-							</FormItem>
-						)}
+						{email ?
+							(
+								<FormField
+									required
+									label={I18n.t('Email')}
+									error={email.showError && email.error}
+								>
+									<TextInput
+										name="email"
+										value={email.value}
+										placeholder={I18n.t('Insert your email here...')}
+										disabled={loading}
+										onInput={this.handleEmailChange}
+									/>
+								</FormField>
+							) :
+							null}
 
-						{department && (
-							<FormItem>
-								<Label error={department.showError} htmlFor="department">{I18n.t('I need help with...')}</Label>
-								<SelectInput
-									name="department"
-									placeholder={I18n.t('Choose an option...')}
-									options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
-									disabled={loading}
-									value={department.value}
-									error={department.showError}
-									onInput={this.handleDepartmentChange}
-								/>
-								<Description error={department.showError}>
-									{department.showError && department.error}
-								</Description>
-							</FormItem>
-						)}
+						{department ?
+							(
+								<FormField
+									label={I18n.t('I need help with...')}
+									error={department.showError && department.error}
+								>
+									<SelectInput
+										name="department"
+										value={department.value}
+										options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
+										placeholder={I18n.t('Choose an option...')}
+										disabled={loading}
+										onInput={this.handleDepartmentChange}
+									/>
+								</FormField>
+							) :
+							null}
 
-						<FormItem style={{ 'margin-bottom': '0' }}>
+						<ButtonGroup>
 							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
-						</FormItem>
+						</ButtonGroup>
 					</Form>
 				</Screen.Content>
 				<Screen.Footer />

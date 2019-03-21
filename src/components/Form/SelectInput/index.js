@@ -28,8 +28,9 @@ export class SelectInput extends Component {
 	}
 
 	render = ({
-		options = [],
+		name,
 		placeholder,
+		options = [],
 		disabled,
 		small,
 		error,
@@ -38,15 +39,16 @@ export class SelectInput extends Component {
 		style = {},
 	}) => (
 		<div
-			className={createClassName(styles, 'form__input-select', {}, [className])}
+			className={createClassName(styles, 'select-input', {}, [className])}
 			style={style}
 		>
 			<select
+				name={name}
 				value={this.state.value}
 				disabled={disabled}
 				onChange={this.handleChange}
 				onInput={onInput}
-				className={createClassName(styles, 'form__input-select__select', {
+				className={createClassName(styles, 'select-input__select', {
 					disabled,
 					error,
 					small,
@@ -55,10 +57,10 @@ export class SelectInput extends Component {
 			>
 				<option value="" disabled hidden>{placeholder}</option>
 				{Array.from(options).map(({ value, label }, key) => (
-					<option key={key} value={value} className={createClassName(styles, 'form__input-select__option')}>{label}</option>
+					<option key={key} value={value} className={createClassName(styles, 'select-input__option')}>{label}</option>
 				))}
 			</select>
-			<ArrowIcon className={createClassName(styles, 'form__input-select__arrow')} />
+			<ArrowIcon className={createClassName(styles, 'select-input__arrow')} />
 		</div>
 	)
 }

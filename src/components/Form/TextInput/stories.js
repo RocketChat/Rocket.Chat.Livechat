@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { Form, FormItem } from '..';
+import { Form, FormField } from '..';
 import { TextInput } from '.';
 
 
@@ -11,7 +11,7 @@ storiesOf('Forms|TextInput', module)
 	.addDecorator(withKnobs)
 	.add('empty', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<TextInput
 					value={text('value', '')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -22,12 +22,12 @@ storiesOf('Forms|TextInput', module)
 					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('filled', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<TextInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -38,12 +38,12 @@ storiesOf('Forms|TextInput', module)
 					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('disabled', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<TextInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -54,12 +54,12 @@ storiesOf('Forms|TextInput', module)
 					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('small', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<TextInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -70,12 +70,12 @@ storiesOf('Forms|TextInput', module)
 					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('multine', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<TextInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -86,12 +86,12 @@ storiesOf('Forms|TextInput', module)
 					error={boolean('error', false)}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 	.add('with error', () => (
 		<Form>
-			<FormItem>
+			<FormField>
 				<TextInput
 					value={text('value', 'Value')}
 					placeholder={text('placeholder', 'Placeholder')}
@@ -102,7 +102,7 @@ storiesOf('Forms|TextInput', module)
 					error={boolean('error', true)}
 					onInput={action('input')}
 				/>
-			</FormItem>
+			</FormField>
 		</Form>
 	))
 ;

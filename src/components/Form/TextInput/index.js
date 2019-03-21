@@ -26,7 +26,7 @@ export const TextInput = memo(({
 				disabled={disabled}
 				onChange={onChange}
 				onInput={onInput}
-				className={createClassName(styles, 'form__input-textarea', { disabled, error, small }, [className])}
+				className={createClassName(styles, 'text-input', { disabled, error, small, multiline }, [className])}
 				style={style}
 			/>
 		) :
@@ -39,7 +39,7 @@ export const TextInput = memo(({
 				disabled={disabled}
 				onChange={onChange}
 				onInput={onInput}
-				className={createClassName(styles, 'form__input-text', { disabled, error, small }, [className])}
+				className={createClassName(styles, 'text-input', { disabled, error, small }, [className])}
 				style={style}
 			/>
 		)

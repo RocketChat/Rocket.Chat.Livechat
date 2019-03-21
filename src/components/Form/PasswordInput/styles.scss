@@ -1,6 +1,6 @@
-@import '../style';
+@import '../mixins';
 
 
-.form__input-password {
+.password-input {
 	@include form__input-box;
 }
