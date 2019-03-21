@@ -1,13 +1,9 @@
-import loremIpsum from 'lorem-ipsum';
-import mem from 'mem';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { screenCentered } from '../../helpers.stories';
+import { screenCentered, memedIpsum } from '../../helpers.stories';
 import { Alert } from '.';
 
-
-const memedIpsum = mem(loremIpsum);
 
 storiesOf('Components|Alert', module)
 	.addDecorator(withKnobs)

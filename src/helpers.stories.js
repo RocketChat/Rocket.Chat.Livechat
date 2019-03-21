@@ -1,3 +1,5 @@
+import loremIpsum from 'lorem-ipsum';
+import mem from 'mem';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { boolean, color } from '@storybook/addon-knobs';
@@ -30,3 +32,5 @@ export const avatarResolver = (username) => ({
 	'guilherme.gazzo': '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
 	'martin.schoeler': '//gravatar.com/avatar/e6662ba16ba3ca2a76857e3999e6d960?s=32',
 })[username];
+
+export const memedIpsum = mem(loremIpsum);
