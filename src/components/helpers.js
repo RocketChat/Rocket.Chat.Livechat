@@ -170,20 +170,12 @@ export const memo = (component) => class MemoizedComponent extends Component {
 		const { props } = this;
 
 		for (const key in props) {
-			if (key === 'children') {
-				continue;
-			}
-
 			if (props[key] !== nextProps[key]) {
 				return true;
 			}
 		}
 
 		for (const key in nextProps) {
-			if (key === 'children') {
-				continue;
-			}
-
 			if (!(key in props)) {
 				return true;
 			}
