@@ -116,6 +116,13 @@ export const getAttachmentsUrl = (attachments) => attachments && attachments.map
 	return { ...attachment, attachment_url: `${ Livechat.client.host }${ assetUrl }` };
 });
 
+export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) => {
+	if (a[column] < b[column] && !inverted) {
+		return -1;
+	}
+	return 1;
+});
+
 export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));
 
 

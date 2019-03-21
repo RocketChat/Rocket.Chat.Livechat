@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import Button from '../../components/Button';
 import Form, { Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
-import { createClassName } from '../../components/helpers';
+import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import styles from './styles';
 
 
@@ -124,7 +124,7 @@ export default class LeaveMessage extends Component {
 					<Form.SelectInput
 						name="department"
 						placeholder={I18n.t('Choose an option...')}
-						options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
+						options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
 						disabled={loading}
 						value={department.value}
 						error={department.showError}
