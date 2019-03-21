@@ -165,7 +165,7 @@ export const visibility = (() => {
 })();
 
 
-export const memo = (component) => class MemoizedComponent extends Component {
+export class MemoizedComponent extends Component {
 	shouldComponentUpdate(nextProps) {
 		const { props } = this;
 
@@ -183,8 +183,10 @@ export const memo = (component) => class MemoizedComponent extends Component {
 
 		return false;
 	}
+}
 
-	render(props) {
-		return h(component, props);
+export const memo = (component) => (
+	class extends MemoizedComponent {
+		render = component
 	}
-};
+);
