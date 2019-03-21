@@ -16,6 +16,13 @@ addParameters({
 		hierarchySeparator: /\//,
 		hierarchyRootSeparator: /\|/,
 	},
+	backgrounds: [
+		{
+			name: 'white',
+			value: 'white',
+			default: true,
+		},
+	],
 });
 
 addDecorator(withA11y);
