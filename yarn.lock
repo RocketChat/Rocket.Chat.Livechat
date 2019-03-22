@@ -1451,12 +1451,6 @@
     global "^4.3.2"
     util-deprecate "^1.0.2"
 
-"@storybook/addon-console@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-console/-/addon-console-1.1.0.tgz#ef063fa122a7aa03ac54067a1d6a72d717b41c73"
-  dependencies:
-    global "^4.3.2"
-
 "@storybook/addon-knobs@^5.0.1":
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-5.0.5.tgz#965d3afc86bd2373ad4514529ec0f4e590c7db45"
