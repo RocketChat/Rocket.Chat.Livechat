@@ -1,0 +1,32 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+
+$message-bubble-padding: 3px;
+$message-bubble-background-color: $bg-color-light;
+$message-bubble-color: $color-text-dark;
+$message-bubble-border-radius: $default-border-radius;
+$message-bubble-link-color: $color-blue;
+$message-bubble-me-background-color: $color-blue;
+$message-bubble-me-color: $color-text-lighter;
+$message-bubble-me-link-color: $color-text-lighter;
+
+.message-bubble {
+	padding: $message-bubble-padding;
+	background-color: $message-bubble-background-color;
+	color: $message-bubble-color;
+	border-radius: $message-bubble-border-radius;
+
+	a {
+		color: var(--color, $message-bubble-link-color);
+	}
+
+	&--inverse {
+		background-color: var(--color, $message-bubble-me-background-color);
+		color: var(--font-color, $message-bubble-me-color);
+
+		a {
+			color: var(--font-color, $message-bubble-me-link-color);
+		}
+	}
+}

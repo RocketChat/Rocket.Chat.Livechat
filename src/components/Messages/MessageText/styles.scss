@@ -1,0 +1,41 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+
+$message-text-padding: 9px;
+$message-text-font-size: 0.875rem;
+$message-text-quote-border-width: 3px;
+$message-text-quote-border-color: $color-green;
+
+.message-text {
+	padding: $message-text-padding;
+	font-size: $message-text-font-size;
+	word-break: break-all;
+
+	a {
+		text-decoration: underline dotted;
+
+		&:hover,
+		&:focus {
+			text-decoration-style: solid;
+		}
+	}
+
+	h1, h2, h3, h4, h5, h6,
+	p {
+		padding: 0;
+		margin: 0;
+	}
+
+	&--quote {
+		border-left: $message-text-quote-border-width solid $message-text-quote-border-color;
+	}
+
+	&--system {
+		font-style: italic;
+
+		em {
+			font-style: normal;
+		}
+	}
+}

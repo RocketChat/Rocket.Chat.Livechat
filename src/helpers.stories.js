@@ -33,4 +33,6 @@ export const avatarResolver = (username) => ({
 	'martin.schoeler': '//gravatar.com/avatar/e6662ba16ba3ca2a76857e3999e6d960?s=32',
 })[username];
 
+export const attachmentResolver = (url) => url;
+
 export const memedIpsum = mem(loremIpsum);

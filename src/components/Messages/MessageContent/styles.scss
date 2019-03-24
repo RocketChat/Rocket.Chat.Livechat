@@ -1,0 +1,17 @@
+@import '~styles/variables';
+
+
+$message-content-gap: ($default-gap / 2);
+$message-content-margin: (-$message-content-gap / 2) ($default-gap / 2);
+
+.message-content {
+	grid-area: content;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin: $message-content-margin;
+
+	> * {
+		margin: ($message-content-gap / 2) 0;
+	}
+}

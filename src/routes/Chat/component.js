@@ -2,10 +2,10 @@ import { Component } from 'preact';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions } from '../../components/Footer';
-import Menu from '../../components/Menu';
-import Messages from '../../components/Messages';
-import Screen from '../../components/Screen';
-import { debounce, createClassName } from '../../components/helpers';
+import { Menu } from '../../components/Menu';
+import { MessageList } from '../../components/Messages';
+import { Screen } from '../../components/Screen';
+import { createClassName } from '../../components/helpers';
 import styles from './styles';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
@@ -15,45 +15,36 @@ import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
 
 
-const toBottom = (el) => el.scrollTop = el.scrollHeight;
-
 export default class Chat extends Component {
+
+	state = {
+		atBottom: true,
+		text: '',
+	}
+
 	handleFilesDropTargetRef = (ref) => {
 		this.filesDropTarget = ref;
 	}
 
 	handleMessagesContainerRef = (messagesContainer) => {
-		this.messagesContainer = messagesContainer;
+		this.messagesContainer = messagesContainer ? messagesContainer.base : null;
 	}
 
-	handleScroll = debounce(() => {
-		if (!this.messagesContainer) {
-			// component was unmounted
+	handleScrollTo = (region) => {
+		const { onTop, onBottom } = this.props;
+
+		if (region === MessageList.SCROLL_AT_BOTTOM) {
+			this.setState({ atBottom: true });
+			onBottom && onBottom();
 			return;
 		}
 
-		const { clientHeight, scrollTop, scrollHeight } = this.messagesContainer;
-		const atTop = scrollTop === 0;
-		const atBottom = scrollHeight - scrollTop === clientHeight;
+		this.setState({ atBottom: false });
 
-		if (this.state.atBottom !== atBottom) {
-			this.setState({ atBottom });
+		if (region === MessageList.SCROLL_AT_TOP) {
+			onTop && onTop();
+			return;
 		}
-
-		const { onTop, onBottom } = this.props;
-
-		if (atTop && onTop) {
-			return onTop();
-		}
-
-		if (atBottom && onBottom) {
-			return onBottom();
-		}
-	}, 100)
-
-	state = {
-		atBottom: true,
-		text: '',
 	}
 
 	handleUploadClick = (event) => {
@@ -77,16 +68,6 @@ export default class Chat extends Component {
 		this.setState({ text });
 		const { onChangeText } = this.props;
 		onChangeText && onChangeText(text);
-	}
-
-	componentDidMount() {
-		toBottom(this.messagesContainer);
-	}
-
-	componentDidUpdate() {
-		if (this.state.atBottom) {
-			toBottom(this.messagesContainer);
-		}
 	}
 
 	render = ({
@@ -140,20 +121,16 @@ export default class Chat extends Component {
 			>
 				<Screen.Content nopadding>
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
-						<div
+						<MessageList
 							ref={this.handleMessagesContainerRef}
-							onScroll={this.handleScroll}
-							className={createClassName(styles, 'chat__wrapper')}
-						>
-							<Messages
-								avatarResolver={avatarResolver}
-								uid={uid}
-								messages={messages}
-								typingUsernames={typingUsernames}
-								conversationFinishedMessage={conversationFinishedMessage}
-								lastReadMessageId={lastReadMessageId}
-							/>
-						</div>
+							avatarResolver={avatarResolver}
+							uid={uid}
+							messages={messages}
+							typingUsernames={typingUsernames}
+							conversationFinishedMessage={conversationFinishedMessage}
+							lastReadMessageId={lastReadMessageId}
+							onScrollTo={this.handleScrollTo}
+						/>
 					</div>
 				</Screen.Content>
 				<Screen.Footer

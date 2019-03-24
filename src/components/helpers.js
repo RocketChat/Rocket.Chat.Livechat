@@ -111,10 +111,7 @@ export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_
 
 export const canRenderMessage = (message = {}) => (!msgTypesNotRendered.includes(message.t));
 
-export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
-	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url || attachment.title_link;
-	return { ...attachment, attachment_url: `${ Livechat.client.host }${ assetUrl }` };
-});
+export const getAttachmentUrl = (url) => `${ Livechat.client.host }${ url }`;
 
 export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) => {
 	if (a[column] < b[column] && !inverted) {
