@@ -89,8 +89,6 @@ Livechat.onTyping((username, isTyping) => {
 });
 
 Livechat.onMessage(async(message) => {
-	console.log(message);
-
 	if (message.ts instanceof Date) {
 		message.ts = message.ts.toISOString();
 	}
