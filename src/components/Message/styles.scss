@@ -32,6 +32,8 @@ $message-attachment-download-color: $color-text-light;
 $message-attachment-download-highlight-color: $color-blue;
 $message-attachment-gap: 8px;
 $message-attachment-background-border-color: $color-green;
+$message-attachment-replied-background-color: $bg-color-light;
+$message-attachment-content-margin: 6px;
 
 .message {
 	display: flex;
@@ -149,17 +151,15 @@ $message-attachment-background-border-color: $color-green;
 			width: 3px;
 			border-radius: 2px;
 			background-color: $message-attachment-background-border-color;
-			top: 0px;
-			left: 0px;
-			bottom: 0px;
+			top: 3px;
+			left: 3px;
+			bottom: 3px;
 			position: absolute;
 		}
 
-		&--resource {
-			padding-left: 3px;
-			font-size: unset;
+		&--replied {
+			background-color: $message-attachment-replied-background-color;
 		}
-
 	}
 
 	&--me {

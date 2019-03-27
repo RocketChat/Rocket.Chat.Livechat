@@ -10,8 +10,8 @@ import DownloadIcon from '../../icons/download.svg';
 import styles from './styles';
 import { parseMessage } from './parsers';
 
-export const AttachmentContent = ({ children, replied, resource }) => (
-	<div className={createClassName(styles, 'message__attachment', { resource })}>
+export const AttachmentContent = ({ children, replied }) => (
+	<div className={createClassName(styles, 'message__attachment', { replied })}>
 		{replied && <div className={createClassName(styles, 'message__attachment-block-border')} />}
 		{children}
 	</div>
@@ -57,12 +57,11 @@ const Attachment = ({ attachment, replied }) => {
 	} = attachment;
 
 	replied = replied || messageLink !== undefined;
-	const resource = replied && (audioUrl || videoUrl || imageUrl);
 
 	if (audioUrl) {
 		return (
-			<AttachmentContent replied={replied} resource={resource}>
-				<audio src={attachmentUrl} className={createClassName(styles, 'message__attachment')} controls>
+			<AttachmentContent replied={replied}>
+				<audio src={attachmentUrl} className={createClassName(styles, 'message__attachment--audio')} controls>
 					{I18n.t('You browser doesn\'t support audio element')}
 				</audio>
 			</AttachmentContent>
@@ -71,7 +70,7 @@ const Attachment = ({ attachment, replied }) => {
 
 	if (videoUrl) {
 		return (
-			<AttachmentContent replied={replied} resource={resource}>
+			<AttachmentContent replied={replied}>
 				<video
 					src={attachmentUrl}
 					className={createClassName(styles, 'message__attachment--video')}
@@ -85,7 +84,7 @@ const Attachment = ({ attachment, replied }) => {
 
 	if (imageUrl) {
 		return (
-			<AttachmentContent replied={replied} resource={resource}>
+			<AttachmentContent replied={replied}>
 				<img
 					className={createClassName(styles, 'message__attachment--image')}
 					src={attachmentUrl}
@@ -97,7 +96,7 @@ const Attachment = ({ attachment, replied }) => {
 	if (text) {
 		const message = { msg: text };
 		return (
-			<AttachmentContent replied={replied} resource={resource}>
+			<AttachmentContent replied={replied}>
 				<div
 					className={createClassName(styles, 'message__text')}
 					// eslint-disable-next-line react/no-danger
@@ -112,7 +111,7 @@ const Attachment = ({ attachment, replied }) => {
 	}
 
 	return (
-		<AttachmentContent replied={replied} resource={resource}>
+		<AttachmentContent replied={replied}>
 			<a
 				className={createClassName(styles, 'message__attachment--no-preview')}
 				href={attachmentUrl}
