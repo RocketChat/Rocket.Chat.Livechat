@@ -1,18 +1,24 @@
 import { createClassName, memo } from '../../helpers';
+import { MessageBubble } from '../MessageBubble';
 import styles from './styles';
 
 
 export const AudioAttachment = memo(({
 	url,
 	className,
-	style = {},
+	...messageBubbleProps
 }) => (
-	<audio
-		src={url}
-		controls
+	<MessageBubble
+		nude
 		className={createClassName(styles, 'audio-attachment', {}, [className])}
-		style={style}
+		{...messageBubbleProps}
 	>
-		{I18n.t('You browser doesn\'t support audio element')}
-	</audio>
+		<audio
+			src={url}
+			controls
+			className={createClassName(styles, 'audio-attachment__inner')}
+		>
+			{I18n.t('You browser doesn\'t support audio element')}
+		</audio>
+	</MessageBubble>
 ));

@@ -1,28 +1,28 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { Separator } from '.';
+import { MessageSeparator } from '.';
 
 
 const now = new Date();
 
-storiesOf('Messages|Separator', module)
+storiesOf('Messages|MessageSeparator', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (
-		<Separator
+		<MessageSeparator
 			date={date('date', null)}
 			unread={boolean('unread', false)}
 		/>
 	))
 	.add('date', () => (
-		<Separator
+		<MessageSeparator
 			date={date('date', now)}
 			unread={boolean('unread', false)}
 		/>
 	))
 	.add('unread', () => (
-		<Separator
+		<MessageSeparator
 			date={date('date', null)}
 			unread={boolean('unread', true)}
 		/>

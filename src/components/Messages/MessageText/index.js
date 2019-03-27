@@ -5,7 +5,6 @@ import styles from './styles';
 
 export const MessageText = memo(({
 	text,
-	quote,
 	system,
 	className,
 	style = {},
@@ -13,7 +12,7 @@ export const MessageText = memo(({
 	<div
 		// eslint-disable-next-line react/no-danger
 		dangerouslySetInnerHTML={{ __html: renderMarkdown(text) }}
-		className={createClassName(styles, 'message-text', { quote, system }, [className])}
+		className={createClassName(styles, 'message-text', { system }, [className])}
 		style={style}
 	/>
 ));

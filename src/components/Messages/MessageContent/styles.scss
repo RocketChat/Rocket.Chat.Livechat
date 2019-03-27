@@ -14,4 +14,8 @@ $message-content-margin: (-$message-content-gap / 2) ($default-gap / 2);
 	> * {
 		margin: ($message-content-gap / 2) 0;
 	}
+
+	&--reverse {
+		align-items: flex-end;
+	}
 }

@@ -20,28 +20,43 @@ import {
 } from '../constants';
 
 
-const renderAttachment = ({
-	attachmentResolver = getAttachmentUrl,
-	attachment,
-}) => (
-	(attachment.audio_url &&
-		<AudioAttachment
-			url={attachmentResolver(attachment.audio_url)}
-		/>) ||
-	(attachment.video_url &&
-		<VideoAttachment
-			url={attachmentResolver(attachment.video_url)}
-		/>) ||
-	(attachment.image_url &&
-		<ImageAttachment
-			url={attachmentResolver(attachment.image_url)}
-		/>) ||
-	(attachment.title_link &&
-		<FileAttachment
-			url={attachmentResolver(attachment.title_link)}
-			title={attachment.title}
-		/>)
-);
+const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver }) => ([
+	...(attachments || [])
+		.map((attachment) => (
+			(attachment.audio_url &&
+				<AudioAttachment
+					quoted={quoted}
+					url={attachmentResolver(attachment.audio_url)}
+				/>) ||
+			(attachment.video_url &&
+				<VideoAttachment
+					quoted={quoted}
+					url={attachmentResolver(attachment.video_url)}
+				/>) ||
+			(attachment.image_url &&
+				<ImageAttachment
+					quoted={quoted}
+					url={attachmentResolver(attachment.image_url)}
+				/>) ||
+			(attachment.title_link &&
+				<FileAttachment
+					quoted={quoted}
+					url={attachmentResolver(attachment.title_link)}
+					title={attachment.title}
+				/>) ||
+			(attachment.message_link && renderContent({
+				text: attachment.text,
+				quoted: true,
+				attachments: attachment.attachments,
+				attachmentResolver,
+			}))
+		)),
+	(text && (
+		<MessageBubble inverse={me} quoted={quoted}>
+			<MessageText text={text} system={system} />
+		</MessageBubble>
+	)),
+].filter(Boolean));
 
 const getSystemMessageText = ({ t, conversationFinishedMessage }) => (
 	(t === MESSAGE_TYPE_ROOM_NAME_CHANGED && I18n.t('Room name changed')) ||
@@ -76,16 +91,14 @@ export const Message = memo(({
 			avatarResolver={avatarResolver}
 			usernames={compact ? [] : (message.u && [message.u.username])}
 		/>
-		<MessageContent>
-			{(message.attachments || [])
-				.filter((attachment) => (attachment.audio_url || attachment.video_url || attachment.image_url || attachment.title_link))
-				.map((attachment) => renderAttachment({ attachment, attachmentResolver }))}
-			<MessageBubble inverse={me}>
-				{(message.attachments || [])
-					.filter((attachment) => attachment.message_link)
-					.map((attachment) => <MessageText quote text={attachment.text} />)}
-				<MessageText text={message.t ? getSystemMessageText(message) : message.msg} system={message.t} />
-			</MessageBubble>
+		<MessageContent reverse={me}>
+			{renderContent({
+				text: message.t ? getSystemMessageText(message) : message.msg,
+				system: !!message.t,
+				me,
+				attachments: message.attachments,
+				attachmentResolver,
+			})}
 		</MessageContent>
 		{!compact && <MessageTime ts={ts} />}
 	</MessageContainer>

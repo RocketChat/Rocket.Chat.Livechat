@@ -9,19 +9,18 @@ export const FileAttachment = memo(({
 	url,
 	title,
 	className,
-	style = {},
+	...messageBubbleProps
 }) => (
 	<MessageBubble
 		className={createClassName(styles, 'file-attachment', {}, [className])}
-		style={style}
+		{...messageBubbleProps}
 	>
 		<a
 			href={url}
 			download
 			target="_blank"
 			rel="noopener noreferrer"
-			className={createClassName(styles, 'file-attachment__inner', {}, [className])}
-			style={style}
+			className={createClassName(styles, 'file-attachment__inner')}
 		>
 			<FileAttachmentIcon url={url} />
 			<span className={createClassName(styles, 'file-attachment__title')}>{title}</span>

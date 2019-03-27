@@ -10,7 +10,7 @@ export { MessageContent } from './MessageContent';
 export { MessageList } from './MessageList';
 export { MessageText } from './MessageText';
 export { MessageTime } from './MessageTime';
-export { Separator } from './Separator';
+export { MessageSeparator } from './MessageSeparator';
 export { TypingDots } from './TypingDots';
 export { TypingIndicator } from './TypingIndicator';
 export { VideoAttachment } from './VideoAttachment';

@@ -1,6 +1,6 @@
 import isSameDay from 'date-fns/is_same_day';
 import { Message } from '../Message';
-import { Separator } from '../Separator';
+import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import styles from './styles';
@@ -106,7 +106,7 @@ export class MessageList extends MemoizedComponent {
 			const showDateSeparator = !previousMessage || !isSameDay(message.ts, previousMessage.ts);
 			if (showDateSeparator) {
 				items.push(
-					<Separator
+					<MessageSeparator
 						key={`sep-${ message.ts }`}
 						use="li"
 						date={message.ts}
@@ -130,7 +130,7 @@ export class MessageList extends MemoizedComponent {
 			const showUnreadSeparator = lastReadMessageId && nextMessage && lastReadMessageId === message._id;
 			if (showUnreadSeparator) {
 				items.push(
-					<Separator
+					<MessageSeparator
 						key="unread"
 						use="li"
 						unread

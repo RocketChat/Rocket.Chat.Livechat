@@ -1,15 +1,11 @@
+import loremIpsum from 'lorem-ipsum';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { memedIpsum } from '../../../helpers.stories';
 import { MessageBubble } from '.';
 
 
-const DummyContent = () => (
-	<div style={{ padding: '9px' }}>
-		{memedIpsum({ count: 1, units: 'sentences' })}
-	</div>
-);
+const text = loremIpsum({ count: 1, units: 'sentences' });
 
 storiesOf('Messages|MessageBubble', module)
 	.addDecorator(centered)
@@ -17,15 +13,37 @@ storiesOf('Messages|MessageBubble', module)
 	.add('default', () => (
 		<MessageBubble
 			inverse={boolean('inverse', false)}
+			nude={boolean('nude', false)}
+			quoted={boolean('quoted', false)}
 		>
-			<DummyContent />
+			{text}
 		</MessageBubble>
 	))
 	.add('inverse', () => (
 		<MessageBubble
 			inverse={boolean('inverse', true)}
+			nude={boolean('nude', false)}
+			quoted={boolean('quoted', false)}
 		>
-			<DummyContent />
+			{text}
+		</MessageBubble>
+	))
+	.add('nude', () => (
+		<MessageBubble
+			inverse={boolean('inverse', false)}
+			nude={boolean('nude', true)}
+			quoted={boolean('quoted', false)}
+		>
+			{text}
+		</MessageBubble>
+	))
+	.add('quoted', () => (
+		<MessageBubble
+			inverse={boolean('inverse', false)}
+			nude={boolean('nude', false)}
+			quoted={boolean('quoted', true)}
+		>
+			{text}
 		</MessageBubble>
 	))
 ;

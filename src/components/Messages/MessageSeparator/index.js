@@ -3,7 +3,7 @@ import { createClassName, memo } from '../../helpers';
 import styles from './styles';
 
 
-export const Separator = memo(({
+export const MessageSeparator = memo(({
 	date,
 	unread,
 	use: Element = 'div',

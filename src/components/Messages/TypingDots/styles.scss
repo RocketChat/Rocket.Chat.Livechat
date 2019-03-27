@@ -3,7 +3,6 @@
 @import '~styles/variables';
 
 
-$typing-dots-margin: 9px;
 $typing-dots-dot-size: 8px;
 $typing-dots-dot-margin: 0 2px;
 $typing-dots-dot-color: $color-text-grey;
@@ -12,7 +11,6 @@ $typing-dots-dot-animation-time: 3 * $default-time-animation;
 $typing-dots-dot-animation-delay-gap: $default-time-animation;
 
 .typing-dots {
-	margin: $typing-dots-margin;
 	text-align: center;
 
 	&__dot {

@@ -1,15 +1,21 @@
 import { createClassName, memo } from '../../helpers';
+import { MessageBubble } from '../MessageBubble';
 import styles from './styles';
 
 
 export const ImageAttachment = memo(({
 	url,
 	className,
-	style = {},
+	...messageBubbleProps
 }) => (
-	<img
-		src={url}
+	<MessageBubble
+		nude
 		className={createClassName(styles, 'image-attachment', {}, [className])}
-		style={style}
-	/>
+		{...messageBubbleProps}
+	>
+		<img
+			src={url}
+			className={createClassName(styles, 'image-attachment__inner')}
+		/>
+	</MessageBubble>
 ));
