@@ -57,6 +57,27 @@ export class MessageList extends MemoizedComponent {
 		}
 	}
 
+	componentWillUpdate() {
+		if (this.scrollPosition === MessageList.SCROLL_AT_TOP) {
+			this.previousScrollHeight = this.base.scrollHeight;
+		}
+	}
+
+	componentDidUpdate() {
+		if (this.scrollPosition === MessageList.SCROLL_AT_BOTTOM) {
+			this.base.scrollTop = this.base.scrollHeight;
+			return;
+		}
+
+		if (this.scrollPosition === MessageList.SCROLL_AT_TOP) {
+			const delta = this.base.scrollHeight - this.previousScrollHeight;
+			if (delta > 0) {
+				this.base.scrollTop = delta;
+			}
+			delete this.previousScrollHeight;
+		}
+	}
+
 	componentDidMount() {
 		this.handleResize();
 		window.addEventListener('resize', this.handleResize);
