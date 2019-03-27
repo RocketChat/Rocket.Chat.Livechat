@@ -31,6 +31,7 @@ $message-attachment-title-margin: 0 8px;
 $message-attachment-download-color: $color-text-light;
 $message-attachment-download-highlight-color: $color-blue;
 $message-attachment-gap: 8px;
+$message-attachment-background-border-color: $color-green;
 
 .message {
 	display: flex;
@@ -105,6 +106,7 @@ $message-attachment-gap: 8px;
 		letter-spacing: 0;
 		line-height: $message-attachment-line-height;
 		text-decoration: none;
+		position: relative;
 
 		&--image,
 		&--video {
@@ -142,6 +144,22 @@ $message-attachment-gap: 8px;
 				color: var(--color, $message-attachment-download-highlight-color);
 			}
 		}
+
+		&-block-border {
+			width: 3px;
+			border-radius: 2px;
+			background-color: $message-attachment-background-border-color;
+			top: 0px;
+			left: 0px;
+			bottom: 0px;
+			position: absolute;
+		}
+
+		&--resource {
+			padding-left: 3px;
+			font-size: unset;
+		}
+
 	}
 
 	&--me {

@@ -16,7 +16,7 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { visibility } from '../helpers';
+import { visibility, createToken } from '../helpers';
 
 export class App extends Component {
 
@@ -161,6 +161,16 @@ export class App extends Component {
 
 		I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
+
+		Livechat.onStreamData('close', () => {
+			const { alerts, dispatch } = this.props;
+			dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('Disconnected'), error: true }), alerts) });
+		});
+
+		Livechat.onStreamData('connected', () => {
+			const { alerts, dispatch } = this.props;
+			dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('Connected'), success: true, timeout: 5000 }), alerts) });
+		});
 	}
 
 	async finalize() {

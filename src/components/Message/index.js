@@ -48,7 +48,7 @@ export function Text({ children, className, ...props }) {
 }
 
 export const Time = ({ ts }) => (
-	<time dateTime={new Date(ts).toISOString()} className={createClassName(styles, 'message__time', {})}>
+	ts && <time dateTime={new Date(ts).toISOString()} className={createClassName(styles, 'message__time', {})}>
 		{parseDate(ts)}
 	</time>
 );
@@ -74,8 +74,8 @@ export const Message = ({
 				className={createClassName(styles, 'message__avatar')}
 			/>
 			<Content>
-				{msg && <Text {...props}>{msg}</Text>}
 				{attachmentsUrl && attachmentsUrl.length && <Attachments attachments={attachmentsUrl} />}
+				{msg && <Text {...props}>{msg}</Text>}
 				<Time ts={ts} />
 			</Content>
 		</Container>
