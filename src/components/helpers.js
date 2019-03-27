@@ -107,13 +107,20 @@ export const createToken = () => (Math.random().toString(36).substring(2, 15) + 
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
-export const msgTypesNotDisplayed = ['livechat_video_call', 'livechat_navigation_history', 'au'];
+export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command'];
 
-export const renderMessage = (message = {}) => (message.t !== 'command' && !msgTypesNotDisplayed.includes(message.t));
+export const canRenderMessage = (message = {}) => (!msgTypesNotRendered.includes(message.t));
 
 export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
 	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url || attachment.title_link;
 	return { ...attachment, attachment_url: `${ Livechat.client.host }${ assetUrl }` };
+});
+
+export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) => {
+	if (a[column] < b[column] && !inverted) {
+		return -1;
+	}
+	return 1;
 });
 
 export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));

@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import Button from '../../components/Button';
 import Form, { Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
-import { createClassName } from '../../components/helpers';
+import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import styles from './styles';
 
 
@@ -168,7 +168,7 @@ export default class Register extends Component {
 									id="department"
 									name="department"
 									placeholder={I18n.t('Choose an option...')}
-									options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
+									options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
 									disabled={loading}
 									value={department.value}
 									error={department.showError}
@@ -180,7 +180,7 @@ export default class Register extends Component {
 							</Form.Item>
 						)}
 
-						<Form.Item>
+						<Form.Item style={{ 'margin-bottom': '0' }}>
 							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
 						</Form.Item>
 					</Form>
