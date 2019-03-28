@@ -29,8 +29,8 @@
 	"devDependencies": {
 		"@storybook/addon-a11y": "5.0.1",
 		"@storybook/addon-actions": "^5.0.1",
+		"@storybook/addon-backgrounds": "^5.0.3",
 		"@storybook/addon-centered": "^5.0.1",
-		"@storybook/addon-console": "^1.1.0",
 		"@storybook/addon-knobs": "^5.0.1",
 		"@storybook/addon-options": "^5.0.1",
 		"@storybook/addon-viewport": "^5.0.1",
@@ -71,6 +71,7 @@
 		"i18n": "^0.8.3",
 		"i18nline": "^2.0.1",
 		"markdown-it": "^8.4.2",
+		"mem": "^4.2.0",
 		"msgpack": "^1.0.2",
 		"preact": "^8.2.6",
 		"preact-context": "^1.1.1",

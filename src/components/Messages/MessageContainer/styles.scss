@@ -1,0 +1,27 @@
+@import '~styles/variables';
+
+
+$message-container-margin: 0 0 $default-padding 0;
+$message-container-compact-margin: 0 0 ($default-padding / 4) 0;
+
+.message-container {
+	margin: $message-container-margin;
+	display: grid;
+	grid-template:
+		"avatars content"
+		".       time" /
+		auto auto;
+	justify-content: start;
+
+	&--compact {
+		margin: $message-container-compact-margin;
+	}
+
+	&--reverse {
+		grid-template:
+			"content avatars"
+			"time    ." /
+			auto auto;
+		justify-content: end;
+	}
+}

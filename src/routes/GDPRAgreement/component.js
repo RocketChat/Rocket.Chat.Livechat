@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import MarkdownIt from 'markdown-it';
-import Button from '../../components/Button';
+import { Button } from '../../components/Button';
+import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles';
@@ -54,9 +55,9 @@ export default class GDPR extends Component {
 					dangerouslySetInnerHTML={{ __html: md.renderInline(instructions || defaultInstructions) }}
 				/>
 
-				<Button.Group>
+				<ButtonGroup>
 					<Button onClick={this.handleClick} stack>{ I18n.t('I Agree') }</Button>
-				</Button.Group>
+				</ButtonGroup>
 			</Screen.Content>
 			<Screen.Footer />
 		</Screen>

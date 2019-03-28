@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 
-export default class Sound extends Component {
+export class Sound extends Component {
 	play = () => {
 		this.audio.play();
 	}

@@ -21,7 +21,7 @@ export const createClassName = (styles, elementName, modifiers = {}, classes = [
 	...(flatMap(Object.entries(modifiers), ([modifierKey, modifierValue]) => [
 		modifierValue && styles[`${ elementName }--${ modifierKey }`],
 		typeof modifierValue !== 'boolean' && styles[`${ elementName }--${ modifierKey }-${ modifierValue }`],
-	]).filter((className) => !!className)), ...classes].join(' ');
+	]).filter((className) => !!className)), ...classes.filter((className) => !!className)].join(' ');
 
 export async function asyncForEach(array, callback) {
 	for (let index = 0; index < array.length; index++) {
@@ -111,10 +111,7 @@ export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_
 
 export const canRenderMessage = (message = {}) => (!msgTypesNotRendered.includes(message.t));
 
-export const getAttachmentsUrl = (attachments) => attachments && attachments.map((attachment) => {
-	const assetUrl = attachment.image_url || attachment.video_url || attachment.audio_url || attachment.title_link;
-	return { ...attachment, attachment_url: `${ Livechat.client.host }${ assetUrl }` };
-});
+export const getAttachmentUrl = (url) => `${ Livechat.client.host }${ url }`;
 
 export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) => {
 	if (a[column] < b[column] && !inverted) {
@@ -165,25 +162,17 @@ export const visibility = (() => {
 })();
 
 
-export const memo = (component) => class MemoizedComponent extends Component {
+export class MemoizedComponent extends Component {
 	shouldComponentUpdate(nextProps) {
 		const { props } = this;
 
 		for (const key in props) {
-			if (key === 'children') {
-				continue;
-			}
-
 			if (props[key] !== nextProps[key]) {
 				return true;
 			}
 		}
 
 		for (const key in nextProps) {
-			if (key === 'children') {
-				continue;
-			}
-
 			if (!(key in props)) {
 				return true;
 			}
@@ -191,8 +180,10 @@ export const memo = (component) => class MemoizedComponent extends Component {
 
 		return false;
 	}
+}
 
-	render(props) {
-		return h(component, props);
+export const memo = (component) => (
+	class extends MemoizedComponent {
+		render = component
 	}
-};
+);

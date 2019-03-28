@@ -3,8 +3,6 @@
 @import '~styles/variables';
 
 
-$button-group-margin: ($default-gap / 4);
-
 $button-border-width: $default-border;
 $button-border-radius: $default-border-radius;
 $button-padding: (0.75 * $default-gap - $default-border) (1.5 * $default-gap - $default-border);
@@ -29,18 +27,16 @@ $button-loading-gap: ($default-gap / 2);
 $button-loading-size: $button-line-height;
 $button-loading-color: #ffffff;
 
-.group {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	flex-wrap: wrap;
-	margin: -$button-group-margin;
+$button-badge-size: 1.5rem;
+$button-badge-background-color: $color-red;
+$button-badge-color: $color-text-lighter;
+$button-badge-font-family: $font-family;
+$button-badge-font-size: 0.8125rem;
+$button-badge-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 
-	.button {
-		margin: $button-group-margin;
-		flex-grow: 1;
-	}
-}
+$button-icon-size: 54px;
+$button-icon-border-radius: 4px;
+$button-icon-padding: 10px;
 
 .button {
 	@mixin state($color, $alpha-color: rgba($color, 0.5)) {
@@ -151,6 +147,38 @@ $button-loading-color: #ffffff;
 				rgba($button-loading-color, 0.5)
 				rgba($button-loading-color, 0.5);
 		}
+	}
+
+	&--icon {
+		width: $button-icon-size;
+		height: $button-icon-size;
+		border-radius: $button-icon-border-radius;
+		padding: $button-icon-padding;
+	}
+
+	&__badge {
+		position: absolute;
+		right: (-$button-badge-size / 3);
+		top: (-$button-badge-size / 3);
+		min-width: $button-badge-size;
+		height: $button-badge-size;
+		padding: 0 ($button-badge-font-size / 2);
+
+		background-color: $button-badge-background-color;
+		box-shadow: $button-badge-shadow;
+		border-radius: ($button-badge-size / 2);
+
+		color: $button-badge-color;
+		font-family: $button-badge-font-family;
+		font-size: $button-badge-font-size;
+		font-weight: bold;
+		letter-spacing: 0;
+		line-height: $button-badge-size;
+		text-align: center;
+	}
+
+	svg {
+		flex: 1;
 	}
 }
 

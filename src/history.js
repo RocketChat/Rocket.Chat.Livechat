@@ -1,5 +1,5 @@
-import createHistory from 'history/createMemoryHistory';
+import { createMemoryHistory } from 'history';
 
-export const history = createHistory();
+export const history = createMemoryHistory();
 
 export default history;

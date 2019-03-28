@@ -1,13 +1,9 @@
-import loremIpsum from 'lorem-ipsum';
-import mem from 'mem';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { memedIpsum } from '../../helpers.stories';
 import Modal from './component';
-
-
-const memedIpsum = mem(loremIpsum);
 
 
 const LoremIpsum = ({ padding = '5rem', count = 5, units = 'paragraphs', ...options }) => (

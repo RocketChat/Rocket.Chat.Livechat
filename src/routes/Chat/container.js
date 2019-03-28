@@ -40,7 +40,7 @@ export class ChatContainer extends Component {
 		const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
 		await dispatch({
 			messages: (moreMessages || []).reverse(),
-			noMoreMessages: messages.length + 10 >= moreMessages.length,
+			noMoreMessages: messages.length + 10 > moreMessages.length,
 		});
 		await dispatch({ loading: false });
 	}

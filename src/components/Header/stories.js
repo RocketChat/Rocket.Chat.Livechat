@@ -2,13 +2,15 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
 import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post, CustomField } from '.';
-import Avatar from '../Avatar';
 import { Alert } from '../Alert';
+import { Avatar } from '../Avatar';
 import Bell from 'icons/bell.svg';
 import Arrow from 'icons/arrowDown.svg';
 import NewWindow from 'icons/newWindow.svg';
-import bertieBartonAvatar from '../Avatar/bertieBarton.png';
+import { avatarResolver } from '../../helpers.stories';
 
+
+const avatarSrc = avatarResolver('guilherme.gazzo');
 
 storiesOf('Components|Header', module)
 	.addDecorator(withKnobs)
@@ -149,13 +151,13 @@ storiesOf('Components|Header', module)
 			}}
 		>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} status={'busy'} />
+				<Avatar src={avatarSrc} status={'busy'} />
 			</Picture>
 
 			<Content>
-				<Title>{text('title', '@bertie.barton')}</Title>
+				<Title>{text('title', '@guilherme.gazzo')}</Title>
 				<SubTitle>
-					{text('subtitle', 'bertie.barton@rocket.chat')}
+					{text('subtitle', 'guilherme.gazzo@rocket.chat')}
 				</SubTitle>
 			</Content>
 
@@ -181,13 +183,13 @@ storiesOf('Components|Header', module)
 			large
 		>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} large status={'away'} />
+				<Avatar src={avatarSrc} large status={'away'} />
 			</Picture>
 
 			<Content>
-				<Title>{text('title', 'Bertie Barton')}</Title>
+				<Title>{text('title', 'Guilherme Gazzo')}</Title>
 				<SubTitle>
-					{text('subtitle', 'bertie.barton@rocket.chat')}
+					{text('subtitle', 'guilherme.gazzo@rocket.chat')}
 				</SubTitle>
 				<CustomField>
 					{text('custom', '+ 55 42423 24242')}
@@ -232,13 +234,13 @@ storiesOf('Components|Header', module)
 			large
 		>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} large status={'online'} />
+				<Avatar src={avatarSrc} large status={'online'} />
 			</Picture>
 
 			<Content>
-				<Title>{text('title', 'Bertie Barton')}</Title>
+				<Title>{text('title', 'Guilherme Gazzo')}</Title>
 				<SubTitle>
-					{text('subtitle', 'bertie.barton@rocket.chat')}
+					{text('subtitle', 'guilherme.gazzo@rocket.chat')}
 				</SubTitle>
 				<CustomField>
 					{text('custom', '+ 55 42423 24242')}
@@ -267,13 +269,13 @@ storiesOf('Components|Header', module)
 			large
 		>
 			<Picture>
-				<Avatar src={bertieBartonAvatar} large status={'away'} />
+				<Avatar src={avatarSrc} large status={'away'} />
 			</Picture>
 
 			<Content>
-				<Title>{text('title', 'Bertie Barton')}</Title>
+				<Title>{text('title', 'Guilherme Gazzo')}</Title>
 				<SubTitle>
-					{text('subtitle', 'bertie.barton@rocket.chat')}
+					{text('subtitle', 'guilherme.gazzo@rocket.chat')}
 				</SubTitle>
 				<CustomField>
 					{text('custom', '+ 55 42423 24242')}

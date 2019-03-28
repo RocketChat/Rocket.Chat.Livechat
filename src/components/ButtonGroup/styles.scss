@@ -1,0 +1,17 @@
+@import '~styles/variables';
+
+
+$button-group-margin: ($default-gap / 4);
+
+.button-group {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: -$button-group-margin;
+
+	&__item {
+		margin: $button-group-margin;
+		flex-grow: 1;
+	}
+}

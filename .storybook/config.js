@@ -1,6 +1,5 @@
 import { addDecorator, configure, addParameters } from '@storybook/react';
 import { withA11y } from '@storybook/addon-a11y';
-import { setConsoleOptions } from '@storybook/addon-console';
 import { withOptions } from '@storybook/addon-options';
 import { create } from '@storybook/theming';
 
@@ -16,13 +15,16 @@ addParameters({
 		hierarchySeparator: /\//,
 		hierarchyRootSeparator: /\|/,
 	},
+	backgrounds: [
+		{
+			name: 'white',
+			value: 'white',
+			default: true,
+		},
+	],
 });
 
 addDecorator(withA11y);
-
-setConsoleOptions({
-	panelExclude: [],
-});
 
 function loadStories() {
 	require('../src/styles/index.scss');
