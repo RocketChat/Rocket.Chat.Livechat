@@ -7,7 +7,6 @@ import styles from './styles';
 export class Alert extends Component {
 	static defaultProps = {
 		timeout: 3000,
-		autoClose: true,
 		hideCloseButton: false,
 	}
 
@@ -17,8 +16,8 @@ export class Alert extends Component {
 	}
 
 	componentDidMount() {
-		const { timeout, autoClose } = this.props;
-		if (autoClose && Number.isFinite(timeout) && timeout > 0) {
+		const { timeout } = this.props;
+		if (Number.isFinite(timeout) && timeout > 0) {
 			this.dismissTimeout = setTimeout(this.handleDismiss, timeout);
 		}
 	}

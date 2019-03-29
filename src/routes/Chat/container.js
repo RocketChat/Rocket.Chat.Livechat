@@ -247,8 +247,8 @@ export class ChatContainer extends Component {
 				id: constants.connectingAgentAlertId,
 				children: I18n.t('We are connecting you to an agent, please wait in the queue...'),
 				warning: true,
-				autoClose: false,
 				hideCloseButton: true,
+				timeout: 0,
 			 });
 		}
 
