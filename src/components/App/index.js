@@ -16,7 +16,7 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { visibility } from '../helpers';
+import { visibility, createToken } from '../helpers';
 
 export class App extends Component {
 
@@ -118,6 +118,16 @@ export class App extends Component {
 		this.forceUpdate();
 	}
 
+	handleConnected = async() => {
+		const { alerts, dispatch } = this.props;
+		await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('Livechat connected.'), success: true, timeout: 5000 }), alerts) });
+	}
+
+	handleDisconnected = async() => {
+		const { alerts, dispatch } = this.props;
+		await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('Livechat is not connected.'), error: true, timeout: 5000 }), alerts) });
+	}
+
 	async initialize() {
 		// TODO: split these behaviors into composable components
 		await Livechat.connect();
@@ -164,6 +174,9 @@ export class App extends Component {
 
 		I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
+
+		Livechat.onStreamData('connected', this.handleConnected);
+		Livechat.onStreamData('close', this.handleDisconnected);
 	}
 
 	async finalize() {

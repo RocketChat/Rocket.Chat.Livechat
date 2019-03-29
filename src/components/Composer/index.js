@@ -145,14 +145,10 @@ export class Composer extends Component {
 		this.value = this.props.value;
 	}
 
-	// we only update composer if connecting prop changed or if value length changed from 0 to 1 or 1 to 0
+	// we only update composer if value length changed from 0 to 1 or 1 to 0
 	// everything else is managed by this.el
-	shouldComponentUpdate({ connecting: nextConnecting, value: nextValue }) {
-		const { connecting, value } = this.props;
-
-		if (nextConnecting !== connecting) {
-			return true;
-		}
+	shouldComponentUpdate({ value: nextValue }) {
+		const { value } = this.props;
 
 		const nextValueEmpty = !nextValue || nextValue.length === 0;
 		const valueEmpty = !value || value.length === 0;
@@ -176,31 +172,27 @@ export class Composer extends Component {
 		replaceCaret(el);
 	}
 
-	render = ({ connecting, pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
-		<div className={createClassName(styles, 'composer', { connecting }, [className])} style={style}>
-			{connecting ? null : pre}
+	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
+		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
+			{pre}
 			<div
 				ref={this.handleRef}
 				{...(
-					connecting ?
-						{
-							'data-placeholder': I18n.t('Connecting to an agent...'),
-						} :
-						{
-							dangerouslySetInnerHTML: {
-								__html: parse(value),
-							},
-							contentEditable: true,
-							'data-placeholder': placeholder,
-							onInput: this.handleInput(onChange),
-							onKeypress: this.handleKeypress(onSubmit),
-							onPaste: this.handlePaste(onUpload),
-							onDrop: this.handleDrop(onUpload),
-						}
+					{
+						dangerouslySetInnerHTML: {
+							__html: parse(value),
+						},
+						contentEditable: true,
+						'data-placeholder': placeholder,
+						onInput: this.handleInput(onChange),
+						onKeypress: this.handleKeypress(onSubmit),
+						onPaste: this.handlePaste(onUpload),
+						onDrop: this.handleDrop(onUpload),
+					}
 				)}
 				className={createClassName(styles, 'composer__input')}
 			/>
-			{connecting ? null : post}
+			{post}
 		</div>
 	)
 }

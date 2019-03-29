@@ -7,6 +7,8 @@ import styles from './styles';
 export class Alert extends Component {
 	static defaultProps = {
 		timeout: 3000,
+		autoClose: true,
+		hideCloseButton: false,
 	}
 
 	handleDismiss = () => {
@@ -15,8 +17,8 @@ export class Alert extends Component {
 	}
 
 	componentDidMount() {
-		const { timeout } = this.props;
-		if (Number.isFinite(timeout) && timeout > 0) {
+		const { timeout, autoClose } = this.props;
+		if (autoClose && Number.isFinite(timeout) && timeout > 0) {
 			this.dismissTimeout = setTimeout(this.handleDismiss, timeout);
 		}
 	}
@@ -25,7 +27,7 @@ export class Alert extends Component {
 		clearTimeout(this.dismissTimeout);
 	}
 
-	render = ({ success, warning, error, color, className, style = {}, children }) => (
+	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children }) => (
 		<div
 			role="alert"
 			className={createClassName(styles, 'alert', { success, warning, error }, [className])}
@@ -37,13 +39,13 @@ export class Alert extends Component {
 			<div className={createClassName(styles, 'alert__content')}>
 				{children}
 			</div>
-			<button
+			{!hideCloseButton && <button
 				onClick={this.handleDismiss}
 				className={createClassName(styles, 'alert__close')}
 				aria-label={I18n.t('Dismiss this alert')}
 			>
 				<CloseIcon width={20} />
-			</button>
+			</button>}
 		</div>
 	)
 }

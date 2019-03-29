@@ -3,7 +3,7 @@ import { store } from '../../store';
 import { route } from 'preact-router';
 import { setCookies, upsert, canRenderMessage } from '../../components/helpers';
 import Commands from '../../lib/commands';
-import { loadConfig, processUnread } from '../../lib/main';
+import { loadConfig, processUnread, checkConnecting } from '../../lib/main';
 import { parentCall } from '../../lib/parentCall';
 import { handleTranscript } from '../../lib/transcript';
 
@@ -36,7 +36,7 @@ const doPlaySound = async(message) => {
 
 export const initRoom = async() => {
 	const { state } = store;
-	const { room, config: { settings: { showConnecting } } = {} } = state;
+	const { room } = state;
 
 	if (!room) {
 		return;
@@ -54,12 +54,12 @@ export const initRoom = async() => {
 			store.setState({ roomAgent });
 			await store.setState({ agent: roomAgent });
 		}
-		const connecting = !!(!roomAgent && showConnecting);
-		store.setState({ connecting });
+		checkConnecting();
 	}
 
-	Livechat.onAgentChange(rid, (agent) => {
-		store.setState({ agent });
+	Livechat.onAgentChange(rid, async(agent) => {
+		await store.setState({ agent });
+		checkConnecting();
 	});
 
 	Livechat.onAgentStatusChange(rid, (status) => {
