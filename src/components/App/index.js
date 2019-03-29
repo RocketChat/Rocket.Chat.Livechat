@@ -16,7 +16,8 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { visibility, createToken } from '../helpers';
+import { visibility } from '../helpers';
+import constants from '../../lib/constants';
 
 export class App extends Component {
 
@@ -119,13 +120,28 @@ export class App extends Component {
 	}
 
 	handleConnected = async() => {
-		const { alerts, dispatch } = this.props;
-		await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('Livechat connected.'), success: true, timeout: 5000 }), alerts) });
+		const { alerts: oldAlerts, dispatch } = this.props;
+		const alerts = oldAlerts.filter((item) => item.id !== constants.livechatConnectedAlertId);
+		alerts.push({
+			id: constants.livechatConnectedAlertId,
+			children: I18n.t('Livechat connected.'),
+			success: true,
+		});
+
+		await dispatch({ alerts });
+
 	}
 
 	handleDisconnected = async() => {
-		const { alerts, dispatch } = this.props;
-		await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('Livechat is not connected.'), error: true, timeout: 5000 }), alerts) });
+		const { alerts: oldAlerts, dispatch } = this.props;
+		const alerts = oldAlerts.filter((item) => item.id !== constants.livechatDisconnectedAlertId);
+		alerts.push({
+			id: constants.livechatDisconnectedAlertId,
+			children: I18n.t('Livechat is not connected.'),
+			error: true,
+		});
+
+		await dispatch({ alerts });
 	}
 
 	async initialize() {
