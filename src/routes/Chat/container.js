@@ -7,42 +7,11 @@ import constants from '../../lib/constants';
 import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
-import { initRoom, closeChat } from './room';
+import { initRoom, closeChat, loadMessages, loadMoreMessages } from '../../lib/room';
 
 export class ChatContainer extends Component {
-	loadMessages = async() => {
-		const { dispatch, room: { _id: rid } = {} } = this.props;
-
-		if (!rid) {
-			return;
-		}
-
-		await dispatch({ loading: true });
-		const messages = await Livechat.loadMessages(rid);
-		await initRoom();
-		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
-		await dispatch({ loading: false });
-
-		if (messages && messages.length) {
-			const lastMessage = messages[messages.length - 1];
-			this.setState({ lastReadMessageId: lastMessage && lastMessage._id });
-		}
-	}
-
-	loadMoreMessages = async() => {
-		const { dispatch, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
-
-		if (!rid || noMoreMessages) {
-			return;
-		}
-
-		await dispatch({ loading: true });
-		const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
-		await dispatch({
-			messages: (moreMessages || []).reverse(),
-			noMoreMessages: messages.length + 10 > moreMessages.length,
-		});
-		await dispatch({ loading: false });
+	state = {
+		connectingAgent: { value: false },
 	}
 
 	grantUser = async() => {
@@ -81,7 +50,7 @@ export class ChatContainer extends Component {
 	}
 
 	handleTop = () => {
-		this.loadMoreMessages();
+		loadMoreMessages();
 	}
 
 	startTyping = throttle(async({ rid, username }) => {
@@ -182,7 +151,7 @@ export class ChatContainer extends Component {
 			}
 		} catch (error) {
 			console.error(error);
-			const alert = { id: createToken(), children: 'Error closing chat.', error: true, timeout: 0 };
+			const alert = { id: createToken(), children: I18n.t('Error closing chat.'), error: true, timeout: 0 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await dispatch({ loading: false });
@@ -206,7 +175,7 @@ export class ChatContainer extends Component {
 			await Livechat.deleteVisitor();
 		} catch (error) {
 			console.error(error);
-			const alert = { id: createToken(), children: 'Error removing user data.', error: true, timeout: 0 };
+			const alert = { id: createToken(), children: I18n.t('Error removing user data.'), error: true, timeout: 0 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await loadConfig();
@@ -216,8 +185,8 @@ export class ChatContainer extends Component {
 	}
 
 	canSwitchDepartment = () => {
-		const { allowSwitchingDepartments, room, departments = {} } = this.props;
-		return allowSwitchingDepartments && room && departments.filter((dept) => dept.showOnRegistration).length > 1;
+		const { allowSwitchingDepartments, departments = {} } = this.props;
+		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
 	}
 
 	canFinishChat = () => {
@@ -234,17 +203,25 @@ export class ChatContainer extends Component {
 		this.canSwitchDepartment() || this.canFinishChat() || this.canRemoveUserData()
 	)
 
-	checkConnecting() {
-		const { dispatch, agent, connecting, showConnecting } = this.props;
-		const connectingStatus = !!(agent && showConnecting);
-		if (connecting !== connectingStatus) {
-			dispatch({ connecting: connectingStatus });
+	async handleConnectingAgentAlert(connecting) {
+		const { alerts: oldAlerts, dispatch } = this.props;
+
+		const alerts = oldAlerts.filter((item) => item.id !== constants.connectingAgentAlertId);
+		if (connecting) {
+			alerts.push({
+				id: constants.connectingAgentAlertId,
+				children: I18n.t('Please, wait for the next available agent..'),
+				warning: true,
+				hideCloseButton: true,
+				timeout: 0,
+			 });
 		}
+
+		await dispatch({ alerts });
 	}
 
 	componentDidMount() {
-		this.loadMessages();
-		this.checkConnecting();
+		loadMessages();
 	}
 
 	async componentWillReceiveProps({ messages: nextMessages, visible: nextVisible, minimized: nextMinimized }) {
@@ -261,6 +238,18 @@ export class ChatContainer extends Component {
 				await dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
 			}
 		}
+	}
+
+	componentDidUpdate() {
+		const { connecting } = this.props;
+		if (connecting !== this.state.connectingAgent) {
+			this.state.connectingAgent = connecting;
+			this.handleConnectingAgentAlert(connecting);
+		}
+	}
+
+	componentWillUnmount() {
+		this.handleConnectingAgentAlert(false);
 	}
 
 	render = ({ user, ...props }) => (
