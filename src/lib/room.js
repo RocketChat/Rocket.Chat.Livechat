@@ -103,6 +103,10 @@ Livechat.onMessage(async(message) => {
 		return;
 	}
 
+	if (message.editedAt) {
+		return;
+	}
+
 	await processUnread();
 	await doPlaySound(message);
 });
