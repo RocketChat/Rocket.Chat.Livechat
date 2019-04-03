@@ -18,6 +18,7 @@ import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { visibility } from '../helpers';
 import constants from '../../lib/constants';
+import { initRoom, loadMessages } from '../../lib/room';
 
 export class App extends Component {
 
@@ -121,12 +122,15 @@ export class App extends Component {
 
 	handleConnected = async() => {
 		const { alerts: oldAlerts, dispatch } = this.props;
-		const alerts = oldAlerts.filter((item) => item.id !== constants.livechatConnectedAlertId);
+		const skipAlerts = [constants.livechatDisconnectedAlertId, constants.livechatConnectedAlertId];
+		const alerts = oldAlerts.filter((item) => !skipAlerts.includes(item.id));
 		alerts.push({
 			id: constants.livechatConnectedAlertId,
 			children: I18n.t('Livechat connected.'),
 			success: true,
 		});
+
+		await loadMessages();
 
 		await dispatch({ alerts });
 
@@ -134,11 +138,13 @@ export class App extends Component {
 
 	handleDisconnected = async() => {
 		const { alerts: oldAlerts, dispatch } = this.props;
-		const alerts = oldAlerts.filter((item) => item.id !== constants.livechatDisconnectedAlertId);
+		const skipAlerts = [constants.livechatDisconnectedAlertId, constants.livechatConnectedAlertId];
+		const alerts = oldAlerts.filter((item) => !skipAlerts.includes(item.id));
 		alerts.push({
 			id: constants.livechatDisconnectedAlertId,
 			children: I18n.t('Livechat is not connected.'),
 			error: true,
+			timeout: 0,
 		});
 
 		await dispatch({ alerts });

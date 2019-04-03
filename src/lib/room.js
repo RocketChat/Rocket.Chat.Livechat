@@ -1,11 +1,11 @@
-import { Livechat } from '../../api';
-import { store } from '../../store';
+import { Livechat } from '../api';
+import { store } from '../store';
 import { route } from 'preact-router';
-import { setCookies, upsert, canRenderMessage } from '../../components/helpers';
-import Commands from '../../lib/commands';
-import { loadConfig, processUnread, checkConnecting } from '../../lib/main';
-import { parentCall } from '../../lib/parentCall';
-import { handleTranscript } from '../../lib/transcript';
+import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import Commands from '../lib/commands';
+import { loadConfig, processUnread, checkConnecting } from '../lib/main';
+import { parentCall } from './parentCall';
+import { handleTranscript } from './transcript';
 
 const commands = new Commands();
 
@@ -106,3 +106,38 @@ Livechat.onMessage(async(message) => {
 	await processUnread();
 	await doPlaySound(message);
 });
+
+export const loadMessages = async() => {
+	const { room: { _id: rid } = {} } = store.state;
+
+	if (!rid) {
+		return;
+	}
+
+	await store.setState({ loading: true });
+	const messages = await Livechat.loadMessages(rid);
+	await initRoom();
+	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false });
+	await store.setState({ loading: false });
+
+	if (messages && messages.length) {
+		const lastMessage = messages[messages.length - 1];
+		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+	}
+};
+
+export const loadMoreMessages = async() => {
+	const { room: { _id: rid } = {}, messages = [], noMoreMessages = false } = store.state;
+
+	if (!rid || noMoreMessages) {
+		return;
+	}
+
+	await store.setState({ loading: true });
+	const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
+	await store.setState({
+		messages: (moreMessages || []).reverse(),
+		noMoreMessages: messages.length + 10 > moreMessages.length,
+	});
+	await store.setState({ loading: false });
+};

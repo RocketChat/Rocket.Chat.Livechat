@@ -7,46 +7,11 @@ import constants from '../../lib/constants';
 import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
-import { initRoom, closeChat } from './room';
+import { initRoom, closeChat, loadMessages, loadMoreMessages } from '../../lib/room';
 
 export class ChatContainer extends Component {
 	state = {
 		connectingAgent: { value: false },
-	}
-
-	loadMessages = async() => {
-		const { dispatch, room: { _id: rid } = {} } = this.props;
-
-		if (!rid) {
-			return;
-		}
-
-		await dispatch({ loading: true });
-		const messages = await Livechat.loadMessages(rid);
-		await initRoom();
-		await dispatch({ messages: (messages || []).reverse(), noMoreMessages: false });
-		await dispatch({ loading: false });
-
-		if (messages && messages.length) {
-			const lastMessage = messages[messages.length - 1];
-			this.setState({ lastReadMessageId: lastMessage && lastMessage._id });
-		}
-	}
-
-	loadMoreMessages = async() => {
-		const { dispatch, room: { _id: rid } = {}, messages = [], noMoreMessages = false } = this.props;
-
-		if (!rid || noMoreMessages) {
-			return;
-		}
-
-		await dispatch({ loading: true });
-		const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
-		await dispatch({
-			messages: (moreMessages || []).reverse(),
-			noMoreMessages: messages.length + 10 > moreMessages.length,
-		});
-		await dispatch({ loading: false });
 	}
 
 	grantUser = async() => {
@@ -85,7 +50,7 @@ export class ChatContainer extends Component {
 	}
 
 	handleTop = () => {
-		this.loadMoreMessages();
+		loadMoreMessages();
 	}
 
 	startTyping = throttle(async({ rid, username }) => {
@@ -256,7 +221,7 @@ export class ChatContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.loadMessages();
+		loadMessages();
 	}
 
 	async componentWillReceiveProps({ messages: nextMessages, visible: nextVisible, minimized: nextMinimized }) {
