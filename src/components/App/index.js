@@ -17,6 +17,8 @@ import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { visibility } from '../helpers';
+import constants from '../../lib/constants';
+import { initRoom, loadMessages } from '../../lib/room';
 
 export class App extends Component {
 
@@ -118,6 +120,36 @@ export class App extends Component {
 		this.forceUpdate();
 	}
 
+	handleConnected = async() => {
+		const { alerts: oldAlerts, dispatch } = this.props;
+		const skipAlerts = [constants.livechatDisconnectedAlertId, constants.livechatConnectedAlertId];
+		const alerts = oldAlerts.filter((item) => !skipAlerts.includes(item.id));
+		alerts.push({
+			id: constants.livechatConnectedAlertId,
+			children: I18n.t('Livechat connected.'),
+			success: true,
+		});
+
+		await loadMessages();
+
+		await dispatch({ alerts });
+
+	}
+
+	handleDisconnected = async() => {
+		const { alerts: oldAlerts, dispatch } = this.props;
+		const skipAlerts = [constants.livechatDisconnectedAlertId, constants.livechatConnectedAlertId];
+		const alerts = oldAlerts.filter((item) => !skipAlerts.includes(item.id));
+		alerts.push({
+			id: constants.livechatDisconnectedAlertId,
+			children: I18n.t('Livechat is not connected.'),
+			error: true,
+			timeout: 0,
+		});
+
+		await dispatch({ alerts });
+	}
+
 	async initialize() {
 		// TODO: split these behaviors into composable components
 		await Livechat.connect();
@@ -164,6 +196,9 @@ export class App extends Component {
 
 		I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
+
+		Livechat.onStreamData('connected', this.handleConnected);
+		Livechat.onStreamData('close', this.handleDisconnected);
 	}
 
 	async finalize() {

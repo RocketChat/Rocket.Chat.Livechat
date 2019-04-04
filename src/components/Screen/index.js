@@ -1,11 +1,11 @@
 import { Component } from 'preact';
-import Alert from '../Alert';
-import Avatar from '../Avatar';
-import ChatButton from '../ChatButton';
+import { Alert } from '../Alert';
+import { Avatar } from '../Avatar';
+import { Button } from '../Button';
 import Header from '../Header';
-import Footer from '../Footer';
+import { Footer, FooterContent, PoweredBy } from '../Footer';
 import { PopoverContainer } from '../Popover';
-import Sound from '../Sound';
+import { Sound } from '../Sound';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
@@ -13,6 +13,8 @@ import NotificationsDisabledIcon from '../../icons/bellOff.svg';
 import MinimizeIcon from '../../icons/arrowDown.svg';
 import RestoreIcon from '../../icons/arrowUp.svg';
 import OpenWindowIcon from '../../icons/newWindow.svg';
+import ChatIcon from '../../icons/chat.svg';
+import CloseIcon from '../../icons/close.svg';
 import styles from './styles';
 
 
@@ -117,17 +119,32 @@ export const ScreenContent = ({ children, nopadding }) => (
 export const ScreenFooter = ({ children, options }) => (
 	<Footer>
 		{children && (
-			<Footer.Content>
+			<FooterContent>
 				{children}
-			</Footer.Content>
+			</FooterContent>
 		)}
-		<Footer.Content>
+		<FooterContent>
 			{options}
-			<Footer.PoweredBy />
-		</Footer.Content>
+			<PoweredBy />
+		</FooterContent>
 	</Footer>
 );
 
+const ChatButton = ({
+	text,
+	minimized,
+	badge,
+	onClick,
+}) => (
+	<Button
+		icon={minimized ? <ChatIcon /> : <CloseIcon />}
+		badge={badge}
+		onClick={onClick}
+		className={createClassName(styles, 'screen__chat-button')}
+	>
+		{text}
+	</Button>
+);
 
 export const Screen = ({
 	theme = {},
@@ -185,10 +202,9 @@ export const Screen = ({
 
 		<ChatButton
 			text={title}
-			open={!minimized}
-			onClick={minimized ? onRestore : onMinimize}
-			className={createClassName(styles, 'screen__chat-button')}
 			badge={unread}
+			minimized={minimized}
+			onClick={minimized ? onRestore : onMinimize}
 		/>
 
 		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} />}

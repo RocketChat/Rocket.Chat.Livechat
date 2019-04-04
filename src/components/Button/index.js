@@ -1,11 +1,11 @@
-import { createClassName } from '../helpers';
+import { createClassName, memo } from '../helpers';
 import styles from './styles';
 
 
 const handleMouseUp = ({ target }) => target.blur();
 
-export const Button = ({
-	children,
+export const Button = memo(({
+	submit,
 	disabled,
 	outline,
 	nude,
@@ -14,13 +14,19 @@ export const Button = ({
 	stack,
 	small,
 	loading,
+	badge,
+	icon,
+	onClick,
 	className,
-	...props
+	style = {},
+	children,
 }) => (
 	<button
-		{...props}
-		type={secondary ? 'button' : 'submit'}
+		type={submit ? 'submit' : 'button'}
 		disabled={disabled}
+		onClick={onClick}
+		onMouseUp={handleMouseUp}
+		aria-label={icon ? children[0] : null}
 		className={createClassName(styles, 'button', {
 			disabled,
 			outline,
@@ -30,20 +36,11 @@ export const Button = ({
 			stack,
 			small,
 			loading,
+			icon: !!icon,
 		}, [className])}
-		onMouseUp={handleMouseUp}
+		style={style}
 	>
-		{children}
+		{badge ? (<span className={createClassName(styles, 'button__badge')}>{badge}</span>) : null}
+		{icon || children}
 	</button>
-);
-
-
-export const Group = ({ children }) => (
-	<div className={createClassName(styles, 'group')}>{children}</div>
-);
-
-
-Button.Group = Group;
-
-
-export default Button;
+));

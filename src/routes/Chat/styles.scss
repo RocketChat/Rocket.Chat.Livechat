@@ -6,8 +6,8 @@
 		flex: 1;
 		display: flex;
 		position: relative;
-		overflow: hidden;
 		width: 100%;
+		overflow: hidden;
 
 		&::before {
 			content:"";
@@ -40,12 +40,6 @@
 			display: block;
 			animation: loader-rotate 1s linear infinite;
 		}
-	}
-
-	&__wrapper {
-		flex: 1 1 auto;
-		padding: 0 16px;
-		overflow-y: auto;
 	}
 }
 

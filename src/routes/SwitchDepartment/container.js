@@ -18,7 +18,7 @@ export class SwitchDepartmentContainer extends Component {
 	}
 
 	handleSubmit = async(fields) => {
-		const { alerts, dispatch, room: { _id: rid } = {} } = this.props;
+		const { alerts, dispatch, room, token } = this.props;
 		const { department } = fields;
 
 		const confirm = await this.confirmChangeDepartment();
@@ -26,8 +26,16 @@ export class SwitchDepartmentContainer extends Component {
 			return;
 		}
 
+		if (!room) {
+			await Livechat.grantVisitor({ visitor: { department, token } });
+			await loadConfig();
+			await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('Department switched'), success: true }), alerts) });
+			return history.go(-1);
+		}
+
 		await dispatch({ loading: true });
 		try {
+			const { _id: rid } = room;
 			const result = await Livechat.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
@@ -44,7 +52,7 @@ export class SwitchDepartmentContainer extends Component {
 			history.go(-1);
 		} catch (error) {
 			console.error(error);
-			await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('No available agents to transfer'), warning: true, timeout: 5000 }), alerts) });
+			await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('No available agents to transfer'), warning: true }), alerts) });
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -75,11 +83,12 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 					iconColor: customIconColor,
 				} = {},
 			} = {},
-			room = {},
+			room,
 			loading = false,
 			department,
 			dispatch,
 			alerts,
+			token,
 		}) => (
 			<SwitchDepartmentContainer
 				ref={ref}
@@ -94,6 +103,7 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 				dispatch={dispatch}
 				room={room}
 				alerts={alerts}
+				token={token}
 			/>
 		)}
 	</Consumer>

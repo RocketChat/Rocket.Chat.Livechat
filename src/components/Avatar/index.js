@@ -1,7 +1,6 @@
 import { Component } from 'preact';
-import styles from './styles';
 import { createClassName } from '../helpers';
-import StatusIndicator from '../StatusIndicator';
+import styles from './styles';
 
 
 export class Avatar extends Component {
@@ -13,17 +12,18 @@ export class Avatar extends Component {
 		this.setState({ errored: true });
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.src !== this.props.src) {
+	componentWillReceiveProps({ src: nextSrc }) {
+		const { src } = this.props;
+		if (nextSrc !== src) {
 			this.setState({ errored: false });
 		}
 	}
 
-	render = ({ small, large, src, description, status, className, ...args }, { errored }) => (
+	render = ({ small, large, src, description, status, className, style }, { errored }) => (
 		<div
 			aria-label="User picture"
 			className={createClassName(styles, 'avatar', { small, large, nobg: src && !errored }, [className])}
-			{...args}
+			style={style}
 		>
 			{(src && !errored) && (
 				<img
@@ -35,12 +35,8 @@ export class Avatar extends Component {
 			)}
 
 			{status && (
-				<div className={createClassName(styles, 'avatar__status', { small, large })}>
-					<StatusIndicator status={status} small={small} large={large} bordered />
-				</div>
+				<span className={createClassName(styles, 'avatar__status', { small, large, status })} />
 			)}
 		</div>
 	)
 }
-
-export default Avatar;

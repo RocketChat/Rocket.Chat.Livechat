@@ -1,6 +1,7 @@
 import { Component } from 'preact';
-import Button from '../../components/Button';
-import Form, { Validations } from '../../components/Form';
+import { Button } from '../../components/Button';
+import { ButtonGroup } from '../../components/ButtonGroup';
+import { Form, FormField, SelectInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles';
@@ -87,28 +88,25 @@ export default class SwitchDepartment extends Component {
 					<p className={createClassName(styles, 'switch-department__message')}>{message || defaultMessage}</p>
 
 					<Form onSubmit={this.handleSubmit}>
-						<Form.Item>
-							<Form.Label error={department && department.showError} htmlFor="department">
-								{I18n.t('Departments')}
-							</Form.Label>
-							<Form.SelectInput
-								id="department"
+						<FormField
+							label={I18n.t('Departments')}
+							error={department && department.showError && department.error}
+						>
+							<SelectInput
 								name="department"
-								placeholder={I18n.t('Choose a department...')}
-								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
-								disabled={loading}
 								value={department && department.value}
+								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
+								placeholder={I18n.t('Choose a department...')}
+								disabled={loading}
 								error={department && department.showError}
 								onInput={this.handleDepartmentChange}
 							/>
-							<Form.Description error={department && department.showError}>
-								{department && department.showError && department.error}
-							</Form.Description>
-						</Form.Item>
-						<Form.Item>
-							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
+						</FormField>
+
+						<ButtonGroup>
+							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
 							<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{I18n.t('Cancel')}</Button>
-						</Form.Item>
+						</ButtonGroup>
 					</Form>
 				</Screen.Content>
 				<Screen.Footer />

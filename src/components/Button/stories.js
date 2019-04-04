@@ -1,11 +1,13 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
+import { storiesOf } from '@storybook/react';
+import ChatIcon from '../../icons/chat.svg';
+import { Button } from '.';
 
-import Button, { Group } from '.';
 
-const buttonText = 'Powered by Rocket.Chat';
+const defaultText = 'Powered by Rocket.Chat';
+const defaultBadge = 'badged';
 
 storiesOf('Components|Button', module)
 	.addDecorator(centered)
@@ -19,9 +21,11 @@ storiesOf('Components|Button', module)
 			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
 	))
 	.add('disabled', () => (
@@ -33,9 +37,11 @@ storiesOf('Components|Button', module)
 			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
 	))
 	.add('outline', () => (
@@ -47,9 +53,11 @@ storiesOf('Components|Button', module)
 			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
 	))
 	.add('nude', () => (
@@ -61,9 +69,11 @@ storiesOf('Components|Button', module)
 			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
 	))
 	.add('danger', () => (
@@ -75,9 +85,11 @@ storiesOf('Components|Button', module)
 			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
 	))
 	.add('secondary', () => (
@@ -89,9 +101,11 @@ storiesOf('Components|Button', module)
 			secondary={boolean('secondary', true)}
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
 	))
 	.add('stack', () => (
@@ -103,9 +117,11 @@ storiesOf('Components|Button', module)
 			secondary={boolean('secondary', false)}
 			stack={boolean('stack', true)}
 			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
 	))
 	.add('small', () => (
@@ -117,9 +133,11 @@ storiesOf('Components|Button', module)
 			secondary={boolean('secondary', false)}
 			stack={boolean('stack', false)}
 			small={boolean('small', true)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
 	))
 	.add('loading', () => (
@@ -132,40 +150,43 @@ storiesOf('Components|Button', module)
 			stack={boolean('stack', false)}
 			small={boolean('small', false)}
 			loading={boolean('loading', true)}
+			badge={text('badge', '')}
 			onClick={action('clicked')}
 		>
-			{text('text', buttonText)}
+			{text('text', defaultText)}
 		</Button>
-	));
-
-storiesOf('Components|Button/Group', module)
-	.addDecorator(centered)
-	.addDecorator(withKnobs)
-	.add('with buttons of same size', () => (
-		<Group>
-			<Button>{text('button text 1', 'Yes')}</Button>
-			<Button outline>{text('button text 2', 'Cancel')}</Button>
-			<Button danger>{text('button text 3', 'No')}</Button>
-		</Group>
 	))
-	.add('with buttons of different sizes', () => (
-		<Group>
-			<Button small>{text('button text 1', 'Yes')}</Button>
-			<Button outline>{text('button text 2', 'Cancel')}</Button>
-			<Button small danger>{text('button text 3', 'No')}</Button>
-		</Group>
+	.add('with badge', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
+			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', defaultBadge)}
+			onClick={action('clicked')}
+		>
+			{text('text', defaultText)}
+		</Button>
 	))
-	.add('with only small buttons', () => (
-		<Group>
-			<Button small>{text('button text 1', 'Yes')}</Button>
-			<Button small outline>{text('button text 2', 'Cancel')}</Button>
-			<Button small danger>{text('button text 3', 'No')}</Button>
-		</Group>
+	.add('with icon', () => (
+		<Button
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			nude={boolean('nude', false)}
+			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', '')}
+			icon={<ChatIcon />}
+			onClick={action('clicked')}
+		>
+			{text('text', defaultText)}
+		</Button>
 	))
-	.add('with stacked buttons', () => (
-		<Group>
-			<Button small outline>Rename</Button>
-			<Button small outline>Share</Button>
-			<Button stack danger>Delete</Button>
-		</Group>
-	));
+;

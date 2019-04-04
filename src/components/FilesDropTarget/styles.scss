@@ -53,6 +53,10 @@ $drop-overlay-text-font-size: 1.375rem;
 			pointer-events: none;
 		}
 	}
+
+	&__input {
+		display: none;
+	}
 }
 
 @keyframes fadein {

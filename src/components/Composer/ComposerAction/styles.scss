@@ -1,0 +1,24 @@
+@import '~styles/helpers';
+
+
+$composer-action-margin: 0 6px;
+
+.composer__action {
+	margin: $composer-action-margin;
+	padding: 0;
+	flex: 0 0;
+
+	background: none;
+	border: none;
+
+	font-size: 0;
+
+	cursor: pointer;
+
+	&:focus {
+		transform: scale(1.05);
+		outline: none;
+	}
+
+	@include pressable-button(1px);
+}

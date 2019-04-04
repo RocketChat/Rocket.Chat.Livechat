@@ -1,25 +1,28 @@
+import mem from 'mem';
 import { Component } from 'preact';
 import { createClassName } from '../helpers';
-import { parse } from './parsing';
 import styles from './styles';
 
 
-const handleActionClick = (onClick) => (event) => {
-	event.preventDefault();
-	onClick && onClick(event);
+const escapeMap = {
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+	'"': '&quot;',
+	'\'': '&#x27;',
+	'`': '&#x60;',
 };
 
-export const Actions = ({ children, ...props }) => (
-	<div className={createClassName(styles, 'composer__actions')} {...props}>{children}</div>
+const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
+
+const escapeHtml = mem(
+	(string) => string.replace(escapeRegex, (match) => escapeMap[match])
 );
 
-export const Action = ({ children, text, onClick, ...props }) => (
-	<button
-		{...props}
-		className={createClassName(styles, 'composer__action')}
-		aria-label={text}
-		onClick={handleActionClick(onClick)}
-	>{children}</button>
+const parse = (plainText) => (
+	[{ plain: plainText }]
+		.map(({ plain, html }) => (plain ? escapeHtml(plain) : (html || '')))
+		.join('')
 );
 
 const findLastTextNode = (node) => {
@@ -55,7 +58,7 @@ const replaceCaret = (el) => {
 };
 
 export class Composer extends Component {
-	bind = (el) => {
+	handleRef = (el) => {
 		this.el = el;
 	}
 
@@ -142,14 +145,10 @@ export class Composer extends Component {
 		this.value = this.props.value;
 	}
 
-	// we only update composer if connecting prop changed or if value length changed from 0 to 1 or 1 to 0
+	// we only update composer if value length changed from 0 to 1 or 1 to 0
 	// everything else is managed by this.el
-	shouldComponentUpdate({ connecting: nextConnecting, value: nextValue }) {
-		const { connecting, value } = this.props;
-
-		if (nextConnecting !== connecting) {
-			return true;
-		}
+	shouldComponentUpdate({ value: nextValue }) {
+		const { value } = this.props;
 
 		const nextValueEmpty = !nextValue || nextValue.length === 0;
 		const valueEmpty = !value || value.length === 0;
@@ -173,35 +172,30 @@ export class Composer extends Component {
 		replaceCaret(el);
 	}
 
-	render({ pre, post, placeholder, value, connecting, onChange, onSubmit, onUpload, ...args }) {
-		if (connecting) {
-			return (
-				<div className={createClassName(styles, 'composer')} {...args}>
-					<div data-placeholder={I18n.t('Connecting to an agent...')}
-						className={createClassName(styles, 'composer__input', { connecting })}
-					/>
-				</div>
-			);
-		}
-		return (
-			<div className={createClassName(styles, 'composer')} {...args}>
-				{pre}
-				<div
-					ref={this.bind}
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: parse(value) }}
-					data-placeholder={placeholder}
-					onInput={this.handleInput(onChange)}
-					onKeypress={this.handleKeypress(onSubmit)}
-					onPaste={this.handlePaste(onUpload)}
-					onDrop={this.handleDrop(onUpload)}
-					className={createClassName(styles, 'composer__input')}
-					contentEditable
-				/>
-				{post}
-			</div>
-		);
-	 }
+	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
+		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
+			{pre}
+			<div
+				ref={this.handleRef}
+				{...(
+					{
+						dangerouslySetInnerHTML: {
+							__html: parse(value),
+						},
+						contentEditable: true,
+						'data-placeholder': placeholder,
+						onInput: this.handleInput(onChange),
+						onKeypress: this.handleKeypress(onSubmit),
+						onPaste: this.handlePaste(onUpload),
+						onDrop: this.handleDrop(onUpload),
+					}
+				)}
+				className={createClassName(styles, 'composer__input')}
+			/>
+			{post}
+		</div>
+	)
 }
 
-export default Composer;
+export { ComposerAction } from './ComposerAction';
+export { ComposerActions } from './ComposerActions';

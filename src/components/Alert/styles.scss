@@ -5,6 +5,7 @@
 
 $alert-color: $color-text-lighter;
 $alert-font-family: $font-family;
+$alert-background-color: $bg-color-darker;
 $alert-success-background-color: $color-green;
 $alert-warning-background-color: $color-yellow;
 $alert-error-background-color: $color-red;
@@ -20,7 +21,7 @@ $alert-error-background-color: $color-red;
 	overflow: hidden;
 	letter-spacing: 0;
 	line-height: 16px;
-	background-color: $alert-success-background-color;
+	background-color: $alert-background-color;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -29,18 +30,6 @@ $alert-error-background-color: $color-red;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-	}
-
-	&--success {
-		background-color: $alert-success-background-color;
-	}
-
-	&--warning {
-		background-color: $alert-warning-background-color;
-	}
-
-	&--error {
-		background-color: $alert-error-background-color;
 	}
 
 	&__close {
@@ -55,4 +44,15 @@ $alert-error-background-color: $color-red;
 		@include pressable-button(1px);
 	}
 
+	&--success {
+		background-color: $alert-success-background-color;
+	}
+
+	&--warning {
+		background-color: $alert-warning-background-color;
+	}
+
+	&--error {
+		background-color: $alert-error-background-color;
+	}
 }

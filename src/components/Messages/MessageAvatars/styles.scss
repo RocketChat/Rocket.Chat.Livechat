@@ -1,0 +1,17 @@
+.message-avatars {
+	grid-area: avatars;
+	min-width: 32px;
+	padding: 0 5px;
+	align-self: end;
+	display: flex;
+	flex-flow: row nowrap;
+
+	&__avatar {
+		margin: 0 -5px;
+		box-shadow: -2px 0 1px 0px #00000082;
+
+		&:first-child {
+			box-shadow: none;
+		}
+	}
+}

@@ -1,20 +1,31 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, text, color } from '@storybook/addon-knobs';
+import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import { screenCentered, memedIpsum } from '../../helpers.stories';
 import { Alert } from '.';
 
-const alertText = 'A simple alert';
 
 storiesOf('Components|Alert', module)
 	.addDecorator(withKnobs)
+	.addDecorator(screenCentered)
+	.add('default', () => (
+		<Alert
+			success={boolean('success', false)}
+			warning={boolean('warning', false)}
+			error={boolean('error', false)}
+			onDismiss={action('dismiss')}
+		>
+			{text('text', memedIpsum({ count: 3, units: 'words' }))}
+		</Alert>
+	))
 	.add('success', () => (
 		<Alert
 			success={boolean('success', true)}
 			warning={boolean('warning', false)}
 			error={boolean('error', false)}
-			onDismiss={action('clicked')}
+			onDismiss={action('dismiss')}
 		>
-			{text('text', alertText)}
+			{text('text', memedIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('warning', () => (
@@ -22,9 +33,9 @@ storiesOf('Components|Alert', module)
 			success={boolean('success', false)}
 			warning={boolean('warning', true)}
 			error={boolean('error', false)}
-			onDismiss={action('clicked')}
+			onDismiss={action('dismiss')}
 		>
-			{text('text', alertText)}
+			{text('text', memedIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('error', () => (
@@ -32,9 +43,9 @@ storiesOf('Components|Alert', module)
 			success={boolean('success', false)}
 			warning={boolean('warning', false)}
 			error={boolean('error', true)}
-			onDismiss={action('clicked')}
+			onDismiss={action('dismiss')}
 		>
-			{text('text', alertText)}
+			{text('text', memedIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('custom color', () => (
@@ -43,9 +54,9 @@ storiesOf('Components|Alert', module)
 			warning={boolean('warning', false)}
 			error={boolean('error', false)}
 			color={color('color', '#175CC4')}
-			onDismiss={action('clicked')}
+			onDismiss={action('dismiss')}
 		>
-			{text('text', alertText)}
+			{text('text', memedIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('with long text content', () => (
@@ -53,8 +64,20 @@ storiesOf('Components|Alert', module)
 			success={boolean('success', false)}
 			warning={boolean('warning', false)}
 			error={boolean('error', false)}
-			onDismiss={action('clicked')}
+			onDismiss={action('dismiss')}
 		>
-			{text('text', alertText.repeat(100))}
+			{text('text', memedIpsum({ count: 30, units: 'words' }))}
 		</Alert>
-	));
+	))
+	.add('without timeout', () => (
+		<Alert
+			success={boolean('success', false)}
+			warning={boolean('warning', false)}
+			error={boolean('error', false)}
+			timeout={0}
+			onDismiss={action('dismiss')}
+		>
+			{text('text', memedIpsum({ count: 3, units: 'words' }))}
+		</Alert>
+	))
+;

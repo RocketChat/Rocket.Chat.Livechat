@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
-import Footer from '../Footer';
+import { FooterOptions } from '../Footer';
 import Menu from '../Menu';
 import { Screen } from '.';
 
@@ -309,13 +309,13 @@ storiesOf('Components|Screen/Footer', module)
 			<Screen.Content />
 			<Screen.Footer
 				options={
-					<Footer.Options>
+					<FooterOptions>
 						<Menu.Group>
 							<Menu.Item onClick={action('changeDepartment')}>{I18n.t('Change department')}</Menu.Item>
 							<Menu.Item onClick={action('removeUserData')}>{I18n.t('Forget/Remove my data')}</Menu.Item>
 							<Menu.Item danger onClick={action('finishChat')}>{I18n.t('Finish this chat')}</Menu.Item>
 						</Menu.Group>
-					</Footer.Options>
+					</FooterOptions>
 				}
 			/>
 		</Screen>

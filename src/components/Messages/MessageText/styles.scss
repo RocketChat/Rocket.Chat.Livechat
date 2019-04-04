@@ -1,0 +1,33 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+
+$message-text-font-size: 0.875rem;
+
+.message-text {
+	font-size: $message-text-font-size;
+	word-break: break-all;
+
+	a {
+		text-decoration: underline dotted;
+
+		&:hover,
+		&:focus {
+			text-decoration-style: solid;
+		}
+	}
+
+	h1, h2, h3, h4, h5, h6,
+	p {
+		padding: 0;
+		margin: 0;
+	}
+
+	&--system {
+		font-style: italic;
+
+		em {
+			font-style: normal;
+		}
+	}
+}
