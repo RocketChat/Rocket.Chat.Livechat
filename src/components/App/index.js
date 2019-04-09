@@ -3,7 +3,7 @@ import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 import { Livechat } from '../../api';
 import history from '../../history';
-import { loadConfig } from '../../lib/main';
+import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
@@ -18,7 +18,7 @@ import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { visibility } from '../helpers';
 import constants from '../../lib/constants';
-import { initRoom, loadMessages } from '../../lib/room';
+import { loadMessages } from '../../lib/room';
 
 export class App extends Component {
 
@@ -121,33 +121,20 @@ export class App extends Component {
 	}
 
 	handleConnected = async() => {
-		const { alerts: oldAlerts, dispatch } = this.props;
-		const skipAlerts = [constants.livechatDisconnectedAlertId, constants.livechatConnectedAlertId];
-		const alerts = oldAlerts.filter((item) => !skipAlerts.includes(item.id));
-		alerts.push({
-			id: constants.livechatConnectedAlertId,
-			children: I18n.t('Livechat connected.'),
-			success: true,
-		});
+		await clearConnectionAlerts();
 
+		const { livechatConnectedAlertId } = constants;
+		const { alerts, dispatch } = this.props;
+		await dispatch({ alerts: (alerts.push({ id: livechatConnectedAlertId, children: I18n.t('Livechat connected.'), success: true }), alerts) });
 		await loadMessages();
-
-		await dispatch({ alerts });
-
 	}
 
 	handleDisconnected = async() => {
-		const { alerts: oldAlerts, dispatch } = this.props;
-		const skipAlerts = [constants.livechatDisconnectedAlertId, constants.livechatConnectedAlertId];
-		const alerts = oldAlerts.filter((item) => !skipAlerts.includes(item.id));
-		alerts.push({
-			id: constants.livechatDisconnectedAlertId,
-			children: I18n.t('Livechat is not connected.'),
-			error: true,
-			timeout: 0,
-		});
+		await clearConnectionAlerts();
 
-		await dispatch({ alerts });
+		const { livechatDisconnectedAlertId } = constants;
+		const { alerts, dispatch } = this.props;
+		await dispatch({ alerts: (alerts.push({ id: livechatDisconnectedAlertId, children: I18n.t('Livechat is not connected.'), error: true, timeout: 0 }), alerts) });
 	}
 
 	async initialize() {
