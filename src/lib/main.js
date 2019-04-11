@@ -65,3 +65,10 @@ export const checkConnecting = async() => {
 	const connecting = !!(!agent && showConnecting);
 	await store.setState({ connecting });
 };
+
+export const clearConnectionAlerts = async() => {
+	const { alerts } = store.state;
+	const { livechatDisconnectedAlertId, livechatConnectedAlertId } = constants;
+	await store.setState({ alerts: alerts.filter((alert) => ![livechatDisconnectedAlertId, livechatConnectedAlertId].includes(alert.id)) });
+};
+
