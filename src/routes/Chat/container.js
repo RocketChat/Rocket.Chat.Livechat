@@ -27,7 +27,7 @@ export class ChatContainer extends Component {
 	}
 
 	getRoom = async() => {
-		const { alerts, dispatch, room, showConnecting } = this.props;
+		const { alerts, dispatch, room, triggerAgent: { agent } = {}, showConnecting } = this.props;
 
 		if (room) {
 			return room;
@@ -35,7 +35,8 @@ export class ChatContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			const newRoom = await Livechat.room();
+			const agentId = agent && agent._id;
+			const newRoom = await Livechat.room({ agentId });
 			await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
 			await initRoom();
 			return newRoom;
@@ -313,6 +314,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			visible,
 			unread,
 			lastReadMessageId,
+			triggerAgent,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -353,6 +355,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				unread={unread}
 				lastReadMessageId={lastReadMessageId}
 				guest={guest}
+				triggerAgent={triggerAgent}
 			/>
 		)}
 	</Consumer>
