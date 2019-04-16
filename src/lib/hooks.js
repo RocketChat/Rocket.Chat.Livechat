@@ -108,6 +108,10 @@ const api = {
 
 		createOrUpdateGuest(data);
 	},
+  
+	setLanguage(language) {
+		store.setState({ language });
+	},
 };
 
 const onNewMessage = (msg) => {
