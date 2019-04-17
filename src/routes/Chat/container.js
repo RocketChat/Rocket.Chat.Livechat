@@ -7,7 +7,7 @@ import constants from '../../lib/constants';
 import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
-import { initRoom, closeChat, loadMessages, loadMoreMessages } from '../../lib/room';
+import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams } from '../../lib/room';
 
 export class ChatContainer extends Component {
 	state = {
@@ -27,7 +27,7 @@ export class ChatContainer extends Component {
 	}
 
 	getRoom = async() => {
-		const { alerts, dispatch, room, triggerAgent: { agent } = {}, showConnecting } = this.props;
+		const { alerts, dispatch, room, showConnecting } = this.props;
 
 		if (room) {
 			return room;
@@ -35,8 +35,8 @@ export class ChatContainer extends Component {
 
 		await dispatch({ loading: true });
 		try {
-			const agentId = agent && agent._id;
-			const newRoom = await Livechat.room({ agentId });
+			const params = defaultRoomParams();
+			const newRoom = await Livechat.room(params);
 			await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
 			await initRoom();
 			return newRoom;
