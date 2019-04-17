@@ -2,10 +2,11 @@ import { Livechat } from '../api';
 import { store } from '../store';
 import { route } from 'preact-router';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
-import Commands from '../lib/commands';
-import { loadConfig, processUnread, checkConnecting } from '../lib/main';
+import Commands from './commands';
+import { loadConfig, processUnread, checkConnecting } from './main';
 import { parentCall } from './parentCall';
 import { handleTranscript } from './transcript';
+import { normalizeMessage, normalizeMessages } from './threads';
 
 const commands = new Commands();
 
@@ -51,7 +52,6 @@ export const initRoom = async() => {
 	if (!roomAgent) {
 		if (servedBy) {
 			roomAgent = await Livechat.agent({ rid });
-			store.setState({ roomAgent });
 			await store.setState({ agent: roomAgent });
 		}
 		checkConnecting();
@@ -93,6 +93,11 @@ Livechat.onMessage(async(message) => {
 		message.ts = message.ts.toISOString();
 	}
 
+	message = await normalizeMessage(message);
+	if (!message) {
+		return;
+	}
+
 	await store.setState({
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
@@ -119,7 +124,8 @@ export const loadMessages = async() => {
 	}
 
 	await store.setState({ loading: true });
-	const messages = await Livechat.loadMessages(rid);
+	let messages = await Livechat.loadMessages(rid);
+	messages = await normalizeMessages(messages);
 	await initRoom();
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false });
 	await store.setState({ loading: false });
@@ -138,10 +144,22 @@ export const loadMoreMessages = async() => {
 	}
 
 	await store.setState({ loading: true });
-	const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
+	let moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
+	moreMessages = await normalizeMessages(moreMessages);
 	await store.setState({
 		messages: (moreMessages || []).reverse(),
 		noMoreMessages: messages.length + 10 > moreMessages.length,
 	});
 	await store.setState({ loading: false });
+};
+
+export const defaultRoomParams = () => {
+	const params = {};
+
+	const { triggerAgent: { agent } = {} } = store.state;
+	if (agent && agent._id) {
+		Object.assign(params, { agentId: agent._id });
+	}
+
+	return params;
 };
