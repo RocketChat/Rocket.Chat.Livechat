@@ -5,6 +5,7 @@ import { Livechat } from '../../api';
 import history from '../../history';
 import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
+import Language from '../../lib/language';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
@@ -146,6 +147,7 @@ export class App extends Component {
 		await Livechat.connect();
 		this.handleTriggers();
 		CustomFields.init();
+		Language.init();
 		Hooks.init();
 		userPresence.init();
 
@@ -166,25 +168,12 @@ export class App extends Component {
 			return language;
 		};
 
-		const browserLanguage = () => (navigator.userLanguage || navigator.language);
-
-		const normalizeLanguageString = (languageString) => {
-			let [languageCode, countryCode] = languageString.split ? languageString.split(/[-_]/) : [];
-			if (!languageCode || languageCode.length !== 2) {
-				return 'en';
-			}
-			languageCode = languageCode.toLowerCase();
-
-			if (!countryCode || countryCode.length !== 2) {
-				countryCode = null;
-			} else {
-				countryCode = countryCode.toUpperCase();
-			}
-
-			return countryCode ? `${ languageCode }_${ countryCode }` : languageCode;
+		const iframeLanguage = () => {
+			const { iframe: { language } = {} } = this.props;
+			return language;
 		};
 
-		I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
+		I18n.changeLocale(Language.normalizeLanguageString(iframeLanguage() ? iframeLanguage() : configLanguage() || Language.browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
 
 		Livechat.onStreamData('connected', this.handleConnected);
@@ -193,6 +182,7 @@ export class App extends Component {
 
 	async finalize() {
 		CustomFields.reset();
+		Language.reset();
 		userPresence.reset();
 		visibility.removeListener(this.handleVisibilityChange);
 		I18n.off('change', this.handleLanguageChange);
@@ -213,6 +203,7 @@ export class App extends Component {
 		expanded,
 		alerts,
 		modal,
+		iframe,
 	}, { initialized }) => {
 		if (!initialized) {
 			return null;
@@ -228,6 +219,7 @@ export class App extends Component {
 			sound,
 			alerts,
 			modal,
+			iframe,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
@@ -265,6 +257,7 @@ const AppConnector = () => (
 					alerts,
 					modal,
 					dispatch,
+					iframe,
 				}) => (
 					<App
 						config={config}
@@ -278,6 +271,7 @@ const AppConnector = () => (
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
+						iframe={iframe}
 					/>
 				)}
 			</StoreConsumer>

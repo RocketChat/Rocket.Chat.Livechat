@@ -1,5 +1,6 @@
 import Triggers from './triggers';
 import CustomFields from './customFields';
+import Language from './language';
 import { store } from '../store';
 import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
@@ -110,7 +111,7 @@ const api = {
 	},
   
 	setLanguage(language) {
-		store.setState({ language });
+		Language.setLanguage(language);
 	},
 };
 
