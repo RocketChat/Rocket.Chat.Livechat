@@ -203,6 +203,12 @@ export class App extends Component {
 		this.finalize();
 	}
 
+	componentDidUpdate(previousProps, previousState, previousContext) {
+		if(this.props.user && !previousProps.user){
+			route('/');
+		}
+	}
+
 	render = ({
 		sound,
 		undocked,
