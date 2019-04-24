@@ -142,7 +142,9 @@ export class App extends Component {
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
-		await Livechat.connect();
+		const { token } = this.props;
+		await Livechat.connect({ token });
+
 		await loadConfig();
 		this.handleTriggers();
 		CustomFields.init();
@@ -265,6 +267,7 @@ const AppConnector = () => (
 					alerts,
 					modal,
 					dispatch,
+					token,
 				}) => (
 					<App
 						config={config}
@@ -278,6 +281,7 @@ const AppConnector = () => (
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
+						token={token}
 					/>
 				)}
 			</StoreConsumer>
