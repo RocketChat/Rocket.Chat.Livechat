@@ -3,7 +3,7 @@ import { store } from '../store';
 import { route } from 'preact-router';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import Commands from '../lib/commands';
-import { loadConfig, processUnread, checkConnecting } from '../lib/main';
+import { loadConfig, processUnread } from '../lib/main';
 import { parentCall } from './parentCall';
 import { handleTranscript } from './transcript';
 
@@ -54,12 +54,10 @@ export const initRoom = async() => {
 			store.setState({ roomAgent });
 			await store.setState({ agent: roomAgent });
 		}
-		checkConnecting();
 	}
 
 	Livechat.onAgentChange(rid, async(agent) => {
 		await store.setState({ agent });
-		checkConnecting();
 	});
 
 	Livechat.onAgentStatusChange(rid, (status) => {
@@ -144,4 +142,15 @@ export const loadMoreMessages = async() => {
 		noMoreMessages: messages.length + 10 > moreMessages.length,
 	});
 	await store.setState({ loading: false });
+};
+
+export const defaultRoomParams = () => {
+	const params = {};
+
+	const { triggerAgent: { agent } = {} } = store.state;
+	if (agent && agent._id) {
+		Object.assign(params, { agentId: agent._id });
+	}
+
+	return params;
 };

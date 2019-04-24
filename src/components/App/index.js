@@ -126,6 +126,8 @@ export class App extends Component {
 		const { livechatConnectedAlertId } = constants;
 		const { alerts, dispatch } = this.props;
 		await dispatch({ alerts: (alerts.push({ id: livechatConnectedAlertId, children: I18n.t('Livechat connected.'), success: true }), alerts) });
+
+		await loadConfig();
 		await loadMessages();
 	}
 
@@ -139,8 +141,9 @@ export class App extends Component {
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
-		await Livechat.connect();
+		// Call loadConfig before calling Livechat.connect
 		await loadConfig();
+		await Livechat.connect();
 		this.handleTriggers();
 		CustomFields.init();
 		Hooks.init();
