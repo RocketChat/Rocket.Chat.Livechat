@@ -5,7 +5,7 @@ import { Livechat } from '../../api';
 import history from '../../history';
 import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
-import { language } from '../../lib/language';
+import { setWidgetLanguage } from '../../lib/language';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
@@ -149,7 +149,8 @@ export class App extends Component {
 		CustomFields.init();
 		Hooks.init();
 		userPresence.init();
-
+		setWidgetLanguage();
+    
 		this.setState({ initialized: true });
 		parentCall('ready');
 
@@ -162,17 +163,6 @@ export class App extends Component {
 			visibility.removeListener(this.handleVisibilityChange);
 		});
 
-		const configLanguage = () => {
-			const { config: { settings: { language } = {} } = {} } = this.props;
-			return language;
-		};
-
-		const iframeLanguage = () => {
-			const { iframe: { language } = {} } = this.props;
-			return language;
-		};
-
-		I18n.changeLocale(language.normalizeLanguageString(iframeLanguage() ? iframeLanguage() : configLanguage() || language.browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
 
 		Livechat.onStreamData('connected', this.handleConnected);
@@ -201,7 +191,6 @@ export class App extends Component {
 		expanded,
 		alerts,
 		modal,
-		iframe,
 	}, { initialized }) => {
 		if (!initialized) {
 			return null;
@@ -217,7 +206,6 @@ export class App extends Component {
 			sound,
 			alerts,
 			modal,
-			iframe,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
@@ -255,7 +243,6 @@ const AppConnector = () => (
 					alerts,
 					modal,
 					dispatch,
-					iframe,
 				}) => (
 					<App
 						config={config}
@@ -269,7 +256,6 @@ const AppConnector = () => (
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
-						iframe={iframe}
 					/>
 				)}
 			</StoreConsumer>

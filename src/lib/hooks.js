@@ -1,6 +1,6 @@
 import Triggers from './triggers';
 import CustomFields from './customFields';
-import { language } from './language';
+import { setLanguage } from './language';
 import { store } from '../store';
 import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
@@ -110,8 +110,8 @@ const api = {
 		createOrUpdateGuest(data);
 	},
   
-	setLanguage(lang) {
-		language.setLanguage(lang);
+	setLanguage(language) {
+		setLanguage(language);
 	},
 };
 
