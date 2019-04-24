@@ -1,51 +1,15 @@
 import store from '../store';
 
-class Language {
-	constructor() {
-		if (!Language.instance) {
-			this._initiated = false;
-			this._started = false;
-			this._queue = {};
-			Language.instance = this;
-		}
-    
-		return Language.instance;
-	}
-  
-	init() {
-		if (this._initiated) {
-			return;
-		}
+export const language = {
 
-		this._initiated = true;
-		store.on('change', this.handleStoreChange);
-	}
-  
-	reset() {
-		this._initiated = false;
-		this._started = false;
-		store.off('change', this.handleStoreChange);
-	}
-
-	handleStoreChange(state) {
-		const { user } = state;
-		if (user && user._id) {
-			Language.instance._started = true;
-		}
-	}
-  
 	setLanguage(language) {
 		const { iframe } = store.state;
-		if (!this._started) {
-			return;
-		}
-
 		store.setState({ iframe: { ...iframe, language } });
-	}
+	},
   
 	browserLanguage() {
 		navigator.userLanguage || navigator.language;
-	}
+	},
   
 	normalizeLanguageString(languageString) {
 		let [languageCode, countryCode] = languageString.split ? languageString.split(/[-_]/) : [];
@@ -61,8 +25,5 @@ class Language {
 		}
 
 		return countryCode ? `${ languageCode }_${ countryCode }` : languageCode;
-	}
-}
-
-const instance = new Language();
-export default instance;
+	},
+};

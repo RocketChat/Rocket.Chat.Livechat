@@ -5,7 +5,7 @@ import { Livechat } from '../../api';
 import history from '../../history';
 import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
-import Language from '../../lib/language';
+import { language } from '../../lib/language';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
@@ -147,7 +147,6 @@ export class App extends Component {
 		await Livechat.connect();
 		this.handleTriggers();
 		CustomFields.init();
-		Language.init();
 		Hooks.init();
 		userPresence.init();
 
@@ -173,7 +172,7 @@ export class App extends Component {
 			return language;
 		};
 
-		I18n.changeLocale(Language.normalizeLanguageString(iframeLanguage() ? iframeLanguage() : configLanguage() || Language.browserLanguage()));
+		I18n.changeLocale(language.normalizeLanguageString(iframeLanguage() ? iframeLanguage() : configLanguage() || language.browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
 
 		Livechat.onStreamData('connected', this.handleConnected);
@@ -182,7 +181,6 @@ export class App extends Component {
 
 	async finalize() {
 		CustomFields.reset();
-		Language.reset();
 		userPresence.reset();
 		visibility.removeListener(this.handleVisibilityChange);
 		I18n.off('change', this.handleLanguageChange);
