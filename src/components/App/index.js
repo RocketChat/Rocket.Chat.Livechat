@@ -3,7 +3,7 @@ import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 import { Livechat } from '../../api';
 import history from '../../history';
-import { loadConfig, clearConnectionAlerts, checkConnecting } from '../../lib/main';
+import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
@@ -128,7 +128,6 @@ export class App extends Component {
 		await dispatch({ alerts: (alerts.push({ id: livechatConnectedAlertId, children: I18n.t('Livechat connected.'), success: true }), alerts) });
 
 		await loadConfig();
-		await checkConnecting();
 		await loadMessages();
 	}
 

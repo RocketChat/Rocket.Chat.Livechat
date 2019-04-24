@@ -30,7 +30,6 @@ const initialState = {
 		accepted: false,
 	},
 	alerts: [],
-	connecting: false,
 	visible: true,
 	minimized: true,
 	unread: null,

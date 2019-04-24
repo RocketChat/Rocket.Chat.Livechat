@@ -26,7 +26,6 @@ export const loadConfig = async() => {
 		user,
 		sound: { src, enabled: true, play: false },
 		messages: [],
-		alerts: [],
 		typing: [],
 		noMoreMessages: false,
 		visible: true,
@@ -58,12 +57,6 @@ export const processUnread = async() => {
 
 		await store.setState({ unread: unreadMessages.length });
 	}
-};
-
-export const checkConnecting = async() => {
-	const { agent, config: { settings: { showConnecting } = {} } = {} } = store.state;
-	const connecting = !!(!agent && showConnecting);
-	await store.setState({ connecting });
 };
 
 export const clearConnectionAlerts = async() => {

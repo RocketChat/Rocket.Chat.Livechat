@@ -14,6 +14,14 @@ export class ChatContainer extends Component {
 		connectingAgent: { value: false },
 	}
 
+	checkConnecting = () => {
+		const { connecting } = this.props;
+		if (connecting !== this.state.connectingAgent) {
+			this.state.connectingAgent = connecting;
+			this.handleConnectingAgentAlert(connecting);
+		}
+	}
+
 	grantUser = async() => {
 		const { token, user, guest } = this.props;
 
@@ -27,7 +35,7 @@ export class ChatContainer extends Component {
 	}
 
 	getRoom = async() => {
-		const { alerts, dispatch, room, showConnecting } = this.props;
+		const { alerts, dispatch, room } = this.props;
 
 		if (room) {
 			return room;
@@ -37,7 +45,7 @@ export class ChatContainer extends Component {
 		try {
 			const params = defaultRoomParams();
 			const newRoom = await Livechat.room(params);
-			await dispatch({ room: newRoom, messages: [], noMoreMessages: false, connecting: showConnecting });
+			await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
 			await initRoom();
 			return newRoom;
 		} catch (error) {
@@ -222,6 +230,7 @@ export class ChatContainer extends Component {
 	}
 
 	componentDidMount() {
+		this.checkConnecting();
 		loadMessages();
 	}
 
@@ -242,11 +251,7 @@ export class ChatContainer extends Component {
 	}
 
 	componentDidUpdate() {
-		const { connecting } = this.props;
-		if (connecting !== this.state.connectingAgent) {
-			this.state.connectingAgent = connecting;
-			this.handleConnectingAgentAlert(connecting);
-		}
+		this.checkConnecting();
 	}
 
 	componentWillUnmount() {
@@ -308,7 +313,6 @@ export const ChatConnector = ({ ref, ...props }) => (
 			noMoreMessages,
 			typing,
 			loading,
-			connecting,
 			dispatch,
 			alerts,
 			visible,
@@ -344,7 +348,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				typingUsernames={Array.isArray(typing) ? typing : []}
 				loading={loading}
 				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
-				connecting={connecting} // param to show or hide "connecting"
+				connecting={!!(room && !agent && showConnecting)}
 				dispatch={dispatch}
 				departments={departments}
 				allowSwitchingDepartments={allowSwitchingDepartments}
