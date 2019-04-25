@@ -46,9 +46,9 @@ export const setWidgetLanguage = () => {
  * To set language inside store
  * @param {String} language
  */
-export const setLanguage = async(langauge) => {
+export const setLanguage = async(language) => {
 	const { iframe } = store.state;
-	await store.setState({ iframe: { ...iframe, langauge } });
+	await store.setState({ iframe: { ...iframe, language } });
 	setWidgetLanguage();
 };
 
