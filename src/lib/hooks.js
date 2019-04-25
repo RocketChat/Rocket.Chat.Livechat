@@ -1,7 +1,7 @@
 import Triggers from './triggers';
 import CustomFields from './customFields';
-import { setLanguage } from './language';
 import { store } from '../store';
+import { setWidgetLanguage } from './locale';
 import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
 import { loadConfig } from '../lib/main';
@@ -110,8 +110,10 @@ const api = {
 		createOrUpdateGuest(data);
 	},
   
-	setLanguage(language) {
-		setLanguage(language);
+	async setLanguage(language) {
+		const { iframe } = store.state;
+		await store.setState({ iframe: { ...iframe, language } });
+		setWidgetLanguage();
 	},
 };
 

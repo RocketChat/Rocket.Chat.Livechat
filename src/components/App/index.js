@@ -5,7 +5,7 @@ import { Livechat } from '../../api';
 import history from '../../history';
 import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
-import { setWidgetLanguage } from '../../lib/language';
+import { setWidgetLanguage } from '../../lib/locale';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
