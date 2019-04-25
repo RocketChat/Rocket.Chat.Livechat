@@ -65,6 +65,7 @@ export class App extends Component {
 			if (showRegistrationForm) {
 				return route('/register');
 			}
+			return route('/');
 		}, 100);
 	}
 
@@ -204,9 +205,9 @@ export class App extends Component {
 	}
 
 	componentDidUpdate(previousProps, previousState, previousContext) {
-		if(this.props.user && !previousProps.user){
+		
 			route('/');
-		}
+	
 	}
 
 	render = ({
