@@ -241,6 +241,10 @@ function clearDepartment() {
 	callHook('clearDepartment');
 }
 
+function setLanguage(language) {
+	callHook('setLanguage', language);
+}
+
 const currentPage = {
 	href: null,
 	title: null,
@@ -311,6 +315,7 @@ window.RocketChat.livechat = {
 	setGuestName,
 	setGuestEmail,
 	registerGuest,
+	setLanguage,
 
 	// callbacks
 	onChatMaximized(fn) { registerCallback('chat-maximized', fn); },

@@ -5,6 +5,7 @@ import { Livechat } from '../../api';
 import history from '../../history';
 import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
+import { setWidgetLanguage } from '../../lib/locale';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
@@ -148,7 +149,8 @@ export class App extends Component {
 		CustomFields.init();
 		Hooks.init();
 		userPresence.init();
-
+		setWidgetLanguage();
+    
 		this.setState({ initialized: true });
 		parentCall('ready');
 
@@ -161,30 +163,6 @@ export class App extends Component {
 			visibility.removeListener(this.handleVisibilityChange);
 		});
 
-		const configLanguage = () => {
-			const { config: { settings: { language } = {} } = {} } = this.props;
-			return language;
-		};
-
-		const browserLanguage = () => (navigator.userLanguage || navigator.language);
-
-		const normalizeLanguageString = (languageString) => {
-			let [languageCode, countryCode] = languageString.split ? languageString.split(/[-_]/) : [];
-			if (!languageCode || languageCode.length !== 2) {
-				return 'en';
-			}
-			languageCode = languageCode.toLowerCase();
-
-			if (!countryCode || countryCode.length !== 2) {
-				countryCode = null;
-			} else {
-				countryCode = countryCode.toUpperCase();
-			}
-
-			return countryCode ? `${ languageCode }_${ countryCode }` : languageCode;
-		};
-
-		I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
 
 		Livechat.onStreamData('connected', this.handleConnected);
