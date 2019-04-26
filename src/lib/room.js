@@ -6,6 +6,7 @@ import Commands from '../lib/commands';
 import { loadConfig, processUnread } from '../lib/main';
 import { parentCall } from './parentCall';
 import { handleTranscript } from './transcript';
+import { normalizeMessage, normalizeMessages } from './threads';
 
 const commands = new Commands();
 
@@ -51,7 +52,6 @@ export const initRoom = async() => {
 	if (!roomAgent) {
 		if (servedBy) {
 			roomAgent = await Livechat.agent({ rid });
-			store.setState({ roomAgent });
 			await store.setState({ agent: roomAgent });
 		}
 	}
@@ -91,6 +91,11 @@ Livechat.onMessage(async(message) => {
 		message.ts = message.ts.toISOString();
 	}
 
+	message = await normalizeMessage(message);
+	if (!message) {
+		return;
+	}
+
 	await store.setState({
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
@@ -117,7 +122,7 @@ export const loadMessages = async() => {
 	}
 
 	await store.setState({ loading: true });
-	const messages = await Livechat.loadMessages(rid);
+	const messages = await Livechat.loadMessages(rid).then((data) => (normalizeMessages(data)));
 	await initRoom();
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false });
 	await store.setState({ loading: false });
@@ -136,7 +141,7 @@ export const loadMoreMessages = async() => {
 	}
 
 	await store.setState({ loading: true });
-	const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
+	const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 }).then((data) => (normalizeMessages(data)));
 	await store.setState({
 		messages: (moreMessages || []).reverse(),
 		noMoreMessages: messages.length + 10 > moreMessages.length,

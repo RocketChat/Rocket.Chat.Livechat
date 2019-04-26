@@ -1353,10 +1353,10 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@rocket.chat/sdk@^1.0.0-alpha.27":
-  version "1.0.0-alpha.27"
-  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.27.tgz#9bbcde27ce1fc180b23d45f9fa04132773a45d32"
-  integrity sha512-eC8lMDH4+BPjLxHGcB1DoUPf3HhO4atEfpxg/J7Wi2/+fuTVUv74A5K7H+sTitvVuM9R3xFRXIbjUGIRTx0/gA==
+"@rocket.chat/sdk@^1.0.0-alpha.28":
+  version "1.0.0-alpha.28"
+  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.28.tgz#569f3c578c5c12ed54a9317d36fa8413208ce021"
+  integrity sha512-tQ+tIIX5R931cxIlTTn2ftCfiIo372vCG3omzDwzSfw6Kq24f7giUxVEpWfsI4GtuTU4caoren7wuGYwnST/+A==
   dependencies:
     "@types/event-emitter" "^0.3.2"
     "@types/eventemitter3" "^2.0.2"

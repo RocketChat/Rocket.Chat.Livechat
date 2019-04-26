@@ -44,7 +44,7 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 					url={attachmentResolver(attachment.title_link)}
 					title={attachment.title}
 				/>) ||
-			(attachment.message_link && renderContent({
+			((attachment.message_link || attachment.tmid) && renderContent({
 				text: attachment.text,
 				quoted: true,
 				attachments: attachment.attachments,
