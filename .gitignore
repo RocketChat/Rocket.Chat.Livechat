@@ -3,3 +3,5 @@
 /*.log
 coverage
 package-lock.json
+build.tar.gz
+.DS_Store

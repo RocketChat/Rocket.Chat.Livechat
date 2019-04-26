@@ -13,9 +13,10 @@ const addParentMessage = async(parentMessage) => {
 };
 
 const isThreadMessage = async(message) => {
-	if (!(message && message.replies)) {
+	if (!message || !message.replies) {
 		return false;
 	}
+
 	await addParentMessage(message);
 	return true;
 };

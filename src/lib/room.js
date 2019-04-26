@@ -2,8 +2,8 @@ import { Livechat } from '../api';
 import { store } from '../store';
 import { route } from 'preact-router';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
-import Commands from './commands';
-import { loadConfig, processUnread, checkConnecting } from './main';
+import Commands from '../lib/commands';
+import { loadConfig, processUnread } from '../lib/main';
 import { parentCall } from './parentCall';
 import { handleTranscript } from './transcript';
 import { normalizeMessage, normalizeMessages } from './threads';
@@ -54,12 +54,10 @@ export const initRoom = async() => {
 			roomAgent = await Livechat.agent({ rid });
 			await store.setState({ agent: roomAgent });
 		}
-		checkConnecting();
 	}
 
 	Livechat.onAgentChange(rid, async(agent) => {
 		await store.setState({ agent });
-		checkConnecting();
 	});
 
 	Livechat.onAgentStatusChange(rid, (status) => {
