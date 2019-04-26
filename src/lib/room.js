@@ -122,8 +122,7 @@ export const loadMessages = async() => {
 	}
 
 	await store.setState({ loading: true });
-	let messages = await Livechat.loadMessages(rid);
-	messages = await normalizeMessages(messages);
+	const messages = await Livechat.loadMessages(rid).then(async(data) => (normalizeMessages(data)));
 	await initRoom();
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false });
 	await store.setState({ loading: false });
@@ -142,8 +141,7 @@ export const loadMoreMessages = async() => {
 	}
 
 	await store.setState({ loading: true });
-	let moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
-	moreMessages = await normalizeMessages(moreMessages);
+	const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 }).then(async(data) => (normalizeMessages(data)));
 	await store.setState({
 		messages: (moreMessages || []).reverse(),
 		noMoreMessages: messages.length + 10 > moreMessages.length,
