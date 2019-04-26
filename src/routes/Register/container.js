@@ -8,10 +8,6 @@ import Register from './component';
 
 export class RegisterContainer extends Component {
 
-	state = {
-		registered: false,
-	}
-
 	getDepartment = (fields = {}) => {
 		let { department } = fields;
 
@@ -34,10 +30,8 @@ export class RegisterContainer extends Component {
 		await dispatch({ loading: true, department });
 		try {
 			await Livechat.grantVisitor({ visitor: { ...fields, token } });
-			this.setState({ registered: true });
-			await loadConfig();
 			parentCall('callback', ['pre-chat-form-submit', fields]);
-			route('/');
+			await loadConfig();
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -53,9 +47,8 @@ export class RegisterContainer extends Component {
 	componentDidUpdate(prevProps) {
 		const { user: prevUser } = prevProps;
 		const { user } = this.props;
-		const { registered } = this.state;
 
-		if (!registered && !prevUser && user) {
+		if (!prevUser && user && user._id) {
 			route('/');
 		}
 	}
