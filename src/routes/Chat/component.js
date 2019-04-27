@@ -80,7 +80,6 @@ export default class Chat extends Component {
 		avatarResolver,
 		conversationFinishedMessage,
 		loading,
-		connecting,
 		onUpload,
 		messages,
 		uploads = false,
@@ -152,7 +151,6 @@ export default class Chat extends Component {
 				>
 					<Composer onUpload={onUpload}
 						onSubmit={this.handleSubmit}
-						connecting={connecting}
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
 						value={text}

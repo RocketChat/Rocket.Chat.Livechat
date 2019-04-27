@@ -3,8 +3,9 @@ import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 import { Livechat } from '../../api';
 import history from '../../history';
-import { loadConfig } from '../../lib/main';
+import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
+import { setWidgetLanguage } from '../../lib/locale';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
@@ -18,7 +19,7 @@ import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { visibility } from '../helpers';
 import constants from '../../lib/constants';
-import { initRoom, loadMessages } from '../../lib/room';
+import { loadMessages } from '../../lib/room';
 
 export class App extends Component {
 
@@ -121,44 +122,35 @@ export class App extends Component {
 	}
 
 	handleConnected = async() => {
-		const { alerts: oldAlerts, dispatch } = this.props;
-		const skipAlerts = [constants.livechatDisconnectedAlertId, constants.livechatConnectedAlertId];
-		const alerts = oldAlerts.filter((item) => !skipAlerts.includes(item.id));
-		alerts.push({
-			id: constants.livechatConnectedAlertId,
-			children: I18n.t('Livechat connected.'),
-			success: true,
-		});
+		await clearConnectionAlerts();
 
+		const { livechatConnectedAlertId } = constants;
+		const { alerts, dispatch } = this.props;
+		await dispatch({ alerts: (alerts.push({ id: livechatConnectedAlertId, children: I18n.t('Livechat connected.'), success: true }), alerts) });
+
+		await loadConfig();
 		await loadMessages();
-
-		await dispatch({ alerts });
-
 	}
 
 	handleDisconnected = async() => {
-		const { alerts: oldAlerts, dispatch } = this.props;
-		const skipAlerts = [constants.livechatDisconnectedAlertId, constants.livechatConnectedAlertId];
-		const alerts = oldAlerts.filter((item) => !skipAlerts.includes(item.id));
-		alerts.push({
-			id: constants.livechatDisconnectedAlertId,
-			children: I18n.t('Livechat is not connected.'),
-			error: true,
-			timeout: 0,
-		});
+		await clearConnectionAlerts();
 
-		await dispatch({ alerts });
+		const { livechatDisconnectedAlertId } = constants;
+		const { alerts, dispatch } = this.props;
+		await dispatch({ alerts: (alerts.push({ id: livechatDisconnectedAlertId, children: I18n.t('Livechat is not connected.'), error: true, timeout: 0 }), alerts) });
 	}
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
-		await Livechat.connect();
+		// Call loadConfig before calling Livechat.connect
 		await loadConfig();
+		await Livechat.connect();
 		this.handleTriggers();
 		CustomFields.init();
 		Hooks.init();
 		userPresence.init();
-
+		setWidgetLanguage();
+    
 		this.setState({ initialized: true });
 		parentCall('ready');
 
@@ -171,30 +163,6 @@ export class App extends Component {
 			visibility.removeListener(this.handleVisibilityChange);
 		});
 
-		const configLanguage = () => {
-			const { config: { settings: { language } = {} } = {} } = this.props;
-			return language;
-		};
-
-		const browserLanguage = () => (navigator.userLanguage || navigator.language);
-
-		const normalizeLanguageString = (languageString) => {
-			let [languageCode, countryCode] = languageString.split ? languageString.split(/[-_]/) : [];
-			if (!languageCode || languageCode.length !== 2) {
-				return 'en';
-			}
-			languageCode = languageCode.toLowerCase();
-
-			if (!countryCode || countryCode.length !== 2) {
-				countryCode = null;
-			} else {
-				countryCode = countryCode.toUpperCase();
-			}
-
-			return countryCode ? `${ languageCode }_${ countryCode }` : languageCode;
-		};
-
-		I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 		I18n.on('change', this.handleLanguageChange);
 
 		Livechat.onStreamData('connected', this.handleConnected);

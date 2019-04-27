@@ -1353,10 +1353,10 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@rocket.chat/sdk@^1.0.0-alpha.26":
-  version "1.0.0-alpha.26"
-  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.26.tgz#1676af65ee88b1b08ad323e82cb835f4585dae15"
-  integrity sha512-aZrIlM9+58CTSS5W68ecAWep9p/PkR0AuGe0zo9UF1w9ePS2U65NqglqUED93a8kZlcnjyQBX3e2+fIvwSXg9g==
+"@rocket.chat/sdk@^1.0.0-alpha.28":
+  version "1.0.0-alpha.28"
+  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.28.tgz#569f3c578c5c12ed54a9317d36fa8413208ce021"
+  integrity sha512-tQ+tIIX5R931cxIlTTn2ftCfiIo372vCG3omzDwzSfw6Kq24f7giUxVEpWfsI4GtuTU4caoren7wuGYwnST/+A==
   dependencies:
     "@types/event-emitter" "^0.3.2"
     "@types/eventemitter3" "^2.0.2"
@@ -10690,7 +10690,7 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-paho-mqtt@eclipse/paho.mqtt.javascript#master:
+"paho-mqtt@github:eclipse/paho.mqtt.javascript#master":
   version "1.1.0"
   resolved "https://codeload.github.com/eclipse/paho.mqtt.javascript/tar.gz/9b761defeeb4a627db31d92ae1b0ca91b44b226e"
 

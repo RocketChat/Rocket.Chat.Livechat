@@ -26,7 +26,6 @@ export const loadConfig = async() => {
 		user,
 		sound: { src, enabled: true, play: false },
 		messages: [],
-		alerts: [],
 		typing: [],
 		noMoreMessages: false,
 		visible: true,
@@ -60,8 +59,9 @@ export const processUnread = async() => {
 	}
 };
 
-export const checkConnecting = async() => {
-	const { agent, config: { settings: { showConnecting } = {} } = {} } = store.state;
-	const connecting = !!(!agent && showConnecting);
-	await store.setState({ connecting });
+export const clearConnectionAlerts = async() => {
+	const { alerts } = store.state;
+	const { livechatDisconnectedAlertId, livechatConnectedAlertId } = constants;
+	await store.setState({ alerts: alerts.filter((alert) => ![livechatDisconnectedAlertId, livechatConnectedAlertId].includes(alert.id)) });
 };
+

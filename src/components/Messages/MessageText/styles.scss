@@ -6,7 +6,8 @@ $message-text-font-size: 0.875rem;
 
 .message-text {
 	font-size: $message-text-font-size;
-	word-break: break-all;
+	word-break: break-word;
+	word-wrap: break-word;
 
 	a {
 		text-decoration: underline dotted;

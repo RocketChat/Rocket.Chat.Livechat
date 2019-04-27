@@ -6,7 +6,6 @@ import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
 import Register from './component';
 
-
 export class RegisterContainer extends Component {
 
 	getDepartment = (fields = {}) => {
@@ -31,9 +30,8 @@ export class RegisterContainer extends Component {
 		await dispatch({ loading: true, department });
 		try {
 			await Livechat.grantVisitor({ visitor: { ...fields, token } });
-			await loadConfig();
 			parentCall('callback', ['pre-chat-form-submit', fields]);
-			route('/');
+			await loadConfig();
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -43,6 +41,15 @@ export class RegisterContainer extends Component {
 		const { guestDepartment, departments } = this.props;
 		if (departments && departments.some((dept) => dept._id === guestDepartment)) {
 			return guestDepartment;
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+		const { user: prevUser } = prevProps;
+		const { user } = this.props;
+
+		if (!prevUser && user && user._id) {
+			route('/');
 		}
 	}
 
@@ -83,6 +90,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 			loading = false,
 			token,
 			dispatch,
+			user,
 		}) => (
 			<RegisterContainer
 				ref={ref}
@@ -104,6 +112,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				loading={loading}
 				token={token}
 				dispatch={dispatch}
+				user={user}
 			/>
 		)}
 	</Consumer>
