@@ -77,8 +77,17 @@ const updateWidgetStyle = (isOpened) => {
 
 	if (isOpened) {
 		widget.style.left = smallScreen ? '0' : 'auto';
-		widget.style.width = smallScreen ? '100vw' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
-		widget.style.height = smallScreen ? '100vh' :
+
+		/**
+               * If we use widget.style.width = smallScreen ? '100vw' : ...
+               * In above case some browser's viewport width is not rendered correctly
+               * so, as 100vm will resolve to 100% of the current viewport height,
+               * so fixed it to 100% avoiding problem for some browsers. Similar resolution
+               * for widget.style.height
+               */
+
+		widget.style.width = smallScreen ? '100%' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
+		widget.style.height = smallScreen ? '100%' :
 			`${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
 	} else {
 		widget.style.left = 'auto';
