@@ -205,6 +205,14 @@ const api = {
 	callback(eventName, data) {
 		emitCallback(eventName, data);
 	},
+  
+	showWidget() {
+		iframe.style.display = 'initial';
+	},
+
+	hideWidget() {
+		iframe.style.display = 'none';
+	},
 };
 
 function pageVisited(change) {
@@ -252,6 +260,14 @@ function clearDepartment() {
 
 function setLanguage(language) {
 	callHook('setLanguage', language);
+}
+
+function showWidget() {
+	callHook('showWidget');
+}
+
+function hideWidget() {
+	callHook('hideWidget');
 }
 
 const currentPage = {
@@ -325,6 +341,8 @@ window.RocketChat.livechat = {
 	setGuestEmail,
 	registerGuest,
 	setLanguage,
+	showWidget,
+	hideWidget,
 
 	// callbacks
 	onChatMaximized(fn) { registerCallback('chat-maximized', fn); },
