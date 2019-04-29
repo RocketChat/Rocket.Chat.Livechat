@@ -139,6 +139,21 @@ export class App extends Component {
 		const { alerts, dispatch } = this.props;
 		await dispatch({ alerts: (alerts.push({ id: livechatDisconnectedAlertId, children: I18n.t('Livechat is not connected.'), error: true, timeout: 0 }), alerts) });
 	}
+  
+	initWidget() {
+		setWidgetLanguage();
+		const { minimized, iframe: { visible } } = this.props;
+		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
+		parentCall(visible ? 'showWidget' : 'hideWidget');
+
+		visibility.addListener(this.handleVisibilityChange);
+		this.handleVisibilityChange();
+		window.addEventListener('beforeunload', () => {
+			visibility.removeListener(this.handleVisibilityChange);
+		});
+
+		I18n.on('change', this.handleLanguageChange);
+	}
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
@@ -149,21 +164,10 @@ export class App extends Component {
 		CustomFields.init();
 		Hooks.init();
 		userPresence.init();
-		setWidgetLanguage();
-    
+		this.initWidget();
+
 		this.setState({ initialized: true });
 		parentCall('ready');
-
-		const { minimized } = this.props;
-		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
-
-		visibility.addListener(this.handleVisibilityChange);
-		this.handleVisibilityChange();
-		window.addEventListener('beforeunload', () => {
-			visibility.removeListener(this.handleVisibilityChange);
-		});
-
-		I18n.on('change', this.handleLanguageChange);
 
 		Livechat.onStreamData('connected', this.handleConnected);
 		Livechat.onStreamData('close', this.handleDisconnected);
@@ -243,6 +247,7 @@ const AppConnector = () => (
 					alerts,
 					modal,
 					dispatch,
+					iframe,
 				}) => (
 					<App
 						config={config}
@@ -256,6 +261,7 @@ const AppConnector = () => (
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
+						iframe={iframe}
 					/>
 				)}
 			</StoreConsumer>
