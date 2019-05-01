@@ -30,6 +30,8 @@ const validCallbacks = [
 	'chat-ended',
 	'pre-chat-form-submit',
 	'offline-form-submit',
+	'show-widget',
+	'hide-widget',
 ];
 
 const callbacks = new EventEmitter();
@@ -333,6 +335,8 @@ window.RocketChat.livechat = {
 	onChatEnded(fn) { registerCallback('chat-ended', fn); },
 	onPrechatFormSubmit(fn) { registerCallback('pre-chat-form-submit', fn); },
 	onOfflineFormSubmit(fn) { registerCallback('offline-form-submit', fn); },
+	onWidgetShown(fn) { registerCallback('show-widget', fn); },
+	onWidgetHidden(fn) { registerCallback('hide-widget', fn); },
 };
 
 // proccess queue
