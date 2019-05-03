@@ -5,6 +5,7 @@ import { setWidgetLanguage } from './locale';
 import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
 import { loadConfig } from '../lib/main';
+import { parentCall } from '../lib/parentCall';
 
 const createOrUpdateGuest = async(guest) => {
 	const { token } = guest;
@@ -114,6 +115,18 @@ const api = {
 		const { iframe } = store.state;
 		await store.setState({ iframe: { ...iframe, language } });
 		setWidgetLanguage();
+	},
+  
+	showWidget() {
+		const { iframe } = store.state;
+		store.setState({ iframe: { ...iframe, visible: true } });
+		parentCall('showWidget');
+	},
+  
+	hideWidget() {
+		const { iframe } = store.state;
+		store.setState({ iframe: { ...iframe, visible: false } });
+		parentCall('hideWidget');
 	},
 };
 

@@ -25,6 +25,7 @@ const initialState = {
 	iframe: {
 		guest: {},
 		theme: {},
+		visible: true,
 	},
 	gdpr: {
 		accepted: false,
