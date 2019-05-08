@@ -120,13 +120,13 @@ const api = {
 	showWidget() {
 		const { iframe } = store.state;
 		store.setState({ iframe: { ...iframe, visible: true } });
-		parentCall('showWidget');
+		parentCall('showWidgetIframe');
 	},
   
 	hideWidget() {
 		const { iframe } = store.state;
 		store.setState({ iframe: { ...iframe, visible: false } });
-		parentCall('hideWidget');
+		parentCall('hideWidgetIframe');
 	},
 };
 
