@@ -10690,7 +10690,7 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-"paho-mqtt@github:eclipse/paho.mqtt.javascript#master":
+paho-mqtt@eclipse/paho.mqtt.javascript#master:
   version "1.1.0"
   resolved "https://codeload.github.com/eclipse/paho.mqtt.javascript/tar.gz/9b761defeeb4a627db31d92ae1b0ca91b44b226e"
 
@@ -11959,6 +11959,11 @@ react-draggable@^3.1.1:
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
+
+react-emojione@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-emojione/-/react-emojione-5.0.1.tgz#faa4ccdad4bf24e2f5a1a96d9b44c2e902d2bc79"
+  integrity sha512-sjI6k8uQ14rWENYoAb+2BFQGLBt/cpLDJJNhnZvdFJytAJijhv+JmbmyyrfQPdyID0Cs4N8XFqnek0xq6POwGA==
 
 react-error-overlay@^5.1.4:
   version "5.1.4"
