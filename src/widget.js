@@ -208,12 +208,12 @@ const api = {
 		emitCallback(eventName, data);
 	},
   
-	showWidget() {
+	showWidgetIframe() {
 		iframe.style.display = 'initial';
 		emitCallback('show-widget');
 	},
 
-	hideWidget() {
+	hideWidgetIframe() {
 		iframe.style.display = 'none';
 		emitCallback('hide-widget');
 	},
