@@ -58,6 +58,19 @@ _This is italic text_
 https://rocket.chat
 `;
 
+const defaultEmojiMessage = `
+## Single emoji
+
+Lorem ipsum dolor :wink: and it is nice
+
+## Multiple emojis
+
+Integer molestie :stopwatch: files and :scream: yes
+
+## Only emojis
+:regional_indicator_r: :regional_indicator_c: :regional_indicator_i: :regional_indicator_s: :regional_indicator_a: :regional_indicator_w: :regional_indicator_e: :regional_indicator_s: :regional_indicator_o: :regional_indicator_m: :regional_indicator_e: 
+`;
+
 const defaultUser = {
 	username: 'guilherme.gazzo',
 	name: 'Guilherme Albrech Gazzo',
@@ -111,6 +124,18 @@ storiesOf('Messages|Message', module)
 			me={boolean('me', false)}
 			compact={boolean('compact', false)}
 			msg={text('msg', defaultMarkdownMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+		/>
+	))
+	.add('emoji', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultEmojiMessage)}
 			t={select('t', messageTypes, null)}
 			u={object('u', defaultUser)}
 			ts={date('ts', now)}

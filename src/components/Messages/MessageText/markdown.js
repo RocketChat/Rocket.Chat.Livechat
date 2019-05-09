@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it';
-
+import { emojify } from 'react-emojione';
 
 const md = new MarkdownIt({
 	linkify: true,
@@ -19,4 +19,4 @@ md.use((md) => {
 	md.renderer.rules.em_close = renderStrong;
 });
 
-export const renderMarkdown = (...args) => md.render(...args);
+export const renderMarkdown = (...args) => emojify(md.render(...args), { output: 'unicode' });
