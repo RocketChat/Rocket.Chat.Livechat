@@ -22,6 +22,7 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
+	emojis: [],
 	iframe: {
 		guest: {},
 		theme: {},

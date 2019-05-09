@@ -15,7 +15,7 @@ export const loadConfig = async() => {
 		agent,
 		room,
 		guest: user,
-		resources: { sound: src = null } = {},
+		resources: { sound: src = null, emojis } = {},
 		...config
 	} = await Livechat.config({ token });
 
@@ -24,6 +24,7 @@ export const loadConfig = async() => {
 		agent,
 		room,
 		user,
+		emojis,
 		sound: { src, enabled: true, play: false },
 		messages: [],
 		typing: [],

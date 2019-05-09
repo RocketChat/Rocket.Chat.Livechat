@@ -1,5 +1,6 @@
 import MarkdownIt from 'markdown-it';
 import { emojify } from 'react-emojione';
+import { customEmoji } from './customEmoji';
 
 const md = new MarkdownIt({
 	linkify: true,
@@ -19,4 +20,4 @@ md.use((md) => {
 	md.renderer.rules.em_close = renderStrong;
 });
 
-export const renderMarkdown = (...args) => emojify(md.render(...args), { output: 'unicode' });
+export const renderMarkdown = (...args) => emojify(customEmoji(md.render(...args)), { output: 'unicode' });
