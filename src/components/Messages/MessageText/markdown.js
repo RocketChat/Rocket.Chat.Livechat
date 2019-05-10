@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it';
-import { customEmoji } from './customEmoji';
+import { customEmojify } from './customEmoji';
 
 const md = new MarkdownIt({
 	html: true,
@@ -20,4 +20,4 @@ md.use((md) => {
 	md.renderer.rules.em_close = renderStrong;
 });
 
-export const renderMarkdown = (...args) => md.render(customEmoji(...args));
+export const renderMarkdown = (...args) => md.render(customEmojify(...args));
