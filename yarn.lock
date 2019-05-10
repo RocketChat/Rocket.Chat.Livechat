@@ -11478,6 +11478,13 @@ preact-render-to-string@^3.6.0, preact-render-to-string@^3.6.3, preact-render-to
   dependencies:
     pretty-format "^3.5.1"
 
+preact-render-to-string@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-4.1.0.tgz#70d98a8385cb86558366c558aad7311ebecb881d"
+  integrity sha512-FlFBJRxo8z4cp6VsDmeYjIEx4ZK2clFJnKIvIj8K1IQCRm7ZgJ/SZ1+BotT86/Nc+V1pNtFabHoUi6gpjx5Pug==
+  dependencies:
+    pretty-format "^3.8.0"
+
 preact-router@^2.5.2, preact-router@^2.5.7:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/preact-router/-/preact-router-2.6.1.tgz#eec60a9f2c07a1ae4fbc6604d8a0415742fbbd89"
@@ -11529,7 +11536,7 @@ pretty-format@^24.5.0:
     ansi-styles "^3.2.0"
     react-is "^16.8.4"
 
-pretty-format@^3.5.1:
+pretty-format@^3.5.1, pretty-format@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-3.8.0.tgz#bfbed56d5e9a776645f4b1ff7aa1a3ac4fa3c385"
 

@@ -76,6 +76,7 @@
 		"preact": "^8.2.6",
 		"preact-context": "^1.1.1",
 		"preact-i18nline": "^2.0.0",
+		"preact-render-to-string": "^4.1.0",
 		"preact-router": "^2.5.7",
 		"query-string": "6.3.0",
 		"react-emojione": "^5.0.1",
