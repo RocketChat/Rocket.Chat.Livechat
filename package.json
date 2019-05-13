@@ -1,123 +1,140 @@
 {
-	"name": "@rocket.chat/livechat",
-	"version": "1.0.0",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/RocketChat/Rocket.Chat.Livechat"
-	},
-	"scripts": {
-		"start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-		"build:app": "GENERATE_SOURCEMAP=false preact build --no-prerender --optimize-minimize",
-		"build:widget": "webpack-cli src/widget.js -o build/rocketchat-livechat.min.js --mode production",
-		"build:pack": "cp widget-demo.html ./build && tar -C build -czf build.tar.gz '.'",
-		"build": "run-s build:app build:widget build:pack",
-		"serve": "preact build --no-prerender --optimize-minimize && preact serve",
-		"dev": "preact watch",
-		"lint": "eslint src",
-		"test": "jest ./tests",
-		"coverage": "jest --coverage",
-		"storybook": "start-storybook -p 9001 -c .storybook",
-		"i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
-		"deploy-storybook": "storybook-to-ghpages",
-		"bundle-analyzer": "webpack-bundle-analyzer build/stats.json",
-		"release": "gh-release -c master --assets build.tar.gz"
-	},
-	"eslintIgnore": [
-		"build/*"
-	],
-	"devDependencies": {
-		"@storybook/addon-a11y": "5.0.1",
-		"@storybook/addon-actions": "^5.0.1",
-		"@storybook/addon-backgrounds": "^5.0.3",
-		"@storybook/addon-centered": "^5.0.1",
-		"@storybook/addon-knobs": "^5.0.1",
-		"@storybook/addon-options": "^5.0.1",
-		"@storybook/addon-viewport": "^5.0.1",
-		"@storybook/react": "^5.0.1",
-		"@storybook/storybook-deployer": "^2.3.0",
-		"@storybook/theming": "^5.0.1",
-		"create-react-ref": "^0.1.0",
-		"css-loader": "^2.1.0",
-		"desvg-loader": "^0.1.0",
-		"eslint": "^5.12.1",
-		"eslint-config-synacor": "^3.0.3",
-		"gh-release": "^3.5.0",
-		"husky": "^1.3.1",
-		"identity-obj-proxy": "^3.0.0",
-		"if-env": "^1.0.0",
-		"image-webpack-loader": "^4.3.1",
-		"jest": "^24.0.0",
-		"lorem-ipsum": "^1.0.6",
-		"node-sass": "^4.9.3",
-		"npm-run-all": "^4.1.5",
-		"preact-cli": "3.0.0-next.14",
-		"preact-compat": "^3.18.4",
-		"preact-render-spy": "^1.2.1",
-		"prompts": "^2.0.1",
-		"sass-loader": "^7.1.0",
-		"style-loader": "^0.23.1",
-		"svg-loader": "0.0.2",
-		"webpack-bundle-analyzer": "^3.0.2",
-		"webpack-cli": "^3.2.1"
-	},
-	"dependencies": {
-		"@kossnocorp/desvg": "^0.2.0",
-		"@rocket.chat/sdk": "^1.0.0-alpha.28",
-		"date-fns": "^1.29.0",
-		"desvg": "^1.0.2",
-		"fast-async": "^6.3.8",
-		"history": "^4.7.2",
-		"i18n": "^0.8.3",
-		"i18nline": "^2.0.1",
-		"markdown-it": "^8.4.2",
-		"mem": "^4.2.0",
-		"msgpack": "^1.0.2",
-		"preact": "^8.2.6",
-		"preact-context": "^1.1.1",
-		"preact-i18nline": "^2.0.0",
-		"preact-router": "^2.5.7",
-		"query-string": "6.3.0",
-		"tiny-events": "^1.0.1",
-		"wolfy87-eventemitter": "^5.2.5"
-	},
-	"jest": {
-		"verbose": true,
-		"setupFiles": [
-			"<rootDir>/src/tests/__mocks__/browserMocks.js"
-		],
-		"testURL": "http://localhost:8080",
-		"moduleFileExtensions": [
-			"js",
-			"jsx"
-		],
-		"moduleDirectories": [
-			"node_modules"
-		],
-		"moduleNameMapper": {
-			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
-			"\\.(css|less|scss)$": "identity-obj-proxy",
-			"^./style$": "identity-obj-proxy",
-			"^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
-			"^react$": "preact-compat",
-			"^react-dom$": "preact-compat",
-			"^create-react-class$": "preact-compat/lib/create-react-class",
-			"^react-addons-css-transition-group$": "preact-css-transition-group"
-		}
-	},
-	"browserslist": [
-		"> 1%",
-		"last 2 versions",
-		"not ie < 11"
-	],
-	"storybook-deployer": {
-		"gitUsername": "Guilherme Gazzo",
-		"gitEmail": "guilherme.gazzo@rocket.chat",
-		"commitMessage": "Deploy Storybook to GitHub Pages [skip ci]"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "run-s i18n && git add -A src/i18n"
-		}
-	}
+  "name": "@rocket.chat/livechat",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RocketChat/Rocket.Chat.Livechat"
+  },
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+    "build:app": "GENERATE_SOURCEMAP=false preact build --no-prerender --optimize-minimize",
+    "build:widget": "webpack-cli src/widget.js -o build/rocketchat-livechat.min.js --mode production",
+    "build:pack": "cp widget-demo.html ./build && tar -C build -czf build.tar.gz '.'",
+    "build": "run-s build:app build:widget build:pack",
+    "serve": "preact build --no-prerender --optimize-minimize && preact serve",
+    "dev": "preact watch",
+    "lint": "eslint src",
+    "test": "jest ./tests",
+    "coverage": "jest --coverage",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
+    "deploy-storybook": "storybook-to-ghpages",
+    "bundle-analyzer": "webpack-bundle-analyzer build/stats.json",
+    "release": "gh-release -c master --assets build.tar.gz"
+  },
+  "eslintIgnore": [
+    "build/*"
+  ],
+  "devDependencies": {
+    "@storybook/addon-a11y": "5.0.1",
+    "@storybook/addon-actions": "^5.0.1",
+    "@storybook/addon-backgrounds": "^5.0.3",
+    "@storybook/addon-centered": "^5.0.1",
+    "@storybook/addon-knobs": "^5.0.1",
+    "@storybook/addon-options": "^5.0.1",
+    "@storybook/addon-viewport": "^5.0.1",
+    "@storybook/react": "^5.0.1",
+    "@storybook/storybook-deployer": "^2.3.0",
+    "@storybook/theming": "^5.0.1",
+    "create-react-ref": "^0.1.0",
+    "css-loader": "^2.1.0",
+    "desvg-loader": "^0.1.0",
+    "eslint": "^5.12.1",
+    "eslint-config-synacor": "^3.0.3",
+    "gh-release": "^3.5.0",
+    "husky": "^1.3.1",
+    "identity-obj-proxy": "^3.0.0",
+    "if-env": "^1.0.0",
+    "image-webpack-loader": "^4.3.1",
+    "jest": "^24.0.0",
+    "loki": "^0.15.0",
+    "lorem-ipsum": "^1.0.6",
+    "node-sass": "^4.9.3",
+    "npm-run-all": "^4.1.5",
+    "preact-cli": "3.0.0-next.14",
+    "preact-compat": "^3.18.4",
+    "preact-render-spy": "^1.2.1",
+    "prompts": "^2.0.1",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "svg-loader": "0.0.2",
+    "webpack-bundle-analyzer": "^3.0.2",
+    "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "@kossnocorp/desvg": "^0.2.0",
+    "@rocket.chat/sdk": "^1.0.0-alpha.28",
+    "date-fns": "^1.29.0",
+    "desvg": "^1.0.2",
+    "fast-async": "^6.3.8",
+    "history": "^4.7.2",
+    "i18n": "^0.8.3",
+    "i18nline": "^2.0.1",
+    "markdown-it": "^8.4.2",
+    "mem": "^4.2.0",
+    "msgpack": "^1.0.2",
+    "preact": "^8.2.6",
+    "preact-context": "^1.1.1",
+    "preact-i18nline": "^2.0.0",
+    "preact-router": "^2.5.7",
+    "query-string": "6.3.0",
+    "tiny-events": "^1.0.1",
+    "wolfy87-eventemitter": "^5.2.5"
+  },
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "<rootDir>/src/tests/__mocks__/browserMocks.js"
+    ],
+    "testURL": "http://localhost:8080",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "identity-obj-proxy",
+      "^./style$": "identity-obj-proxy",
+      "^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
+      "^react$": "preact-compat",
+      "^react-dom$": "preact-compat",
+      "^create-react-class$": "preact-compat/lib/create-react-class",
+      "^react-addons-css-transition-group$": "preact-css-transition-group"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie < 11"
+  ],
+  "storybook-deployer": {
+    "gitUsername": "Guilherme Gazzo",
+    "gitEmail": "guilherme.gazzo@rocket.chat",
+    "commitMessage": "Deploy Storybook to GitHub Pages [skip ci]"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s i18n && git add -A src/i18n"
+    }
+  },
+  "loki": {
+    "configurations": {
+      "chrome.laptop": {
+        "target": "chrome.docker",
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1,
+        "mobile": false,
+        "fitWindow": false
+      },
+      "chrome.iphone7": {
+        "target": "chrome.docker",
+        "preset": "iPhone 7"
+      }
+    }
+  }
 }

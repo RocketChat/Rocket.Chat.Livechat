@@ -2,7 +2,7 @@ import { addDecorator, configure, addParameters } from '@storybook/react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withOptions } from '@storybook/addon-options';
 import { create } from '@storybook/theming';
-
+import 'loki/configure-react'
 
 addParameters({
 	options: {
