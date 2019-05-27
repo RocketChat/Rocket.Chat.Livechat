@@ -17,7 +17,6 @@ import ChatIcon from '../../icons/chat.svg';
 import CloseIcon from '../../icons/close.svg';
 import styles from './styles';
 
-
 class ScreenHeader extends Component {
 	largeHeader = () => {
 		const { agent } = this.props;

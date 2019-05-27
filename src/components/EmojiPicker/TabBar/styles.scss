@@ -1,0 +1,23 @@
+@import '~styles/colors';
+@import '~styles/helpers';
+
+
+.tab-list {
+  border-bottom: 1px solid #ccc;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.tab-list-item {
+  display: inline-block;
+  list-style: none;
+  margin-bottom: -1px;
+  padding: 0.5rem 0.5rem;
+}
+
+.tab-list-active {
+  background-color: white;
+  border: solid rgb(59, 17, 17);
+  border-width: 0px 0px 3px 0px;
+}
+
