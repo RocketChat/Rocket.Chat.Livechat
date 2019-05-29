@@ -1,9 +1,8 @@
 import EventEmitter from 'wolfy87-eventemitter';
 
-
-const log = process.env.NODE_ENV === 'development'
-	? (...args) => window.console.log('%cwidget%c', 'color: red', 'color: initial', ...args)
-	: () => {};
+const log = process.env.NODE_ENV === 'development' ?
+	(...args) => window.console.log('%cwidget%c', 'color: red', 'color: initial', ...args) :
+	() => { };
 
 
 const WIDGET_OPEN_WIDTH = 365;
@@ -308,13 +307,12 @@ const trackNavigation = () => {
 	}, 800);
 };
 
-const init = (url) => {
+const init = async(url) => {
 	if (!url) {
 		return;
 	}
 
 	config.url = url;
-
 	createWidget(url);
 	attachMessageListener();
 	trackNavigation();
