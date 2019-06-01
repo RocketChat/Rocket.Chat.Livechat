@@ -5,4 +5,23 @@
   border: solid rgb(221, 211, 211);
   border-width: 1px;
   border-radius: 2%;
+  overflow-y: auto;
+  max-height: 400px;
+  min-height: 400px;
+  width: 380px;
+}
+
+.label-header {
+  margin-left: 3%;
+  color: rgb(3, 36, 36);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.emoji-list{
+  display: inline-block;
+  list-style-type: none;
+  width: auto;
+  margin-left: -20px;
+  margin-top: 0px;
+  min-inline-size: 65px;
 }
