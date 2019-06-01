@@ -3,9 +3,11 @@
 import { Component } from 'preact';
 import Tabs from './TabBar/Tabs';
 import categories from './categories';
+import contentToSend from './customEmoji';
 import styles from './styles';
 import { createClassName } from '../helpers';
 import { emojisByCategory } from '../../emoji';
+import { store } from '../../store';
 import { emojify } from 'react-emojione';
 
 export class EmojiPicker extends Component {
@@ -22,13 +24,31 @@ export class EmojiPicker extends Component {
   			{categories.tabs.map((val) => (
   				<div label={val.tabLabel}>
   					<h3 className={createClassName(styles, 'label-header')}>{val.category}</h3>
-  					{val.category === 'Custom' ? (
-  						<ul className={createClassName(styles, 'emoji-list')}>
-  							<li>
-  								{emojify(':smile:', { output: 'unicode' })}
-  							</li>
-  						</ul>
-  					) : null}
+  					{(() => {
+  						if (val.category === 'Frequently Used') {
+  							return (
+  								<p className={createClassName(styles, 'no-emoji')}>Select an emoji first.</p>
+  							);
+  						}
+  					})()}
+  					{(() => {
+  						if (val.category === 'Custom') {
+  							const { emojis } = store.state;
+  							if (emojis && emojis.length > 0) {
+  								emojis.map((customEmojis) => (
+  										<ul className={createClassName(styles, 'emoji-list')}>
+  											<li>
+  												{contentToSend(`${ customEmojis }`)}
+  											</li>
+  										</ul>
+  									));
+  							} else {
+  								return (
+  									<p className={createClassName(styles, 'no-emoji')}>No Custom Emojis</p>
+  								);
+  							}
+  						}
+  					})()}
   					{emojisByCategory[this.lowerFirstLetter(val.category)] ? (
   						emojisByCategory[this.lowerFirstLetter(val.category)].map((emoji) => (
   							<ul className={createClassName(styles, 'emoji-list')}>

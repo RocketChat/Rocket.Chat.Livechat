@@ -26,3 +26,5 @@ export const customEmojify = (text) => {
 	const content = contentToSend(text);
 	return render(<body> {content} </body>);
 };
+
+export default { contentToSend };

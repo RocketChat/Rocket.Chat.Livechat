@@ -1062,8 +1062,6 @@ export const emojisByCategory = {
 		'large_orange_diamond',
 		'large_blue_diamond',
 		'small_red_triangle',
-		'black_small_square',
-		'white_small_square',
 		'black_large_square',
 		'white_large_square',
 		'small_red_triangle_down',
