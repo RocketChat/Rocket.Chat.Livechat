@@ -33,6 +33,23 @@ export const avatarResolver = (username) => ({
 	'martin.schoeler': '//gravatar.com/avatar/e6662ba16ba3ca2a76857e3999e6d960?s=32',
 })[username];
 
+export const customEmojis = ([
+	{
+		_id: '6545123131234225',
+		name: 'computerrage',
+		aliases: ['computerrage'],
+		extension: 'gif',
+		_updatedAt: { $date: 1480377601 },
+	},
+	{
+		_id: '565463534536535453',
+		name: 'headdesk',
+		aliases: ['headdesk'],
+		extension: 'gif',
+		_updatedAt: { $date: 1480377601 },
+	},
+]);
+
 export const attachmentResolver = (url) => url;
 
 export const memedIpsum = mem(loremIpsum);

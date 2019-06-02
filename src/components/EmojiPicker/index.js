@@ -3,11 +3,10 @@
 import { Component } from 'preact';
 import Tabs from './TabBar/Tabs';
 import categories from './categories';
-import contentToSend from './customEmoji';
 import styles from './styles';
 import { createClassName } from '../helpers';
 import { emojisByCategory } from '../../emoji';
-import { store } from '../../store';
+import { Livechat } from '../../api';
 import { emojify } from 'react-emojione';
 
 export class EmojiPicker extends Component {
@@ -18,7 +17,7 @@ export class EmojiPicker extends Component {
   	return firstLetter ? firstLetter.toLowerCase() + string.substring(1) : '';
   }
 
-  render = () => (
+  render = ({ customEmojis }) => (
   	<section className={createClassName(styles, 'section')}>
   		<Tabs>
   			{categories.tabs.map((val) => (
@@ -33,20 +32,18 @@ export class EmojiPicker extends Component {
   					})()}
   					{(() => {
   						if (val.category === 'Custom') {
-  							const { emojis } = store.state;
-  							if (emojis && emojis.length > 0) {
-  								emojis.map((customEmojis) => (
-  										<ul className={createClassName(styles, 'emoji-list')}>
-  											<li>
-  												{contentToSend(`${ customEmojis }`)}
-  											</li>
-  										</ul>
-  									));
-  							} else {
-  								return (
+  							{
+  								return (customEmojis && customEmojis.length > 0 ? (
+  									customEmojis.map((customEmoji) => (
+  											(
+  												<ul className={createClassName(styles, 'emoji-list')}>
+  													<li><img src={`${ Livechat.client.host }/${ encodeURIComponent(customEmoji.name) }.${ customEmoji.extension }`} width="25" /></li>
+  												</ul>
+  											)
+  										))
+  								) : (
   									<p className={createClassName(styles, 'no-emoji')}>No Custom Emojis</p>
-  								);
-  							}
+  								)); }
   						}
   					})()}
   					{emojisByCategory[this.lowerFirstLetter(val.category)] ? (

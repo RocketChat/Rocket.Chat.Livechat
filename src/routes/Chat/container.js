@@ -319,6 +319,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			unread,
 			lastReadMessageId,
 			triggerAgent,
+			emojis,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -343,7 +344,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				room={room}
 				messages={messages.filter((message) => canRenderMessage(message))}
 				noMoreMessages={noMoreMessages}
-				emoji={false}
+				emoji
 				uploads={uploads}
 				typingUsernames={Array.isArray(typing) ? typing : []}
 				loading={loading}
@@ -357,6 +358,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				alerts={alerts}
 				visible={visible}
 				unread={unread}
+				emojis={emojis}
 				lastReadMessageId={lastReadMessageId}
 				guest={guest}
 				triggerAgent={triggerAgent}
