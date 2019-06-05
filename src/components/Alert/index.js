@@ -38,13 +38,15 @@ export class Alert extends Component {
 			<div className={createClassName(styles, 'alert__content')}>
 				{children}
 			</div>
-			{!hideCloseButton && <button
-				onClick={this.handleDismiss}
-				className={createClassName(styles, 'alert__close')}
-				aria-label={I18n.t('Dismiss this alert')}
-			>
-				<CloseIcon width={20} />
-			</button>}
+			{!hideCloseButton && (
+				<button
+					onClick={this.handleDismiss}
+					className={createClassName(styles, 'alert__close')}
+					aria-label={I18n.t('Dismiss this alert')}
+				>
+					<CloseIcon width={20} />
+				</button>
+			)}
 		</div>
 	)
 }
