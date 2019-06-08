@@ -1,10 +1,16 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 import axios from 'axios';
 import { Livechat } from '../../api';
 import history from '../../history';
+import { loadConfig, clearConnectionAlerts, getToken } from '../../lib/main';
+import CustomFields from '../../lib/customFields';
+import { setWidgetLanguage } from '../../lib/locale';
+import Triggers from '../../lib/triggers';
+import Hooks from '../../lib/hooks';
+import { parentCall } from '../../lib/parentCall';
+import userPresence from '../../lib/userPresence';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
