@@ -7,6 +7,7 @@ import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import { EmojiPicker } from '../../components/EmojiPicker';
+import { Livechat } from '../../api';
 import styles from './styles';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
@@ -158,7 +159,7 @@ export default class Chat extends Component {
 						pre={emoji && (
 							<ComposerActions>
 								<ComposerAction>
-									<EmojiPicker customEmojis={emojis} />
+									<EmojiPicker customEmojis={emojis} host={Livechat.client.host} />
 								</ComposerAction>
 							</ComposerActions>
 						)}
