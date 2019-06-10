@@ -63,7 +63,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 		{({
 			config: {
 				departments = {},
-				message: {
+				messages: {
 					registrationFormMessage: message,
 				} = {},
 				settings: {
