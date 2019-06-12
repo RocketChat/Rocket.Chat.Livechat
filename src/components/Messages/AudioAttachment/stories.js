@@ -7,7 +7,7 @@ import { AudioAttachment } from '.';
 storiesOf('Messages|AudioAttachment', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('default', () => (
+	.lokiSkip('default', () => (
 		<AudioAttachment
 			url={text('url', 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3')}
 		/>

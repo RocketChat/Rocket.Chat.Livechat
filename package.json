@@ -17,7 +17,12 @@
 		"lint": "eslint src",
 		"test": "jest ./tests",
 		"coverage": "jest --coverage",
+		"loki:test": "loki test --chromeDockerImage=chinello/alpine-chrome:73 --chromeFlags=\"--headless --no-sandbox --disable-gpu\" --verboseRenderer --requireReference --reactUri file:./storybook-static",
+		"loki:update": "loki update --chromeDockerImage=chinello/alpine-chrome:73 --chromeFlags=\"--headless --no-sandbox --disable-gpu\" --verboseRenderer --requireReference --reactUri file:./storybook-static",
+		"loki:test-ci": "loki test --chromeFlags=\"--headless --no-sandbox --disable-gpu\" --verboseRenderer --requireReference --reactUri file:./storybook-static",
+		"loki:update-ci": "loki update --chromeFlags=\"--headless --no-sandbox --disable-gpu\" --verboseRenderer --requireReference --reactUri file:./storybook-static",
 		"storybook": "start-storybook -p 9001 -c .storybook",
+		"build-storybook": "build-storybook",
 		"i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
 		"deploy-storybook": "storybook-to-ghpages",
 		"bundle-analyzer": "webpack-bundle-analyzer build/stats.json",
@@ -48,6 +53,7 @@
 		"if-env": "^1.0.0",
 		"image-webpack-loader": "^4.3.1",
 		"jest": "^24.0.0",
+		"loki": "^0.17.0",
 		"lorem-ipsum": "^1.0.6",
 		"node-sass": "^4.9.3",
 		"npm-run-all": "^4.1.5",
@@ -110,6 +116,22 @@
 		"last 2 versions",
 		"not ie < 11"
 	],
+  "loki": {
+    "configurations": {
+      "chrome.laptop": {
+        "target": "chrome.docker",
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1,
+        "mobile": false,
+        "fitWindow": false
+      },
+      "chrome.iphone7": {
+        "target": "chrome.docker",
+        "preset": "iPhone 7"
+      }
+    }
+  },
 	"storybook-deployer": {
 		"gitUsername": "Guilherme Gazzo",
 		"gitEmail": "guilherme.gazzo@rocket.chat",

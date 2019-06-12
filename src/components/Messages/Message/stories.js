@@ -153,7 +153,7 @@ storiesOf('Messages|Message', module)
 			}])}
 		/>
 	))
-	.add('with audio attachment', () => (
+	.lokiSkip('with audio attachment', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
 			avatarResolver={avatarResolver}
@@ -168,7 +168,7 @@ storiesOf('Messages|Message', module)
 			}])}
 		/>
 	))
-	.add('with video attachment', () => (
+	.lokiSkip('with video attachment', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
 			avatarResolver={avatarResolver}
@@ -216,7 +216,7 @@ storiesOf('Messages|Message', module)
 			)}
 		/>
 	))
-	.add('with mutiple attachments', () => (
+	.lokiSkip('with mutiple attachments', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
 			avatarResolver={avatarResolver}

@@ -8,7 +8,7 @@ import { action } from '@storybook/addon-actions';
 storiesOf('Components|Sound', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
-	.add('short', () => (
+	.lokiSkip('short', () => (
 		<Sound
 			src={text('src', 'https://open.rocket.chat/sounds/chime.mp3')}
 			play={boolean('play', false)}
@@ -16,7 +16,7 @@ storiesOf('Components|Sound', module)
 			onStop={action('stop')}
 		/>
 	))
-	.add('long', () => (
+	.lokiSkip('long', () => (
 		<Sound
 			src={text('src', 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3')}
 			play={boolean('play', false)}

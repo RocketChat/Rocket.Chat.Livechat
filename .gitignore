@@ -6,3 +6,6 @@ coverage
 package-lock.json
 build.tar.gz
 .DS_Store
+/storybook-static
+/.loki/*
+!/.loki/reference
