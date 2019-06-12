@@ -2,24 +2,25 @@ import { addDecorator, configure, addParameters } from '@storybook/react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withOptions } from '@storybook/addon-options';
 import { create } from '@storybook/theming';
+import 'loki/configure-react';
 
 
 addParameters({
 	options: {
 		theme: create({
-			base: 'dark',
+			base: 'light',
 			brandTitle: 'Rocket.Chat Livechat',
 			brandImage: 'https://rocket.chat/images/default/logo--dark.svg',
 			brandUrl: 'https://github.com/RocketChat/Rocket.Chat.Livechat',
 		}),
+		panelPosition: 'right',
 		hierarchySeparator: /\//,
 		hierarchyRootSeparator: /\|/,
 	},
 	backgrounds: [
 		{
-			name: 'white',
-			value: 'white',
-			default: true,
+			name: 'dark',
+			value: '#333',
 		},
 	],
 });
