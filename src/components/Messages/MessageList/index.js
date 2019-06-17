@@ -116,7 +116,7 @@ export class MessageList extends MemoizedComponent {
 
 			items.push(
 				<Message
-					key={message.ts}
+					key={message._id}
 					attachmentResolver={attachmentResolver}
 					avatarResolver={avatarResolver}
 					use="li"
