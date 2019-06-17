@@ -14,7 +14,7 @@ import styles from './styles';
 
 
 const defaultTitle = I18n.t('Need help?');
-const defaultMessage = I18n.t('Please, tell us some informations to start the chat');
+const defaultMessage = I18n.t('Please, tell us some information to start the chat');
 
 export default class Register extends Component {
 	state = {

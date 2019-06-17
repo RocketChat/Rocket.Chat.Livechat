@@ -30,6 +30,8 @@ const validCallbacks = [
 	'chat-ended',
 	'pre-chat-form-submit',
 	'offline-form-submit',
+	'show-widget',
+	'hide-widget',
 ];
 
 const callbacks = new EventEmitter();
@@ -205,6 +207,16 @@ const api = {
 	callback(eventName, data) {
 		emitCallback(eventName, data);
 	},
+  
+	showWidgetIframe() {
+		iframe.style.display = 'initial';
+		emitCallback('show-widget');
+	},
+
+	hideWidgetIframe() {
+		iframe.style.display = 'none';
+		emitCallback('hide-widget');
+	},
 };
 
 function pageVisited(change) {
@@ -252,6 +264,14 @@ function clearDepartment() {
 
 function setLanguage(language) {
 	callHook('setLanguage', language);
+}
+
+function showWidget() {
+	callHook('showWidget');
+}
+
+function hideWidget() {
+	callHook('hideWidget');
 }
 
 const currentPage = {
@@ -325,6 +345,8 @@ window.RocketChat.livechat = {
 	setGuestEmail,
 	registerGuest,
 	setLanguage,
+	showWidget,
+	hideWidget,
 
 	// callbacks
 	onChatMaximized(fn) { registerCallback('chat-maximized', fn); },
@@ -333,6 +355,8 @@ window.RocketChat.livechat = {
 	onChatEnded(fn) { registerCallback('chat-ended', fn); },
 	onPrechatFormSubmit(fn) { registerCallback('pre-chat-form-submit', fn); },
 	onOfflineFormSubmit(fn) { registerCallback('offline-form-submit', fn); },
+	onWidgetShown(fn) { registerCallback('show-widget', fn); },
+	onWidgetHidden(fn) { registerCallback('hide-widget', fn); },
 };
 
 // proccess queue
