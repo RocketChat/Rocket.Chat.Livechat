@@ -1,13 +1,12 @@
-/* eslint-disable no-lonely-if */
-/* eslint-disable no-alert */
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 import { Livechat } from '../../api';
 import history from '../../history';
-import { loadConfig, clearConnectionAlerts, getToken } from '../../lib/main';
+import { loadConfig, clearConnectionAlerts } from '../../lib/main';
 import CustomFields from '../../lib/customFields';
 import { setWidgetLanguage } from '../../lib/locale';
+import { locationUpdate } from '../../lib/location';
 import Triggers from '../../lib/triggers';
 import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
@@ -18,7 +17,7 @@ import ChatFinished from '../../routes/ChatFinished';
 import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
-import store, { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
+import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { visibility } from '../helpers';
 import { setWidgetLanguage } from '../../lib/locale';
 import CustomFields from '../../lib/customFields';
