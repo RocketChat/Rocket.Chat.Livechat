@@ -1,22 +1,24 @@
 @import '~styles/helpers';
 
-
 $composer-action-margin: 0 6px;
 
 .composer__action {
-	margin: $composer-action-margin;
-	padding: 0;
 	flex: 0 0;
 
-	background: none;
-	border: none;
-
-	font-size: 0;
+	margin: $composer-action-margin;
+	padding: 0;
 
 	cursor: pointer;
 
+	border: none;
+
+	background: none;
+
+	font-size: 0;
+
 	&:focus {
 		transform: scale(1.05);
+
 		outline: none;
 	}
 

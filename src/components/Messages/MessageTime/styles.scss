@@ -1,19 +1,21 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
-
 $message-time-margin: 0 ($default-gap / 2);
 $message-time-font-size: 0.625rem;
 $message-time-line-height: 1rem;
 $message-time-color: $color-text-grey;
 
 .message-time {
-	grid-area: time;
 	margin: $message-time-margin;
-	justify-self: end;
-	color: $message-time-color;
-	line-height: $message-time-line-height;
-	font-size: $message-time-font-size;
-	white-space: nowrap;
+
 	user-select: none;
+	white-space: nowrap;
+
+	color: $message-time-color;
+
+	font-size: $message-time-font-size;
+	line-height: $message-time-line-height;
+	grid-area: time;
+	justify-self: end;
 }

@@ -14,7 +14,9 @@
 		"build": "run-s build:app build:widget build:pack",
 		"serve": "preact build --no-prerender --optimize-minimize && preact serve",
 		"dev": "preact watch",
-		"lint": "eslint src",
+		"lint": "run-s eslint stylelint",
+		"eslint": "eslint src",
+		"stylelint": "stylelint 'src/**/*.scss'",
 		"test": "jest ./tests",
 		"coverage": "jest --coverage",
 		"storybook": "start-storybook -p 9001 -c .storybook",
@@ -23,9 +25,6 @@
 		"bundle-analyzer": "webpack-bundle-analyzer build/stats.json",
 		"release": "gh-release -c master --assets build.tar.gz"
 	},
-	"eslintIgnore": [
-		"build/*"
-	],
 	"devDependencies": {
 		"@rocket.chat/eslint-config": "^0.3.0",
 		"@storybook/addon-a11y": "^5.1.9",
@@ -58,6 +57,8 @@
 		"prompts": "^2.0.1",
 		"sass-loader": "^7.1.0",
 		"style-loader": "^0.23.1",
+		"stylelint": "^10.1.0",
+		"stylelint-order": "^3.0.0",
 		"svg-loader": "0.0.2",
 		"webpack-bundle-analyzer": "^3.0.2",
 		"webpack-cli": "^3.2.1"

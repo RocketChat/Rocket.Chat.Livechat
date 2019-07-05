@@ -2,17 +2,22 @@
 @import '~styles/variables';
 
 .menu {
-	background: $bg-color-white;
-	border-radius: 4px;
-	box-shadow: 0 0 2px 0 rgba($bg-color-dark, 0.08),
-		0 0 12px 0 rgba($bg-color-dark, 0.12);
-	padding: 16px 0;
-	transition: opacity $default-time-animation,
-		visibility $default-time-animation,
-		transform $default-time-animation / 2;
-	user-select: none;
 	display: flex;
 	flex-direction: column;
+
+	padding: 16px 0;
+
+	user-select: none;
+	transition:
+		opacity $default-time-animation,
+		visibility $default-time-animation,
+		transform $default-time-animation / 2;
+
+	border-radius: 4px;
+	background: $bg-color-white;
+	box-shadow:
+		0 0 2px 0 rgba($bg-color-dark, 0.08),
+		0 0 12px 0 rgba($bg-color-dark, 0.12);
 	align-items: stretch;
 
 	&:empty {
@@ -25,37 +30,47 @@
 		align-items: stretch;
 
 		&-title {
-			color: $color-text-dark;
-			font-size: 12px;
-			font-weight: 600;
-			letter-spacing: 0;
-			line-height: 16px;
 
 			margin: 2px 16px;
+
+			letter-spacing: 0;
+
+			color: $color-text-dark;
+
+			font-size: 12px;
+			font-weight: 600;
+			line-height: 16px;
 		}
 
 		& + &::before {
-			content: "";
 			display: block;
-			border: 1px solid $bg-color-grey;
+
 			margin: 14px 16px;
+
+			content: "";
+
+			border: 1px solid $bg-color-grey;
 		}
 	}
 
 	&__item {
+		display: flex;
+
+		padding: 12px 16px;
+
+		cursor: pointer;
+		text-align: initial;
+		white-space: nowrap;
+		letter-spacing: 0;
+
+		border: none;
+		outline: none;
+		background: none;
+
 		font-family: inherit;
 		font-size: 16px;
 		font-weight: 500;
-		letter-spacing: 0;
 		line-height: 24px;
-		text-align: initial;
-		padding: 12px 16px;
-		white-space: nowrap;
-		background: none;
-		border: none;
-		outline: none;
-		cursor: pointer;
-		display: flex;
 
 		@mixin itemcolor($color) {
 			color: $color;
@@ -65,12 +80,11 @@
 			}
 
 			&:active {
-				background-color: mix($color, $bg-color-white, 10%)
+				background-color: mix($color, $bg-color-white, 10%);
 			}
 		}
 
 		@include itemcolor($color-text-dark);
-
 
 		&--primary {
 			@include itemcolor($color-blue);
@@ -81,8 +95,9 @@
 		}
 
 		&--disabled {
-			opacity: .5;
 			pointer-events: none;
+
+			opacity: 0.5;
 		}
 
 		&__icon {
@@ -93,9 +108,11 @@
 	}
 
 	&--hidden {
-    visibility: hidden;
-		opacity: 0;
+		visibility: hidden;
+
 		transform: scale(0);
+
+		opacity: 0;
 	}
 
 	&--placement {
@@ -104,24 +121,28 @@
 		&-left-top {
 			right: 0;
 			bottom: 100%;
+
 			transform-origin: right bottom;
 		}
 
 		&-right-top {
-			left: 0;
 			bottom: 100%;
+			left: 0;
+
 			transform-origin: left bottom;
 		}
 
 		&-right-bottom {
-			left: 0;
 			top: 100%;
+			left: 0;
+
 			transform-origin: left top;
 		}
 
 		&-left-bottom {
-			right: 0;
 			top: 100%;
+			right: 0;
+
 			transform-origin: right top;
 		}
 	}

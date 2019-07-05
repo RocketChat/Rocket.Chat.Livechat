@@ -1,12 +1,12 @@
 @import '~styles/variables';
 
-
 $message-container-margin: 0 0 $default-padding 0;
 $message-container-compact-margin: 0 0 ($default-padding / 4) 0;
 
 .message-container {
-	margin: $message-container-margin;
 	display: grid;
+
+	margin: $message-container-margin;
 	grid-template:
 		"avatars content"
 		".       time" /
