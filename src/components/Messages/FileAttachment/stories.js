@@ -1,6 +1,7 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { memedIpsum } from '../../../helpers.stories';
 import { FileAttachment } from '.';
 
@@ -55,5 +56,4 @@ storiesOf('Messages|FileAttachment', module)
 			title={text('title', memedIpsum({ count: 50, units: 'words' }))}
 			url={text('url', 'http://localhost:3000/demo.abc')}
 		/>
-	))
-;
+	));

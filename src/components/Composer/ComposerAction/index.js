@@ -1,5 +1,5 @@
 import { createClassName, memo } from '../../helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export const ComposerAction = memo(({ text, onClick, className, style = {}, children }) => (

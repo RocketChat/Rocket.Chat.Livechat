@@ -2,8 +2,10 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { Form, FormField } from '..';
+
 import { TextInput } from '.';
+
+import { Form, FormField } from '..';
 
 
 storiesOf('Forms|TextInput', module)
@@ -104,6 +106,4 @@ storiesOf('Forms|TextInput', module)
 				/>
 			</FormField>
 		</Form>
-	))
-;
-
+	));

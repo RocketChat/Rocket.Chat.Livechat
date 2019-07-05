@@ -2,6 +2,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, button, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { FilesDropTarget } from '.';
 
 
@@ -100,5 +101,4 @@ storiesOf('Components|FilesDropTarget', module)
 				onUpload={action('upload')}
 			/>
 		);
-	})
-;
+	});

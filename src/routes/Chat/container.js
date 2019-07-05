@@ -1,5 +1,6 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
+
 import { Livechat } from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
@@ -22,7 +23,7 @@ export class ChatContainer extends Component {
 		}
 	}
 
-	grantUser = async() => {
+	grantUser = async () => {
 		const { token, user, guest } = this.props;
 
 		if (user) {
@@ -34,7 +35,7 @@ export class ChatContainer extends Component {
 		await loadConfig();
 	}
 
-	getRoom = async() => {
+	getRoom = async () => {
 		const { alerts, dispatch, room } = this.props;
 
 		if (room) {
@@ -62,7 +63,7 @@ export class ChatContainer extends Component {
 		loadMoreMessages();
 	}
 
-	startTyping = throttle(async({ rid, username }) => {
+	startTyping = throttle(async ({ rid, username }) => {
 		await Livechat.notifyVisitorTyping(rid, username, true);
 		this.stopTypingDebounced({ rid, username });
 	}, 4500)
@@ -71,7 +72,7 @@ export class ChatContainer extends Component {
 
 	stopTypingDebounced = debounce(this.stopTyping, 5000)
 
-	handleChangeText = async() => {
+	handleChangeText = async () => {
 		const { user, room } = this.props;
 		if (!(user && user.username && room && room._id)) {
 			return;
@@ -80,7 +81,7 @@ export class ChatContainer extends Component {
 		this.startTyping({ rid: room._id, username: user.username });
 	}
 
-	handleSubmit = async(msg) => {
+	handleSubmit = async (msg) => {
 		if (msg.trim() === '') {
 			return;
 		}
@@ -101,10 +102,9 @@ export class ChatContainer extends Component {
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
 		await Livechat.notifyVisitorTyping(rid, user.username, false);
-
 	}
 
-	doFileUpload = async(rid, file) => {
+	doFileUpload = async (rid, file) => {
 		const { alerts, dispatch } = this.props;
 
 		try {
@@ -126,14 +126,14 @@ export class ChatContainer extends Component {
 		}
 	};
 
-	handleUpload = async(files) => {
+	handleUpload = async (files) => {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 
-		files.forEach(async(file) => await this.doFileUpload(rid, file));
+		files.forEach((file) => this.doFileUpload(rid, file));
 	}
 
-	handleSoundStop = async() => {
+	handleSoundStop = async () => {
 		const { dispatch, sound = {} } = this.props;
 		await dispatch({ sound: { ...sound, play: false } });
 	}
@@ -142,7 +142,7 @@ export class ChatContainer extends Component {
 		route('/switch-department');
 	}
 
-	onFinishChat = async() => {
+	onFinishChat = async () => {
 		const { success } = await ModalManager.confirm({
 			text: I18n.t('Are you sure you want to finish this chat?'),
 		});
@@ -168,7 +168,7 @@ export class ChatContainer extends Component {
 		}
 	}
 
-	onRemoveUserData = async() => {
+	onRemoveUserData = async () => {
 		const { success } = await ModalManager.confirm({
 			text: I18n.t('Are you sure you want to remove all of your personal data?'),
 		});
@@ -208,9 +208,9 @@ export class ChatContainer extends Component {
 		return allowRemoveUserData;
 	}
 
-	showOptionsMenu = () => (
+	showOptionsMenu = () =>
 		this.canSwitchDepartment() || this.canFinishChat() || this.canRemoveUserData()
-	)
+
 
 	async handleConnectingAgentAlert(connecting) {
 		const { alerts: oldAlerts, dispatch } = this.props;
@@ -223,7 +223,7 @@ export class ChatContainer extends Component {
 				warning: true,
 				hideCloseButton: true,
 				timeout: 0,
-			 });
+			});
 		}
 
 		await dispatch({ alerts });
@@ -241,8 +241,8 @@ export class ChatContainer extends Component {
 			const nextLastMessage = nextMessages[nextMessages.length - 1];
 			const lastMessage = messages[messages.length - 1];
 			if (
-				(nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) ||
-				(nextMessages.length === 1 && messages.length === 0)
+				(nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id)
+				|| (nextMessages.length === 1 && messages.length === 0)
 			) {
 				const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
 				await dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });

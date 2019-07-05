@@ -1,6 +1,7 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { avatarResolver } from '../../../helpers.stories';
 import { TypingIndicator } from '.';
 
@@ -21,5 +22,4 @@ storiesOf('Messages|TypingIndicator', module)
 			usernames={object('usernames', ['guilherme.gazzo', 'tasso.evangelista', 'martin.schoeler'])}
 			text={text('text', 'The attendant is typing')}
 		/>
-	))
-;
+	));

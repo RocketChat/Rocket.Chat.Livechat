@@ -1,9 +1,10 @@
 import { Component } from 'preact';
+
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 const defaultGreeting = I18n.t('Thanks for talking with us');
 const defaultMessage = I18n.t('If you have any other questions, just press the button below to start a new chat.');

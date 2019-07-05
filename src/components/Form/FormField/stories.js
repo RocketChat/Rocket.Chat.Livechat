@@ -1,9 +1,12 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
+
 import { memedIpsum } from '../../../helpers.stories';
-import { Form, TextInput } from '..';
 import { FormField } from '.';
+
+import { Form, TextInput } from '..';
 
 
 storiesOf('Forms|FormField', module)
@@ -44,5 +47,4 @@ storiesOf('Forms|FormField', module)
 				<TextInput value={memedIpsum({ count: 3, units: 'words' })} />
 			</FormField>
 		</Form>
-	))
-;
+	));

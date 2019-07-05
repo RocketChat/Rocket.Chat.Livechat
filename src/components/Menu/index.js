@@ -1,7 +1,8 @@
 import { Component, h } from 'preact';
+
 import { createClassName, normalizeDOMRect } from '../helpers';
 import { PopoverTrigger } from '../Popover';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export const Menu = ({ children, hidden, placement, ...props }) => (

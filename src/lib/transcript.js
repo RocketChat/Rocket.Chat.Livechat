@@ -3,7 +3,7 @@ import store from '../store';
 import { ModalManager } from '../components/Modal';
 
 
-const promptTranscript = async() => {
+const promptTranscript = async () => {
 	const { config: { messages: { transcriptMessage } }, user: { token, visitorEmails }, room: { _id } } = store.state;
 	const email = visitorEmails && visitorEmails.length > 0 ? visitorEmails[0].address : '';
 	if (!email) {
@@ -15,9 +15,9 @@ const promptTranscript = async() => {
 
 	return ModalManager.confirm({
 		text: message,
-	}).then(async(result) => {
+	}).then((result) => {
 		if ((typeof result.success === 'boolean') && result.success) {
-			return await Livechat.requestTranscript(email, { token, rid: _id });
+			return Livechat.requestTranscript(email, { token, rid: _id });
 		}
 	});
 };
@@ -28,7 +28,7 @@ const transcriptSentAlert = (message) => ModalManager.alert({
 });
 
 
-export const handleTranscript = async() => {
+export const handleTranscript = async () => {
 	const { config: { settings: { transcript } = {} } } = store.state;
 
 	if (!transcript) {

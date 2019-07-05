@@ -4,4 +4,3 @@ export default {
 	livechatConnectedAlertId: 'LIVECHAT_CONNECTED',
 	livechatDisconnectedAlertId: 'LIVECHAT_DISCONNECTED',
 };
-

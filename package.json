@@ -27,6 +27,7 @@
 		"build/*"
 	],
 	"devDependencies": {
+		"@rocket.chat/eslint-config": "^0.3.0",
 		"@storybook/addon-a11y": "^5.1.9",
 		"@storybook/addon-actions": "^5.1.9",
 		"@storybook/addon-backgrounds": "^5.1.9",

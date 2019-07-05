@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs';
+
 import { screenCentered, screenProps, avatarResolver } from '../../helpers.stories';
 import Chat from './component';
 
@@ -92,5 +93,4 @@ storiesOf('Routes|Chat', module)
 			onSubmit={action('submit')}
 			{...screenProps()}
 		/>
-	))
-;
+	));

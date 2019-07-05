@@ -2,9 +2,10 @@ import loremIpsum from 'lorem-ipsum';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, number, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+
 import { avatarResolver } from '../../../helpers.stories';
 import { MessageList } from '.';
-import { action } from '@storybook/addon-actions';
 
 
 const fittingScreen = (storyFn) => centered(() => (
@@ -60,5 +61,4 @@ storiesOf('Messages|MessageList', module)
 			typingUsernames={object('typingUsernames', [users[1].username, users[2].username])}
 			onScrollTo={action('scrollTo')}
 		/>
-	))
-;
+	));
