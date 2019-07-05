@@ -95,7 +95,6 @@ export class ChatContainer extends Component {
 				Livechat.sendMessage({ msg, token, rid }),
 			]);
 		} catch (error) {
-			await loadConfig();
 			const { data: { error: reason } } = error;
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });

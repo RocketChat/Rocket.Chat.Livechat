@@ -59,9 +59,3 @@ export const processUnread = async() => {
 	}
 };
 
-export const clearConnectionAlerts = async() => {
-	const { alerts } = store.state;
-	const { livechatDisconnectedAlertId, livechatConnectedAlertId } = constants;
-	await store.setState({ alerts: alerts.filter((alert) => ![livechatDisconnectedAlertId, livechatConnectedAlertId].includes(alert.id)) });
-};
-
