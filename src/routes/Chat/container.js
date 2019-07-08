@@ -113,6 +113,7 @@ export class ChatContainer extends Component {
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
+		await Livechat.changeUserState();
 		await Livechat.notifyVisitorTyping(rid, user.username, false);
 	}
 

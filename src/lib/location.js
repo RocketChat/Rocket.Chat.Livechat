@@ -75,6 +75,9 @@ export const locationUpdate = async() => {
 	if (checkLocationUser && !checkLocationUser._id) {
 		// Ask for permission for location
 		if (navigator.geolocation) {
+			store.setState({
+				locationAccess: true,
+			});
 			navigator.geolocation.getCurrentPosition(async(position) => {
 				const locationUser = await locationPrimary(position.coords.latitude, position.coords.longitude);
 				await Livechat.sendLocationData(locationUser);
