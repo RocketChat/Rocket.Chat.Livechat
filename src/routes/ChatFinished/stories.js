@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { screenCentered, screenProps } from '../../helpers.stories';
 import ChatFinished from './component';
 
@@ -16,5 +17,4 @@ storiesOf('Routes|ChatFinished', module)
 			onRedirectChat={action('redirectChat')}
 			{...screenProps()}
 		/>
-	))
-;
+	));

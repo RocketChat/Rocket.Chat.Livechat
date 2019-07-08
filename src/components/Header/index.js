@@ -1,4 +1,4 @@
-import styles from './styles';
+import styles from './styles.scss';
 import { createClassName } from '../helpers';
 
 
@@ -13,7 +13,7 @@ export const Header = ({
 }) => (
 	<header
 		className={createClassName(styles, 'header', { large }, [className])}
-		style={(style || backgroundColor || color) ? { ...(style || {}), backgroundColor, color } : null}
+		style={style || backgroundColor || color ? { ...style || {}, backgroundColor, color } : null}
 		{...props}
 	>
 		{children}

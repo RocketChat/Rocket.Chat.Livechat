@@ -2,7 +2,6 @@
 @import '~styles/helpers';
 @import '~styles/variables';
 
-
 $header-background-color: $color-dark-blue;
 $header-color: $color-text-lighter;
 $header-padding: $default-padding;
@@ -12,22 +11,27 @@ $header-height-large: 77px;
 $header-action-active-displacement: 2px;
 
 .header {
+	z-index: 1;
+
+	display: flex;
+	flex: 0 0 auto;
+
 	width: 100%;
 	height: $header-height;
 	padding: 0 $header-padding / 2;
-	background-color: var(--color, $header-background-color);
+
 	color: var(--font-color, $header-color);
+	background-color: var(--color, $header-background-color);
 	box-shadow: 0 0 16px $bg-color-grey;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex: 0 0 auto;
+
 	font-size: 16px;
-	z-index: 1;
+	align-items: center;
+	justify-content: space-between;
 
 	&__item {
-		margin: 0 $header-padding / 2;
 		flex: 0 0 auto;
+
+		margin: 0 $header-padding / 2;
 	}
 
 	&__picture {
@@ -36,15 +40,18 @@ $header-action-active-displacement: 2px;
 
 	&__content {
 		@extend .header__item;
-		flex-grow: 1;
-		flex-shrink: 1;
 		overflow: hidden;
+
 		white-space: nowrap;
 		text-overflow: ellipsis;
+		flex-grow: 1;
+		flex-shrink: 1;
 
 		.header__title {
 			overflow: hidden;
+
 			text-overflow: ellipsis;
+
 			font-size: 16px;
 			font-weight: 500;
 			line-height: 1.5;
@@ -52,22 +59,28 @@ $header-action-active-displacement: 2px;
 
 		.header__subtitle {
 			overflow: hidden;
+
+			letter-spacing: normal;
 			text-overflow: ellipsis;
+
 			opacity: 0.7;
+
 			font-size: 12px;
 			font-weight: 500;
 			line-height: 1.5;
-			letter-spacing: normal;
 		}
 
 		.header__custom-field {
 			overflow: hidden;
+
+			letter-spacing: normal;
 			text-overflow: ellipsis;
+
 			opacity: 0.7;
+
 			font-size: 12px;
 			font-weight: 500;
 			line-height: 1.67;
-			letter-spacing: normal;
 		}
 	}
 
@@ -76,14 +89,16 @@ $header-action-active-displacement: 2px;
 		display: flex;
 
 		.header__action {
-			background: none;
+			display: flex;
+			flex: 0 0 auto;
+
+			cursor: pointer;
+
+			color: inherit;
 			border: none;
 			outline: none;
-			cursor: pointer;
-			display: flex;
+			background: none;
 			justify-content: center;
-			flex: 0 0 auto;
-			color: inherit;
 
 			@include pressable-button($header-action-active-displacement, 0);
 		}
@@ -91,11 +106,12 @@ $header-action-active-displacement: 2px;
 
 	&__post {
 		position: absolute;
-		top: $header-height;
-		left: 0;
-		right: 0;
-		width: 100%;
 		z-index: 10;
+		top: $header-height;
+		right: 0;
+		left: 0;
+
+		width: 100%;
 	}
 
 	&--large {

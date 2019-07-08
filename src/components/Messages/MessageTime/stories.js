@@ -1,6 +1,7 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, date } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { MessageTime } from '.';
 
 
@@ -15,5 +16,4 @@ storiesOf('Messages|MessageTime', module)
 	))
 	.add('yesterday', () => (
 		<MessageTime ts={date('ts', yesterday)} />
-	))
-;
+	));

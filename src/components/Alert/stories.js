@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { screenCentered, memedIpsum } from '../../helpers.stories';
 import { Alert } from '.';
 
@@ -79,5 +80,4 @@ storiesOf('Components|Alert', module)
 		>
 			{text('text', memedIpsum({ count: 3, units: 'words' }))}
 		</Alert>
-	))
-;
+	));

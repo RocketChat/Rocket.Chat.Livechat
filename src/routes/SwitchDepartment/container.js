@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+
 import { Livechat } from '../../api';
 import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
@@ -8,8 +9,7 @@ import { createToken } from '../../components/helpers';
 import history from '../../history';
 
 export class SwitchDepartmentContainer extends Component {
-
-	confirmChangeDepartment = async() => {
+	confirmChangeDepartment = async () => {
 		const result = await ModalManager.confirm({
 			text: I18n.t('Are you sure you want to switch the department?'),
 		});
@@ -17,7 +17,7 @@ export class SwitchDepartmentContainer extends Component {
 		return typeof result.success === 'boolean' && result.success;
 	}
 
-	handleSubmit = async(fields) => {
+	handleSubmit = async (fields) => {
 		const { alerts, dispatch, room, token } = this.props;
 		const { department } = fields;
 

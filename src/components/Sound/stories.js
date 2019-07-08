@@ -1,8 +1,9 @@
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
-import { Sound } from '.';
 import { action } from '@storybook/addon-actions';
+
+import { Sound } from '.';
 
 
 storiesOf('Components|Sound', module)
@@ -23,5 +24,4 @@ storiesOf('Components|Sound', module)
 			onStart={action('start')}
 			onStop={action('stop')}
 		/>
-	))
-;
+	));

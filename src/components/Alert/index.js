@@ -1,7 +1,8 @@
 import { Component } from 'preact';
+
 import { createClassName } from '../helpers';
 import CloseIcon from '../../icons/close.svg';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export class Alert extends Component {
@@ -32,7 +33,7 @@ export class Alert extends Component {
 			className={createClassName(styles, 'alert', { success, warning, error }, [className])}
 			style={{
 				...style,
-				...(color && { backgroundColor: color }),
+				...color && { backgroundColor: color },
 			}}
 		>
 			<div className={createClassName(styles, 'alert__content')}>

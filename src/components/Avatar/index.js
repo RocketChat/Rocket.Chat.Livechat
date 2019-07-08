@@ -1,6 +1,7 @@
 import { Component } from 'preact';
+
 import { createClassName } from '../helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export class Avatar extends Component {

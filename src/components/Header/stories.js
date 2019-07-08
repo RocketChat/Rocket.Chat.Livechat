@@ -1,12 +1,13 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
+
+import Bell from '../../icons/bell.svg';
+import Arrow from '../../icons/arrowDown.svg';
+import NewWindow from '../../icons/newWindow.svg';
 import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post, CustomField } from '.';
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
-import Bell from 'icons/bell.svg';
-import Arrow from 'icons/arrowDown.svg';
-import NewWindow from 'icons/newWindow.svg';
 import { avatarResolver } from '../../helpers.stories';
 
 
@@ -294,5 +295,4 @@ storiesOf('Components|Header', module)
 				</Action>
 			</Actions>
 		</Header>
-	))
-;
+	));

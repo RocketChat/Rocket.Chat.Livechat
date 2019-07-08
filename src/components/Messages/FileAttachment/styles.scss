@@ -1,6 +1,5 @@
 @import '~styles/colors';
 
-
 $file-attachment-min-width: 180px;
 $file-attachment-height: 2rem;
 $file-attachment-color: $color-text-dark;
@@ -12,21 +11,23 @@ $file-attachment-download-highlight-color: $color-blue;
 
 .file-attachment {
 	& &__inner {
-		min-width: $file-attachment-min-width;
-		width: 100%;
-		height: $file-attachment-height;
 
 		display: flex;
-		flex-flow: row nowrap;
-		align-items: center;
+
+		width: 100%;
+		min-width: $file-attachment-min-width;
+		height: $file-attachment-height;
+
+		text-decoration: none;
+		letter-spacing: 0;
 
 		color: $file-attachment-color;
 
 		font-size: $file-attachment-font-size;
 		font-weight: 500;
-		letter-spacing: 0;
 		line-height: $file-attachment-line-height;
-		text-decoration: none;
+		align-items: center;
+		flex-flow: row nowrap;
 
 		:focus,
 		&:hover {
@@ -38,11 +39,13 @@ $file-attachment-download-highlight-color: $color-blue;
 
 	& &__title {
 		display: block;
-		flex: 1 1 0;
 		overflow: hidden;
+		flex: 1 1 0;
+
+		margin: $file-attachment-title-margin;
+
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		margin: $file-attachment-title-margin;
 	}
 
 	& &__download-button {

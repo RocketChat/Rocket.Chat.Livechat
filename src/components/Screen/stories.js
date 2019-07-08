@@ -2,6 +2,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
+
 import { FooterOptions } from '../Footer';
 import Menu from '../Menu';
 import { Screen } from '.';
@@ -236,9 +237,7 @@ storiesOf('Components|Screen', module)
 				{text('content', 'Content')}
 			</Screen.Content>
 		</Screen>
-	))
-;
-
+	));
 storiesOf('Components|Screen/Footer', module)
 	.addDecorator(withKnobs)
 	.addDecorator(screenCentered)
@@ -319,5 +318,4 @@ storiesOf('Components|Screen/Footer', module)
 				}
 			/>
 		</Screen>
-	))
-;
+	));

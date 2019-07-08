@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { screenCentered, screenProps } from '../../helpers.stories';
 import SwitchDepartment from './component';
 
@@ -60,5 +61,4 @@ storiesOf('Routes|SwitchDepartment', module)
 			onCancel={action('cancel')}
 			{...screenProps()}
 		/>
-	))
-;
+	));

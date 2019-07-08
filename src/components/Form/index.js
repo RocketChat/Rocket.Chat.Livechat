@@ -1,5 +1,5 @@
 import { createClassName, MemoizedComponent } from '../helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export class Form extends MemoizedComponent {

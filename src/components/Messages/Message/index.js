@@ -20,54 +20,52 @@ import {
 } from '../constants';
 
 
-const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver }) => ([
+const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver }) => [
 	...(attachments || [])
-		.map((attachment) => (
-			(attachment.audio_url &&
-				<AudioAttachment
+		.map((attachment) =>
+			(attachment.audio_url
+				&& <AudioAttachment
 					quoted={quoted}
 					url={attachmentResolver(attachment.audio_url)}
-				/>) ||
-			(attachment.video_url &&
-				<VideoAttachment
+				/>)
+			|| (attachment.video_url
+				&& <VideoAttachment
 					quoted={quoted}
 					url={attachmentResolver(attachment.video_url)}
-				/>) ||
-			(attachment.image_url &&
-				<ImageAttachment
+				/>)
+			|| (attachment.image_url
+				&& <ImageAttachment
 					quoted={quoted}
 					url={attachmentResolver(attachment.image_url)}
-				/>) ||
-			(attachment.title_link &&
-				<FileAttachment
+				/>)
+			|| (attachment.title_link
+				&& <FileAttachment
 					quoted={quoted}
 					url={attachmentResolver(attachment.title_link)}
 					title={attachment.title}
-				/>) ||
-			((attachment.message_link || attachment.tmid) && renderContent({
+				/>)
+			|| ((attachment.message_link || attachment.tmid) && renderContent({
 				text: attachment.text,
 				quoted: true,
 				attachments: attachment.attachments,
 				attachmentResolver,
 			}))
-		)),
-	(text && (
+		),
+	text && (
 		<MessageBubble inverse={me} quoted={quoted}>
 			<MessageText text={text} system={system} />
 		</MessageBubble>
-	)),
-].filter(Boolean));
+	),
+].filter(Boolean);
 
-const getSystemMessageText = ({ t, conversationFinishedMessage }) => (
-	(t === MESSAGE_TYPE_ROOM_NAME_CHANGED && I18n.t('Room name changed')) ||
-	(t === MESSAGE_TYPE_USER_ADDED && I18n.t('User added by')) ||
-	(t === MESSAGE_TYPE_USER_REMOVED && I18n.t('User removed by')) ||
-	(t === MESSAGE_TYPE_USER_JOINED && I18n.t('User joined')) ||
-	(t === MESSAGE_TYPE_USER_LEFT && I18n.t('User left')) ||
-	(t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome')) ||
-	(t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
-);
-
+const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
+	(t === MESSAGE_TYPE_ROOM_NAME_CHANGED && I18n.t('Room name changed'))
+	|| (t === MESSAGE_TYPE_USER_ADDED && I18n.t('User added by'))
+	|| (t === MESSAGE_TYPE_USER_REMOVED && I18n.t('User removed by'))
+	|| (t === MESSAGE_TYPE_USER_JOINED && I18n.t('User joined'))
+	|| (t === MESSAGE_TYPE_USER_LEFT && I18n.t('User left'))
+	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
+	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')));
 export const Message = memo(({
 	avatarResolver,
 	attachmentResolver = getAttachmentUrl,
@@ -89,7 +87,7 @@ export const Message = memo(({
 	>
 		<MessageAvatars
 			avatarResolver={avatarResolver}
-			usernames={compact ? [] : (message.u && [message.u.username])}
+			usernames={compact ? [] : message.u && [message.u.username]}
 		/>
 		<MessageContent reverse={me}>
 			{renderContent({

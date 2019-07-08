@@ -1,7 +1,8 @@
 import mem from 'mem';
 import { Component } from 'preact';
+
 import { createClassName } from '../helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 const escapeMap = {
@@ -19,12 +20,10 @@ const escapeHtml = mem(
 	(string) => string.replace(escapeRegex, (match) => escapeMap[match])
 );
 
-const parse = (plainText) => (
+const parse = (plainText) =>
 	[{ plain: plainText }]
-		.map(({ plain, html }) => (plain ? escapeHtml(plain) : (html || '')))
-		.join('')
-);
-
+		.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
+		.join('');
 const findLastTextNode = (node) => {
 	if (node.nodeType === Node.TEXT_NODE) {
 		return node;
@@ -74,7 +73,7 @@ export class Composer extends Component {
 		}
 	}
 
-	handlePaste = (onUpload) => async(event) => {
+	handlePaste = (onUpload) => async (event) => {
 		if (!event.clipboardData || !event.clipboardData.items) {
 			return;
 		}
@@ -83,7 +82,7 @@ export class Composer extends Component {
 
 		const items = Array.from(event.clipboardData.items);
 
-		const files = items.filter((item) => (item.kind === 'file' && /^image\//.test(item.type)))
+		const files = items.filter((item) => item.kind === 'file' && /^image\//.test(item.type))
 			.map((item) => item.getAsFile());
 		if (files.length) {
 			onUpload && onUpload(files);
@@ -91,13 +90,13 @@ export class Composer extends Component {
 		}
 
 		const texts = await Promise.all(
-			items.filter((item) => (item.kind === 'string' && /^text\/plain/.test(item.type)))
+			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve)))
 		);
 		texts.forEach((text) => this.pasteText(text));
 	}
 
-	handleDrop = (onUpload) => async(event) => {
+	handleDrop = (onUpload) => async (event) => {
 		if (!event.dataTransfer || !event.dataTransfer.items) {
 			return;
 		}
@@ -106,7 +105,7 @@ export class Composer extends Component {
 
 		const items = Array.from(event.dataTransfer.items);
 
-		const files = items.filter((item) => (item.kind === 'file' && /^image\//.test(item.type)))
+		const files = items.filter((item) => item.kind === 'file' && /^image\//.test(item.type))
 			.map((item) => item.getAsFile());
 		if (files.length) {
 			onUpload && onUpload(files);
@@ -114,7 +113,7 @@ export class Composer extends Component {
 		}
 
 		const texts = await Promise.all(
-			items.filter((item) => (item.kind === 'string' && /^text\/plain/.test(item.type)))
+			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve)))
 		);
 		texts.forEach((text) => this.pasteText(text));
@@ -167,7 +166,8 @@ export class Composer extends Component {
 		}
 
 		if (this.props.value !== el.innerHTML) {
-		  el.innerHTML = this.value = this.props.value;
+			this.value = this.props.value;
+			el.innerHTML = this.value;
 		}
 		replaceCaret(el);
 	}

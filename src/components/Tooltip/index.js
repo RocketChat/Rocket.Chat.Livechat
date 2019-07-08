@@ -1,6 +1,7 @@
 import { h, cloneElement, Component } from 'preact';
 import createContext from 'preact-context';
-import styles from './styles';
+
+import styles from './styles.scss';
 import { createClassName } from '../helpers';
 
 

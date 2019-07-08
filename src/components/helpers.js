@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+
 import { Livechat } from '../api';
 
 
@@ -18,19 +19,21 @@ export function flatMap(arr, mapFunc) {
 
 export const createClassName = (styles, elementName, modifiers = {}, classes = []) => [
 	styles[elementName],
-	...(flatMap(Object.entries(modifiers), ([modifierKey, modifierValue]) => [
+	...flatMap(Object.entries(modifiers), ([modifierKey, modifierValue]) => [
 		modifierValue && styles[`${ elementName }--${ modifierKey }`],
 		typeof modifierValue !== 'boolean' && styles[`${ elementName }--${ modifierKey }-${ modifierValue }`],
-	]).filter((className) => !!className)), ...classes.filter((className) => !!className)].join(' ');
+	]).filter((className) => !!className), ...classes.filter((className) => !!className)].join(' ');
 
 export async function asyncForEach(array, callback) {
 	for (let index = 0; index < array.length; index++) {
+		// eslint-disable-next-line no-await-in-loop
 		await callback(array[index], index, array);
 	}
 }
 
 export async function asyncEvery(array, callback) {
 	for (let index = 0; index < array.length; index++) {
+		// eslint-disable-next-line no-await-in-loop
 		if (!await callback(array[index], index, array)) {
 			return false;
 		}
@@ -60,7 +63,9 @@ export const throttle = (func, limit) => {
 		if (!inThrottle) {
 			func.apply(context, args);
 			inThrottle = true;
-			setTimeout(() => inThrottle = false, limit);
+			setTimeout(() => {
+				inThrottle = false;
+			}, limit);
 		}
 	};
 };
@@ -103,13 +108,13 @@ export const setCookies = (rid, token) => {
 	document.cookie = 'rc_room_type=l; path=/';
 };
 
-export const createToken = () => (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
+export const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
 export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command'];
 
-export const canRenderMessage = (message = {}) => (!msgTypesNotRendered.includes(message.t));
+export const canRenderMessage = (message = {}) => !msgTypesNotRendered.includes(message.t);
 
 export const getAttachmentUrl = (url) => `${ Livechat.client.host }${ url }`;
 
@@ -120,7 +125,7 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	return 1;
 });
 
-export const normalizeDOMRect = (({ left, top, right, bottom }) => ({ left, top, right, bottom }));
+export const normalizeDOMRect = ({ left, top, right, bottom }) => ({ left, top, right, bottom });
 
 
 export const visibility = (() => {
@@ -182,8 +187,7 @@ export class MemoizedComponent extends Component {
 	}
 }
 
-export const memo = (component) => (
+export const memo = (component) =>
 	class extends MemoizedComponent {
 		render = component
-	}
-);
+	};

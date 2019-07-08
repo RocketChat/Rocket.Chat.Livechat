@@ -2,7 +2,6 @@
 @import '~styles/helpers';
 @import '~styles/variables';
 
-
 $button-border-width: $default-border;
 $button-border-radius: $default-border-radius;
 $button-padding: (0.75 * $default-gap - $default-border) (1.5 * $default-gap - $default-border);
@@ -48,36 +47,38 @@ $button-icon-padding: 10px;
 			color: $color;
 
 			&.button--loading::after {
-					border-color: $color $alpha-color $alpha-color $alpha-color;
+				border-color: $color $alpha-color $alpha-color $alpha-color;
 			}
 		}
 	}
 
 	position: relative;
+
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
 
 	box-sizing: border-box;
-	border: $button-border-width solid;
-	border-radius: $button-border-radius;
 	padding: $button-padding;
 
+	cursor: pointer;
+	user-select: none;
+	transition:
+		color $default-time-animation,
+		background-color $default-time-animation,
+		border-color $default-time-animation,
+		transform $default-time-animation / 2;
+	white-space: nowrap;
+	text-decoration: none;
+
 	color: var(--font-color, $button-color);
+	border: $button-border-width solid;
+	border-radius: $button-border-radius;
 
 	font-family: $button-font-family;
 	font-size: $button-font-size;
 	font-weight: $button-font-weight;
 	line-height: $button-line-height;
-	white-space: nowrap;
-	text-decoration: none;
-
-	cursor: pointer;
-	transition: color $default-time-animation,
-		background-color $default-time-animation,
-		border-color $default-time-animation,
-		transform $default-time-animation / 2;
-	user-select: none;
+	justify-content: center;
 
 	@include state(var(--color, $button-background-color), transparent);
 	@include pressable-button($button-active-displacement, $button-border-width);
@@ -88,11 +89,13 @@ $button-icon-padding: 10px;
 
 	&--danger {
 		color: $button-color;
+
 		@include state($button-danger-background-color);
 	}
 
 	&--secondary {
 		color: $button-color;
+
 		@include state($button-secondary-background-color);
 	}
 
@@ -101,8 +104,8 @@ $button-icon-padding: 10px;
 	}
 
 	&--nude {
-		background: none;
 		border-color: transparent;
+		background: none;
 
 		&:focus {
 			box-shadow: none;
@@ -118,31 +121,35 @@ $button-icon-padding: 10px;
 	}
 
 	&--disabled {
-		opacity: $button-disabled-opacity;
 		cursor: not-allowed;
+
+		opacity: $button-disabled-opacity;
 	}
 
 	&--loading {
 		&::after {
-			content: "";
-
-			display: inline-flex;
-			box-sizing: border-box;
 			position: relative;
 			left: $button-loading-gap;
 
-			border: $button-loading-border-width solid;
-			border-radius: 50%;
+			display: inline-flex;
+
+			box-sizing: border-box;
 			width: $button-line-height;
 			height: $button-line-height;
 
-			border-color: var(--font-color, $button-loading-color) transparent transparent transparent;
+			content: "";
 			animation: button-loading-rotation 1s linear infinite;
+
+			border: $button-loading-border-width solid;
+
+			border-color: var(--font-color, $button-loading-color) transparent transparent transparent;
+			border-radius: 50%;
 		}
 
 		&.button--danger::after,
 		&.button--secondary::after {
-			border-color: $button-loading-color
+			border-color:
+				$button-loading-color
 				rgba($button-loading-color, 0.5)
 				rgba($button-loading-color, 0.5)
 				rgba($button-loading-color, 0.5);
@@ -152,29 +159,33 @@ $button-icon-padding: 10px;
 	&--icon {
 		width: $button-icon-size;
 		height: $button-icon-size;
-		border-radius: $button-icon-border-radius;
 		padding: $button-icon-padding;
+
+		border-radius: $button-icon-border-radius;
 	}
 
 	&__badge {
 		position: absolute;
-		right: (-$button-badge-size / 3);
 		top: (-$button-badge-size / 3);
+		right: (-$button-badge-size / 3);
+
 		min-width: $button-badge-size;
 		height: $button-badge-size;
 		padding: 0 ($button-badge-font-size / 2);
 
-		background-color: $button-badge-background-color;
-		box-shadow: $button-badge-shadow;
-		border-radius: ($button-badge-size / 2);
+		text-align: center;
+		letter-spacing: 0;
 
 		color: $button-badge-color;
+		border-radius: ($button-badge-size / 2);
+
+		background-color: $button-badge-background-color;
+		box-shadow: $button-badge-shadow;
+
 		font-family: $button-badge-font-family;
 		font-size: $button-badge-font-size;
 		font-weight: bold;
-		letter-spacing: 0;
 		line-height: $button-badge-size;
-		text-align: center;
 	}
 
 	svg {
@@ -183,11 +194,11 @@ $button-icon-padding: 10px;
 }
 
 @keyframes button-loading-rotation {
-  0% {
+	0% {
 		transform: rotate(0);
 	}
 
-  100% {
+	100% {
 		transform: rotate(360deg);
 	}
 }

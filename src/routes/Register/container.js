@@ -1,5 +1,6 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
+
 import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
 import { loadConfig } from '../../lib/main';
@@ -7,7 +8,6 @@ import { Consumer } from '../../store';
 import Register from './component';
 
 export class RegisterContainer extends Component {
-
 	getDepartment = (fields = {}) => {
 		let { department } = fields;
 
@@ -22,7 +22,7 @@ export class RegisterContainer extends Component {
 		return department;
 	}
 
-	handleSubmit = async(fields) => {
+	handleSubmit = async (fields) => {
 		const { dispatch, token } = this.props;
 		const department = this.getDepartment(fields);
 		Object.assign(fields, { department });

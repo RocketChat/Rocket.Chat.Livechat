@@ -1,13 +1,12 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
-
 .message-list {
-	flex: 1 1 0;
 	display: flex;
-	flex-flow: column nowrap;
-	align-items: stretch;
 	overflow-y: scroll;
+	flex: 1 1 0;
+	align-items: stretch;
+	flex-flow: column nowrap;
 
 	&::-webkit-scrollbar {
 		&-track {
@@ -27,6 +26,7 @@
 
 	&__content {
 		flex: 1 1 auto;
+
 		margin: 0 16px;
 		padding: 0;
 	}

@@ -1,6 +1,6 @@
 import { createClassName, memo } from '../../helpers';
 import { renderMarkdown } from './markdown';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export const MessageText = memo(({

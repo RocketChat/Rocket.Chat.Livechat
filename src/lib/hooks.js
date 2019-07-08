@@ -4,10 +4,10 @@ import { store } from '../store';
 import { setWidgetLanguage } from './locale';
 import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
-import { loadConfig } from '../lib/main';
-import { parentCall } from '../lib/parentCall';
+import { loadConfig } from './main';
+import { parentCall } from './parentCall';
 
-const createOrUpdateGuest = async(guest) => {
+const createOrUpdateGuest = async (guest) => {
 	const { token } = guest;
 	token && await store.setState({ token });
 	await Livechat.grantVisitor({ visitor: { ...guest } });
@@ -110,19 +110,19 @@ const api = {
 
 		createOrUpdateGuest(data);
 	},
-  
+
 	async setLanguage(language) {
 		const { iframe } = store.state;
 		await store.setState({ iframe: { ...iframe, language } });
 		setWidgetLanguage();
 	},
-  
+
 	showWidget() {
 		const { iframe } = store.state;
 		store.setState({ iframe: { ...iframe, visible: true } });
 		parentCall('showWidgetIframe');
 	},
-  
+
 	hideWidget() {
 		const { iframe } = store.state;
 		store.setState({ iframe: { ...iframe, visible: false } });

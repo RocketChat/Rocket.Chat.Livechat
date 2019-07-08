@@ -1,7 +1,8 @@
+import path from 'path';
+
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, color } from '@storybook/addon-knobs';
-import path from 'path';
 
 
 const req = require.context('./', true, /\.svg$/);
@@ -37,9 +38,7 @@ storiesOf('Components|Icons', module)
 		<div style={{ width: '100%', display: 'flex', flexWrap: 'wrap' }}>
 			{iconset.map((props) => <IconDisplay color={color('color', '#E0364D')} {...props} />)}
 		</div>
-	))
-;
-
+	));
 iconset.forEach(({ component: Icon, name }) =>
 	storiesOf('Components|Icons', module)
 		.addDecorator(centered)

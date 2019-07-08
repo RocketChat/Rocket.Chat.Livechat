@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
+
 import { Livechat } from '../../api';
 import history from '../../history';
 import { loadConfig, clearConnectionAlerts } from '../../lib/main';
@@ -22,12 +23,11 @@ import constants from '../../lib/constants';
 import { loadMessages } from '../../lib/room';
 
 export class App extends Component {
-
 	state = {
 		initialized: false,
 	}
 
-	handleRoute = async() => {
+	handleRoute = async () => {
 		setTimeout(() => {
 			const {
 				config: {
@@ -58,11 +58,11 @@ export class App extends Component {
 			const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
 
 			const showRegistrationForm = (
-				(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)) &&
-				!triggered &&
-				!(user && user.token)
-			);
-
+				registrationForm
+					&& (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)
+			)
+				&& !triggered
+				&& !(user && user.token);
 			if (showRegistrationForm) {
 				return route('/register');
 			}
@@ -112,7 +112,7 @@ export class App extends Component {
 		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
 	}
 
-	handleVisibilityChange = async() => {
+	handleVisibilityChange = async () => {
 		const { dispatch } = this.props;
 		await dispatch({ visible: !visibility.hidden });
 	}
@@ -121,7 +121,7 @@ export class App extends Component {
 		this.forceUpdate();
 	}
 
-	handleConnected = async() => {
+	handleConnected = async () => {
 		await clearConnectionAlerts();
 
 		const { livechatConnectedAlertId } = constants;
@@ -132,14 +132,14 @@ export class App extends Component {
 		await loadMessages();
 	}
 
-	handleDisconnected = async() => {
+	handleDisconnected = async () => {
 		await clearConnectionAlerts();
 
 		const { livechatDisconnectedAlertId } = constants;
 		const { alerts, dispatch } = this.props;
 		await dispatch({ alerts: (alerts.push({ id: livechatDisconnectedAlertId, children: I18n.t('Livechat is not connected.'), error: true, timeout: 0 }), alerts) });
 	}
-  
+
 	initWidget() {
 		setWidgetLanguage();
 		const { minimized, iframe: { visible } } = this.props;
