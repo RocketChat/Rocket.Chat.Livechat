@@ -2,7 +2,7 @@ import { Livechat } from '../api';
 import { store } from '../store';
 import { upsert, createToken } from '../components/helpers';
 
-const addParentMessage = async(parentMessage) => {
+const addParentMessage = async (parentMessage) => {
 	const { state } = store;
 	const { parentMessages = [] } = state;
 	const { tmid } = parentMessage;
@@ -12,7 +12,7 @@ const addParentMessage = async(parentMessage) => {
 	}
 };
 
-const isThreadMessage = async(message) => {
+const isThreadMessage = async (message) => {
 	if (!message || !message.replies) {
 		return false;
 	}
@@ -21,7 +21,7 @@ const isThreadMessage = async(message) => {
 	return true;
 };
 
-const findParentMessage = async(tmid) => {
+const findParentMessage = async (tmid) => {
 	const { state } = store;
 	const { parentMessages = [], room, alerts } = state;
 
@@ -41,7 +41,7 @@ const findParentMessage = async(tmid) => {
 	return parentMessage;
 };
 
-const normalizeThreadMessage = async(message) => {
+const normalizeThreadMessage = async (message) => {
 	const { state } = store;
 	const { messages = [] } = state;
 
@@ -53,7 +53,7 @@ const normalizeThreadMessage = async(message) => {
 	return Object.assign(message, { threadMsg: parentMessage, attachments: [{ attachments, text: msg, tmid: message.tmid }] });
 };
 
-export const normalizeMessage = async(message) => {
+export const normalizeMessage = async (message) => {
 	const isThreadMsg = await isThreadMessage(message);
 	if (isThreadMsg) {
 		return false;
@@ -66,4 +66,4 @@ export const normalizeMessage = async(message) => {
 	return message;
 };
 
-export const normalizeMessages = async(messages = []) => await Promise.all(messages.filter((message) => normalizeMessage(message)));
+export const normalizeMessages = (messages = []) => Promise.all(messages.filter((message) => normalizeMessage(message)));

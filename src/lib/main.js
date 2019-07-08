@@ -1,10 +1,11 @@
 import format from 'date-fns/format';
+
 import { Livechat } from '../api';
 import store from '../store';
-import constants from '../lib/constants';
+import constants from './constants';
 import { canRenderMessage } from '../components/helpers';
 
-export const loadConfig = async() => {
+export const loadConfig = async () => {
 	const {
 		token,
 	} = store.state;
@@ -33,7 +34,7 @@ export const loadConfig = async() => {
 	});
 };
 
-export const processUnread = async() => {
+export const processUnread = async () => {
 	const { minimized, visible, messages } = store.state;
 	if (minimized || !visible) {
 		const { alerts, lastReadMessageId } = store.state;

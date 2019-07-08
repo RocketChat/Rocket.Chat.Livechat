@@ -1,5 +1,5 @@
 import { createClassName, memo } from '../../helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export const TextInput = memo(({
@@ -16,8 +16,8 @@ export const TextInput = memo(({
 	className,
 	style = {},
 }) => (
-	multiline ?
-		(
+	multiline
+		? (
 			<textarea
 				rows={rows}
 				name={name}
@@ -29,8 +29,8 @@ export const TextInput = memo(({
 				className={createClassName(styles, 'text-input', { disabled, error, small, multiline }, [className])}
 				style={style}
 			/>
-		) :
-		(
+		)
+		: (
 			<input
 				type="text"
 				name={name}

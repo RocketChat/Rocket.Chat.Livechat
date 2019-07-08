@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
+
 import {
 	Form,
 	PasswordInput,
@@ -50,5 +51,4 @@ storiesOf('Forms|Form', module)
 				<Button nude secondary stack>Cancel</Button>
 			</ButtonGroup>
 		</Form>
-	))
-;
+	));

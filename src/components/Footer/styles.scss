@@ -2,59 +2,68 @@
 @import '~styles/helpers';
 @import '~styles/variables';
 
-
 .footer {
-	width: 100%;
-	color: $color-text-grey;
-	padding: 4px 8px;
 	display: flex;
-	justify-content: space-between;
-	align-items: stretch;
-	font-size: 0.625rem;
-	flex: 0 0 auto;
 	flex-direction: column;
+	flex: 0 0 auto;
+
+	width: 100%;
+	padding: 4px 8px;
+
+	color: $color-text-grey;
+
+	font-size: 0.625rem;
+	align-items: stretch;
+	justify-content: space-between;
 
 	&__content {
-		padding: 4px 8px;
 		display: flex;
+
+		padding: 4px 8px;
 	}
 
 	&__options {
-		background: none;
-		border: none;
 		padding: 0;
+
 		cursor: pointer;
-		color: $color-text-grey;
-		font-size: 0.625rem;
-		font-weight: bold;
+		user-select: none;
+		transition: trasform $default-time-animation;
 		text-align: left;
 		letter-spacing: 0.2px;
+
+		color: $color-text-grey;
+		border: none;
+		background: none;
+
+		font-size: 0.625rem;
+		font-weight: bold;
 		line-height: 1;
-		transition: trasform $default-time-animation;
-		user-select: none;
 
 		@include pressable-button(2px);
 	}
 }
 
 .powered-by {
-	font-size: 10px;
-	font-weight: 500;
-	text-align: end;
 	width: 100%;
 	margin: 0;
-	align-self: flex-end;
+
 	user-select: none;
+	text-align: end;
+
+	font-size: 10px;
+	font-weight: 500;
+	align-self: flex-end;
 
 	.powered-by__logo {
 		margin: 0 5px;
+
 		vertical-align: middle;
 		--text-color: #{$color-text-grey};
 		--rocket-color: #{$color-text-grey};
 
 		&:hover {
-			--text-color: #2F343D;
-			--rocket-color: #DB2323;
+			--text-color: #2f343d;
+			--rocket-color: #db2323;
 		}
 	}
 }

@@ -1,7 +1,6 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
-
 $modal-padding: $default-padding;
 $modal-border-radius: 2 * $default-border-radius;
 $modal-shadow: 0 7px 16px 0 rgba(0, 0, 0, 0.1);
@@ -13,28 +12,34 @@ $modal-background-color: $bg-color-white;
 
 .modal__overlay {
 	position: absolute;
+	z-index: 10;
 	top: 0;
 	left: 0;
+
 	width: 100%;
 	height: 100%;
+
 	background-color: $overlay-bg-color;
-	z-index: 10;
 }
 
 .modal {
-	max-width: 80%;
-	min-width: 150px;
-	max-height: 80%;
-	position:fixed;
-	padding: $modal-padding;
-	background-color: $modal-background-color;
-	height: auto;
+	position: fixed;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%,-50%);
-	box-shadow: $modal-shadow;
-	border-radius: $modal-border-radius;
+
 	overflow-y: auto;
+
+	min-width: 150px;
+	max-width: 80%;
+	height: auto;
+	max-height: 80%;
+	padding: $modal-padding;
+
+	transform: translate(-50%, -50%);
+
+	border-radius: $modal-border-radius;
+	background-color: $modal-background-color;
+	box-shadow: $modal-shadow;
 
 	&--animated {
 		animation-name: fadeInUp;
@@ -44,20 +49,26 @@ $modal-background-color: $bg-color-white;
 
 .modal__message {
 	margin-bottom: 1.75rem;
+
+	text-align: center;
+
 	color: $color-text-dark;
+
 	font-size: 1rem;
 	font-weight: 500;
-	text-align: center;
 	line-height: 1.5;
 }
 
 @keyframes fadeInUp {
 	0% {
+		transform: translate3d(-50%, 100%, 0);
+
 		opacity: 0;
-		transform: translate3d(-50%, 100%, 0)
 	}
+
 	to {
-		opacity: 1;
 		transform: translate(-50%, -50%);
+
+		opacity: 1;
 	}
 }

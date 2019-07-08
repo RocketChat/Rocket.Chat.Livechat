@@ -1,6 +1,7 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { MessageSeparator } from '.';
 
 
@@ -26,5 +27,4 @@ storiesOf('Messages|MessageSeparator', module)
 			date={date('date', null)}
 			unread={boolean('unread', true)}
 		/>
-	))
-;
+	));

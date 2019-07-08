@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
+
 import history from '../../history';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
@@ -19,12 +20,11 @@ import userPresence from '../../lib/userPresence';
 import Connection from '../../lib/connection';
 
 export class App extends Component {
-
 	state = {
 		initialized: false,
 	}
 
-	handleRoute = async() => {
+	handleRoute = async () => {
 		setTimeout(() => {
 			const {
 				config: {
@@ -55,11 +55,11 @@ export class App extends Component {
 			const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
 
 			const showRegistrationForm = (
-				(registrationForm && (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)) &&
-				!triggered &&
-				!(user && user.token)
-			);
-
+				registrationForm
+					&& (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)
+			)
+				&& !triggered
+				&& !(user && user.token);
 			if (showRegistrationForm) {
 				return route('/register');
 			}
@@ -109,7 +109,7 @@ export class App extends Component {
 		dispatch({ alerts: alerts.filter((alert) => alert.id !== id) });
 	}
 
-	handleVisibilityChange = async() => {
+	handleVisibilityChange = async () => {
 		const { dispatch } = this.props;
 		await dispatch({ visible: !visibility.hidden });
 	}

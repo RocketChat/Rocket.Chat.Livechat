@@ -2,7 +2,6 @@
 @import '~styles/helpers';
 @import '~styles/variables';
 
-
 $alert-color: $color-text-lighter;
 $alert-font-family: $font-family;
 $alert-background-color: $bg-color-darker;
@@ -11,35 +10,43 @@ $alert-warning-background-color: $color-yellow;
 $alert-error-background-color: $color-red;
 
 .alert {
+	display: flex;
+	overflow: hidden;
+
 	width: 100%;
 	height: 28px;
 	padding: 6px 16px;
-	color: $alert-color;
-	font-size: 12px;
-	font-family: $alert-font-family;
-	font-weight: 600;
-	overflow: hidden;
+
 	letter-spacing: 0;
-	line-height: 16px;
+
+	color: $alert-color;
 	background-color: $alert-background-color;
-	display: flex;
+
+	font-family: $alert-font-family;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 16px;
 	align-items: center;
 	justify-content: space-between;
 
 	&__content {
 		overflow: hidden;
+
 		white-space: nowrap;
 		text-overflow: ellipsis;
 	}
 
 	&__close {
+		display: flex;
+
 		padding: 0;
-		background: none;
+
+		cursor: pointer;
+
+		color: $alert-color;
 		border: none;
 		outline: none;
-		color: $alert-color;
-		cursor: pointer;
-		display: flex;
+		background: none;
 
 		@include pressable-button(1px);
 	}

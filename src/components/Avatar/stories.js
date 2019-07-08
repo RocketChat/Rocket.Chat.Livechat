@@ -1,6 +1,7 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { avatarResolver } from '../../helpers.stories';
 import { Avatar } from '.';
 
@@ -90,5 +91,4 @@ storiesOf('Components|Avatar', module)
 				style={{ margin: '0.5rem' }}
 			/>
 		</div>
-	))
-;
+	));

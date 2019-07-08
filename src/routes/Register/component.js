@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import {
@@ -10,7 +11,7 @@ import {
 } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 const defaultTitle = I18n.t('Need help?');
@@ -33,7 +34,7 @@ export default class Register extends Component {
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
 		.filter(Boolean)
 
-	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => (error || validation(value)), undefined)
+	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => error || validation(value), undefined)
 
 	validateAll = () => {
 		for (const { fieldName, value } of this.getValidableFields()) {
@@ -81,7 +82,6 @@ export default class Register extends Component {
 		}
 
 		if (hasDepartmentField && departments) {
-
 			if (departments.length > 1) {
 				this.state.department = { value: '' };
 			} else if (departments.length === 1) {
@@ -132,8 +132,8 @@ export default class Register extends Component {
 					<p className={createClassName(styles, 'register__message')}>{message || defaultMessage}</p>
 
 					<Form onSubmit={this.handleSubmit}>
-						{name ?
-							(
+						{name
+							? (
 								<FormField
 									required
 									label={I18n.t('Name')}
@@ -147,11 +147,11 @@ export default class Register extends Component {
 										onInput={this.handleNameChange}
 									/>
 								</FormField>
-							) :
-							null}
+							)
+							: null}
 
-						{email ?
-							(
+						{email
+							? (
 								<FormField
 									required
 									label={I18n.t('Email')}
@@ -165,11 +165,11 @@ export default class Register extends Component {
 										onInput={this.handleEmailChange}
 									/>
 								</FormField>
-							) :
-							null}
+							)
+							: null}
 
-						{department ?
-							(
+						{department
+							? (
 								<FormField
 									label={I18n.t('I need help with...')}
 									error={department.showError && department.error}
@@ -183,8 +183,8 @@ export default class Register extends Component {
 										onInput={this.handleDepartmentChange}
 									/>
 								</FormField>
-							) :
-							null}
+							)
+							: null}
 
 						<ButtonGroup>
 							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>

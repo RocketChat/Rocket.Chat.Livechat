@@ -5,40 +5,48 @@
 	--tail-size: 0.3125rem;
 
 	position: relative;
-	padding: 0.5rem 0.75rem;
-	margin: 0.5rem;
-	border-radius: $default-border-radius;
-
-	background-color: $bg-color-darker;
-	box-shadow: 0 0 0.125rem 0 rgba($bg-color-dark, 0.08),
-		0 0 0.75rem 0 rgba($bg-color-dark, 0.12);
-
-	color: $color-text-lighter;
-	font-size: 0.75rem;
-	font-weight: 600;
-	letter-spacing: 0;
-	line-height: 1rem;
-	text-align: center;
-	white-space: nowrap;
-	user-select: none;
-	pointer-events: none;
+	z-index: 15;
 
 	display: inline-block;
 	visibility: visible;
-	opacity: 1;
+
+	margin: 0.5rem;
+	padding: 0.5rem 0.75rem;
+
+	user-select: none;
 	transition: opacity $default-time-animation;
-	z-index: 15;
+	text-align: center;
+	white-space: nowrap;
+	letter-spacing: 0;
+	pointer-events: none;
+
+	opacity: 1;
+
+	color: $color-text-lighter;
+	border-radius: $default-border-radius;
+
+	background-color: $bg-color-darker;
+	box-shadow:
+		0 0 0.125rem 0 rgba($bg-color-dark, 0.08),
+		0 0 0.75rem 0 rgba($bg-color-dark, 0.12);
+
+	font-size: 0.75rem;
+	font-weight: 600;
+	line-height: 1rem;
 
 	&--hidden {
 		visibility: hidden;
+
 		opacity: 0;
 	}
 
 	&--placement {
 		@mixin tail {
 			&::before {
-				content: "";
 				position: absolute;
+
+				content: "";
+
 				border: var(--tail-size) solid $bg-color-darker;
 				@content;
 			}
@@ -46,18 +54,20 @@
 
 		&-left {
 			@include tail {
-				left: 100%;
 				top: calc(50% - var(--tail-size));
+				left: 100%;
+
 				border-top-color: transparent;
-				border-bottom-color: transparent;
 				border-right-color: transparent;
+				border-bottom-color: transparent;
 			}
 		}
 
 		&-right {
 			@include tail {
-				right: 100%;
 				top: calc(50% - var(--tail-size));
+				right: 100%;
+
 				border-top-color: transparent;
 				border-bottom-color: transparent;
 				border-left-color: transparent;
@@ -66,41 +76,45 @@
 
 		&-top {
 			@include tail {
-				left: calc(50% - var(--tail-size));
 				top: 100%;
-				border-left-color: transparent;
+				left: calc(50% - var(--tail-size));
+
 				border-right-color: transparent;
 				border-bottom-color: transparent;
+				border-left-color: transparent;
 			}
 		}
 
 		&-top-left {
 			@include tail {
-				right: $default-border-radius;
 				top: 100%;
-				border-left-color: transparent;
+				right: $default-border-radius;
+
 				border-right-color: transparent;
 				border-bottom-color: transparent;
+				border-left-color: transparent;
 			}
 		}
 
 		&-top-right {
 			@include tail {
-				left: $default-border-radius;
 				top: 100%;
-				border-left-color: transparent;
+				left: $default-border-radius;
+
 				border-right-color: transparent;
 				border-bottom-color: transparent;
+				border-left-color: transparent;
 			}
 		}
 
 		&-bottom {
 			@include tail {
-				left: calc(50% - var(--tail-size));
 				bottom: 100%;
-				border-left-color: transparent;
-				border-right-color: transparent;
+				left: calc(50% - var(--tail-size));
+
 				border-top-color: transparent;
+				border-right-color: transparent;
+				border-left-color: transparent;
 			}
 		}
 
@@ -108,26 +122,30 @@
 			@include tail {
 				right: $default-border-radius;
 				bottom: 100%;
-				border-left-color: transparent;
-				border-right-color: transparent;
+
 				border-top-color: transparent;
+				border-right-color: transparent;
+				border-left-color: transparent;
 			}
 		}
 
 		&-bottom-right {
 			@include tail {
-				left: $default-border-radius;
 				bottom: 100%;
-				border-left-color: transparent;
-				border-right-color: transparent;
+				left: $default-border-radius;
+
 				border-top-color: transparent;
+				border-right-color: transparent;
+				border-left-color: transparent;
 			}
 		}
 	}
 
 	&--floating {
 		position: fixed;
+
 		margin: 0;
+
 		transform: translate(-50%, var(--tail-size));
 
 		&.tooltip--placement {

@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+
 import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
 import { Consumer } from '../../store';
@@ -7,7 +8,7 @@ import { createToken } from '../../components/helpers';
 
 
 export class LeaveMessageContainer extends Component {
-	handleSubmit = async(fields) => {
+	handleSubmit = async (fields) => {
 		const { alerts, dispatch, successMessage } = this.props;
 
 		await dispatch({ loading: true });

@@ -1,12 +1,12 @@
 @import '../mixins';
 
-
 $form-input-select-arrow-size: $form-input-padding;
 $form-input-select-arrow-padding: $form-input-padding;
 $form-input-select-arrow-color: $color-text-light;
 
 .select-input {
 	position: relative;
+
 	display: flex;
 	flex: 1;
 
@@ -42,15 +42,15 @@ $form-input-select-arrow-color: $color-text-light;
 
 	&__arrow {
 		position: absolute;
-		right: $form-input-select-arrow-padding;
 		top: 50%;
+		right: $form-input-select-arrow-padding;
 
 		width: $form-input-select-arrow-size;
 		height: $form-input-select-arrow-size;
 
-		color: $form-input-select-arrow-color;
-
 		transform: translateY(-50%) translateY(2px);
 		pointer-events: none;
+
+		color: $form-input-select-arrow-color;
 	}
 }

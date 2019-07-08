@@ -1,5 +1,6 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
+
 import { Consumer } from '../../store';
 import ChatFinished from './component';
 

@@ -1,5 +1,5 @@
 import { createClassName, memo } from '../../helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export const MessageBubble = memo(({

@@ -1,9 +1,9 @@
 import EventEmitter from 'wolfy87-eventemitter';
 
 
-const log = process.env.NODE_ENV === 'development' ?
-	(...args) => window.console.log('%cwidget%c', 'color: red', 'color: initial', ...args) :
-	() => {};
+const log = process.env.NODE_ENV === 'development'
+	? (...args) => window.console.log('%cwidget%c', 'color: red', 'color: initial', ...args)
+	: () => {};
 
 
 const WIDGET_OPEN_WIDTH = 365;
@@ -81,16 +81,16 @@ const updateWidgetStyle = (isOpened) => {
 		widget.style.left = smallScreen ? '0' : 'auto';
 
 		/**
-               * If we use widget.style.height = smallScreen ? '100vh' : ...
-               * In above case some browser's viewport height is not rendered correctly
-               * so, as 100vh will resolve to 100% of the current viewport height,
-               * so fixed it to 100% avoiding problem for some browsers. Similar resolution
-               * for widget.style.width
-               */
+		 * If we use widget.style.height = smallScreen ? '100vh' : ...
+		 * In above case some browser's viewport height is not rendered correctly
+		 * so, as 100vh will resolve to 100% of the current viewport height,
+		 * so fixed it to 100% avoiding problem for some browsers. Similar resolution
+		 * for widget.style.width
+		 */
 
 		widget.style.width = smallScreen ? '100%' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
-		widget.style.height = smallScreen ? '100%' :
-			`${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
+		widget.style.height = smallScreen ? '100%'
+			: `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
 	} else {
 		widget.style.left = 'auto';
 		widget.style.width = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_WIDTH + WIDGET_MARGIN }px`;
@@ -207,7 +207,7 @@ const api = {
 	callback(eventName, data) {
 		emitCallback(eventName, data);
 	},
-  
+
 	showWidgetIframe() {
 		iframe.style.display = 'initial';
 		emitCallback('show-widget');
@@ -328,9 +328,10 @@ if (typeof window.RocketChat.url !== 'undefined') {
 
 const queue = window.RocketChat._;
 
-window.RocketChat = window.RocketChat._.push = function(c) {
+window.RocketChat._.push = function(c) {
 	c.call(window.RocketChat.livechat);
 };
+window.RocketChat = window.RocketChat._.push;
 
 // exports
 window.RocketChat.livechat = {

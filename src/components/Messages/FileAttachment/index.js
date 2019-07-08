@@ -1,7 +1,7 @@
 import { createClassName, memo } from '../../helpers';
 import { FileAttachmentIcon } from '../FileAttachmentIcon';
 import { MessageBubble } from '../MessageBubble';
-import styles from './styles';
+import styles from './styles.scss';
 import DownloadIcon from '../../../icons/download.svg';
 
 

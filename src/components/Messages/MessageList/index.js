@@ -1,19 +1,21 @@
 import isSameDay from 'date-fns/is_same_day';
+
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 export class MessageList extends MemoizedComponent {
-
 	static defaultProps = {
 		typingUsernames: [],
 	}
 
 	static SCROLL_AT_TOP = 'top';
+
 	static SCROLL_AT_BOTTOM = 'bottom';
+
 	static SCROLL_FREE = 'free';
 
 	scrollPosition = MessageList.SCROLL_AT_BOTTOM
