@@ -32,6 +32,8 @@ const validCallbacks = [
 	'offline-form-submit',
 	'show-widget',
 	'hide-widget',
+	'assign-agent',
+	'agent-status-change',
 ];
 
 const callbacks = new EventEmitter();
@@ -358,6 +360,8 @@ window.RocketChat.livechat = {
 	onOfflineFormSubmit(fn) { registerCallback('offline-form-submit', fn); },
 	onWidgetShown(fn) { registerCallback('show-widget', fn); },
 	onWidgetHidden(fn) { registerCallback('hide-widget', fn); },
+	onAssignAgent(fn) { registerCallback('assign-agent', fn); },
+	onAgentStatusChange(fn) { registerCallback('agent-status-change', fn); },
 };
 
 // proccess queue

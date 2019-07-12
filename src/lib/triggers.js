@@ -5,6 +5,7 @@ import store from '../store';
 import { upsert, createToken, asyncForEach } from '../components/helpers';
 import { parentCall } from './parentCall';
 import { processUnread } from './main';
+import { normalizeAgent } from './api';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -121,6 +122,7 @@ class Triggers {
 
 					if (agent && agent._id) {
 						await store.setState({ agent });
+						parentCall('callback', ['assign-agent', normalizeAgent(agent)]);
 					}
 
 					route('/');

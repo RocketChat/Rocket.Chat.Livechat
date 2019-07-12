@@ -8,6 +8,7 @@ import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { handleTranscript } from './transcript';
 import { normalizeMessage, normalizeMessages } from './threads';
+import { normalizeAgent } from './api';
 
 const commands = new Commands();
 
@@ -54,16 +55,19 @@ export const initRoom = async () => {
 		if (servedBy) {
 			roomAgent = await Livechat.agent({ rid });
 			await store.setState({ agent: roomAgent });
+			parentCall('callback', ['assign-agent', normalizeAgent(roomAgent)]);
 		}
 	}
 
 	Livechat.onAgentChange(rid, async (agent) => {
 		await store.setState({ agent });
+		parentCall('callback', ['assign-agent', normalizeAgent(agent)]);
 	});
 
 	Livechat.onAgentStatusChange(rid, (status) => {
 		const { agent } = store.state;
 		agent && store.setState({ agent: { ...agent, status } });
+		parentCall('callback', ['agent-status-change', normalizeAgent(agent)]);
 	});
 
 	setCookies(rid, token);
