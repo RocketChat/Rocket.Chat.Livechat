@@ -32,14 +32,10 @@ const api = {
 			Triggers.processRequest(info);
 		}
 
-		const { token, room } = store.state;
-		// TODO: Need to change this behavior... But we need to change the endpoint on backend side before....
-		if (!room) {
-			return;
-		}
-
+		const { token, room: { _id: rid } = {} } = store.state;
 		const { change, title, location: { href } } = info;
-		Livechat.sendVisitorNavigation({ token, rid: room._id, pageInfo: { change, title, location: { href } } });
+
+		Livechat.sendVisitorNavigation({ token, rid, pageInfo: { change, title, location: { href } } });
 	},
 
 	setCustomField(key, value, overwrite = true) {
