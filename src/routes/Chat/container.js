@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
-import { Consumer } from '../../store';
+import { Consumer, store } from '../../store';
 import { loadConfig } from '../../lib/main';
 import constants from '../../lib/constants';
 import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
@@ -113,8 +113,9 @@ export class ChatContainer extends Component {
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
-		await Livechat.changeUserState();
+		await Livechat.changeUserState('active');
 		await Livechat.notifyVisitorTyping(rid, user.username, false);
+		store.setState({ userState: 'active' });
 	}
 
 	doFileUpload = async (rid, file) => {
@@ -177,6 +178,8 @@ export class ChatContainer extends Component {
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await dispatch({ loading: false });
+			await store.setState({ userState: 'offline' });
+			await Livechat.changeUserState('offline');
 			await closeChat();
 		}
 	}

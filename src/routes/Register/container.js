@@ -4,7 +4,7 @@ import { route } from 'preact-router';
 import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
 import { loadConfig } from '../../lib/main';
-import { Consumer } from '../../store';
+import { Consumer, store } from '../../store';
 import { ModalManager } from '../../components/Modal';
 import Register from './component';
 
@@ -42,6 +42,7 @@ export class RegisterContainer extends Component {
 				await loadConfig();
 			}
 		} finally {
+			store.setState({ userState: 'registered' });
 			await dispatch({ loading: false });
 		}
 	}

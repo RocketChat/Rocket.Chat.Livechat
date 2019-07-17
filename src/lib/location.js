@@ -77,6 +77,7 @@ export const locationUpdate = async() => {
 		if (navigator.geolocation) {
 			store.setState({
 				locationAccess: true,
+				userState: 'idle',
 			});
 			navigator.geolocation.getCurrentPosition(async(position) => {
 				const locationUser = await locationPrimary(position.coords.latitude, position.coords.longitude);
@@ -95,6 +96,10 @@ export const locationUpdate = async() => {
 			// It means navigator is not supported in the browser, so ask
 			// for location access by backup API.
 			if (confirm('Please allow to access your location, for better assistance')) {
+				store.setState({
+					locationAccess: true,
+					userState: 'idle',
+				});
 				const locationUser = await locationBackup();
 				await Livechat.sendLocationData(locationUser);
 			}

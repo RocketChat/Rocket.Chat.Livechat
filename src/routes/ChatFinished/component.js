@@ -1,5 +1,6 @@
 import { Component } from 'preact';
-
+import { Livechat } from '../../api';
+import { store } from '../../store';
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
@@ -10,8 +11,10 @@ const defaultGreeting = I18n.t('Thanks for talking with us');
 const defaultMessage = I18n.t('If you have any other questions, just press the button below to start a new chat.');
 
 export default class ChatFinished extends Component {
-	handleClick = () => {
+	handleClick = async() => {
 		const { onRedirectChat } = this.props;
+		await store.setState({ userState: 'registered' });
+		await Livechat.changeUserState('registered');
 		onRedirectChat && onRedirectChat();
 	}
 

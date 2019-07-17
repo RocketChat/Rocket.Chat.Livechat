@@ -229,6 +229,7 @@ const AppConnector = () => (
 					modal,
 					dispatch,
 					iframe,
+					userState,
 				}) => (
 					<App
 						config={config}
@@ -243,6 +244,7 @@ const AppConnector = () => (
 						modal={modal}
 						dispatch={dispatch}
 						iframe={iframe}
+						userState={userState}
 					/>
 				)}
 			</StoreConsumer>
