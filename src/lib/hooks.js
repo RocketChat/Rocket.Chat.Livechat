@@ -39,7 +39,6 @@ const api = {
 			Livechat.sendVisitorNavigation({ token, pageInfo: { change, title, location: { href } } });
 			return;
 		}
-
 		
 		Livechat.sendVisitorNavigation({ token, rid: room._id, pageInfo: { change, title, location: { href } } });
 	},

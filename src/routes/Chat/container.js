@@ -104,8 +104,10 @@ export class ChatContainer extends Component {
 		const { alerts, dispatch, token, user } = this.props;
 		try {
 			this.stopTypingDebounced.stop();
+			store.setState({ userState: 'chatting' });
 			await Promise.all([
 				this.stopTyping({ rid, username: user.username }),
+				Livechat.changeUserState('chatting'),
 				Livechat.sendMessage({ msg, token, rid }),
 			]);
 		} catch (error) {
@@ -113,9 +115,8 @@ export class ChatContainer extends Component {
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
-		await Livechat.changeUserState('active');
+		
 		await Livechat.notifyVisitorTyping(rid, user.username, false);
-		store.setState({ userState: 'active' });
 	}
 
 	doFileUpload = async (rid, file) => {
