@@ -2,15 +2,7 @@ import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 
-import { Livechat } from '../../api';
 import history from '../../history';
-import { loadConfig, clearConnectionAlerts } from '../../lib/main';
-import CustomFields from '../../lib/customFields';
-import { setWidgetLanguage } from '../../lib/locale';
-import Triggers from '../../lib/triggers';
-import Hooks from '../../lib/hooks';
-import { parentCall } from '../../lib/parentCall';
-import userPresence from '../../lib/userPresence';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
@@ -19,8 +11,13 @@ import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { visibility } from '../helpers';
-import constants from '../../lib/constants';
-import { loadMessages } from '../../lib/room';
+import { setWidgetLanguage } from '../../lib/locale';
+import CustomFields from '../../lib/customFields';
+import Triggers from '../../lib/triggers';
+import Hooks from '../../lib/hooks';
+import { parentCall } from '../../lib/parentCall';
+import userPresence from '../../lib/userPresence';
+import Connection from '../../lib/connection';
 
 export class App extends Component {
 	state = {
@@ -121,25 +118,6 @@ export class App extends Component {
 		this.forceUpdate();
 	}
 
-	handleConnected = async () => {
-		await clearConnectionAlerts();
-
-		const { livechatConnectedAlertId } = constants;
-		const { alerts, dispatch } = this.props;
-		await dispatch({ alerts: (alerts.push({ id: livechatConnectedAlertId, children: I18n.t('Livechat connected.'), success: true }), alerts) });
-
-		await loadConfig();
-		await loadMessages();
-	}
-
-	handleDisconnected = async () => {
-		await clearConnectionAlerts();
-
-		const { livechatDisconnectedAlertId } = constants;
-		const { alerts, dispatch } = this.props;
-		await dispatch({ alerts: (alerts.push({ id: livechatDisconnectedAlertId, children: I18n.t('Livechat is not connected.'), error: true, timeout: 0 }), alerts) });
-	}
-
 	initWidget() {
 		setWidgetLanguage();
 		const { minimized, iframe: { visible } } = this.props;
@@ -157,9 +135,7 @@ export class App extends Component {
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
-		// Call loadConfig before calling Livechat.connect
-		await loadConfig();
-		await Livechat.connect();
+		Connection.init();
 		this.handleTriggers();
 		CustomFields.init();
 		Hooks.init();
@@ -168,9 +144,6 @@ export class App extends Component {
 
 		this.setState({ initialized: true });
 		parentCall('ready');
-
-		Livechat.onStreamData('connected', this.handleConnected);
-		Livechat.onStreamData('close', this.handleDisconnected);
 	}
 
 	async finalize() {
