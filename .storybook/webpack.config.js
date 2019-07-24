@@ -3,6 +3,7 @@ const webpackOverride = require('../webpackOverride.config');
 
 
 module.exports = ({ config, mode }) => {
+	delete config.resolve.alias['core-js'];
 	config = webpackOverride(config, mode);
 
 	config.resolve.alias = Object.assign(
@@ -40,6 +41,7 @@ module.exports = ({ config, mode }) => {
 
 	config.plugins.push(
 		new ProvidePlugin({
+			h: ['preact', 'h'],
 			Component: ['preact', 'Component'],
 			React: ['preact-compat'],
 		})

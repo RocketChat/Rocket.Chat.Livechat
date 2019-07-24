@@ -1,7 +1,6 @@
 @import '~styles/colors';
 @import '~styles/variables';
 
-
 $drop-overlay-animation-time: $default-time-animation;
 $drop-overlay-background-color: rgba($bg-color-white, 0.9);
 $drop-overlay-gap: $default-padding;
@@ -11,46 +10,54 @@ $drop-overlay-text-font-size: 1.375rem;
 
 .drop {
 	position: relative;
+
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
 
 	&.drop--overlayed.drop--dragover {
 		&::before {
-			content: "";
 
 			position: absolute;
+			z-index: 10;
 			top: 0;
-			left: 0;
 			right: 0;
 			bottom: 0;
-			background-color: $drop-overlay-background-color;
+			left: 0;
+
+			content: "";
 			animation: fadein $drop-overlay-animation-time;
-			z-index: 10;
 			pointer-events: none;
+
+			background-color: $drop-overlay-background-color;
 		}
 
 		&::after {
-			content: attr(data-overlay-text) "";
 
 			position: absolute;
-			box-sizing: border-box;
+			z-index: 10;
 			top: $drop-overlay-gap;
-			left: $drop-overlay-gap;
 			right: $drop-overlay-gap;
 			bottom: $drop-overlay-gap;
-			padding: $drop-overlay-gap;
+			left: $drop-overlay-gap;
+
 			display: flex;
-			justify-content: center;
-			align-items: center;
+
+			box-sizing: border-box;
+			padding: $drop-overlay-gap;
+
+			content: attr(data-overlay-text) "";
+			animation: fadein $drop-overlay-animation-time;
+			text-align: center;
+			pointer-events: none;
+
 			color: var(--color, $color-blue);
 			border: $drop-overlay-border-width var(--color, $color-blue) $drop-overlay-border-style;
+
 			font-size: $drop-overlay-text-font-size;
 			font-weight: 500;
-			text-align: center;
-			animation: fadein $drop-overlay-animation-time;
-			z-index: 10;
-			pointer-events: none;
+			align-items: center;
+			justify-content: center;
 		}
 	}
 

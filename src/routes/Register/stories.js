@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { screenCentered, screenProps } from '../../helpers.stories';
 import Register from './component';
 
@@ -59,5 +60,4 @@ storiesOf('Routes|Register', module)
 			onSubmit={action('submit')}
 			{...screenProps()}
 		/>
-	))
-;
+	));

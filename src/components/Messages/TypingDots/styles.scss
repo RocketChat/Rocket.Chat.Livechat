@@ -2,7 +2,6 @@
 @import '~styles/helpers';
 @import '~styles/variables';
 
-
 $typing-dots-dot-size: 8px;
 $typing-dots-dot-margin: 0 2px;
 $typing-dots-dot-color: $color-text-grey;
@@ -15,13 +14,16 @@ $typing-dots-dot-animation-delay-gap: $default-time-animation;
 
 	&__dot {
 		display: inline-block;
-		vertical-align: middle;
+
 		width: $typing-dots-dot-size;
 		height: $typing-dots-dot-size;
 		margin: $typing-dots-dot-margin;
-		background-color: $typing-dots-dot-color;
-		border-radius: 50%;
+
 		animation: typing-dots__indicator $typing-dots-dot-animation-time infinite alternate;
+		vertical-align: middle;
+
+		border-radius: 50%;
+		background-color: $typing-dots-dot-color;
 
 		&:nth-of-type(2) {
 			animation-delay: $typing-dots-dot-animation-delay-gap;
@@ -37,6 +39,7 @@ $typing-dots-dot-animation-delay-gap: $default-time-animation;
 	0% {
 		background-color: $typing-dots-dot-color;
 	}
+
 	100% {
 		background: $typing-dots-dot-highlight-color;
 	}

@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { screenCentered, screenProps } from '../../helpers.stories';
 import LeaveMessage from './component';
 
@@ -40,5 +41,4 @@ storiesOf('Routes|Leave a message', module)
 			onSubmit={action('submit')}
 			{...screenProps()}
 		/>
-	))
-;
+	));

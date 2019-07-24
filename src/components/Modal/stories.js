@@ -2,6 +2,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { memedIpsum } from '../../helpers.stories';
 import Modal from './component';
 
@@ -79,5 +80,4 @@ storiesOf('Components|Modal', module)
 				onConfirm={action('confirm')}
 			/>
 		</div>
-	))
-;
+	));

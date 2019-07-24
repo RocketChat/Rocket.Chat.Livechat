@@ -1,5 +1,6 @@
 import { Component } from 'preact';
-import styles from './styles';
+
+import styles from './styles.scss';
 import { createClassName } from '../helpers';
 import { Button } from '../Button';
 import { ButtonGroup } from '../ButtonGroup';

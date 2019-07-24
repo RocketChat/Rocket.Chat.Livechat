@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions } from '../../components/Footer';
@@ -6,7 +7,7 @@ import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import styles from './styles';
+import styles from './styles.scss';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
 import PlusIcon from '../../icons/plus.svg';
@@ -16,7 +17,6 @@ import EmojiIcon from '../../icons/smile.svg';
 
 
 export default class Chat extends Component {
-
 	state = {
 		atBottom: true,
 		text: '',
@@ -43,7 +43,6 @@ export default class Chat extends Component {
 
 		if (region === MessageList.SCROLL_AT_TOP) {
 			onTop && onTop();
-			return;
 		}
 	}
 

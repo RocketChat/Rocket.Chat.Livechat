@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
@@ -15,7 +16,7 @@ import RestoreIcon from '../../icons/arrowUp.svg';
 import OpenWindowIcon from '../../icons/newWindow.svg';
 import ChatIcon from '../../icons/chat.svg';
 import CloseIcon from '../../icons/close.svg';
-import styles from './styles';
+import styles from './styles.scss';
 
 
 class ScreenHeader extends Component {
@@ -76,9 +77,9 @@ class ScreenHeader extends Component {
 							aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
 							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
 						>
-							{notificationsEnabled ?
-								<NotificationsEnabledIcon width={20} /> :
-								<NotificationsDisabledIcon width={20} />
+							{notificationsEnabled
+								? <NotificationsEnabledIcon width={20} />
+								: <NotificationsDisabledIcon width={20} />
 							}
 						</Header.Action>
 					</Tooltip.Trigger>
@@ -88,9 +89,9 @@ class ScreenHeader extends Component {
 								aria-label={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}
 								onClick={minimized ? onRestore : onMinimize}
 							>
-								{minimized ?
-									<RestoreIcon width={20} /> :
-									<MinimizeIcon width={20} />
+								{minimized
+									? <RestoreIcon width={20} />
+									: <MinimizeIcon width={20} />
 								}
 							</Header.Action>
 						</Tooltip.Trigger>

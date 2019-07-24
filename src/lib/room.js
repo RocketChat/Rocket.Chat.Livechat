@@ -1,23 +1,25 @@
+import { route } from 'preact-router';
+
 import { Livechat } from '../api';
 import { store } from '../store';
-import { route } from 'preact-router';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
-import Commands from '../lib/commands';
-import { loadConfig, processUnread } from '../lib/main';
+import Commands from './commands';
+import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { handleTranscript } from './transcript';
 import { normalizeMessage, normalizeMessages } from './threads';
+import { normalizeAgent } from './api';
 
 const commands = new Commands();
 
-export const closeChat = async() => {
+export const closeChat = async () => {
 	await handleTranscript();
 	await loadConfig();
 	parentCall('callback', 'chat-ended');
 	route('/chat-finished');
 };
 
-const processMessage = async(message) => {
+const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
 		closeChat();
 	} else if (message.t === 'command') {
@@ -25,7 +27,7 @@ const processMessage = async(message) => {
 	}
 };
 
-const doPlaySound = async(message) => {
+const doPlaySound = async (message) => {
 	const { sound, user } = store.state;
 
 	if (!sound.enabled || (user && message.u && message.u._id === user._id)) {
@@ -35,7 +37,7 @@ const doPlaySound = async(message) => {
 	await store.setState({ sound: { ...sound, play: true } });
 };
 
-export const initRoom = async() => {
+export const initRoom = async () => {
 	const { state } = store;
 	const { room } = state;
 
@@ -53,16 +55,19 @@ export const initRoom = async() => {
 		if (servedBy) {
 			roomAgent = await Livechat.agent({ rid });
 			await store.setState({ agent: roomAgent });
+			parentCall('callback', ['assign-agent', normalizeAgent(roomAgent)]);
 		}
 	}
 
-	Livechat.onAgentChange(rid, async(agent) => {
+	Livechat.onAgentChange(rid, async (agent) => {
 		await store.setState({ agent });
+		parentCall('callback', ['assign-agent', normalizeAgent(agent)]);
 	});
 
 	Livechat.onAgentStatusChange(rid, (status) => {
 		const { agent } = store.state;
 		agent && store.setState({ agent: { ...agent, status } });
+		parentCall('callback', ['agent-status-change', normalizeAgent(agent)]);
 	});
 
 	setCookies(rid, token);
@@ -86,7 +91,7 @@ Livechat.onTyping((username, isTyping) => {
 	}
 });
 
-Livechat.onMessage(async(message) => {
+Livechat.onMessage(async (message) => {
 	if (message.ts instanceof Date) {
 		message.ts = message.ts.toISOString();
 	}
@@ -114,7 +119,7 @@ Livechat.onMessage(async(message) => {
 	await doPlaySound(message);
 });
 
-export const loadMessages = async() => {
+export const loadMessages = async () => {
 	const { room: { _id: rid } = {} } = store.state;
 
 	if (!rid) {
@@ -122,7 +127,7 @@ export const loadMessages = async() => {
 	}
 
 	await store.setState({ loading: true });
-	const messages = await Livechat.loadMessages(rid).then((data) => (normalizeMessages(data)));
+	const messages = await Livechat.loadMessages(rid).then((data) => normalizeMessages(data));
 	await initRoom();
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false });
 	await store.setState({ loading: false });
@@ -133,7 +138,7 @@ export const loadMessages = async() => {
 	}
 };
 
-export const loadMoreMessages = async() => {
+export const loadMoreMessages = async () => {
 	const { room: { _id: rid } = {}, messages = [], noMoreMessages = false } = store.state;
 
 	if (!rid || noMoreMessages) {
@@ -141,7 +146,7 @@ export const loadMoreMessages = async() => {
 	}
 
 	await store.setState({ loading: true });
-	const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 }).then((data) => (normalizeMessages(data)));
+	const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 }).then((data) => normalizeMessages(data));
 	await store.setState({
 		messages: (moreMessages || []).reverse(),
 		noMoreMessages: messages.length + 10 > moreMessages.length,

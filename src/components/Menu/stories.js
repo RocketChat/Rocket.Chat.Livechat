@@ -2,6 +2,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
+
 import { Button } from '../Button';
 import { PopoverContainer } from '../Popover';
 import Menu, { Group, Item, PopoverMenu } from '.';
@@ -41,9 +42,7 @@ storiesOf('Components|Menu', module)
 				</Group>
 			</Menu>
 		</div>
-	))
-;
-
+	));
 const centeredWithPopoverContainer = (storyFn) => (
 	<div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
 		<PopoverContainer>
@@ -77,9 +76,7 @@ storiesOf('Components|Menu/PopoverMenu', module)
 				<Item danger>Delete...</Item>
 			</Group>
 		</PopoverMenu>
-	))
-;
-
+	));
 storiesOf('Components|Menu/Group', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
@@ -109,9 +106,7 @@ storiesOf('Components|Menu/Group', module)
 				<Item>{defaultAnotherMenuItemText}</Item>
 			</Group>
 		</Menu>
-	))
-;
-
+	));
 storiesOf('Components|Menu/Item', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
@@ -156,5 +151,4 @@ storiesOf('Components|Menu/Item', module)
 				<Item disabled onClick={action('clicked')} icon={BellIcon}>{text('item text', 'Disabled')}</Item>
 			</Group>
 		</Menu>
-	))
-;
+	));

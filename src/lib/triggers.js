@@ -1,9 +1,11 @@
 import { route } from 'preact-router';
+
 import { Livechat } from '../api';
 import store from '../store';
 import { upsert, createToken, asyncForEach } from '../components/helpers';
 import { parentCall } from './parentCall';
 import { processUnread } from './main';
+import { normalizeAgent } from './api';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -12,7 +14,7 @@ const getAgent = (triggerAction) => {
 		return agentPromise;
 	}
 
-	agentPromise = new Promise(async(resolve, reject) => {
+	agentPromise = new Promise(async (resolve, reject) => {
 		const { params } = triggerAction;
 
 		if (params.sender === 'queue') {
@@ -29,7 +31,7 @@ const getAgent = (triggerAction) => {
 
 			let agent;
 			try {
-				(agent = await Livechat.nextAgent(department));
+				agent = await Livechat.nextAgent(department);
 			} catch (error) {
 				return reject(error);
 			}
@@ -103,7 +105,7 @@ class Triggers {
 			if (action.name === 'send-message') {
 				trigger.skip = true;
 
-				getAgent(action).then(async(agent) => {
+				getAgent(action).then(async (agent) => {
 					const message = {
 						msg: action.params.msg,
 						token,
@@ -120,6 +122,7 @@ class Triggers {
 
 					if (agent && agent._id) {
 						await store.setState({ agent });
+						parentCall('callback', ['assign-agent', normalizeAgent(agent)]);
 					}
 
 					route('/');

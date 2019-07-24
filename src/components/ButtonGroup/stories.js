@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
+
 import { Button } from '../Button';
 import { ButtonGroup } from '.';
 
@@ -35,5 +36,4 @@ storiesOf('Components|ButtonGroup', module)
 			<Button small outline>Share</Button>
 			<Button stack danger>Delete</Button>
 		</ButtonGroup>
-	))
-;
+	));

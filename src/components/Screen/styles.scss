@@ -1,22 +1,23 @@
 @import '~styles/colors';
 
-
 $screen-padding: 16px;
 $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
 
 .screen {
 	display: flex;
+	overflow: hidden;
+	flex-direction: column;
+
 	width: 100%;
 	height: 100%;
 	padding: $screen-padding;
-	flex-direction: column;
-	justify-content: flex-end;
 	align-items: flex-end;
-	overflow: hidden;
+	justify-content: flex-end;
 
 	.screen__inner {
-		box-shadow: $screen-box-shadow;
 		margin-bottom: $screen-padding;
+
+		box-shadow: $screen-box-shadow;
 	}
 
 	.screen__chat-button {
@@ -32,10 +33,12 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 	&--expanded,
 	&--windowed {
 		padding: 0;
+
 		box-shadow: none;
 
 		.screen__inner {
 			margin: 0;
+
 			border-radius: 0;
 		}
 
@@ -46,24 +49,28 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 }
 
 .screen__inner {
-	width: 100%;
-	flex: 1 1;
 	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	background-color: $bg-color-white;
 	overflow: hidden;
+	flex-direction: column;
+	flex: 1 1;
+
+	width: 100%;
+
 	border-radius: 4px;
+	background-color: $bg-color-white;
+	align-items: stretch;
 }
 
 .screen__main {
-	flex: 1 0 0;
 	display: flex;
-	flex-direction: column;
-	padding: 1rem 1rem 0;
 	overflow-y: auto;
-	overflow-wrap: break-word;
+	flex-direction: column;
+	flex: 1 0 0;
+
+	padding: 1rem 1rem 0;
+
 	word-wrap: break-word;
+	overflow-wrap: break-word;
 
 	&--nopadding {
 		padding: 0;
