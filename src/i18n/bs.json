@@ -67,13 +67,11 @@
     "user_joined_407ba0d": "User joined",
     "user_left_58ed9c36": "User left",
     "user_removed_by_e990f856": "User removed by",
-    "waiting_queue_c1062ce4": "Waiting queue",
     "we_are_not_online_right_now_please_leave_a_message_57df1966": "We are not online right now. Please, leave a message.",
     "welcome_dd4e7151": "Welcome",
     "write_your_message_6eee0188": "Write your message...",
     "yes_dde87d5": "Yes",
     "you_browser_doesn_t_support_audio_element_3391386f": "You browser doesn't support audio element",
-    "you_browser_doesn_t_support_video_element_e9cbd81e": "You browser doesn't support video element",
-    "your_spot_is_spot_a35cd288": "Your spot is #%{spot}"
+    "you_browser_doesn_t_support_video_element_e9cbd81e": "You browser doesn't support video element"
   }
 }
