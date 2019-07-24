@@ -5,21 +5,31 @@ import { Livechat } from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
 import constants from '../../lib/constants';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle } from '../../components/helpers';
+import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams } from '../../lib/room';
+import { normalizeQueueAlert } from '../../lib/api';
 
 export class ChatContainer extends Component {
 	state = {
-		connectingAgent: { value: false },
+		connectingAgent: false,
+		queueSpot: 0,
+		triggerQueueMessage: true,
 	}
 
-	checkConnecting = () => {
-		const { connecting } = this.props;
-		if (connecting !== this.state.connectingAgent) {
-			this.state.connectingAgent = connecting;
-			this.handleConnectingAgentAlert(connecting);
+	checkConnectingAgent = async () => {
+		const { connecting, queueInfo } = this.props;
+		const { connectingAgent, queueSpot } = this.state;
+
+		const newConnecting = connecting;
+		const newQueueSpot = (queueInfo && queueInfo.spot) || 0;
+
+		if (newConnecting !== connectingAgent || newQueueSpot !== queueSpot) {
+			this.state.connectingAgent = newConnecting;
+			this.state.queueSpot = newQueueSpot;
+			await this.handleQueueMessage(connecting, queueInfo);
+			await this.handleConnectingAgentAlert(newConnecting, normalizeQueueAlert(queueInfo));
 		}
 	}
 
@@ -211,14 +221,14 @@ export class ChatContainer extends Component {
 		this.canSwitchDepartment() || this.canFinishChat() || this.canRemoveUserData()
 
 
-	async handleConnectingAgentAlert(connecting) {
+	async handleConnectingAgentAlert(connecting, message) {
 		const { alerts: oldAlerts, dispatch } = this.props;
-
-		const alerts = oldAlerts.filter((item) => item.id !== constants.connectingAgentAlertId);
+		const { connectingAgentAlertId } = constants;
+		const alerts = oldAlerts.filter((item) => item.id !== connectingAgentAlertId);
 		if (connecting) {
 			alerts.push({
-				id: constants.connectingAgentAlertId,
-				children: I18n.t('Please, wait for the next available agent..'),
+				id: connectingAgentAlertId,
+				children: message || I18n.t('Please, wait for the next available agent..'),
 				warning: true,
 				hideCloseButton: true,
 				timeout: 0,
@@ -228,8 +238,31 @@ export class ChatContainer extends Component {
 		await dispatch({ alerts });
 	}
 
+	async handleQueueMessage(connecting, queueInfo) {
+		if (!queueInfo) {
+			return;
+		}
+
+		const { message: { text: msg, user: u } = {} } = queueInfo;
+		const { triggerQueueMessage } = this.state;
+
+		const { room } = this.props;
+		if (!room || !connecting || !msg || !triggerQueueMessage) {
+			return;
+		}
+
+		this.state.triggerQueueMessage = false;
+
+		const { dispatch, messages } = this.props;
+		const message = { _id: createToken(), msg, u, ts: new Date() };
+
+		await dispatch({
+			messages: upsert(messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
+		});
+	}
+
 	componentDidMount() {
-		this.checkConnecting();
+		this.checkConnectingAgent();
 		loadMessages();
 	}
 
@@ -250,7 +283,7 @@ export class ChatContainer extends Component {
 	}
 
 	componentDidUpdate() {
-		this.checkConnecting();
+		this.checkConnectingAgent();
 	}
 
 	componentWillUnmount() {
@@ -318,6 +351,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			unread,
 			lastReadMessageId,
 			triggerAgent,
+			queueInfo,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -347,7 +381,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				typingUsernames={Array.isArray(typing) ? typing : []}
 				loading={loading}
 				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
-				connecting={!!(room && !agent && showConnecting)}
+				connecting={!!(room && !agent && (showConnecting || queueInfo))}
 				dispatch={dispatch}
 				departments={departments}
 				allowSwitchingDepartments={allowSwitchingDepartments}
@@ -359,6 +393,11 @@ export const ChatConnector = ({ ref, ...props }) => (
 				lastReadMessageId={lastReadMessageId}
 				guest={guest}
 				triggerAgent={triggerAgent}
+				queueInfo={queueInfo ? {
+					spot: queueInfo.spot,
+					message: queueInfo.message,
+				} : undefined}
+
 			/>
 		)}
 	</Consumer>

@@ -54,13 +54,13 @@ export const initRoom = async () => {
 	if (!roomAgent) {
 		if (servedBy) {
 			roomAgent = await Livechat.agent({ rid });
-			await store.setState({ agent: roomAgent });
+			await store.setState({ agent: roomAgent, queueInfo: null });
 			parentCall('callback', ['assign-agent', normalizeAgent(roomAgent)]);
 		}
 	}
 
 	Livechat.onAgentChange(rid, async (agent) => {
-		await store.setState({ agent });
+		await store.setState({ agent, queueInfo: null });
 		parentCall('callback', ['assign-agent', normalizeAgent(agent)]);
 	});
 
@@ -69,6 +69,17 @@ export const initRoom = async () => {
 		agent && store.setState({ agent: { ...agent, status } });
 		parentCall('callback', ['agent-status-change', normalizeAgent(agent)]);
 	});
+
+	Livechat.onQueuePositionChange(rid, async (queueInfo) => {
+		const { agent } = store.state;
+		if (agent) {
+			return;
+		}
+
+		await store.setState({ queueInfo });
+		// parentCall('callback', ['queue-position-change', queueInfo]);
+	});
+
 
 	setCookies(rid, token);
 	parentCall('callback', 'chat-started');
