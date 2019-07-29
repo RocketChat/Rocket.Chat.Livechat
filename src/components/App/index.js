@@ -1,16 +1,10 @@
 import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
+
 import { Livechat } from '../../api';
-import history from '../../history';
-import { loadConfig, clearConnectionAlerts } from '../../lib/main';
-import CustomFields from '../../lib/customFields';
-import { setWidgetLanguage } from '../../lib/locale';
 import { locationUpdate } from '../../lib/location';
-import Triggers from '../../lib/triggers';
-import Hooks from '../../lib/hooks';
-import { parentCall } from '../../lib/parentCall';
-import userPresence from '../../lib/userPresence';
+import history from '../../history';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
 import ChatFinished from '../../routes/ChatFinished';
@@ -213,43 +207,43 @@ export class App extends Component {
 }
 
 const AppConnector = () => (
-	<StoreProvider>
-		<div id="app">
-			<StoreConsumer>
-				{({
-					config,
-					user,
-					triggered,
-					gdpr,
-					sound,
-					undocked,
-					minimized = true,
-					expanded = false,
-					alerts,
-					modal,
-					dispatch,
-					iframe,
-					userState,
-				}) => (
-					<App
-						config={config}
-						gdpr={gdpr}
-						triggered={triggered}
-						user={user}
-						sound={sound}
-						undocked={undocked}
-						minimized={minimized}
-						expanded={expanded}
-						alerts={alerts}
-						modal={modal}
-						dispatch={dispatch}
-						iframe={iframe}
-						userState={userState}
-					/>
-				)}
-			</StoreConsumer>
-		</div>
-	</StoreProvider>
+  <StoreProvider>
+    <div id="app">
+      <StoreConsumer>
+        {({
+          config,
+          user,
+          triggered,
+          gdpr,
+          sound,
+          undocked,
+          minimized = true,
+          expanded = false,
+          alerts,
+          modal,
+          dispatch,
+          iframe,
+          userState,
+        }) => (
+            <App
+              config={config}
+              gdpr={gdpr}
+              triggered={triggered}
+              user={user}
+              sound={sound}
+              undocked={undocked}
+              minimized={minimized}
+              expanded={expanded}
+              alerts={alerts}
+              modal={modal}
+              dispatch={dispatch}
+              iframe={iframe}
+              userState={userState}
+            />
+          )}
+      </StoreConsumer>
+    </div>
+  </StoreProvider>
 );
 
 export default AppConnector;

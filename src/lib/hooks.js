@@ -32,15 +32,10 @@ const api = {
 			Triggers.processRequest(info);
 		}
 
-		const { token, room } = store.state;
+    const { token, room: { _id: rid } = {} } = store.state;
 		const { change, title, location: { href } } = info;
     
-		if (!room) {
-			Livechat.sendVisitorNavigation({ token, pageInfo: { change, title, location: { href } } });
-			return;
-		}
-		
-		Livechat.sendVisitorNavigation({ token, rid: room._id, pageInfo: { change, title, location: { href } } });
+    Livechat.sendVisitorNavigation({ token, rid, pageInfo: { change, title, location: { href } } });
 	},
 
 	setCustomField(key, value, overwrite = true) {
