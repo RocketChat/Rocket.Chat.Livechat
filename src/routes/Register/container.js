@@ -42,7 +42,6 @@ export class RegisterContainer extends Component {
 				await loadConfig();
 			}
 		} finally {
-			store.setState({ userState: 'registered' });
 			await dispatch({ loading: false });
 		}
 	}

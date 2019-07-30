@@ -13,8 +13,6 @@ const defaultMessage = I18n.t('If you have any other questions, just press the b
 export default class ChatFinished extends Component {
 	handleClick = async() => {
 		const { onRedirectChat } = this.props;
-		await store.setState({ userState: 'registered' });
-		await Livechat.changeUserState('registered');
 		onRedirectChat && onRedirectChat();
 	}
 

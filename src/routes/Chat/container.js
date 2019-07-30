@@ -397,9 +397,7 @@ export class ChatContainer extends Component {
     const { alerts, dispatch, token, user } = this.props;
     try {
       this.stopTypingDebounced.stop();
-      store.setState({ userState: 'chatting' });
       await Promise.all([
-        Livechat.changeUserState('chatting'),
         this.stopTyping({ rid, username: user.username }),
         Livechat.sendMessage({ msg, token, rid }),
       ]);
@@ -471,8 +469,6 @@ export class ChatContainer extends Component {
       await dispatch({ alerts: (alerts.push(alert), alerts) });
     } finally {
       await dispatch({ loading: false });
-      await store.setState({ userState: 'offline' });
-      await Livechat.changeUserState('offline');
       await closeChat();
     }
   }

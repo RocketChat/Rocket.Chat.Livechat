@@ -4,6 +4,14 @@ import { getToken } from './main';
 import { Livechat } from '../api';
 import store from '../store';
 
+const docActivityEvents = ['mousemove', 'mousedown', 'touchend', 'keydown'];
+const token = getToken();
+let timer;
+let initiated = false;
+const awayTime = 3000;
+let self;
+let oldStatus;
+
 const deviceInfo = () => {
 	const module = {
 		options: [],
@@ -117,7 +125,6 @@ const locationPrimary = async(latitude, longitude) => {
 	location.latitude = latitude;
 	location.longitude = longitude;
 
-	const token = getToken();
 	return {
 		location,
 		token,
@@ -136,7 +143,6 @@ const locationBackup = async() => {
 		},
 	}).then((res) => (res.json()));
   
-	const token = getToken();
 	return {
 		location: convertLocationToSend(location),
 		token,
@@ -153,14 +159,13 @@ const locationBackup = async() => {
  * 5. If location already present, increases the visit count for user
  */
 export const locationUpdate = async() => {
-	const checkLocationUser = await Livechat.checkLocationUser(getToken());
+	const checkLocationUser = await Livechat.checkLocationUser(token);
 	// check user location all ready there or not
 	if (checkLocationUser && !checkLocationUser._id) {
 		// Ask for permission for location
 		if (navigator.geolocation) {
 			store.setState({
 				locationAccess: true,
-				userState: 'idle',
 			});
 			navigator.geolocation.getCurrentPosition(async(position) => {
 				const locationUser = await locationPrimary(position.coords.latitude, position.coords.longitude);
@@ -181,7 +186,6 @@ export const locationUpdate = async() => {
 			if (confirm('Please allow to access your location, for better assistance')) {
 				store.setState({
 					locationAccess: true,
-					userState: 'idle',
 				});
 				const locationUser = await locationBackup();
 				await Livechat.sendLocationData(locationUser);
@@ -189,6 +193,79 @@ export const locationUpdate = async() => {
 		}
 	} else {
 		// Update visit count for user
-		Livechat.updateVisitCount(getToken());
+		Livechat.updateVisitCount(token);
 	}
+};
+
+export const userSessionPresence = {
+
+  init() {
+    if (initiated) {
+      return;
+    }
+
+    initiated = true;
+    self = this;
+    store.on('change', this.handleStoreChange);
+  },
+
+  reset() {
+    initiated = false;
+    this.stopEvents();
+    store.off('change', this.handleStoreChange);
+  },
+
+  stopTimer() {
+    timer && clearTimeout(timer);
+  },
+
+  startTimer() {
+    this.stopTimer();
+    timer = setTimeout(this.setAway, awayTime);
+  },
+
+  handleStoreChange(state) {
+    if (!initiated) {
+      return;
+    }
+
+    const { token } = state;
+    token ? self.startEvents() : self.stopEvents();
+  },
+
+  startEvents() {
+    docActivityEvents.forEach((event) => {
+      document.addEventListener(event, this.setOnline);
+    });
+
+    window.addEventListener('focus', this.setOnline);
+  },
+
+  stopEvents() {
+    docActivityEvents.forEach((event) => {
+      document.removeEventListener(event, this.setOnline);
+    });
+
+    window.removeEventListener('focus', this.setOnline);
+    this.stopTimer();
+  },
+
+  async setOnline() {
+    self.startTimer();
+    if (oldStatus === 'online') {
+      return;
+    }
+    oldStatus = 'online';
+    
+    await Livechat.updateSessionStatus('online', token);
+  },
+
+  async setAway() {
+    self.stopTimer();
+    if (oldStatus === 'away') {
+      return;
+    }
+    oldStatus = 'away';
+    await Livechat.updateSessionStatus('away', token);
+  },
 };

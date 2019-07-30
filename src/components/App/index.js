@@ -3,7 +3,7 @@ import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 
 import { Livechat } from '../../api';
-import { locationUpdate } from '../../lib/location';
+import { locationUpdate, userSessionPresence } from '../../lib/location';
 import history from '../../history';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
@@ -223,7 +223,6 @@ const AppConnector = () => (
           modal,
           dispatch,
           iframe,
-          userState,
         }) => (
             <App
               config={config}
@@ -238,7 +237,6 @@ const AppConnector = () => (
               modal={modal}
               dispatch={dispatch}
               iframe={iframe}
-              userState={userState}
             />
           )}
       </StoreConsumer>
