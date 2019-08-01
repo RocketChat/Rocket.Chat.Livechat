@@ -399,6 +399,7 @@ export class ChatContainer extends Component {
       this.stopTypingDebounced.stop();
       await Promise.all([
         this.stopTyping({ rid, username: user.username }),
+        Livechat.updateSessionStatus('online', token),
         Livechat.sendMessage({ msg, token, rid }),
       ]);
     } catch (error) {

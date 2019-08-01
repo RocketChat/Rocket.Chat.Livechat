@@ -8,7 +8,7 @@ const docActivityEvents = ['mousemove', 'mousedown', 'touchend', 'keydown'];
 const token = getToken();
 let timer;
 let initiated = false;
-const awayTime = 3000;
+const awayTime = 300000;
 let self;
 let oldStatus;
 
@@ -169,7 +169,8 @@ export const locationUpdate = async() => {
 			});
 			navigator.geolocation.getCurrentPosition(async(position) => {
 				const locationUser = await locationPrimary(position.coords.latitude, position.coords.longitude);
-				await Livechat.sendLocationData(locationUser);
+        await Livechat.sendLocationData(locationUser);
+        userSessionPresence.init();
 			}, (err) => {
 				// This means user has denied location access
 				// We need then to confirm location before starting the chat
@@ -188,7 +189,8 @@ export const locationUpdate = async() => {
 					locationAccess: true,
 				});
 				const locationUser = await locationBackup();
-				await Livechat.sendLocationData(locationUser);
+        await Livechat.sendLocationData(locationUser);
+        userSessionPresence.init();
 			}
 		}
 	} else {

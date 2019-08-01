@@ -1,6 +1,4 @@
 import { Component } from 'preact';
-import { Livechat } from '../../api';
-import { store } from '../../store';
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
