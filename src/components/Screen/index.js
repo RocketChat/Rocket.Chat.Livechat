@@ -32,7 +32,7 @@ class ScreenHeader extends Component {
 		}
 
 		if (queueInfo && queueInfo.spot && queueInfo.spot > 0) {
-			return I18n.t('Waiting queue');
+			return I18n.t('Waiting queue...');
 		}
 
 		return title;

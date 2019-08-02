@@ -23,12 +23,12 @@ const normalizeLanguageString = (languageString) => {
 /**
  * To get browser Language of user
  */
-const browserLanguage = () => navigator.userLanguage || navigator.language;
+export const browserLanguage = () => navigator.userLanguage || navigator.language;
 
 /**
  * This is configured langauge
  */
-const configLanguage = () => {
+export const configLanguage = () => {
 	const { config: { settings: { language } = {} } = {}, iframe: { language: iframeLanguage } = {} } = store.state;
 	return iframeLanguage || language;
 };
@@ -37,3 +37,13 @@ const configLanguage = () => {
  * This will update langauge of widget
  */
 export const setWidgetLanguage = () => I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
+
+export const getDateFnsLocale = () => {
+	const supportedLocales = ['ar', 'be', 'bg', 'ca', 'cs', 'da', 'de', 'el', 'en', 'eo', 'es', 'fi', 'fil', 'fr', 'hr', 'hu', 'id', 'is', 'it', 'ja', 'ko', 'mk', 'nb', 'nl', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'sr', 'sv', 'th', 'tr', 'zh_cn', 'zh_tw'];
+	let fullLanguage = configLanguage() || browserLanguage();
+	fullLanguage = fullLanguage.toLowerCase();
+	const [languageCode] = fullLanguage.split ? fullLanguage.split(/[-_]/) : [];
+	const locale = [fullLanguage, languageCode, 'en'].find((lng) => supportedLocales.indexOf(lng) > -1);
+	// eslint-disable-next-line import/no-dynamic-require
+	return require(`date-fns/locale/${ locale }/index.js`);
+};

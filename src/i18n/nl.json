@@ -67,13 +67,14 @@
     "user_joined_407ba0d": "Gebruiker is toegetreden",
     "user_left_58ed9c36": "Gebruiker is weggegaan",
     "user_removed_by_e990f856": "User removed by",
-    "waiting_queue_c1062ce4": "Waiting queue",
+    "waiting_queue_800061da": "Waiting queue...",
     "we_are_not_online_right_now_please_leave_a_message_57df1966": "We zijn nu niet online. Laat alsjeblieft een bericht achter.",
     "welcome_dd4e7151": "Welcome",
     "write_your_message_6eee0188": "Write your message...",
     "yes_dde87d5": "Ja",
     "you_browser_doesn_t_support_audio_element_3391386f": "You browser doesn't support audio element",
     "you_browser_doesn_t_support_video_element_e9cbd81e": "You browser doesn't support video element",
-    "your_spot_is_spot_a35cd288": "Your spot is #%{spot}"
+    "your_spot_is_strong_spot_strong_ed0e8ee9": "Your spot is <strong>#%{spot}</strong>",
+    "your_spot_is_strong_spot_strong_estimated_wait_tim_a6faa12": "Your spot is <strong>#%{spot}</strong> (Estimated wait time: <strong>%{estimatedWaitTime}</strong>)"
   }
 }

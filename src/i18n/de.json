@@ -73,6 +73,7 @@
     "yes_dde87d5": "Ja",
     "you_browser_doesn_t_support_audio_element_3391386f": "Ihr Browser unterstützt keine Audio Elemente",
     "you_browser_doesn_t_support_video_element_e9cbd81e": "Ihr Browser unterstützt keine Video Elemente",
-    "your_spot_is_spot_a35cd288": "Your spot is #%{spot}"
+    "your_spot_is_strong_spot_strong_ed0e8ee9": "Your spot is <strong>#%{spot}</strong>",
+    "your_spot_is_strong_spot_strong_estimated_wait_tim_a6faa12": "Your spot is <strong>#%{spot}</strong> (Estimated wait time: <strong>%{estimatedWaitTime}</strong>)"
   }
 }

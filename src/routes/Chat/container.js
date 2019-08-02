@@ -16,18 +16,21 @@ export class ChatContainer extends Component {
 		connectingAgent: false,
 		queueSpot: 0,
 		triggerQueueMessage: true,
+		estimatedWaitTime: null,
 	}
 
 	checkConnectingAgent = async () => {
 		const { connecting, queueInfo } = this.props;
-		const { connectingAgent, queueSpot } = this.state;
+		const { connectingAgent, queueSpot, estimatedWaitTime } = this.state;
 
 		const newConnecting = connecting;
 		const newQueueSpot = (queueInfo && queueInfo.spot) || 0;
+		const newEstimatedWaitTime = queueInfo && queueInfo.estimatedWaitTimeSeconds;
 
-		if (newConnecting !== connectingAgent || newQueueSpot !== queueSpot) {
+		if (newConnecting !== connectingAgent || newQueueSpot !== queueSpot || newEstimatedWaitTime !== estimatedWaitTime) {
 			this.state.connectingAgent = newConnecting;
 			this.state.queueSpot = newQueueSpot;
+			this.state.estimatedWaitTime = newEstimatedWaitTime;
 			await this.handleQueueMessage(connecting, queueInfo);
 			await this.handleConnectingAgentAlert(newConnecting, normalizeQueueAlert(queueInfo));
 		}
@@ -243,6 +246,7 @@ export class ChatContainer extends Component {
 			return;
 		}
 
+		const { livechatQueueMessageId } = constants;
 		const { message: { text: msg, user: u } = {} } = queueInfo;
 		const { triggerQueueMessage } = this.state;
 
@@ -254,7 +258,7 @@ export class ChatContainer extends Component {
 		this.state.triggerQueueMessage = false;
 
 		const { dispatch, messages } = this.props;
-		const message = { _id: createToken(), msg, u, ts: new Date() };
+		const message = { _id: livechatQueueMessageId, msg, u, ts: new Date() };
 
 		await dispatch({
 			messages: upsert(messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
@@ -395,6 +399,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				triggerAgent={triggerAgent}
 				queueInfo={queueInfo ? {
 					spot: queueInfo.spot,
+					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
 
