@@ -121,5 +121,10 @@
 		"hooks": {
 			"pre-commit": "run-s i18n && git add -A src/i18n"
 		}
+	},
+	"houston": {
+		"updateFiles": [
+			"package.json"
+		]
 	}
 }
