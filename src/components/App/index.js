@@ -135,7 +135,7 @@ export class App extends Component {
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
-		Connection.init();
+		await Connection.init();
 		this.handleTriggers();
 		CustomFields.init();
 		Hooks.init();
