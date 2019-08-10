@@ -37,10 +37,7 @@ export class Alert extends Component {
 			}}
 		>
 			<div className={createClassName(styles, 'alert__content')}>
-				<p
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: children }}
-				/>
+				{children}
 			</div>
 			{!hideCloseButton && (
 				<button

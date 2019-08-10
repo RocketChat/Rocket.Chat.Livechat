@@ -74,7 +74,7 @@
     "yes_dde87d5": "Ναι",
     "you_browser_doesn_t_support_audio_element_3391386f": "You browser doesn't support audio element",
     "you_browser_doesn_t_support_video_element_e9cbd81e": "You browser doesn't support video element",
-    "your_spot_is_strong_spot_strong_ed0e8ee9": "Your spot is <strong>#%{spot}</strong>",
-    "your_spot_is_strong_spot_strong_estimated_wait_tim_a6faa12": "Your spot is <strong>#%{spot}</strong> (Estimated wait time: <strong>%{estimatedWaitTime}</strong>)"
+    "your_spot_is_spot_a35cd288": "Your spot is #%{spot}",
+    "your_spot_is_spot_estimated_wait_time_estimatedwai_d0ff46e0": "Your spot is #%{spot} (Estimated wait time: %{estimatedWaitTime})"
   }
 }

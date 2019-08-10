@@ -15,7 +15,7 @@ export const normalizeQueueAlert = (queueInfo) => {
 	return spot > 0
 	&& (
 		estimatedWaitTime
-			? I18n.t('Your spot is <strong>#%{spot}</strong> (Estimated wait time: <strong>%{estimatedWaitTime}</strong>)', { spot, estimatedWaitTime })
-			: I18n.t('Your spot is <strong>#%{spot}</strong>', { spot })
+			? I18n.t('Your spot is #%{spot} (Estimated wait time: %{estimatedWaitTime})', { spot, estimatedWaitTime })
+			: I18n.t('Your spot is #%{spot}', { spot })
 	);
 };
