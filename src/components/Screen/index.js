@@ -25,10 +25,22 @@ class ScreenHeader extends Component {
 		return !!(agent && agent.email && agent.phone);
 	}
 
+	headerTitle = () => {
+		const { agent, queueInfo, title } = this.props;
+		if (agent) {
+			return agent.name;
+		}
+
+		if (queueInfo && queueInfo.spot && queueInfo.spot > 0) {
+			return I18n.t('Waiting queue...');
+		}
+
+		return title;
+	}
+
 	render = ({
 		alerts,
 		agent,
-		title,
 		notificationsEnabled,
 		minimized,
 		expanded,
@@ -62,7 +74,7 @@ class ScreenHeader extends Component {
 			)}
 
 			<Header.Content>
-				<Header.Title>{agent ? agent.name : title}</Header.Title>
+				<Header.Title>{this.headerTitle()}</Header.Title>
 				{agent && (
 					<Header.SubTitle>{agent.email}</Header.SubTitle>
 				)}
@@ -168,6 +180,7 @@ export const Screen = ({
 	onRestore,
 	onOpenWindow,
 	onSoundStop,
+	queueInfo,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<style>{`
@@ -194,6 +207,7 @@ export const Screen = ({
 					onMinimize={onMinimize}
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
+					queueInfo={queueInfo}
 				/>
 
 				{modal}

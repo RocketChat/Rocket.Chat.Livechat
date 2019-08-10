@@ -47,20 +47,24 @@ export const initRoom = async () => {
 
 	Livechat.unsubscribeAll();
 
-	const { token, agent, room: { _id: rid, servedBy } } = state;
+	const { token, agent, queueInfo, room: { _id: rid, servedBy } } = state;
 	Livechat.subscribeRoom(rid);
 
 	let roomAgent = agent;
 	if (!roomAgent) {
 		if (servedBy) {
 			roomAgent = await Livechat.agent({ rid });
-			await store.setState({ agent: roomAgent });
+			await store.setState({ agent: roomAgent, queueInfo: null });
 			parentCall('callback', ['assign-agent', normalizeAgent(roomAgent)]);
 		}
 	}
 
+	if (queueInfo) {
+		parentCall('callback', ['queue-position-change', queueInfo]);
+	}
+
 	Livechat.onAgentChange(rid, async (agent) => {
-		await store.setState({ agent });
+		await store.setState({ agent, queueInfo: null });
 		parentCall('callback', ['assign-agent', normalizeAgent(agent)]);
 	});
 
@@ -68,6 +72,11 @@ export const initRoom = async () => {
 		const { agent } = store.state;
 		agent && store.setState({ agent: { ...agent, status } });
 		parentCall('callback', ['agent-status-change', normalizeAgent(agent)]);
+	});
+
+	Livechat.onQueuePositionChange(rid, async (queueInfo) => {
+		await store.setState({ queueInfo });
+		parentCall('callback', ['queue-position-change', queueInfo]);
 	});
 
 	setCookies(rid, token);
