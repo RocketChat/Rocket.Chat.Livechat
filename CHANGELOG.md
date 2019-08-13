@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 1.1.4 - 2019-08-13
 [FIX] Update SDK alpha version, missing method (#276)
 
+## 1.1.4 - 2019-08-13
+* Update the SDK dependency to the latest alpha version(29) (#276)
+
 ## 1.1.3 - 2019-08-09
 * [FIX] package.json files to /build (#273)
 * [FIX] Make message markdown links open externally (#272)
