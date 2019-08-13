@@ -104,7 +104,8 @@ const convertLocationToSend = (location) => (
 		countryCode: location.country_code,
 		city: location.city || location.state,
 		latitude: location.latitude,
-		longitude: location.longitude,
+    longitude: location.longitude,
+    completLocation: location.country + ", " + location.state + ", " + location.city
 	});
 
 /**
