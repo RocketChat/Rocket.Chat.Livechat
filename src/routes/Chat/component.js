@@ -88,6 +88,7 @@ export default class Chat extends Component {
 		onFinishChat,
 		onRemoveUserData,
 		lastReadMessageId,
+		queueInfo,
 		...props
 	}, {
 		atBottom = true,
@@ -104,6 +105,7 @@ export default class Chat extends Component {
 					src: avatarResolver(agent.username),
 				},
 			} : null}
+			queueInfo={queueInfo}
 			nopadding
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
