@@ -67,11 +67,14 @@
     "user_joined_407ba0d": "Användare ansluten",
     "user_left_58ed9c36": "Användare lämnade",
     "user_removed_by_e990f856": "User removed by",
+    "waiting_queue_800061da": "Waiting queue...",
     "we_are_not_online_right_now_please_leave_a_message_57df1966": "Vi är inte online just nu. Lämna gärna ett medelande.",
     "welcome_dd4e7151": "Welcome",
     "write_your_message_6eee0188": "Write your message...",
     "yes_dde87d5": "Ja",
     "you_browser_doesn_t_support_audio_element_3391386f": "You browser doesn't support audio element",
-    "you_browser_doesn_t_support_video_element_e9cbd81e": "You browser doesn't support video element"
+    "you_browser_doesn_t_support_video_element_e9cbd81e": "You browser doesn't support video element",
+    "your_spot_is_spot_a35cd288": "Your spot is #%{spot}",
+    "your_spot_is_spot_estimated_wait_time_estimatedwai_d0ff46e0": "Your spot is #%{spot} (Estimated wait time: %{estimatedWaitTime})"
   }
 }

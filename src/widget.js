@@ -34,6 +34,7 @@ const validCallbacks = [
 	'hide-widget',
 	'assign-agent',
 	'agent-status-change',
+	'queue-position-change',
 ];
 
 const callbacks = new EventEmitter();
@@ -362,6 +363,7 @@ window.RocketChat.livechat = {
 	onWidgetHidden(fn) { registerCallback('hide-widget', fn); },
 	onAssignAgent(fn) { registerCallback('assign-agent', fn); },
 	onAgentStatusChange(fn) { registerCallback('agent-status-change', fn); },
+	onQueuePositionChange(fn) { registerCallback('queue-position-change', fn); },
 };
 
 // proccess queue

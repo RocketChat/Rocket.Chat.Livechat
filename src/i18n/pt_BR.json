@@ -67,11 +67,14 @@
     "user_joined_407ba0d": "Usuário entrou",
     "user_left_58ed9c36": "Usuário saiu",
     "user_removed_by_e990f856": "Usuário removido por",
+    "waiting_queue_800061da": "Fila de espera...",
     "we_are_not_online_right_now_please_leave_a_message_57df1966": "Não estamos online agora. Por favor deixe uma mensagem.",
     "welcome_dd4e7151": "Bem vindo(a)",
     "write_your_message_6eee0188": "Escreva sua mensagem...",
     "yes_dde87d5": "Sim",
     "you_browser_doesn_t_support_audio_element_3391386f": "Seu navegador não suporta elemento de áudio",
-    "you_browser_doesn_t_support_video_element_e9cbd81e": "Seu navegador não suporta elemento de vídeo"
+    "you_browser_doesn_t_support_video_element_e9cbd81e": "Seu navegador não suporta elemento de vídeo",
+    "your_spot_is_spot_a35cd288": "Seu lugar é #%{spot}",
+    "your_spot_is_spot_estimated_wait_time_estimatedwai_d0ff46e0": "Seu lugar é #%{spot} (Tempo estimado: %{estimatedWaitTime})"
   }
 }
