@@ -4,7 +4,7 @@ import { route } from 'preact-router';
 import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
 import { loadConfig } from '../../lib/main';
-import { Consumer, store } from '../../store';
+import { Consumer } from '../../store';
 import { ModalManager } from '../../components/Modal';
 import Register from './component';
 

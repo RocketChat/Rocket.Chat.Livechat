@@ -12,7 +12,6 @@ export const loadConfig = async () => {
 
   Livechat.credentials.token = token;
 
-<<<<<<< HEAD
 	const {
 		agent,
 		room,
@@ -35,28 +34,6 @@ export const loadConfig = async () => {
 		visible: true,
 		unread: null,
 	});
-=======
-  const {
-    agent,
-    room,
-    guest: user,
-    resources: { sound: src = null } = {},
-    ...config
-  } = await Livechat.config({ token });
-
-  await store.setState({
-    config,
-    agent,
-    room,
-    user,
-    sound: { src, enabled: true, play: false },
-    messages: [],
-    typing: [],
-    noMoreMessages: false,
-    visible: true,
-    unread: null,
-  });
->>>>>>> Rebased code
 };
 
 export const getToken = () => {

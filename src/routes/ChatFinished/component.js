@@ -9,7 +9,7 @@ const defaultGreeting = I18n.t('Thanks for talking with us');
 const defaultMessage = I18n.t('If you have any other questions, just press the button below to start a new chat.');
 
 export default class ChatFinished extends Component {
-	handleClick = async() => {
+	handleClick = () => {
 		const { onRedirectChat } = this.props;
 		onRedirectChat && onRedirectChat();
 	}
