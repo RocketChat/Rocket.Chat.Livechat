@@ -1,5 +1,6 @@
 import queryString from 'query-string';
 
+// eslint-disable-next-line import/no-absolute-path
 import LivechatClient from '/Users/knrt10/dev/openSource/RocketChat/Rocket.Chat.js.SDK/dist/lib/clients/Livechat';
 
 const host = 	window.SERVER_URL

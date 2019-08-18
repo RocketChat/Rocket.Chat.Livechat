@@ -5,7 +5,6 @@ import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
 import { loadConfig } from '../../lib/main';
 import { Consumer } from '../../store';
-import { ModalManager } from '../../components/Modal';
 import Register from './component';
 
 export class RegisterContainer extends Component {
@@ -30,17 +29,10 @@ export class RegisterContainer extends Component {
 
 		await dispatch({ loading: true, department });
 		try {
-			const { locationAccess } = this.props;
-			if (!locationAccess) {
-				await ModalManager.alert({
-					text: I18n.t('Please enable your location to start chat. This is for your convinience only. Thanks'),
-				});
-			} else {
-				await Livechat.grantVisitor({ visitor: { ...fields, token } });
-				await Livechat.updateVisitorSession({ visitor: { ...fields, token } });
-				parentCall('callback', ['pre-chat-form-submit', fields]);
-				await loadConfig();
-			}
+			await Livechat.grantVisitor({ visitor: { ...fields, token } });
+			await Livechat.updateVisitorSessionOnRegister({ visitor: { ...fields, token } });
+			parentCall('callback', ['pre-chat-form-submit', fields]);
+			await loadConfig();
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -100,7 +92,6 @@ export const RegisterConnector = ({ ref, ...props }) => (
 			token,
 			dispatch,
 			user,
-			locationAccess,
 		}) => (
 			<RegisterContainer
 				ref={ref}
@@ -123,7 +114,6 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				token={token}
 				dispatch={dispatch}
 				user={user}
-				locationAccess={locationAccess}
 			/>
 		)}
 	</Consumer>

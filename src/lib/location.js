@@ -12,7 +12,6 @@ const awayTime = 300000;
 let self;
 let oldStatus;
 
-
 export const userSessionPresence = {
 
 	init() {
@@ -167,6 +166,12 @@ const deviceInfo = () => {
 	};
 };
 
+const userDataWithoutLocation = {
+	token,
+	deviceInfo: deviceInfo(),
+};
+
+
 /**
  * This is used to convert location to a default type we want to send to server
  * @param {Object} location
@@ -246,7 +251,7 @@ export const locationUpdate = async () => {
 				const locationUser = await locationPrimary(position.coords.latitude, position.coords.longitude);
 				await Livechat.sendLocationData(locationUser);
 				userSessionPresence.init();
-			}, (err) => {
+			}, async (err) => {
 				// This means user has denied location access
 				// We need then to confirm location before starting the chat
 				// Save state of location access inside store.
@@ -254,6 +259,9 @@ export const locationUpdate = async () => {
 					store.setState({
 						locationAccess: false,
 					});
+					userSessionPresence.init();
+					// Send user data without location
+					await Livechat.sendUserDataWithoutLocation(userDataWithoutLocation);
 				}
 			});
 		} else {
@@ -266,6 +274,13 @@ export const locationUpdate = async () => {
 				const locationUser = await locationBackup();
 				await Livechat.sendLocationData(locationUser);
 				userSessionPresence.init();
+			} else {
+				store.setState({
+					locationAccess: false,
+				});
+				userSessionPresence.init();
+				// Send user data without location
+				await Livechat.sendUserDataWithoutLocation(userDataWithoutLocation);
 			}
 		}
 	} else {
