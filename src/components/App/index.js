@@ -136,8 +136,8 @@ export class App extends Component {
 
 	async initialize() {
 		// TODO: split these behaviors into composable components
-    await Connection.init();
-    locationUpdate();
+		await Connection.init();
+		locationUpdate();
 		this.handleTriggers();
 		CustomFields.init();
 		Hooks.init();
@@ -150,8 +150,8 @@ export class App extends Component {
 
 	async finalize() {
 		CustomFields.reset();
-    userPresence.reset();
-    userSessionPresence.reset();
+		userPresence.reset();
+		userSessionPresence.reset();
 		visibility.removeListener(this.handleVisibilityChange);
 		I18n.off('change', this.handleLanguageChange);
 	}
@@ -208,41 +208,41 @@ export class App extends Component {
 }
 
 const AppConnector = () => (
-  <StoreProvider>
-    <div id="app">
-      <StoreConsumer>
-        {({
-          config,
-          user,
-          triggered,
-          gdpr,
-          sound,
-          undocked,
-          minimized = true,
-          expanded = false,
-          alerts,
-          modal,
-          dispatch,
-          iframe,
-        }) => (
-            <App
-              config={config}
-              gdpr={gdpr}
-              triggered={triggered}
-              user={user}
-              sound={sound}
-              undocked={undocked}
-              minimized={minimized}
-              expanded={expanded}
-              alerts={alerts}
-              modal={modal}
-              dispatch={dispatch}
-              iframe={iframe}
-            />
-          )}
-      </StoreConsumer>
-    </div>
-  </StoreProvider>
+	<StoreProvider>
+		<div id="app">
+			<StoreConsumer>
+				{({
+					config,
+					user,
+					triggered,
+					gdpr,
+					sound,
+					undocked,
+					minimized = true,
+					expanded = false,
+					alerts,
+					modal,
+					dispatch,
+					iframe,
+				}) => (
+					<App
+						config={config}
+						gdpr={gdpr}
+						triggered={triggered}
+						user={user}
+						sound={sound}
+						undocked={undocked}
+						minimized={minimized}
+						expanded={expanded}
+						alerts={alerts}
+						modal={modal}
+						dispatch={dispatch}
+						iframe={iframe}
+					/>
+				)}
+			</StoreConsumer>
+		</div>
+	</StoreProvider>
 );
 
 export default AppConnector;

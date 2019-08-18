@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
-import { Consumer, store } from '../../store';
+import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
 import constants from '../../lib/constants';
 import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
@@ -106,7 +106,7 @@ export class ChatContainer extends Component {
 			this.stopTypingDebounced.stop();
 			await Promise.all([
 				this.stopTyping({ rid, username: user.username }),
-        Livechat.updateSessionStatus('online', token),
+				Livechat.updateSessionStatus('online', token),
 				Livechat.sendMessage({ msg, token, rid }),
 			]);
 		} catch (error) {
@@ -114,7 +114,7 @@ export class ChatContainer extends Component {
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
-		
+
 		await Livechat.notifyVisitorTyping(rid, user.username, false);
 	}
 

@@ -1454,10 +1454,10 @@
   dependencies:
     eslint-plugin-import "^2.17.2"
 
-"@rocket.chat/sdk@^1.0.0-alpha.28":
-  version "1.0.0-alpha.28"
-  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.28.tgz#569f3c578c5c12ed54a9317d36fa8413208ce021"
-  integrity sha512-tQ+tIIX5R931cxIlTTn2ftCfiIo372vCG3omzDwzSfw6Kq24f7giUxVEpWfsI4GtuTU4caoren7wuGYwnST/+A==
+"@rocket.chat/sdk@^1.0.0-alpha.29":
+  version "1.0.0-alpha.30"
+  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.30.tgz#fabfab601892bde9c9277a8aae92e88da770d64e"
+  integrity sha512-beKIoCw0XLjN8dcusqwBiS1hCVKE+y1IzpRYHUtNciS5LhOPujLUwrzF+pys2xkia5TohbRlsbNYlXPehvSHLQ==
   dependencies:
     "@types/event-emitter" "^0.3.2"
     "@types/eventemitter3" "^2.0.2"
@@ -11286,9 +11286,9 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-paho-mqtt@eclipse/paho.mqtt.javascript#master:
+"paho-mqtt@github:eclipse/paho.mqtt.javascript#master":
   version "1.1.0"
-  resolved "https://codeload.github.com/eclipse/paho.mqtt.javascript/tar.gz/c40602f10deb3dec37786fe81e58cda03c6d62ec"
+  resolved "https://codeload.github.com/eclipse/paho.mqtt.javascript/tar.gz/f5859463aba9a9b7c19f99ab7c4849a723f8d832"
 
 pako@~1.0.5:
   version "1.0.10"

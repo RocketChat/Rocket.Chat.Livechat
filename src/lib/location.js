@@ -12,6 +12,80 @@ const awayTime = 300000;
 let self;
 let oldStatus;
 
+
+export const userSessionPresence = {
+
+	init() {
+		if (initiated) {
+			return;
+		}
+
+		initiated = true;
+		self = this;
+		store.on('change', this.handleStoreChange);
+	},
+
+	reset() {
+		initiated = false;
+		this.stopEvents();
+		store.off('change', this.handleStoreChange);
+	},
+
+	stopTimer() {
+		timer && clearTimeout(timer);
+	},
+
+	startTimer() {
+		this.stopTimer();
+		timer = setTimeout(this.setAway, awayTime);
+	},
+
+	handleStoreChange(state) {
+		if (!initiated) {
+			return;
+		}
+
+		const { token } = state;
+		token ? self.startEvents() : self.stopEvents();
+	},
+
+	startEvents() {
+		docActivityEvents.forEach((event) => {
+			document.addEventListener(event, this.setOnline);
+		});
+
+		window.addEventListener('focus', this.setOnline);
+	},
+
+	stopEvents() {
+		docActivityEvents.forEach((event) => {
+			document.removeEventListener(event, this.setOnline);
+		});
+
+		window.removeEventListener('focus', this.setOnline);
+		this.stopTimer();
+	},
+
+	async setOnline() {
+		self.startTimer();
+		if (oldStatus === 'online') {
+			return;
+		}
+		oldStatus = 'online';
+
+		await Livechat.updateSessionStatus('online', token);
+	},
+
+	async setAway() {
+		self.stopTimer();
+		if (oldStatus === 'away') {
+			return;
+		}
+		oldStatus = 'away';
+		await Livechat.updateSessionStatus('away', token);
+	},
+};
+
 const deviceInfo = () => {
 	const module = {
 		options: [],
@@ -104,8 +178,8 @@ const convertLocationToSend = (location) => (
 		countryCode: location.country_code,
 		city: location.city || location.state,
 		latitude: location.latitude,
-    longitude: location.longitude,
-    completLocation: location.country + ", " + location.state + ", " + location.city
+		longitude: location.longitude,
+		completLocation: `${ location.country }, ${ location.state }, ${ location.city }`,
 	});
 
 /**
@@ -114,13 +188,13 @@ const convertLocationToSend = (location) => (
  * @param {Number} longitude
  * @returns {Object}
  */
-const locationPrimary = async(latitude, longitude) => {
+const locationPrimary = async (latitude, longitude) => {
 	const { address } = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${ latitude }&lon=${ longitude }`, {
 		mode: 'cors',
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
-	}).then((res) => (res.json()));
+	}).then((res) => res.json());
 
 	const location = convertLocationToSend(address);
 	location.latitude = latitude;
@@ -137,13 +211,13 @@ const locationPrimary = async(latitude, longitude) => {
  * This is backup method to get location of user
  * @returns {Object}
  */
-const locationBackup = async() => {
+const locationBackup = async () => {
 	const location = await fetch('https://api.ipdata.co?api-key=test', {
 		headers: {
 			Accept: 'application/json',
 		},
-	}).then((res) => (res.json()));
-  
+	}).then((res) => res.json());
+
 	return {
 		location: convertLocationToSend(location),
 		token,
@@ -159,7 +233,7 @@ const locationBackup = async() => {
  * 4. If granted, sets location of user info to DB
  * 5. If location already present, increases the visit count for user
  */
-export const locationUpdate = async() => {
+export const locationUpdate = async () => {
 	const checkLocationUser = await Livechat.checkLocationUser(token);
 	// check user location all ready there or not
 	if (checkLocationUser && !checkLocationUser._id) {
@@ -168,10 +242,10 @@ export const locationUpdate = async() => {
 			store.setState({
 				locationAccess: true,
 			});
-			navigator.geolocation.getCurrentPosition(async(position) => {
+			navigator.geolocation.getCurrentPosition(async (position) => {
 				const locationUser = await locationPrimary(position.coords.latitude, position.coords.longitude);
-        await Livechat.sendLocationData(locationUser);
-        userSessionPresence.init();
+				await Livechat.sendLocationData(locationUser);
+				userSessionPresence.init();
 			}, (err) => {
 				// This means user has denied location access
 				// We need then to confirm location before starting the chat
@@ -190,85 +264,12 @@ export const locationUpdate = async() => {
 					locationAccess: true,
 				});
 				const locationUser = await locationBackup();
-        await Livechat.sendLocationData(locationUser);
-        userSessionPresence.init();
+				await Livechat.sendLocationData(locationUser);
+				userSessionPresence.init();
 			}
 		}
 	} else {
 		// Update visit count for user
 		Livechat.updateVisitCount(token);
 	}
-};
-
-export const userSessionPresence = {
-
-  init() {
-    if (initiated) {
-      return;
-    }
-
-    initiated = true;
-    self = this;
-    store.on('change', this.handleStoreChange);
-  },
-
-  reset() {
-    initiated = false;
-    this.stopEvents();
-    store.off('change', this.handleStoreChange);
-  },
-
-  stopTimer() {
-    timer && clearTimeout(timer);
-  },
-
-  startTimer() {
-    this.stopTimer();
-    timer = setTimeout(this.setAway, awayTime);
-  },
-
-  handleStoreChange(state) {
-    if (!initiated) {
-      return;
-    }
-
-    const { token } = state;
-    token ? self.startEvents() : self.stopEvents();
-  },
-
-  startEvents() {
-    docActivityEvents.forEach((event) => {
-      document.addEventListener(event, this.setOnline);
-    });
-
-    window.addEventListener('focus', this.setOnline);
-  },
-
-  stopEvents() {
-    docActivityEvents.forEach((event) => {
-      document.removeEventListener(event, this.setOnline);
-    });
-
-    window.removeEventListener('focus', this.setOnline);
-    this.stopTimer();
-  },
-
-  async setOnline() {
-    self.startTimer();
-    if (oldStatus === 'online') {
-      return;
-    }
-    oldStatus = 'online';
-    
-    await Livechat.updateSessionStatus('online', token);
-  },
-
-  async setAway() {
-    self.stopTimer();
-    if (oldStatus === 'away') {
-      return;
-    }
-    oldStatus = 'away';
-    await Livechat.updateSessionStatus('away', token);
-  },
 };
