@@ -75,6 +75,8 @@ export const Message = memo(({
 	compact,
 	className,
 	style = {},
+	showAgentInfo,
+	defaultAgentUsername,
 	...message
 }) => (
 	<MessageContainer
@@ -88,6 +90,9 @@ export const Message = memo(({
 		<MessageAvatars
 			avatarResolver={avatarResolver}
 			usernames={compact ? [] : message.u && [message.u.username]}
+			me={me}
+			showAgentInfo={showAgentInfo}
+			defaultAgentUsername={defaultAgentUsername}
 		/>
 		<MessageContent reverse={me}>
 			{renderContent({

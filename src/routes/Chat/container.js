@@ -322,6 +322,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
+					showAgentInfo,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -356,6 +357,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
+			defaultAgentUsername,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -402,6 +404,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
+				showAgentInfo={showAgentInfo}
+				defaultAgentUsername={defaultAgentUsername}
 
 			/>
 		)}

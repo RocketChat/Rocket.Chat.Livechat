@@ -90,6 +90,10 @@ export function getInsertIndex(array, item, ranking) {
 	return array.length > 0 ? array.length : 0;
 }
 
+export const getUserName = (me, showAgentInfo, defaultAgentUsername, username) => {
+	return showAgentInfo || me ? username : defaultAgentUsername;
+};
+
 export function upsert(array, item, predicate, ranking) {
 	const index = array.findIndex(predicate);
 
