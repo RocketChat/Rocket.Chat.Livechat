@@ -76,10 +76,10 @@ class ScreenHeader extends Component {
 
 			<Header.Content>
 				<Header.Title>{this.headerTitle()}</Header.Title>
-				{showAgentInfo && agent && (
+				{!!showAgentInfo && agent && (
 					<Header.SubTitle>{agent.email}</Header.SubTitle>
 				)}
-				{showAgentInfo && agent && agent.phone && (
+				{!!showAgentInfo && agent && agent.phone && (
 					<Header.CustomField>{agent.phone}</Header.CustomField>
 				)}
 			</Header.Content>
