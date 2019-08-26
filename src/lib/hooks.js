@@ -116,23 +116,13 @@ const api = {
 	showWidget() {
 		const { iframe } = store.state;
 		store.setState({ iframe: { ...iframe, visible: true } });
-		parentCall('showWidget');
+		parentCall('showWidgetIframe');
 	},
 
 	hideWidget() {
 		const { iframe } = store.state;
 		store.setState({ iframe: { ...iframe, visible: false } });
-		parentCall('hideWidget');
-	},
-
-	minimizeWidget() {
-		store.setState({ minimized: true });
-		parentCall('closeWidget');
-	},
-
-	maximizeWidget() {
-		store.setState({ minimized: false });
-		parentCall('openWidget');
+		parentCall('hideWidgetIframe');
 	},
 };
 
