@@ -122,7 +122,7 @@ export class App extends Component {
 		setWidgetLanguage();
 		const { minimized, iframe: { visible } } = this.props;
 		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
-		parentCall(visible ? 'showWidgetIframe' : 'hideWidgetIframe');
+		parentCall(visible ? 'showWidget' : 'hideWidget');
 
 		visibility.addListener(this.handleVisibilityChange);
 		this.handleVisibilityChange();
