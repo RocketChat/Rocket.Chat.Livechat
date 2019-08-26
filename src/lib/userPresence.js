@@ -8,7 +8,7 @@ const awayTime = 300000;
 let self;
 let oldStatus;
 
-const userPrensence = {
+const userPresence = {
 
 	init() {
 		if (initiated) {
@@ -80,4 +80,4 @@ const userPrensence = {
 	},
 };
 
-export default userPrensence;
+export default userPresence;

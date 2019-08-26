@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 
-import { locationUpdate, userSessionPresence } from '../../lib/location';
+import { locationUpdate } from '../../lib/location';
 import history from '../../history';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
@@ -137,7 +137,10 @@ export class App extends Component {
 	async initialize() {
 		// TODO: split these behaviors into composable components
 		await Connection.init();
-		locationUpdate();
+		const { config: { settings: { locationAccessPermission } } = {} } = this.props;
+		if (locationAccessPermission) {
+			locationUpdate();
+		}
 		this.handleTriggers();
 		CustomFields.init();
 		Hooks.init();
@@ -151,7 +154,6 @@ export class App extends Component {
 	async finalize() {
 		CustomFields.reset();
 		userPresence.reset();
-		userSessionPresence.reset();
 		visibility.removeListener(this.handleVisibilityChange);
 		I18n.off('change', this.handleLanguageChange);
 	}

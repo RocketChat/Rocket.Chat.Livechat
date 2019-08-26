@@ -166,7 +166,7 @@ const deviceInfo = () => {
 	};
 };
 
-const userDataWithoutLocation = {
+export const userDataWithoutLocation = {
 	token,
 	deviceInfo: deviceInfo(),
 };
