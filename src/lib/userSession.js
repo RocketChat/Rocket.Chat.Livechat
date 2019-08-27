@@ -166,7 +166,7 @@ const deviceInfo = () => {
 	};
 };
 
-export const userDataWithoutLocation = {
+export const userSessionWithoutLocation = {
 	token,
 	deviceInfo: deviceInfo(),
 };
@@ -193,7 +193,7 @@ const convertLocationToSend = (location) => (
  * @param {Number} longitude
  * @returns {Object}
  */
-const locationPrimary = async (latitude, longitude) => {
+const sessionInfo = async (latitude, longitude) => {
 	const { address } = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${ latitude }&lon=${ longitude }`, {
 		mode: 'cors',
 		headers: {
@@ -213,78 +213,32 @@ const locationPrimary = async (latitude, longitude) => {
 };
 
 /**
- * This is backup method to get location of user
- * @returns {Object}
- */
-const locationBackup = async () => {
-	const location = await fetch('https://api.ipdata.co?api-key=test', {
-		headers: {
-			Accept: 'application/json',
-		},
-	}).then((res) => res.json());
-
-	return {
-		location: convertLocationToSend(location),
-		token,
-		deviceInfo: deviceInfo(),
-	};
-};
-
-/**
  * This function works in following way
- * 1. Check user location already present or not
- * 2. If not, asks for user location access
- * 3. If not granted, sets locationAccess in store as false, so that we ask for access again, before starting chat
- * 4. If granted, sets location of user info to DB
- * 5. If location already present, increases the visit count for user
+ * 1. Asks for user location access
+ * 2. If not granted, sets locationAccess in store as false, just send the session information
+ * 3. If granted, sets location of user info to DB
  */
-export const locationUpdate = async () => {
-	const checkLocationUser = await Livechat.checkLocationUser(token);
-	// check user location all ready there or not
-	if (checkLocationUser && !checkLocationUser._id) {
-		// Ask for permission for location
-		if (navigator.geolocation) {
-			store.setState({
-				locationAccess: true,
-			});
-			navigator.geolocation.getCurrentPosition(async (position) => {
-				const locationUser = await locationPrimary(position.coords.latitude, position.coords.longitude);
-				await Livechat.sendLocationData(locationUser);
-				userSessionPresence.init();
-			}, async (err) => {
-				// This means user has denied location access
-				// We need then to confirm location before starting the chat
-				// Save state of location access inside store.
-				if (err) {
-					store.setState({
-						locationAccess: false,
-					});
-					userSessionPresence.init();
-					// Send user data without location
-					await Livechat.sendUserDataWithoutLocation(userDataWithoutLocation);
-				}
-			});
-		} else {
-			// It means navigator is not supported in the browser, so ask
-			// for location access by backup API.
-			if (confirm('Please allow to access your location, for better assistance')) {
-				store.setState({
-					locationAccess: true,
-				});
-				const locationUser = await locationBackup();
-				await Livechat.sendLocationData(locationUser);
-				userSessionPresence.init();
-			} else {
+export const sessionUpdate = async () => {
+	if (navigator.geolocation) {
+		store.setState({
+			locationAccess: true,
+		});
+		navigator.geolocation.getCurrentPosition(async (position) => {
+			const userSession = await sessionInfo(position.coords.latitude, position.coords.longitude);
+			await Livechat.sendSessionData(userSession);
+			userSessionPresence.init();
+		}, async (err) => {
+			// This means user has denied location access
+			// We need then to confirm location before starting the chat
+			// Save state of location access inside store.
+			if (err) {
 				store.setState({
 					locationAccess: false,
 				});
 				userSessionPresence.init();
 				// Send user data without location
-				await Livechat.sendUserDataWithoutLocation(userDataWithoutLocation);
+				await Livechat.sendSessionData(userSessionWithoutLocation);
 			}
-		}
-	} else {
-		// Update visit count for user
-		Livechat.updateVisitCount(token);
+		});
 	}
 };

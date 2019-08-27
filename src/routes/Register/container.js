@@ -4,8 +4,7 @@ import { route } from 'preact-router';
 import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
 import { loadConfig } from '../../lib/main';
-import { Consumer, store } from '../../store';
-import { userDataWithoutLocation, userSessionPresence } from '../../lib/location';
+import { Consumer } from '../../store';
 import Register from './component';
 
 export class RegisterContainer extends Component {
@@ -25,16 +24,11 @@ export class RegisterContainer extends Component {
 
 	handleSubmit = async (fields) => {
 		const { dispatch, token } = this.props;
-		const { config: { settings: { locationAccessPermission } } = {} } = store.state;
 		const department = this.getDepartment(fields);
 		Object.assign(fields, { department });
 
 		await dispatch({ loading: true, department });
 		try {
-			if (!locationAccessPermission) {
-				await Livechat.sendUserDataWithoutLocation(userDataWithoutLocation);
-				userSessionPresence.init();
-			}
 			await Livechat.grantVisitor({ visitor: { ...fields, token } });
 			await Livechat.updateVisitorSessionOnRegister({ visitor: { ...fields, token } });
 			parentCall('callback', ['pre-chat-form-submit', fields]);

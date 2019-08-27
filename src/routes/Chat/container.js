@@ -100,8 +100,12 @@ export class ChatContainer extends Component {
 		}
 
 		await this.grantUser();
-		const { _id: rid } = await this.getRoom();
+		const { _id: rid, msgs } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
+		// This is a hack to fix room state in session when new chat is started
+		if (msgs === 1) {
+			await Livechat.updateSessionStatus('online', token);
+		}
 		try {
 			this.stopTypingDebounced.stop();
 			await Promise.all([
@@ -113,7 +117,6 @@ export class ChatContainer extends Component {
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
-
 		await Livechat.notifyVisitorTyping(rid, user.username, false);
 	}
 

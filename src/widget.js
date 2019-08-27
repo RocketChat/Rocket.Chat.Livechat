@@ -314,6 +314,7 @@ const init = (url) => {
 	}
 
 	config.url = url;
+
 	createWidget(url);
 	attachMessageListener();
 	trackNavigation();
