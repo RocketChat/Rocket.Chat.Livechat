@@ -1,12 +1,13 @@
 /* eslint-disable quote-props */
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
+
 import webpackOverride from './webpackOverride.config';
 
 
 export default (config, env/* , helpers */) => {
 	if (env.production) {
-		config.output.publicPath = '/livechat/';
+		config.output.publicPath = 'livechat/';
 	}
 
 	config = webpackOverride(config);
