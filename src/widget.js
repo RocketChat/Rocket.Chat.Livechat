@@ -211,12 +211,12 @@ const api = {
 		emitCallback(eventName, data);
 	},
 
-	showWidgetIframe() {
+	showWidget() {
 		iframe.style.display = 'initial';
 		emitCallback('show-widget');
 	},
 
-	hideWidgetIframe() {
+	hideWidget() {
 		iframe.style.display = 'none';
 		emitCallback('hide-widget');
 	},
@@ -275,6 +275,14 @@ function showWidget() {
 
 function hideWidget() {
 	callHook('hideWidget');
+}
+
+function maximizeWidget() {
+	callHook('maximizeWidget');
+}
+
+function minimizeWidget() {
+	callHook('minimizeWidget');
 }
 
 const currentPage = {
@@ -351,6 +359,8 @@ window.RocketChat.livechat = {
 	setLanguage,
 	showWidget,
 	hideWidget,
+	maximizeWidget,
+	minimizeWidget,
 
 	// callbacks
 	onChatMaximized(fn) { registerCallback('chat-maximized', fn); },
