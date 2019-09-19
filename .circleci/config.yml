@@ -36,18 +36,18 @@ jobs:
       - run:
           name: list repo
           command: ls -la
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-      - run:
-          name: Publish package
-          command: npm publish
-      - run:
-          name: Github Release
-          command: yarn release -y
-      - run:
-          name: Storybook
-          command: yarn deploy-storybook --ci
+      # - run:
+      #     name: Authenticate with registry
+      #     command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+      # - run:
+      #     name: Publish package
+      #     command: npm publish
+      # - run:
+      #     name: Github Release
+      #     command: yarn release -y
+      # - run:
+      #     name: Storybook
+      #     command: yarn deploy-storybook --ci
 
 workflows:
   version: 2
@@ -58,7 +58,7 @@ workflows:
           requires:
             - build
           filters:
-            branches:
-              only: master
-            tags:
-              only: /^v.*/
+            # branches:
+            #   only: master
+            # tags:
+            #   only: /^v.*/
