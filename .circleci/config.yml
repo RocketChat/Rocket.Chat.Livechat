@@ -20,9 +20,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run: yarn deploy-storybook --ci
-
       - run: yarn build
 
   publish:
@@ -41,6 +38,9 @@ jobs:
       - run:
           name: Github Release
           command: yarn release -y
+      - run:
+          name: Storybook
+          command: yarn deploy-storybook --ci
 
 workflows:
   version: 2
