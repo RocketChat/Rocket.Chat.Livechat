@@ -21,6 +21,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - ./
 
   publish:
     docker:
@@ -29,6 +33,9 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+      - run:
+          name: list repo
+          command: ls -la
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
