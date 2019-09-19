@@ -24,7 +24,8 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths:
-            - ./
+            - ./package.json
+            - ./build
 
   publish:
     docker:
