@@ -18,8 +18,8 @@ storiesOf('Components|Header', module)
 	.add('with text content', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -31,8 +31,8 @@ storiesOf('Components|Header', module)
 	.add('with long text content', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -44,8 +44,8 @@ storiesOf('Components|Header', module)
 	.add('with title and subtitle', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -58,8 +58,8 @@ storiesOf('Components|Header', module)
 	.add('with picture', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -75,8 +75,8 @@ storiesOf('Components|Header', module)
 	.add('with actions', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -97,8 +97,8 @@ storiesOf('Components|Header', module)
 	.add('with multiple alerts', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			post={
 				<Post>
@@ -147,8 +147,8 @@ storiesOf('Components|Header', module)
 	.add('for user chat', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 		>
 			<Picture>
@@ -178,8 +178,8 @@ storiesOf('Components|Header', module)
 	.add('with custom field', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			large
 		>
@@ -213,8 +213,8 @@ storiesOf('Components|Header', module)
 	.add('with custom field and alert', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			post={
 				<Post>
@@ -264,8 +264,8 @@ storiesOf('Components|Header', module)
 	.add('with theme', () => (
 		<Header
 			theme={{
-				color: color('theme.color', 'darkred'),
-				fontColor: color('theme.fontColor', 'peachpuff'),
+				color: color('theme/color', 'darkred'),
+				fontColor: color('theme/fontColor', 'peachpuff'),
 			}}
 			large
 		>

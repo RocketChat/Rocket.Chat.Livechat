@@ -12,9 +12,9 @@ storiesOf('Routes|SwitchDepartment', module)
 	.add('normal', () => (
 		<SwitchDepartment
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', '')}
 			message={text('message', '')}
