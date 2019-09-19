@@ -57,7 +57,7 @@ workflows:
       - publish:
           requires:
             - build
-          filters:
+          # filters:
             # branches:
             #   only: master
             # tags:
