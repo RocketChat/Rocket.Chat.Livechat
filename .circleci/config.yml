@@ -1,10 +1,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
-
     docker:
       - image: circleci/node:10.15
 
@@ -49,12 +45,15 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: master
       - publish:
           requires:
             - build
           filters:
-              branches:
-                only: master
-              tags:
-                only: /^v.*/
+            branches:
+              only: master
+            tags:
+              only: /^v.*/
