@@ -26,8 +26,8 @@ class ScreenHeader extends Component {
 	}
 
 	headerTitle = () => {
-		const { agent, queueInfo, title, showAgentInfo } = this.props;
-		if (showAgentInfo && agent) {
+		const { agent, queueInfo, title } = this.props;
+		if (agent && agent.name) {
 			return agent.name;
 		}
 
@@ -51,7 +51,6 @@ class ScreenHeader extends Component {
 		onMinimize,
 		onRestore,
 		onOpenWindow,
-		showAgentInfo,
 	}) => (
 		<Header
 			ref={this.handleRef}
@@ -62,7 +61,7 @@ class ScreenHeader extends Component {
 			}
 			large={this.largeHeader()}
 		>
-			{!!showAgentInfo && agent && agent.avatar && (
+			{agent && agent.avatar && (
 				<Header.Picture>
 					<Avatar
 						src={agent.avatar.src}
@@ -76,10 +75,10 @@ class ScreenHeader extends Component {
 
 			<Header.Content>
 				<Header.Title>{this.headerTitle()}</Header.Title>
-				{!!showAgentInfo && agent && (
+				{agent && agent.email && (
 					<Header.SubTitle>{agent.email}</Header.SubTitle>
 				)}
-				{!!showAgentInfo && agent && agent.phone && (
+				{agent && agent.phone && (
 					<Header.CustomField>{agent.phone}</Header.CustomField>
 				)}
 			</Header.Content>
@@ -182,7 +181,6 @@ export const Screen = ({
 	onOpenWindow,
 	onSoundStop,
 	queueInfo,
-	showAgentInfo,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<style>{`
@@ -210,7 +208,6 @@ export const Screen = ({
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
-					showAgentInfo={showAgentInfo}
 				/>
 
 				{modal}
