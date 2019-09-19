@@ -213,14 +213,14 @@ storiesOf('Components|Screen', module)
 			</Screen.Content>
 		</Screen>
 	))
-	.add('with empty agent', () => (
+	.add('with hidden agent', () => (
 		<Screen
 			theme={{
 				color: color('theme/color', ''),
 				fontColor: color('theme/fontColor', ''),
 				iconColor: color('theme/iconColor', ''),
 			}}
-			agent={object('agent', {})}
+			agent={object('agent', { hiddenInfo: true })}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
 			minimized={boolean('minimized', false)}
