@@ -88,7 +88,7 @@ export const Message = memo(({
 	>
 		<MessageAvatars
 			avatarResolver={avatarResolver}
-			usernames={compact ? [] : message.u && [message.u.username]}
+			usernames={compact ? [] : message.u && message.u.username && [message.u.username]}
 		/>
 		<MessageContent reverse={me}>
 			{renderContent({

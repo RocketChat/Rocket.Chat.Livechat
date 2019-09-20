@@ -23,8 +23,7 @@ export const loadConfig = async () => {
 
 	await store.setState({
 		config,
-		// agent: agent.hiddenInfo ? { hiddenInfo: true } : agent, // TODO: revert it when the API is updated
-		agent: { hiddenInfo: true },
+		agent: agent.hiddenInfo ? { hiddenInfo: true } : agent, // TODO: revert it when the API is updated
 		room,
 		user,
 		queueInfo,
