@@ -84,9 +84,9 @@ export const initRoom = async () => {
 };
 
 const isAgentHidden = () => {
-	const { agent } = store.state;
+	const { config: { settings: { agentHiddenInfo } = {} } = {} } = store.state;
 
-	return agent && agent.hiddenInfo;
+	return !!agentHiddenInfo;
 };
 
 const transformAgentInformationOnMessage = (message) => {
