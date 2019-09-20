@@ -97,8 +97,6 @@ export class MessageList extends MemoizedComponent {
 		uid,
 		conversationFinishedMessage,
 		typingUsernames,
-		showAgentInfo,
-		defaultAgentUsername,
 	}) => {
 		const items = [];
 
@@ -127,8 +125,6 @@ export class MessageList extends MemoizedComponent {
 					me={uid && message.u && uid === message.u._id}
 					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id}
 					conversationFinishedMessage={conversationFinishedMessage}
-					showAgentInfo={showAgentInfo}
-					defaultAgentUsername={defaultAgentUsername}
 					{...message}
 				/>
 			);
@@ -152,8 +148,6 @@ export class MessageList extends MemoizedComponent {
 					use="li"
 					avatarResolver={avatarResolver}
 					usernames={typingUsernames}
-					showAgentInfo={showAgentInfo}
-					defaultAgentUsername={defaultAgentUsername}
 				/>
 			);
 		}

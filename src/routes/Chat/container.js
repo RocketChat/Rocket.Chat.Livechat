@@ -322,7 +322,6 @@ export const ChatConnector = ({ ref, ...props }) => (
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
-					showAgentInfo,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -357,7 +356,6 @@ export const ChatConnector = ({ ref, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
-			defaultAgentUsername,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -378,6 +376,10 @@ export const ChatConnector = ({ ref, ...props }) => (
 					email: agent.emails && agent.emails[0] && agent.emails[0].address,
 					username: agent.username,
 					phone: (agent.phone && agent.phone[0] && agent.phone[0].phoneNumber) || (agent.customFields && agent.customFields.phone),
+					avatar: agent.username ? {
+						description: agent.username,
+						src: getAvatarUrl(agent.username),
+					} : undefined,
 				} : undefined}
 				room={room}
 				messages={messages.filter((message) => canRenderMessage(message))}
@@ -404,8 +406,6 @@ export const ChatConnector = ({ ref, ...props }) => (
 					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
-				showAgentInfo={showAgentInfo}
-				defaultAgentUsername={defaultAgentUsername}
 
 			/>
 		)}

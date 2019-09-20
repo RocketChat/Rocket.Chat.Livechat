@@ -23,7 +23,8 @@ export const loadConfig = async () => {
 
 	await store.setState({
 		config,
-		agent,
+		// agent: agent.hiddenInfo ? { hiddenInfo: true } : agent, // TODO: revert it when the API is updated
+		agent: { hiddenInfo: true },
 		room,
 		user,
 		queueInfo,
@@ -62,4 +63,3 @@ export const processUnread = async () => {
 		await store.setState({ unread: unreadMessages.length });
 	}
 };
-

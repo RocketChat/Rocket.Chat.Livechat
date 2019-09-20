@@ -1,5 +1,5 @@
 import { Avatar } from '../../Avatar';
-import { createClassName, memo, getUserName } from '../../helpers';
+import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
 
 export const MessageAvatars = memo(({
@@ -7,9 +7,6 @@ export const MessageAvatars = memo(({
 	usernames = [],
 	className,
 	style = {},
-	me,
-	showAgentInfo,
-	defaultAgentUsername,
 }) => (
 	<div
 		className={createClassName(styles, 'message-avatars', {}, [className])}
@@ -17,8 +14,8 @@ export const MessageAvatars = memo(({
 	>
 		{usernames.map((username) => (
 			<Avatar
-				src={avatarResolver(getUserName(me, showAgentInfo, defaultAgentUsername, username))}
-				description={getUserName(me, showAgentInfo, defaultAgentUsername, username)}
+				src={avatarResolver(username)}
+				description={username}
 				className={createClassName(styles, 'message-avatars__avatar')}
 			/>
 		))}

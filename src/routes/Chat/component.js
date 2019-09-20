@@ -89,8 +89,6 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
-		showAgentInfo,
-		defaultAgentUsername,
 		...props
 	}, {
 		atBottom = true,
@@ -100,15 +98,8 @@ export default class Chat extends Component {
 			color={color}
 			title={title || I18n.t('Need help?')}
 			fontColor={fontColor}
-			agent={agent ? {
-				...agent,
-				avatar: {
-					description: agent.username,
-					src: avatarResolver(agent.username),
-				},
-			} : null}
+			agent={agent || null}
 			queueInfo={queueInfo}
-			showAgentInfo={showAgentInfo}
 			nopadding
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
@@ -133,8 +124,6 @@ export default class Chat extends Component {
 							conversationFinishedMessage={conversationFinishedMessage}
 							lastReadMessageId={lastReadMessageId}
 							onScrollTo={this.handleScrollTo}
-							showAgentInfo={showAgentInfo}
-							defaultAgentUsername={defaultAgentUsername}
 						/>
 					</div>
 				</Screen.Content>

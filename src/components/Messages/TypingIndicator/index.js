@@ -10,18 +10,12 @@ export const TypingIndicator = memo(({
 	avatarResolver = () => null,
 	usernames = [],
 	text,
-	me,
-	showAgentInfo,
-	defaultAgentUsername,
 	...containerProps
 }) => (
 	<MessageContainer {...containerProps}>
 		<MessageAvatars
 			avatarResolver={avatarResolver}
 			usernames={usernames}
-			me={false}
-			showAgentInfo={showAgentInfo}
-			defaultAgentUsername={defaultAgentUsername}
 		/>
 		<MessageContent>
 			<MessageBubble>
