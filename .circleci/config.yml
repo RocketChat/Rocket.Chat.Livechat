@@ -72,16 +72,16 @@ workflows:
       - publish:
           requires:
             - build
-          # filters:
-          #   branches:
-          #     only: master
-          #   tags:
-          #     only: /^v.*/
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /^v.*/
       - storybook:
           requires:
             - build
-          # filters:
-          #   branches:
-          #     only: master
-          #   tags:
-          #     only: /^v.*/
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /^v.*/
