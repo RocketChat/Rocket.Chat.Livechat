@@ -84,9 +84,13 @@ export const initRoom = async () => {
 };
 
 Livechat.onTyping((username, isTyping) => {
-	const { typing, user } = store.state;
+	const { typing, user, agent } = store.state;
 
 	if (user && user.username && user.username === username) {
+		return;
+	}
+
+	if (agent && agent.hiddenInfo) {
 		return;
 	}
 
