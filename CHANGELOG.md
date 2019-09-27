@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.6 - 2019-08-17
+* Publish correct package on npm
+
+## 1.1.5 - 2019-08-17
+* Publish correct package on npm
+
+## 1.1.4 - 2019-08-13
+* Update the SDK dependency to the latest alpha version(29) (#276)
 
 ## 1.1.3 - 2019-08-09
 * [FIX] package.json files to /build (#273)
