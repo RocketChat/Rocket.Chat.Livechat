@@ -116,6 +116,8 @@ export default class Register extends Component {
 		} else if (!showDepartmentField) {
 			this.setState({ department: null });
 		}
+
+		this.validateAll();
 	}
 
 	render({ title, color, message, loading, departments, ...props }, { name, email, department }) {
