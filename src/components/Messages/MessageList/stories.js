@@ -8,11 +8,11 @@ import { avatarResolver } from '../../../helpers.stories';
 import { MessageList } from '.';
 
 
-const fittingScreen = (storyFn) => centered(() => (
+const fittingScreen = (storyFn, ...args) => centered(() => (
 	<div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
 		{storyFn()}
 	</div>
-));
+), ...args);
 
 const users = [
 	{
