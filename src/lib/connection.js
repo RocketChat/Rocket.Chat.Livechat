@@ -39,7 +39,7 @@ const Connection = {
 		if (timer) {
 			return;
 		}
-		timer = setTimeout(async() => {
+		timer = setTimeout(async () => {
 			try {
 				clearTimeout(timer);
 				timer = false;
