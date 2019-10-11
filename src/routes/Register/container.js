@@ -30,6 +30,7 @@ export class RegisterContainer extends Component {
 		await dispatch({ loading: true, department });
 		try {
 			await Livechat.grantVisitor({ visitor: { ...fields, token } });
+			await Livechat.updateVisitorSessionOnRegister({ visitor: { ...fields, token } });
 			parentCall('callback', ['pre-chat-form-submit', fields]);
 			await loadConfig();
 		} finally {

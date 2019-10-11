@@ -2,6 +2,8 @@ import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 
+import { Livechat } from '../../api';
+import { sessionUpdate, userSessionWithoutLocation, userSessionPresence } from '../../lib/userSession';
 import history from '../../history';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';
@@ -133,9 +135,25 @@ export class App extends Component {
 		I18n.on('change', this.handleLanguageChange);
 	}
 
+	async initSession() {
+		const { config: { settings: { allowCollectGuestLocation }, session } = {} } = this.props;
+		if (!session) {
+			if (allowCollectGuestLocation) {
+				sessionUpdate();
+			} else {
+				await Livechat.sendSessionData(userSessionWithoutLocation);
+				userSessionPresence.init();
+			}
+		} else {
+			// Update visit count for user
+			Livechat.updateVisitCount(session.token);
+		}
+	}
+
 	async initialize() {
 		// TODO: split these behaviors into composable components
 		await Connection.init();
+		this.initSession();
 		this.handleTriggers();
 		CustomFields.init();
 		Hooks.init();

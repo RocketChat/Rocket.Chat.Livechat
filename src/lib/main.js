@@ -36,6 +36,11 @@ export const loadConfig = async () => {
 	});
 };
 
+export const getToken = () => {
+	const { token } = store.state;
+	return token;
+};
+
 export const processUnread = async () => {
 	const { minimized, visible, messages } = store.state;
 	if (minimized || !visible) {
