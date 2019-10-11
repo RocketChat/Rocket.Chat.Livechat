@@ -1,5 +1,5 @@
 import format from 'date-fns/format';
-import isToday from 'date-fns/is_today';
+import isToday from 'date-fns/isToday';
 
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
