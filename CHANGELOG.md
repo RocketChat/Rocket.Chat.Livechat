@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.0 - 2019-10-14
+
+* [IMPROVE] Preact X (#302)
+* Completed italian translation (#301)
+* [FIX] Support Webpack relative output path (#292)
+* [FIX] Registration Form changes not being detected (#300)
+
 ## 1.1.6 - 2019-08-17
 * Publish correct package on npm
 
