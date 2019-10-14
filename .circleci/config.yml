@@ -36,9 +36,11 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run:
-          name: list repo
-          command: ls -la
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: yarn install
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
