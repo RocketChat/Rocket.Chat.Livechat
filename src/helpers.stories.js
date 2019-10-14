@@ -1,15 +1,15 @@
-import loremIpsum from 'lorem-ipsum';
+import { loremIpsum } from 'lorem-ipsum';
 import mem from 'mem';
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
+import centered from '@storybook/addon-centered';
 import { boolean, color } from '@storybook/addon-knobs';
 
 
-export const screenCentered = (storyFn) => centered(() => (
+export const screenCentered = (storyFn, ...args) => centered(() => (
 	<div style={{ display: 'flex', width: '365px', height: '500px' }}>
 		{storyFn()}
 	</div>
-));
+), ...args);
 
 export const screenProps = () => ({
 	theme: {

@@ -61,4 +61,3 @@ export const processUnread = async () => {
 		await store.setState({ unread: unreadMessages.length });
 	}
 };
-
