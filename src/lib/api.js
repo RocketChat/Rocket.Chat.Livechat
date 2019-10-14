@@ -1,4 +1,4 @@
-import { distanceInWords } from 'date-fns';
+import { formatDistance } from 'date-fns';
 
 import { getDateFnsLocale } from './locale';
 
@@ -11,7 +11,7 @@ export const normalizeQueueAlert = (queueInfo) => {
 
 	const { spot, estimatedWaitTimeSeconds } = queueInfo;
 	const locale = getDateFnsLocale();
-	const estimatedWaitTime = estimatedWaitTimeSeconds && distanceInWords(new Date().setSeconds(estimatedWaitTimeSeconds), new Date(), { locale });
+	const estimatedWaitTime = estimatedWaitTimeSeconds && formatDistance(new Date().setSeconds(estimatedWaitTimeSeconds), new Date(), { locale });
 	return spot > 0
 	&& (
 		estimatedWaitTime
