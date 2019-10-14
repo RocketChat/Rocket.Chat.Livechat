@@ -1,4 +1,4 @@
-import loremIpsum from 'lorem-ipsum';
+import { loremIpsum } from 'lorem-ipsum';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, number, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
@@ -8,11 +8,11 @@ import { avatarResolver } from '../../../helpers.stories';
 import { MessageList } from '.';
 
 
-const fittingScreen = (storyFn) => centered(() => (
+const fittingScreen = (storyFn, ...args) => centered(() => (
 	<div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
 		{storyFn()}
 	</div>
-));
+), ...args);
 
 const users = [
 	{

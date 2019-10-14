@@ -116,21 +116,35 @@ const api = {
 	showWidget() {
 		const { iframe } = store.state;
 		store.setState({ iframe: { ...iframe, visible: true } });
-		parentCall('showWidgetIframe');
+		parentCall('showWidget');
 	},
 
 	hideWidget() {
 		const { iframe } = store.state;
 		store.setState({ iframe: { ...iframe, visible: false } });
-		parentCall('hideWidgetIframe');
+		parentCall('hideWidget');
+	},
+
+	minimizeWidget() {
+		store.setState({ minimized: true });
+		parentCall('closeWidget');
+	},
+
+	maximizeWidget() {
+		store.setState({ minimized: false });
+		parentCall('openWidget');
 	},
 };
 
-const onNewMessage = (msg) => {
-	if (typeof msg.data === 'object' && msg.data.src !== undefined && msg.data.src === 'rocketchat') {
-		if (api[msg.data.fn] !== undefined && typeof api[msg.data.fn] === 'function') {
-			const args = [].concat(msg.data.args || []);
-			api[msg.data.fn].apply(null, args);
+const onNewMessage = (event) => {
+	if (event.source === event.target) {
+		return;
+	}
+
+	if (typeof event.data === 'object' && event.data.src !== undefined && event.data.src === 'rocketchat') {
+		if (api[event.data.fn] !== undefined && typeof api[event.data.fn] === 'function') {
+			const args = [].concat(event.data.args || []);
+			api[event.data.fn].apply(null, args);
 		}
 	}
 };

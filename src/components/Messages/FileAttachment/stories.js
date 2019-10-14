@@ -6,11 +6,11 @@ import { memedIpsum } from '../../../helpers.stories';
 import { FileAttachment } from '.';
 
 
-const centeredWithWidth = (storyFn) => centered(() => (
+const centeredWithWidth = (storyFn, ...args) => centered(() => (
 	<div style={{ width: '365px' }}>
 		{storyFn()}
 	</div>
-));
+), ...args);
 
 storiesOf('Messages|FileAttachment', module)
 	.addDecorator(centeredWithWidth)

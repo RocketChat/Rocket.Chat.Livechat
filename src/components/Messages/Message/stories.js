@@ -1,4 +1,4 @@
-import loremIpsum from 'lorem-ipsum';
+import { loremIpsum } from 'lorem-ipsum';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date, object, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';

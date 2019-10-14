@@ -1,4 +1,4 @@
-import isSameDay from 'date-fns/is_same_day';
+import isSameDay from 'date-fns/isSameDay';
 
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
