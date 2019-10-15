@@ -80,7 +80,6 @@ export const initRoom = async () => {
 	});
 
 	setCookies(rid, token);
-	parentCall('callback', 'chat-started');
 };
 
 Livechat.onTyping((username, isTyping) => {
