@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.2 - 2019-10-15
+
+* [FIX] API method calls
+
 ## 1.2.1 - 2019-10-14
 
 * [CHORE] fix gh-publish (#306)
