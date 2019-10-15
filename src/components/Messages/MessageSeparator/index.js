@@ -1,4 +1,5 @@
 import format from 'date-fns/format';
+import { parseISO } from 'date-fns/fp';
 
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
@@ -22,7 +23,7 @@ export const MessageSeparator = memo(({
 		{(date || unread) && (
 			<span className={createClassName(styles, 'separator__text')}>
 				{
-					(!!date && format(date, 'MMM DD, YYYY').toUpperCase())
+					(!!date && format(parseISO(date), 'MMM dd, yyyy').toUpperCase())
 					|| (unread && I18n.t('unread messages'))
 				}
 			</span>

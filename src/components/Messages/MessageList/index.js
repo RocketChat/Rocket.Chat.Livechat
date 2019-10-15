@@ -1,4 +1,5 @@
 import isSameDay from 'date-fns/isSameDay';
+import { parseISO } from 'date-fns/fp';
 
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
@@ -105,7 +106,7 @@ export class MessageList extends MemoizedComponent {
 			const message = messages[i];
 			const nextMessage = messages[i + 1];
 
-			const showDateSeparator = !previousMessage || !isSameDay(message.ts, previousMessage.ts);
+			const showDateSeparator = !previousMessage || !isSameDay(parseISO(message.ts), parseISO(previousMessage.ts));
 			if (showDateSeparator) {
 				items.push(
 					<MessageSeparator
