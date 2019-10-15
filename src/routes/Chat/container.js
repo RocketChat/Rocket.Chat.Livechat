@@ -4,6 +4,7 @@ import { route } from 'preact-router';
 import { Livechat } from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
+import { parentCall } from '../../lib/parentCall';
 import constants from '../../lib/constants';
 import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
 import Chat from './component';
@@ -61,6 +62,8 @@ export class ChatContainer extends Component {
 			const newRoom = await Livechat.room(params);
 			await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
 			await initRoom();
+
+			parentCall('callback', 'chat-started');
 			return newRoom;
 		} catch (error) {
 			const { data: { error: reason } } = error;
