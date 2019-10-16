@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.5 - 2019-10-16
+
+* [FIX] date-nfs format usage (#315)
+
 ## 1.2.4 - 2019-10-16
 
 * [FIX] date-nfs format usage (#314)
