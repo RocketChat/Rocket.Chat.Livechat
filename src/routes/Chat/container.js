@@ -261,8 +261,8 @@ export class ChatContainer extends Component {
 		this.state.triggerQueueMessage = false;
 
 		const { dispatch, messages } = this.props;
-		const message = { _id: livechatQueueMessageId, msg, u, ts: new Date() };
-
+		const ts = new Date();
+		const message = { _id: livechatQueueMessageId, msg, u, ts: ts.toISOString() };
 		await dispatch({
 			messages: upsert(messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 		});
