@@ -52,7 +52,7 @@ export const processUnread = async () => {
 				other: '%{count} new messages since %{since}',
 			}, {
 				count: unreadMessages.length,
-				since: format(parseISO(lastReadMessage.ts), 'HH:mm [on] MMMM Do'),
+				since: format(parseISO(lastReadMessage.ts), 'HH:mm MMM dd'),
 			});
 			const alert = { id: constants.unreadMessagesAlertId, children: alertMessage, success: true, timeout: 0 };
 			const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
