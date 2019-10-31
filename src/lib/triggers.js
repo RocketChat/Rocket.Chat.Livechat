@@ -106,11 +106,13 @@ class Triggers {
 				trigger.skip = true;
 
 				getAgent(action).then(async (agent) => {
+					const ts = new Date();
+
 					const message = {
 						msg: action.params.msg,
 						token,
 						u: agent,
-						ts: new Date(),
+						ts: ts.toISOString(),
 						_id: createToken(),
 					};
 
