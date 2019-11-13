@@ -5,3 +5,4 @@ export const MESSAGE_TYPE_USER_JOINED = 'uj';
 export const MESSAGE_TYPE_USER_LEFT = 'ul';
 export const MESSAGE_TYPE_WELCOME = 'wm';
 export const MESSAGE_TYPE_LIVECHAT_CLOSED = 'livechat-close';
+export const MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY = 'livechat_transfer_history';

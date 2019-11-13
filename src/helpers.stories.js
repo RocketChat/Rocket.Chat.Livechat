@@ -1,7 +1,7 @@
 import { loremIpsum } from 'lorem-ipsum';
 import mem from 'mem';
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 import { boolean, color } from '@storybook/addon-knobs';
 
 

@@ -4,6 +4,7 @@ import { withKnobs, boolean, date, object, select, text } from '@storybook/addon
 import { storiesOf } from '@storybook/react';
 
 import { attachmentResolver, avatarResolver } from '../../../helpers.stories';
+import { normalizeTransferHistoryMessage } from '../../helpers';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
 	MESSAGE_TYPE_USER_ADDED,
@@ -12,6 +13,7 @@ import {
 	MESSAGE_TYPE_USER_LEFT,
 	MESSAGE_TYPE_WELCOME,
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
+	MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
 } from '../constants';
 import { Message } from '.';
 
@@ -25,6 +27,7 @@ const messageTypes = {
 	USER_LEFT: MESSAGE_TYPE_USER_LEFT,
 	WELCOME: MESSAGE_TYPE_WELCOME,
 	LIVECHAT_CLOSED: MESSAGE_TYPE_LIVECHAT_CLOSED,
+	TRANSFER_HISTORY: MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
 };
 
 const defaultMessage = loremIpsum({ count: 1, units: 'sentences' });
@@ -66,6 +69,29 @@ const defaultUser = {
 
 const now = new Date();
 
+const transferMessageScope = {
+	department: {
+		nextDepartment: {
+			name: 'Sales',
+			_id: 'oBW7aufgK6uhRSgd3',
+		},
+		scope: 'department',
+		transferredBy: defaultUser,
+	},
+	agent: {
+		scope: 'agent',
+		transferredBy: defaultUser,
+		transferredTo: {
+			username: 'renato.becker',
+			name: 'Renato Becker',
+		},
+	},
+	queue: {
+		scope: 'queue',
+		transferredBy: defaultUser,
+	},
+};
+
 storiesOf('Messages|Message', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
@@ -89,6 +115,42 @@ storiesOf('Messages|Message', module)
 			compact={boolean('compact', false)}
 			msg={text('msg', '')}
 			t={select('t', messageTypes, MESSAGE_TYPE_WELCOME)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+		/>
+	))
+	.add('system-return-queue', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', normalizeTransferHistoryMessage(transferMessageScope.queue))}
+			t={select('t', messageTypes, MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+		/>
+	))
+	.add('system-transfer-agent', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', normalizeTransferHistoryMessage(transferMessageScope.agent))}
+			t={select('t', messageTypes, MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+		/>
+	))
+	.add('system-transfer-department', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', normalizeTransferHistoryMessage(transferMessageScope.department))}
+			t={select('t', messageTypes, MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY)}
 			u={object('u', defaultUser)}
 			ts={date('ts', now)}
 		/>
