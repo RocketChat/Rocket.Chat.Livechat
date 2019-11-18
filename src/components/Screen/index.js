@@ -27,7 +27,7 @@ class ScreenHeader extends Component {
 
 	headerTitle = () => {
 		const { agent, queueInfo, title } = this.props;
-		if (agent) {
+		if (agent && agent.name) {
 			return agent.name;
 		}
 
@@ -75,7 +75,7 @@ class ScreenHeader extends Component {
 
 			<Header.Content>
 				<Header.Title>{this.headerTitle()}</Header.Title>
-				{agent && (
+				{agent && agent.email && (
 					<Header.SubTitle>{agent.email}</Header.SubTitle>
 				)}
 				{agent && agent.phone && (

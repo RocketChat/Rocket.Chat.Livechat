@@ -66,6 +66,7 @@ const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
 	|| (t === MESSAGE_TYPE_USER_LEFT && I18n.t('User left'))
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')));
+
 export const Message = memo(({
 	avatarResolver,
 	attachmentResolver = getAttachmentUrl,
@@ -87,7 +88,7 @@ export const Message = memo(({
 	>
 		<MessageAvatars
 			avatarResolver={avatarResolver}
-			usernames={compact ? [] : message.u && [message.u.username]}
+			usernames={compact ? [] : message.u && message.u.username && [message.u.username]}
 		/>
 		<MessageContent reverse={me}>
 			{renderContent({
