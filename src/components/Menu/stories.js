@@ -43,10 +43,11 @@ storiesOf('Components|Menu', module)
 			</Menu>
 		</div>
 	));
-const centeredWithPopoverContainer = (storyFn) => (
+
+const centeredWithPopoverContainer = (storyFn, ...args) => (
 	<div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
 		<PopoverContainer>
-			{centered(storyFn)}
+			{centered(storyFn, ...args)}
 		</PopoverContainer>
 	</div>
 );

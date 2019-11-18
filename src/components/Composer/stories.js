@@ -9,11 +9,11 @@ import SendIcon from '../../icons/send.svg';
 import { Composer, ComposerActions, ComposerAction } from '.';
 
 
-const centeredWithWidth = (storyFn) => centered(() => (
+const centeredWithWidth = (storyFn, ...args) => centered(() => (
 	<div style={{ width: '365px' }}>
 		{storyFn()}
 	</div>
-));
+), ...args);
 
 const defaultPlaceholder = 'Insert your text here';
 

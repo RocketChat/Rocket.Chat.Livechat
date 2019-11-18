@@ -32,14 +32,20 @@ class CustomFields {
 		store.off('change', this.handleStoreChange);
 	}
 
-	handleStoreChange(state, prevState) {
+	handleStoreChange(state) {
 		const { user } = state;
-		const { user: prevUser } = prevState;
+		const { _started } = CustomFields.instance;
 
-		if (!prevUser && user && user._id) {
-			CustomFields.instance._started = true;
-			CustomFields.instance.processCustomFields();
+		if (_started) {
+			return;
 		}
+
+		if (!user) {
+			return;
+		}
+
+		CustomFields.instance._started = true;
+		CustomFields.instance.processCustomFields();
 	}
 
 	processCustomFields() {

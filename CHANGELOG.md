@@ -2,6 +2,38 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.4 - 2019-10-16
+
+* [FIX] date-nfs format usage (#314)
+
+## 1.2.3 - 2019-10-15
+
+* [FIX] date-fns usage (#312)
+
+## 1.2.2 - 2019-10-15
+
+* [FIX] API method calls
+
+## 1.2.1 - 2019-10-14
+
+* [CHORE] fix gh-publish (#306)
+* [NEW] Add setting to display a custom chat finished text (#305)
+
+## 1.2.0 - 2019-10-14
+
+* [IMPROVE] Preact X (#302)
+* Completed italian translation (#301)
+* [FIX] Support Webpack relative output path (#292)
+* [FIX] Registration Form changes not being detected (#300)
+
+## 1.1.6 - 2019-08-17
+* Publish correct package on npm
+
+## 1.1.5 - 2019-08-17
+* Publish correct package on npm
+
+## 1.1.4 - 2019-08-13
+* Update the SDK dependency to the latest alpha version(29) (#276)
 
 ## 1.1.3 - 2019-08-09
 * [FIX] package.json files to /build (#273)

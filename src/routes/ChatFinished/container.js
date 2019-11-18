@@ -22,6 +22,7 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 			config: {
 				messages: {
 					conversationFinishedMessage: greeting,
+					conversationFinishedText: message,
 				} = {},
 				theme: {
 					color,
@@ -45,6 +46,7 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 				}}
 				title={I18n.t('Chat Finished')}
 				greeting={greeting}
+				message={message}
 			/>
 		)}
 	</Consumer>

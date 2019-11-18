@@ -1,18 +1,12 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
-import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs/react';
+import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
 
+import { screenCentered } from '../../helpers.stories';
 import { FooterOptions } from '../Footer';
 import Menu from '../Menu';
 import { Screen } from '.';
 
-
-const screenCentered = (storyFn) => centered(() => (
-	<div style={{ display: 'flex', width: '365px', height: '510px' }}>
-		{storyFn()}
-	</div>
-));
 
 const alerts = [
 	{ id: 1, children: 'Success alert', success: true },
