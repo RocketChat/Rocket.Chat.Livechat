@@ -112,7 +112,7 @@ export const createToken = () => Math.random().toString(36).substring(2, 15) + M
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
-export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command'];
+export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'livechat-close'];
 
 export const canRenderMessage = (message = {}) => !msgTypesNotRendered.includes(message.t);
 
