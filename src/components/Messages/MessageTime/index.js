@@ -6,7 +6,10 @@ import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
 
 
-export const parseDate = (ts) => format(parseISO(ts), isToday(parseISO(ts)) ? 'HH:mm' : 'dddd HH:mm');
+export const parseDate = (ts) => {
+	const timestamp = new Date(ts).toISOString();
+	return format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
+};
 
 export const MessageTime = memo(({ ts, className, style = {} }) => (
 	<time
