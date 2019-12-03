@@ -39,11 +39,20 @@ export const configLanguage = () => {
 export const setWidgetLanguage = () => I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 
 export const getDateFnsLocale = () => {
-	const supportedLocales = ['ar', 'be', 'bg', 'ca', 'cs', 'da', 'de', 'el', 'en', 'eo', 'es', 'fi', 'fil', 'fr', 'hr', 'hu', 'id', 'is', 'it', 'ja', 'ko', 'mk', 'nb', 'nl', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'sr', 'sv', 'th', 'tr', 'zh_cn', 'zh_tw'];
+	const supportedLocales = [
+		'af', 'ar', 'be', 'bg', 'bn', 'ca', 'cs', 'cy', 'da', 'de',
+		'el', 'en-AU', 'en-CA', 'en-GB', 'en-US', 'eo', 'es', 'et',
+		'fa-IR', 'fi', 'fr', 'fr-CA', 'gl', 'gu', 'he', 'hi', 'hr',
+		'hu', 'hy', 'id', 'is', 'it', 'ja', 'ka', 'kk', 'ko', 'lt',
+		'lv', 'nb', 'nl', 'nn', 'pl', 'pt', 'pt-BR', 'ro', 'ru', 'sk',
+		'sl', 'sr', 'sr-Latn', 'sv', 'ta', 'te', 'th', 'tr', 'ug',
+		'uk', 'vi', 'zh_CN', 'zh_TW',
+	];
+
 	let fullLanguage = configLanguage() || browserLanguage();
 	fullLanguage = fullLanguage.toLowerCase();
 	const [languageCode] = fullLanguage.split ? fullLanguage.split(/[-_]/) : [];
-	const locale = [fullLanguage, languageCode, 'en'].find((lng) => supportedLocales.indexOf(lng) > -1);
+	const locale = [fullLanguage, languageCode, 'en-US'].find((lng) => supportedLocales.indexOf(lng) > -1);
 	// eslint-disable-next-line import/no-dynamic-require
 	return require(`date-fns/locale/${ locale }/index.js`);
 };
