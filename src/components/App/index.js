@@ -49,6 +49,7 @@ export class App extends Component {
 			}
 
 			if (!online) {
+				parentCall('callback', 'no-agent-online');
 				return route('/leave-message');
 			}
 
