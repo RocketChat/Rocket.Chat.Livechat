@@ -2,13 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-
 ## 1.3.0 - 2019-12-12
 * [NEW] Add Service Offline callback (#341)
 * [NEW] Persian translation (#330)
 * [NEW] French translation (#323)
 * [NEW] Show/Hide Agent information (#279)
 * [FIX] Fix date-fns (#340) (#320) (#315) (#314)
+
+## 1.2.5 - 2019-10-16
+
+* [FIX] date-nfs format usage (#315)
 
 ## 1.2.4 - 2019-10-16
 
