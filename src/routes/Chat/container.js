@@ -4,7 +4,7 @@ import { route } from 'preact-router';
 import { Livechat } from '../../api';
 import { Consumer } from '../../store';
 import { loadConfig } from '../../lib/main';
-import { parentCall } from '../../lib/parentCall';
+import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
 import constants from '../../lib/constants';
 import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
 import Chat from './component';
@@ -69,6 +69,8 @@ export class ChatContainer extends Component {
 			const { data: { error: reason } } = error;
 			const alert = { id: createToken(), children: I18n.t('Error starting a new conversation: %{reason}', { reason }), error: true, timeout: 10000 };
 			await dispatch({ loading: false, alerts: (alerts.push(alert), alerts) });
+
+			runCallbackEventEmitter(reason);
 			throw error;
 		} finally {
 			await dispatch({ loading: false });

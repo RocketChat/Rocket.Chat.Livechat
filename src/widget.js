@@ -23,7 +23,7 @@ let smallScreen = false;
 let bodyStyle;
 let scrollPosition;
 
-const validCallbacks = [
+export const validCallbacks = [
 	'chat-maximized',
 	'chat-minimized',
 	'chat-started',
@@ -35,6 +35,7 @@ const validCallbacks = [
 	'assign-agent',
 	'agent-status-change',
 	'queue-position-change',
+	'no-agent-online',
 ];
 
 const callbacks = new EventEmitter();
@@ -374,6 +375,7 @@ window.RocketChat.livechat = {
 	onAssignAgent(fn) { registerCallback('assign-agent', fn); },
 	onAgentStatusChange(fn) { registerCallback('agent-status-change', fn); },
 	onQueuePositionChange(fn) { registerCallback('queue-position-change', fn); },
+	onServiceOffline(fn) { registerCallback('no-agent-online', fn); },
 };
 
 // proccess queue
