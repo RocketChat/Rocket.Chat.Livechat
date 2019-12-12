@@ -56,7 +56,7 @@ const normalizeThreadMessage = async (message) => {
 export const normalizeMessage = async (message) => {
 	const isThreadMsg = await isThreadMessage(message);
 	if (isThreadMsg) {
-		return false;
+		return null;
 	}
 
 	if (message && message.tmid && !message.threadMsg) {
@@ -66,4 +66,4 @@ export const normalizeMessage = async (message) => {
 	return message;
 };
 
-export const normalizeMessages = (messages = []) => Promise.all(messages.filter((message) => normalizeMessage(message)));
+export const normalizeMessages = (messages = []) => Promise.all(messages.filter((message) => !!normalizeMessage(message)));

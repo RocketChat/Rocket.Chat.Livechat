@@ -21,9 +21,9 @@ storiesOf('Components|Screen', module)
 	.add('normal', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
@@ -44,9 +44,9 @@ storiesOf('Components|Screen', module)
 	.add('minimized', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
@@ -67,9 +67,9 @@ storiesOf('Components|Screen', module)
 	.add('expanded', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
@@ -90,9 +90,9 @@ storiesOf('Components|Screen', module)
 	.add('windowed', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
@@ -113,9 +113,9 @@ storiesOf('Components|Screen', module)
 	.add('with agent (email)', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			agent={object('agent', {
 				name: 'Guilherme Gazzo',
@@ -145,9 +145,9 @@ storiesOf('Components|Screen', module)
 	.add('with agent (phone)', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			agent={object('agent', {
 				name: 'Guilherme Gazzo',
@@ -177,9 +177,9 @@ storiesOf('Components|Screen', module)
 	.add('with agent', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			agent={object('agent', {
 				name: 'Guilherme Gazzo',
@@ -207,12 +207,36 @@ storiesOf('Components|Screen', module)
 			</Screen.Content>
 		</Screen>
 	))
+	.add('with hidden agent', () => (
+		<Screen
+			theme={{
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
+			}}
+			agent={object('agent', { hiddenInfo: true })}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
+		</Screen>
+	))
 	.add('with multiple alerts', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
@@ -238,9 +262,9 @@ storiesOf('Components|Screen/Footer', module)
 	.add('empty', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
@@ -260,9 +284,9 @@ storiesOf('Components|Screen/Footer', module)
 	.add('with children', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}
@@ -284,9 +308,9 @@ storiesOf('Components|Screen/Footer', module)
 	.add('with options', () => (
 		<Screen
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
-				iconColor: color('theme.iconColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
 			}}
 			title={text('title', 'Title')}
 			notificationsEnabled={boolean('notificationsEnabled', true)}

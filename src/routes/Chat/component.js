@@ -98,13 +98,7 @@ export default class Chat extends Component {
 			color={color}
 			title={title || I18n.t('Need help?')}
 			fontColor={fontColor}
-			agent={agent ? {
-				...agent,
-				avatar: {
-					description: agent.username,
-					src: avatarResolver(agent.username),
-				},
-			} : null}
+			agent={agent || null}
 			queueInfo={queueInfo}
 			nopadding
 			onChangeDepartment={onChangeDepartment}
