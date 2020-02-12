@@ -33,7 +33,7 @@ export default class Store extends EventEmitter {
 			}
 
 			const storedState = JSON.parse(e.newValue);
-			this.setStoredState(storedState, false);
+			this.setStoredState(storedState);
 		});
 	}
 
