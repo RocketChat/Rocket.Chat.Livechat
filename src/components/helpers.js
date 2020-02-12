@@ -90,7 +90,7 @@ export function getInsertIndex(array, item, ranking) {
 	return array.length > 0 ? array.length : 0;
 }
 
-export function upsert(array, item, predicate, ranking) {
+export function upsert(array = [], item, predicate, ranking) {
 	const index = array.findIndex(predicate);
 
 	if (index > -1) {

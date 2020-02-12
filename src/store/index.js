@@ -37,7 +37,8 @@ const initialState = {
 	unread: null,
 };
 
-export const store = new Store(initialState, { dontPersist: ['messages', 'typing'] });
+const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages'];
+export const store = new Store(initialState, { dontPersist });
 
 if (process.env.NODE_ENV === 'development') {
 	store.on('change', (state, prevState, partialState) => {
