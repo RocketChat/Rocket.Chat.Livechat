@@ -29,7 +29,7 @@ export default class Store extends EventEmitter {
 
 			if (!e.newValue) {
 				// The localStorage has been removed
-				location.reload();
+				return location.reload();
 			}
 
 			const storedState = JSON.parse(e.newValue);
