@@ -14,6 +14,7 @@ import { normalizeQueueAlert } from '../../lib/api';
 
 export class ChatContainer extends Component {
 	state = {
+		room: null,
 		connectingAgent: false,
 		queueSpot: 0,
 		triggerQueueMessage: true,
@@ -34,6 +35,15 @@ export class ChatContainer extends Component {
 			this.state.estimatedWaitTime = newEstimatedWaitTime;
 			await this.handleQueueMessage(connecting, queueInfo);
 			await this.handleConnectingAgentAlert(newConnecting, normalizeQueueAlert(queueInfo));
+		}
+	}
+
+	checkRoom = () => {
+		const { room } = this.props;
+		const { room: stateRoom } = this.state;
+		if (room && (!stateRoom || room._id !== stateRoom._id)) {
+			this.state.room = room;
+			setTimeout(loadMessages, 500);
 		}
 	}
 
@@ -270,8 +280,8 @@ export class ChatContainer extends Component {
 		});
 	}
 
-	componentDidMount() {
-		this.checkConnectingAgent();
+	async componentDidMount() {
+		await this.checkConnectingAgent();
 		loadMessages();
 	}
 
@@ -291,8 +301,9 @@ export class ChatContainer extends Component {
 		}
 	}
 
-	componentDidUpdate() {
-		this.checkConnectingAgent();
+	async componentDidUpdate() {
+		await this.checkConnectingAgent();
+		this.checkRoom();
 	}
 
 	componentWillUnmount() {
@@ -387,7 +398,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					} : undefined,
 				} : undefined}
 				room={room}
-				messages={messages.filter((message) => canRenderMessage(message))}
+				messages={messages && messages.filter((message) => canRenderMessage(message))}
 				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}

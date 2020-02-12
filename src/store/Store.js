@@ -20,6 +20,21 @@ export default class Store extends EventEmitter {
 		}
 
 		this._state = { ...initialState, ...storedState };
+
+		window.addEventListener("storage", (e) => {
+			// Cross-tab communication
+			if (e.key !== this.localStorageKey) {
+				return;
+			}
+
+			if (!e.newValue) {
+				// The localStorage has been removed
+				location.reload();
+			}
+
+			const storedState = JSON.parse(e.newValue);
+			this.setStoredState(storedState, false);
+		});
 	}
 
 	get state() {
@@ -39,5 +54,16 @@ export default class Store extends EventEmitter {
 		this._state = { ...prevState, ...partialState };
 		this.persist();
 		this.emit('change', this._state, prevState, partialState);
+	}
+
+	setStoredState(storedState) {
+		const prevState = this._state;
+
+		const nonPeristable = {};
+		for (const ignoredKey of this.dontPersist) {
+			nonPeristable[ignoredKey] = prevState[ignoredKey];
+		}
+		this._state = { ...nonPeristable, ...storedState };
+		this.emit('change', this._state, prevState);
 	}
 }
