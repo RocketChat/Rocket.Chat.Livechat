@@ -63,7 +63,7 @@ export default class Store extends EventEmitter {
 		for (const ignoredKey of this.dontPersist) {
 			nonPeristable[ignoredKey] = prevState[ignoredKey];
 		}
-		this._state = { ...nonPeristable, ...storedState };
+		this._state = { ...storedState, ...nonPeristable };
 		this.emit('change', this._state, prevState);
 	}
 }
