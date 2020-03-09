@@ -88,7 +88,8 @@ export const Message = memo(({
 	>
 		<MessageAvatars
 			avatarResolver={avatarResolver}
-			usernames={compact ? [] : message.u && message.u.username && [message.u.username]}
+			// eslint-disable-next-line no-nested-ternary
+			usernames={compact ? [] : message.alias ? message.u && message.u.name && [message.u.name] : message.u && message.u.username && [message.u.username]}
 		/>
 		<MessageContent reverse={me}>
 			{renderContent({
