@@ -67,6 +67,16 @@ const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')));
 
+const getMessageUsernames = (compact, message) => {
+	if (compact) {
+		return [];
+	}
+	if (message.alias && message.u && message.u.name) {
+		return [message.u.name];
+	}
+	return message.u && message.u.username && [message.u.username];
+}
+
 export const Message = memo(({
 	avatarResolver,
 	attachmentResolver = getAttachmentUrl,
@@ -88,8 +98,7 @@ export const Message = memo(({
 	>
 		<MessageAvatars
 			avatarResolver={avatarResolver}
-			// eslint-disable-next-line no-nested-ternary
-			usernames={compact ? [] : message.alias && message.u && message.u.name ? message.u && message.u.name && [message.u.name] : message.u && message.u.username && [message.u.username]}
+			usernames={getMessageUsernames(compact, message)}
 		/>
 		<MessageContent reverse={me}>
 			{renderContent({
