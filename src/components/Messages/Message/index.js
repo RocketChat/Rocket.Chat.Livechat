@@ -68,14 +68,17 @@ const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')));
 
 const getMessageUsernames = (compact, message) => {
-	if (compact) {
+	if (compact || !message.u) {
 		return [];
 	}
-	if (message.alias && message.u && message.u.name) {
-		return [message.u.name];
+
+	const { alias, u: { username, name } } = message;
+	if (alias && name) {
+		return [name];
 	}
-	return message.u && message.u.username && [message.u.username];
-}
+
+	return [username];
+};
 
 export const Message = memo(({
 	avatarResolver,
