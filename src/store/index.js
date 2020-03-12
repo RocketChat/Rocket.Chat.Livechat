@@ -6,7 +6,7 @@ import Store from './Store';
 
 
 const initialState = {
-	customTitle: 'nesteddd',
+	customTitle: '',
 	token: createToken(),
 	typing: [],
 	config: {
