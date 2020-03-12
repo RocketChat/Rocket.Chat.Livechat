@@ -32,7 +32,6 @@ export default class GDPR extends Component {
 	render = ({
 		color,
 		title,
-		customTitle,
 		consentText,
 		instructions,
 		// eslint-disable-next-line no-unused-vars
@@ -42,7 +41,6 @@ export default class GDPR extends Component {
 		<Screen
 			color={color}
 			title={title}
-			customTitle={customTitle}
 			className={createClassName(styles, 'gdpr')}
 			{...props}
 		>

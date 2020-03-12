@@ -22,13 +22,11 @@ export default class ChatFinished extends Component {
 		message,
 		// eslint-disable-next-line no-unused-vars
 		onRedirectChat,
-		customTitle,
 		...props
 	}) => (
 		<Screen
 			color={color}
 			title={title}
-			customTitle={customTitle}
 			className={createClassName(styles, 'chat-finished')}
 			{...props}
 		>
