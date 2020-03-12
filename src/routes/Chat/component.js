@@ -89,6 +89,7 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
+		customTitle,
 		...props
 	}, {
 		atBottom = true,
@@ -97,6 +98,7 @@ export default class Chat extends Component {
 		<Screen
 			color={color}
 			title={title || I18n.t('Need help?')}
+			customTitle={customTitle}
 			fontColor={fontColor}
 			agent={agent || null}
 			queueInfo={queueInfo}

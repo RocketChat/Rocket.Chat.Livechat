@@ -26,7 +26,10 @@ class ScreenHeader extends Component {
 	}
 
 	headerTitle = () => {
-		const { agent, queueInfo, title } = this.props;
+		const { agent, queueInfo, title, customTitle } = this.props;
+		if (customTitle) {
+			return customTitle;
+		}
 		if (agent && agent.name) {
 			return agent.name;
 		}
@@ -163,6 +166,7 @@ export const Screen = ({
 	theme = {},
 	agent,
 	title,
+	customTitle,
 	notificationsEnabled,
 	minimized = false,
 	expanded = false,
@@ -197,6 +201,7 @@ export const Screen = ({
 					alerts={alerts}
 					agent={agent}
 					title={title}
+					customTitle={customTitle}
 					notificationsEnabled={notificationsEnabled}
 					minimized={minimized}
 					expanded={expanded}

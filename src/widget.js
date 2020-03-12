@@ -238,6 +238,10 @@ function setCustomField(key, value, overwrite) {
 	callHook('setCustomField', [key, value, overwrite]);
 }
 
+function setCustomTitle(title) {
+	callHook('setCustomTitle', title);
+}
+
 function setTheme(theme) {
 	callHook('setTheme', theme);
 }
@@ -350,6 +354,7 @@ window.RocketChat.livechat = {
 	// methods
 	pageVisited,
 	setCustomField,
+	setCustomTitle,
 	setTheme,
 	setDepartment,
 	clearDepartment,

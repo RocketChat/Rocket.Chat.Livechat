@@ -169,6 +169,7 @@ export class App extends Component {
 		expanded,
 		alerts,
 		modal,
+		customTitle,
 	}, { initialized }) => {
 		if (!initialized) {
 			return null;
@@ -184,6 +185,7 @@ export class App extends Component {
 			sound,
 			alerts,
 			modal,
+			customTitle,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
@@ -222,6 +224,7 @@ const AppConnector = () => (
 					modal,
 					dispatch,
 					iframe,
+					customTitle,
 				}) => (
 					<App
 						config={config}
@@ -236,6 +239,7 @@ const AppConnector = () => (
 						modal={modal}
 						dispatch={dispatch}
 						iframe={iframe}
+						customTitle={customTitle}
 					/>
 				)}
 			</StoreConsumer>

@@ -76,12 +76,13 @@ export default class SwitchDepartment extends Component {
 		}
 	}
 
-	render({ title, color, message, loading, departments, ...props }, { department }) {
+	render({ title, customTitle, color, message, loading, departments, ...props }, { department }) {
 		const valid = this.isValid();
 		return (
 			<Screen
 				color={color}
 				title={title || defaultTitle}
+				customTitle={customTitle}
 				className={createClassName(styles, 'switch-department')}
 				{...props}
 			>

@@ -167,10 +167,11 @@ export default class LeaveMessage extends Component {
 		</Form>
 	)
 
-	render = ({ color, title, message, unavailableMessage, hasForm, ...props }) => (
+	render = ({ color, title, customTitle, message, unavailableMessage, hasForm, ...props }) => (
 		<Screen
 			color={color}
 			title={title || defaultTitle}
+			customTitle={customTitle}
 			className={createClassName(styles, 'leave-message')}
 			{...props}
 		>

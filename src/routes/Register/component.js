@@ -120,13 +120,14 @@ export default class Register extends Component {
 		this.validateAll();
 	}
 
-	render({ title, color, message, loading, departments, ...props }, { name, email, department }) {
+	render({ title, customTitle, color, message, loading, departments, ...props }, { name, email, department }) {
 		const valid = this.isValid();
 
 		return (
 			<Screen
 				color={color}
 				title={title || defaultTitle}
+				customTitle={customTitle}
 				className={createClassName(styles, 'register')}
 				{...props}
 			>
