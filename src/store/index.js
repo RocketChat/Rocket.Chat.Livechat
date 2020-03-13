@@ -6,7 +6,6 @@ import Store from './Store';
 
 
 const initialState = {
-	customTitle: '',
 	token: createToken(),
 	typing: [],
 	config: {

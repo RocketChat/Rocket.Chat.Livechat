@@ -353,6 +353,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					color: customColor,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
+					title: customTitle,
 				} = {},
 				guest,
 			} = {},
@@ -380,8 +381,9 @@ export const ChatConnector = ({ ref, ...props }) => (
 					color: customColor || color,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
+					title: customTitle,
 				}}
-				title={title || I18n.t('Need help?')}
+				title={customTitle || title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}
 				user={user}
