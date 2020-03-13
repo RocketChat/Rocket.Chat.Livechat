@@ -136,9 +136,9 @@ class Triggers {
 					}
 
 					route('/');
-					parentCall('openWidget');
 
 					if (!window.mobilecheck()) {
+						parentCall('openWidget');
 						store.setState({ minimized: false });
 					}
 				});
