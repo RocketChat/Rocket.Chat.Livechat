@@ -129,6 +129,7 @@ class Triggers {
 
 					route('/');
 					parentCall('openWidget');
+
 					window.mobilecheck = function() {
 						let check = false;
 						// eslint-disable-next-line wrap-iife
