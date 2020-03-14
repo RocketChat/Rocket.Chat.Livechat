@@ -231,6 +231,51 @@ function pageVisited(change) {
 	});
 }
 
+function initialize(params) {
+	for (const method in params) {
+		switch(method) {
+			case 'customFied':
+				setCustomField(params[method]);
+				continue;
+			case 'theme':
+				setTheme(params[method]);
+				continue;
+			case 'department':
+				setDepartment(params[method]);
+				continue;
+			case 'guestToken':
+				setGuestToken(params[method]);
+				continue;
+			case 'guestName':
+				setGuestName(params[method]);
+				continue;
+			case 'guestEmail':
+				setGuestEmail(params[method]);
+				continue;
+			case 'registerGuest':
+				registerGuest(params[method]);
+				continue;
+			case 'language':
+				setLanguage(params[method]);
+				continue;
+			case 'hideWidget':
+				hideWidget();
+				continue;
+			case 'showWidget':
+				showWidget();
+				continue;
+			case 'maximizeWidget':
+				maximizeWidget();
+				continue;
+			case 'minimizeWidget':
+				minimizeWidget();
+				continue;
+			default:
+				continue;
+		}
+	}
+}
+
 function setCustomField(key, value, overwrite) {
 	if (typeof overwrite === 'undefined') {
 		overwrite = true;
@@ -350,6 +395,7 @@ window.RocketChat.livechat = {
 	// methods
 	pageVisited,
 	setCustomField,
+	initialize,
 	setTheme,
 	setDepartment,
 	clearDepartment,
