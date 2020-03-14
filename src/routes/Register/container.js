@@ -85,6 +85,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					color: customColor,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
+					title: customTitle,
 				} = {},
 			} = {},
 			loading = false,
@@ -99,8 +100,9 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					color: customColor || color,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
+					title: customTitle,
 				}}
-				title={title}
+				title={customTitle || title}
 				message={message}
 				hasNameField={hasNameField}
 				hasEmailField={hasEmailField}

@@ -33,6 +33,7 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 					color: customColor,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
+					title: customTitle,
 				} = {},
 			} = {},
 		}) => (
@@ -43,8 +44,9 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 					color: customColor || color,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
+					title: customTitle,
 				}}
-				title={I18n.t('Chat Finished')}
+				title={customTitle || I18n.t('Chat Finished')}
 				greeting={greeting}
 				message={message}
 			/>
