@@ -10,8 +10,6 @@ import { normalizeAgent } from './api';
 const agentCacheExpiry = 3600000;
 let agentPromise;
 
-window.mobilecheck = mobileCheck;
-
 const getAgent = (triggerAction) => {
 	if (agentPromise) {
 		return agentPromise;
@@ -132,7 +130,7 @@ class Triggers {
 
 					route('/');
 
-					if (window.mobilecheck()) {
+					if (mobileCheck()) {
 						return;
 					}
 
