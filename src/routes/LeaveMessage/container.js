@@ -51,6 +51,11 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 					displayOfflineForm,
 				} = {},
 			} = {},
+			iframe: {
+				theme: {
+					offlineTitle: customOfflineTitle,
+				} = {},
+			} = {},
 			loading,
 			token,
 			dispatch,
@@ -59,8 +64,11 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 			<LeaveMessageContainer
 				ref={ref}
 				{...props}
-				title={title}
-				theme={{ color }}
+				theme={{
+					color,
+					offlineTitle: customOfflineTitle,
+				}}
+				title={customOfflineTitle || title}
 				message={message}
 				successMessage={successMessage}
 				unavailableMessage={unavailableMessage}

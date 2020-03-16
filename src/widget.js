@@ -235,7 +235,14 @@ function initialize(params) {
 	for (const method in params) {
 		switch(method) {
 			case 'customFied':
-				setCustomField(params[method]);
+				const { key, value, overwrite } = params[method];
+				setCustomField(key, value, overwrite);
+				continue;
+			case 'setCustomFields':
+				params[method].forEach((data) => {
+					const { key, value, overwrite } = data;
+					setCustomField(key, value, overwrite);
+				});
 				continue;
 			case 'theme':
 				setTheme(params[method]);
@@ -257,18 +264,6 @@ function initialize(params) {
 				continue;
 			case 'language':
 				setLanguage(params[method]);
-				continue;
-			case 'hideWidget':
-				hideWidget();
-				continue;
-			case 'showWidget':
-				showWidget();
-				continue;
-			case 'maximizeWidget':
-				maximizeWidget();
-				continue;
-			case 'minimizeWidget':
-				minimizeWidget();
 				continue;
 			default:
 				continue;

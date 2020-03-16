@@ -42,7 +42,7 @@ const api = {
 		CustomFields.setCustomField(key, value, overwrite);
 	},
 
-	setTheme({ color, fontColor, iconColor, title } = {}) {
+	setTheme({ color, fontColor, iconColor, title, offlineTitle } = {}) {
 		const { iframe, iframe: { theme } } = store.state;
 		store.setState({
 			iframe: {
@@ -53,6 +53,7 @@ const api = {
 					fontColor,
 					iconColor,
 					title,
+					offlineTitle,
 				},
 			},
 		});

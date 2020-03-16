@@ -33,7 +33,6 @@ export const GDPRConnector = ({ ref, ...props }) => (
 					color: customColor,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
-					title: customTitle,
 				} = {},
 			} = {},
 			dispatch,
@@ -45,9 +44,8 @@ export const GDPRConnector = ({ ref, ...props }) => (
 					color: customColor || color,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
-					title: customTitle,
 				}}
-				title={customTitle || I18n.t('GDPR')}
+				title={I18n.t('GDPR')}
 				dispatch={dispatch}
 				consentText={consentText}
 			/>
