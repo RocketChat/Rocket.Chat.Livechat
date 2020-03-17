@@ -114,6 +114,7 @@ class Triggers {
 						u: agent,
 						ts: ts.toISOString(),
 						_id: createToken(),
+						trigger: true,
 					};
 
 					await store.setState({
