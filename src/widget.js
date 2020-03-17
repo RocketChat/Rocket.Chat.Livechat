@@ -266,6 +266,10 @@ function clearDepartment() {
 	callHook('clearDepartment');
 }
 
+function setAgent(agent) {
+	callHook('setAgent', agent);
+}
+
 function setLanguage(language) {
 	callHook('setLanguage', language);
 }
@@ -356,6 +360,7 @@ window.RocketChat.livechat = {
 	setGuestToken,
 	setGuestName,
 	setGuestEmail,
+	setAgent,
 	registerGuest,
 	setLanguage,
 	showWidget,
