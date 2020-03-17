@@ -70,7 +70,7 @@ const api = {
 		updateIframeGuestData({ department: '' });
 	},
 
-	setAgent({ _id, username, status, ...props } = {}) {
+	setAgent({ _id, username, ...props } = {}) {
 		if (!_id || !username) {
 			return console.log('The fields _id and username are mandatory.');
 		}
