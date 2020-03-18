@@ -234,11 +234,15 @@ function pageVisited(change) {
 function initialize(params) {
 	for (const method in params) {
 		switch(method) {
-			case 'customFied':
+			case 'customField':
 				const { key, value, overwrite } = params[method];
 				setCustomField(key, value, overwrite);
 				continue;
 			case 'setCustomFields':
+				if (!Array.isArray(params[method])) {
+					console.log('Error: Invalid parameters. Value must be an array of objects');
+					continue;
+				}
 				params[method].forEach((data) => {
 					const { key, value, overwrite } = data;
 					setCustomField(key, value, overwrite);
