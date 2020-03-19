@@ -269,6 +269,9 @@ function initialize(params) {
 			case 'language':
 				setLanguage(params[method]);
 				continue;
+			case 'agent':
+				setAgent(params[method]);
+				continue;
 			default:
 				continue;
 		}
@@ -308,6 +311,10 @@ function registerGuest(guest) {
 
 function clearDepartment() {
 	callHook('clearDepartment');
+}
+
+function setAgent(agent) {
+	callHook('setAgent', agent);
 }
 
 function setLanguage(language) {
@@ -401,6 +408,7 @@ window.RocketChat.livechat = {
 	setGuestToken,
 	setGuestName,
 	setGuestEmail,
+	setAgent,
 	registerGuest,
 	setLanguage,
 	showWidget,

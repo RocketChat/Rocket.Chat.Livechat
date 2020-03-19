@@ -191,7 +191,7 @@ export const loadMoreMessages = async () => {
 export const defaultRoomParams = () => {
 	const params = {};
 
-	const { triggerAgent: { agent } = {} } = store.state;
+	const { defaultAgent: agent = {} } = store.state;
 	if (agent && agent._id) {
 		Object.assign(params, { agentId: agent._id });
 	}

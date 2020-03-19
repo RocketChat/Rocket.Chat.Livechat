@@ -72,6 +72,21 @@ const api = {
 		updateIframeGuestData({ department: '' });
 	},
 
+	setAgent({ _id, username, ...props } = {}) {
+		if (!_id || !username) {
+			return console.warn('The fields _id and username are mandatory.');
+		}
+
+		store.setState({
+			defaultAgent: {
+				_id,
+				username,
+				ts: Date.now(),
+				...props,
+			},
+		});
+	},
+
 	setExpanded(expanded) {
 		store.setState({ expanded });
 	},
