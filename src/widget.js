@@ -269,10 +269,10 @@ function initialize(params) {
 			case 'language':
 				setLanguage(params[method]);
 				continue;
-				case 'agent':
-					setAgent(params[method]);
-					continue;
-				default:
+			case 'agent':
+				setAgent(params[method]);
+				continue;
+			default:
 				continue;
 		}
 	}
