@@ -9,7 +9,7 @@ import constants from '../../lib/constants';
 import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
 import Chat from './component';
 import { ModalManager } from '../../components/Modal';
-import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams } from '../../lib/room';
+import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
 import { normalizeQueueAlert } from '../../lib/api';
 
 export class ChatContainer extends Component {
@@ -48,19 +48,20 @@ export class ChatContainer extends Component {
 	}
 
 	grantUser = async () => {
-		const { token, user, guest } = this.props;
+		const { token, user, guest, dispatch } = this.props;
 
 		if (user) {
 			return user;
 		}
 
 		const visitor = { token, ...guest };
-		await Livechat.grantVisitor({ visitor });
-		await loadConfig();
+		const newUser = await Livechat.grantVisitor({ visitor });
+		await dispatch({ user: newUser });
 	}
 
 	getRoom = async () => {
-		const { alerts, dispatch, room } = this.props;
+		const { alerts, dispatch, room, messages } = this.props;
+		const previousMessages = getGreetingMessages(messages);
 
 		if (room) {
 			return room;
@@ -70,7 +71,7 @@ export class ChatContainer extends Component {
 		try {
 			const params = defaultRoomParams();
 			const newRoom = await Livechat.room(params);
-			await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
+			await dispatch({ room: newRoom, messages: previousMessages, noMoreMessages: false });
 			await initRoom();
 
 			parentCall('callback', 'chat-started');
@@ -117,6 +118,7 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
+
 		try {
 			this.stopTypingDebounced.stop();
 			await Promise.all([
