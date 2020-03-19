@@ -74,7 +74,7 @@ const api = {
 
 	setAgent({ _id, username, ...props } = {}) {
 		if (!_id || !username) {
-			return console.log('The fields _id and username are mandatory.');
+			return console.warn('The fields _id and username are mandatory.');
 		}
 
 		store.setState({
