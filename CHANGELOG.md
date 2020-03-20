@@ -2,10 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.4.0 - 2020-03-19
+* [NEW] Add new API method the set the default Agent before chatting (#383)
+* [NEW] Keep trigger messages after the conversation starts. (#384)
+* [NEW] Widget API Methods (#381)
+* [FIX] Livechat guest avatar using name instead of username (#380)
+
 ## 1.3.1 - 2020-02-12
- * [FIX] Add Cross-tab communication on the same origin (#364)
- * [FIX] Corrected German title for finished chat (#363)
- * [FIX] Update polish translation (#324)
+* [FIX] Add Cross-tab communication on the same origin (#364)
+* [FIX] Corrected German title for finished chat (#363)
+* [FIX] Update polish translation (#324)
 
 ## 1.3.0 - 2019-12-12
 * [NEW] Add Service Offline callback (#341)

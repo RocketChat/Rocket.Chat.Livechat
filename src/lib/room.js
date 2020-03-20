@@ -149,20 +149,19 @@ Livechat.onMessage(async (message) => {
 });
 
 export const loadMessages = async () => {
-	const { room: { _id: rid } = {} } = store.state;
+	const { messages: storedMessages, room: { _id: rid } = {} } = store.state;
+	const previousMessages = getGreetingMessages(storedMessages);
 
 	if (!rid) {
 		return;
 	}
 
 	await store.setState({ loading: true });
-
-	const rawMessages = await Livechat.loadMessages(rid);
+	const rawMessages = (await Livechat.loadMessages(rid)).concat(previousMessages);
 	const messages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
 
 	await initRoom();
-	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false });
-	await store.setState({ loading: false });
+	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
 
 	if (messages && messages.length) {
 		const lastMessage = messages[messages.length - 1];
@@ -185,20 +184,24 @@ export const loadMoreMessages = async () => {
 	await store.setState({
 		messages: (moreMessages || []).reverse(),
 		noMoreMessages: messages.length + 10 > moreMessages.length,
+		loading: false,
 	});
-	await store.setState({ loading: false });
 };
 
 export const defaultRoomParams = () => {
 	const params = {};
 
-	const { triggerAgent: { agent } = {} } = store.state;
+	const { defaultAgent: agent = {} } = store.state;
 	if (agent && agent._id) {
 		Object.assign(params, { agentId: agent._id });
 	}
 
 	return params;
 };
+
+export const getGreetingMessages = (messages) => {
+	return messages && messages.filter((msg) => msg.trigger);
+}
 
 store.on('change', (state, prevState) => {
 	// Cross-tab communication

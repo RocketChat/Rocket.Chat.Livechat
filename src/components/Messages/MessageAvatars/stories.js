@@ -32,4 +32,10 @@ storiesOf('Messages|MessageAvatars', module)
 			avatarResolver={avatarResolver}
 			usernames={object('usernames', ['guilherme.gazzo', 'tasso.evangelista', 'martin.schoeler'])}
 		/>
+	))
+	.add('with name as avatar instead of username for guests', () => (
+		<MessageAvatars
+			avatarResolver={avatarResolver}
+			usernames={object('usernames', ['livechat guest'])}
+		/>
 	));
