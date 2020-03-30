@@ -29,12 +29,14 @@ export class MessageList extends MemoizedComponent {
 		}
 
 		let scrollPosition;
-		if (this.base.scrollHeight <= this.base.clientHeight) {
+		if (
+			~~this.base.scrollHeight <= ~~this.base.clientHeight ||
+			~~this.base.scrollHeight === ~~(this.base.scrollTop + this.base.clientHeight) ||
+			~~(this.base.scrollHeight - this.base.scrollTop) === ~~this.base.clientHeight
+		) {
 			scrollPosition = MessageList.SCROLL_AT_BOTTOM;
 		} else if (this.base.scrollTop === 0) {
 			scrollPosition = MessageList.SCROLL_AT_TOP;
-		} else if (this.base.scrollHeight === this.base.scrollTop + this.base.clientHeight) {
-			scrollPosition = MessageList.SCROLL_AT_BOTTOM;
 		} else {
 			scrollPosition = MessageList.SCROLL_FREE;
 		}
