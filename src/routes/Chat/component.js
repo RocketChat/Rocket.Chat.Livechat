@@ -14,6 +14,7 @@ import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
+import { RichMessageGroup } from '../../components/RichMessageGroup';
 
 
 export default class Chat extends Component {
@@ -28,6 +29,10 @@ export default class Chat extends Component {
 
 	handleMessagesContainerRef = (messagesContainer) => {
 		this.messagesContainer = messagesContainer ? messagesContainer.base : null;
+	}
+
+	handleRichMessageContainerRef = (richMessageContainer) => {
+		this.richMessageContainer = richMessageContainer ? richMessageContainer.base : null;
 	}
 
 	handleScrollTo = (region) => {
@@ -126,6 +131,9 @@ export default class Chat extends Component {
 							onScrollTo={this.handleScrollTo}
 						/>
 					</div>
+					<RichMessageGroup
+						ref={this.handleRichMessageContainerRef}
+					/>
 				</Screen.Content>
 				<Screen.Footer
 					options={options ? (
