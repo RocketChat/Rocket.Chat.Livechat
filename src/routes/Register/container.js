@@ -39,8 +39,6 @@ export class RegisterContainer extends Component {
 			email,
 			department: this.getDepartment(department),
 		}
-		console.log('fields');
-		console.log(fields);
 		await dispatch({ loading: true, department });
 		try {
 			const user = await Livechat.grantVisitor({ visitor: { ...fields, token } });
