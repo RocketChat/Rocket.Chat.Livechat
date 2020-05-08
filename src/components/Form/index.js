@@ -20,10 +20,13 @@ export class Form extends MemoizedComponent {
 }
 
 export const Validations = {
-	nonEmpty: (value) => (!value ? 'Field required' : undefined),
+	nonEmpty: ({ value }) => (!value ? 'Field required' : undefined),
 
-	email: (value) => (!/^\S+@\S+\.\S+/.test(String(value).toLowerCase()) ? 'Invalid email' : null),
+	email: ({ value }) => (!/^\S+@\S+\.\S+/.test(String(value).toLowerCase()) ? 'Invalid email' : null),
+
+	custom: ({ value, pattern }) => (new RegExp(pattern, 'i')).test(String(value)) ? null : 'Invalid value',
 };
+
 
 export { FormField } from './FormField';
 export { TextInput } from './TextInput';

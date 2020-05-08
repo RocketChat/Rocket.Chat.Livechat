@@ -3,14 +3,24 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
-import { loadConfig } from '../../lib/main';
+import CustomFields from '../../lib/customFields';
 import { Consumer } from '../../store';
 import Register from './component';
 
 export class RegisterContainer extends Component {
-	getDepartment = (fields = {}) => {
-		let { department } = fields;
+	registerCustomFields = (customFields = {}) => {
+		Object.keys(customFields).forEach((key) => {
+			const value = customFields[key];
+			if (!value || value === '') {
+				return;
+			}
 
+			CustomFields.setCustomField(key, value, true);
+		});
+
+	}
+
+	getDepartment = (department) => {
 		if (department === '') {
 			const { departments = {} } = this.props;
 			const deptDefault = departments.filter((dept) => dept.showOnRegistration)[0];
@@ -22,16 +32,21 @@ export class RegisterContainer extends Component {
 		return department;
 	}
 
-	handleSubmit = async (fields) => {
+	handleSubmit = async ({ name, email, department, ...customFields }) => {
 		const { dispatch, token } = this.props;
-		const department = this.getDepartment(fields);
-		Object.assign(fields, { department });
-
+		const fields = {
+			name,
+			email,
+			department: this.getDepartment(department),
+		}
+		console.log('fields');
+		console.log(fields);
 		await dispatch({ loading: true, department });
 		try {
 			const user = await Livechat.grantVisitor({ visitor: { ...fields, token } });
 			await dispatch({ user });
 			parentCall('callback', ['pre-chat-form-submit', fields]);
+			this.registerCustomFields(customFields);
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -74,6 +89,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					title,
 					color,
 				} = {},
+				customFields = [],
 			} = {},
 			iframe: {
 				guest: {
@@ -115,6 +131,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				token={token}
 				dispatch={dispatch}
 				user={user}
+				customFields={customFields}
 			/>
 		)}
 	</Consumer>

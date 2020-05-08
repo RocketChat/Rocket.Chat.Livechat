@@ -31,20 +31,20 @@ export default class LeaveMessage extends Component {
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
 		.filter(Boolean)
 
-	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => error || validation(value), undefined)
+	validate = ({ name, value }) => this.validations[name].reduce((error, validation) => error || validation({ value }), undefined)
 
 	validateAll = () => {
-		for (const { fieldName, value } of this.getValidableFields()) {
-			const error = this.validate(fieldName, value);
-			this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
+		for (const { fieldName: name, value } of this.getValidableFields()) {
+			const error = this.validate({ name, value });
+			this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
 		}
 	}
 
 	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
 
-	handleFieldChange = (fieldName) => ({ target: { value } }) => {
-		const error = this.validate(fieldName, value);
-		this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
+	handleFieldChange = (name) => ({ target: { value } }) => {
+		const error = this.validate({ name, value });
+		this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
 	}
 
 	handleNameChange = this.handleFieldChange('name')
@@ -95,7 +95,7 @@ export default class LeaveMessage extends Component {
 						<TextInput
 							name="name"
 							value={name.value}
-							placeholder={I18n.t('Insert your name here...')}
+							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
 							disabled={loading}
 							onInput={this.handleNameChange}
 						/>
@@ -113,7 +113,7 @@ export default class LeaveMessage extends Component {
 						<TextInput
 							name="email"
 							value={email.value}
-							placeholder={I18n.t('Insert your email here...')}
+							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
 							disabled={loading}
 							onInput={this.handleEmailChange}
 						/>

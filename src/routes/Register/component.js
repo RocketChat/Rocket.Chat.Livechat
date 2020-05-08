@@ -13,9 +13,45 @@ import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import styles from './styles.scss';
 
-
 const defaultTitle = I18n.t('Need help?');
 const defaultMessage = I18n.t('Please, tell us some information to start the chat');
+
+const getDefaultDepartment = (departments = []) => (departments.length === 1 && departments[0]._id) || '';
+
+const renderCustomFields = ({ customFields, loading, handleFieldChange }, state) => [
+	...(customFields || [])
+		.map(({ _id, required,label, type, options }) =>
+			(type === 'text'
+				&& 	<FormField
+						required={required}
+						label={label}
+					>
+						<TextInput
+							name={_id}
+							placeholder={I18n.t('Insert your %{field} here...', { field: label })}
+							value={state[_id].value}
+							disabled={loading}
+							onInput={handleFieldChange && handleFieldChange.bind(this)}
+							custom
+						/>
+					</FormField>)
+			|| (type === 'select'
+				&& 	<FormField
+						label={label}
+						required={required}
+					>
+						<SelectInput
+							name={_id}
+							value={state[_id].value}
+							placeholder={I18n.t('Choose an option...')}
+							options={options && options.map((option) => ({ value: option, label: option }))}
+							disabled={loading}
+							onInput={handleFieldChange && handleFieldChange.bind(this)}
+							custom
+						/>
+					</FormField>)
+		)
+].filter(Boolean);
 
 export default class Register extends Component {
 	state = {
@@ -30,31 +66,70 @@ export default class Register extends Component {
 		department: [],
 	}
 
+	getDefaultState = () => {
+		const { hasNameField, hasEmailField, hasDepartmentField, departments, customFields = [] } = this.props;
+
+		const state = {
+			...hasNameField && { name: { value: '' } },
+			...hasEmailField && { email: { value: '' } },
+			...hasDepartmentField && { department: { value: getDefaultDepartment(departments) } },
+		}
+
+		customFields.forEach(({ _id, defaultValue, options, regexp }) => {
+			let value = '';
+			if (defaultValue && !options || (Array.isArray(options) && options.includes(defaultValue))) {
+				value = defaultValue;
+			}
+
+			state[_id] = {
+				value,
+				...regexp && { regexp },
+			};
+		});
+
+		return state;
+	}
+
+	getCustomValidations = () => {
+		const { customFields = [] } = this.props;
+		return customFields
+			.map(({ _id, required, regexp }) => {
+				const validations = [];
+
+				if (required) {
+					validations.push(Validations.nonEmpty);
+				}
+
+				if (regexp) {
+					validations.push(Validations.custom);
+				}
+
+				return { [_id]: validations };
+			})
+			.reduce((values, entry) => ({ ...values, ...entry }), {});
+	}
+
 	getValidableFields = () => Object.keys(this.validations)
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
 		.filter(Boolean)
 
-	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => error || validation(value), undefined)
+	validate = ({ name, value, regexp: pattern }) => this.validations[name].reduce((error, validation) => error || validation({ value, pattern }), undefined)
 
 	validateAll = () => {
-		for (const { fieldName, value } of this.getValidableFields()) {
-			const error = this.validate(fieldName, value);
-			this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
+		for (const { fieldName: name, value, regexp } of this.getValidableFields()) {
+			const error = this.validate({ name, value, regexp });
+			this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
 		}
 	}
 
 	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
 
-	handleFieldChange = (fieldName) => ({ target: { value } }) => {
-		const error = this.validate(fieldName, value);
-		this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
+	handleFieldChange = ({ target }) => {
+		const { name, value } = target;
+		const { regexp } = this.state[name];
+		const error = this.validate({ name, value, regexp });
+		this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
 	}
-
-	handleNameChange = this.handleFieldChange('name')
-
-	handleEmailChange = this.handleFieldChange('email')
-
-	handleDepartmentChange = this.handleFieldChange('department')
 
 	handleSubmit = (event) => {
 		event.preventDefault();
@@ -70,27 +145,8 @@ export default class Register extends Component {
 
 	constructor(props) {
 		super(props);
-
-		const { hasNameField, hasEmailField, hasDepartmentField, departments } = props;
-
-		if (hasNameField) {
-			this.state.name = { value: '' };
-		}
-
-		if (hasEmailField) {
-			this.state.email = { value: '' };
-		}
-
-		if (hasDepartmentField && departments) {
-			if (departments.length > 1) {
-				this.state.department = { value: '' };
-			} else if (departments.length === 1) {
-				this.state.department = { value: departments[0]._id };
-			} else {
-				this.state.department = null;
-			}
-		}
-
+		this.setState(this.getDefaultState());
+		this.validations = { ...this.validations, ...this.getCustomValidations() };
 		this.validateAll();
 	}
 
@@ -109,7 +165,7 @@ export default class Register extends Component {
 			this.setState({ email: null });
 		}
 
-		const departmentValue = departmentDefault || (departments && departments.length === 1 && departments[0]._id) || '';
+		const departmentValue = departmentDefault || getDefaultDepartment(departments);
 		const showDepartmentField = hasDepartmentField && departments && departments.length > 1;
 		if (showDepartmentField && (!this.state.department || this.state.department !== departmentValue)) {
 			this.setState({ department: { ...this.state.department, value: departmentValue } });
@@ -120,7 +176,7 @@ export default class Register extends Component {
 		this.validateAll();
 	}
 
-	render({ title, color, message, loading, departments, ...props }, { name, email, department }) {
+	render({ title, color, message, loading, departments, customFields, ...props }, { name, email, department, ...state }) {
 		const valid = this.isValid();
 
 		return (
@@ -144,9 +200,9 @@ export default class Register extends Component {
 									<TextInput
 										name="name"
 										value={name.value}
-										placeholder={I18n.t('Insert your name here...')}
+										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
 										disabled={loading}
-										onInput={this.handleNameChange}
+										onInput={this.handleFieldChange.bind(this)}
 									/>
 								</FormField>
 							)
@@ -162,9 +218,9 @@ export default class Register extends Component {
 									<TextInput
 										name="email"
 										value={email.value}
-										placeholder={I18n.t('Insert your email here...')}
+										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
 										disabled={loading}
-										onInput={this.handleEmailChange}
+										onInput={this.handleFieldChange.bind(this)}
 									/>
 								</FormField>
 							)
@@ -182,11 +238,13 @@ export default class Register extends Component {
 										options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
 										placeholder={I18n.t('Choose an option...')}
 										disabled={loading}
-										onInput={this.handleDepartmentChange}
+										onInput={this.handleFieldChange.bind(this)}
 									/>
 								</FormField>
 							)
 							: null}
+
+						{renderCustomFields({ customFields, loading, handleFieldChange: this.handleFieldChange }, { ...state })}
 
 						<ButtonGroup>
 							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
