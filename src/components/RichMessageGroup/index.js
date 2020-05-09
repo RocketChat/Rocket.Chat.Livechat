@@ -25,11 +25,13 @@ export class RichMessageGroup extends MemoizedComponent {
 	render = ({
 		className,
 		style = {},
+		richMessages,
 	}) => (
 		<div
 			className={createClassName(styles, 'rich-message-group', {}, className)}
 			style={style}
 		>
+			{console.log("From richMessageGroup "+richMessages)}
 			{this.renderItems(this.props).map((child) => cloneElement(child, { className: createClassName(styles, 'rich-message-group__item') }))}
 		</div>
 	)

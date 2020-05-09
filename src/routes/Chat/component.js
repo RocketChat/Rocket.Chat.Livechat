@@ -86,6 +86,7 @@ export default class Chat extends Component {
 		loading,
 		onUpload,
 		messages,
+		richMessages,
 		uploads = false,
 		emoji = false,
 		options,
@@ -133,6 +134,7 @@ export default class Chat extends Component {
 					</div>
 					<RichMessageGroup
 						ref={this.handleRichMessageContainerRef}
+						richMessages={richMessages}
 					/>
 				</Screen.Content>
 				<Screen.Footer

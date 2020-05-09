@@ -17,6 +17,7 @@ const initialState = {
 		resources: {},
 	},
 	messages: [],
+	richMessages: ['Option 1', 'Option 2'],
 	user: null,
 	sound: {
 		src: '',

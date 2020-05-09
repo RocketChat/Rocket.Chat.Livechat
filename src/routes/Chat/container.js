@@ -365,6 +365,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			user,
 			room,
 			messages,
+			richMessages,
 			noMoreMessages,
 			typing,
 			loading,
@@ -403,6 +404,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				} : undefined}
 				room={room}
 				messages={messages && messages.filter((message) => canRenderMessage(message))}
+				richMessages={richMessages}
 				noMoreMessages={noMoreMessages}
 				emoji={false}
 				uploads={uploads}
