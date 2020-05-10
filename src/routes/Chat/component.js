@@ -14,6 +14,8 @@ import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
+import 'emoji-mart/css/emoji-mart.css';
+import { Picker } from 'emoji-mart';
 
 
 export default class Chat extends Component {
@@ -82,7 +84,7 @@ export default class Chat extends Component {
 		onUpload,
 		messages,
 		uploads = false,
-		emoji = false,
+		emoji = true,
 		options,
 		onChangeDepartment,
 		onFinishChat,
@@ -126,6 +128,13 @@ export default class Chat extends Component {
 							onScrollTo={this.handleScrollTo}
 						/>
 					</div>
+					<Picker
+						style={{ position: 'absolute', zIndex: 1, marginLeft: 20, marginTop: 30 }}
+						showPreview={false}
+						showSkinTones={false}
+						sheetSize={64}	/*this property defines the resolution of icons, valid values 16, 20, 32, 34*/
+						/*TODO: attach listener over here*/
+					/>
 				</Screen.Content>
 				<Screen.Footer
 					options={options ? (
