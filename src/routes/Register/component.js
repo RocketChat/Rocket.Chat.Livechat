@@ -20,37 +20,39 @@ const getDefaultDepartment = (departments = []) => (departments.length === 1 && 
 
 const renderCustomFields = ({ customFields, loading, handleFieldChange }, state) => [
 	...(customFields || [])
-		.map(({ _id, required,label, type, options }) =>
-			(type === 'text'
+		.map(({ _id, required, label, type, options }) =>
+			(type === 'input'
 				&& 	<FormField
-						required={required}
-						label={label}
-					>
-						<TextInput
-							name={_id}
-							placeholder={I18n.t('Insert your %{field} here...', { field: label })}
-							value={state[_id].value}
-							disabled={loading}
-							onInput={handleFieldChange && handleFieldChange.bind(this)}
-							custom
-						/>
-					</FormField>)
+					label={label}
+					required={required}
+					error={state[_id].showError && state[_id].error}
+				>
+					<TextInput
+						name={_id}
+						placeholder={I18n.t('Insert your %{field} here...', { field: label })}
+						value={state[_id].value}
+						disabled={loading}
+						onInput={handleFieldChange && handleFieldChange.bind(this)}
+						custom
+					/>
+				</FormField>)
 			|| (type === 'select'
 				&& 	<FormField
-						label={label}
-						required={required}
-					>
-						<SelectInput
-							name={_id}
-							value={state[_id].value}
-							placeholder={I18n.t('Choose an option...')}
-							options={options && options.map((option) => ({ value: option, label: option }))}
-							disabled={loading}
-							onInput={handleFieldChange && handleFieldChange.bind(this)}
-							custom
-						/>
-					</FormField>)
-		)
+					label={label}
+					required={required}
+					error={state[_id].showError && state[_id].error}
+				>
+					<SelectInput
+						name={_id}
+						value={state[_id].value}
+						placeholder={I18n.t('Choose an option...')}
+						options={options && options.map((option) => ({ value: option, label: option }))}
+						disabled={loading}
+						onInput={handleFieldChange && handleFieldChange.bind(this)}
+						custom
+					/>
+				</FormField>),
+		),
 ].filter(Boolean);
 
 export default class Register extends Component {
@@ -73,7 +75,7 @@ export default class Register extends Component {
 			...hasNameField && { name: { value: '' } },
 			...hasEmailField && { email: { value: '' } },
 			...hasDepartmentField && { department: { value: getDefaultDepartment(departments) } },
-		}
+		};
 
 		customFields.forEach(({ _id, defaultValue, options, regexp }) => {
 			let value = '';
@@ -128,7 +130,7 @@ export default class Register extends Component {
 		const { name, value } = target;
 		const { regexp } = this.state[name];
 		const error = this.validate({ name, value, regexp });
-		this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
+		this.setState({ [name]: { ...this.state[name], value, error, showError: true } });
 	}
 
 	handleSubmit = (event) => {

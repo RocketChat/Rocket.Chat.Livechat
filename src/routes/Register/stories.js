@@ -7,20 +7,18 @@ import Register from './component';
 
 const customFields = [
 	{
-		"_id": "website",
-		"label": "Website",
-		"scope": "visitor",
-		"type": "text",
-		"required": true
+		_id: 'website',
+		label: 'Website',
+		type: 'input',
+		required: true,
 	}, {
-		"_id": "area",
-		"label": "Area",
-		"scope": "visitor",
-		"type": "select",
-		"defaultValue": "Marketing",
-		"options": ["Human Resources", "Sales", "Marketing", "Supply", "Development"],
-		"required": true
-	}
+		_id: 'area',
+		label: 'Area',
+		type: 'select',
+		defaultValue: 'Marketing',
+		options: ['Human Resources', 'Sales', 'Marketing', 'Supply', 'Development'],
+		required: true,
+	},
 ];
 
 storiesOf('Routes|Register', module)
