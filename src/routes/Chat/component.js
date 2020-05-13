@@ -132,13 +132,6 @@ export default class Chat extends Component {
 							onScrollTo={this.handleScrollTo}
 						/>
 					</div>
-					{this.state.emojiPickerActive && <Picker
-						style={{ position: 'absolute', zIndex: 1, marginLeft: 20, marginTop: 30 }}
-						showPreview={false}
-						showSkinTones={false}
-						sheetSize={64}	/*this property defines the resolution of icons, valid values 16, 20, 32, 34*/
-						/*TODO: attach listener over here*/
-					/>}
 				</Screen.Content>
 				<Screen.Footer
 					options={options ? (
@@ -157,6 +150,13 @@ export default class Chat extends Component {
 						</FooterOptions>
 					) : null}
 				>
+					{this.state.emojiPickerActive && <Picker
+						style={{ position: 'absolute', zIndex: 1, bottom:90, maxWidth: '90%'}}
+						showPreview={false}
+						showSkinTones={false}
+						sheetSize={64}	/*this property defines the resolution of icons, valid values 16, 20, 32, 34*/
+						/*TODO: attach listener over here*/
+					/>}
 					<Composer onUpload={onUpload}
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChangeText}
