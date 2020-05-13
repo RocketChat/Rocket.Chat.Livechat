@@ -22,6 +22,7 @@ export default class Chat extends Component {
 	state = {
 		atBottom: true,
 		text: '',
+		emojiPickerActive: false,
 	}
 
 	handleFilesDropTargetRef = (ref) => {
@@ -71,6 +72,10 @@ export default class Chat extends Component {
 		onChangeText && onChangeText(text);
 	}
 
+	toggleEmojiPickerState = () => {
+		this.setState({emojiPickerActive: !this.state.emojiPickerActive});
+	}
+
 	render = ({
 		color,
 		title,
@@ -84,7 +89,6 @@ export default class Chat extends Component {
 		onUpload,
 		messages,
 		uploads = false,
-		emoji = true,
 		options,
 		onChangeDepartment,
 		onFinishChat,
@@ -128,13 +132,13 @@ export default class Chat extends Component {
 							onScrollTo={this.handleScrollTo}
 						/>
 					</div>
-					<Picker
+					{this.state.emojiPickerActive && <Picker
 						style={{ position: 'absolute', zIndex: 1, marginLeft: 20, marginTop: 30 }}
 						showPreview={false}
 						showSkinTones={false}
 						sheetSize={64}	/*this property defines the resolution of icons, valid values 16, 20, 32, 34*/
 						/*TODO: attach listener over here*/
-					/>
+					/>}
 				</Screen.Content>
 				<Screen.Footer
 					options={options ? (
@@ -158,9 +162,9 @@ export default class Chat extends Component {
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
 						value={text}
-						pre={emoji && (
+						pre={(
 							<ComposerActions>
-								<ComposerAction>
+								<ComposerAction onClick={this.toggleEmojiPickerState}>
 									<EmojiIcon width={20} />
 								</ComposerAction>
 							</ComposerActions>
