@@ -142,6 +142,7 @@ export class Composer extends Component {
 	constructor(props) {
 		super(props);
 		this.value = this.props.value;
+		this.handleNotifyEmojiSelect = this.handleNotifyEmojiSelect.bind(this);
 	}
 
 	// we only update composer if value length changed from 0 to 1 or 1 to 0
@@ -170,6 +171,16 @@ export class Composer extends Component {
 			el.innerHTML = this.value;
 		}
 		replaceCaret(el);
+	}
+
+	componentWillMount() {
+		if(this.props.notifyEmojiSelect){
+			this.props.notifyEmojiSelect(this.handleNotifyEmojiSelect);
+		}
+	}
+
+	handleNotifyEmojiSelect(emojiColonName) {
+		this.el.innerText = this.el.innerText + emojiColonName;
 	}
 
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (

@@ -76,6 +76,12 @@ export default class Chat extends Component {
 		this.setState({emojiPickerActive: !this.state.emojiPickerActive});
 	}
 
+	handleEmojiSelect = (emoji) => {
+		const emojiColonName = emoji.colons;
+		// notify child composer to append emojiColonName to input text field
+		this.notifyEmojiSelect(emojiColonName);
+	}
+
 	render = ({
 		color,
 		title,
@@ -131,6 +137,13 @@ export default class Chat extends Component {
 							lastReadMessageId={lastReadMessageId}
 							onScrollTo={this.handleScrollTo}
 						/>
+						{this.state.emojiPickerActive && <Picker
+								style={{ position: 'absolute', zIndex: 10, bottom:0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
+								showPreview={false}
+								showSkinTones={false}
+								sheetSize={64}	/*this property defines the resolution of icons, valid values 16, 20, 32, 64*/
+								onSelect={this.handleEmojiSelect}
+						/>}
 					</div>
 				</Screen.Content>
 				<Screen.Footer
@@ -150,18 +163,12 @@ export default class Chat extends Component {
 						</FooterOptions>
 					) : null}
 				>
-					{this.state.emojiPickerActive && <Picker
-						style={{ position: 'absolute', zIndex: 1, bottom:90, maxWidth: '90%'}}
-						showPreview={false}
-						showSkinTones={false}
-						sheetSize={64}	/*this property defines the resolution of icons, valid values 16, 20, 32, 34*/
-						/*TODO: attach listener over here*/
-					/>}
 					<Composer onUpload={onUpload}
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
 						value={text}
+						notifyEmojiSelect={click => this.notifyEmojiSelect = click}
 						pre={(
 							<ComposerActions>
 								<ComposerAction onClick={this.toggleEmojiPickerState}>
