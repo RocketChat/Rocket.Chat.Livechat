@@ -180,7 +180,7 @@ export class Composer extends Component {
 	}
 
 	handleNotifyEmojiSelect(emojiColonName) {
-		this.el.innerText = this.el.innerText + emojiColonName;
+		this.el.innerText = `${ this.el.innerText }${ emojiColonName }`;
 	}
 
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (

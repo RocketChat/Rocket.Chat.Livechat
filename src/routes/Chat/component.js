@@ -78,6 +78,7 @@ export default class Chat extends Component {
 
 	handleEmojiSelect = (emoji) => {
 		const emojiColonName = emoji.colons;
+		this.setState({text:`${this.state.text}${emojiColonName}`});
 		// notify child composer to append emojiColonName to input text field
 		this.notifyEmojiSelect(emojiColonName);
 	}
