@@ -77,7 +77,10 @@ export default class Chat extends Component {
 	}
 
 	handleEmojiSelect = (emoji) => {
-		const emojiColonName = emoji.colons;
+		// turn off Picker
+		this.toggleEmojiPickerState();
+		// add a space after emojiColonName
+		const emojiColonName = `${emoji.colons}&nbsp;`;
 		this.setState({text:`${this.state.text}${emojiColonName}`});
 		// notify child composer to append emojiColonName to input text field
 		this.notifyEmojiSelect(emojiColonName);
@@ -144,6 +147,7 @@ export default class Chat extends Component {
 								showSkinTones={false}
 								sheetSize={64}	/*this property defines the resolution of icons, valid values 16, 20, 32, 64*/
 								onSelect={this.handleEmojiSelect}
+								autoFocus={true}
 						/>}
 					</div>
 				</Screen.Content>
