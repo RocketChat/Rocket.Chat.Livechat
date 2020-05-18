@@ -18,42 +18,44 @@ const defaultMessage = I18n.t('Please, tell us some information to start the cha
 
 const getDefaultDepartment = (departments = []) => (departments.length === 1 && departments[0]._id) || '';
 
-const renderCustomFields = ({ customFields, loading, handleFieldChange }, state) => [
-	...(customFields || [])
-		.map(({ _id, required, label, type, options }) =>
-			(type === 'input'
-				&& 	<FormField
-					label={label}
-					required={required}
-					error={state[_id].showError && state[_id].error}
-				>
-					<TextInput
-						name={_id}
-						placeholder={I18n.t('Insert your %{field} here...', { field: label })}
-						value={state[_id].value}
-						disabled={loading}
-						onInput={handleFieldChange && handleFieldChange.bind(this)}
-						custom
-					/>
-				</FormField>)
-			|| (type === 'select'
-				&& 	<FormField
-					label={label}
-					required={required}
-					error={state[_id].showError && state[_id].error}
-				>
-					<SelectInput
-						name={_id}
-						value={state[_id].value}
-						placeholder={I18n.t('Choose an option...')}
-						options={options && options.map((option) => ({ value: option, label: option }))}
-						disabled={loading}
-						onInput={handleFieldChange && handleFieldChange.bind(this)}
-						custom
-					/>
-				</FormField>),
-		),
-].filter(Boolean);
+const renderCustomFields = (customFields, { loading, handleFieldChange = () => {} }, state) => customFields.map(({ _id, required, label, type, options }) => {
+	switch (type) {
+		case 'input':
+			return <FormField
+				label={label}
+				required={required}
+				key={_id}
+				error={state[_id].showError && state[_id].error}
+			>
+				<TextInput
+					name={_id}
+					placeholder={I18n.t('Insert your %{field} here...', { field: label })}
+					value={state[_id].value}
+					disabled={loading}
+					onInput={handleFieldChange}
+					custom
+				/>
+			</FormField>;
+		case 'select':
+			return <FormField
+				label={label}
+				required={required}
+				key={_id}
+				error={state[_id].showError && state[_id].error}
+			>
+				<SelectInput
+					name={_id}
+					value={state[_id].value}
+					placeholder={I18n.t('Choose an option...')}
+					options={options && options.map((option) => ({ value: option, label: option }))}
+					disabled={loading}
+					onInput={handleFieldChange}
+					custom
+				/>
+			</FormField>;
+	}
+	return null;
+});
 
 export default class Register extends Component {
 	state = {
@@ -204,7 +206,7 @@ export default class Register extends Component {
 										value={name.value}
 										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
 										disabled={loading}
-										onInput={this.handleFieldChange.bind(this)}
+										onInput={this.handleFieldChange}
 									/>
 								</FormField>
 							)
@@ -222,7 +224,7 @@ export default class Register extends Component {
 										value={email.value}
 										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
 										disabled={loading}
-										onInput={this.handleFieldChange.bind(this)}
+										onInput={this.handleFieldChange}
 									/>
 								</FormField>
 							)
@@ -240,13 +242,13 @@ export default class Register extends Component {
 										options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
 										placeholder={I18n.t('Choose an option...')}
 										disabled={loading}
-										onInput={this.handleFieldChange.bind(this)}
+										onInput={this.handleFieldChange}
 									/>
 								</FormField>
 							)
 							: null}
 
-						{renderCustomFields({ customFields, loading, handleFieldChange: this.handleFieldChange }, { ...state })}
+						{customFields && renderCustomFields(customFields, { loading, handleFieldChange: this.handleFieldChange }, state)}
 
 						<ButtonGroup>
 							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>

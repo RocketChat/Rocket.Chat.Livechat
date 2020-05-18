@@ -8,28 +8,27 @@ import { Consumer } from '../../store';
 import Register from './component';
 
 export class RegisterContainer extends Component {
-	registerCustomFields = (customFields = {}) => {
-		Object.keys(customFields).forEach((key) => {
-			const value = customFields[key];
+	registerCustomFields(customFields = {}) {
+		Object.entries(customFields).forEach(([key, value]) => {
 			if (!value || value === '') {
 				return;
 			}
 
 			CustomFields.setCustomField(key, value, true);
 		});
-
 	}
 
 	getDepartment = (department) => {
-		if (department === '') {
-			const { departments = {} } = this.props;
-			const deptDefault = departments.filter((dept) => dept.showOnRegistration)[0];
-			if (deptDefault) {
-				department = deptDefault._id;
-			}
+		if (department !== '') {
+			return department;
 		}
 
-		return department;
+		const { departments = {} } = this.props;
+		const deptDefault = departments.find((dept) => dept.showOnRegistration);
+
+		if (deptDefault) {
+			return deptDefault._id;
+		}
 	}
 
 	handleSubmit = async ({ name, email, department, ...customFields }) => {
@@ -38,7 +37,8 @@ export class RegisterContainer extends Component {
 			name,
 			email,
 			department: this.getDepartment(department),
-		}
+		};
+
 		await dispatch({ loading: true, department });
 		try {
 			const user = await Livechat.grantVisitor({ visitor: { ...fields, token } });
