@@ -13,19 +13,28 @@ const defaultMessage = I18n.t('We are not online right now. Please, leave a mess
 const defaultUnavailableMessage = ''; // TODO
 
 export default class LeaveMessage extends Component {
-	state = {
-		name: { value: '' },
-		email: { value: '' },
-		department: null,
-		message: { value: '' },
-	}
-
 	validations = {
 		name: [Validations.nonEmpty],
 		email: [Validations.nonEmpty, Validations.email],
 		department: [],
 		message: [Validations.nonEmpty],
 	}
+
+	getDefaultState = () => {
+		const { hasDepartmentField, departments } = this.props;
+
+		let department = null;
+		if (hasDepartmentField && departments && departments.length > 0) {
+			department = { value: '' };
+		}
+
+		return {
+			name: { value: '' },
+			email: { value: '' },
+			department,
+			message: { value: '' },
+		};
+	};
 
 	getValidableFields = () => Object.keys(this.validations)
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
@@ -39,6 +48,8 @@ export default class LeaveMessage extends Component {
 			this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
 		}
 	}
+
+	reset = () => this.setState(this.getDefaultState());
 
 	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
 
@@ -55,7 +66,7 @@ export default class LeaveMessage extends Component {
 
 	handleMessageChange = this.handleFieldChange('message')
 
-	handleSubmit = (event) => {
+	handleSubmit = async (event) => {
 		event.preventDefault();
 
 		if (this.props.onSubmit) {
@@ -63,23 +74,16 @@ export default class LeaveMessage extends Component {
 				.filter(([, state]) => state !== null)
 				.map(([name, { value }]) => ({ [name]: value }))
 				.reduce((values, entry) => ({ ...values, ...entry }), {});
-			this.props.onSubmit(values);
+
+			if (await this.props.onSubmit(values)) {
+				this.reset();
+			}
 		}
 	}
 
 	constructor(props) {
 		super(props);
-
-		const { hasDepartmentField, departments } = props;
-
-		if (hasDepartmentField && departments) {
-			if (departments.length > 0) {
-				this.state.department = { value: '' };
-			} else {
-				this.state.department = null;
-			}
-		}
-
+		this.setState(this.getDefaultState());
 		this.validateAll();
 	}
 
