@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.5.0 - 2020-05-20
+* [NEW] Support Registration Form custom fields (#407) …
+* [NEW] Translated to Hebrew (#348)
+* [NEW] Update es.json (#357)
+* [NEW] Russian translation (#359)
+* [FIX] Dutch translations (#391)  
+* [IMPROVE] Update ro.json (397)
+* [FIX] Dutch translations
+
 ## 1.4.0 - 2020-03-19
 * [NEW] Add new API method the set the default Agent before chatting (#383)
 * [NEW] Keep trigger messages after the conversation starts. (#384)

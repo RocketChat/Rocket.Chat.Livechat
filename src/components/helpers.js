@@ -125,6 +125,10 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	return 1;
 });
 
+export const parseOfflineMessage = (fields = {}) => {
+	const host = window.location.origin;
+	return Object.assign(fields, { host });
+};
 export const normalizeDOMRect = ({ left, top, right, bottom }) => ({ left, top, right, bottom });
 
 

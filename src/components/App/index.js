@@ -19,6 +19,13 @@ import { parentCall } from '../../lib/parentCall';
 import userPresence from '../../lib/userPresence';
 import Connection from '../../lib/connection';
 
+function isRTL(s) {
+	const rtlChars = '\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC';
+	const rtlDirCheck = new RegExp(`^[^${ rtlChars }]*?[${ rtlChars }]`);
+
+	return rtlDirCheck.test(s);
+}
+
 export class App extends Component {
 	state = {
 		initialized: false,
@@ -160,6 +167,10 @@ export class App extends Component {
 
 	componentWillUnmount() {
 		this.finalize();
+	}
+
+	componentDidUpdate() {
+		document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'auto';
 	}
 
 	render = ({
