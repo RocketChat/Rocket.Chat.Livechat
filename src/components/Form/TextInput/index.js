@@ -15,6 +15,7 @@ export const TextInput = memo(({
 	onInput,
 	className,
 	style = {},
+	...props
 }) => (
 	multiline
 		? (
@@ -28,6 +29,7 @@ export const TextInput = memo(({
 				onInput={onInput}
 				className={createClassName(styles, 'text-input', { disabled, error, small, multiline }, [className])}
 				style={style}
+				{...props}
 			/>
 		)
 		: (
@@ -41,6 +43,7 @@ export const TextInput = memo(({
 				onInput={onInput}
 				className={createClassName(styles, 'text-input', { disabled, error, small }, [className])}
 				style={style}
+				{...props}
 			/>
 		)
 ));
