@@ -63,6 +63,9 @@ export default class Chat extends Component {
 		if (this.props.onSubmit) {
 			this.props.onSubmit(text);
 			this.setState({ text: '' });
+
+			// turn off emoji-picker
+			this.turnOffEmojiPicker();
 		}
 	}
 
@@ -84,6 +87,17 @@ export default class Chat extends Component {
 		this.setState({text:`${this.state.text}${emojiColonName}`});
 		// notify child composer to append emojiColonName to input text field
 		this.notifyEmojiSelect(emojiColonName);
+	}
+
+	handleClick = (e) => {
+		// check if emoji-picker is active - if true, then hide the picker
+		this.turnOffEmojiPicker();
+	}
+
+	turnOffEmojiPicker = () => {
+		if(this.state.emojiPickerActive){
+			this.setState({emojiPickerActive: !this.state.emojiPickerActive});
+		}
 	}
 
 	render = ({
@@ -121,6 +135,7 @@ export default class Chat extends Component {
 			onFinishChat={onFinishChat}
 			onRemoveUserData={onRemoveUserData}
 			className={createClassName(styles, 'chat')}
+			handleClick={this.handleClick}
 			{...props}
 		>
 			<FilesDropTarget
@@ -140,6 +155,7 @@ export default class Chat extends Component {
 							conversationFinishedMessage={conversationFinishedMessage}
 							lastReadMessageId={lastReadMessageId}
 							onScrollTo={this.handleScrollTo}
+							handleClick={this.handleClick}
 						/>
 						{this.state.emojiPickerActive && <Picker
 								style={{ position: 'absolute', zIndex: 10, bottom:0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
@@ -174,6 +190,7 @@ export default class Chat extends Component {
 						placeholder={I18n.t('Type your message here')}
 						value={text}
 						notifyEmojiSelect={click => this.notifyEmojiSelect = click}
+						handleClick={this.handleClick}
 						pre={(
 							<ComposerActions>
 								<ComposerAction onClick={this.toggleEmojiPickerState}>
