@@ -207,7 +207,7 @@ export class Composer extends Component {
 
 	}
 
-	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
+	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style, handleClick }) => (
 		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
 			{pre}
 			<div
@@ -223,6 +223,7 @@ export class Composer extends Component {
 						onKeypress: this.handleKeypress(onSubmit),
 						onPaste: this.handlePaste(onUpload),
 						onDrop: this.handleDrop(onUpload),
+						onClick: handleClick,
 					}
 				)}
 				className={createClassName(styles, 'composer__input')}
