@@ -1,0 +1,13 @@
+@import '~styles/colors';
+
+.survey-feedback {
+	&__main {
+		padding: 1rem 1.5rem 0;
+	}
+	
+	&__message {
+		margin: 0 0 1rem 0;
+		font-weight: 500;
+		line-height: 1.5;
+	}
+}
