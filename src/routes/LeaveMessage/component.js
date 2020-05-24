@@ -13,13 +13,6 @@ const defaultMessage = I18n.t('We are not online right now. Please, leave a mess
 const defaultUnavailableMessage = ''; // TODO
 
 export default class LeaveMessage extends Component {
-	state = {
-		name: { value: '' },
-		email: { value: '' },
-		department: null,
-		message: { value: '' },
-	}
-
 	validations = {
 		name: [Validations.nonEmpty],
 		email: [Validations.nonEmpty, Validations.email],
@@ -27,24 +20,42 @@ export default class LeaveMessage extends Component {
 		message: [Validations.nonEmpty],
 	}
 
+	getDefaultState = () => {
+		const { hasDepartmentField, departments } = this.props;
+
+		let department = null;
+		if (hasDepartmentField && departments && departments.length > 0) {
+			department = { value: '' };
+		}
+
+		return {
+			name: { value: '' },
+			email: { value: '' },
+			department,
+			message: { value: '' },
+		};
+	};
+
 	getValidableFields = () => Object.keys(this.validations)
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
 		.filter(Boolean)
 
-	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => error || validation(value), undefined)
+	validate = ({ name, value }) => this.validations[name].reduce((error, validation) => error || validation({ value }), undefined)
 
 	validateAll = () => {
-		for (const { fieldName, value } of this.getValidableFields()) {
-			const error = this.validate(fieldName, value);
-			this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
+		for (const { fieldName: name, value } of this.getValidableFields()) {
+			const error = this.validate({ name, value });
+			this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
 		}
 	}
 
+	reset = () => this.setState(this.getDefaultState());
+
 	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
 
-	handleFieldChange = (fieldName) => ({ target: { value } }) => {
-		const error = this.validate(fieldName, value);
-		this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
+	handleFieldChange = (name) => ({ target: { value } }) => {
+		const error = this.validate({ name, value });
+		this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
 	}
 
 	handleNameChange = this.handleFieldChange('name')
@@ -55,7 +66,7 @@ export default class LeaveMessage extends Component {
 
 	handleMessageChange = this.handleFieldChange('message')
 
-	handleSubmit = (event) => {
+	handleSubmit = async (event) => {
 		event.preventDefault();
 
 		if (this.props.onSubmit) {
@@ -63,23 +74,16 @@ export default class LeaveMessage extends Component {
 				.filter(([, state]) => state !== null)
 				.map(([name, { value }]) => ({ [name]: value }))
 				.reduce((values, entry) => ({ ...values, ...entry }), {});
-			this.props.onSubmit(values);
+
+			if (await this.props.onSubmit(values)) {
+				this.reset();
+			}
 		}
 	}
 
 	constructor(props) {
 		super(props);
-
-		const { hasDepartmentField, departments } = props;
-
-		if (hasDepartmentField && departments) {
-			if (departments.length > 0) {
-				this.state.department = { value: '' };
-			} else {
-				this.state.department = null;
-			}
-		}
-
+		this.setState(this.getDefaultState());
 		this.validateAll();
 	}
 
@@ -95,7 +99,7 @@ export default class LeaveMessage extends Component {
 						<TextInput
 							name="name"
 							value={name.value}
-							placeholder={I18n.t('Insert your name here...')}
+							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
 							disabled={loading}
 							onInput={this.handleNameChange}
 						/>
@@ -113,7 +117,7 @@ export default class LeaveMessage extends Component {
 						<TextInput
 							name="email"
 							value={email.value}
-							placeholder={I18n.t('Insert your email here...')}
+							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
 							disabled={loading}
 							onInput={this.handleEmailChange}
 						/>
