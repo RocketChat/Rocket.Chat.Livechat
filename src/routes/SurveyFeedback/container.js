@@ -30,7 +30,7 @@ export const SurveyFeedbackConnector = ({ ref, ...props }) => (
 			<SurveyFeedbackContainer
 				ref={ref}
 				{...props}
-				title={I18n.t('Chat finished')}
+				title={I18n.t('Feedback')}
 				color={color}
 				message={I18n.t('How would you rate your experience?')}
 				loading={loading}
