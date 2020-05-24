@@ -2,9 +2,11 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import SurveyFeedback from './component';
+import { screenCentered } from '../../helpers.stories';
 
 
 storiesOf('Routes|Survey Feedback', module)
+	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<SurveyFeedback

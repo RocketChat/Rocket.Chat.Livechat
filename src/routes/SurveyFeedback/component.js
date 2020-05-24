@@ -5,6 +5,7 @@ import { ExperienceRating } from '../../components/Form/ExperienceRating';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles';
+import { ButtonGroup } from '../../components/ButtonGroup';
 
 
 export default class SurveyFeedback extends Component {
@@ -68,26 +69,29 @@ export default class SurveyFeedback extends Component {
 				className={createClassName(styles, 'survey-feedback')}
 				{...props}
 			>
-				<p className={createClassName(styles, 'survey-feedback__message')}>{messageProp}</p>
-				<Form onSubmit={this.handleSubmit}>
-					<ExperienceRating value={rating.value} onChange={this.handleRatingChange} />
-					<FormField>
-						<TextInput
-							id="message"
-							name="message"
-							placeholder={I18n.t('Do you have anything to say? Leave your opinion here (optional)')}
-							rows={4}
-							disabled={loading}
-							value={message.value}
-							onInput={this.handleMessageChange}
-						/>
-					</FormField>
+				<Screen.Content>
+					<p className={createClassName(styles, 'survey-feedback__message')}>{messageProp}</p>
+					<Form onSubmit={this.handleSubmit}>
+						<ExperienceRating value={rating.value} onChange={this.handleRatingChange} />
+						<FormField>
+							<TextInput
+								id="message"
+								name="message"
+								placeholder={I18n.t('Do you have anything to say? Leave your opinion here (optional)')}
+								rows={4}
+								disabled={loading}
+								value={message.value}
+								multiline={true}
+								onInput={this.handleMessageChange}
+							/>
+						</FormField>
 
-					<FormField>
-						<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
-						<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{I18n.t('No, thanks')}</Button>
-					</FormField>
-				</Form>
+						<ButtonGroup>
+							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
+							<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{I18n.t('No, thanks')}</Button>
+						</ButtonGroup>
+					</Form>
+				</Screen.Content>
 			</Screen>
 		);
 	}
