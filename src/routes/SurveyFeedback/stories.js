@@ -10,7 +10,7 @@ storiesOf('Routes|Survey Feedback', module)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
 		<SurveyFeedback
-			title={text('title', 'Chat finished')}
+			title={text('title', 'Feedback')}
 			theme={{
 				color: color('theme.color', ''),
 				fontColor: color('theme.fontColor', ''),
