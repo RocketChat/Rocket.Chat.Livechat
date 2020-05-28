@@ -25,6 +25,7 @@
     "enable_notifications_a3daf4b1": "Enable notifications",
     "error_closing_chat_4c5e29d7": "Error closing chat.",
     "error_removing_user_data_ce507478": "Error removing user data.",
+    "error_saving_feedback_cfa6151b": "Error Saving Feedback",
     "error_starting_a_new_conversation_reason_a1b491a1": "Error starting a new conversation: %{reason}",
     "expand_chat_a0045dbd": "Expand chat",
     "feedback_6dcc1991": "Feedback",

@@ -14,9 +14,13 @@ const commands = new Commands();
 
 export const closeChat = async () => {
 	await handleTranscript();
+	route('/survey-feedback');
+};
+
+export const endChat = async () => {
 	await loadConfig();
 	parentCall('callback', 'chat-ended');
-	route('/survey-feedback');
+	route('/chat-finished');
 };
 
 const processMessage = async (message) => {

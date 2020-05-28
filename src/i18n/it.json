@@ -25,13 +25,11 @@
     "enable_notifications_a3daf4b1": "Abilita notifiche",
     "error_closing_chat_4c5e29d7": "Errore durante la chiusura della chat.",
     "error_removing_user_data_ce507478": "Errore durante la rimozione dei dati personali.",
+    "error_saving_feedback_cfa6151b": "Error Saving Feedback",
     "error_starting_a_new_conversation_reason_a1b491a1": "Errore durante la creazione di una nuova conversazione: %{reason}",
     "expand_chat_a0045dbd": "Espandi chat",
-
     "feedback_6dcc1991": "Feedback",
-
     "field_required_fc5c6b05": "Field required",
-
     "file_exceeds_allowed_size_of_size_bd65c389": "Il file supera la dimensione massima consentita di %{size}.",
     "fileupload_error_9eedee68": "FileUpload Errore",
     "finish_this_chat_87b79542": "Termina questa chat",

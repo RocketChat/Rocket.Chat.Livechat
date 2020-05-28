@@ -25,6 +25,7 @@
     "enable_notifications_a3daf4b1": "Включить оповещения",
     "error_closing_chat_4c5e29d7": "Ошибка закрытия чата.",
     "error_removing_user_data_ce507478": "Ошибка удаления пользовательских данных.",
+    "error_saving_feedback_cfa6151b": "Error Saving Feedback",
     "error_starting_a_new_conversation_reason_a1b491a1": "Ошибка при запуске нового диалога: %{reason}",
     "expand_chat_a0045dbd": "Развернуть окно чата",
     "feedback_6dcc1991": "Feedback",
