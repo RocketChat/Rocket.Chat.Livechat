@@ -23,7 +23,7 @@ export default class SurveyFeedback extends Component {
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
 		.filter(Boolean)
 
-	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => (error || validation(value)), undefined)
+	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => (error || validation(this.state[fieldName])), undefined)
 
 	validateAll = () => {
 		for (const { fieldName, value } of this.getValidableFields()) {
@@ -35,6 +35,8 @@ export default class SurveyFeedback extends Component {
 	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
 
 	handleFieldChange = (fieldName) => ({ target: { value } }) => {
+		this.setState({ [fieldName]: { value } });
+		// check for errors
 		const error = this.validate(fieldName, value);
 		this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
 	}
