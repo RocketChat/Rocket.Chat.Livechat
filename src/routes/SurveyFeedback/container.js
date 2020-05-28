@@ -3,6 +3,7 @@ import { Component } from 'preact';
 import { Consumer } from '../../store';
 import SurveyFeedback from './component';
 // import { insert, createToken } from '../../components/helpers';
+import { Livechat } from '../../api';
 
 export class SurveyFeedbackContainer extends Component {
 	handleSubmit = async(fields) => {

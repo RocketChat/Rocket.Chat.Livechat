@@ -89,7 +89,7 @@ export default class SurveyFeedback extends Component {
 						</FormField>
 
 						<ButtonGroup>
-							<Button loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
+							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
 							<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{I18n.t('No, thanks')}</Button>
 						</ButtonGroup>
 					</Form>

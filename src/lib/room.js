@@ -16,7 +16,7 @@ export const closeChat = async () => {
 	await handleTranscript();
 	await loadConfig();
 	parentCall('callback', 'chat-ended');
-	route('/chat-finished');
+	route('/survey-feedback');
 };
 
 const processMessage = async (message) => {

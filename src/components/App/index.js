@@ -9,6 +9,7 @@ import ChatFinished from '../../routes/ChatFinished';
 import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
+import SurveyFeedback from '../../routes/SurveyFeedback';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { visibility } from '../helpers';
 import { setWidgetLanguage } from '../../lib/locale';
@@ -211,6 +212,7 @@ export class App extends Component {
 				<GDPRAgreement path="/gdpr" {...screenProps} />
 				<ChatFinished path="/chat-finished" {...screenProps} />
 				<SwitchDepartment path="/switch-department" {...screenProps} />
+				<SurveyFeedback path="/survey-feedback" {...screenProps} />
 			</Router>
 		);
 	}
