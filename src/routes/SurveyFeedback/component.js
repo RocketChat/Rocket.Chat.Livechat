@@ -62,12 +62,13 @@ export default class SurveyFeedback extends Component {
 		this.validateAll();
 	}
 
-	render({ title, message: messageProp, loading, ...props }, { rating, message }) {
+	render({ title, color, message: messageProp, loading, ...props }, { rating, message }) {
 		const valid = this.isValid();
 
 		return (
 			<Screen
 				title={title}
+				color={color}
 				className={createClassName(styles, 'survey-feedback')}
 				{...props}
 			>

@@ -54,6 +54,11 @@ export const SurveyFeedbackConnector = ({ ref, ...props }) => (
 					color,
 				} = {},
 			} = {},
+			iframe: {
+				theme: {
+					color: customColor,
+				} = {},
+			} = {},
 			loading,
 			token,
 			dispatch,
@@ -63,8 +68,10 @@ export const SurveyFeedbackConnector = ({ ref, ...props }) => (
 			<SurveyFeedbackContainer
 				ref={ref}
 				{...props}
+				theme={{
+					color: customColor || color,
+				}}
 				title={I18n.t('Feedback')}
-				color={color}
 				message={I18n.t('How would you rate your experience?')}
 				loading={loading}
 				token={token}
