@@ -44,8 +44,13 @@ export class SurveyFeedbackContainer extends Component {
 		}
 	}
 
+	onCancelClick = async() => {
+		// don't record feedback - end the chat
+		await endChat();
+	}
+
 	render = (props) => (
-		<SurveyFeedback {...props} onSubmit={this.handleSubmit} />
+		<SurveyFeedback {...props} onSubmit={this.handleSubmit} onCancelClick={this.onCancelClick} />
 	)
 }
 

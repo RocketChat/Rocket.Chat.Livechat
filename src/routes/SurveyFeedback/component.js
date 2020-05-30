@@ -57,6 +57,10 @@ export default class SurveyFeedback extends Component {
 		}
 	}
 
+	handleCancelClick = () => {
+		this.props.onCancelClick();
+	}
+
 	constructor(props) {
 		super(props);
 		this.validateAll();
