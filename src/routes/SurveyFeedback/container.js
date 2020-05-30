@@ -29,7 +29,6 @@ export class SurveyFeedbackContainer extends Component {
 					data: data
 				}
 				Livechat.chatSurvey(packet).then(response => {
-					console.log('SDK response - survey --> ', response);
 				}).catch(error => {
 					console.error('error -->', error);
 				});
