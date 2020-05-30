@@ -43,6 +43,51 @@ export class ExperienceRating extends Component {
 		return value === itemValue;
 	}
 
+	generateRatingItems = () => {
+		const itemsData = [
+			{
+				value: "1",
+				label: Rating1,
+				description: "Very bad",
+				checked: this.isChecked('1')
+			},
+			{
+				value: "2",
+				label: Rating2,
+				description: "Bad",
+				checked: this.isChecked('2')
+			},
+			{
+				value: "3",
+				label: Rating3,
+				description: "Ok",
+				checked: this.isChecked('3')
+			},
+			{
+				value: "4",
+				label: Rating4,
+				description: "Good",
+				checked: this.isChecked('4')
+			},
+			{
+				value: "5",
+				label: Rating5,
+				description: "Awesome",
+				checked: this.isChecked('5')
+			}
+		];
+
+		return (itemsData.map(item =>
+			<ExperienceRatingItem
+				value={item.value}
+				label={item.label}
+				description={item.description}
+				onChange={this.handleChange}
+				checked={item.checked} />
+			)
+		);
+	}
+
 
 	render() {
 		return (
@@ -52,11 +97,7 @@ export class ExperienceRating extends Component {
 					createClassName(styles, 'form__input-experience-rating'),
 				].join(' ')}
 			>
-				<ExperienceRatingItem value="1" label={Rating1} description="Very bad" onChange={this.handleChange} checked={this.isChecked('1')} />
-				<ExperienceRatingItem value="2" label={Rating2} description="Bad" onChange={this.handleChange} checked={this.isChecked('2')} />
-				<ExperienceRatingItem value="3" label={Rating3} description="Ok" onChange={this.handleChange} checked={this.isChecked('3')} />
-				<ExperienceRatingItem value="4" label={Rating4} description="Good" onChange={this.handleChange} checked={this.isChecked('4')} />
-				<ExperienceRatingItem value="5" label={Rating5} description="Awesome" onChange={this.handleChange} checked={this.isChecked('5')} />
+				{this.generateRatingItems()}
 			</div>
 		);
 	}
