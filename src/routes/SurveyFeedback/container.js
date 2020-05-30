@@ -10,20 +10,24 @@ import { createToken } from '../../components/helpers';
 export class SurveyFeedbackContainer extends Component {
 	handleSubmit = async(fields) => {
 
+		const { survey } = this.props;
+
 		const { alerts, dispatch, room: { _id: rid } } = this.props;
 
 		await dispatch({ loading: true });
 
 		try{
 			if (rid){
+				const data = survey.items.map(ratingFactorName => {
+					return {
+						name: ratingFactorName,
+						value: `${fields.rating}`
+					}
+				});
 				const packet = {
 					rid: rid,
-					data: [{
-						name: 'satisfaction',	// TODO: modify ILivechatSurveyAPI in RC.js.SDK to remove this field
-						value: `${fields.rating}`
-					}]
+					data: data
 				}
-				// console.log('Packet --> ', packet);
 				Livechat.chatSurvey(packet).then(response => {
 					console.log('SDK response - survey --> ', response);
 				}).catch(error => {
@@ -53,6 +57,7 @@ export const SurveyFeedbackConnector = ({ ref, ...props }) => (
 				theme: {
 					color,
 				} = {},
+				survey: survey,
 			} = {},
 			iframe: {
 				theme: {
@@ -78,6 +83,7 @@ export const SurveyFeedbackConnector = ({ ref, ...props }) => (
 				dispatch={dispatch}
 				room={room}
 				alerts={alerts}
+				survey={survey}
 			/>
 		)}
 	</Consumer>
