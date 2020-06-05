@@ -1,5 +1,6 @@
 import { Component } from 'preact';
 
+import { Button } from '../../components/Button';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions } from '../../components/Footer';
@@ -89,6 +90,8 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
+		registrationRequired,
+		onRegisterUser,
 		...props
 	}, {
 		atBottom = true,
@@ -144,33 +147,36 @@ export default class Chat extends Component {
 						</FooterOptions>
 					) : null}
 				>
-					<Composer onUpload={onUpload}
-						onSubmit={this.handleSubmit}
-						onChange={this.handleChangeText}
-						placeholder={I18n.t('Type your message here')}
-						value={text}
-						pre={emoji && (
-							<ComposerActions>
-								<ComposerAction>
-									<EmojiIcon width={20} />
-								</ComposerAction>
-							</ComposerActions>
-						)}
-						post={(
-							<ComposerActions>
-								{text.length === 0 && uploads && (
-									<ComposerAction onClick={this.handleUploadClick}>
-										<PlusIcon width={20} />
+					{ registrationRequired
+						? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
+						: <Composer onUpload={onUpload}
+							onSubmit={this.handleSubmit}
+							onChange={this.handleChangeText}
+							placeholder={I18n.t('Type your message here')}
+							value={text}
+							pre={emoji && (
+								<ComposerActions>
+									<ComposerAction>
+										<EmojiIcon width={20} />
 									</ComposerAction>
-								)}
-								{text.length > 0 && (
-									<ComposerAction onClick={this.handleSendClick}>
-										<SendIcon width={20} />
-									</ComposerAction>
-								)}
-							</ComposerActions>
-						)}
-					/>
+								</ComposerActions>
+							)}
+							post={(
+								<ComposerActions>
+									{text.length === 0 && uploads && (
+										<ComposerAction onClick={this.handleUploadClick}>
+											<PlusIcon width={20} />
+										</ComposerAction>
+									)}
+									{text.length > 0 && (
+										<ComposerAction onClick={this.handleSendClick}>
+											<SendIcon width={20} />
+										</ComposerAction>
+									)}
+								</ComposerActions>
+							)}
+						/>
+					}
 				</Screen.Footer>
 			</FilesDropTarget>
 		</Screen>
