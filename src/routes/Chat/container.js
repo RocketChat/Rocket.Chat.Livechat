@@ -180,6 +180,8 @@ export class ChatContainer extends Component {
 			return;
 		}
 
+		await loadConfig();
+
 		const { alerts, dispatch, room: { _id: rid } = {} } = this.props;
 
 		await dispatch({ loading: true });

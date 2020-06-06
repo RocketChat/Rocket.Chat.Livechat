@@ -14,7 +14,12 @@ const commands = new Commands();
 
 export const closeChat = async () => {
 	await handleTranscript();
-	route('/survey-feedback');
+	const { config } = store.state;
+	if(config.settings.showFeedbackForm) {
+		route('/survey-feedback');
+	}else{
+		await endChat();
+	}
 };
 
 export const endChat = async () => {
