@@ -1,6 +1,8 @@
 # Rocket.Chat.Livechat
 
-This branch contains a button component @ `/src/components/Messages/MessageAction`. For example you can send a following rich message payload to use with this component:
+This branch contains a button component @ `/src/components/Messages/MessageAction`. 
+
+For example you can send a following rich message payload to use with this component:
 
 ```
 
