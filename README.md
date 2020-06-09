@@ -2,6 +2,10 @@
 
 This branch contains a button component @ `/src/components/Messages/MessageAction`. 
 
+<p align="center">
+<img width="483" alt="Screenshot 2020-06-09 at 8 43 21 PM" src="https://user-images.githubusercontent.com/41849970/84166039-025fc780-aa92-11ea-9f84-81adf1bcd823.png">
+</p>
+
 For example you can send a following rich message payload to use with this component:
 
 ```
