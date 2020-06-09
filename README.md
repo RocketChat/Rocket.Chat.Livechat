@@ -5,35 +5,35 @@ This branch contains a button component @ `/src/components/Messages/MessageActio
 ```
 
 const msgObject = {
-			_id: Random.id(),
-			rid: item.rid,
-			msg: 'Sorry I am not sure of your request. Please select one of the following options:',
-			attachments: [{
-				actions: [
-					{
-						type: 'button',
-						msg_in_chat_window: true,
-						msg_processing_type: 'sendMessage',
-						text: 'Contact Salesforce Agent',
-						msg: 'getSessionId',
-					},
-					{
-						type: 'button',
-						msg_in_chat_window: true,
-						msg_processing_type: 'sendMessage',
-						text: 'Send Random String',
-						msg: 'randomWord',
-					},
-					{
-						type: 'button',
-						msg_in_chat_window: true,
-						msg_processing_type: 'sendMessage',
-						text: 'Close Chat',
-						msg: 'closeChat',
-					},
-				],
-			}],
-		};
+	_id: Random.id(),
+	rid: item.rid,
+	msg: 'Sorry I am not sure of your request. Please select one of the following options:',
+	attachments: [{
+		actions: [
+			{
+			   type: 'button',
+			   msg_in_chat_window: true,
+			   msg_processing_type: 'sendMessage',
+			   text: 'Contact Salesforce Agent',
+			   msg: 'getSessionId',
+			},
+			{
+			   type: 'button',
+			   msg_in_chat_window: true,
+			   msg_processing_type: 'sendMessage',
+			   text: 'Send Random String',
+			   msg: 'randomWord',
+			 },
+			 {
+			   type: 'button',
+		           msg_in_chat_window: true,
+			   msg_processing_type: 'sendMessage',
+	                   text: 'Close Chat',
+			   msg: 'closeChat',
+			 },
+	],
+  }],
+};
 
 ```
 
