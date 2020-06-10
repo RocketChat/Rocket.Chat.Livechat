@@ -17,7 +17,7 @@ import {
 	MESSAGE_TYPE_USER_LEFT,
 	MESSAGE_TYPE_WELCOME,
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
-	MESSAGE_TYPE_REQUEST_SCREENSHARE_ACCESS,
+	MESSAGE_TYPE_REQUEST_SCREEN_SHARING_ACCESS,
 } from '../constants';
 
 
@@ -67,7 +67,7 @@ const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
 	|| (t === MESSAGE_TYPE_USER_LEFT && I18n.t('User left'))
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
-	|| (t === MESSAGE_TYPE_REQUEST_SCREENSHARE_ACCESS && I18n.t('Agent is requesting screenshare'));
+	|| (t === MESSAGE_TYPE_REQUEST_SCREEN_SHARING_ACCESS && I18n.t('Agent is requesting screen sharing'));
 
 const getMessageUsernames = (compact, message) => {
 	if (compact || !message.u) {
