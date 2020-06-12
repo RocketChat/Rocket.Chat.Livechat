@@ -18,6 +18,7 @@ import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
 import userPresence from '../../lib/userPresence';
 import Connection from '../../lib/connection';
+import { ScriptCacheInstance } from '../../lib/scriptCache';
 
 function isRTL(s) {
 	const rtlChars = '\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC';
@@ -152,6 +153,11 @@ export class App extends Component {
 
 		this.setState({ initialized: true });
 		parentCall('ready');
+
+		const { screenSharingConfig: { enabled, providerBundle } } = this.props;
+		if (enabled) {
+			await ScriptCacheInstance.loadSrc(providerBundle);
+		}
 	}
 
 	async finalize() {
@@ -222,6 +228,7 @@ const AppConnector = () => (
 			<StoreConsumer>
 				{({
 					config,
+					screenSharingConfig,
 					user,
 					triggered,
 					gdpr,
@@ -236,6 +243,7 @@ const AppConnector = () => (
 				}) => (
 					<App
 						config={config}
+						screenSharingConfig={screenSharingConfig}
 						gdpr={gdpr}
 						triggered={triggered}
 						user={user}

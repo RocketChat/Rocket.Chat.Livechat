@@ -16,6 +16,10 @@ const initialState = {
 		departments: [],
 		resources: {},
 	},
+	screenSharingConfig: {
+		enabled: true,
+		providerBundle: 'https://ashwaniYDV.github.io/sstest/ssbundle.js',
+	},
 	messages: [],
 	user: null,
 	sound: {
