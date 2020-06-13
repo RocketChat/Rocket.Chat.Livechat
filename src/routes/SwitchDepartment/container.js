@@ -28,7 +28,7 @@ export class SwitchDepartmentContainer extends Component {
 
 		if (!room) {
 			const user = await Livechat.grantVisitor({ visitor: { department, token } });
-			await dispatch({ user, alerts: (alerts.push({ id: createToken(), children: I18n.t('Department switched'), success: true }), alerts) });
+			await dispatch({ department, user, alerts: (alerts.push({ id: createToken(), children: I18n.t('Department switched'), success: true }), alerts) });
 			return history.go(-1);
 		}
 
@@ -89,22 +89,22 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 			alerts,
 			token,
 		}) => (
-			<SwitchDepartmentContainer
-				ref={ref}
-				{...props}
-				theme={{
-					color: customColor || color,
-					fontColor: customFontColor,
-					iconColor: customIconColor,
-				}}
-				loading={loading}
-				departments={departments.filter((dept) => dept.showOnRegistration && dept._id !== department)}
-				dispatch={dispatch}
-				room={room}
-				alerts={alerts}
-				token={token}
-			/>
-		)}
+				<SwitchDepartmentContainer
+					ref={ref}
+					{...props}
+					theme={{
+						color: customColor || color,
+						fontColor: customFontColor,
+						iconColor: customIconColor,
+					}}
+					loading={loading}
+					departments={departments.filter((dept) => dept.showOnRegistration && dept._id !== department)}
+					dispatch={dispatch}
+					room={room}
+					alerts={alerts}
+					token={token}
+				/>
+			)}
 	</Consumer>
 );
 
