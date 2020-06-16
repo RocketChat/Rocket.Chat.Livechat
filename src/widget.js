@@ -36,6 +36,7 @@ export const validCallbacks = [
 	'agent-status-change',
 	'queue-position-change',
 	'no-agent-online',
+	'start-screen-sharing',
 ];
 
 const callbacks = new EventEmitter();
