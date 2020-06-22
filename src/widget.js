@@ -430,6 +430,7 @@ window.RocketChat.livechat = {
 	onAgentStatusChange(fn) { registerCallback('agent-status-change', fn); },
 	onQueuePositionChange(fn) { registerCallback('queue-position-change', fn); },
 	onServiceOffline(fn) { registerCallback('no-agent-online', fn); },
+	onStartScreenSharing(fn) { registerCallback('start-screen-sharing', fn); },
 };
 
 // proccess queue

@@ -9,6 +9,7 @@ import { parentCall } from './parentCall';
 import { handleTranscript } from './transcript';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { normalizeAgent } from './api';
+import { ModalManager } from '../components/Modal';
 
 const commands = new Commands();
 
@@ -19,11 +20,29 @@ export const closeChat = async () => {
 	route('/chat-finished');
 };
 
+const onRequestScreenSharing = async () => {
+	const { success } = await ModalManager.confirm({
+		text: I18n.t('Agent is requesting screensharing. Are you sure you allow agent to screenshare?'),
+	});
+
+	if (!success) {
+		return;
+	}
+
+	const { state: { user: { _id } } } = store;
+
+	console.log(_id);
+
+	parentCall('callback', ['start-screen-sharing', { guestId: _id }]);
+}
+
 const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
 		closeChat();
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
+	} else if (message.t === 'request_screen_sharing_access') {
+		await onRequestScreenSharing();
 	}
 };
 
