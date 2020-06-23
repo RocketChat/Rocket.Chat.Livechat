@@ -21,7 +21,7 @@ export default class Store extends EventEmitter {
 
 		this._state = { ...initialState, ...storedState };
 
-		window.addEventListener("storage", (e) => {
+		window.addEventListener('storage', (e) => {
 			// Cross-tab communication
 			if (e.key !== this.localStorageKey) {
 				return;
@@ -35,6 +35,21 @@ export default class Store extends EventEmitter {
 			const storedState = JSON.parse(e.newValue);
 			this.setStoredState(storedState);
 		});
+
+		/*
+		window.addEventListener('load', (e) => {
+			const sessionId = e.timeStamp.toString(36).substring(4, 15);
+			sessionStorage.setItem('sessionId', sessionId);
+			const { sessionIds = [] } = this._state;
+			this.setState({ sessionIds: [sessionId, ...sessionIds] });
+		});
+
+		window.addEventListener('beforeunload', () => {
+			const sessionId = sessionStorage.getItem('sessionId');
+			const { sessionIds = [] } = this._state;
+			this.setState({ sessionIds: sessionIds.filter((session) => session !== sessionId) });
+		});
+		*/
 	}
 
 	get state() {

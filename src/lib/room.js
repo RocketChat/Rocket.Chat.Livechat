@@ -2,7 +2,7 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../api';
 import { store } from '../store';
-import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import { setCookies, upsert, canRenderMessage, shouldSkipNotification } from '../components/helpers';
 import Commands from './commands';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
@@ -33,6 +33,10 @@ const doPlaySound = async (message) => {
 	if (!sound.enabled || (user && message.u && message.u._id === user._id)) {
 		return;
 	}
+
+	// if (shouldSkipNotification()) {
+	// return;
+	// }
 
 	await store.setState({ sound: { ...sound, play: true } });
 };
@@ -199,9 +203,7 @@ export const defaultRoomParams = () => {
 	return params;
 };
 
-export const getGreetingMessages = (messages) => {
-	return messages && messages.filter((msg) => msg.trigger);
-}
+export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
 
 store.on('change', (state, prevState) => {
 	// Cross-tab communication
@@ -210,4 +212,3 @@ store.on('change', (state, prevState) => {
 		route('/');
 	}
 });
-
