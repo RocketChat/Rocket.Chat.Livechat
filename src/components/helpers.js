@@ -196,9 +196,9 @@ export const memo = (component) =>
 		render = component
 	};
 
-export const shouldSkipNotification = () => {
+export const isActiveSession = () => {
 	const sessionId = sessionStorage.getItem('sessionId');
-	const { sessionIds: [firstSessionId] } = store.state;
+	const { openSessionIds: [firstSessionId] } = store.state;
 
-	return sessionId !== firstSessionId;
+	return sessionId === firstSessionId;
 };

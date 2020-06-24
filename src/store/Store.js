@@ -1,7 +1,7 @@
 import { EventEmitter } from 'tiny-events';
 
 
-const { localStorage } = global;
+const { localStorage, sessionStorage } = window;
 
 export default class Store extends EventEmitter {
 	constructor(initialState = {}, { localStorageKey = 'store', dontPersist = [] } = {}) {
@@ -36,20 +36,18 @@ export default class Store extends EventEmitter {
 			this.setStoredState(storedState);
 		});
 
-		/*
-		window.addEventListener('load', (e) => {
-			const sessionId = e.timeStamp.toString(36).substring(4, 15);
+		window.addEventListener('load', () => {
+			const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 			sessionStorage.setItem('sessionId', sessionId);
-			const { sessionIds = [] } = this._state;
-			this.setState({ sessionIds: [sessionId, ...sessionIds] });
+			const { openSessionIds = [] } = this._state;
+			this.setState({ openSessionIds: [sessionId, ...openSessionIds] });
 		});
 
 		window.addEventListener('beforeunload', () => {
 			const sessionId = sessionStorage.getItem('sessionId');
-			const { sessionIds = [] } = this._state;
-			this.setState({ sessionIds: sessionIds.filter((session) => session !== sessionId) });
+			const { openSessionIds = [] } = this._state;
+			this.setState({ openSessionIds: openSessionIds.filter((session) => session !== sessionId) });
 		});
-		*/
 	}
 
 	get state() {

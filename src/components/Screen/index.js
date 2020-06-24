@@ -181,6 +181,7 @@ export const Screen = ({
 	onOpenWindow,
 	onSoundStop,
 	queueInfo,
+	dismissNotification,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<style>{`
@@ -222,7 +223,7 @@ export const Screen = ({
 			onClick={minimized ? onRestore : onMinimize}
 		/>
 
-		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} />}
+		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} dismissNotification={dismissNotification} />}
 	</div>
 );
 
