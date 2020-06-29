@@ -24,7 +24,7 @@ export default class SwitchDepartment extends Component {
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
 		.filter(Boolean)
 
-	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => error || validation(value), undefined)
+	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => error || validation({value}), undefined)
 
 	validateAll = () => {
 		for (const { fieldName, value } of this.getValidableFields()) {

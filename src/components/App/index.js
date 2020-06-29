@@ -10,7 +10,7 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { visibility } from '../helpers';
+import { visibility, isActiveSession } from '../helpers';
 import { setWidgetLanguage } from '../../lib/locale';
 import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
@@ -126,6 +126,8 @@ export class App extends Component {
 		this.forceUpdate();
 	}
 
+	dismissNotification = () => !isActiveSession();
+
 	initWidget() {
 		setWidgetLanguage();
 		const { minimized, iframe: { visible } } = this.props;
@@ -201,6 +203,7 @@ export class App extends Component {
 			onRestore: this.handleRestore,
 			onOpenWindow: this.handleOpenWindow,
 			onDismissAlert: this.handleDismissAlert,
+			dismissNotification: this.dismissNotification,
 		};
 
 		return (
