@@ -49,7 +49,7 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 				quoted: true,
 				attachments: attachment.attachments,
 				attachmentResolver,
-			}))
+			})),
 		),
 	text && (
 		<MessageBubble inverse={me} quoted={quoted}>

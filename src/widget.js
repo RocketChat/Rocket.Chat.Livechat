@@ -233,7 +233,7 @@ function pageVisited(change) {
 
 function initialize(params) {
 	for (const method in params) {
-		switch(method) {
+		switch (method) {
 			case 'customField':
 				const { key, value, overwrite } = params[method];
 				setCustomField(key, value, overwrite);

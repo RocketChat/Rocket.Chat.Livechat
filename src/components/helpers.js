@@ -1,7 +1,7 @@
 import { Component } from 'preact';
 
 import { Livechat } from '../api';
-
+import store from '../store';
 
 export function flatMap(arr, mapFunc) {
 	const result = [];
@@ -195,3 +195,10 @@ export const memo = (component) =>
 	class extends MemoizedComponent {
 		render = component
 	};
+
+export const isActiveSession = () => {
+	const sessionId = sessionStorage.getItem('sessionId');
+	const { openSessionIds: [firstSessionId] = [] } = store.state;
+
+	return sessionId === firstSessionId;
+};
