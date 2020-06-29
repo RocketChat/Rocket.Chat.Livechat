@@ -199,9 +199,7 @@ export const defaultRoomParams = () => {
 	return params;
 };
 
-export const getGreetingMessages = (messages) => {
-	return messages && messages.filter((msg) => msg.trigger);
-}
+export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
 
 store.on('change', (state, prevState) => {
 	// Cross-tab communication
@@ -210,4 +208,3 @@ store.on('change', (state, prevState) => {
 		route('/');
 	}
 });
-
