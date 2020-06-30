@@ -37,6 +37,7 @@ export const validCallbacks = [
 	'queue-position-change',
 	'no-agent-online',
 	'start-screen-sharing',
+	'end-screen-sharing',
 ];
 
 const callbacks = new EventEmitter();
@@ -431,6 +432,7 @@ window.RocketChat.livechat = {
 	onQueuePositionChange(fn) { registerCallback('queue-position-change', fn); },
 	onServiceOffline(fn) { registerCallback('no-agent-online', fn); },
 	onStartScreenSharing(fn) { registerCallback('start-screen-sharing', fn); },
+	onEndScreenSharing(fn) { registerCallback('end-screen-sharing', fn); },
 };
 
 // proccess queue

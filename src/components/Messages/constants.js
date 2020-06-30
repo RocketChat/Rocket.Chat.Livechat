@@ -6,3 +6,4 @@ export const MESSAGE_TYPE_USER_LEFT = 'ul';
 export const MESSAGE_TYPE_WELCOME = 'wm';
 export const MESSAGE_TYPE_LIVECHAT_CLOSED = 'livechat-close';
 export const MESSAGE_TYPE_REQUEST_SCREEN_SHARING_ACCESS = 'request_screen_sharing_access';
+export const MESSAGE_TYPE_END_SCREEN_SHARING_SESSION = 'end_screen_sharing_session';

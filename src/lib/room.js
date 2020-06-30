@@ -29,11 +29,23 @@ const onRequestScreenSharing = async () => {
 		return;
 	}
 
-	const { state: { user: { _id } } } = store;
+	const { state } = store;
+	const { user: { _id }, room: { _id: rid }, token } = state;
 
-	console.log(_id);
+	console.log(_id, token);
 
-	parentCall('callback', ['start-screen-sharing', { guestId: _id }]);
+	parentCall('callback', ['start-screen-sharing', { roomId: rid }]);
+	const msg = 'Confirm by guest';
+	await Livechat.sendMessage({ msg, token, rid });
+};
+
+const onEndScreenSharing = async () => {
+	const { state } = store;
+	const { user: { _id }, room: { _id: rid }, token } = state;
+
+	console.log(_id, token);
+
+	parentCall('callback', ['end-screen-sharing', { roomId: rid }]);
 }
 
 const processMessage = async (message) => {
@@ -43,6 +55,8 @@ const processMessage = async (message) => {
 		commands[message.msg] && commands[message.msg]();
 	} else if (message.t === 'request_screen_sharing_access') {
 		await onRequestScreenSharing();
+	} else if (message.t === 'end_screen_sharing_session') {
+		await onEndScreenSharing();
 	}
 };
 
