@@ -43,6 +43,14 @@ export const MessageAction = memo(({
 			Livechat.sendMessage({ msg: 'initiate_salesforce_session', token, rid }),
 		]);
 	},
+	sendMessage = async (el) => {
+		const { token } = store.state;
+		const rid = store.state.room._id;
+
+		await Promise.all([
+			Livechat.sendMessage({ msg: el.target.value, token, rid }),
+		]);
+	},
 	addButton = (text, msg) => {
 		if (msg === 'getSessionId') {
 			return <button onClick={getSessionId} className={createClassName(styles, 'button', {}, [className])}>{text}</button>;
@@ -51,6 +59,7 @@ export const MessageAction = memo(({
 		} if (msg === 'closeChat') {
 			return <button onClick={closeChat} className={createClassName(styles, 'button', {}, [className])}>{text}</button>;
 		}
+		return <button onClick={sendMessage} value={msg} className={createClassName(styles, 'button', {}, [className])}>{text}</button>;
 	},
 	...messageBubbleProps
 }) => (

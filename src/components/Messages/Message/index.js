@@ -61,7 +61,6 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 					quoted={false}
 					actions={attachment.actions}
 				/>),
-			})),
 		),
 ].filter(Boolean);
 
