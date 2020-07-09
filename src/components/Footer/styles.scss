@@ -41,6 +41,15 @@
 
 		@include pressable-button(2px);
 	}
+
+	&__remainder, &__remainder-alert  {
+		margin-left: 10px;
+		min-width: 100px;
+	}
+
+	&__remainder-alert {
+		color: $color-red;
+	}
 }
 
 .powered-by {

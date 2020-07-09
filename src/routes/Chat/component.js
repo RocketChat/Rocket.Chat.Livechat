@@ -2,7 +2,7 @@ import { Component } from 'preact';
 
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
-import { FooterOptions } from '../../components/Footer';
+import { FooterOptions, ReminderCharacters } from '../../components/Footer';
 import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
@@ -89,6 +89,7 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
+		limitTextLength,
 		...props
 	}, {
 		atBottom = true,
@@ -143,12 +144,18 @@ export default class Chat extends Component {
 							</Menu.Group>
 						</FooterOptions>
 					) : null}
+					limit={limitTextLength
+						? <ReminderCharacters
+							limitTextLength={limitTextLength}
+							textLenght={text.length}
+						/> : null}
 				>
 					<Composer onUpload={onUpload}
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
 						value={text}
+						limitTextLength={limitTextLength}
 						pre={emoji && (
 							<ComposerActions>
 								<ComposerAction>
@@ -163,11 +170,14 @@ export default class Chat extends Component {
 										<PlusIcon width={20} />
 									</ComposerAction>
 								)}
-								{text.length > 0 && (
-									<ComposerAction onClick={this.handleSendClick}>
-										<SendIcon width={20} />
-									</ComposerAction>
-								)}
+								{(!limitTextLength || limitTextLength >= text.length) && text.length > 0
+								&& <ComposerAction onClick={this.handleSendClick}>
+									<SendIcon width={20} />
+								</ComposerAction>}
+								{limitTextLength < text.length
+								&& <div className={createClassName(styles, 'none__action')}>
+									<SendIcon width={20} />
+								</div>}
 							</ComposerActions>
 						)}
 					/>

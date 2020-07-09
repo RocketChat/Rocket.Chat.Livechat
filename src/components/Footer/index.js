@@ -43,3 +43,13 @@ export const FooterOptions = ({ children }) => (
 		{children}
 	</PopoverMenu>
 );
+
+
+export const ReminderCharacters = ({ className, style = {}, textLenght, limitTextLength }) => (
+	<span
+		className={createClassName(styles, `footer__remainder${ textLenght > limitTextLength ? '-alert' : '' }`, {}, [className])}
+		style={style}
+	>
+		{textLenght} / {limitTextLength}
+	</span>
+);

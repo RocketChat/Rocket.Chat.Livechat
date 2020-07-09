@@ -129,7 +129,7 @@ export const ScreenContent = ({ children, nopadding }) => (
 );
 
 
-export const ScreenFooter = ({ children, options }) => (
+export const ScreenFooter = ({ children, options, limit }) => (
 	<Footer>
 		{children && (
 			<FooterContent>
@@ -138,6 +138,7 @@ export const ScreenFooter = ({ children, options }) => (
 		)}
 		<FooterContent>
 			{options}
+			{limit}
 			<PoweredBy />
 		</FooterContent>
 	</Footer>
