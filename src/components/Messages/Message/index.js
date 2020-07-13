@@ -9,6 +9,7 @@ import { AudioAttachment } from '../AudioAttachment';
 import { VideoAttachment } from '../VideoAttachment';
 import { ImageAttachment } from '../ImageAttachment';
 import { FileAttachment } from '../FileAttachment';
+import { MessageAction } from '../MessageAction';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
 	MESSAGE_TYPE_USER_ADDED,
@@ -21,6 +22,11 @@ import {
 
 
 const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver }) => [
+	text && (
+		<MessageBubble inverse={me} quoted={quoted}>
+			<MessageText text={text} system={system} />
+		</MessageBubble>
+	),
 	...(attachments || [])
 		.map((attachment) =>
 			(attachment.audio_url
@@ -49,13 +55,13 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 				quoted: true,
 				attachments: attachment.attachments,
 				attachmentResolver,
-			})),
+			}))
+			|| (attachment.actions
+				&& <MessageAction
+					quoted={false}
+					actions={attachment.actions}
+				/>),
 		),
-	text && (
-		<MessageBubble inverse={me} quoted={quoted}>
-			<MessageText text={text} system={system} />
-		</MessageBubble>
-	),
 ].filter(Boolean);
 
 const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
