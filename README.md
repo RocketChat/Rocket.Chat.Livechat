@@ -1,5 +1,9 @@
 # Rocket.Chat.Livechat
 
+
+### When making changes, run `yarn build` to create a new build before merging with master
+
+
 This branch contains a button component @ `/src/components/Messages/MessageAction`. 
 
 <p align="center">
