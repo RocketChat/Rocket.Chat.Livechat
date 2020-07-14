@@ -174,7 +174,7 @@ export default class Chat extends Component {
 								&& <ComposerAction onClick={this.handleSendClick}>
 									<SendIcon width={20} />
 								</ComposerAction>}
-								{limitTextLength < text.length
+								{limitTextLength && limitTextLength < text.length
 								&& <div className={createClassName(styles, 'none__action')}>
 									<SendIcon width={20} />
 								</div>}
