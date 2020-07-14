@@ -1,14 +1,10 @@
 {
 	"name": "@rocket.chat/livechat",
-	"version": "1.6.0",
-	"files": [
-		"/build"
-	],
-
+	"version": "1.6.1",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/RocketChat/Rocket.Chat.Livechat"
+		"url": "https://github.com/WideChat/Rocket.Chat.Livechat"
 	},
 	"scripts": {
 		"start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
@@ -122,7 +118,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "run-s i18n && git add -A src/i18n"
+			"pre-commit": "run-s i18n && git add -A src/i18n && yarn build"
 		}
 	},
 	"houston": {
