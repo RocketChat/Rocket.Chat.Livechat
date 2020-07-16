@@ -12,14 +12,22 @@ import { normalizeAgent } from './api';
 
 const commands = new Commands();
 
+export const endChat = async () => {
+	await loadConfig();
+	parentCall('callback', 'chat-ended');
+	route('/chat-finished');
+};
+
 export const closeChat = async ({ transcriptRequested } = {}) => {
 	if (!transcriptRequested) {
 		await handleTranscript();
 	}
-
-	await loadConfig();
-	parentCall('callback', 'chat-ended');
-	route('/chat-finished');
+	const { config } = store.state;
+	if (config.settings.showFeedbackForm) {
+		route('/survey-feedback');
+	} else {
+		await endChat();
+	}
 };
 
 const processMessage = async (message) => {
