@@ -12,25 +12,27 @@ import { normalizeAgent } from './api';
 
 const commands = new Commands();
 
-export const closeChat = async () => {
-	await handleTranscript();
-	const { config } = store.state;
-	if(config.settings.showFeedbackForm) {
-		route('/survey-feedback');
-	}else{
-		await endChat();
-	}
-};
-
 export const endChat = async () => {
 	await loadConfig();
 	parentCall('callback', 'chat-ended');
 	route('/chat-finished');
 };
 
+export const closeChat = async ({ transcriptRequested } = {}) => {
+	if (!transcriptRequested) {
+		await handleTranscript();
+	}
+	const { config } = store.state;
+	if (config.settings.showFeedbackForm) {
+		route('/survey-feedback');
+	} else {
+		await endChat();
+	}
+};
+
 const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
-		closeChat();
+		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	}
@@ -208,9 +210,7 @@ export const defaultRoomParams = () => {
 	return params;
 };
 
-export const getGreetingMessages = (messages) => {
-	return messages && messages.filter((msg) => msg.trigger);
-}
+export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
 
 store.on('change', (state, prevState) => {
 	// Cross-tab communication
@@ -219,4 +219,3 @@ store.on('change', (state, prevState) => {
 		route('/');
 	}
 });
-

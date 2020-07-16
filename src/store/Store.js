@@ -1,7 +1,7 @@
 import { EventEmitter } from 'tiny-events';
 
 
-const { localStorage } = global;
+const { localStorage, sessionStorage } = window;
 
 export default class Store extends EventEmitter {
 	constructor(initialState = {}, { localStorageKey = 'store', dontPersist = [] } = {}) {
@@ -21,7 +21,7 @@ export default class Store extends EventEmitter {
 
 		this._state = { ...initialState, ...storedState };
 
-		window.addEventListener("storage", (e) => {
+		window.addEventListener('storage', (e) => {
 			// Cross-tab communication
 			if (e.key !== this.localStorageKey) {
 				return;
@@ -34,6 +34,19 @@ export default class Store extends EventEmitter {
 
 			const storedState = JSON.parse(e.newValue);
 			this.setStoredState(storedState);
+		});
+
+		window.addEventListener('load', () => {
+			const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+			sessionStorage.setItem('sessionId', sessionId);
+			const { openSessionIds = [] } = this._state;
+			this.setState({ openSessionIds: [sessionId, ...openSessionIds] });
+		});
+
+		window.addEventListener('beforeunload', () => {
+			const sessionId = sessionStorage.getItem('sessionId');
+			const { openSessionIds = [] } = this._state;
+			this.setState({ openSessionIds: openSessionIds.filter((session) => session !== sessionId) });
 		});
 	}
 

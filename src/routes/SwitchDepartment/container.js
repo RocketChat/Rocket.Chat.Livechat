@@ -41,7 +41,7 @@ export class SwitchDepartmentContainer extends Component {
 				throw I18n.t('No available agents to transfer');
 			}
 
-			await dispatch({ department });
+			await dispatch({ department, loading: false });
 			await loadConfig();
 
 			await ModalManager.alert({
