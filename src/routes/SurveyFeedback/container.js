@@ -1,43 +1,44 @@
 import { Component } from 'preact';
-// import SDK from '../../api';
+
 import { Consumer } from '../../store';
 import SurveyFeedback from './component';
-// import { insert, createToken } from '../../components/helpers';
 import { Livechat } from '../../api';
 import { endChat } from '../../lib/room';
 import { createToken } from '../../components/helpers';
 
 export class SurveyFeedbackContainer extends Component {
-	handleSubmit = async(fields) => {
-
+	handleSubmit = async (fields) => {
 		const { survey } = this.props;
 
 		const { alerts, dispatch, room: { _id: rid } } = this.props;
 
 		await dispatch({ loading: true });
 
-		try{
-			if (rid){
-				const data = survey.items.map(ratingFactorName => {
-					return {
-						name: ratingFactorName,
-						value: `${fields.rating}`
-					}
-				});
-				const packet = {
-					rid: rid,
-					data: data
+		try {
+			if (rid) {
+				const data = survey.items.map((ratingFactorName) => ({
+					name: ratingFactorName,
+					value: `${ fields[ratingFactorName] }`,
+				}));
+
+				if (fields.message) {
+					data.push({
+						name: 'additionalFeedback',
+						value: fields.message,
+					});
 				}
-				Livechat.chatSurvey(packet).then(response => {
-				}).catch(error => {
+				const packet = { rid, data };
+
+				Livechat.chatSurvey(packet).then(() => {
+				}).catch((error) => {
 					console.error('error -->', error);
 				});
 			}
-		}catch(error){
+		} catch (error) {
 			console.error(error);
 			const alert = { id: createToken(), children: I18n.t('Error Saving Feedback'), error: true, timeout: 0 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
-		}finally {
+		} finally {
 			await dispatch({ loading: false });
 			await endChat();
 		}
@@ -61,7 +62,7 @@ export const SurveyFeedbackConnector = ({ ref, ...props }) => (
 				theme: {
 					color,
 				} = {},
-				survey: survey,
+				survey,
 			} = {},
 			iframe: {
 				theme: {
