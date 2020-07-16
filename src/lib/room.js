@@ -25,28 +25,61 @@ const onRequestScreenSharing = async () => {
 		text: I18n.t('Agent is requesting screensharing. Are you sure you allow agent to screenshare?'),
 	});
 
+	const { state } = store;
+	const { user: { _id }, room: { _id: roomId }, token, screenSharingConfig } = state;
+
+	console.log(roomId, token);
+
 	if (!success) {
+		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
+		// Livechat.requestFileSharing({ rid, token, messageType: 'screen_sharing_request_rejected' });
+		try {
+			const config = {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ rid: roomId, token, messageType: 'screen_sharing_request_rejected' }),
+			};
+			const response = await fetch('http://localhost:3000/api/v1/livechat/room.requestFileSharing', config);
+			const json = await response.json();
+			console.log(json);
+		} catch (error) {
+			console.log(error);
+		}
 		return;
 	}
 
-	const { state } = store;
-	const { user: { _id }, room: { _id: rid }, token } = state;
+	store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: true } });
 
-	console.log(_id, token);
-
-	parentCall('callback', ['start-screen-sharing', { roomId: rid }]);
-	const msg = 'Confirm by guest';
-	await Livechat.sendMessage({ msg, token, rid });
+	parentCall('callback', ['start-screen-sharing', { roomId }]);
+	// Livechat.requestFileSharing({ rid, token, messageType: 'screen_sharing_request_accepted' });
+	try {
+		const config = {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ rid: roomId, token, messageType: 'screen_sharing_request_accepted' }),
+		};
+		const response = await fetch('http://localhost:3000/api/v1/livechat/room.requestFileSharing', config);
+		const json = await response.json();
+		console.log(json);
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const onEndScreenSharing = async () => {
 	const { state } = store;
-	const { user: { _id }, room: { _id: rid }, token } = state;
+	const { room: { _id: roomId }, screenSharingConfig } = state;
 
-	console.log(_id, token);
+	store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
 
-	parentCall('callback', ['end-screen-sharing', { roomId: rid }]);
-}
+	parentCall('callback', ['end-screen-sharing', { roomId }]);
+};
 
 const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
@@ -232,9 +265,7 @@ export const defaultRoomParams = () => {
 	return params;
 };
 
-export const getGreetingMessages = (messages) => {
-	return messages && messages.filter((msg) => msg.trigger);
-}
+export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
 
 store.on('change', (state, prevState) => {
 	// Cross-tab communication
@@ -243,4 +274,3 @@ store.on('change', (state, prevState) => {
 		route('/');
 	}
 });
-

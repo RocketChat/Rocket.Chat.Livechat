@@ -7,3 +7,6 @@ export const MESSAGE_TYPE_WELCOME = 'wm';
 export const MESSAGE_TYPE_LIVECHAT_CLOSED = 'livechat-close';
 export const MESSAGE_TYPE_REQUEST_SCREEN_SHARING_ACCESS = 'request_screen_sharing_access';
 export const MESSAGE_TYPE_END_SCREEN_SHARING_SESSION = 'end_screen_sharing_session';
+export const MESSAGE_TYPE_SCREEN_SHARING_REQUEST_ACCEPTED = 'screen_sharing_request_accepted';
+export const MESSAGE_TYPE_SCREEN_SHARING_REQUEST_REJECTED = 'screen_sharing_request_rejected';
+export const MESSAGE_TYPE_GUEST_REQUESTING_SCREEN_SHARING = 'guest_requesting_screen_sharing';

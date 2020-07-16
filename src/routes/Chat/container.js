@@ -222,6 +222,27 @@ export class ChatContainer extends Component {
 		}
 	}
 
+	onRequestScreenSharing = async () => {
+		console.log('request screen sharing................');
+		// Livechat.requestFileSharing({ rid, token, messageType: 'guest_requesting_screen_sharing' });
+		try {
+			const { token, room: { _id: roomId } } = this.props;
+			const config = {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ rid: roomId, token, messageType: 'guest_requesting_screen_sharing' }),
+			};
+			const response = await fetch('http://localhost:3000/api/v1/livechat/room.requestFileSharing', config);
+			const json = await response.json();
+			console.log(json);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	canSwitchDepartment = () => {
 		const { allowSwitchingDepartments, departments = {} } = this.props;
 		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
@@ -235,6 +256,11 @@ export class ChatContainer extends Component {
 	canRemoveUserData = () => {
 		const { allowRemoveUserData } = this.props;
 		return allowRemoveUserData;
+	}
+
+	canRequestScreenSharing = () => {
+		const { screenSharingConfig: { enabled, isActive } } = this.props;
+		return enabled && !isActive;
 	}
 
 	showOptionsMenu = () =>
@@ -326,6 +352,7 @@ export class ChatContainer extends Component {
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
 			onSoundStop={this.handleSoundStop}
+			onRequestScreenSharing={(this.canRequestScreenSharing() && this.onRequestScreenSharing) || null}
 		/>
 	)
 }
@@ -350,6 +377,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				} = {},
 				departments = {},
 			},
+			screenSharingConfig,
 			iframe: {
 				theme: {
 					color: customColor,
@@ -385,6 +413,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					iconColor: customIconColor,
 					title: customTitle,
 				}}
+				screenSharingConfig={screenSharingConfig}
 				title={customTitle || title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}

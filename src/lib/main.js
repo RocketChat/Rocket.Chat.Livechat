@@ -25,7 +25,7 @@ export const loadConfig = async () => {
 
 	await store.setState({
 		config,
-		screenSharingConfig,
+		screenSharingConfig: { ...screenSharingConfig, isActive: false },
 		agent: agent && agent.hiddenInfo ? { hiddenInfo: true } : agent, // TODO: revert it when the API is updated
 		room,
 		user,

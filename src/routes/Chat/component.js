@@ -89,6 +89,7 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
+		onRequestScreenSharing,
 		...props
 	}, {
 		atBottom = true,
@@ -104,6 +105,7 @@ export default class Chat extends Component {
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
 			onRemoveUserData={onRemoveUserData}
+			onRequestScreenSharing={onRequestScreenSharing}
 			className={createClassName(styles, 'chat')}
 			{...props}
 		>
@@ -139,6 +141,9 @@ export default class Chat extends Component {
 								)}
 								{onFinishChat && (
 									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
+								)}
+								{onRequestScreenSharing && (
+									<Menu.Item onClick={onRequestScreenSharing} icon={ChangeIcon}>{I18n.t('Request Screen Sharing')}</Menu.Item>
 								)}
 							</Menu.Group>
 						</FooterOptions>

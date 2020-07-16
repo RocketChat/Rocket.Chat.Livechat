@@ -5,6 +5,9 @@ class ScriptCache {
 		this.loaded = [];
 		this.failed = [];
 		this.load(scripts);
+		setInterval(() => {
+			this.load(this.failed);
+		}, 10000);
 	}
 
 	load(scripts) {
@@ -21,10 +24,12 @@ class ScriptCache {
 		return this.scriptTag(src)
 			.then(() => {
 				// handle success
+				this.loaded = this.loaded.filter((script) => script !== src);
 				this.loaded.push(src);
 			})
 			.catch((err) => {
 				// handle cleanup
+				this.failed = this.failed.filter((script) => script !== src);
 				this.failed.push(src);
 				console.error(err);
 			});

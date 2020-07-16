@@ -19,6 +19,9 @@ import {
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
 	MESSAGE_TYPE_REQUEST_SCREEN_SHARING_ACCESS,
 	MESSAGE_TYPE_END_SCREEN_SHARING_SESSION,
+	MESSAGE_TYPE_SCREEN_SHARING_REQUEST_ACCEPTED,
+	MESSAGE_TYPE_SCREEN_SHARING_REQUEST_REJECTED,
+	MESSAGE_TYPE_GUEST_REQUESTING_SCREEN_SHARING,
 } from '../constants';
 
 
@@ -69,7 +72,10 @@ const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
 	|| (t === MESSAGE_TYPE_REQUEST_SCREEN_SHARING_ACCESS && I18n.t('Agent is requesting screen sharing'))
-	|| (t === MESSAGE_TYPE_END_SCREEN_SHARING_SESSION && I18n.t('Screen sharing session ended'));
+	|| (t === MESSAGE_TYPE_END_SCREEN_SHARING_SESSION && I18n.t('Screen sharing session ended'))
+	|| (t === MESSAGE_TYPE_SCREEN_SHARING_REQUEST_ACCEPTED && I18n.t('Screen sharing request accepted'))
+	|| (t === MESSAGE_TYPE_SCREEN_SHARING_REQUEST_REJECTED && I18n.t('Screen sharing request rejected'))
+	|| (t === MESSAGE_TYPE_GUEST_REQUESTING_SCREEN_SHARING && I18n.t('Screen sharing requested'));
 
 const getMessageUsernames = (compact, message) => {
 	if (compact || !message.u) {
