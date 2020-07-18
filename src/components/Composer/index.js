@@ -179,10 +179,12 @@ export class Composer extends Component {
 		}
 	}
 
-	handleNotifyEmojiSelect(emojiColonName) {
-		this.el.innerHTML = `${ this.el.innerText }${ emojiColonName }`;
-
-		this.moveCursorToEndAndFocus(this.el.innerText.length);
+	handleNotifyEmojiSelect(emoji) {
+		const caretPosition = this.getCaretPosition(this.el);
+		const oldText = this.el.innerText;
+		const newText = `${ oldText.substr(0, caretPosition) }${ emoji }&nbsp;${ oldText.substr(caretPosition) }`;
+		this.el.innerHTML = newText;
+		this.moveCursorToEndAndFocus(caretPosition + emoji.length + 1);
 	}
 
 	moveCursorToEndAndFocus(endIndex) {
@@ -204,6 +206,30 @@ export class Composer extends Component {
 
 		// Add range with respect to range object.
 		set.addRange(setpos);
+	}
+
+	getCaretPosition(element) {
+		let caretOffset = 0;
+		const doc = element.ownerDocument || element.document;
+		const win = doc.defaultView || doc.parentWindow;
+		let sel;
+		if (typeof win.getSelection !== 'undefined') {
+			sel = win.getSelection();
+			if (sel.rangeCount > 0) {
+				const range = win.getSelection().getRangeAt(0);
+				const preCaretRange = range.cloneRange();
+				preCaretRange.selectNodeContents(element);
+				preCaretRange.setEnd(range.endContainer, range.endOffset);
+				caretOffset = preCaretRange.toString().length;
+			}
+		} else if ((sel = doc.selection) && sel.type !== 'Control') {
+			const textRange = sel.createRange();
+			const preCaretTextRange = doc.body.createTextRange();
+			preCaretTextRange.moveToElementText(element);
+			preCaretTextRange.setEndPoint('EndToEnd', textRange);
+			caretOffset = preCaretTextRange.text.length;
+		}
+		return caretOffset;
 	}
 
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style, handleClick }) => (

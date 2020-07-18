@@ -82,11 +82,8 @@ export default class Chat extends Component {
 	handleEmojiSelect = (emoji) => {
 		// turn off Picker
 		this.toggleEmojiPickerState();
-		// add a space after emojiColonName
-		const emojiNative = `${ emoji.native }&nbsp;`;
-		this.setState({ text: `${ this.state.text }${ emojiNative }` });
 		// notify child composer to append emojiColonName to input text field
-		this.notifyEmojiSelect(emojiNative);
+		this.notifyEmojiSelect(emoji.native);
 	}
 
 	handleClick = () => {
