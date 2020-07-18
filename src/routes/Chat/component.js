@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+import { Picker } from 'emoji-mart';
 
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
@@ -15,7 +16,6 @@ import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
 import 'emoji-mart/css/emoji-mart.css';
-import { Picker } from 'emoji-mart';
 
 
 export default class Chat extends Component {
@@ -76,27 +76,27 @@ export default class Chat extends Component {
 	}
 
 	toggleEmojiPickerState = () => {
-		this.setState({emojiPickerActive: !this.state.emojiPickerActive});
+		this.setState({ emojiPickerActive: !this.state.emojiPickerActive });
 	}
 
 	handleEmojiSelect = (emoji) => {
 		// turn off Picker
 		this.toggleEmojiPickerState();
 		// add a space after emojiColonName
-		const emojiColonName = `${emoji.colons}&nbsp;`;
-		this.setState({text:`${this.state.text}${emojiColonName}`});
+		const emojiNative = `${ emoji.native }&nbsp;`;
+		this.setState({ text: `${ this.state.text }${ emojiNative }` });
 		// notify child composer to append emojiColonName to input text field
-		this.notifyEmojiSelect(emojiColonName);
+		this.notifyEmojiSelect(emojiNative);
 	}
 
-	handleClick = (e) => {
+	handleClick = () => {
 		// check if emoji-picker is active - if true, then hide the picker
 		this.turnOffEmojiPicker();
 	}
 
 	turnOffEmojiPicker = () => {
-		if(this.state.emojiPickerActive){
-			this.setState({emojiPickerActive: !this.state.emojiPickerActive});
+		if (this.state.emojiPickerActive) {
+			this.setState({ emojiPickerActive: !this.state.emojiPickerActive });
 		}
 	}
 
@@ -158,12 +158,12 @@ export default class Chat extends Component {
 							handleClick={this.handleClick}
 						/>
 						{this.state.emojiPickerActive && <Picker
-								style={{ position: 'absolute', zIndex: 10, bottom:0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
-								showPreview={false}
-								showSkinTones={false}
-								sheetSize={64}	/*this property defines the resolution of icons, valid values 16, 20, 32, 64*/
-								onSelect={this.handleEmojiSelect}
-								autoFocus={true}
+							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
+							showPreview={false}
+							showSkinTones={false}
+							sheetSize={64}	/* this property defines the resolution of icons, valid values 16, 20, 32, 64*/
+							onSelect={this.handleEmojiSelect}
+							autoFocus={true}
 						/>}
 					</div>
 				</Screen.Content>
@@ -189,7 +189,7 @@ export default class Chat extends Component {
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
 						value={text}
-						notifyEmojiSelect={click => this.notifyEmojiSelect = click}
+						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
 						handleClick={this.handleClick}
 						pre={(
 							<ComposerActions>

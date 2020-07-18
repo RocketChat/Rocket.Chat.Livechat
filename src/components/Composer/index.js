@@ -17,7 +17,7 @@ const escapeMap = {
 const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
 
 const escapeHtml = mem(
-	(string) => string.replace(escapeRegex, (match) => escapeMap[match])
+	(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
 );
 
 const parse = (plainText) =>
@@ -91,7 +91,7 @@ export class Composer extends Component {
 
 		const texts = await Promise.all(
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
-				.map((item) => new Promise((resolve) => item.getAsString(resolve)))
+				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
 		texts.forEach((text) => this.pasteText(text));
 	}
@@ -114,7 +114,7 @@ export class Composer extends Component {
 
 		const texts = await Promise.all(
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
-				.map((item) => new Promise((resolve) => item.getAsString(resolve)))
+				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
 		texts.forEach((text) => this.pasteText(text));
 	}
@@ -174,7 +174,7 @@ export class Composer extends Component {
 	}
 
 	componentWillMount() {
-		if(this.props.notifyEmojiSelect){
+		if (this.props.notifyEmojiSelect) {
 			this.props.notifyEmojiSelect(this.handleNotifyEmojiSelect);
 		}
 	}
@@ -204,7 +204,6 @@ export class Composer extends Component {
 
 		// Add range with respect to range object.
 		set.addRange(setpos);
-
 	}
 
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style, handleClick }) => (
