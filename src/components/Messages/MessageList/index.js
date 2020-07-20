@@ -98,6 +98,7 @@ export class MessageList extends MemoizedComponent {
 		uid,
 		conversationFinishedMessage,
 		typingUsernames,
+		resetLastAction,
 	}) => {
 		const items = [];
 
@@ -126,6 +127,7 @@ export class MessageList extends MemoizedComponent {
 					me={uid && message.u && uid === message.u._id}
 					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id}
 					conversationFinishedMessage={conversationFinishedMessage}
+					resetLastAction={resetLastAction}
 					{...message}
 				/>
 			);

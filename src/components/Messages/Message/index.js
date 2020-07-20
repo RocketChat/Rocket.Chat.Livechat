@@ -21,7 +21,7 @@ import {
 } from '../constants';
 
 
-const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver }) => [
+const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver, resetLastAction, actionsVisible }) => [
 	text && (
 		<MessageBubble inverse={me} quoted={quoted}>
 			<MessageText text={text} system={system} />
@@ -56,10 +56,11 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 				attachments: attachment.attachments,
 				attachmentResolver,
 			}))
-			|| (attachment.actions
+			|| (attachment.actions && actionsVisible
 				&& <MessageAction
 					quoted={false}
 					actions={attachment.actions}
+					resetLastAction={resetLastAction}
 				/>),
 		),
 ].filter(Boolean);
@@ -95,6 +96,7 @@ export const Message = memo(({
 	compact,
 	className,
 	style = {},
+	resetLastAction,
 	...message
 }) => (
 	<MessageContainer
@@ -116,6 +118,8 @@ export const Message = memo(({
 				me,
 				attachments: message.attachments,
 				attachmentResolver,
+				resetLastAction,
+				actionsVisible: message.actionsVisible ? message.actionsVisible : false,
 			})}
 		</MessageContent>
 		{!compact && <MessageTime ts={ts} />}
