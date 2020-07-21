@@ -71,7 +71,6 @@
 		"date-fns": "^2.4.1",
 		"desvg": "^1.0.2",
 		"emoji-mart": "^3.0.0",
-		"emoji-toolkit": "^6.0.0",
 		"fast-async": "^6.3.8",
 		"history": "^4.7.2",
 		"i18n": "^0.8.3",
