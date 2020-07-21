@@ -202,27 +202,25 @@ export class Composer extends Component {
 	}
 
 	getCaretPosition(element) {
-		let caretOffset = 0;
 		const doc = element.ownerDocument || element.document;
 		const win = doc.defaultView || doc.parentWindow;
-		let sel;
-		if (typeof win.getSelection !== 'undefined') {
-			sel = win.getSelection();
-			if (sel.rangeCount > 0) {
-				const range = win.getSelection().getRangeAt(0);
-				const preCaretRange = range.cloneRange();
-				preCaretRange.selectNodeContents(element);
-				preCaretRange.setEnd(range.endContainer, range.endOffset);
-				caretOffset = preCaretRange.toString().length;
-			}
-		} else if ((sel = doc.selection) && sel.type !== 'Control') {
-			const textRange = sel.createRange();
+		if (typeof win.getSelection !== 'undefined' && win.getSelection().rangeCount > 0) {
+			const range = win.getSelection().getRangeAt(0);
+			const preCaretRange = range.cloneRange();
+			preCaretRange.selectNodeContents(element);
+			preCaretRange.setEnd(range.endContainer, range.endOffset);
+			return preCaretRange.toString().length;
+		}
+
+		if (doc.selection && doc.selection.type !== 'Control') {
+			const textRange = doc.selection.createRange();
 			const preCaretTextRange = doc.body.createTextRange();
 			preCaretTextRange.moveToElementText(element);
 			preCaretTextRange.setEndPoint('EndToEnd', textRange);
-			caretOffset = preCaretTextRange.text.length;
+			return preCaretTextRange.text.length;
 		}
-		return caretOffset;
+
+		return 0;
 	}
 
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
