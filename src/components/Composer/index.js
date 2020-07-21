@@ -119,6 +119,11 @@ export class Composer extends Component {
 		texts.forEach((text) => this.pasteText(text));
 	}
 
+	handleClick = () => {
+		const { handleEmojiClick } = this.props;
+		handleEmojiClick && handleEmojiClick();
+	}
+
 	pasteText = (plainText) => {
 		this.el.focus();
 
@@ -220,7 +225,7 @@ export class Composer extends Component {
 		return caretOffset;
 	}
 
-	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style, handleClick }) => (
+	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
 		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
 			{pre}
 			<div
@@ -236,7 +241,7 @@ export class Composer extends Component {
 						onKeypress: this.handleKeypress(onSubmit),
 						onPaste: this.handlePaste(onUpload),
 						onDrop: this.handleDrop(onUpload),
-						onClick: handleClick,
+						onClick: this.handleClick,
 					}
 				)}
 				className={createClassName(styles, 'composer__input')}

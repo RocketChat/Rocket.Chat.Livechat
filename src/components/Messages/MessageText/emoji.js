@@ -23,10 +23,10 @@ const isOnlyEmoji = (str) => {
 };
 
 const renderEmojis = (textWithHtml, origPlainText) => {
-	const textwithOnlyUnicode = shortnameToUnicode(origPlainText);
+	const textWithOnlyUnicode = shortnameToUnicode(origPlainText);
 	textWithHtml = shortnameToUnicode(textWithHtml);
 
-	if (isOnlyEmoji(textwithOnlyUnicode)) {
+	if (isOnlyEmoji(textWithOnlyUnicode)) {
 		return textWithHtml.replace(new RegExp(emojiUnicode, 'g'), transformEmojisToLargeSize);
 	}
 
