@@ -188,23 +188,11 @@ export class Composer extends Component {
 	}
 
 	moveCursorToEndAndFocus(endIndex) {
-		// Creates range object
 		const setpos = document.createRange();
-
-		// Creates object for selection
 		const set = window.getSelection();
-
-		// Set start position of range
 		setpos.setStart(this.el.childNodes[0], endIndex);
-
-		// Collapse range within its boundary points
-		// Returns boolean
 		setpos.collapse(true);
-
-		// Remove all ranges set
 		set.removeAllRanges();
-
-		// Add range with respect to range object.
 		set.addRange(setpos);
 	}
 

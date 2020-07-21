@@ -63,8 +63,6 @@ export default class Chat extends Component {
 		if (this.props.onSubmit) {
 			this.props.onSubmit(text);
 			this.setState({ text: '' });
-
-			// turn off emoji-picker
 			this.turnOffEmojiPicker();
 		}
 	}
@@ -80,14 +78,11 @@ export default class Chat extends Component {
 	}
 
 	handleEmojiSelect = (emoji) => {
-		// turn off Picker
 		this.toggleEmojiPickerState();
-		// notify child composer to append emojiColonName to input text field
 		this.notifyEmojiSelect(emoji.native);
 	}
 
 	handleClick = () => {
-		// check if emoji-picker is active - if true, then hide the picker
 		this.turnOffEmojiPicker();
 	}
 
@@ -158,7 +153,7 @@ export default class Chat extends Component {
 							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
 							showPreview={false}
 							showSkinTones={false}
-							sheetSize={64}	/* this property defines the resolution of icons, valid values 16, 20, 32, 64*/
+							sheetSize={64}
 							onSelect={this.handleEmojiSelect}
 							autoFocus={true}
 						/>}
