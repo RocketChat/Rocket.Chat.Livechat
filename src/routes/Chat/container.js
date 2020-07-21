@@ -110,6 +110,19 @@ export class ChatContainer extends Component {
 		this.startTyping({ rid: room._id, username: user.username });
 	}
 
+	resetLastAction = () => {
+		// makes all actions button invisible
+		const { messages, dispatch } = this.props;
+
+		const newMessages = messages.map((message) => {
+			if (message.actionsVisible) {
+				message.actionsVisible = false;
+			}
+			return message;
+		});
+		dispatch({ messages: newMessages });
+	}
+
 	handleSubmit = async (msg) => {
 		if (msg.trim() === '') {
 			return;
@@ -121,6 +134,7 @@ export class ChatContainer extends Component {
 
 		try {
 			this.stopTypingDebounced.stop();
+			this.resetLastAction();
 			await Promise.all([
 				this.stopTyping({ rid, username: user.username }),
 				Livechat.sendMessage({ msg, token, rid }),
@@ -326,6 +340,7 @@ export class ChatContainer extends Component {
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
 			onSoundStop={this.handleSoundStop}
+			resetLastAction={this.resetLastAction}
 		/>
 	)
 }

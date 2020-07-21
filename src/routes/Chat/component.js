@@ -89,6 +89,7 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
+		resetLastAction,
 		...props
 	}, {
 		atBottom = true,
@@ -124,6 +125,7 @@ export default class Chat extends Component {
 							conversationFinishedMessage={conversationFinishedMessage}
 							lastReadMessageId={lastReadMessageId}
 							onScrollTo={this.handleScrollTo}
+							resetLastAction={resetLastAction}
 						/>
 					</div>
 				</Screen.Content>

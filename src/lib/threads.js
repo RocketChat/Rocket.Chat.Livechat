@@ -59,6 +59,12 @@ export const normalizeMessage = async (message) => {
 		return null;
 	}
 
+	const { attachments } = message;
+
+	if (attachments && attachments.length > 0) {
+		Object.assign(message, { actionsVisible: true });
+	}
+
 	if (message && message.tmid && !message.threadMsg) {
 		return normalizeThreadMessage(message);
 	}

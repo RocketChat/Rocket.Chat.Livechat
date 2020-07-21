@@ -161,7 +161,13 @@ export const loadMessages = async () => {
 
 	await store.setState({ loading: true });
 	const rawMessages = (await Livechat.loadMessages(rid)).concat(previousMessages);
-	const messages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
+	const messages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage).map((message) => {
+		const oldMessage = storedMessages.find((x) => x._id === message._id);
+		if (oldMessage && oldMessage.actionsVisible !== undefined) {
+			message.actionsVisible = oldMessage.actionsVisible;
+		}
+		return message;
+	});
 
 	await initRoom();
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
@@ -182,7 +188,14 @@ export const loadMoreMessages = async () => {
 	await store.setState({ loading: true });
 
 	const rawMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
-	const moreMessages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
+	const moreMessages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage).map((message) => {
+		const { _id } = message;
+		const oldMessage = messages.find((x) => x._id === _id);
+		if (oldMessage && oldMessage.actionsVisible !== undefined) {
+			message.actionsVisible = oldMessage.actionsVisible;
+		}
+		return message;
+	});
 
 	await store.setState({
 		messages: (moreMessages || []).reverse(),

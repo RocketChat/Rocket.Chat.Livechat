@@ -18,6 +18,7 @@ export const MessageAction = memo(({
 	url,
 	className,
 	actions,
+	resetLastAction,
 	closeChat = async () => {
 		const rid = store.state.room._id;
 
@@ -46,6 +47,8 @@ export const MessageAction = memo(({
 	sendMessage = async (el) => {
 		const { token } = store.state;
 		const rid = store.state.room._id;
+
+		resetLastAction();
 
 		await Promise.all([
 			Livechat.sendMessage({ msg: el.target.value, token, rid }),
