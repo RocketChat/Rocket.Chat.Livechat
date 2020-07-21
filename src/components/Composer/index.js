@@ -185,20 +185,22 @@ export class Composer extends Component {
 	}
 
 	handleNotifyEmojiSelect(emoji) {
+		const { onChange } = this.props;
 		const caretPosition = this.getCaretPosition(this.el);
 		const oldText = this.el.innerText;
 		const newText = `${ oldText.substr(0, caretPosition) }${ emoji }&nbsp;${ oldText.substr(caretPosition) }`;
 		this.el.innerHTML = newText;
 		this.moveCursorToEndAndFocus(caretPosition + emoji.length + 1);
+		onChange && onChange(this.el.innerText);
 	}
 
 	moveCursorToEndAndFocus(endIndex) {
-		const setpos = document.createRange();
+		const setPos = document.createRange();
 		const set = window.getSelection();
-		setpos.setStart(this.el.childNodes[0], endIndex);
-		setpos.collapse(true);
+		setPos.setStart(this.el.childNodes[0], endIndex);
+		setPos.collapse(true);
 		set.removeAllRanges();
-		set.addRange(setpos);
+		set.addRange(setPos);
 	}
 
 	getCaretPosition(element) {
