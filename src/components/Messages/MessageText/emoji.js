@@ -24,6 +24,7 @@ const isOnlyEmoji = (str) => {
 
 const renderEmojis = (textWithHtml, origPlainText) => {
 	const textwithOnlyUnicode = shortnameToUnicode(origPlainText);
+	textWithHtml = shortnameToUnicode(textWithHtml);
 
 	if (isOnlyEmoji(textwithOnlyUnicode)) {
 		return textWithHtml.replace(new RegExp(emojiUnicode, 'g'), transformEmojisToLargeSize);
