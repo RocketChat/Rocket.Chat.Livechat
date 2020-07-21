@@ -4,7 +4,6 @@
 	"files": [
 		"/build"
 	],
-
 	"license": "MIT",
 	"repository": {
 		"type": "git",
@@ -71,6 +70,7 @@
 		"@rocket.chat/sdk": "^1.0.0-alpha.29",
 		"date-fns": "^2.4.1",
 		"desvg": "^1.0.2",
+		"emoji-mart": "^3.0.0",
 		"fast-async": "^6.3.8",
 		"history": "^4.7.2",
 		"i18n": "^0.8.3",

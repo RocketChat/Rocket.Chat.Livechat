@@ -1,7 +1,7 @@
 import { createClassName, memo } from '../../helpers';
 import { renderMarkdown } from './markdown';
 import styles from './styles.scss';
-
+import renderEmojis from './emoji';
 
 export const MessageText = memo(({
 	text,
@@ -11,7 +11,7 @@ export const MessageText = memo(({
 }) => (
 	<div
 		// eslint-disable-next-line react/no-danger
-		dangerouslySetInnerHTML={{ __html: renderMarkdown(text) }}
+		dangerouslySetInnerHTML={{ __html: renderEmojis(renderMarkdown(text), text) }}
 		className={createClassName(styles, 'message-text', { system }, [className])}
 		style={style}
 	/>

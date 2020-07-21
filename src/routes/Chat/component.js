@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+import { Picker } from 'emoji-mart';
 
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
@@ -14,12 +15,14 @@ import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
+import 'emoji-mart/css/emoji-mart.css';
 
 
 export default class Chat extends Component {
 	state = {
 		atBottom: true,
 		text: '',
+		emojiPickerActive: false,
 	}
 
 	handleFilesDropTargetRef = (ref) => {
@@ -60,6 +63,7 @@ export default class Chat extends Component {
 		if (this.props.onSubmit) {
 			this.props.onSubmit(text);
 			this.setState({ text: '' });
+			this.turnOffEmojiPicker();
 		}
 	}
 
@@ -67,6 +71,25 @@ export default class Chat extends Component {
 		this.setState({ text });
 		const { onChangeText } = this.props;
 		onChangeText && onChangeText(text);
+	}
+
+	toggleEmojiPickerState = () => {
+		this.setState({ emojiPickerActive: !this.state.emojiPickerActive });
+	}
+
+	handleEmojiSelect = (emoji) => {
+		this.toggleEmojiPickerState();
+		this.notifyEmojiSelect(emoji.native);
+	}
+
+	handleEmojiClick = () => {
+		this.turnOffEmojiPicker();
+	}
+
+	turnOffEmojiPicker = () => {
+		if (this.state.emojiPickerActive) {
+			this.setState({ emojiPickerActive: !this.state.emojiPickerActive });
+		}
 	}
 
 	render = ({
@@ -82,7 +105,6 @@ export default class Chat extends Component {
 		onUpload,
 		messages,
 		uploads = false,
-		emoji = false,
 		options,
 		onChangeDepartment,
 		onFinishChat,
@@ -105,6 +127,7 @@ export default class Chat extends Component {
 			onFinishChat={onFinishChat}
 			onRemoveUserData={onRemoveUserData}
 			className={createClassName(styles, 'chat')}
+			handleEmojiClick={this.handleEmojiClick}
 			{...props}
 		>
 			<FilesDropTarget
@@ -124,7 +147,16 @@ export default class Chat extends Component {
 							conversationFinishedMessage={conversationFinishedMessage}
 							lastReadMessageId={lastReadMessageId}
 							onScrollTo={this.handleScrollTo}
+							handleEmojiClick={this.handleEmojiClick}
 						/>
+						{this.state.emojiPickerActive && <Picker
+							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
+							showPreview={false}
+							showSkinTones={false}
+							sheetSize={64}
+							onSelect={this.handleEmojiSelect}
+							autoFocus={true}
+						/>}
 					</div>
 				</Screen.Content>
 				<Screen.Footer
@@ -149,9 +181,11 @@ export default class Chat extends Component {
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
 						value={text}
-						pre={emoji && (
+						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
+						handleEmojiClick={this.handleEmojiClick}
+						pre={(
 							<ComposerActions>
-								<ComposerAction>
+								<ComposerAction onClick={this.toggleEmojiPickerState}>
 									<EmojiIcon width={20} />
 								</ComposerAction>
 							</ComposerActions>
