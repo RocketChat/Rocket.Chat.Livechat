@@ -9,7 +9,7 @@ const emojiRanges = [
 ].join('|');
 
 // this func is called for each emoji, input-> emoji shortname, o/p-> emoji icon in html format
-const transformEmojisToNormalSize = (emoji) => `<span style="font-size:1.3rem">${ emoji }<span>`;
+const transformEmojisToNormalSize = (emoji) => `<span>${ emoji }<span>`;
 
 const transformEmojisToLargeSize = (emoji) => `<span style="font-size:2rem">${ emoji }<span>`;
 
