@@ -46,6 +46,11 @@
 		margin-left: 10px;
 		min-width: 100px;
 	}
+	
+	&__remainder-alert {
+		color: $color-red;
+		transition: color .2s;
+	}
 }
 
 .powered-by {
