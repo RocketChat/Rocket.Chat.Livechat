@@ -10,7 +10,7 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import Register from '../../routes/Register';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
-import { visibility } from '../helpers';
+import { visibility, isActiveSession } from '../helpers';
 import { setWidgetLanguage } from '../../lib/locale';
 import CustomFields from '../../lib/customFields';
 import Triggers from '../../lib/triggers';
@@ -18,6 +18,13 @@ import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
 import userPresence from '../../lib/userPresence';
 import Connection from '../../lib/connection';
+
+function isRTL(s) {
+	const rtlChars = '\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC';
+	const rtlDirCheck = new RegExp(`^[^${ rtlChars }]*?[${ rtlChars }]`);
+
+	return rtlDirCheck.test(s);
+}
 
 export class App extends Component {
 	state = {
@@ -119,6 +126,8 @@ export class App extends Component {
 		this.forceUpdate();
 	}
 
+	dismissNotification = () => !isActiveSession();
+
 	initWidget() {
 		setWidgetLanguage();
 		const { minimized, iframe: { visible } } = this.props;
@@ -162,6 +171,10 @@ export class App extends Component {
 		this.finalize();
 	}
 
+	componentDidUpdate() {
+		document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'auto';
+	}
+
 	render = ({
 		sound,
 		undocked,
@@ -190,6 +203,7 @@ export class App extends Component {
 			onRestore: this.handleRestore,
 			onOpenWindow: this.handleOpenWindow,
 			onDismissAlert: this.handleDismissAlert,
+			dismissNotification: this.dismissNotification,
 		};
 
 		return (

@@ -3,35 +3,48 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
 import { parentCall } from '../../lib/parentCall';
-import { loadConfig } from '../../lib/main';
+import CustomFields from '../../lib/customFields';
 import { Consumer } from '../../store';
 import Register from './component';
 
 export class RegisterContainer extends Component {
-	getDepartment = (fields = {}) => {
-		let { department } = fields;
-
-		if (department === '') {
-			const { departments = {} } = this.props;
-			const deptDefault = departments.filter((dept) => dept.showOnRegistration)[0];
-			if (deptDefault) {
-				department = deptDefault._id;
+	registerCustomFields(customFields = {}) {
+		Object.entries(customFields).forEach(([key, value]) => {
+			if (!value || value === '') {
+				return;
 			}
-		}
 
-		return department;
+			CustomFields.setCustomField(key, value, true);
+		});
 	}
 
-	handleSubmit = async (fields) => {
+	getDepartment = (department) => {
+		if (department !== '') {
+			return department;
+		}
+
+		const { departments = {} } = this.props;
+		const deptDefault = departments.find((dept) => dept.showOnRegistration);
+
+		if (deptDefault) {
+			return deptDefault._id;
+		}
+	}
+
+	handleSubmit = async ({ name, email, department, ...customFields }) => {
 		const { dispatch, token } = this.props;
-		const department = this.getDepartment(fields);
-		Object.assign(fields, { department });
+		const fields = {
+			name,
+			email,
+			department: this.getDepartment(department),
+		};
 
 		await dispatch({ loading: true, department });
 		try {
 			const user = await Livechat.grantVisitor({ visitor: { ...fields, token } });
 			await dispatch({ user });
 			parentCall('callback', ['pre-chat-form-submit', fields]);
+			this.registerCustomFields(customFields);
 		} finally {
 			await dispatch({ loading: false });
 		}
@@ -74,6 +87,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 					title,
 					color,
 				} = {},
+				customFields = [],
 			} = {},
 			iframe: {
 				guest: {
@@ -115,6 +129,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				token={token}
 				dispatch={dispatch}
 				user={user}
+				customFields={customFields}
 			/>
 		)}
 	</Consumer>
