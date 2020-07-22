@@ -64,9 +64,13 @@ export default class Chat extends Component {
 	}
 
 	handleChangeText = (text) => {
-		this.setState({ text });
-		const { onChangeText } = this.props;
-		onChangeText && onChangeText(text);
+		let value = text;
+		const { onChangeText, limitTextLength } = this.props;
+		if (limitTextLength && limitTextLength < text.length) {
+			value = value.substring(0, limitTextLength);
+		}
+		this.setState({ text: value });
+		onChangeText && onChangeText(value);
 	}
 
 	render = ({
@@ -155,7 +159,6 @@ export default class Chat extends Component {
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
 						value={text}
-						limitTextLength={limitTextLength}
 						pre={emoji && (
 							<ComposerActions>
 								<ComposerAction>
@@ -169,17 +172,15 @@ export default class Chat extends Component {
 									<ComposerAction onClick={this.handleUploadClick}>
 										<PlusIcon width={20} />
 									</ComposerAction>
+								)}1
+								{text.length > 0 && (
+									<ComposerAction onClick={this.handleSendClick}>
+										<SendIcon width={20} />
+									</ComposerAction>
 								)}
-								{(!limitTextLength || limitTextLength >= text.length) && text.length > 0
-								&& <ComposerAction onClick={this.handleSendClick}>
-									<SendIcon width={20} />
-								</ComposerAction>}
-								{limitTextLength && limitTextLength < text.length
-								&& <div className={createClassName(styles, 'none__action')}>
-									<SendIcon width={20} />
-								</div>}
 							</ComposerActions>
 						)}
+						limitTextLength={limitTextLength}
 					/>
 				</Screen.Footer>
 			</FilesDropTarget>
