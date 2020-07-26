@@ -23,6 +23,11 @@ export default class Chat extends Component {
 		atBottom: true,
 		text: '',
 		emojiPickerActive: false,
+		disable: false,
+	}
+
+	disableInput = (disable = false, text = "Please Wait") => {
+		this.setState({ disable, text });
 	}
 
 	handleFilesDropTargetRef = (ref) => {
@@ -51,11 +56,19 @@ export default class Chat extends Component {
 
 	handleUploadClick = (event) => {
 		event.preventDefault();
+		const { disable } = this.state;
+		if (disable) {
+			return;
+		}
 		this.filesDropTarget.browse();
 	}
 
 	handleSendClick = (event) => {
 		event.preventDefault();
+		const { disable } = this.state;
+		if (disable) {
+			return;
+		}
 		this.handleSubmit(this.state.text);
 	}
 
@@ -122,6 +135,7 @@ export default class Chat extends Component {
 	}, {
 		atBottom = true,
 		text,
+		disable = false,
 	}) => (
 		<Screen
 			color={color}
@@ -157,6 +171,7 @@ export default class Chat extends Component {
 							onScrollTo={this.handleScrollTo}
 							resetLastAction={resetLastAction}
 							handleEmojiClick={this.handleEmojiClick}
+							onDisable={this.disableInput}
 						/>
 						{this.state.emojiPickerActive && <Picker
 							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
@@ -197,13 +212,15 @@ export default class Chat extends Component {
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
+						disable={disable}
 						value={text}
 						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
 						handleEmojiClick={this.handleEmojiClick}
+						style={disable && { background: styles.bgColorDisable }}
 						pre={(
 							<ComposerActions>
 								<ComposerAction onClick={this.toggleEmojiPickerState}>
-									<EmojiIcon width={20} />
+									<EmojiIcon width={20} style={disable && { color: styles.colorIconDisable }} />
 								</ComposerAction>
 							</ComposerActions>
 						)}
@@ -211,12 +228,12 @@ export default class Chat extends Component {
 							<ComposerActions>
 								{text.length === 0 && uploads && (
 									<ComposerAction onClick={this.handleUploadClick}>
-										<PlusIcon width={20} />
+										<PlusIcon width={20} style={disable && { color: styles.colorIconDisable }} />
 									</ComposerAction>
 								)}
 								{text.length > 0 && (
 									<ComposerAction onClick={this.handleSendClick}>
-										<SendIcon width={20} />
+										<SendIcon width={20} style={disable && { color: styles.colorIconDisable }} />
 									</ComposerAction>
 								)}
 							</ComposerActions>
