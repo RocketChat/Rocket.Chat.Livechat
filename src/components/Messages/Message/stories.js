@@ -213,7 +213,7 @@ storiesOf('Messages|Message', module)
 				.map((extension) => ({
 					title_link: `http://localhost:3000/demo.${ extension }`,
 					title: `Untitled ${ extension } file`,
-				}))
+				})),
 			)}
 		/>
 	))

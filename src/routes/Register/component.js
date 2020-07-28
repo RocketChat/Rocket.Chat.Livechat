@@ -81,7 +81,7 @@ export default class Register extends Component {
 
 		customFields.forEach(({ _id, defaultValue, options, regexp }) => {
 			let value = '';
-			if (defaultValue && !options || (Array.isArray(options) && options.includes(defaultValue))) {
+			if ((defaultValue && !options) || (Array.isArray(options) && options.includes(defaultValue))) {
 				value = defaultValue;
 			}
 

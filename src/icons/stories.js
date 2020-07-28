@@ -47,5 +47,5 @@ iconset.forEach(({ component: Icon, name }) =>
 			<div style={{ color: color('color', '#E0364D') }}>
 				<Icon width={256} height={256} />
 			</div>
-		))
+		)),
 );
