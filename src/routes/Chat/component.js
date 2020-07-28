@@ -10,6 +10,7 @@ import { createClassName } from '../../components/helpers';
 import styles from './styles.scss';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
+import PrintIcon from '../../icons/print.svg';
 import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
@@ -87,6 +88,7 @@ export default class Chat extends Component {
 		onChangeDepartment,
 		onFinishChat,
 		onRemoveUserData,
+		onPrintTranscript,
 		lastReadMessageId,
 		queueInfo,
 		resetLastAction,
@@ -115,7 +117,7 @@ export default class Chat extends Component {
 				onUpload={onUpload}
 			>
 				<Screen.Content nopadding>
-					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
+					<div id={"chat__messages"} className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
 							avatarResolver={avatarResolver}
@@ -133,6 +135,9 @@ export default class Chat extends Component {
 					options={options ? (
 						<FooterOptions>
 							<Menu.Group>
+								{onPrintTranscript && (
+									<Menu.Item onClick={onPrintTranscript} icon={PrintIcon}>{I18n.t('Print Chat')}</Menu.Item>
+								)}
 								{onChangeDepartment && (
 									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
 								)}
