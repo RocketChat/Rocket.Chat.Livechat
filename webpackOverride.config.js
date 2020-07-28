@@ -50,7 +50,7 @@ module.exports = (config/* , env */) => {
 			'autoI18n': path.resolve(__dirname, './src/i18n'),
 			'icons': path.join(__dirname, './src/icons'),
 			'components': path.join(__dirname, './src/components'),
-		}
+		},
 	);
 
 	patchBabelLoader(config);
@@ -68,7 +68,7 @@ module.exports = (config/* , env */) => {
 	config.plugins.push(
 		new webpack.ProvidePlugin({
 			I18n: ['autoI18n', 'default'],
-		})
+		}),
 	);
 
 	return config;
