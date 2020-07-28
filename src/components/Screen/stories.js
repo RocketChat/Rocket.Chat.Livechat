@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
+import { h } from 'preact';
 
 import { screenCentered } from '../../helpers.stories';
 import { FooterOptions } from '../Footer';

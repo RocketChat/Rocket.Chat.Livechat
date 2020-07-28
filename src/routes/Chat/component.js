@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { Picker } from 'emoji-mart';
 
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';

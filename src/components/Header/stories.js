@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
+import { h } from 'preact';
 
 import Bell from '../../icons/bell.svg';
 import Arrow from '../../icons/arrowDown.svg';

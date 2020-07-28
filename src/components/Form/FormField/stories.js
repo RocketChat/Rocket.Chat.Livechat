@@ -1,7 +1,7 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-
+import { h } from 'preact';
 
 import { memedIpsum } from '../../../helpers.stories';
 import { FormField } from '.';

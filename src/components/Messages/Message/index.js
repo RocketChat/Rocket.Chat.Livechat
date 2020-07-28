@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import { getAttachmentUrl, memo } from '../../helpers';
 import { MessageContainer } from '../MessageContainer';
 import { MessageAvatars } from '../MessageAvatars';

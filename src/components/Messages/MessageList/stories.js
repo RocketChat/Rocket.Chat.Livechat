@@ -3,6 +3,7 @@ import centered from '@storybook/addon-centered/react';
 import { withKnobs, number, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import { h } from 'preact';
 
 import { avatarResolver } from '../../../helpers.stories';
 import { MessageList } from '.';

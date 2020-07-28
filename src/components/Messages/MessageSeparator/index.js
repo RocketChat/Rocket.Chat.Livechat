@@ -1,5 +1,6 @@
 import format from 'date-fns/format';
 import { parseISO } from 'date-fns/fp';
+import { h } from 'preact';
 
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';

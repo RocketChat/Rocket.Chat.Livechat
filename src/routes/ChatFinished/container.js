@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Consumer } from '../../store';

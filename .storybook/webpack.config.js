@@ -1,16 +1,13 @@
 const path = require('path');
-const { ProvidePlugin } = require('webpack');
 
 module.exports = ({ config, mode }) => {
 	delete config.resolve.alias['core-js'];
 
-	config.resolve.alias = Object.assign(
-		config.resolve.alias,
-		{
-			'react': `${ __dirname }/compat.js`,
-			'react-dom': `${ __dirname }/compat.js`,
-		}
-	);
+	config.resolve.alias = {
+		...config.resolve.alias,
+		'react': `${ __dirname }/compat.js`,
+		'react-dom': `${ __dirname }/compat.js`,
+	};
 
 	const babelRule = config.module.rules.find((rule) => Array.isArray(rule.use) && rule.use.find(({ loader }) => loader === 'babel-loader'));
 	babelRule.use.push({ loader: 'preact-i18nline/webpack-loader' });
@@ -51,14 +48,6 @@ module.exports = ({ config, mode }) => {
 			'image-webpack-loader',
 		],
 	});
-
-	config.plugins.push(
-		new ProvidePlugin({
-			h: ['preact', 'h'],
-			Component: ['preact', 'Component'],
-			React: ['preact-compat'],
-		})
-	);
 
 	return config;
 };

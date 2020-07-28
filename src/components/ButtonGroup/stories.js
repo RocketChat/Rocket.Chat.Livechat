@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
+import { h } from 'preact';
 
 import { Button } from '../Button';
 import { ButtonGroup } from '.';

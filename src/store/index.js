@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { createContext } from 'preact-context';
 
 import Store from './Store';

@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { Livechat } from '../../api';
 import { loadConfig } from '../../lib/main';

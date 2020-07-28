@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 
