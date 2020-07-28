@@ -39,10 +39,6 @@ const patchFileLoader = (config) => {
 };
 
 module.exports = (config/* , env */) => {
-	config.resolve.extensions.push('.css');
-	config.resolve.extensions.push('.scss');
-	config.resolve.extensions.push('.svg');
-
 	config.resolve.alias = Object.assign(
 		config.resolve.alias,
 		{
