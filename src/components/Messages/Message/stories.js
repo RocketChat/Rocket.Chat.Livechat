@@ -1,7 +1,8 @@
-import { loremIpsum } from 'lorem-ipsum';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date, object, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { loremIpsum } from 'lorem-ipsum';
+import { h } from 'preact';
 
 import { attachmentResolver, avatarResolver } from '../../../helpers.stories';
 import {
@@ -213,7 +214,7 @@ storiesOf('Messages|Message', module)
 				.map((extension) => ({
 					title_link: `http://localhost:3000/demo.${ extension }`,
 					title: `Untitled ${ extension } file`,
-				}))
+				})),
 			)}
 		/>
 	))

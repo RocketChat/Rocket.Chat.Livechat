@@ -1,23 +1,32 @@
 {
 	"extends": [
-		"@rocket.chat/eslint-config",
+		"@rocket.chat/eslint-config"
 	],
 	"plugins": ["react"],
 	"parser": "babel-eslint",
-	"globals": {
-		"I18n": true,
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		}
 	},
 	"env": {
-		"jest": true,
+		"jest": true
 	},
 	"rules": {
 		"import/order": ["error", {
 			"newlines-between": "always",
-			"groups": ["builtin", "external", "internal", ["parent", "sibling", "index"]],
+			"groups": ["builtin", "external", "internal", ["parent", "sibling", "index"]]
 		}],
 		"react/jsx-uses-react": "error",
 		"react/jsx-uses-vars": "error",
 		"react/jsx-no-undef": "error",
 		"react/jsx-fragments": ["error", "syntax"],
+		"react/react-in-jsx-scope": "error"
 	},
+	"settings": {
+    "react": {
+			"pragma": "h",
+			"pragmaFrag": "Fragment"
+    }
+	}
 }

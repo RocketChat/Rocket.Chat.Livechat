@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import { memo } from '../../helpers';
 import DocIcon from '../../../icons/doc.svg';
 import FileIcon from '../../../icons/file.svg';

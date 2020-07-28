@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { screenCentered, memedIpsum } from '../../helpers.stories';
 import { Alert } from '.';

@@ -1,5 +1,6 @@
 import isSameDay from 'date-fns/isSameDay';
 import { parseISO } from 'date-fns/fp';
+import { h } from 'preact';
 
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';

@@ -1,16 +1,30 @@
-/* eslint-disable quote-props */
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
-
-import webpackOverride from './webpackOverride.config';
-
 
 export default (config, env/* , helpers */) => {
 	if (env.production) {
 		config.output.publicPath = 'livechat/';
 	}
 
-	config = webpackOverride(config);
+	const babelRule = config.module.rules.find(({ loader }) => /babel-loader/.test(loader));
+	babelRule.use = [
+		{ loader: babelRule.loader, options: babelRule.options },
+		{ loader: 'preact-i18nline/webpack-loader' },
+	];
+	delete babelRule.loader;
+	delete babelRule.options;
+
+	const filesRule = config.module.rules.find(({ loader }) => /file-loader|url-loader/.test(loader));
+	filesRule.test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
+
+	config.module.rules.push({
+		test: /\.svg$/,
+		use: [
+			'desvg-loader/preact',
+			'svg-loader',
+			'image-webpack-loader',
+		],
+	});
 
 	config.mode = 'production';
 
@@ -109,7 +123,7 @@ export default (config, env/* , helpers */) => {
 	const definePlugin = config.plugins.find((plugin) => plugin.constructor.name === 'DefinePlugin');
 	definePlugin.definitions = {
 		...definePlugin.definitions,
-		'process': {},
+		process: {},
 		'process.env': {},
 		'process.title': 'browser',
 	};

@@ -3,6 +3,7 @@ import path from 'path';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, color } from '@storybook/addon-knobs';
+import { h } from 'preact';
 
 
 const req = require.context('./', true, /\.svg$/);
@@ -47,5 +48,5 @@ iconset.forEach(({ component: Icon, name }) =>
 			<div style={{ color: color('color', '#E0364D') }}>
 				<Icon width={256} height={256} />
 			</div>
-		))
+		)),
 );

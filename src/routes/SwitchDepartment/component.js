@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
@@ -6,6 +6,7 @@ import { Form, FormField, SelectInput, Validations } from '../../components/Form
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles.scss';
+import I18n from '../../i18n';
 
 
 const defaultTitle = I18n.t('Change Department');

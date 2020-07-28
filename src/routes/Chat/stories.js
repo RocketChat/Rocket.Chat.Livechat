@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs';
+import { h } from 'preact';
 
 import { screenCentered, screenProps, avatarResolver } from '../../helpers.stories';
 import Chat from './component';

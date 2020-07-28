@@ -1,5 +1,6 @@
 /node_modules
 /build
+/storybook-static
 /*.log
 /.vscode
 coverage

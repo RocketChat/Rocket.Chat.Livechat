@@ -1,6 +1,9 @@
+import { h } from 'preact';
+
 import { createClassName, memo } from '../../helpers';
 import { MessageBubble } from '../MessageBubble';
 import styles from './styles.scss';
+import I18n from '../../../i18n';
 
 
 export const VideoAttachment = memo(({

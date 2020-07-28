@@ -151,6 +151,8 @@ Livechat.onMessage(async (message) => {
 	await doPlaySound(message);
 });
 
+export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
+
 export const loadMessages = async () => {
 	const { messages: storedMessages, room: { _id: rid } = {} } = store.state;
 	const previousMessages = getGreetingMessages(storedMessages);
@@ -201,8 +203,6 @@ export const defaultRoomParams = () => {
 
 	return params;
 };
-
-export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
 
 store.on('change', (state, prevState) => {
 	// Cross-tab communication

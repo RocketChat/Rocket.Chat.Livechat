@@ -1,5 +1,5 @@
 import mem from 'mem';
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { createClassName } from '../helpers';
 import styles from './styles.scss';

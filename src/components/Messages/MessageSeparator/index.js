@@ -1,8 +1,10 @@
 import format from 'date-fns/format';
 import { parseISO } from 'date-fns/fp';
+import { h } from 'preact';
 
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
+import I18n from '../../../i18n';
 
 
 export const MessageSeparator = memo(({

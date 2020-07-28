@@ -2,6 +2,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import SmileIcon from '../../icons/smile.svg';
 import PlusIcon from '../../icons/plus.svg';
