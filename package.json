@@ -39,7 +39,6 @@
 		"@storybook/storybook-deployer": "^2.8.1",
 		"@storybook/theming": "^5.1.9",
 		"babel-eslint": "^10.1.0",
-		"create-react-ref": "^0.1.0",
 		"css-loader": "^2.1.0",
 		"desvg-loader": "^0.1.0",
 		"eslint": "^7.5.0",
