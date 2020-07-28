@@ -1,4 +1,3 @@
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 
 export default (config, env/* , helpers */) => {
@@ -127,12 +126,6 @@ export default (config, env/* , helpers */) => {
 		'process.env': {},
 		'process.title': 'browser',
 	};
-
-	config.plugins.push(new BundleAnalyzerPlugin({
-		analyzerMode: 'disabled',
-		generateStatsFile: true,
-		statsFilename: 'stats.json',
-	}));
 
 	return config;
 };
