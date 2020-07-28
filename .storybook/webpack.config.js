@@ -1,10 +1,8 @@
+const path = require('path');
 const { ProvidePlugin } = require('webpack');
-const webpackOverride = require('../webpackOverride.config');
-
 
 module.exports = ({ config, mode }) => {
 	delete config.resolve.alias['core-js'];
-	config = webpackOverride(config, mode);
 
 	config.resolve.alias = Object.assign(
 		config.resolve.alias,
@@ -14,7 +12,13 @@ module.exports = ({ config, mode }) => {
 		}
 	);
 
+	const babelRule = config.module.rules.find((rule) => Array.isArray(rule.use) && rule.use.find(({ loader }) => loader === 'babel-loader'));
+	babelRule.use.push({ loader: 'preact-i18nline/webpack-loader' });
+
 	config.module.rules = config.module.rules.filter(({ loader }) => !/json-loader/.test(loader));
+
+	const fileLoader = config.module.rules.find(({ loader }) => /file-loader/.test(loader));
+	fileLoader.test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
 
 	config.module.rules.push({
 		test: /\.(s?css|sass)$/,
@@ -39,12 +43,27 @@ module.exports = ({ config, mode }) => {
 		],
 	});
 
+	config.module.rules.push({
+		test: /\.svg$/,
+		use: [
+			'desvg-loader/preact',
+			'svg-loader',
+			'image-webpack-loader',
+		],
+	});
+
 	config.plugins.push(
 		new ProvidePlugin({
 			h: ['preact', 'h'],
 			Component: ['preact', 'Component'],
 			React: ['preact-compat'],
 		})
+	);
+
+	config.plugins.push(
+		new ProvidePlugin({
+			I18n: [path.resolve(__dirname, '../src/i18n'), 'default'],
+		}),
 	);
 
 	return config;
