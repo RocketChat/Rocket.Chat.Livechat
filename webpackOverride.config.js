@@ -42,7 +42,6 @@ module.exports = (config/* , env */) => {
 	config.resolve.alias = Object.assign(
 		config.resolve.alias,
 		{
-			'styles': path.join(__dirname, './src/styles'),
 			'autoI18n': path.resolve(__dirname, './src/i18n'),
 			'icons': path.join(__dirname, './src/icons'),
 			'components': path.join(__dirname, './src/components'),
