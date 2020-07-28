@@ -3,6 +3,7 @@ import { parseISO } from 'date-fns/fp';
 
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
+import I18n from '../../../i18n';
 
 
 export const MessageSeparator = memo(({

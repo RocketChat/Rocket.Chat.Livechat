@@ -6,6 +6,7 @@ import { Form, FormField, SelectInput, TextInput, Validations } from '../../comp
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import styles from './styles.scss';
+import I18n from '../../i18n';
 
 
 const defaultTitle = I18n.t('Leave a message');

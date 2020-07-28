@@ -5,6 +5,7 @@ import { Livechat } from '../api';
 import store from '../store';
 import constants from './constants';
 import { canRenderMessage } from '../components/helpers';
+import I18n from '../i18n';
 
 export const loadConfig = async () => {
 	const {

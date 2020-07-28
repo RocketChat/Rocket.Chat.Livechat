@@ -3,6 +3,7 @@ import constants from './constants';
 import { Livechat } from '../api';
 import { loadConfig } from './main';
 import { loadMessages } from './room';
+import I18n from '../i18n';
 
 let self;
 let timer;

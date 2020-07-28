@@ -15,6 +15,7 @@ import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
+import I18n from '../../i18n';
 
 export default class Chat extends Component {
 	state = {

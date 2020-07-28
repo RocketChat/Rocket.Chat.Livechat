@@ -1,5 +1,6 @@
 import { Component } from 'preact';
 
+import I18n from '../../i18n';
 import { createClassName } from '../helpers';
 import CloseIcon from '../../icons/close.svg';
 import styles from './styles.scss';

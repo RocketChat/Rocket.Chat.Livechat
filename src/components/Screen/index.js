@@ -17,6 +17,7 @@ import OpenWindowIcon from '../../icons/newWindow.svg';
 import ChatIcon from '../../icons/chat.svg';
 import CloseIcon from '../../icons/close.svg';
 import styles from './styles.scss';
+import I18n from '../../i18n';
 
 
 class ScreenHeader extends Component {

@@ -1,6 +1,7 @@
 import { formatDistance } from 'date-fns';
 
 import { getDateFnsLocale } from './locale';
+import I18n from '../i18n';
 
 export const normalizeAgent = (agentData) => agentData && { name: agentData.name, username: agentData.username, status: agentData.status };
 

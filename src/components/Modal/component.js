@@ -4,6 +4,7 @@ import styles from './styles.scss';
 import { createClassName } from '../helpers';
 import { Button } from '../Button';
 import { ButtonGroup } from '../ButtonGroup';
+import I18n from '../../i18n';
 
 
 export class Modal extends Component {

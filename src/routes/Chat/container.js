@@ -11,6 +11,7 @@ import Chat from './component';
 import { ModalManager } from '../../components/Modal';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
 import { normalizeQueueAlert } from '../../lib/api';
+import I18n from '../../i18n';
 
 export class ChatContainer extends Component {
 	state = {

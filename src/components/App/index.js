@@ -2,6 +2,7 @@ import { Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
 
+import I18n from '../../i18n';
 import history from '../../history';
 import Chat from '../../routes/Chat';
 import LeaveMessage from '../../routes/LeaveMessage';

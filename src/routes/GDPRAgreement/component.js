@@ -6,6 +6,7 @@ import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import styles from './styles.scss';
+import I18n from '../../i18n';
 
 
 const md = new MarkdownIt({

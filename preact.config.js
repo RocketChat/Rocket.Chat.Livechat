@@ -1,6 +1,3 @@
-import path from 'path';
-
-import { ProvidePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 
@@ -136,12 +133,6 @@ export default (config, env/* , helpers */) => {
 		generateStatsFile: true,
 		statsFilename: 'stats.json',
 	}));
-
-	config.plugins.push(
-		new ProvidePlugin({
-			I18n: [path.resolve(__dirname, './src/i18n'), 'default'],
-		}),
-	);
 
 	return config;
 };

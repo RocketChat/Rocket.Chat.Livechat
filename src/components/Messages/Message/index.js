@@ -18,6 +18,7 @@ import {
 	MESSAGE_TYPE_WELCOME,
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
 } from '../constants';
+import I18n from '../../../i18n';
 
 
 const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver }) => [

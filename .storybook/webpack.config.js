@@ -60,11 +60,5 @@ module.exports = ({ config, mode }) => {
 		})
 	);
 
-	config.plugins.push(
-		new ProvidePlugin({
-			I18n: [path.resolve(__dirname, '../src/i18n'), 'default'],
-		}),
-	);
-
 	return config;
 };
