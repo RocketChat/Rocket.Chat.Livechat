@@ -27,7 +27,8 @@
 	"settings": {
     "react": {
 			"pragma": "h",
-			"pragmaFrag": "Fragment"
+			"pragmaFrag": "Fragment",
+			"version": "detect"
     }
 	}
 }
