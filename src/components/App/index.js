@@ -182,7 +182,6 @@ export class App extends Component {
 		expanded,
 		alerts,
 		modal,
-		config,
 	}, { initialized }) => {
 		if (!initialized) {
 			return null;
@@ -205,7 +204,6 @@ export class App extends Component {
 			onOpenWindow: this.handleOpenWindow,
 			onDismissAlert: this.handleDismissAlert,
 			dismissNotification: this.dismissNotification,
-			limitTextLength: config.settings.limitTextLength,
 		};
 
 		return (

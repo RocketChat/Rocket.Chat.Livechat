@@ -45,11 +45,11 @@ export const FooterOptions = ({ children }) => (
 );
 
 
-export const ReminderCharacters = ({ className, style = {}, textLenght, limitTextLength }) => (
+export const CharCounter = ({ className, style = {}, textLength, limitTextLength }) => (
 	<span
-		className={createClassName(styles, `footer__remainder${ textLenght === limitTextLength ? '-alert' : '' }`, {}, [className])}
+		className={createClassName(styles, 'footer__remainder', { highlight: textLength === limitTextLength }, [className])}
 		style={style}
 	>
-		{textLenght} / {limitTextLength}
+		{textLength} / {limitTextLength}
 	</span>
 );

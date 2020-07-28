@@ -2,7 +2,7 @@ import { Component } from 'preact';
 
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
-import { FooterOptions, ReminderCharacters } from '../../components/Footer';
+import { FooterOptions, CharCounter } from '../../components/Footer';
 import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
@@ -149,9 +149,9 @@ export default class Chat extends Component {
 						</FooterOptions>
 					) : null}
 					limit={limitTextLength
-						? <ReminderCharacters
+						? <CharCounter
 							limitTextLength={limitTextLength}
-							textLenght={text.length}
+							textLength={text.length}
 						/> : null}
 				>
 					<Composer onUpload={onUpload}
