@@ -5,19 +5,20 @@ import styles from './styles.scss';
 
 
 export class Avatar extends Component {
+	static getDerivedStateFromProps(props) {
+		if (props.src) {
+			return { errored: false };
+		}
+
+		return null;
+	}
+
 	state = {
 		errored: false,
 	}
 
 	handleError = () => {
 		this.setState({ errored: true });
-	}
-
-	componentWillReceiveProps({ src: nextSrc }) {
-		const { src } = this.props;
-		if (nextSrc !== src) {
-			this.setState({ errored: false });
-		}
 	}
 
 	render = ({ small, large, src, description, status, className, style }, { errored }) => (

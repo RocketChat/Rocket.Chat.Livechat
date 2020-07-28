@@ -36,7 +36,7 @@ for (let i = 0; i < messages.length; ++i) {
 		_id: i + 1,
 		u: users[Math.floor(Math.random() * users.length)],
 		msg: loremIpsum({ count: 1, units: 'sentences' }),
-		ts: new Date(Date.now() - (15 - i) * 60000).getTime(),
+		ts: new Date(Date.now() - (15 - i) * 60000).toISOString(),
 	};
 }
 

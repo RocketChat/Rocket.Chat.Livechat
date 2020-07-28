@@ -13,6 +13,18 @@ const defaultTitle = I18n.t('Change Department');
 const defaultMessage = I18n.t('Choose a department');
 
 export default class SwitchDepartment extends Component {
+	static getDerivedStateFromProps(props, state) {
+		if (props.departments && props.departments.length > 0 && !state.department) {
+			return { department: { value: '' } };
+		}
+
+		if (!props.departments || props.departments.length === 0) {
+			return { department: null };
+		}
+
+		return null;
+	}
+
 	state = {
 		department: null,
 	}
@@ -71,10 +83,8 @@ export default class SwitchDepartment extends Component {
 		this.validateAll();
 	}
 
-	componentWillReceiveProps() {
-		if (!this.state.department) {
-			this.setState({ department: { ...this.state.department, value: '' } });
-		}
+	componentDidUpdate() {
+		this.validateAll();
 	}
 
 	render({ title, color, message, loading, departments, ...props }, { department }) {

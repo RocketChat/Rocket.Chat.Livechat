@@ -59,6 +59,52 @@ const renderCustomFields = (customFields, { loading, handleFieldChange = () => {
 });
 
 export default class Register extends Component {
+	static getDerivedStateFromProps(props, state) {
+		const {
+			hasNameField,
+			hasEmailField,
+			hasDepartmentField,
+			departmentDefault,
+			departments,
+			nameDefault,
+			emailDefault,
+		} = props;
+
+		let stateChange = null;
+		const mergeChange = (change) => {
+			if (stateChange) {
+				stateChange = { ...stateChange, ...change };
+				return;
+			}
+
+			stateChange = change;
+		};
+
+		const nameValue = nameDefault || '';
+		if (hasNameField && (!state.name || state.name !== nameValue)) {
+			mergeChange({ name: { ...state.name, value: nameValue } });
+		} else if (!hasNameField) {
+			mergeChange({ name: null });
+		}
+
+		const emailValue = emailDefault || '';
+		if (hasEmailField && (!state.email || state.name !== emailValue)) {
+			mergeChange({ email: { ...state.email, value: emailValue } });
+		} else if (!hasEmailField) {
+			mergeChange({ email: null });
+		}
+
+		const departmentValue = departmentDefault || getDefaultDepartment(departments);
+		const showDepartmentField = hasDepartmentField && departments && departments.length > 1;
+		if (showDepartmentField && (!state.department || state.department !== departmentValue)) {
+			mergeChange({ department: { ...state.department, value: departmentValue } });
+		} else if (!showDepartmentField) {
+			mergeChange({ department: null });
+		}
+
+		return stateChange;
+	}
+
 	state = {
 		name: null,
 		email: null,
@@ -155,29 +201,7 @@ export default class Register extends Component {
 		this.validateAll();
 	}
 
-	componentWillReceiveProps({ hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments, nameDefault, emailDefault }) {
-		const nameValue = nameDefault || '';
-		if (hasNameField && (!this.state.name || this.state.name !== nameValue)) {
-			this.setState({ name: { ...this.state.name, value: nameValue } });
-		} else if (!hasNameField) {
-			this.setState({ name: null });
-		}
-
-		const emailValue = emailDefault || '';
-		if (hasEmailField && (!this.state.email || this.state.name !== emailValue)) {
-			this.setState({ email: { ...this.state.email, value: emailValue } });
-		} else if (!hasEmailField) {
-			this.setState({ email: null });
-		}
-
-		const departmentValue = departmentDefault || getDefaultDepartment(departments);
-		const showDepartmentField = hasDepartmentField && departments && departments.length > 1;
-		if (showDepartmentField && (!this.state.department || this.state.department !== departmentValue)) {
-			this.setState({ department: { ...this.state.department, value: departmentValue } });
-		} else if (!showDepartmentField) {
-			this.setState({ department: null });
-		}
-
+	componentDidUpdate() {
 		this.validateAll();
 	}
 

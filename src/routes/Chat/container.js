@@ -288,23 +288,19 @@ export class ChatContainer extends Component {
 		loadMessages();
 	}
 
-	async componentWillReceiveProps({ messages: nextMessages, visible: nextVisible, minimized: nextMinimized }) {
-		const { messages, alerts, dispatch } = this.props;
+	async componentDidUpdate(prevProps) {
+		const { messages, visible, minimized, dispatch } = this.props;
+		const { messages: prevMessages, alerts: prevAlerts } = prevProps;
 
-		if (nextMessages && messages && nextMessages.length !== messages.length && nextVisible && !nextMinimized) {
-			const nextLastMessage = nextMessages[nextMessages.length - 1];
-			const lastMessage = messages[messages.length - 1];
-			if (
-				(nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id)
-				|| (nextMessages.length === 1 && messages.length === 0)
-			) {
-				const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
-				await dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
+		if (messages && prevMessages && messages.length !== prevMessages.length && visible && !minimized) {
+			const nextLastMessage = messages[messages.length - 1];
+			const lastMessage = prevMessages[prevMessages.length - 1];
+			if ((nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) || (messages.length === 1 && prevMessages.length === 0)) {
+				const newAlerts = prevAlerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
+				dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
 			}
 		}
-	}
 
-	async componentDidUpdate() {
 		await this.checkConnectingAgent();
 		this.checkRoom();
 	}
