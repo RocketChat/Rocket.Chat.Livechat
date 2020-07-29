@@ -6,7 +6,7 @@ import { h } from 'preact';
 import { ImageAttachment } from '.';
 
 
-storiesOf('Messages|ImageAttachment', module)
+storiesOf('Messages/ImageAttachment', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

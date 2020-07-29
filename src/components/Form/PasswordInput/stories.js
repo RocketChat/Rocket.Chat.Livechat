@@ -5,11 +5,10 @@ import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { PasswordInput } from '.';
-
 import { Form, FormField } from '..';
 
 
-storiesOf('Forms|PasswordInput', module)
+storiesOf('Forms/PasswordInput', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

@@ -1,6 +1,6 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { screenCentered, screenProps, avatarResolver } from '../../helpers.stories';
@@ -33,7 +33,7 @@ const messages = [
 const soundSrc = 'https://open.rocket.chat/sounds/beep.mp3';
 
 
-storiesOf('Routes|Chat', module)
+storiesOf('Routes/Chat', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('loading', () => (

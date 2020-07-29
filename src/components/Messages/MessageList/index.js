@@ -1,11 +1,11 @@
-import isSameDay from 'date-fns/isSameDay';
 import { parseISO } from 'date-fns/fp';
+import isSameDay from 'date-fns/isSameDay';
 import { h } from 'preact';
 
+import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
-import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import styles from './styles.scss';
 
 
@@ -117,7 +117,7 @@ export class MessageList extends MemoizedComponent {
 				items.push(
 					<MessageSeparator
 						key={`sep-${ message.ts }`}
-						use="li"
+						use='li'
 						date={message.ts}
 					/>,
 				);
@@ -128,7 +128,7 @@ export class MessageList extends MemoizedComponent {
 					key={message._id}
 					attachmentResolver={attachmentResolver}
 					avatarResolver={avatarResolver}
-					use="li"
+					use='li'
 					me={uid && message.u && uid === message.u._id}
 					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id}
 					conversationFinishedMessage={conversationFinishedMessage}
@@ -140,8 +140,8 @@ export class MessageList extends MemoizedComponent {
 			if (showUnreadSeparator) {
 				items.push(
 					<MessageSeparator
-						key="unread"
-						use="li"
+						key='unread'
+						use='li'
 						unread
 					/>,
 				);
@@ -151,8 +151,8 @@ export class MessageList extends MemoizedComponent {
 		if (typingUsernames && typingUsernames.length) {
 			items.push(
 				<TypingIndicator
-					key="typing"
-					use="li"
+					key='typing'
+					use='li'
 					avatarResolver={avatarResolver}
 					usernames={typingUsernames}
 				/>,

@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 
+import ArrowIcon from '../../../icons/arrowDown.svg';
 import { createClassName } from '../../helpers';
 import styles from './styles.scss';
-import ArrowIcon from '../../../icons/arrowDown.svg';
 
 
 export class SelectInput extends Component {
@@ -59,7 +59,7 @@ export class SelectInput extends Component {
 				})}
 				{...props}
 			>
-				<option value="" disabled hidden>{placeholder}</option>
+				<option value='' disabled hidden>{placeholder}</option>
 				{Array.from(options).map(({ value, label }, key) => (
 					<option key={key} value={value} className={createClassName(styles, 'select-input__option')}>{label}</option>
 				))}

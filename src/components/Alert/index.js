@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 
 import I18n from '../../i18n';
-import { createClassName } from '../helpers';
 import CloseIcon from '../../icons/close.svg';
+import { createClassName } from '../helpers';
 import styles from './styles.scss';
 
 
@@ -30,7 +30,7 @@ export class Alert extends Component {
 
 	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children }) => (
 		<div
-			role="alert"
+			role='alert'
 			className={createClassName(styles, 'alert', { success, warning, error }, [className])}
 			style={{
 				...style,

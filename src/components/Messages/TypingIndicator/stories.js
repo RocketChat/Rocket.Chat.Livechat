@@ -3,11 +3,11 @@ import { withKnobs, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { avatarResolver } from '../../../helpers.stories';
 import { TypingIndicator } from '.';
+import { avatarResolver } from '../../../helpers.stories';
 
 
-storiesOf('Messages|TypingIndicator', module)
+storiesOf('Messages/TypingIndicator', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

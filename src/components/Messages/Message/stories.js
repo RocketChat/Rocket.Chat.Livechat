@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { loremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
+import { Message } from '.';
 import { attachmentResolver, avatarResolver } from '../../../helpers.stories';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
@@ -14,7 +15,6 @@ import {
 	MESSAGE_TYPE_WELCOME,
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
 } from '../constants';
-import { Message } from '.';
 
 
 const messageTypes = {
@@ -67,7 +67,7 @@ const defaultUser = {
 
 const now = new Date();
 
-storiesOf('Messages|Message', module)
+storiesOf('Messages/Message', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

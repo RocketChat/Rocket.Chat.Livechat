@@ -3,8 +3,8 @@ import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { memedIpsum } from '../../../helpers.stories';
 import { FileAttachment } from '.';
+import { memedIpsum } from '../../../helpers.stories';
 
 
 const centeredWithWidth = (storyFn, ...args) => centered(() => (
@@ -13,7 +13,7 @@ const centeredWithWidth = (storyFn, ...args) => centered(() => (
 	</div>
 ), ...args);
 
-storiesOf('Messages|FileAttachment', module)
+storiesOf('Messages/FileAttachment', module)
 	.addDecorator(centeredWithWidth)
 	.addDecorator(withKnobs)
 	.add('for pdf', () => (

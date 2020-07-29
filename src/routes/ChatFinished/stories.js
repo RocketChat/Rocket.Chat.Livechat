@@ -1,7 +1,7 @@
-import { loremIpsum } from 'lorem-ipsum';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { loremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
 import { screenCentered, screenProps } from '../../helpers.stories';
@@ -10,7 +10,7 @@ import ChatFinished from './component';
 const customGreeting = loremIpsum({ count: 3, units: 'words' });
 const customText = loremIpsum({ count: 2, units: 'sentences' });
 
-storiesOf('Routes|ChatFinished', module)
+storiesOf('Routes/ChatFinished', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

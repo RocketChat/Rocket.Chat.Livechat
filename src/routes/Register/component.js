@@ -11,8 +11,8 @@ import {
 } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
-import styles from './styles.scss';
 import I18n from '../../i18n';
+import styles from './styles.scss';
 
 const defaultTitle = I18n.t('Need help?');
 const defaultMessage = I18n.t('Please, tell us some information to start the chat');
@@ -58,51 +58,106 @@ const renderCustomFields = (customFields, { loading, handleFieldChange = () => {
 	return null;
 });
 
-export default class Register extends Component {
-	static getDerivedStateFromProps(props, state) {
-		const {
-			hasNameField,
-			hasEmailField,
-			hasDepartmentField,
-			departmentDefault,
-			departments,
-			nameDefault,
-			emailDefault,
-		} = props;
+const validations = {
+	name: [Validations.nonEmpty],
+	email: [Validations.nonEmpty, Validations.email],
+	department: [],
+};
 
-		let stateChange = null;
-		const mergeChange = (change) => {
-			if (stateChange) {
-				stateChange = { ...stateChange, ...change };
-				return;
+const getCustomValidations = ({ customFields = [] }) =>
+	customFields
+		.map(({ _id, required, regexp }) => {
+			const validations = [];
+
+			if (required) {
+				validations.push(Validations.nonEmpty);
 			}
 
-			stateChange = change;
+			if (regexp) {
+				validations.push(Validations.custom);
+			}
+
+			return { [_id]: validations };
+		})
+		.reduce((values, entry) => ({ ...values, ...entry }), {});
+
+const getValidableFields = (state) =>
+	Object.keys(validations)
+		.map((fieldName) => (state[fieldName] ? { fieldName, ...state[fieldName] } : null))
+		.filter(Boolean);
+
+const validate = (props, { name, value, regexp: pattern }) => {
+	const validation = validations[name] || getCustomValidations(props)[name];
+	return validation.reduce((error, validation) => error || validation({ value, pattern }), undefined);
+};
+
+const getDefaultState = (props) => {
+	const { hasNameField, hasEmailField, hasDepartmentField, departments, customFields = [] } = props;
+
+	let state = {
+		...hasNameField && { name: { value: '' } },
+		...hasEmailField && { email: { value: '' } },
+		...hasDepartmentField && { department: { value: getDefaultDepartment(departments) } },
+	};
+
+	customFields.forEach(({ _id, defaultValue, options, regexp }) => {
+		let value = '';
+		if ((defaultValue && !options) || (Array.isArray(options) && options.includes(defaultValue))) {
+			value = defaultValue;
+		}
+
+		state[_id] = {
+			value,
+			...regexp && { regexp },
 		};
+	});
+
+	for (const { fieldName: name, value, regexp } of getValidableFields(state)) {
+		const error = validate(props, { name, value, regexp });
+		state = {
+			...state,
+			[name]: {
+				...state[name],
+				value,
+				error,
+				showError: false,
+			},
+		};
+	}
+
+	return state;
+};
+
+export default class Register extends Component {
+	static getDerivedStateFromProps(nextProps, state) {
+		const { hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments, nameDefault, emailDefault } = nextProps;
 
 		const nameValue = nameDefault || '';
 		if (hasNameField && (!state.name || state.name !== nameValue)) {
-			mergeChange({ name: { ...state.name, value: nameValue } });
+			state = { ...state, name: { ...state.name, value: nameValue } };
 		} else if (!hasNameField) {
-			mergeChange({ name: null });
+			state = { ...state, name: null };
 		}
 
 		const emailValue = emailDefault || '';
 		if (hasEmailField && (!state.email || state.name !== emailValue)) {
-			mergeChange({ email: { ...state.email, value: emailValue } });
+			state = { ...state, email: { ...state.email, value: emailValue } };
 		} else if (!hasEmailField) {
-			mergeChange({ email: null });
+			state = { ...state, email: null };
 		}
 
 		const departmentValue = departmentDefault || getDefaultDepartment(departments);
 		const showDepartmentField = hasDepartmentField && departments && departments.length > 1;
 		if (showDepartmentField && (!state.department || state.department !== departmentValue)) {
-			mergeChange({ department: { ...state.department, value: departmentValue } });
+			state = { ...state, department: { ...state.department, value: departmentValue } };
 		} else if (!showDepartmentField) {
-			mergeChange({ department: null });
+			state = { ...state, department: null };
 		}
 
-		return stateChange;
+		for (const { fieldName: name, value, regexp } of getValidableFields(state)) {
+			const error = validate(nextProps, { name, value, regexp });
+			state = { ...state, [name]: { ...state[name], value, error, showError: false } };
+		}
 	}
 
 	state = {
@@ -111,75 +166,18 @@ export default class Register extends Component {
 		department: null,
 	}
 
-	validations = {
-		name: [Validations.nonEmpty],
-		email: [Validations.nonEmpty, Validations.email],
-		department: [],
-	}
-
-	getDefaultState = () => {
-		const { hasNameField, hasEmailField, hasDepartmentField, departments, customFields = [] } = this.props;
-
-		const state = {
-			...hasNameField && { name: { value: '' } },
-			...hasEmailField && { email: { value: '' } },
-			...hasDepartmentField && { department: { value: getDefaultDepartment(departments) } },
-		};
-
-		customFields.forEach(({ _id, defaultValue, options, regexp }) => {
-			let value = '';
-			if ((defaultValue && !options) || (Array.isArray(options) && options.includes(defaultValue))) {
-				value = defaultValue;
-			}
-
-			state[_id] = {
-				value,
-				...regexp && { regexp },
-			};
-		});
-
-		return state;
-	}
-
-	getCustomValidations = () => {
-		const { customFields = [] } = this.props;
-		return customFields
-			.map(({ _id, required, regexp }) => {
-				const validations = [];
-
-				if (required) {
-					validations.push(Validations.nonEmpty);
-				}
-
-				if (regexp) {
-					validations.push(Validations.custom);
-				}
-
-				return { [_id]: validations };
-			})
-			.reduce((values, entry) => ({ ...values, ...entry }), {});
-	}
-
-	getValidableFields = () => Object.keys(this.validations)
-		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
-		.filter(Boolean)
-
-	validate = ({ name, value, regexp: pattern }) => this.validations[name].reduce((error, validation) => error || validation({ value, pattern }), undefined)
-
-	validateAll = () => {
-		for (const { fieldName: name, value, regexp } of this.getValidableFields()) {
-			const error = this.validate({ name, value, regexp });
-			this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
-		}
-	}
-
-	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
-
 	handleFieldChange = ({ target }) => {
 		const { name, value } = target;
 		const { regexp } = this.state[name];
-		const error = this.validate({ name, value, regexp });
-		this.setState({ [name]: { ...this.state[name], value, error, showError: true } });
+		const error = validate(this.props, { name, value, regexp });
+		this.setState({
+			[name]: {
+				...this.state[name],
+				value,
+				error,
+				showError: true,
+			},
+		});
 	}
 
 	handleSubmit = (event) => {
@@ -196,17 +194,11 @@ export default class Register extends Component {
 
 	constructor(props) {
 		super(props);
-		this.setState(this.getDefaultState());
-		this.validations = { ...this.validations, ...this.getCustomValidations() };
-		this.validateAll();
-	}
-
-	componentDidUpdate() {
-		this.validateAll();
+		this.state = getDefaultState(props);
 	}
 
 	render({ title, color, message, loading, departments, customFields, ...props }, { name, email, department, ...state }) {
-		const valid = this.isValid();
+		const valid = getValidableFields(this.state).every(({ error } = {}) => !error);
 
 		return (
 			<Screen
@@ -227,7 +219,7 @@ export default class Register extends Component {
 									error={name.showError && name.error}
 								>
 									<TextInput
-										name="name"
+										name='name'
 										value={name.value}
 										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
 										disabled={loading}
@@ -245,7 +237,7 @@ export default class Register extends Component {
 									error={email.showError && email.error}
 								>
 									<TextInput
-										name="email"
+										name='email'
 										value={email.value}
 										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
 										disabled={loading}
@@ -262,7 +254,7 @@ export default class Register extends Component {
 									error={department.showError && department.error}
 								>
 									<SelectInput
-										name="department"
+										name='department'
 										value={department.value}
 										options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
 										placeholder={I18n.t('Choose an option...')}

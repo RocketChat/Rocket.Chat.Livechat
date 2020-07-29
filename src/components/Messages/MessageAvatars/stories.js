@@ -3,11 +3,11 @@ import { withKnobs, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { avatarResolver } from '../../../helpers.stories';
 import { MessageAvatars } from '.';
+import { avatarResolver } from '../../../helpers.stories';
 
 
-storiesOf('Messages|MessageAvatars', module)
+storiesOf('Messages/MessageAvatars', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('empty', () => (

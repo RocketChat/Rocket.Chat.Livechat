@@ -1,20 +1,20 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import Bell from '../../icons/bell.svg';
-import Arrow from '../../icons/arrowDown.svg';
-import NewWindow from '../../icons/newWindow.svg';
 import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post, CustomField } from '.';
+import { avatarResolver } from '../../helpers.stories';
+import Arrow from '../../icons/arrowDown.svg';
+import Bell from '../../icons/bell.svg';
+import NewWindow from '../../icons/newWindow.svg';
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
-import { avatarResolver } from '../../helpers.stories';
 
 
 const avatarSrc = avatarResolver('guilherme.gazzo');
 
-storiesOf('Components|Header', module)
+storiesOf('Components/Header', module)
 	.addDecorator(withKnobs)
 	.add('with text content', () => (
 		<Header

@@ -6,7 +6,7 @@ import { h } from 'preact';
 import { TypingDots } from '.';
 
 
-storiesOf('Messages|TypingDots', module)
+storiesOf('Messages/TypingDots', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

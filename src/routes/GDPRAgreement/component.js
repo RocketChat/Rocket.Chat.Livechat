@@ -1,12 +1,12 @@
-import { h, Component } from 'preact';
 import MarkdownIt from 'markdown-it';
+import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import styles from './styles.scss';
 import I18n from '../../i18n';
+import styles from './styles.scss';
 
 
 const md = new MarkdownIt({

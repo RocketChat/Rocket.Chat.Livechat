@@ -1,7 +1,7 @@
-import { loremIpsum } from 'lorem-ipsum';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { loremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
 import { MessageBubble } from '.';
@@ -9,7 +9,7 @@ import { MessageBubble } from '.';
 
 const text = loremIpsum({ count: 1, units: 'sentences' });
 
-storiesOf('Messages|MessageBubble', module)
+storiesOf('Messages/MessageBubble', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

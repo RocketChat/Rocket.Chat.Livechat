@@ -1,5 +1,5 @@
-import store from '../store';
 import I18n from '../i18n';
+import store from '../store';
 
 /**
  * To normalize Language String and return language code

@@ -1,8 +1,8 @@
 import path from 'path';
 
-import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, color } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 
@@ -32,7 +32,7 @@ const IconDisplay = ({ component: Icon, name, color }) => (
 	</div>
 );
 
-storiesOf('Components|Icons', module)
+storiesOf('Components/Icons', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('all', () => (
@@ -41,7 +41,7 @@ storiesOf('Components|Icons', module)
 		</div>
 	));
 iconset.forEach(({ component: Icon, name }) =>
-	storiesOf('Components|Icons', module)
+	storiesOf('Components/Icons', module)
 		.addDecorator(centered)
 		.addDecorator(withKnobs)
 		.add(name, () => (

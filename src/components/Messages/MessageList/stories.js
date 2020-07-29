@@ -1,12 +1,12 @@
-import { loremIpsum } from 'lorem-ipsum';
+import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, number, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+import { loremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
-import { avatarResolver } from '../../../helpers.stories';
 import { MessageList } from '.';
+import { avatarResolver } from '../../../helpers.stories';
 
 
 const fittingScreen = (storyFn, ...args) => centered(() => (
@@ -40,7 +40,7 @@ for (let i = 0; i < messages.length; ++i) {
 	};
 }
 
-storiesOf('Messages|MessageList', module)
+storiesOf('Messages/MessageList', module)
 	.addDecorator(fittingScreen)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

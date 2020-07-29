@@ -1,4 +1,4 @@
-import EventEmitter from 'wolfy87-eventemitter';
+import mitt from 'mitt';
 
 
 const log = process.env.NODE_ENV === 'development'
@@ -38,7 +38,7 @@ export const validCallbacks = [
 	'no-agent-online',
 ];
 
-const callbacks = new EventEmitter();
+const callbacks = mitt();
 
 function registerCallback(eventName, fn) {
 	if (validCallbacks.indexOf(eventName) === -1) {
