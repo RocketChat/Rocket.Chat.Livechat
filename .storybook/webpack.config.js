@@ -1,12 +1,10 @@
 const path = require('path');
 
 module.exports = ({ config, mode }) => {
-	delete config.resolve.alias['core-js'];
-
 	config.resolve.alias = {
 		...config.resolve.alias,
-		'react': `${ __dirname }/compat.js`,
-		'react-dom': `${ __dirname }/compat.js`,
+		'react': require.resolve('preact/compat'),
+		'react-dom': require.resolve('preact/compat'),
 	};
 
 	const babelRule = config.module.rules.find((rule) => Array.isArray(rule.use) && rule.use.find(({ loader }) => loader === 'babel-loader'));
@@ -18,30 +16,26 @@ module.exports = ({ config, mode }) => {
 	fileLoader.test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
 
 	config.module.rules.push({
-		test: /\.(s?css|sass)$/,
+		test: /\.scss$/,
 		use: [
-			{
-				loader: 'style-loader',
-			},
+			'style-loader',
 			{
 				loader: 'css-loader',
 				options: {
 					sourceMap: true,
 					modules: true,
-					localIdentName: '[local]___[hash:base64:5]',
+					importLoaders: 1,
 				},
 			},
-			{
-				loader: 'sass-loader',
-				options: {
-					sourceMap: true,
-				},
-			},
+			'sass-loader',
 		],
 	});
 
 	config.module.rules.push({
 		test: /\.svg$/,
+		exclude: [
+			__dirname
+		],
 		use: [
 			'desvg-loader/preact',
 			'svg-loader',

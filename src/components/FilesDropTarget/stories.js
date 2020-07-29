@@ -23,7 +23,7 @@ const DummyContent = () => (
 	</div>
 );
 
-storiesOf('Components|FilesDropTarget', module)
+storiesOf('Components/FilesDropTarget', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

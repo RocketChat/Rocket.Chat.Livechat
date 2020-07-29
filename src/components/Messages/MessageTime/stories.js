@@ -9,7 +9,7 @@ import { MessageTime } from '.';
 const today = new Date();
 const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-storiesOf('Messages|MessageTime', module)
+storiesOf('Messages/MessageTime', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('today', () => (

@@ -22,7 +22,7 @@ const customFields = [
 	},
 ];
 
-storiesOf('Routes|Register', module)
+storiesOf('Routes/Register', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

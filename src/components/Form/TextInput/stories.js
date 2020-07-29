@@ -8,7 +8,7 @@ import { TextInput } from '.';
 import { Form, FormField } from '..';
 
 
-storiesOf('Forms|TextInput', module)
+storiesOf('Forms/TextInput', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('empty', () => (

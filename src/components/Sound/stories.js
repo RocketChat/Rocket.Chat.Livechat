@@ -7,7 +7,7 @@ import { h } from 'preact';
 import { Sound } from '.';
 
 
-storiesOf('Components|Sound', module)
+storiesOf('Components/Sound', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('short', () => (

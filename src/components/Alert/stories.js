@@ -7,7 +7,7 @@ import { Alert } from '.';
 import { screenCentered, memedIpsum } from '../../helpers.stories';
 
 
-storiesOf('Components|Alert', module)
+storiesOf('Components/Alert', module)
 	.addDecorator(withKnobs)
 	.addDecorator(screenCentered)
 	.add('default', () => (

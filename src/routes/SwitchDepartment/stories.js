@@ -7,7 +7,7 @@ import { screenCentered, screenProps } from '../../helpers.stories';
 import SwitchDepartment from './component';
 
 
-storiesOf('Routes|SwitchDepartment', module)
+storiesOf('Routes/SwitchDepartment', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

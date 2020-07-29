@@ -7,7 +7,7 @@ import { TypingIndicator } from '.';
 import { avatarResolver } from '../../../helpers.stories';
 
 
-storiesOf('Messages|TypingIndicator', module)
+storiesOf('Messages/TypingIndicator', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

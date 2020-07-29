@@ -14,7 +14,7 @@ import { Avatar } from '../Avatar';
 
 const avatarSrc = avatarResolver('guilherme.gazzo');
 
-storiesOf('Components|Header', module)
+storiesOf('Components/Header', module)
 	.addDecorator(withKnobs)
 	.add('with text content', () => (
 		<Header

@@ -11,7 +11,7 @@ import ChatIcon from '../../icons/chat.svg';
 const defaultText = 'Powered by Rocket.Chat';
 const defaultBadge = 'badged';
 
-storiesOf('Components|Button', module)
+storiesOf('Components/Button', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

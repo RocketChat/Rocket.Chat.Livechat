@@ -9,7 +9,7 @@ import { MessageBubble } from '.';
 
 const text = loremIpsum({ count: 1, units: 'sentences' });
 
-storiesOf('Messages|MessageBubble', module)
+storiesOf('Messages/MessageBubble', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

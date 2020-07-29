@@ -7,7 +7,7 @@ import { screenCentered, screenProps } from '../../helpers.stories';
 import LeaveMessage from './component';
 
 
-storiesOf('Routes|Leave a message', module)
+storiesOf('Routes/Leave a message', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

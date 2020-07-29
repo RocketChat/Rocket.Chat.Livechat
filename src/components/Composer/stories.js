@@ -18,7 +18,7 @@ const centeredWithWidth = (storyFn, ...args) => centered(() => (
 
 const defaultPlaceholder = 'Insert your text here';
 
-storiesOf('Components|Composer', module)
+storiesOf('Components/Composer', module)
 	.addDecorator(centeredWithWidth)
 	.addDecorator(withKnobs({ escapeHTML: false }))
 	.add('default', () => (

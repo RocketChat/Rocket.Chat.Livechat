@@ -16,7 +16,7 @@ import { PopoverContainer } from '../Popover';
 const defaultMenuItemText = 'A menu item';
 const defaultAnotherMenuItemText = 'Another menu item';
 
-storiesOf('Components|Menu', module)
+storiesOf('Components/Menu', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('empty', () => (
@@ -53,7 +53,7 @@ const centeredWithPopoverContainer = (storyFn, ...args) => (
 	</div>
 );
 
-storiesOf('Components|Menu/PopoverMenu', module)
+storiesOf('Components/Menu/PopoverMenu', module)
 	.addDecorator(withKnobs)
 	.addDecorator(centeredWithPopoverContainer)
 	.add('default', () => (
@@ -79,7 +79,7 @@ storiesOf('Components|Menu/PopoverMenu', module)
 			</Group>
 		</PopoverMenu>
 	));
-storiesOf('Components|Menu/Group', module)
+storiesOf('Components/Menu/Group', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('single', () => (
@@ -109,7 +109,7 @@ storiesOf('Components|Menu/Group', module)
 			</Group>
 		</Menu>
 	));
-storiesOf('Components|Menu/Item', module)
+storiesOf('Components/Menu/Item', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('simple', () => (

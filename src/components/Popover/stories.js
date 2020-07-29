@@ -15,7 +15,7 @@ const centeredWithPopoverContainer = (storyFn, ...args) => (
 	</div>
 );
 
-storiesOf('Components|Popover', module)
+storiesOf('Components/Popover', module)
 	.addDecorator(withKnobs)
 	.addDecorator(centeredWithPopoverContainer)
 	.add('arbitrary renderer', () => (

@@ -6,7 +6,7 @@ import { h } from 'preact';
 import { AudioAttachment } from '.';
 
 
-storiesOf('Messages|AudioAttachment', module)
+storiesOf('Messages/AudioAttachment', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

@@ -7,7 +7,7 @@ import { screenCentered, screenProps } from '../../helpers.stories';
 import GDPRAgreement from './component';
 
 
-storiesOf('Routes|GDPRAgreement', module)
+storiesOf('Routes/GDPRAgreement', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

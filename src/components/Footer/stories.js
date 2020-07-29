@@ -20,7 +20,7 @@ const bottomWithPopoverContainer = (storyFn) => (
 	</div>
 );
 
-storiesOf('Components|Footer', module)
+storiesOf('Components/Footer', module)
 	.addDecorator(bottomWithPopoverContainer)
 	.add('simple', () => (
 		<Footer>

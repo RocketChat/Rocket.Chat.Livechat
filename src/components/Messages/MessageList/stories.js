@@ -40,7 +40,7 @@ for (let i = 0; i < messages.length; ++i) {
 	};
 }
 
-storiesOf('Messages|MessageList', module)
+storiesOf('Messages/MessageList', module)
 	.addDecorator(fittingScreen)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

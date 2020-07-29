@@ -19,7 +19,7 @@ function handleSubmit(event, ...args) {
 	action('submit')(event, ...args);
 }
 
-storiesOf('Forms|Form', module)
+storiesOf('Forms/Form', module)
 	.addDecorator(centered)
 	.add('default', () => (
 		<Form onSubmit={handleSubmit}>

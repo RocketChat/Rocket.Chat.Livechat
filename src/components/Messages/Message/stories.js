@@ -67,7 +67,7 @@ const defaultUser = {
 
 const now = new Date();
 
-storiesOf('Messages|Message', module)
+storiesOf('Messages/Message', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

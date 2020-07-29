@@ -8,7 +8,7 @@ import { SelectInput } from '.';
 import { Form, FormField } from '..';
 
 
-storiesOf('Forms|SelectInput', module)
+storiesOf('Forms/SelectInput', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('empty', () => (

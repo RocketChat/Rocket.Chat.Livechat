@@ -33,7 +33,7 @@ const messages = [
 const soundSrc = 'https://open.rocket.chat/sounds/beep.mp3';
 
 
-storiesOf('Routes|Chat', module)
+storiesOf('Routes/Chat', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('loading', () => (

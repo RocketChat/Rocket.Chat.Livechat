@@ -10,7 +10,7 @@ import ChatFinished from './component';
 const customGreeting = loremIpsum({ count: 3, units: 'words' });
 const customText = loremIpsum({ count: 2, units: 'sentences' });
 
-storiesOf('Routes|ChatFinished', module)
+storiesOf('Routes/ChatFinished', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

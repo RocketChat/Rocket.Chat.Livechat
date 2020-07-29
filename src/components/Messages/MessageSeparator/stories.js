@@ -8,7 +8,7 @@ import { MessageSeparator } from '.';
 
 const now = new Date();
 
-storiesOf('Messages|MessageSeparator', module)
+storiesOf('Messages/MessageSeparator', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

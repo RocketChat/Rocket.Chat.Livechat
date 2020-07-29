@@ -7,7 +7,7 @@ import { ButtonGroup } from '.';
 import { Button } from '../Button';
 
 
-storiesOf('Components|ButtonGroup', module)
+storiesOf('Components/ButtonGroup', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('with buttons of same size', () => (

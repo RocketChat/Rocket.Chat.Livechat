@@ -7,7 +7,7 @@ import { MessageAvatars } from '.';
 import { avatarResolver } from '../../../helpers.stories';
 
 
-storiesOf('Messages|MessageAvatars', module)
+storiesOf('Messages/MessageAvatars', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('empty', () => (

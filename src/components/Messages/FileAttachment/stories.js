@@ -13,7 +13,7 @@ const centeredWithWidth = (storyFn, ...args) => centered(() => (
 	</div>
 ), ...args);
 
-storiesOf('Messages|FileAttachment', module)
+storiesOf('Messages/FileAttachment', module)
 	.addDecorator(centeredWithWidth)
 	.addDecorator(withKnobs)
 	.add('for pdf', () => (

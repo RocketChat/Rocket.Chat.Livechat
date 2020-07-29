@@ -15,7 +15,7 @@ const LoremIpsum = ({ padding = '5rem', count = 5, units = 'paragraphs', ...opti
 );
 
 
-storiesOf('Components|Modal', module)
+storiesOf('Components/Modal', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

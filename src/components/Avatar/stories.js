@@ -11,7 +11,7 @@ const defaultSrc = avatarResolver('guilherme.gazzo');
 const defaultDescription = 'user description';
 const statuses = [null, 'offline', 'away', 'busy', 'online'];
 
-storiesOf('Components|Avatar', module)
+storiesOf('Components/Avatar', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

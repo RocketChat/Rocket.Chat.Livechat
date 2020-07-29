@@ -17,7 +17,7 @@ const alerts = [
 	{ id: 4, children: 'Custom colored alert', color: '#000', timeout: 5000 },
 ];
 
-storiesOf('Components|Screen', module)
+storiesOf('Components/Screen', module)
 	.addDecorator(withKnobs)
 	.addDecorator(screenCentered)
 	.add('normal', () => (
@@ -258,7 +258,7 @@ storiesOf('Components|Screen', module)
 			</Screen.Content>
 		</Screen>
 	));
-storiesOf('Components|Screen/Footer', module)
+storiesOf('Components/Screen/Footer', module)
 	.addDecorator(withKnobs)
 	.addDecorator(screenCentered)
 	.add('empty', () => (

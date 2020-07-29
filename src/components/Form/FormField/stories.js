@@ -8,7 +8,7 @@ import { Form, TextInput } from '..';
 import { memedIpsum } from '../../../helpers.stories';
 
 
-storiesOf('Forms|FormField', module)
+storiesOf('Forms/FormField', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
