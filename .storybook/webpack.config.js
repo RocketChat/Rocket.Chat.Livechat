@@ -39,7 +39,6 @@ module.exports = ({ config, mode }) => {
 		use: [
 			'desvg-loader/preact',
 			'svg-loader',
-			'image-webpack-loader',
 		],
 	});
 

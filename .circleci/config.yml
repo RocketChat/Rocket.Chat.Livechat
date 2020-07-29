@@ -32,7 +32,6 @@ jobs:
     steps:
       - checkout
       - run: yarn
-      - run: yarn run build
       - run: yarn run build-storybook:loki
       - run: |
           cat package.json | sed s/\.docker/.app/ > package.json-new
@@ -40,8 +39,6 @@ jobs:
       - run: yarn run loki:test-ci
       - store_artifacts:
           path: ~/repo/.loki/difference
-
-
   publish:
     docker:
       - image: circleci/node:10.15
