@@ -419,7 +419,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				room={room}
 				messages={messages && messages.filter((message) => canRenderMessage(message))}
 				noMoreMessages={noMoreMessages}
-				emoji={false}
+				emoji={true}
 				uploads={uploads}
 				typingUsernames={Array.isArray(typing) ? typing : []}
 				loading={loading}

@@ -60,6 +60,11 @@ export class MessageList extends MemoizedComponent {
 		}
 	}
 
+	handleClick = () => {
+		const { handleEmojiClick } = this.props;
+		handleEmojiClick && handleEmojiClick();
+	}
+
 	componentWillUpdate() {
 		if (this.scrollPosition === MessageList.SCROLL_AT_TOP) {
 			this.previousScrollHeight = this.base.scrollHeight;
@@ -114,7 +119,7 @@ export class MessageList extends MemoizedComponent {
 						key={`sep-${ message.ts }`}
 						use="li"
 						date={message.ts}
-					/>
+					/>,
 				);
 			}
 
@@ -129,7 +134,7 @@ export class MessageList extends MemoizedComponent {
 					conversationFinishedMessage={conversationFinishedMessage}
 					resetLastAction={resetLastAction}
 					{...message}
-				/>
+				/>,
 			);
 
 			const showUnreadSeparator = lastReadMessageId && nextMessage && lastReadMessageId === message._id;
@@ -139,7 +144,7 @@ export class MessageList extends MemoizedComponent {
 						key="unread"
 						use="li"
 						unread
-					/>
+					/>,
 				);
 			}
 		}
@@ -151,7 +156,7 @@ export class MessageList extends MemoizedComponent {
 					use="li"
 					avatarResolver={avatarResolver}
 					usernames={typingUsernames}
-				/>
+				/>,
 			);
 		}
 
@@ -165,6 +170,7 @@ export class MessageList extends MemoizedComponent {
 		<div
 			onScroll={this.handleScroll}
 			className={createClassName(styles, 'message-list', {}, [className])}
+			onClick={this.handleClick}
 			style={style}
 		>
 			<ol className={createClassName(styles, 'message-list__content')}>
