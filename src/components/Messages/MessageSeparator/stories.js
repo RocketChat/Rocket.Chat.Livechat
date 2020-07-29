@@ -6,26 +6,26 @@ import { h } from 'preact';
 import { MessageSeparator } from '.';
 
 
-const now = new Date();
+const defaultDate = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
 storiesOf('Messages/MessageSeparator', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (
 		<MessageSeparator
-			date={date('date', null)}
+			date={null}
 			unread={boolean('unread', false)}
 		/>
 	))
 	.add('date', () => (
 		<MessageSeparator
-			date={date('date', now)}
+			date={new Date(date('date', defaultDate)).toISOString()}
 			unread={boolean('unread', false)}
 		/>
 	))
 	.add('unread', () => (
 		<MessageSeparator
-			date={date('date', null)}
+			date={null}
 			unread={boolean('unread', true)}
 		/>
 	));

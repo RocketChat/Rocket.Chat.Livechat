@@ -68,7 +68,7 @@ const defaultUser = {
 	name: 'Guilherme Albrech Gazzo',
 };
 
-const now = new Date();
+const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
 storiesOf('Messages/Message', module)
 	.addDecorator(centered)
