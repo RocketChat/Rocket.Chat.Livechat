@@ -61,7 +61,7 @@
 	},
 	"dependencies": {
 		"@kossnocorp/desvg": "^0.2.0",
-		"@rocket.chat/sdk": "^1.0.0-alpha.29",
+		"@rocket.chat/sdk": "^1.0.0-alpha.41",
 		"date-fns": "^2.4.1",
 		"desvg": "^1.0.2",
 		"emoji-mart": "^3.0.0",
