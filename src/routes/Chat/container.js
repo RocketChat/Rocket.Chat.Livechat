@@ -236,6 +236,18 @@ export class ChatContainer extends Component {
 		}
 	}
 
+	onPrintTranscript = () => {
+		const printContent = document.getElementById('chat__messages').innerHTML;
+		let head = document.getElementsByTagName('head')[0].innerHTML
+		let printWindow = window.open();
+		let printScript = printWindow.document.createElement( 'script' );
+		printScript.innerHTML = "window.print();";
+		printWindow.document.write(printContent);
+		printWindow.document.body.appendChild(printScript);
+		printWindow.document.head.innerHTML = head;
+		printWindow.document.close();
+	}
+
 	canSwitchDepartment = () => {
 		const { allowSwitchingDepartments, departments = {} } = this.props;
 		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
@@ -249,6 +261,11 @@ export class ChatContainer extends Component {
 	canRemoveUserData = () => {
 		const { allowRemoveUserData } = this.props;
 		return allowRemoveUserData;
+	}
+
+	canPrintTranscript = () => {
+		const { transcript } = this.props;
+		return transcript;
 	}
 
 	showOptionsMenu = () =>
@@ -339,6 +356,7 @@ export class ChatContainer extends Component {
 			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
+			onPrintTranscript={(this.canPrintTranscript() && this.onPrintTranscript) || null}
 			onSoundStop={this.handleSoundStop}
 			resetLastAction={this.resetLastAction}
 		/>
@@ -355,6 +373,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
+					transcript,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -430,6 +449,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				allowSwitchingDepartments={allowSwitchingDepartments}
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
+				transcript={transcript}
 				alerts={alerts}
 				visible={visible}
 				unread={unread}
