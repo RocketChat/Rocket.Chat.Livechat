@@ -14,6 +14,8 @@ const fittingScreen = (storyFn, ...args) => centered(() => (
 	</div>
 ), ...args);
 
+const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
+
 const users = [
 	{
 		_id: 1,
@@ -33,9 +35,9 @@ const messages = new Array(10);
 for (let i = 0; i < messages.length; ++i) {
 	messages[i] = {
 		_id: i + 1,
-		u: users[Math.floor(Math.random() * users.length)],
+		u: users[i % users.length],
 		msg: loremIpsum({ count: 1, units: 'sentences' }),
-		ts: new Date(Date.now() - (15 - i) * 60000).toISOString(),
+		ts: new Date(now.getTime() - (15 - i) * 60000).toISOString(),
 	};
 }
 

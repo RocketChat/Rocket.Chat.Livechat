@@ -171,7 +171,7 @@ storiesOf('Messages/Message', module)
 				audio_url: sampleAudio,
 			}])}
 		/>
-	))
+	), { loki: { skip: true } })
 	.add('with video attachment', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
@@ -186,7 +186,7 @@ storiesOf('Messages/Message', module)
 				video_url: sampleVideo,
 			}])}
 		/>
-	))
+	), { loki: { skip: true } })
 	.add('with image attachment', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
@@ -246,4 +246,4 @@ storiesOf('Messages/Message', module)
 				},
 			])}
 		/>
-	));
+	), { loki: { skip: true } });

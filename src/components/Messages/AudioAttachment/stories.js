@@ -14,4 +14,4 @@ storiesOf('Messages/AudioAttachment', module)
 		<AudioAttachment
 			url={text('url', sampleAudio)}
 		/>
-	));
+	), { loki: { skip: true } });
