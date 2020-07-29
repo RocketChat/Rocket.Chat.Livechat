@@ -1,7 +1,7 @@
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 
-export default (config, env/* , helpers */) => {
-	if (env.production) {
+export default (config, { isProd }) => {
+	if (isProd) {
 		config.output.publicPath = 'livechat/';
 	}
 
@@ -24,8 +24,6 @@ export default (config, env/* , helpers */) => {
 			'image-webpack-loader',
 		],
 	});
-
-	config.mode = 'production';
 
 	config.performance = {
 		hints: false,
@@ -77,20 +75,8 @@ export default (config, env/* , helpers */) => {
 			maxInitialRequests: 10,
 			automaticNameDelimiter: '~',
 			cacheGroups: {
-				mqtt: {
-					name: 'mqtt',
-					chunks: 'async',
-					test: /node_modules\/@rocket\.chat\/sdk\/drivers\/mqtt/,
-					priority: 50,
-				},
-				ddp: {
-					name: 'ddp',
-					chunks: 'async',
-					test: /ddp/,
-					priority: 50,
-				},
 				sdk: {
-					name: 'Rocket.Chat.js.SDK',
+					name: 'sdk',
 					chunks: 'all',
 					test: /node_modules\/@rocket\.chat\/sdk/,
 					priority: 40,
@@ -117,14 +103,6 @@ export default (config, env/* , helpers */) => {
 				},
 			},
 		},
-	};
-
-	const definePlugin = config.plugins.find((plugin) => plugin.constructor.name === 'DefinePlugin');
-	definePlugin.definitions = {
-		...definePlugin.definitions,
-		process: {},
-		'process.env': {},
-		'process.title': 'browser',
 	};
 
 	return config;
