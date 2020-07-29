@@ -1,11 +1,11 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { Livechat } from '../../api';
+import { ModalManager } from '../../components/Modal';
+import { createToken, parseOfflineMessage } from '../../components/helpers';
 import { parentCall } from '../../lib/parentCall';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
-import { ModalManager } from '../../components/Modal';
-import { createToken, parseOfflineMessage } from '../../components/helpers';
 
 
 export class LeaveMessageContainer extends Component {

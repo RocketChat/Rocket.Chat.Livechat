@@ -1,14 +1,17 @@
+import { h } from 'preact';
+
+import I18n from '../../../i18n';
 import { getAttachmentUrl, memo } from '../../helpers';
-import { MessageContainer } from '../MessageContainer';
+import { AudioAttachment } from '../AudioAttachment';
+import { FileAttachment } from '../FileAttachment';
+import { ImageAttachment } from '../ImageAttachment';
 import { MessageAvatars } from '../MessageAvatars';
-import { MessageContent } from '../MessageContent';
 import { MessageBubble } from '../MessageBubble';
+import { MessageContainer } from '../MessageContainer';
+import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
-import { AudioAttachment } from '../AudioAttachment';
 import { VideoAttachment } from '../VideoAttachment';
-import { ImageAttachment } from '../ImageAttachment';
-import { FileAttachment } from '../FileAttachment';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
 	MESSAGE_TYPE_USER_ADDED,

@@ -1,9 +1,9 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
-import { parentCall } from '../../lib/parentCall';
 import CustomFields from '../../lib/customFields';
+import { parentCall } from '../../lib/parentCall';
 import { Consumer } from '../../store';
 import Register from './component';
 

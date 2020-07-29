@@ -4,7 +4,6 @@
 	"files": [
 		"/build"
 	],
-
 	"license": "MIT",
 	"repository": {
 		"type": "git",
@@ -21,94 +20,58 @@
 		"lint": "run-s eslint stylelint",
 		"eslint": "eslint src",
 		"stylelint": "stylelint 'src/**/*.scss'",
-		"test": "jest ./tests",
-		"coverage": "jest --coverage",
 		"storybook": "start-storybook -p 9001 -c .storybook",
 		"i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
 		"deploy-storybook": "storybook-to-ghpages",
-		"bundle-analyzer": "webpack-bundle-analyzer build/stats.json",
 		"release": "gh-release -c master --assets build.tar.gz"
 	},
 	"devDependencies": {
 		"@rocket.chat/eslint-config": "^0.4.0",
-		"@storybook/addon-a11y": "^5.1.9",
-		"@storybook/addon-actions": "^5.1.9",
-		"@storybook/addon-backgrounds": "^5.1.9",
-		"@storybook/addon-centered": "^5.1.9",
-		"@storybook/addon-knobs": "^5.1.9",
-		"@storybook/addon-options": "^5.1.9",
-		"@storybook/addon-viewport": "^5.1.9",
-		"@storybook/react": "^5.1.9",
-		"@storybook/storybook-deployer": "^2.8.1",
-		"@storybook/theming": "^5.1.9",
-		"create-react-ref": "^0.1.0",
-		"css-loader": "^2.1.0",
+		"@storybook/addon-actions": "^5.3.19",
+		"@storybook/addon-backgrounds": "^5.3.19",
+		"@storybook/addon-centered": "^5.3.19",
+		"@storybook/addon-knobs": "^5.3.19",
+		"@storybook/addon-options": "^5.3.19",
+		"@storybook/addon-viewport": "^5.3.19",
+		"@storybook/react": "^5.3.19",
+		"@storybook/storybook-deployer": "^2.8.6",
+		"@storybook/theming": "^5.3.19",
+		"babel-eslint": "^10.1.0",
+		"css-loader": "^4.0.0",
 		"desvg-loader": "^0.1.0",
-		"eslint": "^6.5.1",
-		"eslint-config-synacor": "^3.0.5",
+		"eslint": "^7.5.0",
+		"eslint-plugin-import": "^2.22.0",
+		"eslint-plugin-react": "^7.20.5",
 		"gh-release": "^3.5.0",
-		"husky": "^3.0.8",
-		"identity-obj-proxy": "^3.0.0",
-		"if-env": "^1.0.0",
-		"image-webpack-loader": "^4.3.1",
-		"jest": "^24.0.0",
+		"husky": "^4.2.5",
+		"if-env": "^1.0.4",
+		"image-webpack-loader": "^6.0.0",
 		"lorem-ipsum": "^2.0.3",
-		"node-sass": "^4.9.3",
+		"node-sass": "^4.14.1",
 		"npm-run-all": "^4.1.5",
-		"preact-cli": "3.0.0-next.14",
-		"preact-compat": "^3.18.4",
-		"preact-render-spy": "^1.2.1",
-		"sass-loader": "^7.1.0",
-		"style-loader": "^0.23.1",
-		"stylelint": "^11.1.1",
-		"stylelint-order": "^3.1.1",
+		"preact-cli": "^3.0.1",
+		"sass-loader": "^9.0.2",
+		"style-loader": "^1.2.1",
+		"stylelint": "^13.6.1",
+		"stylelint-order": "^4.1.0",
 		"svg-loader": "0.0.2",
-		"webpack-bundle-analyzer": "^3.0.2",
-		"webpack-cli": "^3.2.1"
+		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
 		"@kossnocorp/desvg": "^0.2.0",
-		"@rocket.chat/sdk": "^1.0.0-alpha.29",
-		"date-fns": "^2.4.1",
+		"@rocket.chat/sdk": "^1.0.0-alpha.41",
+		"date-fns": "^2.15.0",
 		"desvg": "^1.0.2",
-		"fast-async": "^6.3.8",
-		"history": "^4.7.2",
-		"i18n": "^0.8.3",
+		"emoji-mart": "^3.0.0",
+		"history": "^5.0.0",
 		"i18nline": "^2.0.1",
-		"markdown-it": "^10.0.0",
-		"mem": "^5.1.1",
-		"msgpack": "^1.0.2",
-		"preact": "^8.2.6",
-		"preact-context": "^1.1.1",
+		"markdown-it": "^11.0.0",
+		"mem": "^6.1.0",
+		"mitt": "^2.1.0",
+		"preact": "^10.4.6",
 		"preact-i18nline": "^2.0.0",
-		"preact-router": "^2.5.7",
-		"query-string": "6.8.3",
-		"tiny-events": "^1.0.1",
-		"wolfy87-eventemitter": "^5.2.5"
-	},
-	"jest": {
-		"verbose": true,
-		"setupFiles": [
-			"<rootDir>/src/tests/__mocks__/browserMocks.js"
-		],
-		"testURL": "http://localhost:8080",
-		"moduleFileExtensions": [
-			"js",
-			"jsx"
-		],
-		"moduleDirectories": [
-			"node_modules"
-		],
-		"moduleNameMapper": {
-			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
-			"\\.(css|less|scss)$": "identity-obj-proxy",
-			"^./style$": "identity-obj-proxy",
-			"^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
-			"^react$": "preact-compat",
-			"^react-dom$": "preact-compat",
-			"^create-react-class$": "preact-compat/lib/create-react-class",
-			"^react-addons-css-transition-group$": "preact-css-transition-group"
-		}
+		"preact-router": "^3.2.1",
+		"query-string": "^6.13.1"
 	},
 	"browserslist": [
 		"> 1%",
@@ -122,7 +85,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "run-s i18n && git add -A src/i18n"
+			"pre-commit": "run-s i18n build:app && git add -A src/i18n size-plugin.json"
 		}
 	},
 	"houston": {

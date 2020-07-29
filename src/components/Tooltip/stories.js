@@ -1,6 +1,7 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import Tooltip, { withTooltip } from '.';
 import { Button } from '../Button';
@@ -9,7 +10,7 @@ const tooltipText = 'A simple tool tip';
 const tooltipHidden = false;
 const placements = [null, 'left', 'top', 'right', 'bottom', 'top-left', 'top-right', 'bottom-left', 'bottom-right'];
 
-storiesOf('Components|Tooltip', module)
+storiesOf('Components/Tooltip', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('inline', () => (

@@ -1,11 +1,12 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { VideoAttachment } from '.';
 
 
-storiesOf('Messages|VideoAttachment', module)
+storiesOf('Messages/VideoAttachment', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

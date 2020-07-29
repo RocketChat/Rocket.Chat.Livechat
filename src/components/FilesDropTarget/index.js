@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { createClassName } from '../helpers';
 import styles from './styles.scss';
@@ -105,7 +105,7 @@ export class FilesDropTarget extends Component {
 		>
 			<input
 				ref={this.handleInputRef}
-				type="file"
+				type='file'
 				accept={accept}
 				multiple={multiple}
 				onChange={this.handleInputChange}
