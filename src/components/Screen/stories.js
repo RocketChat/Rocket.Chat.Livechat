@@ -125,7 +125,7 @@ storiesOf('Components/Screen', module)
 				email: 'guilherme.gazzo@rocket.chat',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: 'https://gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
 				},
 			})}
 			title={text('title', 'Title')}
@@ -157,7 +157,7 @@ storiesOf('Components/Screen', module)
 				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: 'https://gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
 				},
 			})}
 			title={text('title', 'Title')}
@@ -190,7 +190,7 @@ storiesOf('Components/Screen', module)
 				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: 'https://gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
 				},
 			})}
 			title={text('title', 'Title')}

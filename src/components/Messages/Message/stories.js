@@ -5,6 +5,9 @@ import { loremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
 import { Message } from '.';
+import sampleAudio from '../../../../.storybook/assets/sample-audio.mp3';
+import sampleImage from '../../../../.storybook/assets/sample-image.jpg';
+import sampleVideo from '../../../../.storybook/assets/sample-video.mp4';
 import { attachmentResolver, avatarResolver } from '../../../helpers.stories';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
@@ -166,7 +169,7 @@ storiesOf('Messages/Message', module)
 			u={object('u', defaultUser)}
 			ts={date('ts', now)}
 			attachments={object('attachments', [{
-				audio_url: 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3',
+				audio_url: sampleAudio,
 			}])}
 		/>
 	))
@@ -181,7 +184,7 @@ storiesOf('Messages/Message', module)
 			u={object('u', defaultUser)}
 			ts={date('ts', now)}
 			attachments={object('attachments', [{
-				video_url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+				video_url: sampleVideo,
 			}])}
 		/>
 	))
@@ -196,7 +199,7 @@ storiesOf('Messages/Message', module)
 			u={object('u', defaultUser)}
 			ts={date('ts', now)}
 			attachments={object('attachments', [{
-				image_url: 'https://sample-videos.com/img/Sample-png-image-200kb.png',
+				image_url: sampleImage,
 			}])}
 		/>
 	))
@@ -212,7 +215,7 @@ storiesOf('Messages/Message', module)
 			ts={date('ts', now)}
 			attachments={object('attachments', ['pdf', 'doc', 'ppt', 'xls', 'zip', 'abc']
 				.map((extension) => ({
-					title_link: `http://localhost:3000/demo.${ extension }`,
+					title_link: `http://example.com/demo.${ extension }`,
 					title: `Untitled ${ extension } file`,
 				})),
 			)}
@@ -230,16 +233,16 @@ storiesOf('Messages/Message', module)
 			ts={date('ts', now)}
 			attachments={object('attachments', [
 				{
-					audio_url: 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3',
+					audio_url: sampleAudio,
 				},
 				{
-					video_url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+					video_url: sampleVideo,
 				},
 				{
-					image_url: 'https://sample-videos.com/img/Sample-png-image-200kb.png',
+					image_url: sampleImage,
 				},
 				{
-					title_link: 'http://localhost:3000/demo.pdf',
+					title_link: 'http://example.com/demo.pdf',
 					title: 'Untitled pdf file',
 				},
 			])}

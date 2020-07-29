@@ -29,9 +29,9 @@ export const screenProps = () => ({
 });
 
 export const avatarResolver = (username) => ({
-	'tasso.evangelista': '//gravatar.com/avatar/5ddcdc159b17f4f79fd254a06d871c5a?s=32',
-	'guilherme.gazzo': '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
-	'martin.schoeler': '//gravatar.com/avatar/e6662ba16ba3ca2a76857e3999e6d960?s=32',
+	'tasso.evangelista': 'https://gravatar.com/avatar/5ddcdc159b17f4f79fd254a06d871c5a?s=32',
+	'guilherme.gazzo': 'https://gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
+	'martin.schoeler': 'https://gravatar.com/avatar/e6662ba16ba3ca2a76857e3999e6d960?s=32',
 })[username];
 
 export const attachmentResolver = (url) => url;
