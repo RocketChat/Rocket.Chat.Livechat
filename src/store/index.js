@@ -1,5 +1,4 @@
-import { h, Component } from 'preact';
-import { createContext } from 'preact-context';
+import { h, Component, createContext } from 'preact';
 
 import Store from './Store';
 

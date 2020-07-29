@@ -1,5 +1,3 @@
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
-
 export default (config, { isProd }) => {
 	if (isProd) {
 		config.output.publicPath = 'livechat/';
@@ -31,42 +29,6 @@ export default (config, { isProd }) => {
 
 	config.optimization = {
 		sideEffects: false,
-		minimizer: [
-			new UglifyJSPlugin({
-				uglifyOptions: {
-					extractComments: 'all',
-					warnings: false,
-					mangle: true,
-					toplevel: false,
-					nameCache: null,
-					ie8: false,
-					keep_fnames: false,
-					output: {
-						comments: false,
-					},
-					compress: {
-						unsafe_comps: true,
-						properties: true,
-						keep_fargs: false,
-						pure_getters: true,
-						collapse_vars: true,
-						warnings: false,
-						sequences: true,
-						dead_code: true,
-						drop_debugger: true,
-						comparisons: true,
-						conditionals: true,
-						evaluate: true,
-						booleans: true,
-						loops: true,
-						unused: true,
-						if_return: true,
-						join_vars: true,
-						drop_console: true,
-					},
-				},
-			}),
-		],
 		splitChunks: {
 			minSize: 30000,
 			maxSize: 0,
