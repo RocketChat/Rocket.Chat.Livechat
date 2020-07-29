@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { FileAttachment } from '.';
-import { memedIpsum } from '../../../helpers.stories';
+import { loremIpsum } from '../../../helpers.stories';
 
 
 const centeredWithWidth = (storyFn, ...args) => centered(() => (
@@ -54,7 +54,7 @@ storiesOf('Messages/FileAttachment', module)
 	))
 	.add('with long title', () => (
 		<FileAttachment
-			title={text('title', memedIpsum({ count: 50, units: 'words' }))}
+			title={text('title', loremIpsum({ count: 50, units: 'words' }))}
 			url={text('url', 'http://example.com/demo.abc')}
 		/>
 	));

@@ -1,8 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered';
 import { boolean, color } from '@storybook/addon-knobs';
-import { loremIpsum } from 'lorem-ipsum';
-import mem from 'mem';
+import { loremIpsum as originalLoremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
 
@@ -36,4 +35,9 @@ export const avatarResolver = (username) => ({
 
 export const attachmentResolver = (url) => url;
 
-export const memedIpsum = mem(loremIpsum);
+const createRandom = (s) => () => {
+	s = Math.sin(s) * 10000;
+	return s - Math.floor(s);
+};
+const loremIpsumRandom = createRandom(42);
+export const loremIpsum = (options) => originalLoremIpsum({ random: loremIpsumRandom, ...options });
