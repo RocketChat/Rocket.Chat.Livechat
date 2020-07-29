@@ -35,7 +35,7 @@ const userPrensence = {
 		timer = setTimeout(this.setAway, awayTime);
 	},
 
-	handleStoreChange(state) {
+	handleStoreChange([state]) {
 		if (!initiated) {
 			return;
 		}
