@@ -205,7 +205,7 @@ export default class Chat extends Component {
 									<ComposerAction onClick={this.handleUploadClick}>
 										<PlusIcon width={20} />
 									</ComposerAction>
-								)}1
+								)}
 								{text.length > 0 && (
 									<ComposerAction onClick={this.handleSendClick}>
 										<SendIcon width={20} />
