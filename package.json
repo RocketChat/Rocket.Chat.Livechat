@@ -57,7 +57,7 @@
 		"stylelint": "^13.6.1",
 		"stylelint-order": "^4.1.0",
 		"svg-loader": "0.0.2",
-		"webpack-cli": "^3.2.1"
+		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
 		"@kossnocorp/desvg": "^0.2.0",
@@ -67,8 +67,8 @@
 		"emoji-mart": "^3.0.0",
 		"history": "^4.7.2",
 		"i18nline": "^2.0.1",
-		"markdown-it": "^10.0.0",
-		"mem": "^5.1.1",
+		"markdown-it": "^11.0.0",
+		"mem": "^6.1.0",
 		"mitt": "^2.1.0",
 		"preact": "^8.2.6",
 		"preact-context": "^1.1.1",
