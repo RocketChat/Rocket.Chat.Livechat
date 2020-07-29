@@ -105,7 +105,7 @@ export default class SwitchDepartment extends Component {
 							error={department && department.showError && department.error}
 						>
 							<SelectInput
-								name="department"
+								name='department'
 								value={department && department.value}
 								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
 								placeholder={I18n.t('Choose a department...')}

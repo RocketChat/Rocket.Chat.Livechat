@@ -36,7 +36,7 @@ export const TextInput = memo(({
 		)
 		: (
 			<input
-				type="text"
+				type='text'
 				name={name}
 				value={value}
 				placeholder={placeholder}

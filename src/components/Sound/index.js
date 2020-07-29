@@ -37,7 +37,7 @@ export class Sound extends Component {
 			src={src}
 			onPlay={onStart}
 			onEnded={onStop}
-			type="audio/mpeg"
+			type='audio/mpeg'
 		/>
 	)
 }

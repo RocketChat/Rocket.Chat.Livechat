@@ -219,7 +219,7 @@ export default class Register extends Component {
 									error={name.showError && name.error}
 								>
 									<TextInput
-										name="name"
+										name='name'
 										value={name.value}
 										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
 										disabled={loading}
@@ -237,7 +237,7 @@ export default class Register extends Component {
 									error={email.showError && email.error}
 								>
 									<TextInput
-										name="email"
+										name='email'
 										value={email.value}
 										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
 										disabled={loading}
@@ -254,7 +254,7 @@ export default class Register extends Component {
 									error={department.showError && department.error}
 								>
 									<SelectInput
-										name="department"
+										name='department'
 										value={department.value}
 										options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
 										placeholder={I18n.t('Choose an option...')}

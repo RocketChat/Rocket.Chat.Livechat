@@ -32,7 +32,7 @@ storiesOf('Components|Footer', module)
 	.add('with Composer and options', () => (
 		<Footer>
 			<FooterContent>
-				<Composer placeholder="Insert your text here" />
+				<Composer placeholder='Insert your text here' />
 			</FooterContent>
 			<FooterContent>
 				<FooterOptions>

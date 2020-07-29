@@ -75,18 +75,18 @@ storiesOf('Components|Composer', module)
 			placeholder={text('placeholder', defaultPlaceholder)}
 			pre={
 				<ComposerActions>
-					<ComposerAction text="Add emoji" onClick={action('click smile')}>
-						<SmileIcon width="20" />
+					<ComposerAction text='Add emoji' onClick={action('click smile')}>
+						<SmileIcon width='20' />
 					</ComposerAction>
-					<ComposerAction text="Send" onClick={action('click send')}>
-						<SendIcon color="#1D74F5" width="20" />
+					<ComposerAction text='Send' onClick={action('click send')}>
+						<SendIcon color='#1D74F5' width='20' />
 					</ComposerAction>
 				</ComposerActions>
 			}
 			post={
 				<ComposerActions>
-					<ComposerAction text="Add attachment" onClick={action('click plus')}>
-						<PlusIcon width="20" />
+					<ComposerAction text='Add attachment' onClick={action('click plus')}>
+						<PlusIcon width='20' />
 					</ComposerAction>
 				</ComposerActions>
 			}

@@ -30,7 +30,7 @@ export class Alert extends Component {
 
 	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children }) => (
 		<div
-			role="alert"
+			role='alert'
 			className={createClassName(styles, 'alert', { success, warning, error }, [className])}
 			style={{
 				...style,

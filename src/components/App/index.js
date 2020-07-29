@@ -209,12 +209,12 @@ export class App extends Component {
 
 		return (
 			<Router history={history} onChange={this.handleRoute}>
-				<Chat default path="/" {...screenProps} />
-				<ChatFinished path="/chat-finished" {...screenProps} />
-				<GDPRAgreement path="/gdpr" {...screenProps} />
-				<LeaveMessage path="/leave-message" {...screenProps} />
-				<Register path="/register" {...screenProps} />
-				<SwitchDepartment path="/switch-department" {...screenProps} />
+				<Chat default path='/' {...screenProps} />
+				<ChatFinished path='/chat-finished' {...screenProps} />
+				<GDPRAgreement path='/gdpr' {...screenProps} />
+				<LeaveMessage path='/leave-message' {...screenProps} />
+				<Register path='/register' {...screenProps} />
+				<SwitchDepartment path='/switch-department' {...screenProps} />
 			</Router>
 		);
 	}
@@ -222,7 +222,7 @@ export class App extends Component {
 
 const AppConnector = () => (
 	<StoreProvider>
-		<div id="app">
+		<div id='app'>
 			<StoreConsumer>
 				{({
 					config,

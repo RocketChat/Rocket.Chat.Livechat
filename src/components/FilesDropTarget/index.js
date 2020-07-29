@@ -105,7 +105,7 @@ export class FilesDropTarget extends Component {
 		>
 			<input
 				ref={this.handleInputRef}
-				type="file"
+				type='file'
 				accept={accept}
 				multiple={multiple}
 				onChange={this.handleInputChange}

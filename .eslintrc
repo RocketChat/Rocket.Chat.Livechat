@@ -20,6 +20,7 @@
 				"order": "asc"
 			}
 		}],
+		"jsx-quotes": ["error", "prefer-single"],
 		"react/display-name": ["warn", {
 			"ignoreTranspilerName": false
 		}],

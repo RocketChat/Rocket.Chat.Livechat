@@ -23,7 +23,7 @@ export class Avatar extends Component {
 
 	render = ({ small, large, src, description, status, className, style }, { errored }) => (
 		<div
-			aria-label="User picture"
+			aria-label='User picture'
 			className={createClassName(styles, 'avatar', { small, large, nobg: src && !errored }, [className])}
 			style={style}
 		>

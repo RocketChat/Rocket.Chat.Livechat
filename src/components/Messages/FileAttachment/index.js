@@ -20,8 +20,8 @@ export const FileAttachment = memo(({
 		<a
 			href={url}
 			download
-			target="_blank"
-			rel="noopener noreferrer"
+			target='_blank'
+			rel='noopener noreferrer'
 			className={createClassName(styles, 'file-attachment__inner')}
 		>
 			<FileAttachmentIcon url={url} />

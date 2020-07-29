@@ -59,7 +59,7 @@ export class SelectInput extends Component {
 				})}
 				{...props}
 			>
-				<option value="" disabled hidden>{placeholder}</option>
+				<option value='' disabled hidden>{placeholder}</option>
 				{Array.from(options).map(({ value, label }, key) => (
 					<option key={key} value={value} className={createClassName(styles, 'select-input__option')}>{label}</option>
 				))}

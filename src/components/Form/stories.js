@@ -24,20 +24,20 @@ storiesOf('Forms|Form', module)
 	.add('default', () => (
 		<Form onSubmit={handleSubmit}>
 			<FormField
-				label="Text"
-				description="Input field for plain text"
+				label='Text'
+				description='Input field for plain text'
 			>
 				<TextInput />
 			</FormField>
 			<FormField
-				label="Password"
-				description="Input field for secret text"
+				label='Password'
+				description='Input field for secret text'
 			>
 				<PasswordInput />
 			</FormField>
 			<FormField
-				label="Select"
-				description="Input field for secret text"
+				label='Select'
+				description='Input field for secret text'
 			>
 				<SelectInput
 					options={[

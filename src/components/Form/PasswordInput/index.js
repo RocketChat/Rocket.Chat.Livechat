@@ -17,7 +17,7 @@ export const PasswordInput = memo(({
 	style = {},
 }) => (
 	<input
-		type="password"
+		type='password'
 		name={name}
 		value={value}
 		placeholder={placeholder}
