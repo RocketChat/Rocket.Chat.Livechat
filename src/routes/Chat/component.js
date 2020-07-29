@@ -1,5 +1,5 @@
-import { h, Component } from 'preact';
 import { Picker } from 'emoji-mart';
+import { h, Component } from 'preact';
 
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
@@ -8,14 +8,14 @@ import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import styles from './styles.scss';
+import I18n from '../../i18n';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
 import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
-import I18n from '../../i18n';
+import styles from './styles.scss';
 
 export default class Chat extends Component {
 	state = {

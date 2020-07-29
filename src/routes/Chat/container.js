@@ -2,16 +2,16 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
-import { Consumer } from '../../store';
+import { ModalManager } from '../../components/Modal';
+import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import I18n from '../../i18n';
+import { normalizeQueueAlert } from '../../lib/api';
+import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
-import constants from '../../lib/constants';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
-import Chat from './component';
-import { ModalManager } from '../../components/Modal';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
-import { normalizeQueueAlert } from '../../lib/api';
-import I18n from '../../i18n';
+import { Consumer } from '../../store';
+import Chat from './component';
 
 export class ChatContainer extends Component {
 	state = {

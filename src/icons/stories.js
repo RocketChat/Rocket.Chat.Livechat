@@ -1,8 +1,8 @@
 import path from 'path';
 
-import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, color } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 

@@ -1,10 +1,10 @@
 import { h } from 'preact';
 
-import styles from './styles.scss';
-import Logo from './logo.svg';
-import { createClassName } from '../helpers';
-import { PopoverMenu } from '../Menu';
 import I18n from '../../i18n';
+import { PopoverMenu } from '../Menu';
+import { createClassName } from '../helpers';
+import Logo from './logo.svg';
+import styles from './styles.scss';
 
 
 export const Footer = ({ children, className, ...props }) => (

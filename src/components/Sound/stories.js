@@ -1,7 +1,7 @@
-import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { Sound } from '.';

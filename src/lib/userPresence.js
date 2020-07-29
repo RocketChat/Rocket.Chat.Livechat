@@ -1,5 +1,5 @@
-import store from '../store';
 import { Livechat } from '../api';
+import store from '../store';
 
 const docActivityEvents = ['mousemove', 'mousedown', 'touchend', 'keydown'];
 let timer;

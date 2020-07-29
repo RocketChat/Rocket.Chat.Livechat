@@ -1,6 +1,6 @@
 import format from 'date-fns/format';
-import isToday from 'date-fns/isToday';
 import { parseISO } from 'date-fns/fp';
+import isToday from 'date-fns/isToday';
 import { h } from 'preact';
 
 import { createClassName, memo } from '../../helpers';

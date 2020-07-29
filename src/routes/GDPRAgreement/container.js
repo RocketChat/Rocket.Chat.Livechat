@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
+import I18n from '../../i18n';
 import { Consumer } from '../../store';
 import GDPRAgreement from './component';
-import I18n from '../../i18n';
 
 
 export class GDPRContainer extends Component {

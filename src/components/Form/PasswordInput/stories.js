@@ -5,7 +5,6 @@ import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { PasswordInput } from '.';
-
 import { Form, FormField } from '..';
 
 

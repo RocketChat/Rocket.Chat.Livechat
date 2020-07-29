@@ -3,8 +3,8 @@ import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { avatarResolver } from '../../helpers.stories';
 import { Avatar } from '.';
+import { avatarResolver } from '../../helpers.stories';
 
 
 const defaultSrc = avatarResolver('guilherme.gazzo');

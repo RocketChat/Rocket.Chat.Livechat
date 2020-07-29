@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import styles from './styles.scss';
 import { createClassName } from '../helpers';
+import styles from './styles.scss';
 
 
 export const Header = ({

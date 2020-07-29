@@ -1,14 +1,14 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { store } from '../store';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import { store } from '../store';
+import { normalizeAgent } from './api';
 import Commands from './commands';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
-import { handleTranscript } from './transcript';
 import { normalizeMessage, normalizeMessages } from './threads';
-import { normalizeAgent } from './api';
+import { handleTranscript } from './transcript';
 
 const commands = new Commands();
 

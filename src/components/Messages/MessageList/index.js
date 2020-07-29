@@ -1,11 +1,11 @@
-import isSameDay from 'date-fns/isSameDay';
 import { parseISO } from 'date-fns/fp';
+import isSameDay from 'date-fns/isSameDay';
 import { h } from 'preact';
 
+import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
-import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import styles from './styles.scss';
 
 

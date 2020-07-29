@@ -1,10 +1,10 @@
 import { h, Component } from 'preact';
 
-import styles from './styles.scss';
-import { createClassName } from '../helpers';
+import I18n from '../../i18n';
 import { Button } from '../Button';
 import { ButtonGroup } from '../ButtonGroup';
-import I18n from '../../i18n';
+import { createClassName } from '../helpers';
+import styles from './styles.scss';
 
 
 export class Modal extends Component {

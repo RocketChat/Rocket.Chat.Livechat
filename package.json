@@ -43,6 +43,7 @@
 		"css-loader": "^2.1.0",
 		"desvg-loader": "^0.1.0",
 		"eslint": "^7.5.0",
+		"eslint-plugin-import": "^2.22.0",
 		"eslint-plugin-react": "^7.20.4",
 		"gh-release": "^3.5.0",
 		"husky": "^3.0.8",

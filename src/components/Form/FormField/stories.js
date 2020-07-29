@@ -3,10 +3,9 @@ import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { memedIpsum } from '../../../helpers.stories';
 import { FormField } from '.';
-
 import { Form, TextInput } from '..';
+import { memedIpsum } from '../../../helpers.stories';
 
 
 storiesOf('Forms|FormField', module)

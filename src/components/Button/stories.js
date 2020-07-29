@@ -1,11 +1,11 @@
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
+import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import ChatIcon from '../../icons/chat.svg';
 import { Button } from '.';
+import ChatIcon from '../../icons/chat.svg';
 
 
 const defaultText = 'Powered by Rocket.Chat';

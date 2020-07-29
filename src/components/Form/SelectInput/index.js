@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 
+import ArrowIcon from '../../../icons/arrowDown.svg';
 import { createClassName } from '../../helpers';
 import styles from './styles.scss';
-import ArrowIcon from '../../../icons/arrowDown.svg';
 
 
 export class SelectInput extends Component {

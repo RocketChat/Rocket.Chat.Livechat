@@ -11,8 +11,8 @@ import {
 } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
-import styles from './styles.scss';
 import I18n from '../../i18n';
+import styles from './styles.scss';
 
 const defaultTitle = I18n.t('Need help?');
 const defaultMessage = I18n.t('Please, tell us some information to start the chat');

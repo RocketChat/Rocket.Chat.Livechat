@@ -4,10 +4,10 @@ import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import SmileIcon from '../../icons/smile.svg';
+import { Composer, ComposerActions, ComposerAction } from '.';
 import PlusIcon from '../../icons/plus.svg';
 import SendIcon from '../../icons/send.svg';
-import { Composer, ComposerActions, ComposerAction } from '.';
+import SmileIcon from '../../icons/smile.svg';
 
 
 const centeredWithWidth = (storyFn, ...args) => centered(() => (

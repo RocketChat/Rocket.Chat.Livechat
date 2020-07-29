@@ -1,10 +1,10 @@
 import { h } from 'preact';
 
+import DownloadIcon from '../../../icons/download.svg';
 import { createClassName, memo } from '../../helpers';
 import { FileAttachmentIcon } from '../FileAttachmentIcon';
 import { MessageBubble } from '../MessageBubble';
 import styles from './styles.scss';
-import DownloadIcon from '../../../icons/download.svg';
 
 
 export const FileAttachment = memo(({

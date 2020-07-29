@@ -1,16 +1,16 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { Button } from '../Button';
-import { PopoverContainer } from '../Popover';
 import Menu, { Group, Item, PopoverMenu } from '.';
 import BellIcon from '../../icons/bell.svg';
+import ChangeIcon from '../../icons/change.svg';
 import CloseIcon from '../../icons/close.svg';
 import FinishIcon from '../../icons/finish.svg';
-import ChangeIcon from '../../icons/change.svg';
+import { Button } from '../Button';
+import { PopoverContainer } from '../Popover';
 
 
 const defaultMenuItemText = 'A menu item';
