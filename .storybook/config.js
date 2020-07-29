@@ -1,5 +1,4 @@
-import { addDecorator, addParameters, configure } from '@storybook/react';
-import { withA11y } from '@storybook/addon-a11y';
+import { addParameters, configure } from '@storybook/react';
 import { create } from '@storybook/theming';
 
 addParameters({
@@ -14,8 +13,6 @@ addParameters({
 		hierarchyRootSeparator: /\|/,
 	},
 });
-
-addDecorator(withA11y);
 
 configure(() => {
 	require('../src/styles/index.scss');

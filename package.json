@@ -28,7 +28,6 @@
 	},
 	"devDependencies": {
 		"@rocket.chat/eslint-config": "^0.4.0",
-		"@storybook/addon-a11y": "^5.1.9",
 		"@storybook/addon-actions": "^5.1.9",
 		"@storybook/addon-backgrounds": "^5.1.9",
 		"@storybook/addon-centered": "^5.1.9",
