@@ -13,7 +13,10 @@ module.exports = ({ config, mode }) => {
 	config.module.rules = config.module.rules.filter(({ loader }) => !/json-loader/.test(loader));
 
 	const fileLoader = config.module.rules.find(({ loader }) => /file-loader/.test(loader));
-	fileLoader.test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf|mp[34])(\?.*)?$/;
+	fileLoader.test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf|mp3|mp4)(\?.*)?$/;
+
+	const urlLoader = config.module.rules.find(({ loader }) => /url-loader/.test(loader));
+	urlLoader.test = /\.(webm|wav|m4a|aac|oga)(\?.*)?$/;
 
 	config.module.rules.push({
 		test: /\.scss$/,
