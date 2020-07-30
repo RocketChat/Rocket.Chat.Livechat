@@ -4,6 +4,10 @@ import { boolean, color } from '@storybook/addon-knobs';
 import { loremIpsum as originalLoremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
+import gazzoAvatar from '../.storybook/assets/gazzo.jpg';
+import martinAvatar from '../.storybook/assets/martin.jpg';
+import tassoAvatar from '../.storybook/assets/tasso.jpg';
+
 
 export const screenCentered = (storyFn, ...args) => centered(() => (
 	<div style={{ display: 'flex', width: '365px', height: '500px' }}>
@@ -28,9 +32,9 @@ export const screenProps = () => ({
 });
 
 export const avatarResolver = (username) => ({
-	'tasso.evangelista': 'https://gravatar.com/avatar/5ddcdc159b17f4f79fd254a06d871c5a?s=32',
-	'guilherme.gazzo': 'https://gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
-	'martin.schoeler': 'https://gravatar.com/avatar/e6662ba16ba3ca2a76857e3999e6d960?s=32',
+	'guilherme.gazzo': gazzoAvatar,
+	'martin.schoeler': martinAvatar,
+	'tasso.evangelista': tassoAvatar,
 })[username];
 
 export const attachmentResolver = (url) => url;
@@ -41,3 +45,9 @@ const createRandom = (s) => () => {
 };
 const loremIpsumRandom = createRandom(42);
 export const loremIpsum = (options) => originalLoremIpsum({ random: loremIpsumRandom, ...options });
+
+export {
+	gazzoAvatar,
+	martinAvatar,
+	tassoAvatar,
+};

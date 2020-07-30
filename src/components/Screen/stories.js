@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { Screen } from '.';
-import { screenCentered } from '../../helpers.stories';
+import { screenCentered, gazzoAvatar } from '../../helpers.stories';
 import I18n from '../../i18n';
 import { FooterOptions } from '../Footer';
 import Menu from '../Menu';
@@ -125,7 +125,7 @@ storiesOf('Components/Screen', module)
 				email: 'guilherme.gazzo@rocket.chat',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: 'https://gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: gazzoAvatar,
 				},
 			})}
 			title={text('title', 'Title')}
@@ -157,7 +157,7 @@ storiesOf('Components/Screen', module)
 				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: 'https://gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: gazzoAvatar,
 				},
 			})}
 			title={text('title', 'Title')}
@@ -190,7 +190,7 @@ storiesOf('Components/Screen', module)
 				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: 'https://gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: gazzoAvatar,
 				},
 			})}
 			title={text('title', 'Title')}
