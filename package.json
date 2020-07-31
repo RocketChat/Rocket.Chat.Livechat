@@ -68,6 +68,7 @@
 	"dependencies": {
 		"@kossnocorp/desvg": "^0.2.0",
 		"@rocket.chat/sdk": "^1.0.0-alpha.41",
+		"@rocket.chat/ui-kit": "^0.13.1",
 		"date-fns": "^2.15.0",
 		"desvg": "^1.0.2",
 		"emoji-mart": "^3.0.0",
@@ -106,7 +107,7 @@
 			"chrome": {
 				"target": "chrome.docker",
 				"width": 365,
-        "height": 500
+				"height": 500
 			}
 		}
 	}
