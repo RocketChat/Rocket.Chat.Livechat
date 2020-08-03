@@ -157,12 +157,16 @@ export class Composer extends Component {
 	// we only update composer if value length changed from 0 to 1 or 1 to 0
 	// everything else is managed by this.el
 	shouldComponentUpdate({ value: nextValue }) {
-		const { value } = this.props;
+		const { value, limitTextLength } = this.props;
 
 		const nextValueEmpty = !nextValue || nextValue.length === 0;
 		const valueEmpty = !value || value.length === 0;
 
 		if (nextValueEmpty !== valueEmpty) {
+			return true;
+		}
+
+		if (nextValue.length === limitTextLength || value.length === limitTextLength) {
 			return true;
 		}
 

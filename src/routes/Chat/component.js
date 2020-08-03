@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
-import { FooterOptions } from '../../components/Footer';
+import { FooterOptions, CharCounter } from '../../components/Footer';
 import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
@@ -67,9 +67,13 @@ export default class Chat extends Component {
 	}
 
 	handleChangeText = (text) => {
-		this.setState({ text });
-		const { onChangeText } = this.props;
-		onChangeText && onChangeText(text);
+		let value = text;
+		const { onChangeText, limitTextLength } = this.props;
+		if (limitTextLength && limitTextLength < text.length) {
+			value = value.substring(0, limitTextLength);
+		}
+		this.setState({ text: value });
+		onChangeText && onChangeText(value);
 	}
 
 	toggleEmojiPickerState = () => {
@@ -110,6 +114,7 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
+		limitTextLength,
 		...props
 	}, {
 		atBottom = true,
@@ -174,6 +179,11 @@ export default class Chat extends Component {
 							</Menu.Group>
 						</FooterOptions>
 					) : null}
+					limit={limitTextLength
+						? <CharCounter
+							limitTextLength={limitTextLength}
+							textLength={text.length}
+						/> : null}
 				>
 					<Composer onUpload={onUpload}
 						onSubmit={this.handleSubmit}
@@ -203,6 +213,7 @@ export default class Chat extends Component {
 								)}
 							</ComposerActions>
 						)}
+						limitTextLength={limitTextLength}
 					/>
 				</Screen.Footer>
 			</FilesDropTarget>
