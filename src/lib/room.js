@@ -26,50 +26,18 @@ const onRequestScreenSharing = async () => {
 	});
 
 	const { state } = store;
-	const { user: { _id }, room: { _id: roomId }, token, screenSharingConfig } = state;
-
-	console.log(roomId, token);
+	const { room: { _id: roomId }, screenSharingConfig } = state;
 
 	if (!success) {
 		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
-		// Livechat.requestFileSharing({ rid, token, messageType: 'screen_sharing_request_rejected' });
-		try {
-			const config = {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ rid: roomId, token, messageType: 'screen_sharing_request_rejected' }),
-			};
-			const response = await fetch('http://localhost:3000/api/v1/livechat/room.requestFileSharing', config);
-			const json = await response.json();
-			console.log(json);
-		} catch (error) {
-			console.log(error);
-		}
+		Livechat.requestFileSharing({ rid: roomId, messageType: 'screen_sharing_request_rejected' });
 		return;
 	}
 
 	store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: true } });
 
 	parentCall('callback', ['start-screen-sharing', { roomId }]);
-	// Livechat.requestFileSharing({ rid, token, messageType: 'screen_sharing_request_accepted' });
-	try {
-		const config = {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ rid: roomId, token, messageType: 'screen_sharing_request_accepted' }),
-		};
-		const response = await fetch('http://localhost:3000/api/v1/livechat/room.requestFileSharing', config);
-		const json = await response.json();
-		console.log(json);
-	} catch (error) {
-		console.log(error);
-	}
+	Livechat.requestFileSharing({ rid: roomId, messageType: 'screen_sharing_request_accepted' });
 };
 
 const onEndScreenSharing = async () => {

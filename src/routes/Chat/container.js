@@ -223,24 +223,8 @@ export class ChatContainer extends Component {
 	}
 
 	onRequestScreenSharing = async () => {
-		console.log('request screen sharing................');
-		// Livechat.requestFileSharing({ rid, token, messageType: 'guest_requesting_screen_sharing' });
-		try {
-			const { token, room: { _id: roomId } } = this.props;
-			const config = {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ rid: roomId, token, messageType: 'guest_requesting_screen_sharing' }),
-			};
-			const response = await fetch('http://localhost:3000/api/v1/livechat/room.requestFileSharing', config);
-			const json = await response.json();
-			console.log(json);
-		} catch (error) {
-			console.log(error);
-		}
+		const { room: { _id: rid } } = this.props;
+		Livechat.requestFileSharing({ rid, messageType: 'guest_requesting_screen_sharing' });
 	}
 
 	canSwitchDepartment = () => {
