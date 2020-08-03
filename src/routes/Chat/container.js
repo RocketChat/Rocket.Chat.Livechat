@@ -337,6 +337,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
+					limitTextLength,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -423,7 +424,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
-
+				limitTextLength={limitTextLength}
 			/>
 		)}
 	</Consumer>

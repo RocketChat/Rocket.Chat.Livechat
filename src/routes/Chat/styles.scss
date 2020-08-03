@@ -50,6 +50,11 @@
 			border-radius: 50%;
 		}
 	}
+
+	.none__action {
+		opacity: 0.6;
+		margin: 0 6px;
+	}
 }
 
 @keyframes loader-rotate {
