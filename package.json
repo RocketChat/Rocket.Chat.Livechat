@@ -93,7 +93,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "run-s i18n build:app && git add -A src/i18n size-plugin.json"
+			"pre-commit": "run-s i18n && git add -A src/i18n"
 		}
 	},
 	"houston": {
