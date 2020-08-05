@@ -30,14 +30,14 @@ const onRequestScreenSharing = async () => {
 
 	if (!success) {
 		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
-		Livechat.requestFileSharing({ rid: roomId, messageType: 'screen_sharing_request_rejected' });
+		Livechat.screenSharing({ rid: roomId, messageType: 'screen_sharing_request_rejected' });
 		return;
 	}
 
 	store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: true } });
 
 	parentCall('callback', ['start-screen-sharing', { roomId }]);
-	Livechat.requestFileSharing({ rid: roomId, messageType: 'screen_sharing_request_accepted' });
+	Livechat.screenSharing({ rid: roomId, messageType: 'screen_sharing_request_accepted' });
 };
 
 const onEndScreenSharing = async () => {
@@ -54,9 +54,9 @@ const processMessage = async (message) => {
 		closeChat();
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
-	} else if (message.t === 'request_screen_sharing_access') {
+	} else if (message.t === 'request_livechat_screen_sharing_access') {
 		await onRequestScreenSharing();
-	} else if (message.t === 'end_screen_sharing_session') {
+	} else if (message.t === 'end_livechat_screen_sharing_session') {
 		await onEndScreenSharing();
 	}
 };

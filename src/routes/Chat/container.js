@@ -224,7 +224,7 @@ export class ChatContainer extends Component {
 
 	onRequestScreenSharing = async () => {
 		const { room: { _id: rid } } = this.props;
-		Livechat.requestFileSharing({ rid, messageType: 'guest_requesting_screen_sharing' });
+		Livechat.screenSharing({ rid, messageType: 'guest_requesting_livechat_screen_sharing' });
 	}
 
 	canSwitchDepartment = () => {
