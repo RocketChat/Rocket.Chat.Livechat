@@ -19,13 +19,13 @@ export const loadConfig = async () => {
 		guest: user,
 		resources: { sound: src = null } = {},
 		queueInfo,
-		screenSharingConfig,
+		screenSharing,
 		...config
 	} = await Livechat.config({ token });
 
 	await store.setState({
 		config,
-		screenSharingConfig: { ...screenSharingConfig, isActive: false },
+		screenSharingConfig: { ...screenSharing, isActive: false },
 		agent: agent && agent.hiddenInfo ? { hiddenInfo: true } : agent, // TODO: revert it when the API is updated
 		room,
 		user,
