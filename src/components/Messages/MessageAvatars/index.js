@@ -6,6 +6,8 @@ export const MessageAvatars = memo(({
 	avatarResolver = () => null,
 	usernames = [],
 	className,
+	isVisitor = false,
+	name = null,
 	style = {},
 }) => (
 	<div
@@ -14,7 +16,7 @@ export const MessageAvatars = memo(({
 	>
 		{usernames.map((username) => (
 			<Avatar
-				src={avatarResolver(username)}
+				src={avatarResolver(username, isVisitor, name)}
 				description={username}
 				className={createClassName(styles, 'message-avatars__avatar')}
 			/>
