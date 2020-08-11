@@ -1,6 +1,6 @@
 import { Livechat } from '../api';
-import store from '../store';
 import { ModalManager } from '../components/Modal';
+import store from '../store';
 
 
 const promptTranscript = async () => {

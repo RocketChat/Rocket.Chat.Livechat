@@ -32,7 +32,7 @@ class CustomFields {
 		store.off('change', this.handleStoreChange);
 	}
 
-	handleStoreChange(state) {
+	handleStoreChange([state]) {
 		const { user } = state;
 		const { _started } = CustomFields.instance;
 

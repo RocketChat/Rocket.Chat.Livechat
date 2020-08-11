@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
 
@@ -34,7 +36,7 @@ export const TextInput = memo(({
 		)
 		: (
 			<input
-				type="text"
+				type='text'
 				name={name}
 				value={value}
 				placeholder={placeholder}

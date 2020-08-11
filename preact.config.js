@@ -1,18 +1,27 @@
-/* eslint-disable quote-props */
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
-
-import webpackOverride from './webpackOverride.config';
-
-
-export default (config, env/* , helpers */) => {
-	if (env.production) {
+export default (config, { isProd }) => {
+	if (isProd) {
 		config.output.publicPath = 'livechat/';
 	}
 
-	config = webpackOverride(config);
+	const babelRule = config.module.rules.find(({ loader }) => /babel-loader/.test(loader));
+	babelRule.use = [
+		{ loader: babelRule.loader, options: babelRule.options },
+		{ loader: 'preact-i18nline/webpack-loader' },
+	];
+	delete babelRule.loader;
+	delete babelRule.options;
 
-	config.mode = 'production';
+	const filesRule = config.module.rules.find(({ loader }) => /file-loader|url-loader/.test(loader));
+	filesRule.test = /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i;
+
+	config.module.rules.push({
+		test: /\.svg$/,
+		use: [
+			'desvg-loader/preact',
+			'svg-loader',
+			'image-webpack-loader',
+		],
+	});
 
 	config.performance = {
 		hints: false,
@@ -20,42 +29,6 @@ export default (config, env/* , helpers */) => {
 
 	config.optimization = {
 		sideEffects: false,
-		minimizer: [
-			new UglifyJSPlugin({
-				uglifyOptions: {
-					extractComments: 'all',
-					warnings: false,
-					mangle: true,
-					toplevel: false,
-					nameCache: null,
-					ie8: false,
-					keep_fnames: false,
-					output: {
-						comments: false,
-					},
-					compress: {
-						unsafe_comps: true,
-						properties: true,
-						keep_fargs: false,
-						pure_getters: true,
-						collapse_vars: true,
-						warnings: false,
-						sequences: true,
-						dead_code: true,
-						drop_debugger: true,
-						comparisons: true,
-						conditionals: true,
-						evaluate: true,
-						booleans: true,
-						loops: true,
-						unused: true,
-						if_return: true,
-						join_vars: true,
-						drop_console: true,
-					},
-				},
-			}),
-		],
 		splitChunks: {
 			minSize: 30000,
 			maxSize: 0,
@@ -64,20 +37,8 @@ export default (config, env/* , helpers */) => {
 			maxInitialRequests: 10,
 			automaticNameDelimiter: '~',
 			cacheGroups: {
-				mqtt: {
-					name: 'mqtt',
-					chunks: 'async',
-					test: /node_modules\/@rocket\.chat\/sdk\/drivers\/mqtt/,
-					priority: 50,
-				},
-				ddp: {
-					name: 'ddp',
-					chunks: 'async',
-					test: /ddp/,
-					priority: 50,
-				},
 				sdk: {
-					name: 'Rocket.Chat.js.SDK',
+					name: 'sdk',
 					chunks: 'all',
 					test: /node_modules\/@rocket\.chat\/sdk/,
 					priority: 40,
@@ -105,20 +66,6 @@ export default (config, env/* , helpers */) => {
 			},
 		},
 	};
-
-	const definePlugin = config.plugins.find((plugin) => plugin.constructor.name === 'DefinePlugin');
-	definePlugin.definitions = {
-		...definePlugin.definitions,
-		'process': {},
-		'process.env': {},
-		'process.title': 'browser',
-	};
-
-	config.plugins.push(new BundleAnalyzerPlugin({
-		analyzerMode: 'disabled',
-		generateStatsFile: true,
-		statsFilename: 'stats.json',
-	}));
 
 	return config;
 };

@@ -1,12 +1,13 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { Livechat } from '../../api';
-import { loadConfig } from '../../lib/main';
-import { Consumer } from '../../store';
-import SwitchDepartment from './component';
 import { ModalManager } from '../../components/Modal';
 import { createToken } from '../../components/helpers';
 import history from '../../history';
+import I18n from '../../i18n';
+import { loadConfig } from '../../lib/main';
+import { Consumer } from '../../store';
+import SwitchDepartment from './component';
 
 export class SwitchDepartmentContainer extends Component {
 	confirmChangeDepartment = async () => {
@@ -41,7 +42,7 @@ export class SwitchDepartmentContainer extends Component {
 				throw I18n.t('No available agents to transfer');
 			}
 
-			await dispatch({ department });
+			await dispatch({ department, loading: false });
 			await loadConfig();
 
 			await ModalManager.alert({

@@ -1,3 +1,6 @@
+import { h } from 'preact';
+
+import I18n from '../../i18n';
 import { createClassName, MemoizedComponent } from '../helpers';
 import styles from './styles.scss';
 

@@ -1,8 +1,10 @@
-import { loremIpsum } from 'lorem-ipsum';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date, object, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { loremIpsum } from 'lorem-ipsum';
+import { h } from 'preact';
 
+import { Message } from '.';
 import { attachmentResolver, avatarResolver } from '../../../helpers.stories';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
@@ -18,7 +20,6 @@ import {
 	MESSAGE_TYPE_LIVECHAT_SCREEN_SHARING_REQUEST_REJECTED,
 	MESSAGE_TYPE_GUEST_REQUESTING_LIVECHAT_SCREEN_SHARING,
 } from '../constants';
-import { Message } from '.';
 
 
 const messageTypes = {
@@ -76,7 +77,7 @@ const defaultUser = {
 
 const now = new Date();
 
-storiesOf('Messages|Message', module)
+storiesOf('Messages/Message', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (
@@ -223,7 +224,7 @@ storiesOf('Messages|Message', module)
 				.map((extension) => ({
 					title_link: `http://localhost:3000/demo.${ extension }`,
 					title: `Untitled ${ extension } file`,
-				}))
+				})),
 			)}
 		/>
 	))
