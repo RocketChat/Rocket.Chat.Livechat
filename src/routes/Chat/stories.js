@@ -1,6 +1,7 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { screenCentered, screenProps, avatarResolver } from '../../helpers.stories';
 import Chat from './component';
@@ -26,13 +27,13 @@ const messages = [
 	{ _id: 9, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Veri soluta suscipit mel no' },
 ].map((message, i) => ({
 	...message,
-	ts: new Date(Date.now() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)),
+	ts: new Date(Date.now() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)).toISOString(),
 }));
 
 const soundSrc = 'https://open.rocket.chat/sounds/beep.mp3';
 
 
-storiesOf('Routes|Chat', module)
+storiesOf('Routes/Chat', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('loading', () => (
@@ -51,6 +52,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	))
@@ -71,6 +73,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	))
@@ -91,6 +94,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	));

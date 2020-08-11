@@ -1,6 +1,6 @@
-@import '~styles/colors';
-@import '~styles/helpers';
-@import '~styles/variables';
+@import '../../styles/colors';
+@import '../../styles/helpers';
+@import '../../styles/variables';
 
 .footer {
 	display: flex;
@@ -41,6 +41,17 @@
 
 		@include pressable-button(2px);
 	}
+
+	&__remainder  {
+		margin-left: 10px;
+		min-width: 100px;
+		font-weight: bold;
+		&--highlight {
+			color: $color-red;
+			transition: color .2s;
+		}
+	}
+
 }
 
 .powered-by {

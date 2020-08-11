@@ -1,9 +1,10 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
+import I18n from '../../i18n';
 import styles from './styles.scss';
 
 const defaultGreeting = I18n.t('Thanks for talking with us');

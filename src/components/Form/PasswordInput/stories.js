@@ -2,13 +2,13 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { PasswordInput } from '.';
-
 import { Form, FormField } from '..';
 
 
-storiesOf('Forms|PasswordInput', module)
+storiesOf('Forms/PasswordInput', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

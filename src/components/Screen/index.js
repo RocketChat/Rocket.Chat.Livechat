@@ -1,23 +1,23 @@
-import { Component } from 'preact';
+import { Component, h } from 'preact';
 
+import I18n from '../../i18n';
+import MinimizeIcon from '../../icons/arrowDown.svg';
+import RestoreIcon from '../../icons/arrowUp.svg';
+import NotificationsEnabledIcon from '../../icons/bell.svg';
+import NotificationsDisabledIcon from '../../icons/bellOff.svg';
+import ChatIcon from '../../icons/chat.svg';
+import CloseIcon from '../../icons/close.svg';
+import OpenWindowIcon from '../../icons/newWindow.svg';
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import Header from '../Header';
 import { Footer, FooterContent, PoweredBy } from '../Footer';
+import Header from '../Header';
 import { PopoverContainer } from '../Popover';
 import { Sound } from '../Sound';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
-import NotificationsEnabledIcon from '../../icons/bell.svg';
-import NotificationsDisabledIcon from '../../icons/bellOff.svg';
-import MinimizeIcon from '../../icons/arrowDown.svg';
-import RestoreIcon from '../../icons/arrowUp.svg';
-import OpenWindowIcon from '../../icons/newWindow.svg';
-import ChatIcon from '../../icons/chat.svg';
-import CloseIcon from '../../icons/close.svg';
 import styles from './styles.scss';
-
 
 class ScreenHeader extends Component {
 	largeHeader = () => {
@@ -109,7 +109,7 @@ class ScreenHeader extends Component {
 						</Tooltip.Trigger>
 					)}
 					{(!expanded && !windowed) && (
-						<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom-left">
+						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
 								<OpenWindowIcon width={20} />
 							</Header.Action>
@@ -129,7 +129,7 @@ export const ScreenContent = ({ children, nopadding }) => (
 );
 
 
-export const ScreenFooter = ({ children, options }) => (
+export const ScreenFooter = ({ children, options, limit }) => (
 	<Footer>
 		{children && (
 			<FooterContent>
@@ -138,6 +138,7 @@ export const ScreenFooter = ({ children, options }) => (
 		)}
 		<FooterContent>
 			{options}
+			{limit}
 			<PoweredBy />
 		</FooterContent>
 	</Footer>
@@ -181,6 +182,7 @@ export const Screen = ({
 	onOpenWindow,
 	onSoundStop,
 	queueInfo,
+	dismissNotification,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<style>{`
@@ -222,7 +224,7 @@ export const Screen = ({
 			onClick={minimized ? onRestore : onMinimize}
 		/>
 
-		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} />}
+		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} dismissNotification={dismissNotification} />}
 	</div>
 );
 

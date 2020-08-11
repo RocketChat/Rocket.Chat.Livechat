@@ -2,6 +2,7 @@ import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, button, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { FilesDropTarget } from '.';
 
@@ -22,7 +23,7 @@ const DummyContent = () => (
 	</div>
 );
 
-storiesOf('Components|FilesDropTarget', module)
+storiesOf('Components/FilesDropTarget', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

@@ -26,7 +26,7 @@
     "error_removing_user_data_ce507478": "Error eliminando datos de usuario.",
     "error_starting_a_new_conversation_reason_a1b491a1": "Error al iniciar una nueva conversación: %{reason}",
     "expand_chat_a0045dbd": "Expandir chat",
-    "field_required_fc5c6b05": "Field required",
+    "field_required_fc5c6b05": "Archivo requerido",
     "file_exceeds_allowed_size_of_size_bd65c389": "El archivo excede el tamaño permitido %{size}.",
     "fileupload_error_9eedee68": "Error en subida de archivo",
     "finish_this_chat_87b79542": "Finalizar este chat",

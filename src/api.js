@@ -1,5 +1,5 @@
-import queryString from 'query-string';
 import LivechatClient from '@rocket.chat/sdk/lib/clients/Livechat';
+import queryString from 'query-string';
 
 const host = window.SERVER_URL
 	|| queryString.parse(window.location.search).serverUrl

@@ -1,4 +1,4 @@
-import EventEmitter from 'wolfy87-eventemitter';
+import mitt from 'mitt';
 
 
 const log = process.env.NODE_ENV === 'development'
@@ -38,7 +38,7 @@ export const validCallbacks = [
 	'no-agent-online',
 ];
 
-const callbacks = new EventEmitter();
+const callbacks = mitt();
 
 function registerCallback(eventName, fn) {
 	if (validCallbacks.indexOf(eventName) === -1) {
@@ -231,53 +231,6 @@ function pageVisited(change) {
 	});
 }
 
-function initialize(params) {
-	for (const method in params) {
-		switch(method) {
-			case 'customField':
-				const { key, value, overwrite } = params[method];
-				setCustomField(key, value, overwrite);
-				continue;
-			case 'setCustomFields':
-				if (!Array.isArray(params[method])) {
-					console.log('Error: Invalid parameters. Value must be an array of objects');
-					continue;
-				}
-				params[method].forEach((data) => {
-					const { key, value, overwrite } = data;
-					setCustomField(key, value, overwrite);
-				});
-				continue;
-			case 'theme':
-				setTheme(params[method]);
-				continue;
-			case 'department':
-				setDepartment(params[method]);
-				continue;
-			case 'guestToken':
-				setGuestToken(params[method]);
-				continue;
-			case 'guestName':
-				setGuestName(params[method]);
-				continue;
-			case 'guestEmail':
-				setGuestEmail(params[method]);
-				continue;
-			case 'registerGuest':
-				registerGuest(params[method]);
-				continue;
-			case 'language':
-				setLanguage(params[method]);
-				continue;
-			case 'agent':
-				setAgent(params[method]);
-				continue;
-			default:
-				continue;
-		}
-	}
-}
-
 function setCustomField(key, value, overwrite) {
 	if (typeof overwrite === 'undefined') {
 		overwrite = true;
@@ -335,6 +288,57 @@ function maximizeWidget() {
 
 function minimizeWidget() {
 	callHook('minimizeWidget');
+}
+
+function initialize(params) {
+	for (const method in params) {
+		if (!params.hasOwnProperty(method)) {
+			continue;
+		}
+
+		switch (method) {
+			case 'customField':
+				const { key, value, overwrite } = params[method];
+				setCustomField(key, value, overwrite);
+				continue;
+			case 'setCustomFields':
+				if (!Array.isArray(params[method])) {
+					console.log('Error: Invalid parameters. Value must be an array of objects');
+					continue;
+				}
+				params[method].forEach((data) => {
+					const { key, value, overwrite } = data;
+					setCustomField(key, value, overwrite);
+				});
+				continue;
+			case 'theme':
+				setTheme(params[method]);
+				continue;
+			case 'department':
+				setDepartment(params[method]);
+				continue;
+			case 'guestToken':
+				setGuestToken(params[method]);
+				continue;
+			case 'guestName':
+				setGuestName(params[method]);
+				continue;
+			case 'guestEmail':
+				setGuestEmail(params[method]);
+				continue;
+			case 'registerGuest':
+				registerGuest(params[method]);
+				continue;
+			case 'language':
+				setLanguage(params[method]);
+				continue;
+			case 'agent':
+				setAgent(params[method]);
+				continue;
+			default:
+				continue;
+		}
+	}
 }
 
 const currentPage = {

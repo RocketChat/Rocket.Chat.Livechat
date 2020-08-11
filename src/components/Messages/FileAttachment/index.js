@@ -1,8 +1,10 @@
+import { h } from 'preact';
+
+import DownloadIcon from '../../../icons/download.svg';
 import { createClassName, memo } from '../../helpers';
 import { FileAttachmentIcon } from '../FileAttachmentIcon';
 import { MessageBubble } from '../MessageBubble';
 import styles from './styles.scss';
-import DownloadIcon from '../../../icons/download.svg';
 
 
 export const FileAttachment = memo(({
@@ -18,8 +20,8 @@ export const FileAttachment = memo(({
 		<a
 			href={url}
 			download
-			target="_blank"
-			rel="noopener noreferrer"
+			target='_blank'
+			rel='noopener noreferrer'
 			className={createClassName(styles, 'file-attachment__inner')}
 		>
 			<FileAttachmentIcon url={url} />

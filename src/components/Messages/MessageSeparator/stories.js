@@ -1,13 +1,14 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { MessageSeparator } from '.';
 
 
 const now = new Date();
 
-storiesOf('Messages|MessageSeparator', module)
+storiesOf('Messages/MessageSeparator', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (
