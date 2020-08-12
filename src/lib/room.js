@@ -10,6 +10,7 @@ import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { ModalManager } from '../components/Modal';
 import { handleTranscript } from './transcript';
+import I18n from '../i18n';
 
 const commands = new Commands();
 
