@@ -82,10 +82,8 @@ export default class LeaveMessage extends Component {
 		}
 	}
 
-	constructor(props) {
-		super(props);
-		this.setState(this.getDefaultState());
-		this.validateAll();
+	componentDidMount() {
+		this.setState(this.getDefaultState(), this.validateAll);
 	}
 
 	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }) => (
