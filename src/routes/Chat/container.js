@@ -3,7 +3,7 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import { createToken, debounce, getAvatarUrl, getFilteredMsg, canRenderMessage, throttle, upsert } from '../../components/helpers';
 import I18n from '../../i18n';
 import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
@@ -148,7 +148,7 @@ export class ChatContainer extends Component {
 			this.resetLastAction();
 			await Promise.all([
 				this.stopTyping({ rid, username: user.username }),
-				Livechat.sendMessage({ msg, token, rid, avatar }),
+				Livechat.sendMessage({ msg: getFilteredMsg(msg), token, rid, avatar }),
 			]);
 		} catch (error) {
 			const { data: { error: reason } } = error;
