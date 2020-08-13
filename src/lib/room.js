@@ -82,6 +82,17 @@ export const initRoom = async () => {
 		parentCall('callback', ['queue-position-change', queueInfo]);
 	});
 
+	Livechat.onVisitorChange(rid, async (newVisitor) => {
+		const { user: { _updatedAt = null } = {}, room } = store.state;
+		const { _id, token, username } = newVisitor;
+		await store.setState({
+			user: { _id, token, username, _updatedAt },
+			token,
+			room: { ...room, v: { _id, token, username } },
+		});
+		await loadConfig();
+	});
+
 	setCookies(rid, token);
 };
 
