@@ -38,6 +38,40 @@ export const loadConfig = async () => {
 	});
 };
 
+export const reloadConfig = async () => {
+	const {
+		token,
+		room: { _id: roomId = null } = {},
+		messages,
+		typing,
+	} = store.state;
+
+	Livechat.credentials.token = token;
+
+	const {
+		agent,
+		room,
+		guest: user,
+		resources: { sound: src = null } = {},
+		queueInfo,
+		...config
+	} = await Livechat.config({
+		token,
+		...roomId && { roomId },
+	});
+
+	await store.setState({
+		config,
+		agent: agent && agent.hiddenInfo ? { hiddenInfo: true } : agent, // TODO: revert it when the API is updated
+		room,
+		user,
+		queueInfo,
+		sound: { src, enabled: true, play: false },
+		messages,
+		typing,
+	});
+};
+
 export const processUnread = async () => {
 	const { minimized, visible, messages } = store.state;
 	if (minimized || !visible) {

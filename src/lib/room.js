@@ -5,7 +5,7 @@ import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
-import { loadConfig, processUnread } from './main';
+import { loadConfig, processUnread, reloadConfig } from './main';
 import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
@@ -90,7 +90,7 @@ export const initRoom = async () => {
 			token,
 			room: { ...room, v: { _id, token, username } },
 		});
-		await loadConfig();
+		await reloadConfig();
 	});
 
 	setCookies(rid, token);
