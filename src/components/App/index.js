@@ -18,6 +18,7 @@ import LeaveMessage from '../../routes/LeaveMessage';
 import Register from '../../routes/Register';
 import SwitchDepartment from '../../routes/SwitchDepartment';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
+import { ScriptCacheInstance } from '../../lib/scriptCache';
 import { visibility, isActiveSession } from '../helpers';
 
 function isRTL(s) {
@@ -155,6 +156,11 @@ export class App extends Component {
 
 		this.setState({ initialized: true });
 		parentCall('ready');
+
+		const { screenSharingConfig: { enabled, providerBundle } } = this.props;
+		if (enabled) {
+			await ScriptCacheInstance.loadSrc(providerBundle);
+		}
 	}
 
 	async finalize() {
@@ -226,6 +232,7 @@ const AppConnector = () => (
 			<StoreConsumer>
 				{({
 					config,
+					screenSharingConfig,
 					user,
 					triggered,
 					gdpr,
@@ -240,6 +247,7 @@ const AppConnector = () => (
 				}) => (
 					<App
 						config={config}
+						screenSharingConfig={screenSharingConfig}
 						gdpr={gdpr}
 						triggered={triggered}
 						user={user}

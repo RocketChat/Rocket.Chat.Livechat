@@ -36,6 +36,8 @@ export const validCallbacks = [
 	'agent-status-change',
 	'queue-position-change',
 	'no-agent-online',
+	'start-screen-sharing',
+	'end-screen-sharing',
 ];
 
 const callbacks = mitt();
@@ -433,6 +435,8 @@ window.RocketChat.livechat = {
 	onAgentStatusChange(fn) { registerCallback('agent-status-change', fn); },
 	onQueuePositionChange(fn) { registerCallback('queue-position-change', fn); },
 	onServiceOffline(fn) { registerCallback('no-agent-online', fn); },
+	onStartScreenSharing(fn) { registerCallback('start-screen-sharing', fn); },
+	onEndScreenSharing(fn) { registerCallback('end-screen-sharing', fn); },
 };
 
 // proccess queue

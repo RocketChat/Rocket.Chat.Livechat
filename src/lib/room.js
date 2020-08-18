@@ -1,7 +1,9 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
+import { ModalManager } from '../components/Modal';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import I18n from '../i18n';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
@@ -22,11 +24,44 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 	route('/chat-finished');
 };
 
+const onRequestScreenSharing = async () => {
+	const { success } = await ModalManager.confirm({
+		text: I18n.t('Agent is requesting screensharing. Are you sure you allow agent to screenshare?'),
+	});
+
+	const { state } = store;
+	const { room: { _id: roomId }, screenSharingConfig } = state;
+
+	if (!success) {
+		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
+		Livechat.screenSharing({ rid: roomId, messageType: 'livechat_screen_sharing_request_rejected' });
+		return;
+	}
+
+	store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: true } });
+
+	parentCall('callback', ['start-screen-sharing', { roomId }]);
+	Livechat.screenSharing({ rid: roomId, messageType: 'livechat_screen_sharing_request_accepted' });
+};
+
+const onEndScreenSharing = async () => {
+	const { state } = store;
+	const { room: { _id: roomId }, screenSharingConfig } = state;
+
+	store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
+
+	parentCall('callback', ['end-screen-sharing', { roomId }]);
+};
+
 const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
+	} else if (message.t === 'request_livechat_screen_sharing_access') {
+		await onRequestScreenSharing();
+	} else if (message.t === 'end_livechat_screen_sharing_session') {
+		await onEndScreenSharing();
 	}
 };
 
