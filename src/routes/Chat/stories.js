@@ -3,6 +3,7 @@ import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
+import soundSrc from '../../../.storybook/assets/beep.mp3';
 import { screenCentered, screenProps, avatarResolver } from '../../helpers.stories';
 import Chat from './component';
 
@@ -14,6 +15,8 @@ const agent = {
 	phone: '+55 99 99999 9999',
 	username: 'guilherme.gazzo',
 };
+
+const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
 const messages = [
 	{ _id: 1, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
@@ -27,10 +30,8 @@ const messages = [
 	{ _id: 9, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Veri soluta suscipit mel no' },
 ].map((message, i) => ({
 	...message,
-	ts: new Date(Date.now() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)).toISOString(),
+	ts: new Date(now.getTime() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)).toISOString(),
 }));
-
-const soundSrc = 'https://open.rocket.chat/sounds/beep.mp3';
 
 
 storiesOf('Routes/Chat', module)

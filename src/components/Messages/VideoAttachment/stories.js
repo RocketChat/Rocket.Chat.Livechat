@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { VideoAttachment } from '.';
+import sampleVideo from '../../../../.storybook/assets/sample-video.mp4';
 
 
 storiesOf('Messages/VideoAttachment', module)
@@ -11,6 +12,6 @@ storiesOf('Messages/VideoAttachment', module)
 	.addDecorator(withKnobs)
 	.add('default', () => (
 		<VideoAttachment
-			url={text('url', 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4')}
+			url={text('url', sampleVideo)}
 		/>
-	));
+	), { loki: { skip: true } });

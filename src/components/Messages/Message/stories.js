@@ -1,11 +1,13 @@
 import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date, object, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { loremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
 import { Message } from '.';
-import { attachmentResolver, avatarResolver } from '../../../helpers.stories';
+import sampleAudio from '../../../../.storybook/assets/sample-audio.mp3';
+import sampleImage from '../../../../.storybook/assets/sample-image.jpg';
+import sampleVideo from '../../../../.storybook/assets/sample-video.mp4';
+import { attachmentResolver, avatarResolver, loremIpsum } from '../../../helpers.stories';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
 	MESSAGE_TYPE_USER_ADDED,
@@ -65,7 +67,7 @@ const defaultUser = {
 	name: 'Guilherme Albrech Gazzo',
 };
 
-const now = new Date();
+const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
 storiesOf('Messages/Message', module)
 	.addDecorator(centered)
@@ -166,10 +168,10 @@ storiesOf('Messages/Message', module)
 			u={object('u', defaultUser)}
 			ts={date('ts', now)}
 			attachments={object('attachments', [{
-				audio_url: 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3',
+				audio_url: sampleAudio,
 			}])}
 		/>
-	))
+	), { loki: { skip: true } })
 	.add('with video attachment', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
@@ -181,10 +183,10 @@ storiesOf('Messages/Message', module)
 			u={object('u', defaultUser)}
 			ts={date('ts', now)}
 			attachments={object('attachments', [{
-				video_url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+				video_url: sampleVideo,
 			}])}
 		/>
-	))
+	), { loki: { skip: true } })
 	.add('with image attachment', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
@@ -196,7 +198,7 @@ storiesOf('Messages/Message', module)
 			u={object('u', defaultUser)}
 			ts={date('ts', now)}
 			attachments={object('attachments', [{
-				image_url: 'https://sample-videos.com/img/Sample-png-image-200kb.png',
+				image_url: sampleImage,
 			}])}
 		/>
 	))
@@ -212,7 +214,7 @@ storiesOf('Messages/Message', module)
 			ts={date('ts', now)}
 			attachments={object('attachments', ['pdf', 'doc', 'ppt', 'xls', 'zip', 'abc']
 				.map((extension) => ({
-					title_link: `http://localhost:3000/demo.${ extension }`,
+					title_link: `http://example.com/demo.${ extension }`,
 					title: `Untitled ${ extension } file`,
 				})),
 			)}
@@ -230,18 +232,18 @@ storiesOf('Messages/Message', module)
 			ts={date('ts', now)}
 			attachments={object('attachments', [
 				{
-					audio_url: 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3',
+					audio_url: sampleAudio,
 				},
 				{
-					video_url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+					video_url: sampleVideo,
 				},
 				{
-					image_url: 'https://sample-videos.com/img/Sample-png-image-200kb.png',
+					image_url: sampleImage,
 				},
 				{
-					title_link: 'http://localhost:3000/demo.pdf',
+					title_link: 'http://example.com/demo.pdf',
 					title: 'Untitled pdf file',
 				},
 			])}
 		/>
-	));
+	), { loki: { skip: true } });

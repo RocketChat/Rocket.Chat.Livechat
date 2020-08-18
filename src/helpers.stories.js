@@ -1,9 +1,12 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 import { boolean, color } from '@storybook/addon-knobs';
-import { loremIpsum } from 'lorem-ipsum';
-import mem from 'mem';
+import { loremIpsum as originalLoremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
+
+import gazzoAvatar from '../.storybook/assets/gazzo.jpg';
+import martinAvatar from '../.storybook/assets/martin.jpg';
+import tassoAvatar from '../.storybook/assets/tasso.jpg';
 
 
 export const screenCentered = (storyFn, ...args) => centered(() => (
@@ -29,11 +32,22 @@ export const screenProps = () => ({
 });
 
 export const avatarResolver = (username) => ({
-	'tasso.evangelista': '//gravatar.com/avatar/5ddcdc159b17f4f79fd254a06d871c5a?s=32',
-	'guilherme.gazzo': '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=32',
-	'martin.schoeler': '//gravatar.com/avatar/e6662ba16ba3ca2a76857e3999e6d960?s=32',
+	'guilherme.gazzo': gazzoAvatar,
+	'martin.schoeler': martinAvatar,
+	'tasso.evangelista': tassoAvatar,
 })[username];
 
 export const attachmentResolver = (url) => url;
 
-export const memedIpsum = mem(loremIpsum);
+const createRandom = (s) => () => {
+	s = Math.sin(s) * 10000;
+	return s - Math.floor(s);
+};
+const loremIpsumRandom = createRandom(42);
+export const loremIpsum = (options) => originalLoremIpsum({ random: loremIpsumRandom, ...options });
+
+export {
+	gazzoAvatar,
+	martinAvatar,
+	tassoAvatar,
+};

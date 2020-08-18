@@ -1,4 +1,5 @@
 import { addDecorator, addParameters } from '@storybook/react';
+import 'loki/configure-react';
 import '../src/styles/index.scss';
 
 addParameters({

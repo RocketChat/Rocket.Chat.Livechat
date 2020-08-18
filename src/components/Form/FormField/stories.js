@@ -5,7 +5,7 @@ import { h } from 'preact';
 
 import { FormField } from '.';
 import { Form, TextInput } from '..';
-import { memedIpsum } from '../../../helpers.stories';
+import { loremIpsum } from '../../../helpers.stories';
 
 
 storiesOf('Forms/FormField', module)
@@ -19,7 +19,7 @@ storiesOf('Forms/FormField', module)
 				description={text('description', 'Description')}
 				error={text('error', '')}
 			>
-				<TextInput value={memedIpsum({ count: 3, units: 'words' })} />
+				<TextInput value={loremIpsum({ count: 3, units: 'words' })} />
 			</FormField>
 		</Form>
 	))
@@ -31,7 +31,7 @@ storiesOf('Forms/FormField', module)
 				description={text('description', 'Description')}
 				error={text('error', '')}
 			>
-				<TextInput value={memedIpsum({ count: 3, units: 'words' })} />
+				<TextInput value={loremIpsum({ count: 3, units: 'words' })} />
 			</FormField>
 		</Form>
 	))
@@ -43,7 +43,7 @@ storiesOf('Forms/FormField', module)
 				description={text('description', 'Description')}
 				error={text('error', 'Error')}
 			>
-				<TextInput value={memedIpsum({ count: 3, units: 'words' })} />
+				<TextInput value={loremIpsum({ count: 3, units: 'words' })} />
 			</FormField>
 		</Form>
 	));

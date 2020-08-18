@@ -23,7 +23,13 @@
 		"storybook": "start-storybook -p 9001 -c .storybook",
 		"i18n": "i18nline synch && node_modules/.bin/eslint --fix src/i18n/index.js",
 		"deploy-storybook": "storybook-to-ghpages",
-		"release": "gh-release -c master --assets build.tar.gz"
+		"release": "gh-release -c master --assets build.tar.gz",
+		"loki:test": "loki test --chromeDockerImage=chinello/alpine-chrome:latest --chromeFlags=\"--headless --no-sandbox --disable-gpu --disable-features=VizDisplayCompositor\" --verboseRenderer --requireReference --reactUri file:./storybook-static",
+		"loki:test-ci": "loki test --chromeFlags=\"--headless --no-sandbox --disable-gpu --disable-features=VizDisplayCompositor\" --verboseRenderer --requireReference --reactUri file:./storybook-static",
+		"loki:update": "loki update --chromeDockerImage=chinello/alpine-chrome:latest --chromeFlags=\"--headless --no-sandbox --disable-gpu --disable-features=VizDisplayCompositor\" --verboseRenderer --requireReference --reactUri file:./storybook-static",
+		"build-storybook": "build-storybook",
+		"build-storybook:loki": "cross-env NODE_ENV=loki build-storybook",
+		"update-storybook": "cross-env NODE_ENV=loki run-s build-storybook loki:update"
 	},
 	"devDependencies": {
 		"@rocket.chat/eslint-config": "^0.4.0",
@@ -37,6 +43,7 @@
 		"@storybook/storybook-deployer": "^2.8.6",
 		"@storybook/theming": "^5.3.19",
 		"babel-eslint": "^10.1.0",
+		"cross-env": "^7.0.2",
 		"css-loader": "^4.0.0",
 		"desvg-loader": "^0.1.0",
 		"eslint": "^7.5.0",
@@ -46,6 +53,7 @@
 		"husky": "^4.2.5",
 		"if-env": "^1.0.4",
 		"image-webpack-loader": "^6.0.0",
+		"loki": "^0.24.0",
 		"lorem-ipsum": "^2.0.3",
 		"node-sass": "^4.14.1",
 		"npm-run-all": "^4.1.5",
@@ -85,12 +93,21 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "run-s i18n build:app && git add -A src/i18n size-plugin.json"
+			"pre-commit": "run-s i18n && git add -A src/i18n"
 		}
 	},
 	"houston": {
 		"updateFiles": [
 			"package.json"
 		]
+	},
+	"loki": {
+		"configurations": {
+			"chrome": {
+				"target": "chrome.docker",
+				"width": 365,
+        "height": 500
+			}
+		}
 	}
 }

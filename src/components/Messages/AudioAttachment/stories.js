@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { AudioAttachment } from '.';
+import sampleAudio from '../../../../.storybook/assets/sample-audio.mp3';
 
 
 storiesOf('Messages/AudioAttachment', module)
@@ -11,6 +12,6 @@ storiesOf('Messages/AudioAttachment', module)
 	.addDecorator(withKnobs)
 	.add('default', () => (
 		<AudioAttachment
-			url={text('url', 'https://sample-videos.com/audio/mp3/crowd-cheering.mp3')}
+			url={text('url', sampleAudio)}
 		/>
-	));
+	), { loki: { skip: true } });

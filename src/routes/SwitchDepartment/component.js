@@ -51,6 +51,7 @@ export default class SwitchDepartment extends Component {
 	handleFieldChange = (name) => ({ target: { value } }) => {
 		const error = this.validate({ name, value });
 		this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
+		this.validateAll();
 	}
 
 	handleDepartmentChange = this.handleFieldChange('department')
@@ -79,11 +80,9 @@ export default class SwitchDepartment extends Component {
 		if (departments && departments.length > 0) {
 			this.state.department = { value: '' };
 		}
-
-		this.validateAll();
 	}
 
-	componentDidUpdate() {
+	componentDidMount() {
 		this.validateAll();
 	}
 
