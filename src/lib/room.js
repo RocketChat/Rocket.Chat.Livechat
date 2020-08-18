@@ -114,7 +114,6 @@ const transformAgentInformationOnMessage = (message) => {
 	return message;
 };
 
-
 Livechat.onTyping((username, isTyping) => {
 	const { typing, user, agent } = store.state;
 
