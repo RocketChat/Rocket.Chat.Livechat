@@ -1,16 +1,16 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
+import { ModalManager } from '../components/Modal';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import I18n from '../i18n';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
-import { ModalManager } from '../components/Modal';
 import { handleTranscript } from './transcript';
-import I18n from '../i18n';
 
 const commands = new Commands();
 

@@ -24,7 +24,7 @@ export const loadConfig = async () => {
 		...config
 	} = await Livechat.config({ token });
 	let screenSharingStatus = false;
-	if (room && room.screenSharing && room.screenSharing.status) {
+	if (room && room.screenSharing && room.screenSharing.status === 'active') {
 		screenSharingStatus = true;
 	}
 

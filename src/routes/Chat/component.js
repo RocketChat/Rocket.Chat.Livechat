@@ -115,6 +115,7 @@ export default class Chat extends Component {
 		lastReadMessageId,
 		queueInfo,
 		onRequestScreenSharing,
+		onEndScreenSharing,
 		limitTextLength,
 		...props
 	}, {
@@ -132,6 +133,7 @@ export default class Chat extends Component {
 			onFinishChat={onFinishChat}
 			onRemoveUserData={onRemoveUserData}
 			onRequestScreenSharing={onRequestScreenSharing}
+			onEndScreenSharing={onEndScreenSharing}
 			className={createClassName(styles, 'chat')}
 			handleEmojiClick={this.handleEmojiClick}
 			{...props}
@@ -180,6 +182,9 @@ export default class Chat extends Component {
 								)}
 								{onRequestScreenSharing && (
 									<Menu.Item onClick={onRequestScreenSharing} icon={ChangeIcon}>{I18n.t('Request Screen Sharing')}</Menu.Item>
+								)}
+								{onEndScreenSharing && (
+									<Menu.Item onClick={onEndScreenSharing} icon={ChangeIcon}>{I18n.t('End Screen Sharing')}</Menu.Item>
 								)}
 							</Menu.Group>
 						</FooterOptions>

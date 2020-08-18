@@ -10,7 +10,7 @@ import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
-import { Consumer } from '../../store';
+import { Consumer, store } from '../../store';
 import Chat from './component';
 
 export class ChatContainer extends Component {
@@ -228,6 +228,13 @@ export class ChatContainer extends Component {
 		Livechat.screenSharing({ rid, messageType: 'guest_requesting_livechat_screen_sharing' });
 	}
 
+	onEndScreenSharing = async () => {
+		const { room: { _id }, screenSharingConfig } = this.props;
+		parentCall('callback', ['end-screen-sharing', { roomId: _id }]);
+		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
+		Livechat.screenSharing({ rid: _id, messageType: 'guest_ended_livechat_screen_sharing' });
+	}
+
 	canSwitchDepartment = () => {
 		const { allowSwitchingDepartments, departments = {} } = this.props;
 		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
@@ -246,6 +253,11 @@ export class ChatContainer extends Component {
 	canRequestScreenSharing = () => {
 		const { screenSharingConfig: { enabled, isActive } } = this.props;
 		return enabled && !isActive;
+	}
+
+	canEndScreenSharing = () => {
+		const { screenSharingConfig: { enabled, isActive } } = this.props;
+		return enabled && isActive;
 	}
 
 	showOptionsMenu = () =>
@@ -334,6 +346,7 @@ export class ChatContainer extends Component {
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
 			onSoundStop={this.handleSoundStop}
 			onRequestScreenSharing={(this.canRequestScreenSharing() && this.onRequestScreenSharing) || null}
+			onEndScreenSharing={(this.canEndScreenSharing() && this.onEndScreenSharing) || null}
 		/>
 	)
 }
