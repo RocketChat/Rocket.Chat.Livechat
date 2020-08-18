@@ -1,5 +1,4 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
 import { boolean, color } from '@storybook/addon-knobs';
 import { loremIpsum as originalLoremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
@@ -8,6 +7,13 @@ import gazzoAvatar from '../.storybook/assets/gazzo.jpg';
 import martinAvatar from '../.storybook/assets/martin.jpg';
 import tassoAvatar from '../.storybook/assets/tasso.jpg';
 
+export const centered = (storyFn) => (
+	<div style={{ position: 'fixed', top: 0, left: 0, bottom: 0, right: 0, display: 'flex', alignItems: 'center', overflow: 'auto' }}>
+		<div style={{ margin: 'auto', maxHeight: '100%' }}>
+			{storyFn()}
+		</div>
+	</div>
+);
 
 export const screenCentered = (storyFn, ...args) => centered(() => (
 	<div style={{ display: 'flex', width: '365px', height: '500px' }}>

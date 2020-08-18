@@ -1,10 +1,10 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, button, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { FilesDropTarget } from '.';
+import { centered } from '../../helpers.stories';
 
 
 const DummyContent = () => (

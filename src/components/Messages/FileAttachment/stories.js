@@ -1,10 +1,9 @@
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { FileAttachment } from '.';
-import { loremIpsum } from '../../../helpers.stories';
+import { loremIpsum, centered } from '../../../helpers.stories';
 
 
 const centeredWithWidth = (storyFn, ...args) => centered(() => (

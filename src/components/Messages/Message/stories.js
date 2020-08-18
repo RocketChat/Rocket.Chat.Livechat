@@ -1,4 +1,3 @@
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, date, object, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
@@ -7,7 +6,7 @@ import { Message } from '.';
 import sampleAudio from '../../../../.storybook/assets/sample-audio.mp3';
 import sampleImage from '../../../../.storybook/assets/sample-image.jpg';
 import sampleVideo from '../../../../.storybook/assets/sample-video.mp4';
-import { attachmentResolver, avatarResolver, loremIpsum } from '../../../helpers.stories';
+import { attachmentResolver, avatarResolver, loremIpsum, centered } from '../../../helpers.stories';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
 	MESSAGE_TYPE_USER_ADDED,
