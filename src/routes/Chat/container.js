@@ -123,6 +123,15 @@ export class ChatContainer extends Component {
 		dispatch({ messages: newMessages });
 	}
 
+	getAvatar = (username, isVisitor = false, name = null) => {
+		if (!isVisitor || name) {
+			return getAvatarUrl(name || username);
+		}
+
+		const { defaultAvatar } = this.props;
+		return `${ Livechat.client.host }/${ defaultAvatar.url || defaultAvatar.defaultUrl }`;
+	}
+
 	handleSubmit = async (msg) => {
 		if (msg.trim() === '') {
 			return;
@@ -131,13 +140,14 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
+		const avatar = this.getAvatar(user.username, true, user.name);
 
 		try {
 			this.stopTypingDebounced.stop();
 			this.resetLastAction();
 			await Promise.all([
 				this.stopTyping({ rid, username: user.username }),
-				Livechat.sendMessage({ msg, token, rid }),
+				Livechat.sendMessage({ msg, token, rid, avatar }),
 			]);
 		} catch (error) {
 			const { data: { error: reason } } = error;
@@ -346,7 +356,7 @@ export class ChatContainer extends Component {
 	render = ({ user, ...props }) => (
 		<Chat
 			{...props}
-			avatarResolver={getAvatarUrl}
+			avatarResolver={this.getAvatar}
 			uid={user && user._id}
 			onTop={this.handleTop}
 			onChangeText={this.handleChangeText}
@@ -370,6 +380,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			config: {
 				settings: {
 					fileUpload: uploads,
+					guestDefaultAvatar: defaultAvatar,
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
@@ -446,6 +457,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				connecting={!!(room && !agent && (showConnecting || queueInfo))}
 				dispatch={dispatch}
 				departments={departments}
+				defaultAvatar={defaultAvatar}
 				allowSwitchingDepartments={allowSwitchingDepartments}
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
