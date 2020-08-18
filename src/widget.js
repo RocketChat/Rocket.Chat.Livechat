@@ -36,6 +36,7 @@ export const validCallbacks = [
 	'agent-status-change',
 	'queue-position-change',
 	'no-agent-online',
+	'visitor-change',
 ];
 
 const callbacks = mitt();
@@ -433,6 +434,7 @@ window.RocketChat.livechat = {
 	onAgentStatusChange(fn) { registerCallback('agent-status-change', fn); },
 	onQueuePositionChange(fn) { registerCallback('queue-position-change', fn); },
 	onServiceOffline(fn) { registerCallback('no-agent-online', fn); },
+	onVisitorChange(fn) { registerCallback('visitor-change', fn); },
 };
 
 // proccess queue

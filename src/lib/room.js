@@ -5,7 +5,7 @@ import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
-import { loadConfig, processUnread, reloadConfig } from './main';
+import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
@@ -85,12 +85,15 @@ export const initRoom = async () => {
 	Livechat.onVisitorChange(rid, async (newVisitor) => {
 		const { user: { _updatedAt = null } = {}, room } = store.state;
 		const { _id, token, username } = newVisitor;
+
+		Livechat.credentials.token = token;
+
 		await store.setState({
 			user: { _id, token, username, _updatedAt },
 			token,
 			room: { ...room, v: { _id, token, username } },
 		});
-		await reloadConfig();
+		parentCall('callback', ['visitor-change', newVisitor]);
 	});
 
 	setCookies(rid, token);
@@ -110,6 +113,7 @@ const transformAgentInformationOnMessage = (message) => {
 
 	return message;
 };
+
 
 Livechat.onTyping((username, isTyping) => {
 	const { typing, user, agent } = store.state;
