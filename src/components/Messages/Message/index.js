@@ -6,6 +6,7 @@ import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
 import { MessageAvatars } from '../MessageAvatars';
+import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
@@ -23,7 +24,7 @@ import {
 } from '../constants';
 
 
-const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver }) => [
+const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver, blocks }) => [
 	...(attachments || [])
 		.map((attachment) =>
 			(attachment.audio_url
@@ -58,6 +59,9 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 		<MessageBubble inverse={me} quoted={quoted}>
 			<MessageText text={text} system={system} />
 		</MessageBubble>
+	),
+	blocks && (
+		<MessageBlocks blocks={blocks} />
 	),
 ].filter(Boolean);
 
@@ -112,6 +116,7 @@ export const Message = memo(({
 				system: !!message.t,
 				me,
 				attachments: message.attachments,
+				blocks: message.blocks,
 				attachmentResolver,
 			})}
 		</MessageContent>

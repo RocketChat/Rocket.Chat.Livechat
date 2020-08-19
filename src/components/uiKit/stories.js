@@ -1,7 +1,6 @@
 import { withKnobs, object } from '@storybook/addon-knobs';
-import { h } from 'preact';
 
-import { UiKitOmnichannelMessage } from '.';
+import { renderMessageBlocks } from '.';
 
 export default {
 	title: 'UiKit/UiKitOmnichannelMessage',
@@ -11,8 +10,8 @@ export default {
 };
 
 export const Example = () =>
-	<UiKitOmnichannelMessage
-		blocks={object('blocks', [
+	renderMessageBlocks(
+		object('blocks', [
 			{
 				type: 'section',
 				text: {
@@ -20,5 +19,5 @@ export const Example = () =>
 					text: 'I am an item',
 				},
 			},
-		])}
-	/>;
+		]),
+	);

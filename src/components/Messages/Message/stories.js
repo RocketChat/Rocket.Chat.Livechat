@@ -245,4 +245,25 @@ storiesOf('Messages/Message', module)
 				},
 			])}
 		/>
-	), { loki: { skip: true } });
+	), { loki: { skip: true } })
+	.add('with UiKit blocks', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+			blocks={[
+				{
+					type: 'section',
+					text: {
+						type: 'plain_text',
+						text: 'This is a plain text section block.',
+						emoji: true,
+					},
+				},
+			]}
+		/>
+	));

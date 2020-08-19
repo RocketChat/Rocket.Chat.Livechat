@@ -1,16 +1,8 @@
-import { uiKitGeneric, UiKitParserMessage, BLOCK_CONTEXT, ELEMENT_TYPES } from '@rocket.chat/ui-kit';
+import { uiKitMessage, UiKitParserMessage, BLOCK_CONTEXT, ELEMENT_TYPES } from '@rocket.chat/ui-kit';
 import { h } from 'preact';
 
 import renderEmojis from '../Messages/MessageText/emoji';
 import { renderMarkdown } from '../Messages/MessageText/markdown';
-
-export const uiKitOmnichannelMessage = uiKitGeneric([
-	ELEMENT_TYPES.DIVIDER,
-	ELEMENT_TYPES.SECTION,
-	ELEMENT_TYPES.IMAGE,
-	ELEMENT_TYPES.ACTIONS,
-	ELEMENT_TYPES.CONTEXT,
-]);
 
 class MessageParser extends UiKitParserMessage {
 	text(args, context, index) {
@@ -76,6 +68,18 @@ class MessageParser extends UiKitParserMessage {
 
 		return null;
 	}
+
+	button = () => null
+
+	overflow = () => null
+
+	datePicker = () => null
+
+	divider = () => null
+
+	actions = () => null
+
+	context = () => null
 
 	// overflow(element, context) {
 	//   return <Overflow context={context} {...element} parser={this}/>;
@@ -160,7 +164,4 @@ class MessageParser extends UiKitParserMessage {
 }
 
 const parser = new MessageParser();
-const render = uiKitOmnichannelMessage(parser);
-
-export const UiKitOmnichannelMessage = ({ blocks }) =>
-	(blocks ? render(blocks) : null);
+export const renderMessageBlocks = uiKitMessage(parser);
