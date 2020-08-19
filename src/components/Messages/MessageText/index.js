@@ -3,6 +3,16 @@ import { renderMarkdown } from './markdown';
 import styles from './styles.scss';
 import renderEmojis from './emoji';
 
+const sanitizeHtml = require('sanitize-html');
+
+const sanitizeHtmlOptions = {
+	allowedTags: ['a'],
+	allowedAttributes: {
+		a: ['href', 'name', 'target'],
+	},
+};
+
+
 export const MessageText = memo(({
 	text,
 	system,
@@ -11,7 +21,7 @@ export const MessageText = memo(({
 }) => (
 	<div
 		// eslint-disable-next-line react/no-danger
-		dangerouslySetInnerHTML={{ __html: renderEmojis(renderMarkdown(text), text) }}
+		dangerouslySetInnerHTML={{ __html: renderEmojis(renderMarkdown(sanitizeHtml(text, sanitizeHtmlOptions)), text) }}
 		className={createClassName(styles, 'message-text', { system }, [className])}
 		style={style}
 	/>
