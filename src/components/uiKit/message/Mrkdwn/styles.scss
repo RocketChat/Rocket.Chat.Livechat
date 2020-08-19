@@ -1,0 +1,26 @@
+.uikit-mrkdwn {
+	word-wrap: break-word;
+	word-break: break-word;
+
+	font-size: 0.875rem;
+
+	a {
+		text-decoration: underline dotted;
+
+		&:hover,
+		&:focus {
+			text-decoration-style: solid;
+		}
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		margin: 0;
+		padding: 0;
+	}
+}

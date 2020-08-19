@@ -1,0 +1,28 @@
+.uikit-section-block {
+	margin: 8px;
+	display: flex;
+	flex-wrap: nowrap;
+
+	&__content {
+		flex: 1 1 auto;
+	}
+
+	&__text {
+		display: block;
+	}
+
+	&__fields {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		justify-content: space-between;
+	}
+
+	&__field {
+		flex: 1 1 50%;
+	}
+
+	&__accessory {
+		flex: 0 0 auto;
+	}
+}

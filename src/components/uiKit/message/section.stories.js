@@ -108,7 +108,7 @@ export const AccessoryAsImage = () =>
 			},
 		},
 	]);
-AccessoryAsImage.storyName = 'accessory as button';
+AccessoryAsImage.storyName = 'accessory as image';
 
 export const AccessoryAsOverflowMenu = () =>
 	renderMessageBlocks([

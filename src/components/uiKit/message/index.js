@@ -1,25 +1,11 @@
 import { uiKitMessage, UiKitParserMessage, BLOCK_CONTEXT } from '@rocket.chat/ui-kit';
 import { h } from 'preact';
 
-const DividerBlock = () =>
-	<hr />;
-
-const SectionBlock = ({ blockId, appId, text, fields, accessory, parser }) => {
-	let key = 0;
-	const parsedText = text ? parser.text(text, BLOCK_CONTEXT.SECTION, key++) : null;
-	const parsedFields = fields ? fields.map((field) => parser.text(field, BLOCK_CONTEXT.SECTION, key++)) : null;
-	const parsedAccessory = parser.renderAccessories({ blockId, appId, ...accessory }, BLOCK_CONTEXT.SECTION, undefined, key++);
-
-	return <div>
-		<div>
-			{parsedText}
-			{parsedFields}
-		</div>
-		{parsedAccessory && <div>
-			{parsedAccessory}
-		</div>}
-	</div>;
-};
+import ButtonElement from './ButtonElement';
+import DividerBlock from './DividerBlock';
+import Mrkdwn from './Mrkdwn';
+import PlainText from './PlainText';
+import SectionBlock from './SectionBlock';
 
 const ImageBlock = () =>
 	<div />;
@@ -71,14 +57,29 @@ class MessageParser extends UiKitParserMessage {
 		return <ContextBlock key={index} {...element} parser={this} />;
 	}
 
-	plainText = () =>
-		null;
+	plainText = (element, context, index) => {
+		if (context === BLOCK_CONTEXT.BLOCK) {
+			return null;
+		}
 
-	mrkdwn = () =>
-		null;
+		return <PlainText key={index} {...element} />;
+	}
 
-	button = () =>
-		null
+	mrkdwn = (element, context, index) => {
+		if (context === BLOCK_CONTEXT.BLOCK) {
+			return null;
+		}
+
+		return <Mrkdwn key={index} {...element} />;
+	}
+
+	button = (element, context, index) => {
+		if (context === BLOCK_CONTEXT.BLOCK) {
+			return null;
+		}
+
+		return <ButtonElement key={index} {...element} parser={this} context={BLOCK_CONTEXT.SECTION} />;
+	}
 
 	overflow = () =>
 		null
