@@ -51,6 +51,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+            limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	))
@@ -71,6 +72,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+            limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	))
@@ -91,6 +93,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+            limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	));

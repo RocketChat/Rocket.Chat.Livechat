@@ -385,6 +385,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
 					transcript,
+                    limitTextLength,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -473,7 +474,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
-
+                limitTextLength={limitTextLength}
 			/>
 		)}
 	</Consumer>
