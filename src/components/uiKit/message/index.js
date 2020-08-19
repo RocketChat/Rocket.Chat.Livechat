@@ -3,18 +3,19 @@ import { h } from 'preact';
 
 import ButtonElement from './ButtonElement';
 import DividerBlock from './DividerBlock';
+import ImageElement from './ImageElement';
 import Mrkdwn from './Mrkdwn';
 import PlainText from './PlainText';
 import SectionBlock from './SectionBlock';
 
-const ImageBlock = () =>
-	<div />;
+const ImageBlock = (props) =>
+	<div children={JSON.stringify(props)} />;
 
-const ActionsBlock = () =>
-	<div />;
+const ActionsBlock = (props) =>
+	<div children={JSON.stringify(props)} />;
 
-const ContextBlock = () =>
-	<div />;
+const ContextBlock = (props) =>
+	<div children={JSON.stringify(props)} />;
 
 class MessageParser extends UiKitParserMessage {
 	divider = (element, context, index) => {
@@ -38,7 +39,7 @@ class MessageParser extends UiKitParserMessage {
 			return <ImageBlock key={index} />;
 		}
 
-		return <img key={index} />;
+		return <ImageElement key={index} {...element} parser={this} context={context} />;
 	}
 
 	actions = (element, context, index) => {
@@ -78,7 +79,7 @@ class MessageParser extends UiKitParserMessage {
 			return null;
 		}
 
-		return <ButtonElement key={index} {...element} parser={this} context={BLOCK_CONTEXT.SECTION} />;
+		return <ButtonElement key={index} {...element} parser={this} context={context} />;
 	}
 
 	overflow = () =>
@@ -95,4 +96,6 @@ class MessageParser extends UiKitParserMessage {
 }
 
 const parser = new MessageParser();
-export const renderMessageBlocks = uiKitMessage(parser);
+export const renderMessageBlocks = uiKitMessage(parser, {
+	engine: 'livechat',
+});

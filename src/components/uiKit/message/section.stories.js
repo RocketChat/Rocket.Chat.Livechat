@@ -103,8 +103,8 @@ export const AccessoryAsImage = () =>
 			},
 			accessory: {
 				type: 'image',
-				imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-				altText: 'cute cat',
+				imageUrl: 'https://www.placecage.com/g/400/400',
+				altText: 'Nicolas Cage',
 			},
 		},
 	]);

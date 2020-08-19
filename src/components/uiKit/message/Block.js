@@ -1,28 +1,52 @@
 import { createContext, h } from 'preact';
-import { memo, useRef, useContext } from 'preact/compat';
+import { memo, useContext, useCallback, useState, useRef, useEffect } from 'preact/compat';
 
-const BlockContext = createContext();
+const BlockContext = createContext({
+	appId: null,
+	blockId: null,
+});
 
-const getBlockId = (blockIdProp, blockIdRef) => {
-	if (blockIdProp) {
-		return blockIdProp;
-	}
+const Block = ({ appId, blockId, children }) =>
+	<BlockContext.Provider
+		children={children}
+		value={{
+			appId,
+			blockId,
+		}}
+	/>;
 
-	if (!blockIdRef.current) {
-		blockIdRef.current = Math.random().toString(36).slice(2);
-	}
+export const useAppId = () => useContext(BlockContext).appId;
 
-	return blockIdRef.current;
+export const useBlockId = () => useContext(BlockContext).blockId;
+
+export const usePerformAction = (actionId, value) => {
+	const { appId, blockId } = useContext(BlockContext);
+	const [performing, setPerforming] = useState(false);
+	const mountedRef = useRef(true);
+
+	useEffect(() => () => {
+		mountedRef.current = false;
+	}, []);
+
+	const perform = useCallback(async () => {
+		setPerforming(true);
+
+		// TODO
+		console.log({
+			appId,
+			blockId,
+			actionId,
+			value,
+		});
+
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+
+		if (mountedRef.current) {
+			setPerforming(false);
+		}
+	}, [actionId, appId, blockId, value]);
+
+	return [perform, performing];
 };
-
-const Block = ({ blockId, children }) => {
-	const blockIdRef = useRef();
-
-	const effectiveBlockId = getBlockId(blockId, blockIdRef);
-
-	return <BlockContext.Provider children={children} value={effectiveBlockId} />;
-};
-
-export const useBlockId = () => useContext(BlockContext);
 
 export default memo(Block);

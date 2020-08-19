@@ -34,12 +34,12 @@ export const Mrkdwn = () =>
 			elements: [
 				{
 					type: 'image',
-					imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-					altText: 'cute cat',
+					imageUrl: 'https://www.placecage.com/g/400/400',
+					altText: 'Nicolas Cage',
 				},
 				{
 					type: 'mrkdwn',
-					text: '*Cat* has approved this message.',
+					text: '*Cage* has approved this message.',
 				},
 			],
 		},
@@ -57,18 +57,18 @@ export const TextAndImages = () =>
 				},
 				{
 					type: 'image',
-					imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-					altText: 'cute cat',
+					imageUrl: 'https://www.placecage.com/g/400/400',
+					altText: 'Nicolas Cage',
 				},
 				{
 					type: 'image',
-					imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-					altText: 'cute cat',
+					imageUrl: 'https://www.placecage.com/g/400/400',
+					altText: 'Nicolas Cage',
 				},
 				{
 					type: 'image',
-					imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-					altText: 'cute cat',
+					imageUrl: 'https://www.placecage.com/g/400/400',
+					altText: 'Nicolas Cage',
 				},
 				{
 					type: 'plain_text',

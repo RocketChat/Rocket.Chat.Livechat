@@ -1,3 +1,8 @@
 .uikit-button {
 	padding: 6px;
+
+	&::after {
+		left: 4px;
+		margin-right: 2px;
+	}
 }

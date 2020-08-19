@@ -6,8 +6,8 @@ import { createClassName } from '../../../helpers';
 import Block from '../Block';
 import styles from './styles.scss';
 
-const SectionBlock = ({ blockId, text, fields, accessory, parser }) =>
-	<Block blockId={blockId}>
+const SectionBlock = ({ appId, blockId, text, fields, accessory, parser }) =>
+	<Block appId={appId} blockId={blockId}>
 		<div className={createClassName(styles, 'uikit-section-block')}>
 			<div className={createClassName(styles, 'uikit-section-block__content')}>
 				{text && (

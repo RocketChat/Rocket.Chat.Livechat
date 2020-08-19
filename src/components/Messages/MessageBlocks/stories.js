@@ -9,10 +9,6 @@ export default {
 	},
 };
 
-export const Empty = () =>
-	<MessageBlocks />;
-Empty.storyName = 'empty';
-
 export const WithBlocks = () =>
 	<MessageBlocks
 		blocks={[

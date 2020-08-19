@@ -4,13 +4,11 @@ import { memo, useCallback } from 'preact/compat';
 
 import { Button } from '../../../Button';
 import { createClassName } from '../../../helpers';
-import { useBlockId } from '../Block';
-import { useActionId } from '../useActionId';
+import { usePerformAction } from '../Block';
 import styles from './styles.scss';
 
-const ButtonElement = ({ text, actionId: _actionId, url, value, style, context, confirm, parser }) => {
-	const blockId = useBlockId();
-	const actionId = useActionId(_actionId); // TODO
+const ButtonElement = ({ text, actionId, url, value, style, context, confirm, parser }) => {
+	const [performAction, performingAction] = usePerformAction(actionId, value);
 
 	const handleClick = useCallback(async (event) => {
 		event.preventDefault();
@@ -26,12 +24,8 @@ const ButtonElement = ({ text, actionId: _actionId, url, value, style, context, 
 			return;
 		}
 
-		console.log({
-			blockId,
-			actionId,
-			value,
-		}); // TODO
-	}, []);
+		await performAction();
+	}, [confirm, performAction, url]);
 
 	return <Button
 		children={parser.text(text)}
@@ -39,8 +33,10 @@ const ButtonElement = ({ text, actionId: _actionId, url, value, style, context, 
 			accessory: context === BLOCK_CONTEXT.SECTION,
 		})}
 		danger={style === 'danger'}
-		secondary={!style}
+		disabled={performingAction}
+		loading={performingAction}
 		outline={!style}
+		secondary={!style}
 		onClick={handleClick}
 	/>;
 };
