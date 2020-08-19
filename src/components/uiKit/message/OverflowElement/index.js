@@ -52,7 +52,7 @@ const OverflowElement = ({ actionId, confirm, options, parser }) => {
 	const [performAction, performingAction] = usePerformAction(actionId);
 
 	const handleClick = useCallback(async (value) => {
-		await performAction(value);
+		await performAction({ value });
 	}, [performAction]);
 
 	return <PopoverMenu trigger={({ pop }) => <OverflowTrigger loading={performingAction} onClick={pop} />}>

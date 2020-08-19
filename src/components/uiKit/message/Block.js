@@ -28,7 +28,7 @@ export const usePerformAction = (actionId) => {
 		mountedRef.current = false;
 	}, []);
 
-	const perform = useCallback(async (value) => {
+	const perform = useCallback(async (values = {}) => {
 		setPerforming(true);
 
 		try {
@@ -37,7 +37,7 @@ export const usePerformAction = (actionId) => {
 				appId,
 				blockId,
 				actionId,
-				value,
+				...values,
 			});
 
 			await new Promise((resolve) => setTimeout(resolve, 1000));

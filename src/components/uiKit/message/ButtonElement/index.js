@@ -24,7 +24,7 @@ const ButtonElement = ({ text, actionId, url, value, style, context, confirm, pa
 			return;
 		}
 
-		await performAction(value);
+		await performAction({ value });
 	}, [confirm, performAction, url, value]);
 
 	return <Button

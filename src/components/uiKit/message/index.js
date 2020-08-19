@@ -2,6 +2,7 @@ import { uiKitMessage, UiKitParserMessage, BLOCK_CONTEXT } from '@rocket.chat/ui
 import { h } from 'preact';
 
 import ButtonElement from './ButtonElement';
+import DatePickerElement from './DatePickerElement';
 import DividerBlock from './DividerBlock';
 import ImageElement from './ImageElement';
 import Mrkdwn from './Mrkdwn';
@@ -91,8 +92,13 @@ class MessageParser extends UiKitParserMessage {
 		return <OverflowElement key={index} {...element} parser={this} context={context} />;
 	}
 
-	datePicker = () =>
-		null
+	datePicker = (element, context, index) => {
+		if (context === BLOCK_CONTEXT.BLOCK) {
+			return null;
+		}
+
+		return <DatePickerElement key={index} {...element} parser={this} context={context} />;
+	}
 
 	staticSelect = () =>
 		null
