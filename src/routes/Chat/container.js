@@ -225,14 +225,14 @@ export class ChatContainer extends Component {
 
 	onRequestScreenSharing = async () => {
 		const { room: { _id: rid } } = this.props;
-		Livechat.screenSharing({ rid, messageType: 'guest_requesting_livechat_screen_sharing' });
+		Livechat.screenShare({ rid, messageType: 'guest_requesting_livechat_screen_sharing' });
 	}
 
 	onEndScreenSharing = async () => {
 		const { room: { _id }, screenSharingConfig } = this.props;
 		parentCall('callback', ['end-screen-sharing', { roomId: _id }]);
 		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
-		Livechat.screenSharing({ rid: _id, messageType: 'guest_ended_livechat_screen_sharing' });
+		Livechat.screenShare({ rid: _id, messageType: 'guest_ended_livechat_screen_sharing' });
 	}
 
 	canSwitchDepartment = () => {

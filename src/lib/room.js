@@ -34,14 +34,14 @@ const onRequestScreenSharing = async () => {
 
 	if (!success) {
 		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
-		Livechat.screenSharing({ rid: roomId, messageType: 'livechat_screen_sharing_request_rejected' });
+		Livechat.screenShare({ rid: roomId, messageType: 'livechat_screen_sharing_request_rejected' });
 		return;
 	}
 
 	store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: true } });
 
 	parentCall('callback', ['start-screen-sharing', { roomId }]);
-	Livechat.screenSharing({ rid: roomId, messageType: 'livechat_screen_sharing_request_accepted' });
+	Livechat.screenShare({ rid: roomId, messageType: 'livechat_screen_sharing_request_accepted' });
 };
 
 const onEndScreenSharing = async () => {
