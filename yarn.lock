@@ -1814,10 +1814,10 @@
     tiny-events "^1.0.1"
     universal-websocket-client "^1.0.2"
 
-"@rocket.chat/ui-kit@^0.13.1":
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/@rocket.chat/ui-kit/-/ui-kit-0.13.1.tgz#999e32b8694c20e0388afb6323e66334322bc5a0"
-  integrity sha512-VP2BvHUA1tmIjjS46UrItoIk78BdV5kLnrFNMzf3v8P5uDQvpkhWBOKWQus8H/lL3wO4ATfgEMuua6JG4aA+Sw==
+"@rocket.chat/ui-kit@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@rocket.chat/ui-kit/-/ui-kit-0.14.0.tgz#e4d20f51d426f572797c8f120856d816b2d16973"
+  integrity sha512-eJgJ49rPfzQ9BKf8/l9LVnCtcWKRX7JatQ/nn9yDoLqTKJ54WjF1yzy2yb4KPL2bdIqaE6FNTN0BwZ4VzmzJLA==
 
 "@rollup/plugin-node-resolve@^7.1.1":
   version "7.1.3"
