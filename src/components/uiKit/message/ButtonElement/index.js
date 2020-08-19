@@ -8,7 +8,7 @@ import { usePerformAction } from '../Block';
 import styles from './styles.scss';
 
 const ButtonElement = ({ text, actionId, url, value, style, context, confirm, parser }) => {
-	const [performAction, performingAction] = usePerformAction(actionId, value);
+	const [performAction, performingAction] = usePerformAction(actionId);
 
 	const handleClick = useCallback(async (event) => {
 		event.preventDefault();
@@ -24,8 +24,8 @@ const ButtonElement = ({ text, actionId, url, value, style, context, confirm, pa
 			return;
 		}
 
-		await performAction();
-	}, [confirm, performAction, url]);
+		await performAction(value);
+	}, [confirm, performAction, url, value]);
 
 	return <Button
 		children={parser.text(text)}

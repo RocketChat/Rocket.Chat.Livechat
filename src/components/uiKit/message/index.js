@@ -5,6 +5,7 @@ import ButtonElement from './ButtonElement';
 import DividerBlock from './DividerBlock';
 import ImageElement from './ImageElement';
 import Mrkdwn from './Mrkdwn';
+import OverflowElement from './OverflowElement';
 import PlainText from './PlainText';
 import SectionBlock from './SectionBlock';
 
@@ -82,8 +83,13 @@ class MessageParser extends UiKitParserMessage {
 		return <ButtonElement key={index} {...element} parser={this} context={context} />;
 	}
 
-	overflow = () =>
-		null
+	overflow = (element, context, index) => {
+		if (context === BLOCK_CONTEXT.BLOCK) {
+			return null;
+		}
+
+		return <OverflowElement key={index} {...element} parser={this} context={context} />;
+	}
 
 	datePicker = () =>
 		null

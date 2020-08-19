@@ -19,7 +19,7 @@ export const useAppId = () => useContext(BlockContext).appId;
 
 export const useBlockId = () => useContext(BlockContext).blockId;
 
-export const usePerformAction = (actionId, value) => {
+export const usePerformAction = (actionId) => {
 	const { appId, blockId } = useContext(BlockContext);
 	const [performing, setPerforming] = useState(false);
 	const mountedRef = useRef(true);
@@ -28,23 +28,25 @@ export const usePerformAction = (actionId, value) => {
 		mountedRef.current = false;
 	}, []);
 
-	const perform = useCallback(async () => {
+	const perform = useCallback(async (value) => {
 		setPerforming(true);
 
-		// TODO
-		console.log({
-			appId,
-			blockId,
-			actionId,
-			value,
-		});
+		try {
+			// TODO
+			console.log({
+				appId,
+				blockId,
+				actionId,
+				value,
+			});
 
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		if (mountedRef.current) {
-			setPerforming(false);
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+		} finally {
+			if (mountedRef.current) {
+				setPerforming(false);
+			}
 		}
-	}, [actionId, appId, blockId, value]);
+	}, [actionId, appId, blockId]);
 
 	return [perform, performing];
 };

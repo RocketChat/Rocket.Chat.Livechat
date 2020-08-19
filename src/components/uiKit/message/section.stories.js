@@ -1,6 +1,7 @@
 import { h } from 'preact';
 
 import { renderMessageBlocks } from '.';
+import { PopoverContainer } from '../../Popover';
 
 export default {
 	title: 'UiKit/Message/Section block',
@@ -9,6 +10,7 @@ export default {
 	},
 	decorators: [
 		(storyFn) => <div children={storyFn()} style={{ width: '100vw', maxWidth: 500 }} />,
+		(storyFn) => <PopoverContainer children={storyFn()} />,
 	],
 };
 
