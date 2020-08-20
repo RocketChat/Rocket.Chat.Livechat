@@ -10,6 +10,7 @@ import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import I18n from '../../i18n';
 import ChangeIcon from '../../icons/change.svg';
+import CloseIcon from '../../icons/close.svg';
 import FinishIcon from '../../icons/finish.svg';
 import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
@@ -181,10 +182,10 @@ export default class Chat extends Component {
 									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
 								)}
 								{onRequestScreenSharing && (
-									<Menu.Item onClick={onRequestScreenSharing} icon={ChangeIcon}>{I18n.t('Request Screen Sharing')}</Menu.Item>
+									<Menu.Item onClick={onRequestScreenSharing} icon={PlusIcon}>{I18n.t('Request Screen Sharing')}</Menu.Item>
 								)}
 								{onEndScreenSharing && (
-									<Menu.Item onClick={onEndScreenSharing} icon={ChangeIcon}>{I18n.t('End Screen Sharing')}</Menu.Item>
+									<Menu.Item onClick={onEndScreenSharing} icon={CloseIcon}>{I18n.t('End Screen Sharing')}</Menu.Item>
 								)}
 							</Menu.Group>
 						</FooterOptions>

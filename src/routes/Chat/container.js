@@ -224,14 +224,15 @@ export class ChatContainer extends Component {
 	}
 
 	onRequestScreenSharing = async () => {
-		const { room: { _id: rid } } = this.props;
+		const { room: { _id: rid }, screenSharingConfig } = this.props;
+		store.setState({ screenSharingConfig: { ...screenSharingConfig, status: 'requested' } });
 		Livechat.screenShare({ rid, messageType: 'guest_requesting_livechat_screen_sharing' });
 	}
 
 	onEndScreenSharing = async () => {
 		const { room: { _id }, screenSharingConfig } = this.props;
 		parentCall('callback', ['end-screen-sharing', { roomId: _id }]);
-		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false } });
+		store.setState({ screenSharingConfig: { ...screenSharingConfig, isActive: false, status: '' } });
 		Livechat.screenShare({ rid: _id, messageType: 'guest_ended_livechat_screen_sharing' });
 	}
 
@@ -251,8 +252,9 @@ export class ChatContainer extends Component {
 	}
 
 	canRequestScreenSharing = () => {
-		const { screenSharingConfig: { enabled, isActive } } = this.props;
-		return enabled && !isActive;
+		const { screenSharingConfig: { enabled, isActive, status } } = this.props;
+		console.log(status);
+		return enabled && !isActive && (!status || status !== 'requested');
 	}
 
 	canEndScreenSharing = () => {

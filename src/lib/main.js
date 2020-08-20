@@ -6,6 +6,7 @@ import { canRenderMessage } from '../components/helpers';
 import I18n from '../i18n';
 import store from '../store';
 import constants from './constants';
+import { defaultRoomParams } from './room';
 
 export const loadConfig = async () => {
 	const {
@@ -23,14 +24,17 @@ export const loadConfig = async () => {
 		screenSharing,
 		...config
 	} = await Livechat.config({ token });
-	let screenSharingStatus = false;
-	if (room && room.screenSharing && room.screenSharing.status === 'active') {
-		screenSharingStatus = true;
+	let screenSharingConfig = { ...screenSharing, isActive: false };
+	if (room && room.screenSharing && room.screenSharing.status) {
+		screenSharingConfig = { ...screenSharingConfig, status: room.screenSharing.status };
+		if (room && room.screenSharing && room.screenSharing.status === 'active') {
+			screenSharingConfig.isActive = true;
+		}
 	}
 
 	await store.setState({
 		config,
-		screenSharingConfig: { ...screenSharing, isActive: screenSharingStatus },
+		screenSharingConfig,
 		agent: agent && agent.hiddenInfo ? { hiddenInfo: true } : agent, // TODO: revert it when the API is updated
 		room,
 		user,
