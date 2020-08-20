@@ -10,6 +10,7 @@ const ImageElement = ({ imageUrl, altText, context }) =>
 		aria-label={altText}
 		className={createClassName(styles, 'uikit-image', {
 			accessory: context === BLOCK_CONTEXT.SECTION,
+			context: context === BLOCK_CONTEXT.CONTEXT,
 		})}
 		role='img'
 		style={{

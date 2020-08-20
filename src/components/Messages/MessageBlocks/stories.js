@@ -332,7 +332,7 @@ export const WithBlocks = () =>
 				elements: [
 					{
 						type: 'plain_text',
-						text: 'Author: K A Applegate',
+						text: 'Author: Manuel Puig',
 						emoji: true,
 					},
 				],
@@ -347,7 +347,7 @@ export const WithBlocks = () =>
 					},
 					{
 						type: 'mrkdwn',
-						text: '*Cat* has approved this message.',
+						text: '*Julian Schultz* has approved this message.',
 					},
 				],
 			},
@@ -375,7 +375,7 @@ export const WithBlocks = () =>
 					},
 					{
 						type: 'plain_text',
-						text: 'Author: K A Applegate',
+						text: 'Author: Manuel Puig',
 						emoji: true,
 					},
 				],

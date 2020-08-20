@@ -20,7 +20,7 @@ export const PlainText = () =>
 			elements: [
 				{
 					type: 'plain_text',
-					text: 'Author: K A Applegate',
+					text: 'Author: Manuel Puig',
 					emoji: true,
 				},
 			],
@@ -73,7 +73,7 @@ export const TextAndImages = () =>
 				},
 				{
 					type: 'plain_text',
-					text: 'Author: K A Applegate',
+					text: 'Author: Manuel Puig',
 					emoji: true,
 				},
 			],

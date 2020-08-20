@@ -3,6 +3,7 @@ import { h } from 'preact';
 
 import ActionsBlock from './ActionsBlock';
 import ButtonElement from './ButtonElement';
+import ContextBlock from './ContextBlock';
 import DatePickerElement from './DatePickerElement';
 import DividerBlock from './DividerBlock';
 import ImageBlock from './ImageBlock';
@@ -12,9 +13,6 @@ import OverflowElement from './OverflowElement';
 import PlainText from './PlainText';
 import SectionBlock from './SectionBlock';
 import StaticSelectElement from './StaticSelectElement';
-
-const ContextBlock = (props) =>
-	<div children={JSON.stringify(props)} />;
 
 class MessageParser extends UiKitParserMessage {
 	divider = (element, context, index) => {

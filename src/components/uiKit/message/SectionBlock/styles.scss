@@ -1,10 +1,12 @@
 .uikit-section-block {
-	margin: 8px 2px;
 	display: flex;
+
+	margin: 8px 2px;
 	flex-wrap: nowrap;
 
 	&__content {
 		flex: 1 1 auto;
+
 		margin: 0 6px;
 	}
 
@@ -14,8 +16,8 @@
 
 	&__fields {
 		display: flex;
-		flex-wrap: wrap;
 		align-items: flex-start;
+		flex-wrap: wrap;
 		justify-content: space-between;
 	}
 
@@ -25,6 +27,7 @@
 
 	&__accessory {
 		flex: 0 0 auto;
+
 		margin: 0 6px;
 	}
 }

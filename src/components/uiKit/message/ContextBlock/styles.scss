@@ -1,0 +1,22 @@
+@import '../../../../styles/colors';
+
+.uikit-context-block {
+	display: flex;
+
+	margin: 8px 4px;
+	flex-wrap: wrap;
+
+	&__item {
+		margin: 0 4px;
+
+		letter-spacing: 0.2px;
+
+		color: $color-text-grey;
+		border: none;
+		background: none;
+
+		font-size: 0.85rem;
+		font-weight: normal;
+		line-height: 1;
+	}
+}
