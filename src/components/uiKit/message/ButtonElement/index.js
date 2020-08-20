@@ -31,12 +31,14 @@ const ButtonElement = ({ text, actionId, url, value, style, context, confirm, pa
 		children={parser.text(text)}
 		className={createClassName(styles, 'uikit-button', {
 			accessory: context === BLOCK_CONTEXT.SECTION,
+			action: context === BLOCK_CONTEXT.ACTION,
 		})}
 		danger={style === 'danger'}
 		disabled={performingAction}
 		loading={performingAction}
 		outline={!style}
 		secondary={!style}
+		stack={context === BLOCK_CONTEXT.ACTION}
 		onClick={handleClick}
 	/>;
 };

@@ -1,0 +1,8 @@
+.uikit-static-select {
+	flex-grow: 0;
+	width: max-content;
+
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		display: inline-block;
+	}
+}

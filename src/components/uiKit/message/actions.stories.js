@@ -102,6 +102,7 @@ export const FilteredConversationsSelect = () =>
 		},
 	]);
 FilteredConversationsSelect.storyName = 'filtered conversations select';
+FilteredConversationsSelect.parameters = { loki: { skip: true } };
 
 export const SelectsWithInitialOptions = () =>
 	renderMessageBlocks([
@@ -139,6 +140,7 @@ export const SelectsWithInitialOptions = () =>
 		},
 	]);
 SelectsWithInitialOptions.storyName = 'selects with initial options';
+SelectsWithInitialOptions.parameters = { loki: { skip: true } };
 
 export const Button = () =>
 	renderMessageBlocks([

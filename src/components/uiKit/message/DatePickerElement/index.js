@@ -21,7 +21,7 @@ const DatePickerElement = ({ actionId, confirm/* , placeholder */, initialDate/*
 	}, [confirm, initialDate, performAction]);
 
 	return <DateInput
-		defaultValue={initialDate}
+		value={initialDate}
 		disabled={performingAction}
 		// TODO: placeholder={parser.text(placeholder)}
 		small

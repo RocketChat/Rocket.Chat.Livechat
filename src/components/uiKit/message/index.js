@@ -1,6 +1,7 @@
 import { uiKitMessage, UiKitParserMessage, BLOCK_CONTEXT } from '@rocket.chat/ui-kit';
 import { h } from 'preact';
 
+import ActionsBlock from './ActionsBlock';
 import ButtonElement from './ButtonElement';
 import DatePickerElement from './DatePickerElement';
 import DividerBlock from './DividerBlock';
@@ -10,9 +11,7 @@ import Mrkdwn from './Mrkdwn';
 import OverflowElement from './OverflowElement';
 import PlainText from './PlainText';
 import SectionBlock from './SectionBlock';
-
-const ActionsBlock = (props) =>
-	<div children={JSON.stringify(props)} />;
+import StaticSelectElement from './StaticSelectElement';
 
 const ContextBlock = (props) =>
 	<div children={JSON.stringify(props)} />;
@@ -36,7 +35,7 @@ class MessageParser extends UiKitParserMessage {
 
 	image = (element, context, index) => {
 		if (context === BLOCK_CONTEXT.BLOCK) {
-			return <ImageBlock key={index} {...element} parser={this} context={context} />;
+			return <ImageBlock key={index} {...element} parser={this} />;
 		}
 
 		return <ImageElement key={index} {...element} parser={this} context={context} />;
@@ -98,8 +97,13 @@ class MessageParser extends UiKitParserMessage {
 		return <DatePickerElement key={index} {...element} parser={this} context={context} />;
 	}
 
-	staticSelect = () =>
-		null
+	staticSelect = (element, context, index) => {
+		if (context === BLOCK_CONTEXT.BLOCK) {
+			return null;
+		}
+
+		return <StaticSelectElement key={index} {...element} parser={this} context={context} />;
+	}
 
 	multiStaticSelect = () =>
 		null

@@ -1,0 +1,9 @@
+.uikit-actions-block {
+	display: flex;
+	flex-flow: column nowrap;
+	margin: 8px;
+
+	&__item {
+		margin: 4px 0;
+	}
+}
