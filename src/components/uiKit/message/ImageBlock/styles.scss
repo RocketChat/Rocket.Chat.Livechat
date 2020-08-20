@@ -1,0 +1,46 @@
+@import '../../../../styles/colors';
+@import '../../../../styles/variables';
+
+.uikit-image-block {
+	margin: 8px;
+
+	&__title {
+		letter-spacing: 0.2px;
+
+		color: $color-text-grey;
+		font-size: 0.725rem;
+		font-weight: normal;
+		line-height: 1;
+	}
+
+	&__content {
+		overflow: hidden;
+
+		&--loading {
+			opacity: $disabled-opacity;
+		}
+	}
+
+	&__wrapper {
+		position: relative;
+		width: 100%;
+		height: 0;
+	}
+
+	&__link {
+		position: absolute;
+		left: 0;
+		top: 0;
+		cursor: pointer;
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: contain;
+    border-radius: $default-border-radius;
+	}
+}

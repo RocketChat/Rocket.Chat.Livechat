@@ -1,12 +1,18 @@
 import { h } from 'preact';
 
 import MessageBlocks from '.';
+import accessoryImage from '../../../../.storybook/assets/accessoryImage.png';
+import imageBlock from '../../../../.storybook/assets/imageBlock.png';
+import { PopoverContainer } from '../../Popover';
 
 export default {
 	title: 'Messages/MessageBlocks',
 	parameters: {
-		layout: 'centered',
+		layout: 'fullscreen',
 	},
+	decorators: [
+		(storyFn) => <PopoverContainer children={storyFn()} />,
+	],
 };
 
 export const WithBlocks = () =>
@@ -27,7 +33,7 @@ export const WithBlocks = () =>
 				type: 'section',
 				text: {
 					type: 'mrkdwn',
-					text: 'This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>',
+					text: 'This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and [this is a link](https://google.com)',
 				},
 			},
 			{
@@ -84,8 +90,8 @@ export const WithBlocks = () =>
 				},
 				accessory: {
 					type: 'image',
-					imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-					altText: 'cute cat',
+					imageUrl: accessoryImage,
+					altText: 'Photo by Julian Schultz on Unsplash',
 				},
 			},
 			{
@@ -160,16 +166,16 @@ export const WithBlocks = () =>
 				type: 'image',
 				title: {
 					type: 'plain_text',
-					text: 'I Need a Marg',
+					text: 'SpaceX Falcon Heavy Launch',
 					emoji: true,
 				},
-				imageUrl: 'https://assets3.thrillist.com/v1/image/1682388/size/tl-horizontal_main.jpg',
-				altText: 'marg',
+				imageUrl: imageBlock,
+				altText: 'Photo by SpaceX on Unsplash',
 			},
 			{
 				type: 'image',
-				imageUrl: 'https://i1.wp.com/thetempest.co/wp-content/uploads/2017/08/The-wise-words-of-Michael-Scott-Imgur-2.jpg?w=1024&ssl=1',
-				altText: 'inspiration',
+				imageUrl: imageBlock,
+				altText: 'Photo by SpaceX on Unsplash',
 			},
 			{
 				type: 'actions',
@@ -336,8 +342,8 @@ export const WithBlocks = () =>
 				elements: [
 					{
 						type: 'image',
-						imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-						altText: 'cute cat',
+						imageUrl: accessoryImage,
+						altText: 'Photo by Julian Schultz on Unsplash',
 					},
 					{
 						type: 'mrkdwn',
@@ -354,18 +360,18 @@ export const WithBlocks = () =>
 					},
 					{
 						type: 'image',
-						imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-						altText: 'cute cat',
+						imageUrl: accessoryImage,
+						altText: 'Photo by Julian Schultz on Unsplash',
 					},
 					{
 						type: 'image',
-						imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-						altText: 'cute cat',
+						imageUrl: accessoryImage,
+						altText: 'Photo by Julian Schultz on Unsplash',
 					},
 					{
 						type: 'image',
-						imageUrl: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-						altText: 'cute cat',
+						imageUrl: accessoryImage,
+						altText: 'Photo by Julian Schultz on Unsplash',
 					},
 					{
 						type: 'plain_text',

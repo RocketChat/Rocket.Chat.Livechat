@@ -4,14 +4,12 @@ import { h } from 'preact';
 import ButtonElement from './ButtonElement';
 import DatePickerElement from './DatePickerElement';
 import DividerBlock from './DividerBlock';
+import ImageBlock from './ImageBlock';
 import ImageElement from './ImageElement';
 import Mrkdwn from './Mrkdwn';
 import OverflowElement from './OverflowElement';
 import PlainText from './PlainText';
 import SectionBlock from './SectionBlock';
-
-const ImageBlock = (props) =>
-	<div children={JSON.stringify(props)} />;
 
 const ActionsBlock = (props) =>
 	<div children={JSON.stringify(props)} />;
@@ -38,7 +36,7 @@ class MessageParser extends UiKitParserMessage {
 
 	image = (element, context, index) => {
 		if (context === BLOCK_CONTEXT.BLOCK) {
-			return <ImageBlock key={index} />;
+			return <ImageBlock key={index} {...element} parser={this} context={context} />;
 		}
 
 		return <ImageElement key={index} {...element} parser={this} context={context} />;

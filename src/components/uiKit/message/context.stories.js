@@ -1,6 +1,7 @@
 import { h } from 'preact';
 
 import { renderMessageBlocks } from '.';
+import accessoryImage from '../../../../.storybook/assets/accessoryImage.png';
 
 export default {
 	title: 'UiKit/Message/Context block',
@@ -34,12 +35,12 @@ export const Mrkdwn = () =>
 			elements: [
 				{
 					type: 'image',
-					imageUrl: 'https://www.placecage.com/g/400/400',
-					altText: 'Nicolas Cage',
+					imageUrl: accessoryImage,
+					altText: 'Photo by Julian Schultz on Unsplash',
 				},
 				{
 					type: 'mrkdwn',
-					text: '*Cage* has approved this message.',
+					text: '*Julian Schultz* has approved this message.',
 				},
 			],
 		},
@@ -57,18 +58,18 @@ export const TextAndImages = () =>
 				},
 				{
 					type: 'image',
-					imageUrl: 'https://www.placecage.com/g/400/400',
-					altText: 'Nicolas Cage',
+					imageUrl: accessoryImage,
+					altText: 'Photo by Julian Schultz on Unsplash',
 				},
 				{
 					type: 'image',
-					imageUrl: 'https://www.placecage.com/g/400/400',
-					altText: 'Nicolas Cage',
+					imageUrl: accessoryImage,
+					altText: 'Photo by Julian Schultz on Unsplash',
 				},
 				{
 					type: 'image',
-					imageUrl: 'https://www.placecage.com/g/400/400',
-					altText: 'Nicolas Cage',
+					imageUrl: accessoryImage,
+					altText: 'Photo by Julian Schultz on Unsplash',
 				},
 				{
 					type: 'plain_text',

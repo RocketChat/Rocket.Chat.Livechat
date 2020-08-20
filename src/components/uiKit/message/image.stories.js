@@ -1,6 +1,7 @@
 import { h } from 'preact';
 
 import { renderMessageBlocks } from '.';
+import imageBlock from '../../../../.storybook/assets/imageBlock.png';
 
 export default {
 	title: 'UiKit/Message/Image block',
@@ -18,11 +19,11 @@ export const WithTitle = () =>
 			type: 'image',
 			title: {
 				type: 'plain_text',
-				text: 'I Need a Cage',
+				text: 'SpaceX Falcon Heavy Launch',
 				emoji: true,
 			},
-			imageUrl: 'https://www.placecage.com/600/300',
-			altText: 'Nicolas Cage',
+			imageUrl: imageBlock,
+			altText: 'Photo by SpaceX on Unsplash',
 		},
 	]);
 WithTitle.storyName = 'with title';
@@ -31,8 +32,8 @@ export const WithNoTitle = () =>
 	renderMessageBlocks([
 		{
 			type: 'image',
-			imageUrl: 'https://www.placecage.com/600/300',
-			altText: 'Nicolas Cage',
+			imageUrl: imageBlock,
+			altText: 'Photo by SpaceX on Unsplash',
 		},
 	]);
 WithNoTitle.storyName = 'with no title';

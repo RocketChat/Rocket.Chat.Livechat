@@ -1,6 +1,7 @@
 import { h } from 'preact';
 
 import { renderMessageBlocks } from '.';
+import accessoryImage from '../../../../.storybook/assets/accessoryImage.png';
 import { PopoverContainer } from '../../Popover';
 
 export default {
@@ -105,8 +106,8 @@ export const AccessoryAsImage = () =>
 			},
 			accessory: {
 				type: 'image',
-				imageUrl: 'https://www.placecage.com/g/400/400',
-				altText: 'Nicolas Cage',
+				imageUrl: accessoryImage,
+				altText: 'Photo by Julian Schultz on Unsplash',
 			},
 		},
 	]);
