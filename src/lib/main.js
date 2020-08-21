@@ -20,7 +20,7 @@ export const loadConfig = async () => {
 		resources: { sound: src = null } = {},
 		queueInfo,
 		...config
-	} = await Livechat.config({ token });
+	} = await Livechat.config({ token, url: window.location.href });
 
 	await store.setState({
 		config,
