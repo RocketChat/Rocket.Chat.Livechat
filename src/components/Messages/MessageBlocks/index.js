@@ -6,8 +6,10 @@ import {
 	UIKitIncomingInteractionType,
 	UIKitIncomingInteractionContainerType,
 } from '../../../lib/uiKit';
+import { createClassName } from '../../helpers';
 import { renderMessageBlocks } from '../../uiKit';
 import Surface from '../../uiKit/message/Surface';
+import styles from './styles.scss';
 
 const MessageBlocks = ({ blocks = [], mid, rid }) => {
 	const dispatchAction = useCallback(({
@@ -30,7 +32,9 @@ const MessageBlocks = ({ blocks = [], mid, rid }) => {
 
 	return <Surface dispatchAction={dispatchAction}>
 		{Array.isArray(blocks) && blocks.length > 0
-			? renderMessageBlocks(blocks)
+			? <div className={createClassName(styles, 'message-blocks')}>
+				{renderMessageBlocks(blocks)}
+			</div>
 			: null}
 	</Surface>;
 };
