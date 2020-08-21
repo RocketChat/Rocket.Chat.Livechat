@@ -1,7 +1,15 @@
+@import '../../../../styles/colors';
+
 .uikit-section-block {
 	display: flex;
 
 	margin: 0 2px 8px;
+
+	color: $color-text-dark;
+
+	font-size: 0.875rem;
+	font-weight: normal;
+	line-height: 1.25rem;
 	flex-wrap: nowrap;
 
 	&__content {

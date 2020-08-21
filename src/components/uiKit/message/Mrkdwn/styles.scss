@@ -1,15 +1,17 @@
+@import '../../../../styles/colors';
+
 .uikit-mrkdwn {
 	word-wrap: break-word;
 	word-break: break-word;
 
-	font-size: 0.875em;
-
 	a {
-		text-decoration: underline dotted;
+		text-decoration: none;
+
+		color: var(--color, $color-blue);
 
 		&:hover,
 		&:focus {
-			text-decoration-style: solid;
+			text-decoration: underline solid;
 		}
 	}
 

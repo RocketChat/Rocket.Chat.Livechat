@@ -4,19 +4,18 @@
 	display: flex;
 
 	margin: 0 4px 8px;
+
+	color: $color-text-grey;
+
+	font-size: 0.75rem;
+	font-weight: normal;
+	line-height: 1.25rem;
 	flex-wrap: wrap;
 
 	&__item {
 		margin: 0 4px 8px;
 
-		letter-spacing: 0.2px;
-
-		color: $color-text-grey;
 		border: none;
 		background: none;
-
-		font-size: 0.85rem;
-		font-weight: normal;
-		line-height: 1;
 	}
 }
