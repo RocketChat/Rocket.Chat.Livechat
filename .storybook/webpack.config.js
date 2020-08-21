@@ -1,10 +1,9 @@
-const path = require('path');
-
-module.exports = ({ config, mode }) => {
+module.exports = ({ config }) => {
 	config.resolve.alias = {
 		...config.resolve.alias,
-		'react': require.resolve('preact/compat'),
+		react: require.resolve('preact/compat'),
 		'react-dom': require.resolve('preact/compat'),
+		[require.resolve('../src/lib/uiKit')]: require.resolve('./mocks/uiKit'),
 	};
 
 	const babelRule = config.module.rules.find((rule) => Array.isArray(rule.use) && rule.use.find(({ loader }) => loader === 'babel-loader'));
@@ -37,7 +36,7 @@ module.exports = ({ config, mode }) => {
 	config.module.rules.push({
 		test: /\.svg$/,
 		exclude: [
-			__dirname
+			__dirname,
 		],
 		use: [
 			'desvg-loader/preact',
