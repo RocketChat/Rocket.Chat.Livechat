@@ -4,11 +4,6 @@
 	],
 	"plugins": ["react", "react-hooks"],
 	"parser": "babel-eslint",
-	"parserOptions": {
-		"ecmaFeatures": {
-			"jsx": true
-		}
-	},
 	"env": {
 		"jest": true
 	},

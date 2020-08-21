@@ -2,11 +2,12 @@ import { h } from 'preact';
 import { memo, useEffect, useState, useMemo } from 'preact/compat';
 
 import { createClassName } from '../../../helpers';
+import Block from '../Block';
 import styles from './styles.scss';
 
 const MAX_SIZE = 360;
 
-const ImageBlock = ({ title, imageUrl, altText, parser }) => {
+const ImageBlock = ({ appId, blockId, title, imageUrl, altText, parser }) => {
 	const [{
 		loading,
 		naturalWidth,
@@ -52,30 +53,32 @@ const ImageBlock = ({ title, imageUrl, altText, parser }) => {
 		backgroundImage: `url(${ imageUrl })`,
 	}), [imageUrl]);
 
-	return <div className={createClassName(styles, 'uikit-image-block')}>
-		{title && <h3 className={createClassName(styles, 'uikit-image-block__title')}>
-			{parser.text(title)}
-		</h3>}
-		<div
-			className={createClassName(styles, 'uikit-image-block__content', { loading })}
-			style={contentStyle}
-		>
+	return <Block appId={appId} blockId={blockId}>
+		<div className={createClassName(styles, 'uikit-image-block')}>
+			{title && <h3 className={createClassName(styles, 'uikit-image-block__title')}>
+				{parser.text(title)}
+			</h3>}
 			<div
-				className={createClassName(styles, 'uikit-image-block__wrapper')}
-				style={wrapperStyle}
+				className={createClassName(styles, 'uikit-image-block__content', { loading })}
+				style={contentStyle}
 			>
-				<a
-					children={imageUrl}
-					className={createClassName(styles, 'uikit-image-block__link')}
-					href={imageUrl}
-					rel='noopener noreferrer'
-					style={linkStyle}
-					target='_blank'
-					title={altText}
-				/>
+				<div
+					className={createClassName(styles, 'uikit-image-block__wrapper')}
+					style={wrapperStyle}
+				>
+					<a
+						children={imageUrl}
+						className={createClassName(styles, 'uikit-image-block__link')}
+						href={imageUrl}
+						rel='noopener noreferrer'
+						style={linkStyle}
+						target='_blank'
+						title={altText}
+					/>
+				</div>
 			</div>
 		</div>
-	</div>;
+	</Block>;
 };
 
 export default memo(ImageBlock);

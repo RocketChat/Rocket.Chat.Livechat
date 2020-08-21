@@ -1,6 +1,8 @@
+import { action } from '@storybook/addon-actions';
 import { h } from 'preact';
 
 import { renderMessageBlocks } from '.';
+import Surface from './Surface';
 
 export default {
 	title: 'UiKit/Message/Actions block',
@@ -9,6 +11,13 @@ export default {
 	},
 	decorators: [
 		(storyFn) => <div children={storyFn()} style={{ width: '100vw', maxWidth: 500 }} />,
+		(storyFn) => <Surface
+			children={storyFn()}
+			dispatchAction={async (payload) => {
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				action('dispatchAction')(payload);
+			}}
+		/>,
 	],
 };
 

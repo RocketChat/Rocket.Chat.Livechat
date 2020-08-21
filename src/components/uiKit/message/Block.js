@@ -1,6 +1,8 @@
 import { createContext, h } from 'preact';
 import { memo, useContext, useCallback, useState, useRef, useEffect } from 'preact/compat';
 
+import { useDispatchAction } from './Surface';
+
 const BlockContext = createContext({
 	appId: null,
 	blockId: null,
@@ -15,12 +17,10 @@ const Block = ({ appId, blockId, children }) =>
 		}}
 	/>;
 
-export const useAppId = () => useContext(BlockContext).appId;
-
-export const useBlockId = () => useContext(BlockContext).blockId;
-
 export const usePerformAction = (actionId) => {
-	const { appId, blockId } = useContext(BlockContext);
+	const { appId } = useContext(BlockContext);
+	const dispatchAction = useDispatchAction();
+
 	const [performing, setPerforming] = useState(false);
 	const mountedRef = useRef(true);
 
@@ -28,25 +28,21 @@ export const usePerformAction = (actionId) => {
 		mountedRef.current = false;
 	}, []);
 
-	const perform = useCallback(async (values = {}) => {
+	const perform = useCallback(async (payload = {}) => {
 		setPerforming(true);
 
 		try {
-			// TODO
-			console.log({
+			await dispatchAction({
 				appId,
-				blockId,
 				actionId,
-				...values,
+				payload,
 			});
-
-			await new Promise((resolve) => setTimeout(resolve, 1000));
 		} finally {
 			if (mountedRef.current) {
 				setPerforming(false);
 			}
 		}
-	}, [actionId, appId, blockId]);
+	}, [actionId, appId, dispatchAction]);
 
 	return [perform, performing];
 };

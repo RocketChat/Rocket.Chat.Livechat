@@ -24,7 +24,17 @@ import {
 } from '../constants';
 
 
-const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver, blocks }) => [
+const renderContent = ({
+	text,
+	system,
+	quoted,
+	me,
+	blocks,
+	attachments,
+	attachmentResolver,
+	mid,
+	rid,
+}) => [
 	...(attachments || [])
 		.map((attachment) =>
 			(attachment.audio_url
@@ -61,7 +71,11 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 		</MessageBubble>
 	),
 	blocks && (
-		<MessageBlocks blocks={blocks} />
+		<MessageBlocks
+			blocks={blocks}
+			mid={mid}
+			rid={rid}
+		/>
 	),
 ].filter(Boolean);
 
@@ -117,6 +131,8 @@ export const Message = memo(({
 				me,
 				attachments: message.attachments,
 				blocks: message.blocks,
+				mid: message._id,
+				rid: message.rid,
 				attachmentResolver,
 			})}
 		</MessageContent>
