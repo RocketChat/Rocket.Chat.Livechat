@@ -43,7 +43,7 @@ ___
 
 _This is italic text_
 
-~~Strikethrough~~
+~Strikethrough~
 
 + Lorem ipsum dolor sit amet
 + Consectetur adipiscing elit
