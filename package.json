@@ -35,6 +35,7 @@
 		"@rocket.chat/eslint-config": "^0.4.0",
 		"@storybook/addon-actions": "^6.0.12",
 		"@storybook/addon-backgrounds": "^6.0.12",
+		"@storybook/addon-essentials": "^6.0.16",
 		"@storybook/addon-knobs": "^6.0.12",
 		"@storybook/addon-viewport": "^6.0.12",
 		"@storybook/react": "^6.0.12",
