@@ -19,9 +19,6 @@ export const WithBlocks = () =>
 	<MessageBlocks
 		blocks={[
 			{
-				type: 'divider',
-			},
-			{
 				type: 'section',
 				text: {
 					type: 'plain_text',
@@ -161,6 +158,9 @@ export const WithBlocks = () =>
 						emoji: true,
 					},
 				},
+			},
+			{
+				type: 'divider',
 			},
 			{
 				type: 'image',

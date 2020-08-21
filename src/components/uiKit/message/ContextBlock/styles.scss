@@ -3,11 +3,11 @@
 .uikit-context-block {
 	display: flex;
 
-	margin: 8px 4px;
+	margin: 0 4px 8px;
 	flex-wrap: wrap;
 
 	&__item {
-		margin: 0 4px;
+		margin: 0 4px 8px;
 
 		letter-spacing: 0.2px;
 
