@@ -1,10 +1,11 @@
 import { action } from '@storybook/addon-actions';
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, number, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { MessageList } from '.';
-import { avatarResolver, loremIpsum, centered } from '../../../helpers.stories';
+import { avatarResolver, loremIpsum } from '../../../helpers.stories';
 
 
 const fittingScreen = (storyFn, ...args) => centered(() => (

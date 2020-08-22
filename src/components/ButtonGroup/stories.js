@@ -1,9 +1,9 @@
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { ButtonGroup } from '.';
-import { centered } from '../../helpers.stories';
 import { Button } from '../Button';
 
 

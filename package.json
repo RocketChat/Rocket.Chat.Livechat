@@ -33,14 +33,15 @@
 	},
 	"devDependencies": {
 		"@rocket.chat/eslint-config": "^0.4.0",
-		"@storybook/addon-actions": "^6.0.12",
-		"@storybook/addon-backgrounds": "^6.0.12",
-		"@storybook/addon-essentials": "^6.0.16",
-		"@storybook/addon-knobs": "^6.0.12",
-		"@storybook/addon-viewport": "^6.0.12",
-		"@storybook/react": "^6.0.12",
+		"@storybook/addon-actions": "^5.3.19",
+		"@storybook/addon-backgrounds": "^5.3.19",
+		"@storybook/addon-centered": "^5.3.19",
+		"@storybook/addon-knobs": "^5.3.19",
+		"@storybook/addon-options": "^5.3.19",
+		"@storybook/addon-viewport": "^5.3.19",
+		"@storybook/react": "^5.3.19",
 		"@storybook/storybook-deployer": "^2.8.6",
-		"@storybook/theming": "^6.0.12",
+		"@storybook/theming": "^5.3.19",
 		"babel-eslint": "^10.1.0",
 		"cross-env": "^7.0.2",
 		"css-loader": "^4.0.0",
@@ -48,7 +49,6 @@
 		"eslint": "^7.5.0",
 		"eslint-plugin-import": "^2.22.0",
 		"eslint-plugin-react": "^7.20.5",
-		"eslint-plugin-react-hooks": "^4.1.0",
 		"gh-release": "^3.5.0",
 		"husky": "^4.2.5",
 		"if-env": "^1.0.4",
@@ -68,7 +68,6 @@
 	"dependencies": {
 		"@kossnocorp/desvg": "^0.2.0",
 		"@rocket.chat/sdk": "^1.0.0-alpha.41",
-		"@rocket.chat/ui-kit": "^0.14.1",
 		"date-fns": "^2.15.0",
 		"desvg": "^1.0.2",
 		"emoji-mart": "^3.0.0",
@@ -107,7 +106,7 @@
 			"chrome": {
 				"target": "chrome.docker",
 				"width": 365,
-				"height": 500
+        "height": 500
 			}
 		}
 	}

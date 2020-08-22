@@ -1,9 +1,10 @@
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { MessageBubble } from '.';
-import { loremIpsum, centered } from '../../../helpers.stories';
+import { loremIpsum } from '../../../helpers.stories';
 
 
 const text = loremIpsum({ count: 1, units: 'sentences' });

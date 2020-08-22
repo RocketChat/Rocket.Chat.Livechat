@@ -2,8 +2,13 @@
 	"extends": [
 		"@rocket.chat/eslint-config"
 	],
-	"plugins": ["react", "react-hooks"],
+	"plugins": ["react"],
 	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
 	"env": {
 		"jest": true
 	},
@@ -45,9 +50,7 @@
 		"react/prefer-stateless-function": "warn",
 		"react/react-in-jsx-scope": "error",
 		"react/require-render-return": "error",
-		"react/self-closing-comp": "error",
-		"react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+		"react/self-closing-comp": "error"
 	},
 	"settings": {
     "react": {

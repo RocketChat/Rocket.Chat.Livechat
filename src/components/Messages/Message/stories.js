@@ -1,3 +1,6 @@
+import centered from '@storybook/addon-centered/react';
+import { withKnobs, boolean, date, object, select, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { Message } from '.';
@@ -14,6 +17,7 @@ import {
 	MESSAGE_TYPE_WELCOME,
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
 } from '../constants';
+
 
 const messageTypes = {
 	NULL: null,
@@ -43,7 +47,7 @@ ___
 
 _This is italic text_
 
-~Strikethrough~
+~~Strikethrough~~
 
 + Lorem ipsum dolor sit amet
 + Consectetur adipiscing elit
@@ -65,313 +69,181 @@ const defaultUser = {
 
 const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
-export default {
-	title: 'Messages/Message',
-	component: Message,
-	parameters: {
-		layout: 'centered',
-	},
-	argTypes: {
-		me: { control: 'boolean' },
-		compact: { control: 'boolean' },
-		msg: { control: 'text' },
-		t: { control: { type: 'select', options: messageTypes } },
-		u: { control: 'object' },
-		ts: { control: 'date' },
-		attachments: { control: 'object' },
-		blocks: { control: 'object' },
-	},
-	args: {
-		me: false,
-		compact: false,
-		msg: defaultMessage,
-		t: null,
-		u: defaultUser,
-		ts: now,
-		attachments: [],
-		blocks: [],
-	},
-};
-
-export const Default = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-Default.storyName = 'default';
-
-export const System = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-System.storyName = 'system';
-System.args = {
-	msg: '',
-	t: MESSAGE_TYPE_WELCOME,
-};
-
-export const Me = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-Me.storyName = 'me';
-Me.args = {
-	me: true,
-};
-
-export const Markdown = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-Markdown.storyName = 'markdown';
-Markdown.args = {
-	msg: defaultMarkdownMessage,
-};
-
-export const Grouping = (args) => (
-	<div>
+storiesOf('Messages/Message', module)
+	.addDecorator(centered)
+	.addDecorator(withKnobs)
+	.add('default', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
 			avatarResolver={avatarResolver}
-			me={args.me}
-			compact={args.compact}
-			msg={args.msg}
-			t={args.t}
-			u={args.u}
-			ts={args.ts}
-			attachments={args.attachments}
-			blocks={args.blocks}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
 		/>
+	))
+	.add('system', () => (
 		<Message
 			attachmentResolver={attachmentResolver}
 			avatarResolver={avatarResolver}
-			me={args.me}
-			msg={defaultMessage}
-			u={defaultUser}
-			ts={now}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', '')}
+			t={select('t', messageTypes, MESSAGE_TYPE_WELCOME)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
 		/>
-	</div>
-);
-Grouping.storyName = 'grouping';
-Grouping.args = {
-	msg: defaultMessageExtra,
-	compact: true,
-};
-
-export const WithQuotation = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-WithQuotation.storyName = 'with quotation';
-WithQuotation.args = {
-	attachments: [{
-		message_link: 'http://localhost:3000/live/SqouQyJ7wDsK8KPnc?msg=EWrxmazqYbEf3rFzd',
-		text: defaultMessageExtra,
-	}],
-};
-
-export const WithAudioAttachment = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-WithAudioAttachment.storyName = 'with audio attachment';
-WithAudioAttachment.args = {
-	attachments: [{
-		audio_url: sampleAudio,
-	}],
-};
-WithAudioAttachment.parameters = {
-	loki: { skip: true },
-};
-
-export const WithVideoAttachment = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-WithVideoAttachment.storyName = 'with video attachment';
-WithVideoAttachment.args = {
-	attachments: [{
-		video_url: sampleVideo,
-	}],
-};
-WithVideoAttachment.parameters = {
-	loki: { skip: true },
-};
-
-export const WithImageAttachment = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-WithImageAttachment.storyName = 'with image attachment';
-WithImageAttachment.args = {
-	attachments: [{
-		image_url: sampleImage,
-	}],
-};
-
-export const WithFilesAttachments = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-WithFilesAttachments.storyName = 'with files attachments';
-WithFilesAttachments.args = {
-	attachments: ['pdf', 'doc', 'ppt', 'xls', 'zip', 'abc']
-		.map((extension) => ({
-			title_link: `http://example.com/demo.${ extension }`,
-			title: `Untitled ${ extension } file`,
-		})),
-};
-
-export const WithMultipleAttachments = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-WithMultipleAttachments.storyName = 'with mutiple attachments';
-WithMultipleAttachments.args = {
-	attachments: [
-		{
-			audio_url: sampleAudio,
-		},
-		{
-			video_url: sampleVideo,
-		},
-		{
-			image_url: sampleImage,
-		},
-		{
-			title_link: 'http://example.com/demo.pdf',
-			title: 'Untitled pdf file',
-		},
-	],
-};
-WithMultipleAttachments.parameters = {
-	loki: { skip: true },
-};
-
-export const WithUiKitBlocks = (args) => (
-	<Message
-		attachmentResolver={attachmentResolver}
-		avatarResolver={avatarResolver}
-		me={args.me}
-		compact={args.compact}
-		msg={args.msg}
-		t={args.t}
-		u={args.u}
-		ts={args.ts}
-		attachments={args.attachments}
-		blocks={args.blocks}
-	/>
-);
-WithUiKitBlocks.storyName = 'with UiKit blocks';
-WithUiKitBlocks.args = {
-	msg: '',
-	blocks: [
-		{
-			type: 'section',
-			text: {
-				type: 'plain_text',
-				text: 'This is a plain text section block.',
-				emoji: true,
-			},
-		},
-	],
-};
+	))
+	.add('me', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', true)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+		/>
+	))
+	.add('markdown', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMarkdownMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+		/>
+	))
+	.add('grouping', () => (
+		<div>
+			<Message
+				attachmentResolver={attachmentResolver}
+				avatarResolver={avatarResolver}
+				me={boolean('me', false)}
+				compact={boolean('compact', true)}
+				msg={text('msg', defaultMessageExtra)}
+				t={select('t', messageTypes, null)}
+				u={object('u', defaultUser)}
+				ts={date('ts', now)}
+			/>
+			<Message
+				attachmentResolver={attachmentResolver}
+				avatarResolver={avatarResolver}
+				msg={defaultMessage}
+				u={defaultUser}
+				ts={now}
+			/>
+		</div>
+	))
+	.add('with quotation', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+			attachments={object('attachments', [{
+				message_link: 'http://localhost:3000/live/SqouQyJ7wDsK8KPnc?msg=EWrxmazqYbEf3rFzd',
+				text: defaultMessageExtra,
+			}])}
+		/>
+	))
+	.add('with audio attachment', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+			attachments={object('attachments', [{
+				audio_url: sampleAudio,
+			}])}
+		/>
+	), { loki: { skip: true } })
+	.add('with video attachment', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+			attachments={object('attachments', [{
+				video_url: sampleVideo,
+			}])}
+		/>
+	), { loki: { skip: true } })
+	.add('with image attachment', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+			attachments={object('attachments', [{
+				image_url: sampleImage,
+			}])}
+		/>
+	))
+	.add('with files attachments', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+			attachments={object('attachments', ['pdf', 'doc', 'ppt', 'xls', 'zip', 'abc']
+				.map((extension) => ({
+					title_link: `http://example.com/demo.${ extension }`,
+					title: `Untitled ${ extension } file`,
+				})),
+			)}
+		/>
+	))
+	.add('with mutiple attachments', () => (
+		<Message
+			attachmentResolver={attachmentResolver}
+			avatarResolver={avatarResolver}
+			me={boolean('me', false)}
+			compact={boolean('compact', false)}
+			msg={text('msg', defaultMessage)}
+			t={select('t', messageTypes, null)}
+			u={object('u', defaultUser)}
+			ts={date('ts', now)}
+			attachments={object('attachments', [
+				{
+					audio_url: sampleAudio,
+				},
+				{
+					video_url: sampleVideo,
+				},
+				{
+					image_url: sampleImage,
+				},
+				{
+					title_link: 'http://example.com/demo.pdf',
+					title: 'Untitled pdf file',
+				},
+			])}
+		/>
+	), { loki: { skip: true } });

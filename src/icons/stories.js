@@ -1,10 +1,9 @@
 import path from 'path';
 
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, color } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
-
-import { centered } from '../helpers.stories';
 
 
 const req = require.context('./', true, /\.svg$/);

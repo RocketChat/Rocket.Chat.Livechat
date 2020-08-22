@@ -1,10 +1,11 @@
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { FormField } from '.';
 import { Form, TextInput } from '..';
-import { loremIpsum, centered } from '../../../helpers.stories';
+import { loremIpsum } from '../../../helpers.stories';
 
 
 storiesOf('Forms/FormField', module)

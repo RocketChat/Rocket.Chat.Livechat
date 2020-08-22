@@ -1,12 +1,9 @@
 module.exports = {
   addons: [
-		{
-			name: '@storybook/addon-essentials',
-			options: {
-				backgrounds: false,
-			}
-		},
+		'@storybook/addon-actions/register',
+		'@storybook/addon-backgrounds/register',
 		'@storybook/addon-knobs/register',
+		'@storybook/addon-viewport/register',
   ],
   stories: [
 		'../src/**/stories.js',

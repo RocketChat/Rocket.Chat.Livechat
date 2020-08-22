@@ -1,4 +1,5 @@
 import { action } from '@storybook/addon-actions';
+import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
@@ -6,7 +7,6 @@ import { h } from 'preact';
 import { Sound } from '.';
 import beepAudio from '../../../.storybook/assets/beep.mp3';
 import sampleAudio from '../../../.storybook/assets/sample-audio.mp3';
-import { centered } from '../../helpers.stories';
 
 
 storiesOf('Components/Sound', module)
