@@ -2,10 +2,11 @@ import { BLOCK_CONTEXT } from '@rocket.chat/ui-kit';
 import { h } from 'preact';
 import { memo, useCallback } from 'preact/compat';
 
-import { Button } from '../../../Button';
 import { createClassName } from '../../../helpers';
 import { usePerformAction } from '../Block';
 import styles from './styles.scss';
+
+const handleMouseUp = ({ target }) => target.blur();
 
 const ButtonElement = ({ text, actionId, url, value, style, context, confirm, parser }) => {
 	const [performAction, performingAction] = usePerformAction(actionId);
@@ -27,19 +28,17 @@ const ButtonElement = ({ text, actionId, url, value, style, context, confirm, pa
 		await performAction({ value });
 	}, [confirm, performAction, url, value]);
 
-	return <Button
+	return <button
 		children={parser.text(text)}
 		className={createClassName(styles, 'uikit-button', {
+			style,
 			accessory: context === BLOCK_CONTEXT.SECTION,
 			action: context === BLOCK_CONTEXT.ACTION,
 		})}
-		danger={style === 'danger'}
 		disabled={performingAction}
-		loading={performingAction}
-		outline={!style}
-		secondary={!style}
-		stack={context === BLOCK_CONTEXT.ACTION}
+		type='button'
 		onClick={handleClick}
+		onMouseUp={handleMouseUp}
 	/>;
 };
 

@@ -107,7 +107,8 @@ class MessageParser extends UiKitParserMessage {
 		null
 }
 
-const parser = new MessageParser();
+export const parser = new MessageParser();
+
 export const renderMessageBlocks = uiKitMessage(parser, {
 	engine: 'livechat',
 });
