@@ -1,3 +1,1 @@
-module.exports = {
-	presets: ['preact-cli/babel']
-};
+module.exports = require('../babel.config');
