@@ -1,16 +1,16 @@
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-import { avatarResolver } from '../../helpers.stories';
 import { Avatar } from '.';
+import { avatarResolver, centered } from '../../helpers.stories';
 
 
 const defaultSrc = avatarResolver('guilherme.gazzo');
 const defaultDescription = 'user description';
 const statuses = [null, 'offline', 'away', 'busy', 'online'];
 
-storiesOf('Components|Avatar', module)
+storiesOf('Components/Avatar', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

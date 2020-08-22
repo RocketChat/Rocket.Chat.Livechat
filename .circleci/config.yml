@@ -3,19 +3,14 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.15
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-
       - run: yarn install
-
       - save_cache:
           paths:
             - node_modules
@@ -28,7 +23,22 @@ jobs:
             - ./build
             - ./CHANGELOG.md
             - ./build.tar.gz
-
+  loki:
+    docker:
+      - image: chinello/alpine-chrome:with-node
+    working_directory: ~/repo
+    environment:
+      CHROME_PATH: /usr/bin/chromium-browser
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn run build-storybook:loki
+      - run: |
+          cat package.json | sed s/\.docker/.app/ > package.json-new
+          mv package.json-new package.json
+      - run: yarn run loki:test-ci
+      - store_artifacts:
+          path: ~/repo/.loki/difference
   publish:
     docker:
       - image: circleci/node:10.15
@@ -71,9 +81,12 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - publish:
+      - loki:
           requires:
             - build
+      - publish:
+          requires:
+            - loki
           filters:
             branches:
               only: master

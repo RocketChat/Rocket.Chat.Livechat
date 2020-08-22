@@ -1,4 +1,4 @@
-import { cloneElement } from 'preact';
+import { h, cloneElement } from 'preact';
 
 import { createClassName } from '../../helpers';
 import styles from './styles.scss';

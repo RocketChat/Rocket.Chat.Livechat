@@ -1,9 +1,10 @@
-import { storiesOf } from '@storybook/react';
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, object } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-import { Button } from '../Button';
 import { PopoverContainer, PopoverTrigger } from '.';
+import { centered } from '../../helpers.stories';
+import { Button } from '../Button';
 
 
 const centeredWithPopoverContainer = (storyFn, ...args) => (
@@ -14,7 +15,7 @@ const centeredWithPopoverContainer = (storyFn, ...args) => (
 	</div>
 );
 
-storiesOf('Components|Popover', module)
+storiesOf('Components/Popover', module)
 	.addDecorator(withKnobs)
 	.addDecorator(centeredWithPopoverContainer)
 	.add('arbitrary renderer', () => (

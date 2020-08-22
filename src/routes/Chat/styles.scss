@@ -1,5 +1,5 @@
-@import '~styles/colors';
-@import '~styles/variables';
+@import '../../styles/colors';
+@import '../../styles/variables';
 
 .chat {
 	&__messages {
@@ -49,6 +49,12 @@
 			border-color: $color-dark-blue transparent transparent transparent;
 			border-radius: 50%;
 		}
+	}
+
+	.none__action {
+		margin: 0 6px;
+
+		opacity: 0.6;
 	}
 }
 

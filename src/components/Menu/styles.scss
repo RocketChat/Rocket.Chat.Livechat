@@ -1,5 +1,5 @@
-@import '~styles/colors';
-@import '~styles/variables';
+@import '../../styles/colors';
+@import '../../styles/variables';
 
 .menu {
 	display: flex;
@@ -30,7 +30,6 @@
 		align-items: stretch;
 
 		&-title {
-
 			margin: 2px 16px;
 
 			letter-spacing: 0;

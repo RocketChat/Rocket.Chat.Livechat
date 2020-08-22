@@ -1,11 +1,13 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-import { screenCentered } from '../../helpers.stories';
+import { Screen } from '.';
+import { screenCentered, gazzoAvatar } from '../../helpers.stories';
+import I18n from '../../i18n';
 import { FooterOptions } from '../Footer';
 import Menu from '../Menu';
-import { Screen } from '.';
 
 
 const alerts = [
@@ -15,7 +17,7 @@ const alerts = [
 	{ id: 4, children: 'Custom colored alert', color: '#000', timeout: 5000 },
 ];
 
-storiesOf('Components|Screen', module)
+storiesOf('Components/Screen', module)
 	.addDecorator(withKnobs)
 	.addDecorator(screenCentered)
 	.add('normal', () => (
@@ -123,7 +125,7 @@ storiesOf('Components|Screen', module)
 				email: 'guilherme.gazzo@rocket.chat',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: gazzoAvatar,
 				},
 			})}
 			title={text('title', 'Title')}
@@ -155,7 +157,7 @@ storiesOf('Components|Screen', module)
 				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: gazzoAvatar,
 				},
 			})}
 			title={text('title', 'Title')}
@@ -188,7 +190,7 @@ storiesOf('Components|Screen', module)
 				phone: '+ 55 42423 24242',
 				avatar: {
 					description: 'guilherme.gazzo',
-					src: '//gravatar.com/avatar/7ba3fcdd590033117b1e6587e0d20478?s=46',
+					src: gazzoAvatar,
 				},
 			})}
 			title={text('title', 'Title')}
@@ -256,7 +258,7 @@ storiesOf('Components|Screen', module)
 			</Screen.Content>
 		</Screen>
 	));
-storiesOf('Components|Screen/Footer', module)
+storiesOf('Components/Screen/Footer', module)
 	.addDecorator(withKnobs)
 	.addDecorator(screenCentered)
 	.add('empty', () => (

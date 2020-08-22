@@ -1,8 +1,10 @@
+import { h } from 'preact';
+
 import { memo } from '../../helpers';
+import { MessageAvatars } from '../MessageAvatars';
+import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
-import { MessageBubble } from '../MessageBubble';
-import { MessageAvatars } from '../MessageAvatars';
 import { TypingDots } from '../TypingDots';
 
 

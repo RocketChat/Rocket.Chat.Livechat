@@ -1,5 +1,5 @@
 import mem from 'mem';
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { createClassName } from '../helpers';
 import styles from './styles.scss';
@@ -17,7 +17,7 @@ const escapeMap = {
 const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
 
 const escapeHtml = mem(
-	(string) => string.replace(escapeRegex, (match) => escapeMap[match])
+	(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
 );
 
 const parse = (plainText) =>
@@ -91,7 +91,7 @@ export class Composer extends Component {
 
 		const texts = await Promise.all(
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
-				.map((item) => new Promise((resolve) => item.getAsString(resolve)))
+				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
 		texts.forEach((text) => this.pasteText(text));
 	}
@@ -114,9 +114,14 @@ export class Composer extends Component {
 
 		const texts = await Promise.all(
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
-				.map((item) => new Promise((resolve) => item.getAsString(resolve)))
+				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
 		texts.forEach((text) => this.pasteText(text));
+	}
+
+	handleClick = () => {
+		const { handleEmojiClick } = this.props;
+		handleEmojiClick && handleEmojiClick();
 	}
 
 	pasteText = (plainText) => {
@@ -142,17 +147,26 @@ export class Composer extends Component {
 	constructor(props) {
 		super(props);
 		this.value = this.props.value;
+		this.handleNotifyEmojiSelect = this.handleNotifyEmojiSelect.bind(this);
+
+		if (typeof this.props.notifyEmojiSelect === 'function') {
+			this.props.notifyEmojiSelect(this.handleNotifyEmojiSelect);
+		}
 	}
 
 	// we only update composer if value length changed from 0 to 1 or 1 to 0
 	// everything else is managed by this.el
 	shouldComponentUpdate({ value: nextValue }) {
-		const { value } = this.props;
+		const { value, limitTextLength } = this.props;
 
 		const nextValueEmpty = !nextValue || nextValue.length === 0;
 		const valueEmpty = !value || value.length === 0;
 
 		if (nextValueEmpty !== valueEmpty) {
+			return true;
+		}
+
+		if (nextValue.length === limitTextLength || value.length === limitTextLength) {
 			return true;
 		}
 
@@ -172,6 +186,47 @@ export class Composer extends Component {
 		replaceCaret(el);
 	}
 
+	handleNotifyEmojiSelect(emoji) {
+		const { onChange } = this.props;
+		const caretPosition = this.getCaretPosition(this.el);
+		const oldText = this.el.innerText;
+		const newText = `${ oldText.substr(0, caretPosition) }${ emoji }&nbsp;${ oldText.substr(caretPosition) }`;
+		this.el.innerHTML = newText;
+		this.moveCursorToEndAndFocus(caretPosition + emoji.length + 1);
+		onChange && onChange(this.el.innerText);
+	}
+
+	moveCursorToEndAndFocus(endIndex) {
+		const setPos = document.createRange();
+		const set = window.getSelection();
+		setPos.setStart(this.el.childNodes[0], endIndex);
+		setPos.collapse(true);
+		set.removeAllRanges();
+		set.addRange(setPos);
+	}
+
+	getCaretPosition(element) {
+		const doc = element.ownerDocument || element.document;
+		const win = doc.defaultView || doc.parentWindow;
+		if (typeof win.getSelection !== 'undefined' && win.getSelection().rangeCount > 0) {
+			const range = win.getSelection().getRangeAt(0);
+			const preCaretRange = range.cloneRange();
+			preCaretRange.selectNodeContents(element);
+			preCaretRange.setEnd(range.endContainer, range.endOffset);
+			return preCaretRange.toString().length;
+		}
+
+		if (doc.selection && doc.selection.type !== 'Control') {
+			const textRange = doc.selection.createRange();
+			const preCaretTextRange = doc.body.createTextRange();
+			preCaretTextRange.moveToElementText(element);
+			preCaretTextRange.setEndPoint('EndToEnd', textRange);
+			return preCaretTextRange.text.length;
+		}
+
+		return 0;
+	}
+
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
 		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
 			{pre}
@@ -188,6 +243,7 @@ export class Composer extends Component {
 						onKeypress: this.handleKeypress(onSubmit),
 						onPaste: this.handlePaste(onUpload),
 						onDrop: this.handleDrop(onUpload),
+						onClick: this.handleClick,
 					}
 				)}
 				className={createClassName(styles, 'composer__input')}

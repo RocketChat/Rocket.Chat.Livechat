@@ -2,7 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.6.9 - 2020-06-29
+## 1.7.0 - 2020-08-21
+[NEW] UiKit support (#474)
+[CHORE] Loki visual tests (#459)
+[IMPROVE] Translate to spanish (#413) 
+[NEW] Message character limit feature (#443) 
+[IMPROVE] Preact X (#457)
+[NEW] Add Emoji rendering support (#412) 
+
+## 1.6.0 - 2020-06-29
 [FIX] Improve the transcript request process. (#419)
 [FIX] Start chat disable with handler validate error (#432)
 [FIX] Loading should be flase when department switched is confirmed (#… …

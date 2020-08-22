@@ -1,6 +1,6 @@
-@import '~styles/colors';
-@import '~styles/helpers';
-@import '~styles/variables';
+@import '../../styles/colors';
+@import '../../styles/helpers';
+@import '../../styles/variables';
 
 .footer {
 	display: flex;
@@ -40,6 +40,19 @@
 		line-height: 1;
 
 		@include pressable-button(2px);
+	}
+
+	&__remainder {
+		min-width: 100px;
+		margin-left: 10px;
+
+		font-weight: bold;
+
+		&--highlight {
+			transition: color 0.2s;
+
+			color: $color-red;
+		}
 	}
 }
 
