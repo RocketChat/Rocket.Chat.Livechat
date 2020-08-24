@@ -1,12 +1,13 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { screenCentered, screenProps } from '../../helpers.stories';
 import GDPRAgreement from './component';
 
 
-storiesOf('Routes|GDPRAgreement', module)
+storiesOf('Routes/GDPRAgreement', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

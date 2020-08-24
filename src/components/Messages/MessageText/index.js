@@ -1,4 +1,7 @@
+import { h } from 'preact';
+
 import { createClassName, memo } from '../../helpers';
+import renderEmojis from './emoji';
 import { renderMarkdown } from './markdown';
 import styles from './styles.scss';
 import renderEmojis from './emoji';
@@ -11,7 +14,6 @@ const sanitizeHtmlOptions = {
 		a: ['href', 'name', 'target'],
 	},
 };
-
 
 export const MessageText = memo(({
 	text,

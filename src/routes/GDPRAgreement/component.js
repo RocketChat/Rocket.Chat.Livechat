@@ -1,10 +1,11 @@
-import { Component } from 'preact';
 import MarkdownIt from 'markdown-it';
+import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
+import I18n from '../../i18n';
 import styles from './styles.scss';
 
 
@@ -16,11 +17,11 @@ const md = new MarkdownIt({
 const defaultConsentText = I18n.t(
 	'The controller of your personal data is [Company Name], with registered '
 	+ 'office at [Company Address]. To start the chat you agree that your '
-	+ 'personal data shall be processed and trasmitted in accordance with the General Data Protection Regulation (GDPR).'
+	+ 'personal data shall be processed and trasmitted in accordance with the General Data Protection Regulation (GDPR).',
 );
 
 const defaultInstructions = I18n.t(
-	'Go to **menu options → Forget/Remove my personal data** to request the immediate removal of your data.'
+	'Go to **menu options → Forget/Remove my personal data** to request the immediate removal of your data.',
 );
 
 export default class GDPR extends Component {

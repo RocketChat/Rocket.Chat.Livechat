@@ -1,14 +1,14 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { store } from '../store';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import { store } from '../store';
+import { normalizeAgent } from './api';
 import Commands from './commands';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
-import { handleTranscript } from './transcript';
 import { normalizeMessage, normalizeMessages } from './threads';
-import { normalizeAgent } from './api';
+import { handleTranscript } from './transcript';
 
 const commands = new Commands();
 
@@ -151,6 +151,8 @@ Livechat.onMessage(async (message) => {
 	await doPlaySound(message);
 });
 
+export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
+
 export const loadMessages = async () => {
 	const { messages: storedMessages, room: { _id: rid } = {} } = store.state;
 	const previousMessages = getGreetingMessages(storedMessages);
@@ -215,9 +217,7 @@ export const defaultRoomParams = () => {
 	return params;
 };
 
-export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
-
-store.on('change', (state, prevState) => {
+store.on('change', ([state, prevState]) => {
 	// Cross-tab communication
 	// Detects when a room is created and then route to the correct container
 	if (!prevState.room && state.room) {

@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { screenCentered, screenProps } from '../../helpers.stories';
 import Register from './component';
@@ -21,7 +22,7 @@ const customFields = [
 	},
 ];
 
-storiesOf('Routes|Register', module)
+storiesOf('Routes/Register', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

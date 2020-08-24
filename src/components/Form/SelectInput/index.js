@@ -1,11 +1,19 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
+import ArrowIcon from '../../../icons/arrowDown.svg';
 import { createClassName } from '../../helpers';
 import styles from './styles.scss';
-import ArrowIcon from '../../../icons/arrowDown.svg';
 
 
 export class SelectInput extends Component {
+	static getDerivedStateFromProps(props, state) {
+		if (props.value !== state.value) {
+			return { value: props.value };
+		}
+
+		return null;
+	}
+
 	state = {
 		value: this.props.value,
 	}
@@ -19,13 +27,6 @@ export class SelectInput extends Component {
 		}
 
 		this.setState({ value: event.target.value });
-	}
-
-	componentWillReceiveProps({ value: nextValue }) {
-		const { value } = this.props;
-		if (nextValue !== value) {
-			this.setState({ value: nextValue });
-		}
 	}
 
 	render = ({
@@ -58,7 +59,7 @@ export class SelectInput extends Component {
 				})}
 				{...props}
 			>
-				<option value="" disabled hidden>{placeholder}</option>
+				<option value='' disabled hidden>{placeholder}</option>
 				{Array.from(options).map(({ value, label }, key) => (
 					<option key={key} value={value} className={createClassName(styles, 'select-input__option')}>{label}</option>
 				))}

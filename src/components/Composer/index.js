@@ -1,5 +1,5 @@
 import mem from 'mem';
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { createClassName } from '../helpers';
 import styles from './styles.scss';
@@ -125,6 +125,11 @@ export class Composer extends Component {
 		handleEmojiClick && handleEmojiClick();
 	}
 
+	handleClick = () => {
+		const { handleEmojiClick } = this.props;
+		handleEmojiClick && handleEmojiClick();
+	}
+
 	pasteText = (plainText) => {
 		this.el.focus();
 
@@ -149,6 +154,10 @@ export class Composer extends Component {
 		super(props);
 		this.value = this.props.value;
 		this.handleNotifyEmojiSelect = this.handleNotifyEmojiSelect.bind(this);
+
+		if (typeof this.props.notifyEmojiSelect === 'function') {
+			this.props.notifyEmojiSelect(this.handleNotifyEmojiSelect);
+		}
 	}
 
 	// we only update composer if value length changed from 0 to 1 or 1 to 0
@@ -163,7 +172,7 @@ export class Composer extends Component {
 			return true;
 		}
 
-        if (nextValue.length === limitTextLength || value.length === limitTextLength) {
+		if (nextValue.length === limitTextLength || value.length === limitTextLength) {
 			return true;
 		}
 
@@ -181,12 +190,6 @@ export class Composer extends Component {
 			el.innerHTML = this.value;
 		}
 		replaceCaret(el);
-	}
-
-	componentWillMount() {
-		if (this.props.notifyEmojiSelect) {
-			this.props.notifyEmojiSelect(this.handleNotifyEmojiSelect);
-		}
 	}
 
 	handleNotifyEmojiSelect(emoji) {

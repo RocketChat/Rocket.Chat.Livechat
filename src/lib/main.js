@@ -2,9 +2,10 @@ import format from 'date-fns/format';
 import { parseISO } from 'date-fns/fp';
 
 import { Livechat } from '../api';
+import { canRenderMessage } from '../components/helpers';
+import I18n from '../i18n';
 import store from '../store';
 import constants from './constants';
-import { canRenderMessage } from '../components/helpers';
 
 export const loadConfig = async () => {
 	const {
