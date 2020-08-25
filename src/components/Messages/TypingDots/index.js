@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import { createClassName } from '../../helpers';
 import styles from './styles.scss';
 

@@ -1,16 +1,17 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
-import { Consumer } from '../../store';
+import { ModalManager } from '../../components/Modal';
+import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import I18n from '../../i18n';
+import { normalizeQueueAlert } from '../../lib/api';
+import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
-import constants from '../../lib/constants';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
-import Chat from './component';
-import { ModalManager } from '../../components/Modal';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
-import { normalizeQueueAlert } from '../../lib/api';
+import { Consumer } from '../../store';
+import Chat from './component';
 
 export class ChatContainer extends Component {
 	state = {
@@ -328,23 +329,19 @@ export class ChatContainer extends Component {
 		loadMessages();
 	}
 
-	async componentWillReceiveProps({ messages: nextMessages, visible: nextVisible, minimized: nextMinimized }) {
-		const { messages, alerts, dispatch } = this.props;
+	async componentDidUpdate(prevProps) {
+		const { messages, visible, minimized, dispatch } = this.props;
+		const { messages: prevMessages, alerts: prevAlerts } = prevProps;
 
-		if (nextMessages && messages && nextMessages.length !== messages.length && nextVisible && !nextMinimized) {
-			const nextLastMessage = nextMessages[nextMessages.length - 1];
-			const lastMessage = messages[messages.length - 1];
-			if (
-				(nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id)
-				|| (nextMessages.length === 1 && messages.length === 0)
-			) {
-				const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
-				await dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
+		if (messages && prevMessages && messages.length !== prevMessages.length && visible && !minimized) {
+			const nextLastMessage = messages[messages.length - 1];
+			const lastMessage = prevMessages[prevMessages.length - 1];
+			if ((nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) || (messages.length === 1 && prevMessages.length === 0)) {
+				const newAlerts = prevAlerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
+				dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
 			}
 		}
-	}
 
-	async componentDidUpdate() {
 		await this.checkConnectingAgent();
 		this.checkRoom();
 	}
@@ -474,7 +471,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
-                limitTextLength={limitTextLength}
+				limitTextLength={limitTextLength}
 			/>
 		)}
 	</Consumer>

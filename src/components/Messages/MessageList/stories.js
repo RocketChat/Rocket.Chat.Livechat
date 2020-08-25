@@ -1,11 +1,10 @@
-import { loremIpsum } from 'lorem-ipsum';
-import centered from '@storybook/addon-centered/react';
+import { action } from '@storybook/addon-actions';
 import { withKnobs, number, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+import { h } from 'preact';
 
-import { avatarResolver } from '../../../helpers.stories';
 import { MessageList } from '.';
+import { avatarResolver, loremIpsum, centered } from '../../../helpers.stories';
 
 
 const fittingScreen = (storyFn, ...args) => centered(() => (
@@ -13,6 +12,8 @@ const fittingScreen = (storyFn, ...args) => centered(() => (
 		{storyFn()}
 	</div>
 ), ...args);
+
+const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
 const users = [
 	{
@@ -33,13 +34,13 @@ const messages = new Array(10);
 for (let i = 0; i < messages.length; ++i) {
 	messages[i] = {
 		_id: i + 1,
-		u: users[Math.floor(Math.random() * users.length)],
+		u: users[i % users.length],
 		msg: loremIpsum({ count: 1, units: 'sentences' }),
-		ts: new Date(Date.now() - (15 - i) * 60000).getTime(),
+		ts: new Date(now.getTime() - (15 - i) * 60000).toISOString(),
 	};
 }
 
-storiesOf('Messages|MessageList', module)
+storiesOf('Messages/MessageList', module)
 	.addDecorator(fittingScreen)
 	.addDecorator(withKnobs)
 	.add('normal', () => (

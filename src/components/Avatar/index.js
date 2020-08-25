@@ -1,10 +1,18 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { createClassName } from '../helpers';
 import styles from './styles.scss';
 
 
 export class Avatar extends Component {
+	static getDerivedStateFromProps(props) {
+		if (props.src) {
+			return { errored: false };
+		}
+
+		return null;
+	}
+
 	state = {
 		errored: false,
 	}
@@ -13,16 +21,9 @@ export class Avatar extends Component {
 		this.setState({ errored: true });
 	}
 
-	componentWillReceiveProps({ src: nextSrc }) {
-		const { src } = this.props;
-		if (nextSrc !== src) {
-			this.setState({ errored: false });
-		}
-	}
-
 	render = ({ small, large, src, description, status, className, style }, { errored }) => (
 		<div
-			aria-label="User picture"
+			aria-label='User picture'
 			className={createClassName(styles, 'avatar', { small, large, nobg: src && !errored }, [className])}
 			style={style}
 		>

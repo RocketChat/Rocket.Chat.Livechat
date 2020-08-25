@@ -1,5 +1,5 @@
-import { Component } from 'preact';
 import { Picker } from 'emoji-mart';
+import { h, Component } from 'preact';
 
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
@@ -8,7 +8,7 @@ import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import styles from './styles.scss';
+import I18n from '../../i18n';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
 import PrintIcon from '../../icons/print.svg';
@@ -16,8 +16,7 @@ import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
-import 'emoji-mart/css/emoji-mart.css';
-
+import styles from './styles.scss';
 
 export default class Chat extends Component {
 	state = {
@@ -69,7 +68,7 @@ export default class Chat extends Component {
 	}
 
 	handleChangeText = (text) => {
-        let value = text;
+		let value = text;
 		const { onChangeText, limitTextLength } = this.props;
 		if (limitTextLength && limitTextLength < text.length) {
 			value = value.substring(0, limitTextLength);
@@ -187,11 +186,11 @@ export default class Chat extends Component {
 							</Menu.Group>
 						</FooterOptions>
 					) : null}
-                    limit={limitTextLength
-                        ? <CharCounter
-                            limitTextLength={limitTextLength}
-                            textLength={text.length}
-                        /> : null}
+					limit={limitTextLength
+						? <CharCounter
+							limitTextLength={limitTextLength}
+							textLength={text.length}
+						/> : null}
 				>
 					<Composer onUpload={onUpload}
 						onSubmit={this.handleSubmit}
@@ -221,7 +220,7 @@ export default class Chat extends Component {
 								)}
 							</ComposerActions>
 						)}
-                        limitTextLength={limitTextLength}
+						limitTextLength={limitTextLength}
 					/>
 				</Screen.Footer>
 			</FilesDropTarget>

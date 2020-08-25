@@ -1,14 +1,18 @@
+import { h } from 'preact';
+
+import I18n from '../../../i18n';
 import { getAttachmentUrl, memo } from '../../helpers';
-import { MessageContainer } from '../MessageContainer';
+import { AudioAttachment } from '../AudioAttachment';
+import { FileAttachment } from '../FileAttachment';
+import { ImageAttachment } from '../ImageAttachment';
 import { MessageAvatars } from '../MessageAvatars';
-import { MessageContent } from '../MessageContent';
+import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
+import { MessageContainer } from '../MessageContainer';
+import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
-import { AudioAttachment } from '../AudioAttachment';
 import { VideoAttachment } from '../VideoAttachment';
-import { ImageAttachment } from '../ImageAttachment';
-import { FileAttachment } from '../FileAttachment';
 import { MessageAction } from '../MessageAction';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
@@ -21,12 +25,19 @@ import {
 } from '../constants';
 
 
-const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver, resetLastAction, actionsVisible }) => [
-	text && (
-		<MessageBubble inverse={me} quoted={quoted}>
-			<MessageText text={text} system={system} />
-		</MessageBubble>
-	),
+const renderContent = ({
+	text,
+	system,
+	quoted,
+	me,
+	blocks,
+	attachments,
+	attachmentResolver,
+	mid,
+	rid,
+	resetLastAction,
+	actionsVisible
+}) => [
 	...(attachments || [])
 		.map((attachment) =>
 			(attachment.audio_url
@@ -63,6 +74,18 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 					resetLastAction={resetLastAction}
 				/>),
 		),
+	text && (
+		<MessageBubble inverse={me} quoted={quoted}>
+			<MessageText text={text} system={system} />
+		</MessageBubble>
+	),
+	blocks && (
+		<MessageBlocks
+			blocks={blocks}
+			mid={mid}
+			rid={rid}
+		/>
+	),
 ].filter(Boolean);
 
 const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
@@ -128,6 +151,9 @@ export const Message = memo(({
 				system: !!message.t,
 				me,
 				attachments: message.attachments,
+				blocks: message.blocks,
+				mid: message._id,
+				rid: message.rid,
 				attachmentResolver,
 				resetLastAction,
 				actionsVisible: message.actionsVisible ? message.actionsVisible : false,

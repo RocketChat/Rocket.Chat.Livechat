@@ -1,12 +1,13 @@
-import { storiesOf } from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
-import centered from '@storybook/addon-centered/react';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-import { Button } from '../Button';
 import { ButtonGroup } from '.';
+import { centered } from '../../helpers.stories';
+import { Button } from '../Button';
 
 
-storiesOf('Components|ButtonGroup', module)
+storiesOf('Components/ButtonGroup', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('with buttons of same size', () => (

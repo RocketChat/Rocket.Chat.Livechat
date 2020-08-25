@@ -1,6 +1,7 @@
+import { Livechat } from '../api';
+import I18n from '../i18n';
 import store from '../store';
 import constants from './constants';
-import { Livechat } from '../api';
 import { loadConfig } from './main';
 import { loadMessages } from './room';
 

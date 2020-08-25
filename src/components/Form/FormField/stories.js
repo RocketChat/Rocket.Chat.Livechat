@@ -1,15 +1,13 @@
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-
-import { memedIpsum } from '../../../helpers.stories';
 import { FormField } from '.';
-
 import { Form, TextInput } from '..';
+import { loremIpsum, centered } from '../../../helpers.stories';
 
 
-storiesOf('Forms|FormField', module)
+storiesOf('Forms/FormField', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('normal', () => (
@@ -20,7 +18,7 @@ storiesOf('Forms|FormField', module)
 				description={text('description', 'Description')}
 				error={text('error', '')}
 			>
-				<TextInput value={memedIpsum({ count: 3, units: 'words' })} />
+				<TextInput value={loremIpsum({ count: 3, units: 'words' })} />
 			</FormField>
 		</Form>
 	))
@@ -32,7 +30,7 @@ storiesOf('Forms|FormField', module)
 				description={text('description', 'Description')}
 				error={text('error', '')}
 			>
-				<TextInput value={memedIpsum({ count: 3, units: 'words' })} />
+				<TextInput value={loremIpsum({ count: 3, units: 'words' })} />
 			</FormField>
 		</Form>
 	))
@@ -44,7 +42,7 @@ storiesOf('Forms|FormField', module)
 				description={text('description', 'Description')}
 				error={text('error', 'Error')}
 			>
-				<TextInput value={memedIpsum({ count: 3, units: 'words' })} />
+				<TextInput value={loremIpsum({ count: 3, units: 'words' })} />
 			</FormField>
 		</Form>
 	));

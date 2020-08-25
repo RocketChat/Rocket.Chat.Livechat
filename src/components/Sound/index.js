@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 export class Sound extends Component {
 	play = () => {
@@ -37,7 +37,7 @@ export class Sound extends Component {
 			src={src}
 			onPlay={onStart}
 			onEnded={onStop}
-			type="audio/mpeg"
+			type='audio/mpeg'
 		/>
 	)
 }
