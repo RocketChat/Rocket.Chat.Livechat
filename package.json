@@ -1,9 +1,6 @@
 {
 	"name": "@rocket.chat/livechat",
 	"version": "1.6.1",
-	"files": [
-		"/build"
-	],
 	"license": "MIT",
 	"repository": {
 		"type": "git",
