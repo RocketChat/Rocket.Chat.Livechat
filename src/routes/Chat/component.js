@@ -11,8 +11,8 @@ import { createClassName } from '../../components/helpers';
 import I18n from '../../i18n';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
-import PrintIcon from '../../icons/print.svg';
 import PlusIcon from '../../icons/plus.svg';
+import PrintIcon from '../../icons/print.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
@@ -116,7 +116,7 @@ export default class Chat extends Component {
 		onPrintTranscript,
 		lastReadMessageId,
 		queueInfo,
-        limitTextLength,
+		limitTextLength,
 		resetLastAction,
 		...props
 	}, {
@@ -130,6 +130,7 @@ export default class Chat extends Component {
 			agent={agent || null}
 			queueInfo={queueInfo}
 			nopadding
+			options={options}
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
 			onRemoveUserData={onRemoveUserData}
@@ -144,7 +145,7 @@ export default class Chat extends Component {
 				onUpload={onUpload}
 			>
 				<Screen.Content nopadding>
-					<div id={"chat__messages"} className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
+					<div id={'chat__messages'} className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
 							avatarResolver={avatarResolver}
