@@ -53,7 +53,7 @@ const getAgent = (triggerAction) => {
 	agentPromise = new Promise(async (resolve, reject) => {
 		const { params } = triggerAction;
 
-		if (params.sender === 'queue' || params.sender === 'agent') {
+		if (params.sender === 'queue') {
 			const { state } = store;
 			const { defaultAgent, iframe: { guest: { department } } } = state;
 			if (defaultAgent && defaultAgent.ts && Date.now() - defaultAgent.ts < agentCacheExpiry) {
@@ -63,14 +63,11 @@ const getAgent = (triggerAction) => {
 			let agent;
 			try {
 				agent = await Livechat.nextAgent(department);
-				store.setState({ defaultAgent: { ...agent, ts: Date.now() } });
-				if (params.sender === 'agent') {
-					await registerGuestAndCreateSession();
-				}
 			} catch (error) {
 				return reject(error);
 			}
-
+			
+			store.setState({ defaultAgent: { ...agent, ts: Date.now() } });
 			resolve(agent);
 		} else if (params.sender === 'custom') {
 			resolve({
@@ -165,6 +162,10 @@ class Triggers {
 					route('/');
 					parentCall('openWidget');
 					store.setState({ minimized: false });
+				});
+			} else if (action.name === 'start-session') {
+				registerGuestAndCreateSession().then(() => {
+					store.setState({ triggered: true });
 				});
 			}
 		});
