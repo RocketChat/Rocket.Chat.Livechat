@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.7.1 - 2020-08-218
+## 1.7.2 - 2020-08-28
+[FIX] UiKit interation using header as autorization (#483)
+[FIX] Transpile widget.js with Babel
+
+## 1.7.1 - 2020-08-28
 [FIX] UiKit interation (#483)
 
 ## 1.7.0 - 2020-08-21
