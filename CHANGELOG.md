@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.7.1 - 2020-08-218
+[FIX] UiKit interation (#483)
+
 ## 1.7.0 - 2020-08-21
 [NEW] UiKit support (#474)
 [CHORE] Loki visual tests (#459)
