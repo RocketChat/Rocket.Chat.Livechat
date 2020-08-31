@@ -2,7 +2,6 @@ import { Component, h } from 'preact';
 
 import I18n from '../../i18n';
 import MinimizeIcon from '../../icons/arrowDown.svg';
-import RestoreIcon from '../../icons/arrowUp.svg';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
 import NotificationsDisabledIcon from '../../icons/bellOff.svg';
 import ChatIcon from '../../icons/chat.svg';
@@ -42,15 +41,14 @@ class ScreenHeader extends Component {
 		alerts,
 		agent,
 		notificationsEnabled,
-		minimized,
 		expanded,
 		windowed,
 		onDismissAlert,
 		onEnableNotifications,
 		onDisableNotifications,
-		onMinimize,
-		onRestore,
 		onOpenWindow,
+		options,
+		onFinishChat,
 	}) => (
 		<Header
 			ref={this.handleRef}
@@ -95,23 +93,20 @@ class ScreenHeader extends Component {
 							}
 						</Header.Action>
 					</Tooltip.Trigger>
-					{(expanded || !windowed) && (
-						<Tooltip.Trigger content={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}>
-							<Header.Action
-								aria-label={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}
-								onClick={minimized ? onRestore : onMinimize}
-							>
-								{minimized
-									? <RestoreIcon width={20} />
-									: <MinimizeIcon width={20} />
-								}
-							</Header.Action>
-						</Tooltip.Trigger>
-					)}
 					{(!expanded && !windowed) && (
 						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
 								<OpenWindowIcon width={20} />
+							</Header.Action>
+						</Tooltip.Trigger>
+					)}
+					{options && onFinishChat && (
+						<Tooltip.Trigger content={I18n.t('End chat')}>
+							<Header.Action
+								aria-label={I18n.t('End chat')}
+								onClick={onFinishChat}
+							>
+								<CloseIcon width={20} />
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
@@ -151,7 +146,7 @@ const ChatButton = ({
 	onClick,
 }) => (
 	<Button
-		icon={minimized ? <ChatIcon /> : <CloseIcon />}
+		icon={minimized ? <ChatIcon /> : <MinimizeIcon />}
 		badge={badge}
 		onClick={onClick}
 		className={createClassName(styles, 'screen__chat-button')}
@@ -183,6 +178,8 @@ export const Screen = ({
 	onSoundStop,
 	queueInfo,
 	dismissNotification,
+	options,
+	onFinishChat,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<style>{`
@@ -210,6 +207,8 @@ export const Screen = ({
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
+					options={options}
+					onFinishChat={onFinishChat}
 				/>
 
 				{modal}
