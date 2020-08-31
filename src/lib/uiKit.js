@@ -124,7 +124,11 @@ export const triggerAction = async ({
 		};
 
 		const result = await Promise.race([
-			Livechat.post(`apps/ui.interaction/${ appId }`, params),
+			fetch(`${ Livechat.client.host }/api/${ encodeURI(`apps/ui.interaction/${ appId }`) }`, {
+				method: 'POST',
+				body: Livechat.client.getBody(params),
+				headers: Object.assign({ 'x-visitor-token': Livechat.credentials.token }, Livechat.client.getHeaders()),
+			}).then(Livechat.client.handle),
 			new Promise((_, reject) => {
 				setTimeout(() => {
 					reject(new Error(triggerId));
