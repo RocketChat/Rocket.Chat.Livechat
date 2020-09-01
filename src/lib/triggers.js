@@ -13,8 +13,7 @@ const agentCacheExpiry = 3600000;
 let agentPromise;
 
 const registerGuestAndCreateSession = async () => {
-	const { alerts, room } = store.state;
-	
+	const { alerts, room, token } = store.state;
 	if (room) {
 		return room;
 	}
@@ -22,7 +21,7 @@ const registerGuestAndCreateSession = async () => {
 	store.setState({ loading: true });
 	
 	try {
-		const guest = { token: createToken() };
+		const guest = { token: token || createToken() };
 		store.setState(guest);
 		const user = await Livechat.grantVisitor({ visitor: { ...guest } });
 		store.setState({ user });
@@ -92,6 +91,7 @@ class Triggers {
 			this._started = false;
 			this._requests = [];
 			this._triggers = [];
+			this._inProgress = {};
 			this._enabled = true;
 			Triggers.instance = this;
 		}
@@ -214,8 +214,11 @@ class Triggers {
 						break;
 					case 'open-chat-window':
 						store.on('change', ([state, prevState]) => {
-							if (prevState.minimized && !state.minimized) {
-								self.fire(trigger);
+							if (prevState.minimized && !state.minimized && !self._inProgress[trigger.id]) {
+								self._inProgress[trigger.id] = true;
+								self.fire(trigger).then(()=> {
+									self._inProgress[trigger.id] = false;
+								});
 							}
 						});
 						break;
