@@ -12,7 +12,7 @@ import { defaultRoomParams, initRoom } from './room';
 const agentCacheExpiry = 3600000;
 let agentPromise;
 
-const registerGuestAndCreateSession = async () => {
+const registerGuestAndCreateSession = async (triggerAction) => {
 	const { alerts, room, token } = store.state;
 	if (room) {
 		return room;
@@ -21,12 +21,13 @@ const registerGuestAndCreateSession = async () => {
 	store.setState({ loading: true });
 	
 	try {
-		const guest = { token: token || createToken() };
+		const { params } = triggerAction;
+		const guest = { token: token || createToken(), department: params && params.department };
 		store.setState(guest);
 		const user = await Livechat.grantVisitor({ visitor: { ...guest } });
 		store.setState({ user });
-		const params = defaultRoomParams();
-		const newRoom = await Livechat.room(params);
+		const roomParams = defaultRoomParams();
+		const newRoom = await Livechat.room(roomParams);
 		store.setState({ room: newRoom });
 		await initRoom();
 
@@ -164,7 +165,7 @@ class Triggers {
 					store.setState({ minimized: false });
 				});
 			} else if (action.name === 'start-session') {
-				registerGuestAndCreateSession().then(() => {
+				registerGuestAndCreateSession(action).then(() => {
 					store.setState({ triggered: true });
 				});
 			}
