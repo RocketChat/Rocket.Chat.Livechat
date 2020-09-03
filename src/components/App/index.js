@@ -20,11 +20,15 @@ import SwitchDepartment from '../../routes/SwitchDepartment';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import { visibility, isActiveSession } from '../helpers';
 
+const rtlChars = '\\u0591-\\u07FF\\u200F\\u202B\\u202E\\uFB1D-\\uFDFD\\uFE70-\\uFEFC';
+const rtlDirCheck = new RegExp(`^[^${ rtlChars }]*?[${ rtlChars }]`);
 function isRTL(s) {
-	const rtlChars = '\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC';
-	const rtlDirCheck = new RegExp(`^[^${ rtlChars }]*?[${ rtlChars }]`);
-
-	return rtlDirCheck.test(s);
+	try {
+		return rtlDirCheck.test(s);
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
 }
 
 export class App extends Component {
@@ -173,7 +177,14 @@ export class App extends Component {
 	}
 
 	componentDidUpdate() {
-		document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'auto';
+		try {
+			console.log(I18n.t('Yes'), isRTL);
+			const rtl = isRTL(I18n.t('Yes')) && 'rtl';
+			document.dir = rtl || 'auto';
+			
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	render = ({

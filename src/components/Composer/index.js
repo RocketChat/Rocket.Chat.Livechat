@@ -1,4 +1,3 @@
-import mem from 'mem';
 import { h, Component } from 'preact';
 
 import { createClassName } from '../helpers';
@@ -16,9 +15,7 @@ const escapeMap = {
 
 const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
 
-const escapeHtml = mem(
-	(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
-);
+const escapeHtml = (string) => string.replace(escapeRegex, (match) => escapeMap[match]);
 
 const parse = (plainText) =>
 	[{ plain: plainText }]

@@ -4,8 +4,7 @@ import { Livechat } from '../api';
 import store from '../store';
 
 export function flatMap(arr, mapFunc) {
-	const result = [];
-	for (const [index, elem] of arr.entries()) {
+	return arr.reduce((result, elem, index) => {
 		const x = mapFunc(elem, index, arr);
 		// We allow mapFunc() to return non-Arrays
 		if (Array.isArray(x)) {
@@ -13,8 +12,8 @@ export function flatMap(arr, mapFunc) {
 		} else {
 			result.push(x);
 		}
-	}
-	return result;
+		return result;
+	}, []);
 }
 
 export const createClassName = (styles, elementName, modifiers = {}, classes = []) => [

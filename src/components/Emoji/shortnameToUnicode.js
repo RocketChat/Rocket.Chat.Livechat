@@ -1,7 +1,7 @@
 import ascii, { asciiRegexp } from './ascii';
 import emojis from './emojis';
 
-const shortnamePattern = new RegExp(/:[-+_a-z0-9]+:/, 'gi');
+const shortnamePattern = /:[-+_a-z0-9]+:/ig;
 const replaceShortNameWithUnicode = (shortname) => emojis[shortname] || shortname;
 const regAscii = new RegExp(`((\\s|^)${ asciiRegexp }(?=\\s|$|[!,.?]))`, 'gi');
 
