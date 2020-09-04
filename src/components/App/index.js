@@ -26,7 +26,7 @@ function isRTL(s) {
 	try {
 		return rtlDirCheck.test(s);
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return false;
 	}
 }
@@ -178,12 +178,9 @@ export class App extends Component {
 
 	componentDidUpdate() {
 		try {
-			console.log(I18n.t('Yes'), isRTL);
-			const rtl = isRTL(I18n.t('Yes')) && 'rtl';
-			document.dir = rtl || 'auto';
-			
+			document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'ltr';
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
