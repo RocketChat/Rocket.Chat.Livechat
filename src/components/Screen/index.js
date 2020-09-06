@@ -90,8 +90,8 @@ class ScreenHeader extends Component {
 							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
 						>
 							{notificationsEnabled
-								? <NotificationsEnabledIcon width={20} />
-								: <NotificationsDisabledIcon width={20} />
+								? <NotificationsEnabledIcon width={20} height={20} />
+								: <NotificationsDisabledIcon width={20} height={20} />
 							}
 						</Header.Action>
 					</Tooltip.Trigger>
@@ -102,8 +102,8 @@ class ScreenHeader extends Component {
 								onClick={minimized ? onRestore : onMinimize}
 							>
 								{minimized
-									? <RestoreIcon width={20} />
-									: <MinimizeIcon width={20} />
+									? <RestoreIcon width={20} height={20} />
+									: <MinimizeIcon width={20} height={20} />
 								}
 							</Header.Action>
 						</Tooltip.Trigger>
@@ -111,7 +111,7 @@ class ScreenHeader extends Component {
 					{(!expanded && !windowed) && (
 						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-								<OpenWindowIcon width={20} />
+								<OpenWindowIcon width={20} height={20} />
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
