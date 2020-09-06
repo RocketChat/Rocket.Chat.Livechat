@@ -221,8 +221,8 @@ export class App extends Component {
 }
 
 const AppConnector = () => (
-	<StoreProvider>
-		<div id='app'>
+	<div id='app'>
+		<StoreProvider>
 			<StoreConsumer>
 				{({
 					config,
@@ -254,8 +254,8 @@ const AppConnector = () => (
 					/>
 				)}
 			</StoreConsumer>
-		</div>
-	</StoreProvider>
+		</StoreProvider>
+	</div>
 );
 
 export default AppConnector;
