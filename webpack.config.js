@@ -104,12 +104,6 @@ module.exports = (env, argv) => [
 							options: {
 								ident: 'postcss',
 								sourceMap: true,
-								plugins: [
-									require('autoprefixer')(),
-									require('postcss-css-variables')({
-										preserve: true,
-									}),
-								],
 							},
 						},
 					],
