@@ -4,28 +4,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 
-const common = (argv) => ({
-	mode: argv.mode,
-	devtool: argv.mode === 'production' ? 'source-map' : 'eval',
-	resolve: {
-		extensions: [
-			'.js',
-			'.jsx',
-		],
-	},
-	node: {
-		console: false,
-		process: false,
-		Buffer: false,
-		__filename: false,
-		__dirname: false,
-		setImmediate: false,
-	},
-});
-
 module.exports = (env, argv) => [
 	{
-		...common(argv),
+		mode: argv.mode,
+		devtool: argv.mode === 'production' ? 'source-map' : 'eval',
+		resolve: {
+			extensions: [
+				'.js',
+				'.jsx',
+			],
+		},
+		node: {
+			console: false,
+			process: false,
+			Buffer: false,
+			__filename: false,
+			__dirname: false,
+			setImmediate: false,
+		},
 		entry: {
 			bundle: [
 				'core-js',
@@ -49,24 +45,8 @@ module.exports = (env, argv) => [
 					],
 					type: 'javascript/auto',
 					use: [
-						{
-							loader: 'babel-loader',
-							options: {
-								presets: [
-									['@babel/preset-env', {
-										useBuiltIns: 'entry',
-										corejs: 3,
-									}],
-								],
-								plugins: [
-									['@babel/plugin-proposal-class-properties', { loose: true }],
-									'@babel/plugin-proposal-object-rest-spread',
-								],
-							},
-						},
-						{
-							loader: 'preact-i18nline/webpack-loader',
-						},
+						'babel-loader',
+						'preact-i18nline/webpack-loader',
 					],
 				},
 				{
@@ -97,9 +77,6 @@ module.exports = (env, argv) => [
 							options: {
 								ident: 'postcss',
 								sourceMap: true,
-								plugins: [
-									require('autoprefixer')(),
-								],
 							},
 						},
 					],
@@ -237,7 +214,22 @@ module.exports = (env, argv) => [
 		},
 	},
 	{
-		...common(argv),
+		mode: argv.mode,
+		devtool: argv.mode === 'production' ? 'source-map' : 'eval',
+		resolve: {
+			extensions: [
+				'.js',
+				'.jsx',
+			],
+		},
+		node: {
+			console: false,
+			process: false,
+			Buffer: false,
+			__filename: false,
+			__dirname: false,
+			setImmediate: false,
+		},
 		entry: {
 			script: path.resolve(__dirname, './src/widget.js'),
 		},
@@ -255,6 +247,7 @@ module.exports = (env, argv) => [
 						{
 							loader: 'babel-loader',
 							options: {
+								babelrc: false,
 								presets: [
 									['@babel/preset-env', {
 										useBuiltIns: 'entry',
