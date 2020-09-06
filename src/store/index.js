@@ -73,8 +73,6 @@ export class Provider extends Component {
 	)
 }
 
-export class Consumer extends StoreContext.Consumer {
-	static displayName = 'StoreConsumer'
-}
+export const { Consumer } = StoreContext;
 
 export default store;
