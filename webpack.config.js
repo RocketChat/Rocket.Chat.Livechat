@@ -32,7 +32,7 @@ module.exports = (env, argv) => [
 		},
 		output: {
 			path: path.resolve(__dirname, './build'),
-			publicPath: '/',
+			publicPath: argv.mode === 'production' ? '/livechat/' : '/',
 			filename: argv.mode === 'production' ? '[name].[chunkhash:5].js' : '[name].js',
 			chunkFilename: '[name].chunk.[chunkhash:5].js',
 		},
@@ -195,7 +195,7 @@ module.exports = (env, argv) => [
 			inline: true,
 			hot: true,
 			compress: true,
-			publicPath: '/',
+			publicPath: argv.mode === 'production' ? '/livechat/' : '/',
 			contentBase: path.resolve(__dirname, './src'),
 			port: 8080,
 			host: '0.0.0.0',
@@ -235,7 +235,7 @@ module.exports = (env, argv) => [
 		},
 		output: {
 			path: path.resolve(__dirname, './build'),
-			publicPath: '/',
+			publicPath: argv.mode === 'production' ? '/livechat/' : '/',
 			filename: 'rocketchat-livechat.min.js',
 		},
 		module: {
