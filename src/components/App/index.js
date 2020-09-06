@@ -173,7 +173,7 @@ export class App extends Component {
 	}
 
 	componentDidUpdate() {
-		document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'auto';
+		document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'ltr';
 	}
 
 	render = ({
