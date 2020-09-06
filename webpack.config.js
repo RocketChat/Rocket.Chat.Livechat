@@ -13,207 +13,6 @@ const common = (argv) => ({
 			'.jsx',
 		],
 	},
-	module: {
-		rules: [
-			{
-				test: /\.jsx?$/,
-				exclude: [
-					/\/node_modules\/core-js\//,
-				],
-				type: 'javascript/auto',
-				use: [
-					{
-						loader: 'babel-loader',
-						options: {
-							presets: [
-								['@babel/preset-env', {
-									useBuiltIns: 'entry',
-									corejs: 3,
-								}],
-							],
-							plugins: [
-								['@babel/plugin-proposal-class-properties', { loose: true }],
-								'@babel/plugin-proposal-object-rest-spread',
-							],
-						},
-					},
-					{
-						loader: 'preact-i18nline/webpack-loader',
-					},
-				],
-			},
-			{
-				test: /\.svg$/,
-				use: [
-					'desvg-loader/preact',
-					'svg-loader',
-					'image-webpack-loader',
-				],
-			},
-			{
-				test: /\.s?css$/,
-				exclude: [
-					path.resolve(__dirname, './src/components'),
-					path.resolve(__dirname, './src/routes'),
-				],
-				use: [
-					argv.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
-					{
-						loader: 'css-loader',
-						options: {
-							importLoaders: 1,
-							sourceMap: true,
-						},
-					},
-					{
-						loader: 'postcss-loader',
-						options: {
-							ident: 'postcss',
-							sourceMap: true,
-							plugins: [
-								require('autoprefixer')(),
-							],
-						},
-					},
-				],
-			},
-			{
-				test: /\.s?css$/,
-				include: [
-					path.resolve(__dirname, './src/components'),
-					path.resolve(__dirname, './src/routes'),
-				],
-				use: [
-					argv.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
-					{
-						loader: 'css-loader',
-						options: {
-							modules: {
-								localIdentName: '[local]__[hash:base64:5]',
-							},
-							importLoaders: 1,
-							sourceMap: true,
-						},
-					},
-					{
-						loader: 'postcss-loader',
-						options: {
-							ident: 'postcss',
-							sourceMap: true,
-							plugins: [
-								require('autoprefixer')(),
-								require('postcss-css-variables')({
-							],
-						},
-					},
-				],
-			},
-			{
-				enforce: 'pre',
-				test: /\.scss$/,
-				use: [
-					'sass-loader',
-				],
-			},
-			{
-				test: /\.(woff2?|ttf|eot|jpe?g|png|webp|gif|mp4|mov|ogg|webm)(\?.*)?$/i,
-				loader: argv.mode === 'production' ? 'file-loader' : 'url-loader',
-			},
-		],
-	},
-});
-
-module.exports = (env, argv) => ({
-	...common(argv),
-	entry: {
-		widget: path.resolve(__dirname, './src/widget.js'),
-		bundle: [
-			'core-js',
-			'regenerator-runtime/runtime',
-			path.resolve(__dirname, './src/entry'),
-		],
-		polyfills: path.resolve(__dirname, './src/polyfills'),
-	},
-	output: {
-		path: path.resolve(__dirname, './build'),
-		publicPath: '/',
-		filename: argv.mode === 'production' ? '[name].[chunkhash:5].js' : '[name].js',
-		chunkFilename: '[name].chunk.[chunkhash:5].js',
-	},
-	plugins: [
-		new MiniCssExtractPlugin({
-			filename: argv.mode === 'production' ? '[name].[contenthash:5].css' : '[name].css',
-			chunkFilename: argv.mode === 'production'
-				? '[name].chunk.[contenthash:5].css'
-				: '[name].chunk.css',
-		}),
-		new webpack.NoEmitOnErrorsPlugin(),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(
-				argv.mode === 'production' ? 'production' : 'development',
-			),
-		}),
-		new HtmlWebpackPlugin({
-			title: 'Rocket.Chat.Livechat',
-			excludeChunks: [
-				'widget',
-			],
-			chunksSortMode: (a, b) => {
-				if (a.id === 'polyfills') {
-					return -1;
-				}
-
-				if (b.id === 'polyfills') {
-					return 1;
-				}
-
-				if (a.entry !== b.entry) {
-					return b.entry ? 1 : -1;
-				}
-
-				return b.id - a.id;
-			},
-		}),
-	],
-	optimization: {
-		sideEffects: false,
-		splitChunks: {
-			minSize: 30000,
-			maxSize: 0,
-			minChunks: 1,
-			maxAsyncRequests: 10,
-			maxInitialRequests: 10,
-			automaticNameDelimiter: '~',
-			cacheGroups: {
-				sdk: {
-					name: 'sdk',
-					chunks: 'all',
-					test: /node_modules\/@rocket\.chat\/sdk/,
-					priority: 40,
-				},
-				components: {
-					name: 'components',
-					test: /components|icons|\.scss$/,
-					chunks: 'all',
-					priority: 50,
-				},
-				vendor: {
-					name: 'vendor',
-					chunks: 'all',
-					test: /node_modules/,
-					priority: 30,
-				},
-				common: {
-					name: 'common',
-					minChunks: 2,
-					chunks: 'async',
-					priority: 10,
-					reuseExistingChunk: true,
-					enforce: true,
-				},
-			},
-		},
-	},
 	node: {
 		console: false,
 		process: false,
@@ -222,25 +21,251 @@ module.exports = (env, argv) => ({
 		__dirname: false,
 		setImmediate: false,
 	},
-	devServer: {
-		inline: true,
-		hot: true,
-		compress: true,
-		publicPath: '/',
-		contentBase: path.resolve(__dirname, './src'),
-		port: 8080,
-		host: '0.0.0.0',
-		disableHostCheck: true,
-		historyApiFallback: true,
-		quiet: false,
-		clientLogLevel: 'trace',
-		overlay: true,
-		stats: 'normal',
-		watchOptions: {
-			ignored: [
-				path.resolve(__dirname, './build'),
-				path.resolve(__dirname, './node_modules'),
+});
+
+module.exports = (env, argv) => [
+	{
+		...common(argv),
+		entry: {
+			bundle: [
+				'core-js',
+				'regenerator-runtime/runtime',
+				path.resolve(__dirname, './src/entry'),
+			],
+			polyfills: path.resolve(__dirname, './src/polyfills'),
+		},
+		output: {
+			path: path.resolve(__dirname, './build'),
+			publicPath: '/',
+			filename: argv.mode === 'production' ? '[name].[chunkhash:5].js' : '[name].js',
+			chunkFilename: '[name].chunk.[chunkhash:5].js',
+		},
+		module: {
+			rules: [
+				{
+					test: /\.jsx?$/,
+					exclude: [
+						/\/node_modules\/core-js\//,
+					],
+					type: 'javascript/auto',
+					use: [
+						{
+							loader: 'babel-loader',
+							options: {
+								presets: [
+									['@babel/preset-env', {
+										useBuiltIns: 'entry',
+										corejs: 3,
+									}],
+								],
+								plugins: [
+									['@babel/plugin-proposal-class-properties', { loose: true }],
+									'@babel/plugin-proposal-object-rest-spread',
+								],
+							},
+						},
+						{
+							loader: 'preact-i18nline/webpack-loader',
+						},
+					],
+				},
+				{
+					test: /\.svg$/,
+					use: [
+						'desvg-loader/preact',
+						'svg-loader',
+						'image-webpack-loader',
+					],
+				},
+				{
+					test: /\.s?css$/,
+					exclude: [
+						path.resolve(__dirname, './src/components'),
+						path.resolve(__dirname, './src/routes'),
+					],
+					use: [
+						argv.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+						{
+							loader: 'css-loader',
+							options: {
+								importLoaders: 1,
+								sourceMap: true,
+							},
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								ident: 'postcss',
+								sourceMap: true,
+								plugins: [
+									require('autoprefixer')(),
+								],
+							},
+						},
+					],
+				},
+				{
+					test: /\.s?css$/,
+					include: [
+						path.resolve(__dirname, './src/components'),
+						path.resolve(__dirname, './src/routes'),
+					],
+					use: [
+						argv.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+						{
+							loader: 'css-loader',
+							options: {
+								modules: {
+									localIdentName: '[local]__[hash:base64:5]',
+								},
+								importLoaders: 1,
+								sourceMap: true,
+							},
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								ident: 'postcss',
+								sourceMap: true,
+								plugins: [
+									require('autoprefixer')(),
+									require('postcss-css-variables')({
+										preserve: true,
+									}),
+								],
+							},
+						},
+					],
+				},
+				{
+					enforce: 'pre',
+					test: /\.scss$/,
+					use: [
+						'sass-loader',
+					],
+				},
+				{
+					test: /\.(woff2?|ttf|eot|jpe?g|png|webp|gif|mp4|mov|ogg|webm)(\?.*)?$/i,
+					loader: argv.mode === 'production' ? 'file-loader' : 'url-loader',
+				},
+			],
+		},
+		plugins: [
+			new MiniCssExtractPlugin({
+				filename: argv.mode === 'production' ? '[name].[contenthash:5].css' : '[name].css',
+				chunkFilename: argv.mode === 'production'
+					? '[name].chunk.[contenthash:5].css'
+					: '[name].chunk.css',
+			}),
+			new webpack.NoEmitOnErrorsPlugin(),
+			new webpack.DefinePlugin({
+				'process.env.NODE_ENV': JSON.stringify(
+					argv.mode === 'production' ? 'production' : 'development',
+				),
+			}),
+			new HtmlWebpackPlugin({
+				title: 'Rocket.Chat.Livechat',
+				chunks: [
+					'polyfills',
+					'vendor',
+					'bundle',
+				],
+				chunksSortMode: 'manual',
+			}),
+		],
+		optimization: {
+			sideEffects: false,
+			splitChunks: {
+				automaticNameDelimiter: '~',
+				chunks: 'all',
+				maxAsyncRequests: 30,
+				maxInitialRequests: 30,
+				minChunks: 1,
+				minSize: 20000,
+				enforceSizeThreshold: 500000,
+				maxSize: 0,
+			// cacheGroups: {
+			// 	sdk: {
+			// 		name: 'sdk',
+			// 		chunks: 'all',
+			// 		test: /node_modules\/@rocket\.chat\/sdk/,
+			// 		priority: 40,
+			// 	},
+			// 	components: {
+			// 		name: 'components',
+			// 		test: /components|icons|\.scss$/,
+			// 		chunks: 'all',
+			// 		priority: 50,
+			// 	},
+			// 	vendor: {
+			// 		name: 'vendor',
+			// 		chunks: 'all',
+			// 		test: /node_modules/,
+			// 		priority: 30,
+			// 	},
+			// 	common: {
+			// 		name: 'common',
+			// 		minChunks: 2,
+			// 		chunks: 'async',
+			// 		priority: 10,
+			// 		reuseExistingChunk: true,
+			// 		enforce: true,
+			// 	},
+			// },
+			},
+		},
+		devServer: {
+			inline: true,
+			hot: true,
+			compress: true,
+			publicPath: '/',
+			contentBase: path.resolve(__dirname, './src'),
+			port: 8080,
+			host: '0.0.0.0',
+			disableHostCheck: true,
+			historyApiFallback: true,
+			quiet: false,
+			clientLogLevel: 'trace',
+			overlay: true,
+			stats: 'normal',
+			watchOptions: {
+				ignored: [
+					path.resolve(__dirname, './build'),
+					path.resolve(__dirname, './node_modules'),
+				],
+			},
+		},
+	},
+	{
+		...common(argv),
+		entry: {
+			script: path.resolve(__dirname, './src/widget.js'),
+		},
+		output: {
+			path: path.resolve(__dirname, './build'),
+			publicPath: '/',
+			filename: 'rocketchat-livechat.min.js',
+		},
+		module: {
+			rules: [
+				{
+					test: /\.js$/,
+					type: 'javascript/auto',
+					use: [
+						{
+							loader: 'babel-loader',
+							options: {
+								presets: [
+									['@babel/preset-env', {
+										useBuiltIns: 'entry',
+										corejs: 3,
+									}],
+								],
+							},
+						},
+					],
+				},
 			],
 		},
 	},
-});
+];

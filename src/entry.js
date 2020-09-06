@@ -1,6 +1,6 @@
 import { h, render } from 'preact';
 
-let root = document.getElementById('preact_root') || document.body.firstElementChild;
+let root = document.getElementById('app') || document.body.firstElementChild;
 
 const init = async () => {
 	const { default: App } = await import('./index');
