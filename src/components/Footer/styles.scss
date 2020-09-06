@@ -71,12 +71,21 @@
 		margin: 0 5px;
 
 		vertical-align: middle;
-		--text-color: #{$color-text-grey};
-		--rocket-color: #{$color-text-grey};
 
-		&:hover {
-			--text-color: #2f343d;
-			--rocket-color: #db2323;
+		:global(.text) {
+			fill: #{$color-text-grey};
+		}
+
+		&:hover :global(.text) {
+			fill: #2f343d;
+		}
+
+		:global(.rocket) {
+			fill: #{$color-text-grey};
+		}
+
+		&:hover :global(.rocket) {
+			fill: #db2323;
 		}
 	}
 }

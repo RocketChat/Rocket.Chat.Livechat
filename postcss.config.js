@@ -6,6 +6,7 @@ module.exports = {
 		},
 		'postcss-selector-not': {},
 		'postcss-flexbugs-fixes': {},
+		'postcss-ie11-supports': {},
 		cssnano: {},
 	},
 };

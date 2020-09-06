@@ -12194,6 +12194,13 @@ postcss-html@^0.36.0:
   dependencies:
     htmlparser2 "^3.10.0"
 
+postcss-ie11-supports@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/postcss-ie11-supports/-/postcss-ie11-supports-0.1.3.tgz#422c574489a02556ddc2222109098733299936e6"
+  integrity sha512-zULt1ZdXZFoO8Et+4hKHeDbV6BXlzeKviwQeV7ZyNHDcl99VknaxCpGbO6zK0SfLhB5WoR/flYDj98LCnLN8og==
+  dependencies:
+    postcss "^6.0.21"
+
 postcss-less@^3.1.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/postcss-less/-/postcss-less-3.1.4.tgz#369f58642b5928ef898ffbc1a6e93c958304c5ad"
@@ -12534,7 +12541,7 @@ postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.1.0.tgz#443f6a20ced6481a2bda4fa8532a6e55d789a2cb"
   integrity sha512-97DXOFbQJhk71ne5/Mt6cOu6yxsSfM0QGQyl0L25Gca4yGWEGJaig7l7gbCX623VqTBNGLRLaVUCnNkcedlRSQ==
 
-postcss@^6.0.8:
+postcss@^6.0.21, postcss@^6.0.8:
   version "6.0.23"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.23.tgz#61c82cc328ac60e677645f979054eb98bc0e3324"
   integrity sha512-soOk1h6J3VMTZtVeVpv15/Hpdl2cBLX3CAw4TAbkpTJiNPk9YP/zWcD1ND+xEtvyuuvKzbxliTOIyvkSeSJ6ag==

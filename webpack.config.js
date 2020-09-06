@@ -52,7 +52,7 @@ module.exports = (env, argv) => [
 				{
 					test: /\.svg$/,
 					use: [
-						'desvg-loader/preact',
+						require.resolve('./svg-component-loader'),
 						'svg-loader',
 						'image-webpack-loader',
 					],
