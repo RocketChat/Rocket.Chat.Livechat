@@ -102,6 +102,7 @@ const common = (argv) => ({
 							sourceMap: true,
 							plugins: [
 								require('autoprefixer')(),
+								require('postcss-css-variables')({
 							],
 						},
 					},
