@@ -26,7 +26,7 @@ export const FileAttachment = memo(({
 		>
 			<FileAttachmentIcon url={url} />
 			<span className={createClassName(styles, 'file-attachment__title')}>{title}</span>
-			<DownloadIcon width={20} className={createClassName(styles, 'file-attachment__download-button')} />
+			<DownloadIcon width={20} height={20} className={createClassName(styles, 'file-attachment__download-button')} />
 		</a>
 	</MessageBubble>
 ));
