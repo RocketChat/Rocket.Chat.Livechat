@@ -1,10 +1,9 @@
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { Avatar } from '.';
-import { avatarResolver } from '../../helpers.stories';
+import { avatarResolver, centered } from '../../helpers.stories';
 
 
 const defaultSrc = avatarResolver('guilherme.gazzo');

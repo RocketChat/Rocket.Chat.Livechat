@@ -1,10 +1,9 @@
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { TypingIndicator } from '.';
-import { avatarResolver } from '../../../helpers.stories';
+import { avatarResolver, centered } from '../../../helpers.stories';
 
 
 storiesOf('Messages/TypingIndicator', module)

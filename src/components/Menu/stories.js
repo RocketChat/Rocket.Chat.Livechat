@@ -1,10 +1,10 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import Menu, { Group, Item, PopoverMenu } from '.';
+import { centered } from '../../helpers.stories';
 import BellIcon from '../../icons/bell.svg';
 import ChangeIcon from '../../icons/change.svg';
 import CloseIcon from '../../icons/close.svg';

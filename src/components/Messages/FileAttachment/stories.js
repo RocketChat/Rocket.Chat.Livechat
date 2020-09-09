@@ -1,10 +1,9 @@
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { FileAttachment } from '.';
-import { memedIpsum } from '../../../helpers.stories';
+import { loremIpsum, centered } from '../../../helpers.stories';
 
 
 const centeredWithWidth = (storyFn, ...args) => centered(() => (
@@ -19,42 +18,42 @@ storiesOf('Messages/FileAttachment', module)
 	.add('for pdf', () => (
 		<FileAttachment
 			title={text('title', 'Untitle')}
-			url={text('url', 'http://localhost:3000/demo.pdf')}
+			url={text('url', 'http://example.com/demo.pdf')}
 		/>
 	))
 	.add('for doc', () => (
 		<FileAttachment
 			title={text('title', 'Untitle')}
-			url={text('url', 'http://localhost:3000/demo.doc')}
+			url={text('url', 'http://example.com/demo.doc')}
 		/>
 	))
 	.add('for ppt', () => (
 		<FileAttachment
 			title={text('title', 'Untitle')}
-			url={text('url', 'http://localhost:3000/demo.ppt')}
+			url={text('url', 'http://example.com/demo.ppt')}
 		/>
 	))
 	.add('for xls', () => (
 		<FileAttachment
 			title={text('title', 'Untitle')}
-			url={text('url', 'http://localhost:3000/demo.xls')}
+			url={text('url', 'http://example.com/demo.xls')}
 		/>
 	))
 	.add('for zip', () => (
 		<FileAttachment
 			title={text('title', 'Untitle')}
-			url={text('url', 'http://localhost:3000/demo.zip')}
+			url={text('url', 'http://example.com/demo.zip')}
 		/>
 	))
 	.add('for unknown extension', () => (
 		<FileAttachment
 			title={text('title', 'Untitle')}
-			url={text('url', 'http://localhost:3000/demo.abc')}
+			url={text('url', 'http://example.com/demo.abc')}
 		/>
 	))
 	.add('with long title', () => (
 		<FileAttachment
-			title={text('title', memedIpsum({ count: 50, units: 'words' }))}
-			url={text('url', 'http://localhost:3000/demo.abc')}
+			title={text('title', loremIpsum({ count: 50, units: 'words' }))}
+			url={text('url', 'http://example.com/demo.abc')}
 		/>
 	));
