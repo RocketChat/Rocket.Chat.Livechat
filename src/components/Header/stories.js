@@ -65,7 +65,7 @@ storiesOf('Components/Header', module)
 			onClick={action('clicked')}
 		>
 			<Picture>
-				<Bell width={20} />
+				<Bell width={20} height={20} />
 			</Picture>
 
 			<Content>
@@ -87,10 +87,10 @@ storiesOf('Components/Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -137,10 +137,10 @@ storiesOf('Components/Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -165,13 +165,13 @@ storiesOf('Components/Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 				<Action onClick={action('fullscreen')}>
-					<NewWindow width={20} />
+					<NewWindow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -200,13 +200,13 @@ storiesOf('Components/Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 				<Action onClick={action('fullscreen')}>
-					<NewWindow width={20} />
+					<NewWindow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -251,13 +251,13 @@ storiesOf('Components/Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 				<Action onClick={action('fullscreen')}>
-					<NewWindow width={20} />
+					<NewWindow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -286,13 +286,13 @@ storiesOf('Components/Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 				<Action onClick={action('fullscreen')}>
-					<NewWindow width={20} />
+					<NewWindow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>

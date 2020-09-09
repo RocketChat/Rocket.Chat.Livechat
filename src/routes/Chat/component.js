@@ -195,7 +195,7 @@ export default class Chat extends Component {
 						pre={(
 							<ComposerActions>
 								<ComposerAction onClick={this.toggleEmojiPickerState}>
-									<EmojiIcon width={20} />
+									<EmojiIcon width={20} height={20} />
 								</ComposerAction>
 							</ComposerActions>
 						)}
@@ -203,12 +203,12 @@ export default class Chat extends Component {
 							<ComposerActions>
 								{text.length === 0 && uploads && (
 									<ComposerAction onClick={this.handleUploadClick}>
-										<PlusIcon width={20} />
+										<PlusIcon width={20} height={20} />
 									</ComposerAction>
 								)}
 								{text.length > 0 && (
 									<ComposerAction onClick={this.handleSendClick}>
-										<SendIcon width={20} />
+										<SendIcon width={20} height={20} />
 									</ComposerAction>
 								)}
 							</ComposerActions>

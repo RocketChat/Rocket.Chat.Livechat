@@ -173,7 +173,7 @@ export class App extends Component {
 	}
 
 	componentDidUpdate() {
-		document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'auto';
+		document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'ltr';
 	}
 
 	render = ({
@@ -221,8 +221,8 @@ export class App extends Component {
 }
 
 const AppConnector = () => (
-	<StoreProvider>
-		<div id='app'>
+	<div id='app'>
+		<StoreProvider>
 			<StoreConsumer>
 				{({
 					config,
@@ -254,8 +254,8 @@ const AppConnector = () => (
 					/>
 				)}
 			</StoreConsumer>
-		</div>
-	</StoreProvider>
+		</StoreProvider>
+	</div>
 );
 
 export default AppConnector;

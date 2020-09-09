@@ -1,4 +1,5 @@
 import { Component, h } from 'preact';
+import { useEffect } from 'preact/hooks';
 
 import I18n from '../../i18n';
 import MinimizeIcon from '../../icons/arrowDown.svg';
@@ -90,8 +91,8 @@ class ScreenHeader extends Component {
 							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
 						>
 							{notificationsEnabled
-								? <NotificationsEnabledIcon width={20} />
-								: <NotificationsDisabledIcon width={20} />
+								? <NotificationsEnabledIcon width={20} height={20} />
+								: <NotificationsDisabledIcon width={20} height={20} />
 							}
 						</Header.Action>
 					</Tooltip.Trigger>
@@ -102,8 +103,8 @@ class ScreenHeader extends Component {
 								onClick={minimized ? onRestore : onMinimize}
 							>
 								{minimized
-									? <RestoreIcon width={20} />
-									: <MinimizeIcon width={20} />
+									? <RestoreIcon width={20} height={20} />
+									: <MinimizeIcon width={20} height={20} />
 								}
 							</Header.Action>
 						</Tooltip.Trigger>
@@ -111,7 +112,7 @@ class ScreenHeader extends Component {
 					{(!expanded && !windowed) && (
 						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-								<OpenWindowIcon width={20} />
+								<OpenWindowIcon width={20} height={20} />
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
@@ -160,6 +161,39 @@ const ChatButton = ({
 	</Button>
 );
 
+const CssVar = ({ theme }) => {
+	useEffect(() => {
+		if (window.CSS && CSS.supports('color', 'var(--color)')) {
+			return;
+		}
+		let mounted = true;
+		(async () => {
+			const { default: cssVars } = await import('css-vars-ponyfill');
+			if (!mounted) {
+				return;
+			}
+			cssVars({
+				variables: {
+					'--color': theme.color,
+					'--font-color': theme.fontColor,
+					'--icon-color': theme.iconColor,
+				},
+			});
+		})();
+		return () => {
+			mounted = false;
+		};
+	}, [theme]);
+
+	return <style>{`
+		.${ styles.screen } {
+			${ theme.color ? `--color: ${ theme.color };` : '' }
+			${ theme.fontColor ? `--font-color: ${ theme.fontColor };` : '' }
+			${ theme.iconColor ? `--icon-color: ${ theme.iconColor };` : '' }
+		}
+	`}</style>;
+};
+
 export const Screen = ({
 	theme = {},
 	agent,
@@ -185,14 +219,7 @@ export const Screen = ({
 	dismissNotification,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
-		<style>{`
-			.${ styles.screen } {
-				${ theme.color ? `--color: ${ theme.color };` : '' }
-				${ theme.fontColor ? `--font-color: ${ theme.fontColor };` : '' }
-				${ theme.iconColor ? `--icon-color: ${ theme.iconColor };` : '' }
-			}
-		`}</style>
-
+		<CssVar theme={theme} />
 		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
 			<PopoverContainer>
 				<ScreenHeader
