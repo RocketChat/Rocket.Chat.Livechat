@@ -36,9 +36,7 @@ const renderContent = ({
 	mid,
 	rid,
 	resetLastAction,
-	actionsVisible,
-	onDisable,
-	lastIndex
+	actionsVisible
 }) => [
 	...(attachments || [])
 		.map((attachment) =>
@@ -74,8 +72,6 @@ const renderContent = ({
 					quoted={false}
 					actions={attachment.actions}
 					resetLastAction={resetLastAction}
-					onDisable={onDisable}
-					lastIndex={lastIndex}
 				/>),
 		),
 	text && (
@@ -125,8 +121,6 @@ const getMessageUsernames = (compact, message) => {
 
 export const Message = memo(({
 	avatarResolver,
-	onDisable,
-	lastIndex,
 	attachmentResolver = getAttachmentUrl,
 	use,
 	ts,
@@ -163,8 +157,6 @@ export const Message = memo(({
 				attachmentResolver,
 				resetLastAction,
 				actionsVisible: message.actionsVisible ? message.actionsVisible : false,
-				onDisable,
-				lastIndex,
 			})}
 		</MessageContent>
 		{!compact && <MessageTime ts={ts} />}

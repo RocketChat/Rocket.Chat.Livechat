@@ -8,6 +8,33 @@ import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import styles from './styles.scss';
 
+const disableComposer = (msg) => {
+	const defaultText = 'Please Wait';
+	const result = { disable: false, disableText: defaultText };
+
+	if(!msg) {
+		return result;
+	}
+
+	const { customFields = {}, attachments = [] } = msg;
+
+	if (customFields.disableInput) {
+		return { disable: true, disableText: customFields.disableInputMessage || defaultText };
+	}
+
+	for (var i = 0; i < attachments.length; i++) {
+		const { actions = [] } = attachments[i];
+
+		for (var j = 0; j < actions.length; j++) {
+			const { disableInput, disableInputMessage } = actions[j];
+			if (disableInput) {
+				return { disable: true, disableText: disableInputMessage || defaultText };
+			}
+		}
+	}
+
+	return result;
+}
 
 export class MessageList extends MemoizedComponent {
 	static defaultProps = {
@@ -105,7 +132,8 @@ export class MessageList extends MemoizedComponent {
 		conversationFinishedMessage,
 		typingUsernames,
 		resetLastAction,
-		onDisable,
+		onDisableComposer,
+		onEnableComposer,
 	}) => {
 		const items = [];
 
@@ -130,9 +158,7 @@ export class MessageList extends MemoizedComponent {
 					key={message._id}
 					attachmentResolver={attachmentResolver}
 					avatarResolver={avatarResolver}
-					onDisable={onDisable}
-					lastIndex={ i === messages.length - 1 }
-					use="li"
+					use='li'
 					me={uid && message.u && uid === message.u._id}
 					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id}
 					conversationFinishedMessage={conversationFinishedMessage}
@@ -151,6 +177,15 @@ export class MessageList extends MemoizedComponent {
 					/>,
 				);
 			}
+		}
+
+		const lastMessage = messages.length > 0 ? messages[messages.length - 1]: null;
+		const { disable, disableText } = disableComposer(lastMessage);
+		
+		if (disable) {
+			onDisableComposer && onDisableComposer(disableText);
+		} else {
+			onEnableComposer && onEnableComposer();
 		}
 
 		if (typingUsernames && typingUsernames.length) {

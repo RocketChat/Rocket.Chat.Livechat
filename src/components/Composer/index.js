@@ -233,7 +233,7 @@ export class Composer extends Component {
 		return 0;
 	}
 
-	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style, disable }) => (
+	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
 		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
 			{pre}
 			<div
@@ -243,14 +243,13 @@ export class Composer extends Component {
 						dangerouslySetInnerHTML: {
 							__html: parse(value),
 						},
-						contentEditable: !disable,
+						contentEditable: true,
 						'data-placeholder': placeholder,
 						onInput: this.handleInput(onChange),
 						onKeypress: this.handleKeypress(onSubmit),
 						onPaste: this.handlePaste(onUpload),
 						onDrop: this.handleDrop(onUpload),
 						onClick: this.handleClick,
-						style: (disable && {"font-color": "#e0364d"})
 					}
 				)}
 				className={createClassName(styles, 'composer__input')}
