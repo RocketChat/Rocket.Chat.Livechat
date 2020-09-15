@@ -12,6 +12,7 @@ import I18n from '../../i18n';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
 import PlusIcon from '../../icons/plus.svg';
+import PrintIcon from '../../icons/print.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
@@ -112,9 +113,11 @@ export default class Chat extends Component {
 		onChangeDepartment,
 		onFinishChat,
 		onRemoveUserData,
+		onPrintTranscript,
 		lastReadMessageId,
 		queueInfo,
 		limitTextLength,
+		resetLastAction,
 		...props
 	}, {
 		atBottom = true,
@@ -127,6 +130,7 @@ export default class Chat extends Component {
 			agent={agent || null}
 			queueInfo={queueInfo}
 			nopadding
+			options={options}
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
 			onRemoveUserData={onRemoveUserData}
@@ -141,7 +145,7 @@ export default class Chat extends Component {
 				onUpload={onUpload}
 			>
 				<Screen.Content nopadding>
-					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
+					<div id={'chat__messages'} className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
 							avatarResolver={avatarResolver}
@@ -151,6 +155,7 @@ export default class Chat extends Component {
 							conversationFinishedMessage={conversationFinishedMessage}
 							lastReadMessageId={lastReadMessageId}
 							onScrollTo={this.handleScrollTo}
+							resetLastAction={resetLastAction}
 							handleEmojiClick={this.handleEmojiClick}
 						/>
 						{this.state.emojiPickerActive && <Picker
@@ -167,6 +172,9 @@ export default class Chat extends Component {
 					options={options ? (
 						<FooterOptions>
 							<Menu.Group>
+								{onPrintTranscript && (
+									<Menu.Item onClick={onPrintTranscript} icon={PrintIcon}>{I18n.t('Print Chat')}</Menu.Item>
+								)}
 								{onChangeDepartment && (
 									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
 								)}
