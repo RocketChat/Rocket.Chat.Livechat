@@ -249,13 +249,11 @@ export class ChatContainer extends Component {
 
 	onPrintTranscript = () => {
 		const printContent = document.getElementById('chat__messages').innerHTML;
-		let head = document.getElementsByTagName('head')[0].innerHTML
-		let printWindow = window.open();
-		let printScript = printWindow.document.createElement( 'script' );
-		printScript.innerHTML = "window.print();";
+		const head = document.getElementsByTagName('head')[0].innerHTML;
+		const printWindow = window.open();
 		printWindow.document.write(printContent);
-		printWindow.document.body.appendChild(printScript);
 		printWindow.document.head.innerHTML = head;
+		printWindow.document.body.setAttribute('onload', 'window.print()');
 		printWindow.document.close();
 	}
 
@@ -382,7 +380,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
 					transcript,
-                    limitTextLength,
+					limitTextLength,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
