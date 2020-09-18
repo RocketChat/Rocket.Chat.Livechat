@@ -35,6 +35,7 @@ export default class Store {
 
 			const storedState = JSON.parse(e.newValue);
 			this.setStoredState(storedState);
+			this.emit('storageSynced');
 		});
 
 		window.addEventListener('load', () => {
