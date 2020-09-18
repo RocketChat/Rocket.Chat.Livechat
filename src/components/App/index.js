@@ -17,7 +17,7 @@ import GDPRAgreement from '../../routes/GDPRAgreement';
 import LeaveMessage from '../../routes/LeaveMessage';
 import Register from '../../routes/Register';
 import SwitchDepartment from '../../routes/SwitchDepartment';
-import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
+import { Provider as StoreProvider, Consumer as StoreConsumer, store } from '../../store';
 import { visibility, isActiveSession } from '../helpers';
 
 function isRTL(s) {
@@ -104,7 +104,17 @@ export class App extends Component {
 	handleRestore = () => {
 		parentCall('restoreWindow');
 		const { dispatch } = this.props;
-		dispatch({ minimized: false, undocked: false });
+		const { undocked } = this.props;
+		const dispatchRestore = () => dispatch({ minimized: false, undocked: false });
+		const dispatchEvent = () => {
+			dispatchRestore();
+			store.off('storageSynced', dispatchEvent);
+		}
+		if (undocked) {
+			store.on('storageSynced', dispatchEvent);
+		} else {
+			dispatchRestore();
+		}
 	}
 
 	handleOpenWindow = () => {
