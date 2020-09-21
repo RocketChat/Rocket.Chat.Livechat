@@ -56,8 +56,7 @@ export default class LeaveMessage extends Component {
 
 	handleFieldChange = (name) => ({ target: { value } }) => {
 		const error = this.validate({ name, value });
-		this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
-		this.validateAll();
+		this.setState({ [name]: { ...this.state[name], value, error, showError: false } }, () => { this.validateAll(); });
 	}
 
 	handleNameChange = this.handleFieldChange('name')
