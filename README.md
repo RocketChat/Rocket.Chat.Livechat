@@ -1,4 +1,52 @@
 # Rocket.Chat.Livechat
+
+
+### When making changes, run `yarn build` to create a new build before merging with master
+
+
+This branch contains a button component @ `/src/components/Messages/MessageAction`. 
+
+<p align="center">
+<img width="483" alt="Screenshot 2020-06-09 at 8 43 21 PM" src="https://user-images.githubusercontent.com/41849970/84166039-025fc780-aa92-11ea-9f84-81adf1bcd823.png">
+</p>
+
+For example you can send a following rich message payload to use with this component:
+
+```
+
+const msgObject = {
+	_id: Random.id(),
+	rid: item.rid,
+	msg: 'Sorry I am not sure of your request. Please select one of the following options:',
+	attachments: [{
+		actions: [
+			{
+			   type: 'button',
+			   msg_in_chat_window: true,
+			   msg_processing_type: 'sendMessage',
+			   text: 'Contact Salesforce Agent',
+			   msg: 'getSessionId',
+			},
+			{
+			   type: 'button',
+			   msg_in_chat_window: true,
+			   msg_processing_type: 'sendMessage',
+			   text: 'Send Random String',
+			   msg: 'randomWord',
+			 },
+			 {
+			   type: 'button',
+		           msg_in_chat_window: true,
+			   msg_processing_type: 'sendMessage',
+	                   text: 'Close Chat',
+			   msg: 'closeChat',
+			 },
+	],
+  }],
+};
+
+```
+
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/RocketChat/Rocket.Chat.Livechat.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/RocketChat/Rocket.Chat.Livechat/context:javascript)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/RocketChat/Rocket.Chat.Livechat.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/RocketChat/Rocket.Chat.Livechat/alerts/)
 [![Storybook](https://cdn.jsdelivr.net/gh/storybooks/brand@master/badge/badge-storybook.svg)](https://rocketchat.github.io/Rocket.Chat.Livechat)
