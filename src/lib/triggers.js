@@ -128,7 +128,7 @@ class Triggers {
 
 	async fire(trigger) {
 		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || user) {
+		if (!this._enabled || user || trigger.skip) {
 			return;
 		}
 		const { actions } = trigger;
@@ -215,10 +215,10 @@ class Triggers {
 						break;
 					case 'open-chat-window':
 						store.on('change', ([state, prevState]) => {
-							if (prevState.minimized && !state.minimized && !self._inProgress[trigger.id]) {
-								self._inProgress[trigger.id] = true;
+							if (prevState.minimized && !state.minimized && !self._inProgress[trigger._id]) {
+								self._inProgress[trigger._id] = true;
 								self.fire(trigger).then(()=> {
-									self._inProgress[trigger.id] = false;
+									self._inProgress[trigger._id] = false;
 								});
 							}
 						});
