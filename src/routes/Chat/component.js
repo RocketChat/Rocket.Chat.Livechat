@@ -1,6 +1,7 @@
 import { Picker } from 'emoji-mart';
 import { h, Component } from 'preact';
 
+import { Button } from '../../components/Button';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
@@ -23,6 +24,16 @@ export default class Chat extends Component {
 		atBottom: true,
 		text: '',
 		emojiPickerActive: false,
+		disable: false,
+		disableText: 'Please Wait'
+	}
+
+	handleDisableComposer = (disableText) => {
+		this.setState({ disable: true, disableText });
+	}
+
+	handleEnableComposer = () => {
+		this.setState({ disable: false, disableText: 'Please Wait' });
 	}
 
 	handleFilesDropTargetRef = (ref) => {
@@ -51,11 +62,19 @@ export default class Chat extends Component {
 
 	handleUploadClick = (event) => {
 		event.preventDefault();
+		const { disable } = this.state;
+		if (disable) {
+			return;
+		}
 		this.filesDropTarget.browse();
 	}
 
 	handleSendClick = (event) => {
 		event.preventDefault();
+		const { disable } = this.state;
+		if (disable) {
+			return;
+		}
 		this.handleSubmit(this.state.text);
 	}
 
@@ -122,6 +141,8 @@ export default class Chat extends Component {
 	}, {
 		atBottom = true,
 		text,
+		disable = false,
+		disableText,
 	}) => (
 		<Screen
 			color={color}
@@ -157,6 +178,8 @@ export default class Chat extends Component {
 							onScrollTo={this.handleScrollTo}
 							resetLastAction={resetLastAction}
 							handleEmojiClick={this.handleEmojiClick}
+							onDisableComposer={this.handleDisableComposer}
+							onEnableComposer={this.handleEnableComposer}
 						/>
 						{this.state.emojiPickerActive && <Picker
 							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
@@ -193,7 +216,10 @@ export default class Chat extends Component {
 							textLength={text.length}
 						/> : null}
 				>
-					<Composer onUpload={onUpload}
+					{disable && <Button style={{ width: '100%' }}>
+						{disableText}
+					</Button>}
+					{!disable && <Composer onUpload={onUpload}
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
@@ -222,7 +248,7 @@ export default class Chat extends Component {
 							</ComposerActions>
 						)}
 						limitTextLength={limitTextLength}
-					/>
+					/>}
 				</Screen.Footer>
 			</FilesDropTarget>
 		</Screen>
