@@ -36,6 +36,10 @@ const disableComposer = (msg) => {
 	return result;
 }
 
+const isNotEmpty = (message) => {
+	return message && (message.t || message.msg || message.blocks || message.attachments);
+}
+
 export class MessageList extends MemoizedComponent {
 	static defaultProps = {
 		typingUsernames: [],
@@ -153,7 +157,7 @@ export class MessageList extends MemoizedComponent {
 				);
 			}
 
-			items.push(
+			isNotEmpty(message) && items.push(
 				<Message
 					key={message._id}
 					attachmentResolver={attachmentResolver}
@@ -181,7 +185,7 @@ export class MessageList extends MemoizedComponent {
 
 		const lastMessage = messages.length > 0 ? messages[messages.length - 1]: null;
 		const { disable, disableText } = disableComposer(lastMessage);
-		
+
 		if (disable) {
 			onDisableComposer && onDisableComposer(disableText);
 		} else {
