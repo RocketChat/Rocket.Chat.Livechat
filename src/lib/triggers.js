@@ -7,7 +7,7 @@ import { normalizeAgent } from './api';
 import { processUnread } from './main';
 import { parentCall, runCallbackEventEmitter } from './parentCall';
 import I18n from '../i18n';
-import { defaultRoomParams, initRoom } from './room';
+import { assignRoom } from './room';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -26,13 +26,9 @@ const registerGuestAndCreateSession = async (triggerAction) => {
 		store.setState(guest);
 		const user = await Livechat.grantVisitor({ visitor: { ...guest } });
 		store.setState({ user });
-		const roomParams = defaultRoomParams();
-		const newRoom = await Livechat.room(roomParams);
-		store.setState({ room: newRoom });
-		await initRoom();
+		await assignRoom();
 
 		parentCall('callback', 'chat-started');
-		return newRoom;
 	} catch (error) {
 		const { data: { error: reason } } = error;
 		const alert = { id: createToken(), children: I18n.t('Error starting a new conversation: %{reason}', { reason }), error: true, timeout: 10000 };
@@ -128,7 +124,7 @@ class Triggers {
 
 	async fire(trigger) {
 		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || user || trigger.skip) {
+		if (!this._enabled || trigger.skip || (trigger.registeredOnly && !user)) {
 			return;
 		}
 		const { actions } = trigger;

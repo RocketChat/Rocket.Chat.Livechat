@@ -217,6 +217,23 @@ export const defaultRoomParams = () => {
 	return params;
 };
 
+export const assignRoom = async () => {
+	const { defaultAgent: agent = {}, room } = store.state;
+	const params = {};
+
+	if (room) {
+		return;
+	}
+
+	if (agent && agent._id) {
+		Object.assign(params, { agentId: agent._id });
+	}
+
+	const newRoom = await Livechat.room(params);
+	await store.setState({ room: newRoom });
+	await initRoom();
+};
+
 store.on('change', ([state, prevState]) => {
 	// Cross-tab communication
 	// Detects when a room is created and then route to the correct container

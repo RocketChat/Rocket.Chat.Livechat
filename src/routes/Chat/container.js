@@ -9,7 +9,7 @@ import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
-import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
+import { initRoom, assignRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
 import { Consumer } from '../../store';
 import Chat from './component';
 
@@ -23,7 +23,7 @@ export class ChatContainer extends Component {
 	}
 
 	checkConnectingAgent = async () => {
-		const { connecting, queueInfo } = this.props;
+		const { connecting, queueInfo, startSession } = this.props;
 		const { connectingAgent, queueSpot, estimatedWaitTime } = this.state;
 
 		const newConnecting = connecting;
@@ -36,6 +36,10 @@ export class ChatContainer extends Component {
 			this.state.estimatedWaitTime = newEstimatedWaitTime;
 			await this.handleQueueMessage(connecting, queueInfo);
 			await this.handleConnectingAgentAlert(newConnecting, normalizeQueueAlert(queueInfo));
+
+			if (startSession) {
+				assignRoom();
+			}
 		}
 	}
 
@@ -378,6 +382,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				settings: {
 					fileUpload: uploads,
 					guestDefaultAvatar: defaultAvatar,
+					startSessionOnNewChat: startSession,
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
@@ -455,6 +460,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				connecting={!!(room && !agent && (showConnecting || queueInfo))}
 				dispatch={dispatch}
 				departments={departments}
+				startSession={startSession}
 				defaultAvatar={defaultAvatar}
 				allowSwitchingDepartments={allowSwitchingDepartments}
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
