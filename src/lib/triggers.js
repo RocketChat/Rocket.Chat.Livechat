@@ -123,8 +123,8 @@ class Triggers {
 	}
 
 	async fire(trigger) {
-		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || trigger.skip || (trigger.registeredOnly && !user)) {
+		const { token, user, firedTriggers = [], config: { settings: { registrationForm } } } = store.state;
+		if (!this._enabled || trigger.skip || (trigger.registeredOnly && registrationForm && !user)) {
 			return;
 		}
 		const { actions } = trigger;
