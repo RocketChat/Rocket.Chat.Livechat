@@ -28,8 +28,8 @@ class ScreenHeader extends Component {
 
 	headerTitle = () => {
 		const { agent, queueInfo, title } = this.props;
-		if (agent && agent.name) {
-			return agent.name;
+		if (agent && (agent.name || agent.nickname)) {
+			return agent.nickname || agent.name;
 		}
 
 		if (queueInfo && queueInfo.spot && queueInfo.spot > 0) {
