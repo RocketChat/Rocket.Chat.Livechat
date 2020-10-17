@@ -390,6 +390,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				agent={agent ? {
 					_id: agent._id,
 					name: agent.name,
+					nickname: agent.nickname,
 					status: agent.status,
 					email: agent.emails && agent.emails[0] && agent.emails[0].address,
 					username: agent.username,
