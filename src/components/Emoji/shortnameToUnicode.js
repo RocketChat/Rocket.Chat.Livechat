@@ -30,7 +30,7 @@ const unescapeHTML = (string) => {
 const addSpaceBetweenHTMLTags = (stringWithHTML) => {
 	const regexTags = new RegExp('<\/?.[^>]*>', 'ig');
 	return stringWithHTML.replace(regexTags, (entire) => {
-		return ` ${entire} `;
+		return ` ${ entire } `;
 	})
 }
 
