@@ -27,14 +27,8 @@ const unescapeHTML = (string) => {
 	return string.replace(/&(?:amp|#38|#x26|lt|#60|#x3C|gt|#62|#x3E|apos|#39|#x27|quot|#34|#x22);/ig, (match) => unescaped[match]);
 };
 
-const addSpaceBetweenHTMLTags = (stringWithHTML) => {
-	const regexTags = new RegExp('<\/?.[^>]*>', 'ig');
-	return stringWithHTML.replace(regexTags, (entire) => ` ${ entire } `);
-}
-
 const shortnameToUnicode = (stringMessage) => {
 	stringMessage = stringMessage.replace(shortnamePattern, replaceShortNameWithUnicode);
-	stringMessage = addSpaceBetweenHTMLTags(stringMessage);
 	stringMessage = stringMessage.replace(regAscii, (entire, m1, m2, m3) => {
 		if (!m3 || !(unescapeHTML(m3) in ascii)) {
 			return entire;

@@ -9,9 +9,9 @@ const emojiRanges = [
 ].join('|');
 
 // this func is called for each emoji, input-> emoji shortname, o/p-> emoji icon in html format
-const transformEmojisToNormalSize = (emoji) => `<span>${ emoji }<span>`;
+const transformEmojisToNormalSize = (emoji) => `<span>${ emoji }</span>`;
 
-const transformEmojisToLargeSize = (emoji) => `<span style="font-size:2rem">${ emoji }<span>`;
+const transformEmojisToLargeSize = (emoji) => `<span style="font-size:2rem">${ emoji }</span>`;
 
 const removeSpaces = (str) => str && str.replace(/\s/g, '');
 
@@ -22,15 +22,14 @@ const isOnlyEmoji = (str) => {
 	return !removeAllEmoji(str).length;
 };
 
-const renderEmojis = (textWithHtml, origPlainText) => {
+const renderEmojis = (origPlainText) => {
 	const textWithOnlyUnicode = shortnameToUnicode(origPlainText);
-	textWithHtml = shortnameToUnicode(textWithHtml);
 
 	if (isOnlyEmoji(textWithOnlyUnicode)) {
-		return textWithHtml.replace(new RegExp(emojiUnicode, 'g'), transformEmojisToLargeSize);
+		return textWithOnlyUnicode.replace(new RegExp(emojiUnicode, 'g'), transformEmojisToLargeSize);
 	}
 
-	return textWithHtml.replace(new RegExp(emojiUnicode, 'g'), transformEmojisToNormalSize);
+	return textWithOnlyUnicode.replace(new RegExp(emojiUnicode, 'g'), transformEmojisToNormalSize);
 };
 
 export default renderEmojis;
