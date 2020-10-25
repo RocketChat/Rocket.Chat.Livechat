@@ -2,33 +2,37 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.7.4 - 2020-09-18
+* [FIX] Select input field not working issue (#481)
+* [FIX] Invisible div on top of page (#496)
+
 ## 1.7.3 - 2020-09-09
 bump version
 
 ## 1.7.2 - 2020-09-09
-[FIX] IE11 Support (#492)
+* [FIX] IE11 Support (#492)
 
 ## 1.7.1 - 2020-08-28
-[FIX] UiKit interation using header as autorization (#483)
-[FIX] Transpile widget.js with Babel
+* [FIX] UiKit interation using header as autorization (#483)
+* [FIX] Transpile widget.js with Babel
 
 ## 1.7.0 - 2020-08-21
-[NEW] UiKit support (#474)
-[CHORE] Loki visual tests (#459)
-[IMPROVE] Translate to spanish (#413) 
-[NEW] Message character limit feature (#443) 
-[IMPROVE] Preact X (#457)
-[NEW] Add Emoji rendering support (#412) 
+* [NEW] UiKit support (#474)
+* [CHORE] Loki visual tests (#459)
+* [IMPROVE] Translate to spanish (#413) 
+* [NEW] Message character limit feature (#443) 
+* [IMPROVE] Preact X (#457)
+* [NEW] Add Emoji rendering support (#412) 
 
 ## 1.6.0 - 2020-06-29
-[FIX] Improve the transcript request process. (#419)
-[FIX] Start chat disable with handler validate error (#432)
-[FIX] Loading should be flase when department switched is confirmed (#… …
-[FIX] Widget playing multiple sound notifications(Multiple tabs) (#435)
-[NEW] Translate to japanese
-[NEW] Translate i18n to Czech
-[NEW] Update fr.json
-[NEW] Translate to japanese
+* [FIX] Improve the transcript request process. (#419)
+* [FIX] Start chat disable with handler validate error (#432)
+* [FIX] Loading should be flase when department switched is confirmed (#… …
+* [FIX] Widget playing multiple sound notifications(Multiple tabs) (#435)
+* [NEW] Translate to japanese
+* [NEW] Translate i18n to Czech
+* [NEW] Update fr.json
+* [NEW] Translate to japanese
 
 ## 1.5.0 - 2020-05-20
 * [NEW] Support Registration Form custom fields (#407) …
