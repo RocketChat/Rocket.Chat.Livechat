@@ -13,6 +13,10 @@ module.exports = (env, argv) => [
 				'.js',
 				'.jsx',
 			],
+			alias: {
+				'react': 'preact/compat',
+				'react-dom': 'preact/compat',
+			}
 		},
 		node: {
 			console: false,
@@ -32,7 +36,7 @@ module.exports = (env, argv) => [
 		},
 		output: {
 			path: path.resolve(__dirname, './build'),
-			publicPath: argv.mode === 'production' ? '/livechat/' : '/',
+			publicPath: argv.mode === 'production' ? 'livechat/' : '/',
 			filename: argv.mode === 'production' ? '[name].[chunkhash:5].js' : '[name].js',
 			chunkFilename: '[name].chunk.[chunkhash:5].js',
 		},
@@ -189,7 +193,7 @@ module.exports = (env, argv) => [
 			inline: true,
 			hot: true,
 			compress: true,
-			publicPath: argv.mode === 'production' ? '/livechat/' : '/',
+			publicPath: argv.mode === 'production' ? 'livechat/' : '/',
 			contentBase: path.resolve(__dirname, './src'),
 			port: 8080,
 			host: '0.0.0.0',
@@ -215,6 +219,10 @@ module.exports = (env, argv) => [
 				'.js',
 				'.jsx',
 			],
+			alias: {
+				'react': 'preact/compat',
+				'react-dom': 'preact/compat',
+			}
 		},
 		node: {
 			console: false,
@@ -229,7 +237,7 @@ module.exports = (env, argv) => [
 		},
 		output: {
 			path: path.resolve(__dirname, './build'),
-			publicPath: argv.mode === 'production' ? '/livechat/' : '/',
+			publicPath: argv.mode === 'production' ? 'livechat/' : '/',
 			filename: 'rocketchat-livechat.min.js',
 		},
 		module: {

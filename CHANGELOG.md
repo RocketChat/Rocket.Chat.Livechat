@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.7.5 - 2020-10-25
+
+[FIX] Add zh.json missing translations (#478)
+[FIX] Rendering emojis before transform markdown into HTML. (#522)
+[FIX] UIKit ActionsBlock layout for smaller screen devices (#479)
+[FIX] Emoji picker not rendering (#519)
+[FIX] Scroll issues on Safari (#503)
+[FIX] Support Webpack relative output path (#521)
+
 ## 1.7.4 - 2020-09-18
 * [FIX] Select input field not working issue (#481)
 * [FIX] Invisible div on top of page (#496)
