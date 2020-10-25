@@ -13,6 +13,10 @@ module.exports = (env, argv) => [
 				'.js',
 				'.jsx',
 			],
+			alias: {
+				'react': 'preact/compat',
+				'react-dom': 'preact/compat',
+			}
 		},
 		node: {
 			console: false,
@@ -215,6 +219,10 @@ module.exports = (env, argv) => [
 				'.js',
 				'.jsx',
 			],
+			alias: {
+				'react': 'preact/compat',
+				'react-dom': 'preact/compat',
+			}
 		},
 		node: {
 			console: false,
