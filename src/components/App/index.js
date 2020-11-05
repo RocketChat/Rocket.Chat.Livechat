@@ -30,6 +30,7 @@ function isRTL(s) {
 export class App extends Component {
 	state = {
 		initialized: false,
+		poppedOut: false,
 	}
 
 	handleRoute = async () => {
@@ -154,6 +155,16 @@ export class App extends Component {
 		I18n.on('change', this.handleLanguageChange);
 	}
 
+	checkPoppedOutWindow() {
+		// Checking if the window is poppedOut and setting parent minimized if yes for the restore purpose
+		const { dispatch } = this.props;
+		const poppedOut = queryString.parse(window.location.search).mode === 'popout';
+		this.setState({ poppedOut });
+		if (poppedOut) {
+			dispatch({ minimized: false });
+		}
+	}
+
 	async initialize() {
 		// TODO: split these behaviors into composable components
 		await Connection.init();
@@ -162,6 +173,7 @@ export class App extends Component {
 		Hooks.init();
 		userPresence.init();
 		this.initWidget();
+		this.checkPoppedOutWindow();
 
 		this.setState({ initialized: true });
 		parentCall('ready');
@@ -193,13 +205,10 @@ export class App extends Component {
 		expanded,
 		alerts,
 		modal,
-	}, { initialized }) => {
+	}, { initialized, poppedOut }) => {
 		if (!initialized) {
 			return null;
 		}
-
-		const poppedOut = queryString.parse(window.location.search).mode === 'popout';
-
 		const screenProps = {
 			notificationsEnabled: sound && sound.enabled,
 			minimized: !poppedOut && (minimized || undocked),
