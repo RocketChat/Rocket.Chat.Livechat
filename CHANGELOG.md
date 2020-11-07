@@ -2,8 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.7.5 - 2020-10-25
+## 1.7.6 - 2020-11-07
+[FIX] Livechat window cannot be restored in popout mode (#529)
+[FIX] Visitor's messages are not aligned properly on Mozilla Firefox (#530)
 
+## 1.7.5 - 2020-10-25
 [FIX] Add zh.json missing translations (#478)
 [FIX] Rendering emojis before transform markdown into HTML. (#522)
 [FIX] UIKit ActionsBlock layout for smaller screen devices (#479)
