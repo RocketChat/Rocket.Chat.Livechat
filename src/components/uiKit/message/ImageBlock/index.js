@@ -55,9 +55,6 @@ const ImageBlock = ({ appId, blockId, title, imageUrl, altText, parser }) => {
 
 	return <Block appId={appId} blockId={blockId}>
 		<div className={createClassName(styles, 'uikit-image-block')}>
-			{title && <h3 className={createClassName(styles, 'uikit-image-block__title')}>
-				{parser.text(title)}
-			</h3>}
 			<div
 				className={createClassName(styles, 'uikit-image-block__content', { loading })}
 				style={contentStyle}
@@ -77,6 +74,9 @@ const ImageBlock = ({ appId, blockId, title, imageUrl, altText, parser }) => {
 					/>
 				</div>
 			</div>
+			{title && <h3 className={createClassName(styles, 'uikit-image-block__title')}>
+				{parser.text(title)}
+			</h3>}
 		</div>
 	</Block>;
 };

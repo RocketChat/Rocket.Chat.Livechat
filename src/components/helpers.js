@@ -70,6 +70,15 @@ export const throttle = (func, limit) => {
 	};
 };
 
+export function getFilteredMsg(msg) {
+	const { config: { filters = [] } } = store.state;
+	filters.forEach(filter => {
+		const regExp = new RegExp(filter.regex, 'g');
+		msg = msg.replace(regExp, filter.slug);
+	});
+	return msg;
+}
+
 export function getInsertIndex(array, item, ranking) {
 	const order = ranking(item);
 	let min = 0;

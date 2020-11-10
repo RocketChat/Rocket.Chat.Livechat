@@ -8,6 +8,37 @@ import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import styles from './styles.scss';
 
+const disableComposer = (msg) => {
+	const defaultText = 'Please Wait';
+	const result = { disable: false, disableText: defaultText };
+
+	if(!msg) {
+		return result;
+	}
+
+	const { customFields = {}, attachments = [] } = msg;
+
+	if (customFields.disableInput) {
+		return { disable: true, disableText: customFields.disableInputMessage || defaultText };
+	}
+
+	for (var i = 0; i < attachments.length; i++) {
+		const { actions = [] } = attachments[i];
+
+		for (var j = 0; j < actions.length; j++) {
+			const { disableInput, disableInputMessage } = actions[j];
+			if (disableInput) {
+				return { disable: true, disableText: disableInputMessage || defaultText };
+			}
+		}
+	}
+
+	return result;
+}
+
+const isNotEmpty = (message) => {
+	return message && (message.t || message.msg || message.blocks || message.attachments);
+}
 
 export class MessageList extends MemoizedComponent {
 	static defaultProps = {
@@ -104,6 +135,9 @@ export class MessageList extends MemoizedComponent {
 		uid,
 		conversationFinishedMessage,
 		typingUsernames,
+		resetLastAction,
+		onDisableComposer,
+		onEnableComposer,
 	}) => {
 		const items = [];
 
@@ -123,7 +157,7 @@ export class MessageList extends MemoizedComponent {
 				);
 			}
 
-			items.push(
+			isNotEmpty(message) && items.push(
 				<Message
 					key={message._id}
 					attachmentResolver={attachmentResolver}
@@ -132,6 +166,7 @@ export class MessageList extends MemoizedComponent {
 					me={uid && message.u && uid === message.u._id}
 					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id}
 					conversationFinishedMessage={conversationFinishedMessage}
+					resetLastAction={resetLastAction}
 					{...message}
 				/>,
 			);
@@ -146,6 +181,15 @@ export class MessageList extends MemoizedComponent {
 					/>,
 				);
 			}
+		}
+
+		const lastMessage = messages.length > 0 ? messages[messages.length - 1]: null;
+		const { disable, disableText } = disableComposer(lastMessage);
+
+		if (disable) {
+			onDisableComposer && onDisableComposer(disableText);
+		} else {
+			onEnableComposer && onEnableComposer();
 		}
 
 		if (typingUsernames && typingUsernames.length) {
