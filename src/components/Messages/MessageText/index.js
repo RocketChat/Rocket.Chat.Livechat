@@ -22,7 +22,7 @@ export const MessageText = memo(({
 }) => (
 	<div
 		// eslint-disable-next-line react/no-danger
-		dangerouslySetInnerHTML={{ __html: renderEmojis(renderMarkdown(sanitizeHtml(text, sanitizeHtmlOptions)), text) }}
+		dangerouslySetInnerHTML={{ __html: renderMarkdown(renderEmojis(sanitizeHtml(text, sanitizeHtmlOptions))) }}
 		className={createClassName(styles, 'message-text', { system }, [className])}
 		style={style}
 	/>
