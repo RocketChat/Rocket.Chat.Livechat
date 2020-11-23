@@ -1,7 +1,8 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
-import { createClassName } from '../helpers';
+import I18n from '../../i18n';
 import CloseIcon from '../../icons/close.svg';
+import { createClassName } from '../helpers';
 import styles from './styles.scss';
 
 
@@ -29,7 +30,7 @@ export class Alert extends Component {
 
 	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children }) => (
 		<div
-			role="alert"
+			role='alert'
 			className={createClassName(styles, 'alert', { success, warning, error }, [className])}
 			style={{
 				...style,
@@ -45,7 +46,7 @@ export class Alert extends Component {
 					className={createClassName(styles, 'alert__close')}
 					aria-label={I18n.t('Dismiss this alert')}
 				>
-					<CloseIcon width={20} />
+					<CloseIcon width={20} height={20} />
 				</button>
 			)}
 		</div>

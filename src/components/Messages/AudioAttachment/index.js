@@ -1,3 +1,6 @@
+import { h } from 'preact';
+
+import I18n from '../../../i18n';
 import { createClassName, memo } from '../../helpers';
 import { MessageBubble } from '../MessageBubble';
 import styles from './styles.scss';

@@ -1,6 +1,6 @@
-@import '~styles/colors';
-@import '~styles/helpers';
-@import '~styles/variables';
+@import '../../styles/colors';
+@import '../../styles/helpers';
+@import '../../styles/variables';
 
 $composer-padding: 12px 6px;
 $composer-border-width: $default-border;
@@ -58,7 +58,6 @@ $composer-input-placeholder-color: $color-text-light;
 		line-height: $composer-input-line-height;
 
 		&:empty::before {
-
 			display: block; /* For Firefox */
 
 			overflow: hidden;

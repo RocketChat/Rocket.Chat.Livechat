@@ -1,12 +1,13 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-import { screenCentered, memedIpsum } from '../../helpers.stories';
 import { Alert } from '.';
+import { screenCentered, loremIpsum } from '../../helpers.stories';
 
 
-storiesOf('Components|Alert', module)
+storiesOf('Components/Alert', module)
 	.addDecorator(withKnobs)
 	.addDecorator(screenCentered)
 	.add('default', () => (
@@ -16,7 +17,7 @@ storiesOf('Components|Alert', module)
 			error={boolean('error', false)}
 			onDismiss={action('dismiss')}
 		>
-			{text('text', memedIpsum({ count: 3, units: 'words' }))}
+			{text('text', loremIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('success', () => (
@@ -26,7 +27,7 @@ storiesOf('Components|Alert', module)
 			error={boolean('error', false)}
 			onDismiss={action('dismiss')}
 		>
-			{text('text', memedIpsum({ count: 3, units: 'words' }))}
+			{text('text', loremIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('warning', () => (
@@ -36,7 +37,7 @@ storiesOf('Components|Alert', module)
 			error={boolean('error', false)}
 			onDismiss={action('dismiss')}
 		>
-			{text('text', memedIpsum({ count: 3, units: 'words' }))}
+			{text('text', loremIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('error', () => (
@@ -46,7 +47,7 @@ storiesOf('Components|Alert', module)
 			error={boolean('error', true)}
 			onDismiss={action('dismiss')}
 		>
-			{text('text', memedIpsum({ count: 3, units: 'words' }))}
+			{text('text', loremIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('custom color', () => (
@@ -57,7 +58,7 @@ storiesOf('Components|Alert', module)
 			color={color('color', '#175CC4')}
 			onDismiss={action('dismiss')}
 		>
-			{text('text', memedIpsum({ count: 3, units: 'words' }))}
+			{text('text', loremIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	))
 	.add('with long text content', () => (
@@ -67,7 +68,7 @@ storiesOf('Components|Alert', module)
 			error={boolean('error', false)}
 			onDismiss={action('dismiss')}
 		>
-			{text('text', memedIpsum({ count: 30, units: 'words' }))}
+			{text('text', loremIpsum({ count: 30, units: 'words' }))}
 		</Alert>
 	))
 	.add('without timeout', () => (
@@ -78,6 +79,6 @@ storiesOf('Components|Alert', module)
 			timeout={0}
 			onDismiss={action('dismiss')}
 		>
-			{text('text', memedIpsum({ count: 3, units: 'words' }))}
+			{text('text', loremIpsum({ count: 3, units: 'words' }))}
 		</Alert>
 	));

@@ -1,21 +1,22 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-import { Button } from '../Button';
-import { PopoverContainer } from '../Popover';
 import Menu, { Group, Item, PopoverMenu } from '.';
+import { centered } from '../../helpers.stories';
 import BellIcon from '../../icons/bell.svg';
+import ChangeIcon from '../../icons/change.svg';
 import CloseIcon from '../../icons/close.svg';
 import FinishIcon from '../../icons/finish.svg';
-import ChangeIcon from '../../icons/change.svg';
+import { Button } from '../Button';
+import { PopoverContainer } from '../Popover';
 
 
 const defaultMenuItemText = 'A menu item';
 const defaultAnotherMenuItemText = 'Another menu item';
 
-storiesOf('Components|Menu', module)
+storiesOf('Components/Menu', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('empty', () => (
@@ -52,7 +53,7 @@ const centeredWithPopoverContainer = (storyFn, ...args) => (
 	</div>
 );
 
-storiesOf('Components|Menu/PopoverMenu', module)
+storiesOf('Components/Menu/PopoverMenu', module)
 	.addDecorator(withKnobs)
 	.addDecorator(centeredWithPopoverContainer)
 	.add('default', () => (
@@ -78,7 +79,7 @@ storiesOf('Components|Menu/PopoverMenu', module)
 			</Group>
 		</PopoverMenu>
 	));
-storiesOf('Components|Menu/Group', module)
+storiesOf('Components/Menu/Group', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('single', () => (
@@ -108,7 +109,7 @@ storiesOf('Components|Menu/Group', module)
 			</Group>
 		</Menu>
 	));
-storiesOf('Components|Menu/Item', module)
+storiesOf('Components/Menu/Item', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('simple', () => (

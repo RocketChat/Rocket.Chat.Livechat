@@ -1,10 +1,11 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import { Form, FormField, SelectInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
+import I18n from '../../i18n';
 import styles from './styles.scss';
 
 
@@ -12,6 +13,18 @@ const defaultTitle = I18n.t('Change Department');
 const defaultMessage = I18n.t('Choose a department');
 
 export default class SwitchDepartment extends Component {
+	static getDerivedStateFromProps(props, state) {
+		if (props.departments && props.departments.length > 0 && !state.department) {
+			return { department: { value: '' } };
+		}
+
+		if (!props.departments || props.departments.length === 0) {
+			return { department: null };
+		}
+
+		return null;
+	}
+
 	state = {
 		department: null,
 	}
@@ -24,20 +37,20 @@ export default class SwitchDepartment extends Component {
 		.map((fieldName) => (this.state[fieldName] ? { fieldName, ...this.state[fieldName] } : null))
 		.filter(Boolean)
 
-	validate = (fieldName, value) => this.validations[fieldName].reduce((error, validation) => error || validation(value), undefined)
+	validate = ({ name, value }) => this.validations[name].reduce((error, validation) => error || validation({ value }), undefined)
 
 	validateAll = () => {
-		for (const { fieldName, value } of this.getValidableFields()) {
-			const error = this.validate(fieldName, value);
-			this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
+		for (const { fieldName: name, value } of this.getValidableFields()) {
+			const error = this.validate({ name, value });
+			this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
 		}
 	}
 
 	isValid = () => this.getValidableFields().every(({ error } = {}) => !error)
 
-	handleFieldChange = (fieldName) => ({ target: { value } }) => {
-		const error = this.validate(fieldName, value);
-		this.setState({ [fieldName]: { ...this.state[fieldName], value, error, showError: false } });
+	handleFieldChange = (name) => ({ target: { value } }) => {
+		const error = this.validate({ name, value });
+		this.setState({ [name]: { ...this.state[name], value, error, showError: false } }, () => { this.validateAll(); });
 	}
 
 	handleDepartmentChange = this.handleFieldChange('department')
@@ -66,14 +79,10 @@ export default class SwitchDepartment extends Component {
 		if (departments && departments.length > 0) {
 			this.state.department = { value: '' };
 		}
-
-		this.validateAll();
 	}
 
-	componentWillReceiveProps() {
-		if (!this.state.department) {
-			this.setState({ department: { ...this.state.department, value: '' } });
-		}
+	componentDidMount() {
+		this.validateAll();
 	}
 
 	render({ title, color, message, loading, departments, ...props }, { department }) {
@@ -94,7 +103,7 @@ export default class SwitchDepartment extends Component {
 							error={department && department.showError && department.error}
 						>
 							<SelectInput
-								name="department"
+								name='department'
 								value={department && department.value}
 								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
 								placeholder={I18n.t('Choose a department...')}

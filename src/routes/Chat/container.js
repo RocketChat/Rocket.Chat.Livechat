@@ -1,16 +1,17 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
-import { Consumer } from '../../store';
+import { ModalManager } from '../../components/Modal';
+import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import I18n from '../../i18n';
+import { normalizeQueueAlert } from '../../lib/api';
+import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
-import constants from '../../lib/constants';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
+import { Consumer } from '../../store';
 import Chat from './component';
-import { ModalManager } from '../../components/Modal';
-import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams } from '../../lib/room';
-import { normalizeQueueAlert } from '../../lib/api';
 
 export class ChatContainer extends Component {
 	state = {
@@ -48,19 +49,20 @@ export class ChatContainer extends Component {
 	}
 
 	grantUser = async () => {
-		const { token, user, guest } = this.props;
+		const { token, user, guest, dispatch } = this.props;
 
 		if (user) {
 			return user;
 		}
 
 		const visitor = { token, ...guest };
-		await Livechat.grantVisitor({ visitor });
-		await loadConfig();
+		const newUser = await Livechat.grantVisitor({ visitor });
+		await dispatch({ user: newUser });
 	}
 
 	getRoom = async () => {
-		const { alerts, dispatch, room } = this.props;
+		const { alerts, dispatch, room, messages } = this.props;
+		const previousMessages = getGreetingMessages(messages);
 
 		if (room) {
 			return room;
@@ -70,7 +72,7 @@ export class ChatContainer extends Component {
 		try {
 			const params = defaultRoomParams();
 			const newRoom = await Livechat.room(params);
-			await dispatch({ room: newRoom, messages: [], noMoreMessages: false });
+			await dispatch({ room: newRoom, messages: previousMessages, noMoreMessages: false });
 			await initRoom();
 
 			parentCall('callback', 'chat-started');
@@ -117,6 +119,7 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
+
 		try {
 			this.stopTypingDebounced.stop();
 			await Promise.all([
@@ -124,7 +127,7 @@ export class ChatContainer extends Component {
 				Livechat.sendMessage({ msg, token, rid }),
 			]);
 		} catch (error) {
-			const { data: { error: reason } } = error;
+			const reason = error?.data?.error ?? error.message;
 			const alert = { id: createToken(), children: reason, error: true, timeout: 5000 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		}
@@ -285,23 +288,19 @@ export class ChatContainer extends Component {
 		loadMessages();
 	}
 
-	async componentWillReceiveProps({ messages: nextMessages, visible: nextVisible, minimized: nextMinimized }) {
-		const { messages, alerts, dispatch } = this.props;
+	async componentDidUpdate(prevProps) {
+		const { messages, visible, minimized, dispatch } = this.props;
+		const { messages: prevMessages, alerts: prevAlerts } = prevProps;
 
-		if (nextMessages && messages && nextMessages.length !== messages.length && nextVisible && !nextMinimized) {
-			const nextLastMessage = nextMessages[nextMessages.length - 1];
-			const lastMessage = messages[messages.length - 1];
-			if (
-				(nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id)
-				|| (nextMessages.length === 1 && messages.length === 0)
-			) {
-				const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
-				await dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
+		if (messages && prevMessages && messages.length !== prevMessages.length && visible && !minimized) {
+			const nextLastMessage = messages[messages.length - 1];
+			const lastMessage = prevMessages[prevMessages.length - 1];
+			if ((nextLastMessage && lastMessage && nextLastMessage._id !== lastMessage._id) || (messages.length === 1 && prevMessages.length === 0)) {
+				const newAlerts = prevAlerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
+				dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
 			}
 		}
-	}
 
-	async componentDidUpdate() {
 		await this.checkConnectingAgent();
 		this.checkRoom();
 	}
@@ -338,6 +337,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
+					limitTextLength,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -353,6 +353,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					color: customColor,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
+					title: customTitle,
 				} = {},
 				guest,
 			} = {},
@@ -380,8 +381,9 @@ export const ChatConnector = ({ ref, ...props }) => (
 					color: customColor || color,
 					fontColor: customFontColor,
 					iconColor: customIconColor,
+					title: customTitle,
 				}}
-				title={title || I18n.t('Need help?')}
+				title={customTitle || title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}
 				user={user}
@@ -400,7 +402,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				room={room}
 				messages={messages && messages.filter((message) => canRenderMessage(message))}
 				noMoreMessages={noMoreMessages}
-				emoji={false}
+				emoji={true}
 				uploads={uploads}
 				typingUsernames={Array.isArray(typing) ? typing : []}
 				loading={loading}
@@ -422,7 +424,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
-
+				limitTextLength={limitTextLength}
 			/>
 		)}
 	</Consumer>

@@ -1,6 +1,6 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import {
 	Form,
@@ -8,6 +8,7 @@ import {
 	SelectInput,
 	TextInput,
 } from '.';
+import { centered } from '../../helpers.stories';
 import { Button } from '../Button';
 import { ButtonGroup } from '../ButtonGroup';
 import { FormField } from './FormField';
@@ -18,25 +19,25 @@ function handleSubmit(event, ...args) {
 	action('submit')(event, ...args);
 }
 
-storiesOf('Forms|Form', module)
+storiesOf('Forms/Form', module)
 	.addDecorator(centered)
 	.add('default', () => (
 		<Form onSubmit={handleSubmit}>
 			<FormField
-				label="Text"
-				description="Input field for plain text"
+				label='Text'
+				description='Input field for plain text'
 			>
 				<TextInput />
 			</FormField>
 			<FormField
-				label="Password"
-				description="Input field for secret text"
+				label='Password'
+				description='Input field for secret text'
 			>
 				<PasswordInput />
 			</FormField>
 			<FormField
-				label="Select"
-				description="Input field for secret text"
+				label='Select'
+				description='Input field for secret text'
 			>
 				<SelectInput
 					options={[

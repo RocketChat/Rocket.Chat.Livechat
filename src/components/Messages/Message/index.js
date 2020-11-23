@@ -1,14 +1,19 @@
-import { getAttachmentUrl, memo } from '../../helpers';
-import { MessageContainer } from '../MessageContainer';
+import { h } from 'preact';
+
+import I18n from '../../../i18n';
+import { getAttachmentUrl, memo, createClassName } from '../../helpers';
+import { AudioAttachment } from '../AudioAttachment';
+import { FileAttachment } from '../FileAttachment';
+import { ImageAttachment } from '../ImageAttachment';
 import { MessageAvatars } from '../MessageAvatars';
-import { MessageContent } from '../MessageContent';
+import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
+import { MessageContainer } from '../MessageContainer';
+import styles from '../MessageContainer/styles.scss';
+import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
-import { AudioAttachment } from '../AudioAttachment';
 import { VideoAttachment } from '../VideoAttachment';
-import { ImageAttachment } from '../ImageAttachment';
-import { FileAttachment } from '../FileAttachment';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
 	MESSAGE_TYPE_USER_ADDED,
@@ -19,8 +24,17 @@ import {
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
 } from '../constants';
 
-
-const renderContent = ({ text, system, quoted, me, attachments, attachmentResolver }) => [
+const renderContent = ({
+	text,
+	system,
+	quoted,
+	me,
+	blocks,
+	attachments,
+	attachmentResolver,
+	mid,
+	rid,
+}) => [
 	...(attachments || [])
 		.map((attachment) =>
 			(attachment.audio_url
@@ -49,12 +63,19 @@ const renderContent = ({ text, system, quoted, me, attachments, attachmentResolv
 				quoted: true,
 				attachments: attachment.attachments,
 				attachmentResolver,
-			}))
+			})),
 		),
 	text && (
 		<MessageBubble inverse={me} quoted={quoted}>
 			<MessageText text={text} system={system} />
 		</MessageBubble>
+	),
+	blocks && (
+		<MessageBlocks
+			blocks={blocks}
+			mid={mid}
+			rid={rid}
+		/>
 	),
 ].filter(Boolean);
 
@@ -109,9 +130,12 @@ export const Message = memo(({
 				system: !!message.t,
 				me,
 				attachments: message.attachments,
+				blocks: message.blocks,
+				mid: message._id,
+				rid: message.rid,
 				attachmentResolver,
 			})}
 		</MessageContent>
-		{!compact && <MessageTime ts={ts} />}
+		{!compact && <MessageTime normal={!me} inverse={me} ts={ts} />}
 	</MessageContainer>
 ));

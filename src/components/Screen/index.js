@@ -1,23 +1,24 @@
-import { Component } from 'preact';
+import { Component, h } from 'preact';
+import { useEffect } from 'preact/hooks';
 
+import I18n from '../../i18n';
+import MinimizeIcon from '../../icons/arrowDown.svg';
+import RestoreIcon from '../../icons/arrowUp.svg';
+import NotificationsEnabledIcon from '../../icons/bell.svg';
+import NotificationsDisabledIcon from '../../icons/bellOff.svg';
+import ChatIcon from '../../icons/chat.svg';
+import CloseIcon from '../../icons/close.svg';
+import OpenWindowIcon from '../../icons/newWindow.svg';
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import Header from '../Header';
 import { Footer, FooterContent, PoweredBy } from '../Footer';
+import Header from '../Header';
 import { PopoverContainer } from '../Popover';
 import { Sound } from '../Sound';
 import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
-import NotificationsEnabledIcon from '../../icons/bell.svg';
-import NotificationsDisabledIcon from '../../icons/bellOff.svg';
-import MinimizeIcon from '../../icons/arrowDown.svg';
-import RestoreIcon from '../../icons/arrowUp.svg';
-import OpenWindowIcon from '../../icons/newWindow.svg';
-import ChatIcon from '../../icons/chat.svg';
-import CloseIcon from '../../icons/close.svg';
 import styles from './styles.scss';
-
 
 class ScreenHeader extends Component {
 	largeHeader = () => {
@@ -90,8 +91,8 @@ class ScreenHeader extends Component {
 							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
 						>
 							{notificationsEnabled
-								? <NotificationsEnabledIcon width={20} />
-								: <NotificationsDisabledIcon width={20} />
+								? <NotificationsEnabledIcon width={20} height={20} />
+								: <NotificationsDisabledIcon width={20} height={20} />
 							}
 						</Header.Action>
 					</Tooltip.Trigger>
@@ -102,16 +103,16 @@ class ScreenHeader extends Component {
 								onClick={minimized ? onRestore : onMinimize}
 							>
 								{minimized
-									? <RestoreIcon width={20} />
-									: <MinimizeIcon width={20} />
+									? <RestoreIcon width={20} height={20} />
+									: <MinimizeIcon width={20} height={20} />
 								}
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
 					{(!expanded && !windowed) && (
-						<Tooltip.Trigger content={I18n.t('Expand chat')} placement="bottom-left">
+						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-								<OpenWindowIcon width={20} />
+								<OpenWindowIcon width={20} height={20} />
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
@@ -129,7 +130,7 @@ export const ScreenContent = ({ children, nopadding }) => (
 );
 
 
-export const ScreenFooter = ({ children, options }) => (
+export const ScreenFooter = ({ children, options, limit }) => (
 	<Footer>
 		{children && (
 			<FooterContent>
@@ -138,6 +139,7 @@ export const ScreenFooter = ({ children, options }) => (
 		)}
 		<FooterContent>
 			{options}
+			{limit}
 			<PoweredBy />
 		</FooterContent>
 	</Footer>
@@ -158,6 +160,39 @@ const ChatButton = ({
 		{text}
 	</Button>
 );
+
+const CssVar = ({ theme }) => {
+	useEffect(() => {
+		if (window.CSS && CSS.supports('color', 'var(--color)')) {
+			return;
+		}
+		let mounted = true;
+		(async () => {
+			const { default: cssVars } = await import('css-vars-ponyfill');
+			if (!mounted) {
+				return;
+			}
+			cssVars({
+				variables: {
+					'--color': theme.color,
+					'--font-color': theme.fontColor,
+					'--icon-color': theme.iconColor,
+				},
+			});
+		})();
+		return () => {
+			mounted = false;
+		};
+	}, [theme]);
+
+	return <style>{`
+		.${ styles.screen } {
+			${ theme.color ? `--color: ${ theme.color };` : '' }
+			${ theme.fontColor ? `--font-color: ${ theme.fontColor };` : '' }
+			${ theme.iconColor ? `--icon-color: ${ theme.iconColor };` : '' }
+		}
+	`}</style>;
+};
 
 export const Screen = ({
 	theme = {},
@@ -181,16 +216,10 @@ export const Screen = ({
 	onOpenWindow,
 	onSoundStop,
 	queueInfo,
+	dismissNotification,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
-		<style>{`
-			.${ styles.screen } {
-				${ theme.color ? `--color: ${ theme.color };` : '' }
-				${ theme.fontColor ? `--font-color: ${ theme.fontColor };` : '' }
-				${ theme.iconColor ? `--icon-color: ${ theme.iconColor };` : '' }
-			}
-		`}</style>
-
+		<CssVar theme={theme} />
 		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
 			<PopoverContainer>
 				<ScreenHeader
@@ -222,7 +251,7 @@ export const Screen = ({
 			onClick={minimized ? onRestore : onMinimize}
 		/>
 
-		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} />}
+		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} dismissNotification={dismissNotification} />}
 	</div>
 );
 

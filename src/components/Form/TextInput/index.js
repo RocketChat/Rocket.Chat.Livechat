@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
 
@@ -15,6 +17,7 @@ export const TextInput = memo(({
 	onInput,
 	className,
 	style = {},
+	...props
 }) => (
 	multiline
 		? (
@@ -28,11 +31,12 @@ export const TextInput = memo(({
 				onInput={onInput}
 				className={createClassName(styles, 'text-input', { disabled, error, small, multiline }, [className])}
 				style={style}
+				{...props}
 			/>
 		)
 		: (
 			<input
-				type="text"
+				type='text'
 				name={name}
 				value={value}
 				placeholder={placeholder}
@@ -41,6 +45,7 @@ export const TextInput = memo(({
 				onInput={onInput}
 				className={createClassName(styles, 'text-input', { disabled, error, small }, [className])}
 				style={style}
+				{...props}
 			/>
 		)
 ));

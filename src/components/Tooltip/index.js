@@ -1,8 +1,7 @@
-import { h, cloneElement, Component } from 'preact';
-import createContext from 'preact-context';
+import { h, cloneElement, Component, createContext, toChildArray } from 'preact';
 
-import styles from './styles.scss';
 import { createClassName } from '../helpers';
+import styles from './styles.scss';
 
 
 const getPositioningStyle = (placement, { left, top, right, bottom }) => {
@@ -82,12 +81,12 @@ export class TooltipContainer extends Component {
 
 export const TooltipTrigger = ({ children, content, placement }) => (
 	<TooltipContext.Consumer>
-		{({ showTooltip, hideTooltip }) => cloneElement(children[0], {
+		{({ showTooltip, hideTooltip }) => toChildArray(children).map((child) => cloneElement(child, {
 			onMouseEnter: (event) => showTooltip(event, { content, placement }),
 			onMouseLeave: (event) => hideTooltip(event),
 			onFocusCapture: (event) => showTooltip(event, { content, placement }),
 			onBlurCapture: (event) => hideTooltip(event),
-		})}
+		}))}
 	</TooltipContext.Consumer>
 );
 

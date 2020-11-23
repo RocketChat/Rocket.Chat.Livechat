@@ -1,3 +1,6 @@
+import { h } from 'preact';
+
+import I18n from '../../i18n';
 import { createClassName, MemoizedComponent } from '../helpers';
 import styles from './styles.scss';
 
@@ -20,10 +23,13 @@ export class Form extends MemoizedComponent {
 }
 
 export const Validations = {
-	nonEmpty: (value) => (!value ? 'Field required' : undefined),
+	nonEmpty: ({ value }) => (!value ? I18n.t('Field required') : undefined),
 
-	email: (value) => (!/^\S+@\S+\.\S+/.test(String(value).toLowerCase()) ? 'Invalid email' : null),
+	email: ({ value }) => (!/^\S+@\S+\.\S+/.test(String(value).toLowerCase()) ? I18n.t('Invalid email') : null),
+
+	custom: ({ value, pattern }) => (new RegExp(pattern, 'i').test(String(value)) ? null : I18n.t('Invalid value')),
 };
+
 
 export { FormField } from './FormField';
 export { TextInput } from './TextInput';

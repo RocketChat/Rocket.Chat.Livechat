@@ -1,9 +1,8 @@
-import { Component } from 'preact';
-import { createContext } from 'preact-context';
+import { h, Component, createContext } from 'preact';
 
-import { createToken } from '../components/helpers';
 import Store from './Store';
 
+const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 const initialState = {
 	token: createToken(),
@@ -37,11 +36,11 @@ const initialState = {
 	unread: null,
 };
 
-const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages'];
+const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages', 'modal'];
 export const store = new Store(initialState, { dontPersist });
 
 if (process.env.NODE_ENV === 'development') {
-	store.on('change', (state, prevState, partialState) => {
+	store.on('change', ([, , partialState]) => {
 		// eslint-disable-next-line no-console
 		console.log('%cstore.setState %c%o', 'color: blue', 'color: initial', partialState);
 	});
@@ -74,8 +73,6 @@ export class Provider extends Component {
 	)
 }
 
-export class Consumer extends StoreContext.Consumer {
-	static displayName = 'StoreConsumer'
-}
+export const { Consumer } = StoreContext;
 
 export default store;

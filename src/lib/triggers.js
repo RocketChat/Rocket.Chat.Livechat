@@ -6,6 +6,8 @@ import { upsert, createToken, asyncForEach, mobileCheck } from '../components/he
 import { parentCall } from './parentCall';
 import { processUnread } from './main';
 import { normalizeAgent } from './api';
+import { processUnread } from './main';
+import { parentCall } from './parentCall';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -20,14 +22,9 @@ const getAgent = (triggerAction) => {
 
 		if (params.sender === 'queue') {
 			const { state } = store;
-			const { triggerAgent, iframe: { guest: { department } } } = state;
-
-			if (triggerAgent) {
-				const cacheAgent = triggerAgent;
-				// cache valid for 1h
-				if (cacheAgent.ts && Date.now() - cacheAgent.ts < agentCacheExpiry) {
-					return resolve(cacheAgent.agent);
-				}
+			const { defaultAgent, iframe: { guest: { department } } } = state;
+			if (defaultAgent && defaultAgent.ts && Date.now() - defaultAgent.ts < agentCacheExpiry) {
+				return resolve(defaultAgent); // cache valid for 1
 			}
 
 			let agent;
@@ -37,7 +34,7 @@ const getAgent = (triggerAction) => {
 				return reject(error);
 			}
 
-			store.setState({ triggerAgent: { agent, ts: Date.now() } });
+			store.setState({ defaultAgent: { ...agent, ts: Date.now() } });
 			resolve(agent);
 		} else if (params.sender === 'custom') {
 			resolve({
@@ -115,6 +112,7 @@ class Triggers {
 						u: agent,
 						ts: ts.toISOString(),
 						_id: createToken(),
+						trigger: true,
 					};
 
 					await store.setState({

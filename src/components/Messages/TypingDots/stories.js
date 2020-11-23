@@ -1,11 +1,12 @@
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
 import { TypingDots } from '.';
+import { centered } from '../../../helpers.stories';
 
 
-storiesOf('Messages|TypingDots', module)
+storiesOf('Messages/TypingDots', module)
 	.addDecorator(centered)
 	.addDecorator(withKnobs)
 	.add('default', () => (

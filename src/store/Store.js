@@ -1,11 +1,12 @@
-import { EventEmitter } from 'tiny-events';
+import mitt from 'mitt';
 
 
-const { localStorage } = global;
+const { localStorage, sessionStorage } = window;
 
-export default class Store extends EventEmitter {
+export default class Store {
 	constructor(initialState = {}, { localStorageKey = 'store', dontPersist = [] } = {}) {
-		super();
+		Object.assign(this, mitt());
+
 		this.localStorageKey = localStorageKey;
 		this.dontPersist = dontPersist;
 
@@ -21,7 +22,7 @@ export default class Store extends EventEmitter {
 
 		this._state = { ...initialState, ...storedState };
 
-		window.addEventListener("storage", (e) => {
+		window.addEventListener('storage', (e) => {
 			// Cross-tab communication
 			if (e.key !== this.localStorageKey) {
 				return;
@@ -34,6 +35,20 @@ export default class Store extends EventEmitter {
 
 			const storedState = JSON.parse(e.newValue);
 			this.setStoredState(storedState);
+			this.emit('storageSynced');
+		});
+
+		window.addEventListener('load', () => {
+			const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+			sessionStorage.setItem('sessionId', sessionId);
+			const { openSessionIds = [] } = this._state;
+			this.setState({ openSessionIds: [sessionId, ...openSessionIds] });
+		});
+
+		window.addEventListener('beforeunload', () => {
+			const sessionId = sessionStorage.getItem('sessionId');
+			const { openSessionIds = [] } = this._state;
+			this.setState({ openSessionIds: openSessionIds.filter((session) => session !== sessionId) });
 		});
 	}
 
@@ -53,7 +68,7 @@ export default class Store extends EventEmitter {
 		const prevState = this._state;
 		this._state = { ...prevState, ...partialState };
 		this.persist();
-		this.emit('change', this._state, prevState, partialState);
+		this.emit('change', [this._state, prevState, partialState]);
 	}
 
 	setStoredState(storedState) {
@@ -64,6 +79,6 @@ export default class Store extends EventEmitter {
 			nonPeristable[ignoredKey] = prevState[ignoredKey];
 		}
 		this._state = { ...storedState, ...nonPeristable };
-		this.emit('change', this._state, prevState);
+		this.emit('change', [this._state, prevState]);
 	}
 }

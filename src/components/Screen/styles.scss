@@ -1,4 +1,4 @@
-@import '~styles/colors';
+@import '../../styles/colors';
 
 $screen-padding: 16px;
 $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
@@ -65,7 +65,7 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 	display: flex;
 	overflow-y: auto;
 	flex-direction: column;
-	flex: 1 0 0;
+	flex: 1 1 0;
 
 	padding: 1rem 1rem 0;
 
