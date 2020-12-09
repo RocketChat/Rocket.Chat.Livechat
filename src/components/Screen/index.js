@@ -96,8 +96,8 @@ class ScreenHeader extends Component {
 					</Tooltip.Trigger>
 					// Viasat remove button to expand widget
 					// {(!expanded && !windowed) && (
-					// 	<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
-					// 		<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
+					// 	<Tooltip.Trigger content={I18n.t('Expand_eric chat')} placement='bottom-left'>
+					// 		<Header.Action aria-label={I18n.t('Expand_eric chat')} onClick={onOpenWindow}>
 					// 			<OpenWindowIcon width={20} height={20} />
 					// 		</Header.Action>
 					// 	</Tooltip.Trigger>
