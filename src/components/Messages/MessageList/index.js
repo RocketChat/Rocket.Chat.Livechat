@@ -116,6 +116,14 @@ export class MessageList extends MemoizedComponent {
 			}
 			delete this.previousScrollHeight;
 		}
+
+		// when scrollPosition is "free", scroll to bottom
+		if (this.scrollPosition == "free") {
+			this.base.scrollTop = this.base.scrollHeight;
+			const { onScrollTo } = this.props;
+			onScrollTo && onScrollTo(MessageList.SCROLL_AT_BOTTOM);
+		}
+		
 	}
 
 	componentDidMount() {
