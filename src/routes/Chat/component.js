@@ -16,7 +16,7 @@ import PlusIcon from '../../icons/plus.svg';
 import PrintIcon from '../../icons/print.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
-import EmojiIcon from '../../icons/smile.svg';
+// import EmojiIcon from '../../icons/smile.svg';
 import styles from './styles.scss';
 
 export default class Chat extends Component {
@@ -25,7 +25,7 @@ export default class Chat extends Component {
 		text: '',
 		emojiPickerActive: false,
 		disable: false,
-		disableText: 'Please Wait'
+		disableText: 'Please Wait',
 	}
 
 	handleDisableComposer = (disableText) => {
@@ -226,13 +226,15 @@ export default class Chat extends Component {
 						value={text}
 						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
 						handleEmojiClick={this.handleEmojiClick}
-						pre={(
-							<ComposerActions>
-								<ComposerAction onClick={this.toggleEmojiPickerState}>
-									<EmojiIcon width={20} height={20} />
-								</ComposerAction>
-							</ComposerActions>
-						)}
+						// Viasat : Hide Emoticon pallet
+						//
+						// pre={(
+						// 	<ComposerActions>
+						// 		<ComposerAction onClick={this.toggleEmojiPickerState}>
+						// 			<EmojiIcon width={20} height={20} />
+						// 		</ComposerAction>
+						// 	</ComposerActions>
+						// )}
 						post={(
 							<ComposerActions>
 								{text.length === 0 && uploads && (

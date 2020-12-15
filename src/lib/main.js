@@ -57,7 +57,8 @@ export const processUnread = async () => {
 			});
 			const alert = { id: constants.unreadMessagesAlertId, children: alertMessage, success: true, timeout: 0 };
 			const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
-			await store.setState({ alerts: (newAlerts.push(alert), newAlerts) });
+			// Viasat: do not show unread messages banner
+			// await store.setState({ alerts: (newAlerts.push(alert), newAlerts) });
 		}
 
 		await store.setState({ unread: unreadMessages.length });
