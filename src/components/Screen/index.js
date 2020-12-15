@@ -238,7 +238,7 @@ export const Screen = ({
 
 		<ChatButton
 			text={title}
-			badge={unread}
+			badge={false}
 			minimized={minimized}
 			onClick={minimized ? onRestore : onMinimize}
 		/>
