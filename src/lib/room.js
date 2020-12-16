@@ -5,6 +5,7 @@ import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
+import { handleIdleTimeout } from './idleTimeout';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
@@ -136,6 +137,11 @@ Livechat.onMessage(async (message) => {
 	await store.setState({
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
+
+	// Viasat : Timeout Warnings
+	if (message.customFields && message.customFields.idleTimeoutConfig) {
+		handleIdleTimeout(message.customFields.idleTimeoutConfig);
+	}
 
 	await processMessage(message);
 
