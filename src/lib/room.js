@@ -184,6 +184,22 @@ export const loadMessages = async () => {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
 	}
+
+	const { idleTimeout } = store.state;
+
+	if (idleTimeout && idleTimeout.idleTimeoutRunning) {
+		const {
+			idleTimeoutMessage,
+			idleTimeoutWarningTime,
+			idleTimeoutTimeoutTime,
+		} = idleTimeout;
+		handleIdleTimeout({
+			idleTimeoutAction: 'start',
+			idleTimeoutMessage,
+			idleTimeoutWarningTime,
+			idleTimeoutTimeoutTime,
+		});
+	}
 };
 
 export const loadMoreMessages = async () => {

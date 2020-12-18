@@ -1,4 +1,6 @@
 import { Livechat } from '../api';
+import { ModalManager } from '../components/Modal';
+import I18n from '../i18n';
 import { store } from '../store';
 
 const idleTimeoutWarningId = 'idleTimeoutWarning';
@@ -72,6 +74,9 @@ export const handleIdleTimeout = async (idleTimeoutConfig) => {
 			await Promise.all([
 				Livechat.sendMessage({ msg: 'customer_idle_timeout', token, rid }),
 			]);
+			await ModalManager.alert({
+				text: I18n.t('Chat ended due to timeout'),
+			});
 		}
 
 		await store.setState({
