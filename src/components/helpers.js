@@ -123,7 +123,9 @@ export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }
 
 export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'livechat-close'];
 
-export const canRenderMessage = (message = {}) => !msgTypesNotRendered.includes(message.t);
+export const msgTextNotRendered = ['customer_idle_timeout'];
+
+export const canRenderMessage = (message = {}) => !msgTypesNotRendered.includes(message.t) && !msgTextNotRendered.includes(message.msg);
 
 export const getAttachmentUrl = (url) => `${ Livechat.client.host }${ url }`;
 
