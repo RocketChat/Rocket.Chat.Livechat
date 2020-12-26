@@ -42,7 +42,7 @@ const api = {
 		CustomFields.setCustomField(key, value, overwrite);
 	},
 
-	setTheme({ color, fontColor, iconColor, title, offlineTitle } = {}) {
+	setTheme({ color, fontColor, iconColor, title, offlineTitle, hideChatButton, hideMinimizeChatButton, hideExpandChatButton } = {}) {
 		const { iframe, iframe: { theme } } = store.state;
 		store.setState({
 			iframe: {
@@ -54,6 +54,9 @@ const api = {
 					iconColor,
 					title,
 					offlineTitle,
+					hideChatButton,
+					hideMinimizeChatButton,
+					hideExpandChatButton,
 				},
 			},
 		});

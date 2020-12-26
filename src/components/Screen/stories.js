@@ -257,6 +257,78 @@ storiesOf('Components/Screen', module)
 				{text('content', 'Content')}
 			</Screen.Content>
 		</Screen>
+	))
+	.add('with hidden chat button', () => (
+		<Screen
+			theme={{
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
+				hideChatButton: true,
+			}}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
+		</Screen>
+	))
+	.add('with hidden minimize chat button', () => (
+		<Screen
+			theme={{
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
+				hideMinimizeChatButton: true,
+			}}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
+		</Screen>
+	))
+	.add('with hidden expand chat button', () => (
+		<Screen
+			theme={{
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
+				iconColor: color('theme/iconColor', ''),
+				hideExpandChatButton: true,
+			}}
+			title={text('title', 'Title')}
+			notificationsEnabled={boolean('notificationsEnabled', true)}
+			minimized={boolean('minimized', false)}
+			expanded={boolean('expanded', false)}
+			windowed={boolean('windowed', false)}
+			onEnableNotifications={action('enableNotifications')}
+			onDisableNotifications={action('disableNotifications')}
+			onMinimize={action('minimize')}
+			onRestore={action('restore')}
+			onOpenWindow={action('openWindow')}
+		>
+			<Screen.Content>
+				{text('content', 'Content')}
+			</Screen.Content>
+		</Screen>
 	));
 storiesOf('Components/Screen/Footer', module)
 	.addDecorator(withKnobs)

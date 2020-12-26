@@ -52,6 +52,8 @@ class ScreenHeader extends Component {
 		onMinimize,
 		onRestore,
 		onOpenWindow,
+		hideMinimizeChatButton,
+		hideExpandChatButton,
 	}) => (
 		<Header
 			ref={this.handleRef}
@@ -96,7 +98,7 @@ class ScreenHeader extends Component {
 							}
 						</Header.Action>
 					</Tooltip.Trigger>
-					{(expanded || !windowed) && (
+					{(!hideMinimizeChatButton && (expanded || !windowed)) && (
 						<Tooltip.Trigger content={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}>
 							<Header.Action
 								aria-label={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}
@@ -109,7 +111,7 @@ class ScreenHeader extends Component {
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
-					{(!expanded && !windowed) && (
+					{(!hideExpandChatButton && !expanded && !windowed) && (
 						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
 								<OpenWindowIcon width={20} height={20} />
@@ -237,6 +239,8 @@ export const Screen = ({
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
+					hideMinimizeChatButton={theme.hideMinimizeChatButton}
+					hideExpandChatButton={theme.hideExpandChatButton}
 				/>
 
 				{modal}
@@ -244,12 +248,12 @@ export const Screen = ({
 			</PopoverContainer>
 		</div>
 
-		<ChatButton
+		{!theme.hideChatButton && <ChatButton
 			text={title}
 			badge={unread}
 			minimized={minimized}
 			onClick={minimized ? onRestore : onMinimize}
-		/>
+		/>}
 
 		{sound && <Sound src={sound.src} play={sound.play} onStop={onSoundStop} dismissNotification={dismissNotification} />}
 	</div>
