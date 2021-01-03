@@ -151,6 +151,11 @@ const api = {
 		store.setState({ minimized: false });
 		parentCall('openWidget');
 	},
+
+	async sendMessage(msg) {
+		const { token, room: { _id: rid } = {} } = store.state;
+		await Livechat.sendMessage({ msg, token, rid });
+	},
 };
 
 const onNewMessage = (event) => {
