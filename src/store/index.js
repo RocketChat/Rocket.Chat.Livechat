@@ -11,6 +11,7 @@ const initialState = {
 		messages: {},
 		settings: {},
 		theme: {},
+		filters: [],
 		triggers: [],
 		departments: [],
 		resources: {},

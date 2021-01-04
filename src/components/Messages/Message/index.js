@@ -14,6 +14,7 @@ import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
 import { VideoAttachment } from '../VideoAttachment';
+import { MessageAction } from '../MessageAction';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
 	MESSAGE_TYPE_USER_ADDED,
@@ -34,6 +35,8 @@ const renderContent = ({
 	attachmentResolver,
 	mid,
 	rid,
+	resetLastAction,
+	actionsVisible
 }) => [
 	...(attachments || [])
 		.map((attachment) =>
@@ -63,7 +66,13 @@ const renderContent = ({
 				quoted: true,
 				attachments: attachment.attachments,
 				attachmentResolver,
-			})),
+			}))
+			|| (attachment.actions && actionsVisible
+				&& <MessageAction
+					quoted={false}
+					actions={attachment.actions}
+					resetLastAction={resetLastAction}
+				/>),
 		),
 	text && (
 		<MessageBubble inverse={me} quoted={quoted}>
@@ -88,6 +97,15 @@ const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')));
 
+const getName = (message) => {
+	if (!message.u) {
+		return null;
+	}
+
+	const { alias, u: { name } } = message;
+	return alias && name;
+};
+
 const getMessageUsernames = (compact, message) => {
 	if (compact || !message.u) {
 		return [];
@@ -110,6 +128,7 @@ export const Message = memo(({
 	compact,
 	className,
 	style = {},
+	resetLastAction,
 	...message
 }) => (
 	<MessageContainer
@@ -123,6 +142,8 @@ export const Message = memo(({
 		<MessageAvatars
 			avatarResolver={avatarResolver}
 			usernames={getMessageUsernames(compact, message)}
+			isVisitor={me}
+			name={getName(message)}
 		/>
 		<MessageContent reverse={me}>
 			{renderContent({
@@ -134,6 +155,8 @@ export const Message = memo(({
 				mid: message._id,
 				rid: message.rid,
 				attachmentResolver,
+				resetLastAction,
+				actionsVisible: message.actionsVisible ? message.actionsVisible : false,
 			})}
 		</MessageContent>
 		{!compact && <MessageTime normal={!me} inverse={me} ts={ts} />}

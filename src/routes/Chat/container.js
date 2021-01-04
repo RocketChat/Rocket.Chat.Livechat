@@ -3,13 +3,13 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import { createToken, debounce, getAvatarUrl, getFilteredMsg, canRenderMessage, throttle, upsert } from '../../components/helpers';
 import I18n from '../../i18n';
 import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
-import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
+import { initRoom, assignRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
 import { Consumer } from '../../store';
 import Chat from './component';
 
@@ -23,7 +23,7 @@ export class ChatContainer extends Component {
 	}
 
 	checkConnectingAgent = async () => {
-		const { connecting, queueInfo } = this.props;
+		const { connecting, queueInfo, startSession } = this.props;
 		const { connectingAgent, queueSpot, estimatedWaitTime } = this.state;
 
 		const newConnecting = connecting;
@@ -36,6 +36,10 @@ export class ChatContainer extends Component {
 			this.state.estimatedWaitTime = newEstimatedWaitTime;
 			await this.handleQueueMessage(connecting, queueInfo);
 			await this.handleConnectingAgentAlert(newConnecting, normalizeQueueAlert(queueInfo));
+
+			if (startSession) {
+				assignRoom();
+			}
 		}
 	}
 
@@ -111,6 +115,28 @@ export class ChatContainer extends Component {
 		this.startTyping({ rid: room._id, username: user.username });
 	}
 
+	resetLastAction = () => {
+		// makes all actions button invisible
+		const { messages, dispatch } = this.props;
+
+		const newMessages = messages.map((message) => {
+			if (message.actionsVisible) {
+				message.actionsVisible = false;
+			}
+			return message;
+		});
+		dispatch({ messages: newMessages });
+	}
+
+	getAvatar = (username, isVisitor = false, name = null) => {
+		if (!isVisitor || name) {
+			return getAvatarUrl(name || username);
+		}
+
+		const { defaultAvatar } = this.props;
+		return `${ Livechat.client.host }/${ defaultAvatar.url || defaultAvatar.defaultUrl }`;
+	}
+
 	handleSubmit = async (msg) => {
 		if (msg.trim() === '') {
 			return;
@@ -119,12 +145,14 @@ export class ChatContainer extends Component {
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
 		const { alerts, dispatch, token, user } = this.props;
+		const avatar = this.getAvatar(user.username, true, user.name);
 
 		try {
 			this.stopTypingDebounced.stop();
+			this.resetLastAction();
 			await Promise.all([
 				this.stopTyping({ rid, username: user.username }),
-				Livechat.sendMessage({ msg, token, rid }),
+				Livechat.sendMessage({ msg: getFilteredMsg(msg), token, rid, avatar }),
 			]);
 		} catch (error) {
 			const reason = error?.data?.error ?? error.message;
@@ -223,6 +251,16 @@ export class ChatContainer extends Component {
 		}
 	}
 
+	onPrintTranscript = () => {
+		const printContent = document.getElementById('chat__messages').innerHTML;
+		const head = document.getElementsByTagName('head')[0].innerHTML;
+		const printWindow = window.open();
+		printWindow.document.write(printContent);
+		printWindow.document.head.innerHTML = head;
+		printWindow.document.body.setAttribute('onload', 'window.print()');
+		printWindow.document.close();
+	}
+
 	canSwitchDepartment = () => {
 		const { allowSwitchingDepartments, departments = {} } = this.props;
 		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
@@ -236,6 +274,11 @@ export class ChatContainer extends Component {
 	canRemoveUserData = () => {
 		const { allowRemoveUserData } = this.props;
 		return allowRemoveUserData;
+	}
+
+	canPrintTranscript = () => {
+		const { transcript } = this.props;
+		return transcript;
 	}
 
 	showOptionsMenu = () =>
@@ -312,7 +355,7 @@ export class ChatContainer extends Component {
 	render = ({ user, ...props }) => (
 		<Chat
 			{...props}
-			avatarResolver={getAvatarUrl}
+			avatarResolver={this.getAvatar}
 			uid={user && user._id}
 			onTop={this.handleTop}
 			onChangeText={this.handleChangeText}
@@ -322,7 +365,9 @@ export class ChatContainer extends Component {
 			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
+			onPrintTranscript={(this.canPrintTranscript() && this.onPrintTranscript) || null}
 			onSoundStop={this.handleSoundStop}
+			resetLastAction={this.resetLastAction}
 		/>
 	)
 }
@@ -334,9 +379,12 @@ export const ChatConnector = ({ ref, ...props }) => (
 			config: {
 				settings: {
 					fileUpload: uploads,
+					guestDefaultAvatar: defaultAvatar,
+					startSessionOnNewChat: startSession,
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
+					transcript,
 					limitTextLength,
 				} = {},
 				messages: {
@@ -410,9 +458,12 @@ export const ChatConnector = ({ ref, ...props }) => (
 				connecting={!!(room && !agent && (showConnecting || queueInfo))}
 				dispatch={dispatch}
 				departments={departments}
+				startSession={startSession}
+				defaultAvatar={defaultAvatar}
 				allowSwitchingDepartments={allowSwitchingDepartments}
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
+				transcript={transcript}
 				alerts={alerts}
 				visible={visible}
 				unread={unread}
