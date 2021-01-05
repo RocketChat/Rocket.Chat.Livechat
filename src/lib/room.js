@@ -26,6 +26,9 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
 		closeChat(message);
+		handleIdleTimeout({
+			idleTimeoutAction: 'stop',
+		});
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	}
