@@ -7,6 +7,7 @@ import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import styles from './styles.scss';
+import store from '../../../store';
 
 const disableComposer = (msg) => {
 	const defaultText = 'Please Wait';
@@ -38,6 +39,20 @@ const disableComposer = (msg) => {
 
 const isNotEmpty = (message) => {
 	return message && (message.t || message.msg || message.blocks || message.attachments);
+}
+
+const shouldHideMessage = (message) => {
+	const { config: { settings: { hideSysMessages } } } = store.state;
+	if(!message.t) {
+		return false;
+	}
+	if (hideSysMessages == [] || !hideSysMessages) {
+		return false;
+	}
+	if (hideSysMessages.indexOf(message.t) != -1) {
+		return true;
+	}
+	return false;
 }
 
 export class MessageList extends MemoizedComponent {
@@ -165,7 +180,8 @@ export class MessageList extends MemoizedComponent {
 				);
 			}
 
-			isNotEmpty(message) && items.push(
+			
+			isNotEmpty(message) && !shouldHideMessage(message) && items.push(
 				<Message
 					key={message._id}
 					attachmentResolver={attachmentResolver}
