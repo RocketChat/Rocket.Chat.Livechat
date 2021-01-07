@@ -7,7 +7,7 @@ $message-container-compact-margin: 0 0 ($default-padding / 4) 0;
 	display: flex;
 
 	margin: $message-container-margin;
-	justify-content: start;
+	justify-content: flex-start;
 
 	&--compact {
 		margin: $message-container-compact-margin;

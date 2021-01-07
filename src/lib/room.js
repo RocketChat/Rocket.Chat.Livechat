@@ -5,6 +5,7 @@ import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
+import { handleIdleTimeout } from './idleTimeout';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
@@ -25,6 +26,9 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
 		closeChat(message);
+		handleIdleTimeout({
+			idleTimeoutAction: 'stop',
+		});
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	}
@@ -137,6 +141,11 @@ Livechat.onMessage(async (message) => {
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
 
+	// Viasat : Timeout Warnings
+	if (message.customFields && message.customFields.idleTimeoutConfig) {
+		handleIdleTimeout(message.customFields.idleTimeoutConfig);
+	}
+
 	await processMessage(message);
 
 	if (canRenderMessage(message) !== true) {
@@ -177,6 +186,22 @@ export const loadMessages = async () => {
 	if (messages && messages.length) {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+	}
+
+	const { idleTimeout } = store.state;
+
+	if (idleTimeout && idleTimeout.idleTimeoutRunning) {
+		const {
+			idleTimeoutMessage,
+			idleTimeoutWarningTime,
+			idleTimeoutTimeoutTime,
+		} = idleTimeout;
+		handleIdleTimeout({
+			idleTimeoutAction: 'start',
+			idleTimeoutMessage,
+			idleTimeoutWarningTime,
+			idleTimeoutTimeoutTime,
+		});
 	}
 };
 

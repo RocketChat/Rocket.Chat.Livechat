@@ -28,7 +28,7 @@ export class Alert extends Component {
 		clearTimeout(this.dismissTimeout);
 	}
 
-	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children }) => (
+	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, contentStyle = {}, children }) => (
 		<div
 			role='alert'
 			className={createClassName(styles, 'alert', { success, warning, error }, [className])}
@@ -37,7 +37,8 @@ export class Alert extends Component {
 				...color && { backgroundColor: color },
 			}}
 		>
-			<div className={createClassName(styles, 'alert__content')}>
+			<div className={createClassName(styles, 'alert__content')}
+				style={{ ...contentStyle }}>
 				{children}
 			</div>
 			{!hideCloseButton && (
