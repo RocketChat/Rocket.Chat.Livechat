@@ -85,7 +85,7 @@
 	},
 	"dependencies": {
 		"@kossnocorp/desvg": "^0.2.0",
-		"@rocket.chat/sdk": "^1.0.0-alpha.41",
+		"@rocket.chat/sdk": "git+https://github.com/WideChat/Rocket.Chat.js.SDK.git#multiple-clients",
 		"@rocket.chat/ui-kit": "^0.14.1",
 		"css-vars-ponyfill": "^2.3.2",
 		"date-fns": "^2.15.0",

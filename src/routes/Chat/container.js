@@ -10,7 +10,7 @@ import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
 import { initRoom, assignRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
-import { Consumer } from '../../store';
+import store, { Consumer } from '../../store';
 import Chat from './component';
 
 export class ChatContainer extends Component {
@@ -97,8 +97,8 @@ export class ChatContainer extends Component {
 		loadMoreMessages();
 	}
 
-	startTyping = throttle(async ({ rid, username }) => {
-		await Livechat.notifyVisitorTyping(rid, username, true);
+	startTyping = throttle(async ({ rid, username, text }) => {
+		await Livechat.notifyVisitorTyping(rid, username, true, text);
 		this.stopTypingDebounced({ rid, username });
 	}, 4500)
 
@@ -106,13 +106,18 @@ export class ChatContainer extends Component {
 
 	stopTypingDebounced = debounce(this.stopTyping, 5000)
 
-	handleChangeText = async () => {
+	handleSneakPeakDebounced = debounce(async ({ rid, username, text }) => {
+		await Livechat.notifyVisitorTyping(rid, username, true, text);
+	}, 2000)
+
+	handleChangeText = async (text) => {
 		const { user, room } = this.props;
 		if (!(user && user.username && room && room._id)) {
 			return;
 		}
-
-		this.startTyping({ rid: room._id, username: user.username });
+		const { sneakPeekEnabled } = store.state;
+		sneakPeekEnabled && this.handleSneakPeakDebounced({ rid: room._id, username: user.username, text });
+		this.startTyping(sneakPeekEnabled ? { rid: room._id, username: user.username, text } : { rid: room._id, username: user.username });
 	}
 
 	resetLastAction = () => {
@@ -149,6 +154,7 @@ export class ChatContainer extends Component {
 
 		try {
 			this.stopTypingDebounced.stop();
+			this.handleSneakPeakDebounced.stop();
 			this.resetLastAction();
 			await Promise.all([
 				this.stopTyping({ rid, username: user.username }),

@@ -146,6 +146,12 @@ Livechat.onMessage(async (message) => {
 		handleIdleTimeout(message.customFields.idleTimeoutConfig);
 	}
 
+	if (message.customFields) {
+		if (message.customFields.sneakPeekEnabled !== undefined || message.customFields.sneakPeekEnabled !== null) {
+			store.setState({ sneakPeekEnabled: message.customFields.sneakPeekEnabled });
+		}
+	}
+
 	await processMessage(message);
 
 	if (canRenderMessage(message) !== true) {
