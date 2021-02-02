@@ -1,9 +1,9 @@
-@import '~styles/helpers';
+@import '../../../styles/helpers';
 
 $composer-action-margin: 0 6px;
 
 .composer__action {
-	flex: 0 0;
+	flex: 0 0 auto;
 
 	margin: $composer-action-margin;
 	padding: 0;

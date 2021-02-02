@@ -1,7 +1,7 @@
-import { Component, h } from 'preact';
+import { h, Component } from 'preact';
 
-import { createClassName, normalizeDOMRect } from '../helpers';
 import { PopoverTrigger } from '../Popover';
+import { createClassName, normalizeDOMRect } from '../helpers';
 import styles from './styles.scss';
 
 

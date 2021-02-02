@@ -1,6 +1,6 @@
-@import '~styles/colors';
-@import '~styles/helpers';
-@import '~styles/variables';
+@import '../../styles/colors';
+@import '../../styles/helpers';
+@import '../../styles/variables';
 
 .footer {
 	display: flex;
@@ -41,6 +41,19 @@
 
 		@include pressable-button(2px);
 	}
+
+	&__remainder {
+		min-width: 100px;
+		margin-left: 10px;
+
+		font-weight: bold;
+
+		&--highlight {
+			transition: color 0.2s;
+
+			color: $color-red;
+		}
+	}
 }
 
 .powered-by {
@@ -58,12 +71,21 @@
 		margin: 0 5px;
 
 		vertical-align: middle;
-		--text-color: #{$color-text-grey};
-		--rocket-color: #{$color-text-grey};
 
-		&:hover {
-			--text-color: #2f343d;
-			--rocket-color: #db2323;
+		:global(.text) {
+			fill: #{$color-text-grey};
+		}
+
+		&:hover :global(.text) {
+			fill: #2f343d;
+		}
+
+		:global(.rocket) {
+			fill: #{$color-text-grey};
+		}
+
+		&:hover :global(.rocket) {
+			fill: #db2323;
 		}
 	}
 }

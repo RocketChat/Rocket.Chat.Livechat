@@ -1,5 +1,5 @@
-@import '~styles/colors';
-@import '~styles/variables';
+@import '../../styles/colors';
+@import '../../styles/variables';
 
 $drop-overlay-animation-time: $default-time-animation;
 $drop-overlay-background-color: rgba($bg-color-white, 0.9);
@@ -11,13 +11,14 @@ $drop-overlay-text-font-size: 1.375rem;
 .drop {
 	position: relative;
 
+	overflow: hidden;
+
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
 
 	&.drop--overlayed.drop--dragover {
 		&::before {
-
 			position: absolute;
 			z-index: 10;
 			top: 0;
@@ -33,7 +34,6 @@ $drop-overlay-text-font-size: 1.375rem;
 		}
 
 		&::after {
-
 			position: absolute;
 			z-index: 10;
 			top: $drop-overlay-gap;

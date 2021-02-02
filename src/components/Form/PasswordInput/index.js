@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
 
@@ -15,7 +17,7 @@ export const PasswordInput = memo(({
 	style = {},
 }) => (
 	<input
-		type="password"
+		type='password'
 		name={name}
 		value={value}
 		placeholder={placeholder}

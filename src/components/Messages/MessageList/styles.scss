@@ -1,5 +1,5 @@
-@import '~styles/colors';
-@import '~styles/variables';
+@import '../../../styles/colors';
+@import '../../../styles/variables';
 
 .message-list {
 	display: flex;
@@ -29,5 +29,6 @@
 
 		margin: 0 16px;
 		padding: 0;
+		list-style: none;
 	}
 }

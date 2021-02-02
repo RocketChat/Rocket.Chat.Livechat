@@ -1,5 +1,5 @@
-@import '~styles/colors';
-@import '~styles/variables';
+@import '../../../styles/colors';
+@import '../../../styles/variables';
 
 $message-time-margin: 0 ($default-gap / 2);
 $message-time-font-size: 0.625rem;
@@ -7,6 +7,8 @@ $message-time-line-height: 1rem;
 $message-time-color: $color-text-grey;
 
 .message-time {
+	position: absolute;
+
 	margin: $message-time-margin;
 
 	user-select: none;
@@ -16,6 +18,22 @@ $message-time-color: $color-text-grey;
 
 	font-size: $message-time-font-size;
 	line-height: $message-time-line-height;
-	grid-area: time;
 	justify-self: end;
+
+	&-wrapper {
+		position: relative;
+
+		& > .message-time {
+			bottom: -16px;
+	
+			&--normal {
+				right: 0;
+			}
+		
+			&--inverted {
+				left: 0;
+			}
+		}
+
+	}
 }

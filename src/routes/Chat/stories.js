@@ -1,7 +1,9 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, number, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
+import soundSrc from '../../../.storybook/assets/beep.mp3';
 import { screenCentered, screenProps, avatarResolver } from '../../helpers.stories';
 import Chat from './component';
 
@@ -13,6 +15,8 @@ const agent = {
 	phone: '+55 99 99999 9999',
 	username: 'guilherme.gazzo',
 };
+
+const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
 const messages = [
 	{ _id: 1, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
@@ -31,14 +35,12 @@ const triggers = [
 	{ _id: 2, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
 ];
 
-const soundSrc = 'https://open.rocket.chat/sounds/beep.mp3';
-
 const normalizeMessages = (messages = []) => messages.map((message, i) => ({
 	...message,
 	ts: new Date(Date.now() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)).toISOString(),
 }));
 
-storiesOf('Routes|Chat', module)
+storiesOf('Routes/Chat', module)
 	.addDecorator(screenCentered)
 	.addDecorator(withKnobs)
 	.add('loading', () => (
@@ -57,6 +59,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	))
@@ -77,6 +80,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	))
@@ -97,6 +101,7 @@ storiesOf('Routes|Chat', module)
 			onBottom={action('bottom')}
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
+			limitTextLength={number('limitTextLength', 0)}
 			{...screenProps()}
 		/>
 	))

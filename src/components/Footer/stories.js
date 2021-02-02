@@ -1,13 +1,14 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
+import { Footer, FooterContent, FooterOptions, PoweredBy } from '.';
+import ChangeIcon from '../../icons/change.svg';
+import FinishIcon from '../../icons/finish.svg';
+import RemoveIcon from '../../icons/remove.svg';
 import { Composer } from '../Composer';
 import Menu from '../Menu';
 import { PopoverContainer } from '../Popover';
-import ChangeIcon from '../../icons/change.svg';
-import RemoveIcon from '../../icons/remove.svg';
-import FinishIcon from '../../icons/finish.svg';
-import { Footer, FooterContent, FooterOptions, PoweredBy } from '.';
 
 
 const bottomWithPopoverContainer = (storyFn) => (
@@ -19,7 +20,7 @@ const bottomWithPopoverContainer = (storyFn) => (
 	</div>
 );
 
-storiesOf('Components|Footer', module)
+storiesOf('Components/Footer', module)
 	.addDecorator(bottomWithPopoverContainer)
 	.add('simple', () => (
 		<Footer>
@@ -31,7 +32,7 @@ storiesOf('Components|Footer', module)
 	.add('with Composer and options', () => (
 		<Footer>
 			<FooterContent>
-				<Composer placeholder="Insert your text here" />
+				<Composer placeholder='Insert your text here' />
 			</FooterContent>
 			<FooterContent>
 				<FooterOptions>

@@ -1,11 +1,12 @@
-import { EventEmitter } from 'tiny-events';
+import mitt from 'mitt';
 
 
 const { localStorage, sessionStorage } = window;
 
-export default class Store extends EventEmitter {
+export default class Store {
 	constructor(initialState = {}, { localStorageKey = 'store', dontPersist = [] } = {}) {
-		super();
+		Object.assign(this, mitt());
+
 		this.localStorageKey = localStorageKey;
 		this.dontPersist = dontPersist;
 
@@ -34,6 +35,7 @@ export default class Store extends EventEmitter {
 
 			const storedState = JSON.parse(e.newValue);
 			this.setStoredState(storedState);
+			this.emit('storageSynced');
 		});
 
 		window.addEventListener('load', () => {
@@ -66,7 +68,7 @@ export default class Store extends EventEmitter {
 		const prevState = this._state;
 		this._state = { ...prevState, ...partialState };
 		this.persist();
-		this.emit('change', this._state, prevState, partialState);
+		this.emit('change', [this._state, prevState, partialState]);
 	}
 
 	setStoredState(storedState) {
@@ -77,6 +79,6 @@ export default class Store extends EventEmitter {
 			nonPeristable[ignoredKey] = prevState[ignoredKey];
 		}
 		this._state = { ...storedState, ...nonPeristable };
-		this.emit('change', this._state, prevState);
+		this.emit('change', [this._state, prevState]);
 	}
 }

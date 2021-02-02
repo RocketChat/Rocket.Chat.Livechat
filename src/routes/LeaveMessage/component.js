@@ -1,10 +1,11 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import { Form, FormField, SelectInput, TextInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
+import I18n from '../../i18n';
 import styles from './styles.scss';
 
 
@@ -55,7 +56,7 @@ export default class LeaveMessage extends Component {
 
 	handleFieldChange = (name) => ({ target: { value } }) => {
 		const error = this.validate({ name, value });
-		this.setState({ [name]: { ...this.state[name], value, error, showError: false } });
+		this.setState({ [name]: { ...this.state[name], value, error, showError: false } }, () => { this.validateAll(); });
 	}
 
 	handleNameChange = this.handleFieldChange('name')
@@ -83,7 +84,10 @@ export default class LeaveMessage extends Component {
 
 	constructor(props) {
 		super(props);
-		this.setState(this.getDefaultState());
+		this.state = this.getDefaultState();
+	}
+
+	componentDidMount() {
 		this.validateAll();
 	}
 
@@ -97,7 +101,7 @@ export default class LeaveMessage extends Component {
 						error={name.showError && name.error}
 					>
 						<TextInput
-							name="name"
+							name='name'
 							value={name.value}
 							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
 							disabled={loading}
@@ -115,7 +119,7 @@ export default class LeaveMessage extends Component {
 						error={email.showError && email.error}
 					>
 						<TextInput
-							name="email"
+							name='email'
 							value={email.value}
 							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
 							disabled={loading}
@@ -132,7 +136,7 @@ export default class LeaveMessage extends Component {
 						error={department.showError && department.error}
 					>
 						<SelectInput
-							name="department"
+							name='department'
 							value={department.value}
 							options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
 							placeholder={I18n.t('Choose an option...')}
@@ -152,7 +156,7 @@ export default class LeaveMessage extends Component {
 						error={message.showError && message.error}
 					>
 						<TextInput
-							name="message"
+							name='message'
 							value={message.value}
 							multiline
 							rows={4}
