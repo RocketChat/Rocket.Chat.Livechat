@@ -46,7 +46,7 @@ export default class Store {
 			this.setState({ openSessionIds: [sessionId, ...openSessionIds] });
 		});
 
-		window.addEventListener('visibilitychange', () => {
+		document.addEventListener('visibilitychange', () => {
 			!this._state.minimized && this._state.visible && parentCall('openWidget');
 			this._state.iframe.visible ? parentCall('showWidget') : parentCall('hideWidget');
 		});
