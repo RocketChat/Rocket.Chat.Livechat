@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 
 import { Livechat } from '../api';
+import I18n from '../i18n';
 import store from '../store';
 
 export function flatMap(arr, mapFunc) {
