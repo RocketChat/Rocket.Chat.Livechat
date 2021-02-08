@@ -1,6 +1,6 @@
 import { Livechat } from '../api';
-import { store } from '../store';
 import { upsert, createToken } from '../components/helpers';
+import { store } from '../store';
 
 const addParentMessage = async (parentMessage) => {
 	const { state } = store;
@@ -56,7 +56,7 @@ const normalizeThreadMessage = async (message) => {
 export const normalizeMessage = async (message) => {
 	const isThreadMsg = await isThreadMessage(message);
 	if (isThreadMsg) {
-		return false;
+		return null;
 	}
 
 	if (message && message.tmid && !message.threadMsg) {
@@ -66,4 +66,4 @@ export const normalizeMessage = async (message) => {
 	return message;
 };
 
-export const normalizeMessages = (messages = []) => Promise.all(messages.filter((message) => normalizeMessage(message)));
+export const normalizeMessages = (messages = []) => Promise.all(messages.filter((message) => !!normalizeMessage(message)));

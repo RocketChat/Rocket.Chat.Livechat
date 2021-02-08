@@ -1,7 +1,7 @@
 import { Component } from 'preact';
 
 import { Livechat } from '../api';
-
+import store from '../store';
 
 export function flatMap(arr, mapFunc) {
 	const result = [];
@@ -90,7 +90,7 @@ export function getInsertIndex(array, item, ranking) {
 	return array.length > 0 ? array.length : 0;
 }
 
-export function upsert(array, item, predicate, ranking) {
+export function upsert(array = [], item, predicate, ranking) {
 	const index = array.findIndex(predicate);
 
 	if (index > -1) {
@@ -112,7 +112,7 @@ export const createToken = () => Math.random().toString(36).substring(2, 15) + M
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
-export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul'];
+export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul', 'livechat-close'];
 
 export const canRenderMessage = ({ t }) => !msgTypesNotRendered.includes(t);
 
@@ -148,6 +148,10 @@ export const normalizeTransferHistoryMessage = (transferData) => {
 	return transferTypes[scope]();
 };
 
+export const parseOfflineMessage = (fields = {}) => {
+	const host = window.location.origin;
+	return Object.assign(fields, { host });
+};
 export const normalizeDOMRect = ({ left, top, right, bottom }) => ({ left, top, right, bottom });
 
 
@@ -214,3 +218,10 @@ export const memo = (component) =>
 	class extends MemoizedComponent {
 		render = component
 	};
+
+export const isActiveSession = () => {
+	const sessionId = sessionStorage.getItem('sessionId');
+	const { openSessionIds: [firstSessionId] = [] } = store.state;
+
+	return sessionId === firstSessionId;
+};

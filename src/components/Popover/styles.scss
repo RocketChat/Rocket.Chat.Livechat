@@ -7,7 +7,7 @@
 	left: 0;
 
 	visibility: hidden;
-
+	
 	&--visible {
 		visibility: visible;
 	}
@@ -15,7 +15,8 @@
 
 .popover__container {
 	position: relative;
-
+	overflow: hidden;
+	
 	display: flex;
 	flex-direction: column;
 	flex: 1;

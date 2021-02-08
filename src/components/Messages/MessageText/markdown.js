@@ -2,6 +2,8 @@ import MarkdownIt from 'markdown-it';
 
 
 const md = new MarkdownIt({
+	html: true,
+	breaks: true,
 	linkify: true,
 	typographer: true,
 });
@@ -38,6 +40,44 @@ md.use((md) => {
 
 	md.renderer.rules.em_open = renderStrong;
 	md.renderer.rules.em_close = renderStrong;
+});
+
+md.use((md) => {
+	md.inline.ruler.push('strikethrough', (state, silent) => {
+		const marker = state.src.charCodeAt(state.pos);
+
+		if (silent) {
+			return false;
+		}
+
+		if (marker !== 0x7E/* ~ */) {
+			return false;
+		}
+
+		const scanned = state.scanDelims(state.pos, true);
+
+		const ch = String.fromCharCode(marker);
+
+		const len = scanned.length;
+		for (let i = 0; i < len; i += 1) {
+			const token = state.push('text', '', 0);
+			token.content = ch;
+
+			state.delimiters.push({
+				marker,
+				length: 0,
+				jump: i,
+				token: state.tokens.length - 1,
+				end: -1,
+				open: scanned.can_open,
+				close: scanned.can_close,
+			});
+		}
+
+		state.pos += scanned.length;
+
+		return true;
+	});
 });
 
 export const renderMarkdown = (...args) => md.render(...args);

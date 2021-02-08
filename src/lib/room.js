@@ -1,19 +1,22 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { store } from '../store';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import { store } from '../store';
+import { normalizeAgent } from './api';
 import Commands from './commands';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
-import { handleTranscript } from './transcript';
 import { normalizeMessage, normalizeMessages } from './threads';
-import { normalizeAgent } from './api';
+import { handleTranscript } from './transcript';
 
 const commands = new Commands();
 
-export const closeChat = async () => {
-	await handleTranscript();
+export const closeChat = async ({ transcriptRequested } = {}) => {
+	if (!transcriptRequested) {
+		await handleTranscript();
+	}
+
 	await loadConfig();
 	parentCall('callback', 'chat-ended');
 	route('/chat-finished');
@@ -21,7 +24,7 @@ export const closeChat = async () => {
 
 const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
-		closeChat();
+		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	}
@@ -82,10 +85,29 @@ export const initRoom = async () => {
 	setCookies(rid, token);
 };
 
+const isAgentHidden = () => {
+	const { config: { settings: { agentHiddenInfo } = {} } = {} } = store.state;
+
+	return !!agentHiddenInfo;
+};
+
+const transformAgentInformationOnMessage = (message) => {
+	const { user } = store.state;
+	if (message.u && message.u._id !== user._id && isAgentHidden()) {
+		return { ...message, u: { _id: message.u._id } };
+	}
+
+	return message;
+};
+
 Livechat.onTyping((username, isTyping) => {
-	const { typing, user } = store.state;
+	const { typing, user, agent } = store.state;
 
 	if (user && user.username && user.username === username) {
+		return;
+	}
+
+	if (agent && agent.hiddenInfo) {
 		return;
 	}
 
@@ -109,6 +131,8 @@ Livechat.onMessage(async (message) => {
 		return;
 	}
 
+	message = transformAgentInformationOnMessage(message);
+
 	await store.setState({
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
@@ -127,18 +151,22 @@ Livechat.onMessage(async (message) => {
 	await doPlaySound(message);
 });
 
+export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
+
 export const loadMessages = async () => {
-	const { room: { _id: rid } = {} } = store.state;
+	const { messages: storedMessages, room: { _id: rid } = {} } = store.state;
+	const previousMessages = getGreetingMessages(storedMessages);
 
 	if (!rid) {
 		return;
 	}
 
 	await store.setState({ loading: true });
-	const messages = await Livechat.loadMessages(rid).then((data) => normalizeMessages(data));
+	const rawMessages = (await Livechat.loadMessages(rid)).concat(previousMessages);
+	const messages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
+
 	await initRoom();
-	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false });
-	await store.setState({ loading: false });
+	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
 
 	if (messages && messages.length) {
 		const lastMessage = messages[messages.length - 1];
@@ -154,21 +182,32 @@ export const loadMoreMessages = async () => {
 	}
 
 	await store.setState({ loading: true });
-	const moreMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 }).then((data) => normalizeMessages(data));
+
+	const rawMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
+	const moreMessages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
+
 	await store.setState({
 		messages: (moreMessages || []).reverse(),
 		noMoreMessages: messages.length + 10 > moreMessages.length,
+		loading: false,
 	});
-	await store.setState({ loading: false });
 };
 
 export const defaultRoomParams = () => {
 	const params = {};
 
-	const { triggerAgent: { agent } = {} } = store.state;
+	const { defaultAgent: agent = {} } = store.state;
 	if (agent && agent._id) {
 		Object.assign(params, { agentId: agent._id });
 	}
 
 	return params;
 };
+
+store.on('change', ([state, prevState]) => {
+	// Cross-tab communication
+	// Detects when a room is created and then route to the correct container
+	if (!prevState.room && state.room) {
+		route('/');
+	}
+});

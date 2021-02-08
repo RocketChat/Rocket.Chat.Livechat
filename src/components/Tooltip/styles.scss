@@ -1,8 +1,8 @@
-@import '~styles/colors';
-@import '~styles/variables';
+@import '../../styles/colors';
+@import '../../styles/variables';
 
 .tooltip {
-	--tail-size: 0.3125rem;
+	$tail-size: 0.3125rem;
 
 	position: relative;
 	z-index: 15;
@@ -47,14 +47,14 @@
 
 				content: "";
 
-				border: var(--tail-size) solid $bg-color-darker;
+				border: $tail-size solid $bg-color-darker;
 				@content;
 			}
 		}
 
 		&-left {
 			@include tail {
-				top: calc(50% - var(--tail-size));
+				top: calc(50% - #{$tail-size});
 				left: 100%;
 
 				border-top-color: transparent;
@@ -65,7 +65,7 @@
 
 		&-right {
 			@include tail {
-				top: calc(50% - var(--tail-size));
+				top: calc(50% - #{$tail-size});
 				right: 100%;
 
 				border-top-color: transparent;
@@ -77,7 +77,7 @@
 		&-top {
 			@include tail {
 				top: 100%;
-				left: calc(50% - var(--tail-size));
+				left: calc(50% - #{$tail-size});
 
 				border-right-color: transparent;
 				border-bottom-color: transparent;
@@ -110,7 +110,7 @@
 		&-bottom {
 			@include tail {
 				bottom: 100%;
-				left: calc(50% - var(--tail-size));
+				left: calc(50% - #{$tail-size});
 
 				border-top-color: transparent;
 				border-right-color: transparent;
@@ -146,35 +146,35 @@
 
 		margin: 0;
 
-		transform: translate(-50%, var(--tail-size));
+		transform: translate(-50%, #{$tail-size});
 
 		&.tooltip--placement {
 			&-left {
-				transform: translate(calc(-100% - var(--tail-size)), -50%);
+				transform: translate(calc(-100% - #{$tail-size}), -50%);
 			}
 
 			&-right {
-				transform: translate(var(--tail-size), -50%);
+				transform: translate(#{$tail-size}, -50%);
 			}
 
 			&-top {
-				transform: translate(-50%, calc(-100% - var(--tail-size)));
+				transform: translate(-50%, calc(-100% - #{$tail-size}));
 			}
 
 			&-top-left {
-				transform: translate(calc(-100% + var(--tail-size)), calc(-100% - var(--tail-size)));
+				transform: translate(calc(-100% + #{$tail-size}), calc(-100% - #{$tail-size}));
 			}
 
 			&-top-right {
-				transform: translate(calc(0% - var(--tail-size)), calc(-100% - var(--tail-size)));
+				transform: translate(calc(0% - #{$tail-size}), calc(-100% - #{$tail-size}));
 			}
 
 			&-bottom-left {
-				transform: translate(calc(-100% + var(--tail-size)), var(--tail-size));
+				transform: translate(calc(-100% + #{$tail-size}), #{$tail-size});
 			}
 
 			&-bottom-right {
-				transform: translate(calc(0% - var(--tail-size)), var(--tail-size));
+				transform: translate(calc(0% - #{$tail-size}), #{$tail-size});
 			}
 		}
 	}

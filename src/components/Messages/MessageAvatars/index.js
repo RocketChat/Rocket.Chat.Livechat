@@ -1,7 +1,8 @@
+import { h } from 'preact';
+
 import { Avatar } from '../../Avatar';
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
-
 
 export const MessageAvatars = memo(({
 	avatarResolver = () => null,

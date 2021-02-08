@@ -1,25 +1,26 @@
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-import Bell from '../../icons/bell.svg';
-import Arrow from '../../icons/arrowDown.svg';
-import NewWindow from '../../icons/newWindow.svg';
 import Header, { Picture, Content, SubTitle, Title, Actions, Action, Post, CustomField } from '.';
+import { avatarResolver } from '../../helpers.stories';
+import Arrow from '../../icons/arrowDown.svg';
+import Bell from '../../icons/bell.svg';
+import NewWindow from '../../icons/newWindow.svg';
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
-import { avatarResolver } from '../../helpers.stories';
 
 
 const avatarSrc = avatarResolver('guilherme.gazzo');
 
-storiesOf('Components|Header', module)
+storiesOf('Components/Header', module)
 	.addDecorator(withKnobs)
 	.add('with text content', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -31,8 +32,8 @@ storiesOf('Components|Header', module)
 	.add('with long text content', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -44,8 +45,8 @@ storiesOf('Components|Header', module)
 	.add('with title and subtitle', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -58,13 +59,13 @@ storiesOf('Components|Header', module)
 	.add('with picture', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
 			<Picture>
-				<Bell width={20} />
+				<Bell width={20} height={20} />
 			</Picture>
 
 			<Content>
@@ -75,8 +76,8 @@ storiesOf('Components|Header', module)
 	.add('with actions', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			onClick={action('clicked')}
 		>
@@ -86,10 +87,10 @@ storiesOf('Components|Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -97,8 +98,8 @@ storiesOf('Components|Header', module)
 	.add('with multiple alerts', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			post={
 				<Post>
@@ -136,10 +137,10 @@ storiesOf('Components|Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -147,8 +148,8 @@ storiesOf('Components|Header', module)
 	.add('for user chat', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 		>
 			<Picture>
@@ -164,13 +165,13 @@ storiesOf('Components|Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 				<Action onClick={action('fullscreen')}>
-					<NewWindow width={20} />
+					<NewWindow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -178,8 +179,8 @@ storiesOf('Components|Header', module)
 	.add('with custom field', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			large
 		>
@@ -199,13 +200,13 @@ storiesOf('Components|Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 				<Action onClick={action('fullscreen')}>
-					<NewWindow width={20} />
+					<NewWindow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -213,8 +214,8 @@ storiesOf('Components|Header', module)
 	.add('with custom field and alert', () => (
 		<Header
 			theme={{
-				color: color('theme.color', ''),
-				fontColor: color('theme.fontColor', ''),
+				color: color('theme/color', ''),
+				fontColor: color('theme/fontColor', ''),
 			}}
 			post={
 				<Post>
@@ -250,13 +251,13 @@ storiesOf('Components|Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 				<Action onClick={action('fullscreen')}>
-					<NewWindow width={20} />
+					<NewWindow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>
@@ -264,8 +265,8 @@ storiesOf('Components|Header', module)
 	.add('with theme', () => (
 		<Header
 			theme={{
-				color: color('theme.color', 'darkred'),
-				fontColor: color('theme.fontColor', 'peachpuff'),
+				color: color('theme/color', 'darkred'),
+				fontColor: color('theme/fontColor', 'peachpuff'),
 			}}
 			large
 		>
@@ -285,13 +286,13 @@ storiesOf('Components|Header', module)
 
 			<Actions>
 				<Action onClick={action('notifications')}>
-					<Bell width={20} />
+					<Bell width={20} height={20} />
 				</Action>
 				<Action onClick={action('minimize')}>
-					<Arrow width={20} />
+					<Arrow width={20} height={20} />
 				</Action>
 				<Action onClick={action('fullscreen')}>
-					<NewWindow width={20} />
+					<NewWindow width={20} height={20} />
 				</Action>
 			</Actions>
 		</Header>

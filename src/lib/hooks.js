@@ -1,17 +1,17 @@
-import Triggers from './triggers';
-import CustomFields from './customFields';
-import { store } from '../store';
-import { setWidgetLanguage } from './locale';
 import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
+import { store } from '../store';
+import CustomFields from './customFields';
+import { setWidgetLanguage } from './locale';
 import { loadConfig } from './main';
 import { parentCall } from './parentCall';
+import Triggers from './triggers';
 
 const createOrUpdateGuest = async (guest) => {
 	const { token } = guest;
 	token && await store.setState({ token });
-	await Livechat.grantVisitor({ visitor: { ...guest } });
-	await loadConfig();
+	const user = await Livechat.grantVisitor({ visitor: { ...guest } });
+	store.setState({ user });
 };
 
 const updateIframeGuestData = (data) => {
@@ -42,7 +42,7 @@ const api = {
 		CustomFields.setCustomField(key, value, overwrite);
 	},
 
-	setTheme({ color, fontColor, iconColor } = {}) {
+	setTheme({ color, fontColor, iconColor, title, offlineTitle } = {}) {
 		const { iframe, iframe: { theme } } = store.state;
 		store.setState({
 			iframe: {
@@ -52,6 +52,8 @@ const api = {
 					color,
 					fontColor,
 					iconColor,
+					title,
+					offlineTitle,
 				},
 			},
 		});
@@ -68,6 +70,21 @@ const api = {
 
 	clearDepartment() {
 		updateIframeGuestData({ department: '' });
+	},
+
+	setAgent({ _id, username, ...props } = {}) {
+		if (!_id || !username) {
+			return console.warn('The fields _id and username are mandatory.');
+		}
+
+		store.setState({
+			defaultAgent: {
+				_id,
+				username,
+				ts: Date.now(),
+				...props,
+			},
+		});
 	},
 
 	setExpanded(expanded) {

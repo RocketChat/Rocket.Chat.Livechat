@@ -1,12 +1,13 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import { h } from 'preact';
 
-import SmileIcon from '../../icons/smile.svg';
+import { Composer, ComposerActions, ComposerAction } from '.';
+import { centered } from '../../helpers.stories';
 import PlusIcon from '../../icons/plus.svg';
 import SendIcon from '../../icons/send.svg';
-import { Composer, ComposerActions, ComposerAction } from '.';
+import SmileIcon from '../../icons/smile.svg';
 
 
 const centeredWithWidth = (storyFn, ...args) => centered(() => (
@@ -17,7 +18,7 @@ const centeredWithWidth = (storyFn, ...args) => centered(() => (
 
 const defaultPlaceholder = 'Insert your text here';
 
-storiesOf('Components|Composer', module)
+storiesOf('Components/Composer', module)
 	.addDecorator(centeredWithWidth)
 	.addDecorator(withKnobs({ escapeHTML: false }))
 	.add('default', () => (
@@ -74,18 +75,18 @@ storiesOf('Components|Composer', module)
 			placeholder={text('placeholder', defaultPlaceholder)}
 			pre={
 				<ComposerActions>
-					<ComposerAction text="Add emoji" onClick={action('click smile')}>
-						<SmileIcon width="20" />
+					<ComposerAction text='Add emoji' onClick={action('click smile')}>
+						<SmileIcon width='20' />
 					</ComposerAction>
-					<ComposerAction text="Send" onClick={action('click send')}>
-						<SendIcon color="#1D74F5" width="20" />
+					<ComposerAction text='Send' onClick={action('click send')}>
+						<SendIcon color='#1D74F5' width='20' />
 					</ComposerAction>
 				</ComposerActions>
 			}
 			post={
 				<ComposerActions>
-					<ComposerAction text="Add attachment" onClick={action('click plus')}>
-						<PlusIcon width="20" />
+					<ComposerAction text='Add attachment' onClick={action('click plus')}>
+						<PlusIcon width='20' />
 					</ComposerAction>
 				</ComposerActions>
 			}
