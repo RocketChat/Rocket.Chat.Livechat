@@ -123,7 +123,7 @@ class Triggers {
 						parentCall('callback', ['assign-agent', normalizeAgent(agent)]);
 					}
 
-					route('/');
+					route('/trigger-messages');
 					parentCall('openWidget');
 					store.setState({ minimized: false });
 				});

@@ -217,12 +217,13 @@ export const Screen = ({
 	onSoundStop,
 	queueInfo,
 	dismissNotification,
+	showHeader = true,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<CssVar theme={theme} />
 		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
 			<PopoverContainer>
-				<ScreenHeader
+				{showHeader && <ScreenHeader
 					alerts={alerts}
 					agent={agent}
 					title={title}
@@ -237,7 +238,7 @@ export const Screen = ({
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
-				/>
+				/>}
 
 				{modal}
 				{children}
