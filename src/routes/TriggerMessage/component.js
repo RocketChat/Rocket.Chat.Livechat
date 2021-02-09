@@ -18,8 +18,7 @@ export default class TriggerMessage extends Component {
 				color={color}
 				title={title || defaultTitle}
 				{...props}
-				showHeader={false}
-				showTopCloseButton={true}
+				isTriggerMessages={true}
 			>
 				<Screen.Content showHeader={false}>
 					{messages && messages.map((message) => <p className={createClassName(styles, 'trigger-message__message')}>{message?.msg}</p>)}

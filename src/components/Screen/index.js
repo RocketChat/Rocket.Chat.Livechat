@@ -217,15 +217,14 @@ export const Screen = ({
 	onSoundStop,
 	queueInfo,
 	dismissNotification,
-	showHeader = true,
-	showTopCloseButton = false,
+	isTriggerMessages = false,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<CssVar theme={theme} />
-		{showTopCloseButton && <p>Close Btn</p>}
-		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
+		{isTriggerMessages && <p>Close Btn</p>}
+		<div className={createClassName(styles, 'screen__inner', { fitTextSize: isTriggerMessages }, [className])}>
 			<PopoverContainer>
-				{showHeader && <ScreenHeader
+				{!isTriggerMessages && <ScreenHeader
 					alerts={alerts}
 					agent={agent}
 					title={title}

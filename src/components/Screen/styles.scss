@@ -59,6 +59,13 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 	border-radius: 4px;
 	background-color: $bg-color-white;
 	align-items: stretch;
+	
+	&--fitTextSize {
+		flex: none;
+		.screen__main {
+			flex: none;
+		}
+	}
 }
 
 .screen__main {
