@@ -218,9 +218,11 @@ export const Screen = ({
 	queueInfo,
 	dismissNotification,
 	showHeader = true,
+	showTopCloseButton = false,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
 		<CssVar theme={theme} />
+		{showTopCloseButton && <p>Close Btn</p>}
 		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
 			<PopoverContainer>
 				{showHeader && <ScreenHeader

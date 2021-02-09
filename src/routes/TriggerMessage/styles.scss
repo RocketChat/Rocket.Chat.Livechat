@@ -1,0 +1,30 @@
+@import '../../styles/colors';
+
+
+.trigger-message {
+	&__message {
+		margin: 0.5rem 0 0.5rem;
+		letter-spacing: 0;
+
+		font-size: 0.75rem;
+		line-height: 1.5rem;
+	}
+
+	&__footer {
+		text-align: center;
+	}
+
+	&__separator {
+		background: #F2F3F5;
+		height: 0.125rem;
+		width: 90%;
+		border: 0;
+	}
+
+	&__link-reply {
+		color: $color-blue;
+		text-decoration: none;
+		font-weight: bold;
+		font-size: 0.75rem;
+	}
+}
