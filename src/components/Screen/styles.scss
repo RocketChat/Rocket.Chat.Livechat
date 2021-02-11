@@ -49,12 +49,25 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 
 		.screen__inner {
 			margin: 0;
-
 			border-radius: 0;
 		}
 
 		.screen__chat-button {
 			display: none;
+		}
+	}
+
+	&--isTriggerMessages {
+		padding: 16px;
+		border-radius: 4px;
+
+		.screen__inner {
+			margin-bottom: 16px;
+			border-radius: 4px;
+		}
+
+		.screen__chat-button {
+			display: block;
 		}
 	}
 }

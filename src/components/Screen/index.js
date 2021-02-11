@@ -227,7 +227,7 @@ export const Screen = ({
 	dismissNotification,
 	isTriggerMessages = false,
 }) => (
-	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
+	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, isTriggerMessages })}>
 		<CssVar theme={theme} />
 		{isTriggerMessages && <Button onClick={onMinimize} className={createClassName(styles, 'screen__chat-close-button')} icon={<CloseIcon />}>Close</Button>}
 		<div className={createClassName(styles, 'screen__inner', { fitTextSize: isTriggerMessages }, [className])}>

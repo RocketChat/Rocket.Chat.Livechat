@@ -73,7 +73,7 @@ const updateWidgetStyle = (isOpened) => {
 	if (smallScreen && isOpened) {
 		scrollPosition = document.documentElement.scrollTop;
 		bodyStyle = document.body.style.cssText;
-		document.body.style.cssText += `overflow: hidden; height: 100%; width: 100%; position: fixed; top: ${ scrollPosition }px;`;
+		document.body.style.cssText += `overflow: hidden; position: absolute; top: ${ scrollPosition }px;`;
 	} else {
 		document.body.style.cssText = bodyStyle;
 		if (smallScreen) {

@@ -6,14 +6,12 @@ import I18n from '../../i18n';
 import styles from './styles.scss';
 
 
-const defaultTitle = I18n.t('Leave a message');
+const defaultTitle = I18n.t('Messages');
 
 export default class TriggerMessage extends Component {
 	state = { }
 
 	render({ title, messages, loading, onStartChat = () => {}, departments, ...props }) {
-		console.log(props);
-		console.log(messages);
 		const { theme: { color } } = props;
 		return (
 			<Screen
@@ -26,7 +24,7 @@ export default class TriggerMessage extends Component {
 				</Screen.Content>
 				<footer className={createClassName(styles, 'trigger-message__footer')}>
 					<hr className={createClassName(styles, 'trigger-message__separator')} />
-					<button style={color && { color }} onClick={onStartChat} className={createClassName(styles, 'trigger-message__link-reply')}>{I18n.t('Start a chat')}</button>
+					<button style={color && { color }} onClick={onStartChat} className={createClassName(styles, 'trigger-message__link-reply')}>{I18n.t('Start chat')}</button>
 				</footer>
 			</Screen>
 		);
