@@ -22,10 +22,21 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 
 	.screen__chat-button {
 		box-shadow: $screen-box-shadow;
+		background-size: cover !important;
+	}
+
+	.screen__chat-close-button {
+		background: #1F2329 40%;
+		border: 0;
+		border-radius: 2em;
+		height: 32px;
+		width: 32px;
+		padding: 2px;
+		margin-bottom: 1rem;
 	}
 
 	&--minimized {
-		.screen__inner {
+		.screen__inner, .screen__chat-close-button {
 			display: none;
 		}
 	}

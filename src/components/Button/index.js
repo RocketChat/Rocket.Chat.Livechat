@@ -22,6 +22,7 @@ export const Button = memo(({
 	className,
 	style = {},
 	children,
+	emptyButton = false,
 }) => (
 	<button
 		type={submit ? 'submit' : 'button'}
@@ -43,6 +44,6 @@ export const Button = memo(({
 		style={style}
 	>
 		{badge ? (<span className={createClassName(styles, 'button__badge')}>{badge}</span>) : null}
-		{icon || children}
+		{!emptyButton && (icon || children)}
 	</button>
 ));

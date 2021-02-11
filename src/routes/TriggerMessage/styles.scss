@@ -19,6 +19,7 @@
 		height: 0.125rem;
 		width: 90%;
 		border: 0;
+		margin-bottom: 0;
 	}
 
 	&__link-reply {
@@ -26,7 +27,10 @@
 		text-decoration: none;
 		font-weight: bold;
 		font-size: 0.75rem;
-		display: block;
-		margin: 1.1rem 0 1.1rem 0;
+		margin: 1rem 0 1rem 0;
+		padding: 0;
+		background: none;
+		border: 0;
+		cursor: pointer;
 	}
 }

@@ -1,29 +1,62 @@
 import { h, Component } from 'preact';
-// import { route } from 'preact-router';
+import { route } from 'preact-router';
 
-import { canRenderMessage } from '../../components/helpers';
+import { canRenderMessage, getAvatarUrl } from '../../components/helpers';
 import { Consumer } from '../../store';
 import TriggerMessage from './component';
 
 
 export class TriggerMessageContainer extends Component {
-	handleClick() {
-		console.log('click');
+	handleStart() {
+		route('/');
 	}
 
-	render = (props) => (
-		<TriggerMessage {...props} />
-	)
+	render = (props) => {
+		console.log(props);
+		return <TriggerMessage onStartChat={this.handleStart} {...props} />;
+	}
 }
 
 export const TriggerMessageConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
+			config: {
+				theme: {
+					color,
+				} = {},
+			} = {},
+			iframe: {
+				theme: {
+					color: customColor,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				} = {},
+			} = {},
 			messages,
+			agent,
+			unread,
 		}) => (
 			<TriggerMessageContainer
 				ref={ref}
 				{...props}
+				theme={{
+					color: customColor || color,
+					fontColor: customFontColor,
+					iconColor: customIconColor,
+				}}
+				unread={unread}
+				agent={agent ? {
+					_id: agent._id,
+					name: agent.name,
+					status: agent.status,
+					email: agent.emails && agent.emails[0] && agent.emails[0].address,
+					username: agent.username,
+					phone: (agent.phone && agent.phone[0] && agent.phone[0].phoneNumber) || (agent.customFields && agent.customFields.phone),
+					avatar: agent.username ? {
+						description: agent.username,
+						src: getAvatarUrl(agent.username),
+					} : undefined,
+				} : undefined}
 				messages={messages && messages.filter((message) => canRenderMessage(message))}
 			/>
 		)}

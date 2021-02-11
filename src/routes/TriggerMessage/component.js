@@ -11,21 +11,22 @@ const defaultTitle = I18n.t('Leave a message');
 export default class TriggerMessage extends Component {
 	state = { }
 
-	render({ title, color, messages, loading, departments, ...props }) {
+	render({ title, messages, loading, onStartChat = () => {}, departments, ...props }) {
+		console.log(props);
 		console.log(messages);
+		const { theme: { color } } = props;
 		return (
 			<Screen
-				color={color}
 				title={title || defaultTitle}
 				{...props}
 				isTriggerMessages={true}
 			>
 				<Screen.Content showHeader={false}>
-					{messages && messages.map((message) => <p className={createClassName(styles, 'trigger-message__message')}>{message?.msg}</p>)}
+					{messages && messages.map((message) => <p className={createClassName(styles, 'trigger-message__message')}>{message.msg}</p>)}
 				</Screen.Content>
 				<footer className={createClassName(styles, 'trigger-message__footer')}>
 					<hr className={createClassName(styles, 'trigger-message__separator')} />
-					<a className={createClassName(styles, 'trigger-message__link-reply')} href='#'>{I18n.t('Start a chat')}</a>
+					<button style={color && { color }} onClick={onStartChat} className={createClassName(styles, 'trigger-message__link-reply')}>{I18n.t('Start a chat')}</button>
 				</footer>
 			</Screen>
 		);
