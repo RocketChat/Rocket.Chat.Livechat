@@ -17,8 +17,7 @@ import TriggerMessage from './component';
 const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
 const messages = [
-	{ _id: 1, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Hi there! 👋 Let us know if you have any questions.' },
-	{ _id: 2, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Rocket.Chat allows you to chat and create better relationships with your customers on their favorite channels.' },
+	{ _id: 1, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Hi there!' },
 ].map((message, i) => ({
 	...message,
 	ts: new Date(now.getTime() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)).toISOString(),
