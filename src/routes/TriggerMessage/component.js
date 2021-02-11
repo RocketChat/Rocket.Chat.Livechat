@@ -17,7 +17,7 @@ export default class TriggerMessage extends Component {
 			<Screen
 				title={title || defaultTitle}
 				{...props}
-				isTriggerMessages={true}
+				triggered={true}
 			>
 				<Screen.Content showHeader={false}>
 					{messages && messages.map((message) => <p className={createClassName(styles, 'trigger-message__message')}>{message.msg}</p>)}
