@@ -2,17 +2,19 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { canRenderMessage, getAvatarUrl } from '../../components/helpers';
+import { parentCall } from '../../lib/parentCall';
 import { Consumer } from '../../store';
 import TriggerMessage from './component';
 
 
 export class TriggerMessageContainer extends Component {
 	handleStart() {
+		parentCall('setFullScreenDocumentMobile');
 		route('/');
 	}
 
 	render = (props) => {
-		console.log(props);
+		parentCall('resetDocumentStyle');
 		return <TriggerMessage onStartChat={this.handleStart} {...props} />;
 	}
 }

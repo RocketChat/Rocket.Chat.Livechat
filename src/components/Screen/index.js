@@ -159,7 +159,7 @@ const ChatButton = ({
 		badge={badge}
 		onClick={onClick}
 		className={createClassName(styles, 'screen__chat-button')}
-		img={agent && agent.avatar.src}
+		img={triggered && agent && agent.avatar.src}
 	>
 		{text}
 	</Button>

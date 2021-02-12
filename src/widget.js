@@ -11,6 +11,7 @@ const WIDGET_OPEN_HEIGHT = 525;
 const WIDGET_MINIMIZED_WIDTH = 54;
 const WIDGET_MINIMIZED_HEIGHT = 54;
 const WIDGET_MARGIN = 16;
+const FULLSCREEN_DOCUMENT_CONFIG = 'overflow: hidden; height: 100%; width: 100%;';
 
 
 window.RocketChat = window.RocketChat || { _: [] };
@@ -73,7 +74,7 @@ const updateWidgetStyle = (isOpened) => {
 	if (smallScreen && isOpened) {
 		scrollPosition = document.documentElement.scrollTop;
 		bodyStyle = document.body.style.cssText;
-		document.body.style.cssText += 'overflow: hidden; height: 100%; width: 100%;';
+		document.body.style.cssText += FULLSCREEN_DOCUMENT_CONFIG;
 	} else {
 		document.body.style.cssText = bodyStyle;
 		if (smallScreen) {
@@ -220,6 +221,14 @@ const api = {
 	hideWidget() {
 		iframe.style.display = 'none';
 		emitCallback('hide-widget');
+	},
+
+	resetDocumentStyle() {
+		document.body.style.cssText = bodyStyle;
+	},
+
+	setFullScreenDocumentMobile() {
+		document.body.style.cssText += smallScreen && FULLSCREEN_DOCUMENT_CONFIG;
 	},
 };
 
