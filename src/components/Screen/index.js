@@ -154,16 +154,12 @@ const ChatButton = ({
 	agent,
 }) => (
 	<Button
-		emptyButton={triggered && agent?.avatar}
+		emptyButton={triggered && agent && agent.avatar}
 		icon={minimized || triggered ? <ChatIcon /> : <CloseIcon />}
 		badge={badge}
 		onClick={onClick}
 		className={createClassName(styles, 'screen__chat-button')}
-		style={triggered && agent && agent?.avatar && {
-			backgroundImage: `url(${ agent.avatar.src })`,
-			border: 0,
-			boxShadow: '0px 0px 3px 0px #000',
-		}}
+		img={agent && agent.avatar.src}
 	>
 		{text}
 	</Button>
