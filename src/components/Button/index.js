@@ -42,7 +42,7 @@ export const Button = memo(({
 			loading,
 			icon: !!icon,
 		}, [className])}
-		style={Object.assign({}, style, img && { backgroundImage: `url(${ img })` })}
+		style={Object.assign({}, style, img && { backgroundImage: `url(${ img })`, border: 0 })}
 	>
 		{badge ? (<span className={createClassName(styles, 'button__badge')}>{badge}</span>) : null}
 		{!emptyButton && (icon || children)}

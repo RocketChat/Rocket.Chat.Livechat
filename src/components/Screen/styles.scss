@@ -29,8 +29,8 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 		background: #1F2329 40%;
 		border: 0;
 		border-radius: 2em;
-		height: 32px;
-		width: 32px;
+		height: 24px;
+		width: 24px;
 		padding: 2px;
 		margin-bottom: 1rem;
 	}
@@ -85,6 +85,7 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 	align-items: stretch;
 	
 	&--fitTextSize {
+		width: 85%;
 		flex: none;
 		.screen__main {
 			flex: none;
