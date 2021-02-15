@@ -110,7 +110,7 @@ export class App extends Component {
 		const dispatchEvent = () => {
 			dispatchRestore();
 			store.off('storageSynced', dispatchEvent);
-		}
+		};
 		if (undocked) {
 			store.on('storageSynced', dispatchEvent);
 		} else {
