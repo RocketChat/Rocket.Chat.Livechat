@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 
 import { Livechat } from '../api';
+import I18n from '../i18n';
 import store from '../store';
 
 export function flatMap(arr, mapFunc) {
@@ -121,11 +122,11 @@ export const createToken = () => Math.random().toString(36).substring(2, 15) + M
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
-export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'livechat-close'];
+export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul', 'livechat-close'];
 
 export const msgTextNotRendered = ['customer_idle_timeout'];
 
-export const canRenderMessage = (message = {}) => !msgTypesNotRendered.includes(message.t) && !msgTextNotRendered.includes(message.msg);
+export const canRenderMessage = ({ t, msg }) => !msgTypesNotRendered.includes(t) && !msgTextNotRendered.includes(msg);
 
 export const getAttachmentUrl = (url) => `${ Livechat.client.host }${ url }`;
 
@@ -135,6 +136,29 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	}
 	return 1;
 });
+
+export const normalizeTransferHistoryMessage = (transferData) => {
+	if (!transferData) {
+		return;
+	}
+
+	const { transferredBy, transferredTo, nextDepartment, scope } = transferData;
+	const from = transferredBy && (transferredBy.name || transferredBy.username);
+
+	const transferTypes = {
+		agent: () => {
+			const to = transferredTo && (transferredTo.name || transferredTo.username);
+			return I18n.t('%{from} transferred the chat to %{to}', { from, to });
+		},
+		department: () => {
+			const to = nextDepartment && nextDepartment.name;
+			return I18n.t('%{from} transferred the chat to the department %{to}', { from, to });
+		},
+		queue: () => I18n.t('%{from} returned the chat to the queue', { from }),
+	};
+
+	return transferTypes[scope]();
+};
 
 export const parseOfflineMessage = (fields = {}) => {
 	const host = window.location.origin;
