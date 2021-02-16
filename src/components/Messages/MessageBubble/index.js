@@ -11,9 +11,10 @@ export const MessageBubble = memo(({
 	className,
 	style = {},
 	children,
+	system = false,
 }) => (
 	<div
-		className={createClassName(styles, 'message-bubble', { inverse, nude, quoted }, [className])}
+		className={createClassName(styles, 'message-bubble', { inverse, nude, quoted, system }, [className])}
 		style={style}
 	>
 		<div className={createClassName(styles, 'message-bubble__inner')}>

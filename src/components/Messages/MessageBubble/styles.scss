@@ -67,4 +67,8 @@ $message-bubble-quoted-indicator-color: $color-green;
 			background-color: $message-bubble-quoted-indicator-color;
 		}
 	}
+	&--system {
+		background-color: transparent;
+		text-align: center;
+	}
 }

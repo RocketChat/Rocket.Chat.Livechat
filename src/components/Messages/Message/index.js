@@ -9,7 +9,6 @@ import { MessageAvatars } from '../MessageAvatars';
 import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
-import styles from '../MessageContainer/styles.scss';
 import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
@@ -67,7 +66,7 @@ const renderContent = ({
 			})),
 		),
 	text && (
-		<MessageBubble inverse={me} quoted={quoted}>
+		<MessageBubble inverse={me} quoted={quoted} system={system}>
 			<MessageText text={text} system={system} />
 		</MessageBubble>
 	),
@@ -122,10 +121,10 @@ export const Message = memo(({
 		className={className}
 		style={style}
 	>
-		<MessageAvatars
+		{!message.t && <MessageAvatars
 			avatarResolver={avatarResolver}
 			usernames={getMessageUsernames(compact, message)}
-		/>
+		/>}
 		<MessageContent reverse={me}>
 			{renderContent({
 				text: message.t ? getSystemMessageText(message) : message.msg,
@@ -138,6 +137,6 @@ export const Message = memo(({
 				attachmentResolver,
 			})}
 		</MessageContent>
-		{!compact && <MessageTime normal={!me} inverse={me} ts={ts} />}
+		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={ts} />}
 	</MessageContainer>
 ));
