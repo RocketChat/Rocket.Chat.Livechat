@@ -154,7 +154,6 @@ const ChatButton = ({
 	agent,
 }) => (
 	<Button
-		emptyButton={triggered && agent && agent.avatar}
 		icon={minimized || triggered ? <ChatIcon /> : <CloseIcon />}
 		badge={badge}
 		onClick={onClick}

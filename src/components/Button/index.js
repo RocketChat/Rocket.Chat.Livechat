@@ -22,7 +22,6 @@ export const Button = memo(({
 	className,
 	style = {},
 	children,
-	emptyButton = false,
 	img,
 }) => (
 	<button
@@ -41,10 +40,13 @@ export const Button = memo(({
 			small,
 			loading,
 			icon: !!icon,
+			img,
 		}, [className])}
-		style={Object.assign({}, style, img && { backgroundImage: `url(${ img })`, border: 0 })}
+		style={Object.assign({}, style, img && {
+			backgroundImage: `url(${ img })`,
+		})}
 	>
 		{badge ? (<span className={createClassName(styles, 'button__badge')}>{badge}</span>) : null}
-		{!emptyButton && (icon || children)}
+		{!img && (icon || children)}
 	</button>
 ));
