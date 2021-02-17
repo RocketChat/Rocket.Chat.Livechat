@@ -70,5 +70,10 @@ $message-bubble-quoted-indicator-color: $color-green;
 	&--system {
 		background-color: transparent;
 		text-align: center;
+		width: 200px;
+
+		.message-container {
+			justify-content: center;
+		}
 	}
 }

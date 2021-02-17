@@ -120,6 +120,7 @@ export const Message = memo(({
 		use={use}
 		className={className}
 		style={style}
+		system={!!message.t}
 	>
 		{!message.t && <MessageAvatars
 			avatarResolver={avatarResolver}

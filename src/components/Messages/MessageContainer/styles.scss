@@ -17,6 +17,10 @@ $message-container-compact-margin: 0 0 ($default-padding / 4) 0;
 		flex-direction: row-reverse;
 	}
 
+	&--system {
+		justify-content: center;
+	}
+
 	&-break {
 		display: flex;
 		flex-wrap: wrap;
