@@ -125,8 +125,8 @@ class ScreenHeader extends Component {
 }
 
 
-export const ScreenContent = ({ children, nopadding }) => (
-	<main className={createClassName(styles, 'screen__main', { nopadding })}>
+export const ScreenContent = ({ children, nopadding, triggered = false }) => (
+	<main className={createClassName(styles, 'screen__main', { nopadding, triggered })}>
 		{children}
 	</main>
 );
@@ -152,12 +152,15 @@ const ChatButton = ({
 	minimized,
 	badge,
 	onClick,
+	triggered = false,
+	agent,
 }) => (
 	<Button
-		icon={minimized ? <ChatIcon /> : <CloseIcon />}
+		icon={minimized || triggered ? <ChatIcon /> : <CloseIcon />}
 		badge={badge}
 		onClick={onClick}
 		className={createClassName(styles, 'screen__chat-button')}
+		img={triggered && agent && agent.avatar.src}
 	>
 		{text}
 	</Button>
@@ -219,12 +222,14 @@ export const Screen = ({
 	onSoundStop,
 	queueInfo,
 	dismissNotification,
+	triggered = false,
 }) => (
-	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
+	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, triggered })}>
 		<CssVar theme={theme} />
-		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
+		{triggered && <Button onClick={onMinimize} className={createClassName(styles, 'screen__chat-close-button')} icon={<CloseIcon />}>Close</Button>}
+		<div className={createClassName(styles, 'screen__inner', { fitTextSize: triggered }, [className])}>
 			<PopoverContainer>
-				<ScreenHeader
+				{!triggered && <ScreenHeader
 					alerts={alerts}
 					agent={agent}
 					title={title}
@@ -241,7 +246,7 @@ export const Screen = ({
 					queueInfo={queueInfo}
 					hideMinimizeChatButton={theme.hideMinimizeChatButton}
 					hideExpandChatButton={theme.hideExpandChatButton}
-				/>
+				/>}
 
 				{modal}
 				{children}
@@ -249,6 +254,8 @@ export const Screen = ({
 		</div>
 
 		{!theme.hideChatButton && <ChatButton
+			agent={agent}
+			triggered={triggered}
 			text={title}
 			badge={unread}
 			minimized={minimized}
