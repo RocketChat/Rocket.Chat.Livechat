@@ -1,9 +1,9 @@
 @import '../../styles/colors';
 
-
 .trigger-message {
 	&__message {
 		margin: 0.4rem 0;
+
 		letter-spacing: 0;
 
 		font-size: 0.75rem;
@@ -15,22 +15,26 @@
 	}
 
 	&__separator {
-		background: #F2F3F5;
-		height: 0.125rem;
 		width: 90%;
-		border: 0;
+		height: 0.125rem;
 		margin-bottom: 0;
+
+		border: 0;
+		background: #f2f3f5;
 	}
 
 	&__link-reply {
-		color: $color-blue;
-		text-decoration: none;
-		font-weight: bold;
-		font-size: 0.75rem;
-		margin: 1rem 0 1rem 0;
+		margin: 1rem 0;
 		padding: 0;
-		background: none;
-		border: 0;
+
 		cursor: pointer;
+		text-decoration: none;
+
+		color: $color-blue;
+		border: 0;
+		background: none;
+
+		font-size: 0.75rem;
+		font-weight: bold;
 	}
 }

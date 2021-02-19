@@ -22,22 +22,24 @@ $max-lines: 12;
 	}
 
 	.screen__chat-button {
-		box-shadow: $screen-box-shadow;
 		background-size: cover !important;
+		box-shadow: $screen-box-shadow;
 	}
 
 	.screen__chat-close-button {
-		background: rgba(31, 35, 41, 0.4);
+		width: 28px;
+		height: 28px;
+		margin-bottom: 1rem;
+		padding: 2px;
+
 		border: 0;
 		border-radius: 2em;
-		height: 28px;
-		width: 28px;
-		padding: 2px;
-		margin-bottom: 1rem;
+		background: rgba(31, 35, 41, 0.4);
 	}
 
 	&--minimized {
-		.screen__inner, .screen__chat-close-button {
+		.screen__inner,
+		.screen__chat-close-button {
 			display: none;
 		}
 	}
@@ -50,6 +52,7 @@ $max-lines: 12;
 
 		.screen__inner {
 			margin: 0;
+
 			border-radius: 0;
 		}
 
@@ -60,10 +63,12 @@ $max-lines: 12;
 
 	&--triggered {
 		padding: 16px;
+
 		border-radius: 4px;
 
 		.screen__inner {
 			margin-bottom: 16px;
+
 			border-radius: 4px;
 		}
 
@@ -84,10 +89,12 @@ $max-lines: 12;
 	border-radius: 4px;
 	background-color: $bg-color-white;
 	align-items: stretch;
-	
+
 	&--fitTextSize {
-		width: 85%;
 		flex: none;
+
+		width: 85%;
+
 		.screen__main {
 			flex: none;
 		}
@@ -110,11 +117,12 @@ $max-lines: 12;
 	}
 
 	&--triggered {
-		overflow: hidden;
-		text-overflow: ellipsis;
 		display: -webkit-box;
-		-webkit-line-clamp: $max-lines;
+		overflow: hidden;
+
+		text-overflow: ellipsis;
 		-webkit-box-orient: vertical;
+		-webkit-line-clamp: $max-lines;
 	}
 }
 
