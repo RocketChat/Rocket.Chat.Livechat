@@ -25,15 +25,14 @@ $message-time-color: $color-text-grey;
 
 		& > .message-time {
 			bottom: -16px;
-	
+
 			&--normal {
 				right: 0;
 			}
-		
+
 			&--inverted {
 				left: 0;
 			}
 		}
-
 	}
 }
