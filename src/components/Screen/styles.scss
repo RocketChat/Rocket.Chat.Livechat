@@ -2,6 +2,7 @@
 
 $screen-padding: 16px;
 $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
+$max-lines: 12;
 
 .screen {
 	display: flex;
@@ -106,6 +107,14 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 
 	&--nopadding {
 		padding: 0;
+	}
+
+	&--triggered {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: $max-lines;
+		-webkit-box-orient: vertical;
 	}
 }
 

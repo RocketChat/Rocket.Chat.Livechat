@@ -123,8 +123,8 @@ class ScreenHeader extends Component {
 }
 
 
-export const ScreenContent = ({ children, nopadding }) => (
-	<main className={createClassName(styles, 'screen__main', { nopadding })}>
+export const ScreenContent = ({ children, nopadding, triggered = false }) => (
+	<main className={createClassName(styles, 'screen__main', { nopadding, triggered })}>
 		{children}
 	</main>
 );
