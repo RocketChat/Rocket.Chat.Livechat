@@ -9,7 +9,6 @@ import { MessageAvatars } from '../MessageAvatars';
 import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
-import styles from '../MessageContainer/styles.scss';
 import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
@@ -22,6 +21,7 @@ import {
 	MESSAGE_TYPE_USER_LEFT,
 	MESSAGE_TYPE_WELCOME,
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
+	MESSAGE_TYPE_LIVECHAT_STARTED,
 	MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
 } from '../constants';
 
@@ -67,7 +67,7 @@ const renderContent = ({
 			})),
 		),
 	text && (
-		<MessageBubble inverse={me} quoted={quoted}>
+		<MessageBubble inverse={me} quoted={quoted} system={system}>
 			<MessageText text={text} system={system} />
 		</MessageBubble>
 	),
@@ -88,6 +88,7 @@ const getSystemMessageText = ({ t, conversationFinishedMessage, transferData }) 
 	|| (t === MESSAGE_TYPE_USER_LEFT && I18n.t('User left'))
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
+	|| (t === MESSAGE_TYPE_LIVECHAT_STARTED && I18n.t('Chat started'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData));
 
 const getMessageUsernames = (compact, message) => {
@@ -121,11 +122,12 @@ export const Message = memo(({
 		use={use}
 		className={className}
 		style={style}
+		system={!!message.t}
 	>
-		<MessageAvatars
+		{!message.t && <MessageAvatars
 			avatarResolver={avatarResolver}
 			usernames={getMessageUsernames(compact, message)}
-		/>
+		/>}
 		<MessageContent reverse={me}>
 			{renderContent({
 				text: message.t ? getSystemMessageText(message) : message.msg,
@@ -138,6 +140,6 @@ export const Message = memo(({
 				attachmentResolver,
 			})}
 		</MessageContent>
-		{!compact && <MessageTime normal={!me} inverse={me} ts={ts} />}
+		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={ts} />}
 	</MessageContainer>
 ));
