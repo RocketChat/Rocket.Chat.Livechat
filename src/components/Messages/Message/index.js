@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
 import I18n from '../../../i18n';
-import { getAttachmentUrl, memo, createClassName } from '../../helpers';
+import { getAttachmentUrl, memo } from '../../helpers';
 import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
@@ -9,7 +9,6 @@ import { MessageAvatars } from '../MessageAvatars';
 import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
-import styles from '../MessageContainer/styles.scss';
 import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';

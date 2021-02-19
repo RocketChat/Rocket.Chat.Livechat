@@ -16,8 +16,6 @@ const agent = {
 	username: 'guilherme.gazzo',
 };
 
-const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
-
 const messages = [
 	{ _id: 1, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Lorem ipsum dolor sit amet, ea usu quod eirmod lucilius, mea veri viris concludaturque id, vel eripuit fabulas ea' },
 	{ _id: 2, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Putent appareat te sea, dico recusabo pri te' },
