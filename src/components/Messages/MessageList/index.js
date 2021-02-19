@@ -129,7 +129,7 @@ export class MessageList extends MemoizedComponent {
 					attachmentResolver={attachmentResolver}
 					avatarResolver={avatarResolver}
 					use='li'
-					me={uid && message.u && uid === message.u._id}
+					me={!!message.token}
 					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id}
 					conversationFinishedMessage={conversationFinishedMessage}
 					{...message}
