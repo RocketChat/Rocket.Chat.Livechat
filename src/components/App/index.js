@@ -17,6 +17,7 @@ import GDPRAgreement from '../../routes/GDPRAgreement';
 import LeaveMessage from '../../routes/LeaveMessage';
 import Register from '../../routes/Register';
 import SwitchDepartment from '../../routes/SwitchDepartment';
+import TriggerMessage from '../../routes/TriggerMessage';
 import { Provider as StoreProvider, Consumer as StoreConsumer, store } from '../../store';
 import { visibility, isActiveSession } from '../helpers';
 
@@ -234,6 +235,7 @@ export class App extends Component {
 				<LeaveMessage path='/leave-message' {...screenProps} />
 				<Register path='/register' {...screenProps} />
 				<SwitchDepartment path='/switch-department' {...screenProps} />
+				<TriggerMessage path='/trigger-messages' {...screenProps} />
 			</Router>
 		);
 	}

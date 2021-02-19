@@ -2,6 +2,7 @@
 
 $screen-padding: 16px;
 $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
+$max-lines: 12;
 
 .screen {
 	display: flex;
@@ -22,10 +23,21 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 
 	.screen__chat-button {
 		box-shadow: $screen-box-shadow;
+		background-size: cover !important;
+	}
+
+	.screen__chat-close-button {
+		background: rgba(31, 35, 41, 0.4);
+		border: 0;
+		border-radius: 2em;
+		height: 28px;
+		width: 28px;
+		padding: 2px;
+		margin-bottom: 1rem;
 	}
 
 	&--minimized {
-		.screen__inner {
+		.screen__inner, .screen__chat-close-button {
 			display: none;
 		}
 	}
@@ -38,12 +50,25 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 
 		.screen__inner {
 			margin: 0;
-
 			border-radius: 0;
 		}
 
 		.screen__chat-button {
 			display: none;
+		}
+	}
+
+	&--triggered {
+		padding: 16px;
+		border-radius: 4px;
+
+		.screen__inner {
+			margin-bottom: 16px;
+			border-radius: 4px;
+		}
+
+		.screen__chat-button {
+			display: block;
 		}
 	}
 }
@@ -59,6 +84,14 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 	border-radius: 4px;
 	background-color: $bg-color-white;
 	align-items: stretch;
+	
+	&--fitTextSize {
+		width: 85%;
+		flex: none;
+		.screen__main {
+			flex: none;
+		}
+	}
 }
 
 .screen__main {
@@ -74,6 +107,14 @@ $screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 
 
 	&--nopadding {
 		padding: 0;
+	}
+
+	&--triggered {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: $max-lines;
+		-webkit-box-orient: vertical;
 	}
 }
 

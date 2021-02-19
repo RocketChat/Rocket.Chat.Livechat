@@ -22,6 +22,7 @@ export const Button = memo(({
 	className,
 	style = {},
 	children,
+	img,
 }) => (
 	<button
 		type={submit ? 'submit' : 'button'}
@@ -39,10 +40,13 @@ export const Button = memo(({
 			small,
 			loading,
 			icon: !!icon,
+			img,
 		}, [className])}
-		style={style}
+		style={Object.assign({}, style, img && {
+			backgroundImage: `url(${ img })`,
+		})}
 	>
 		{badge ? (<span className={createClassName(styles, 'button__badge')}>{badge}</span>) : null}
-		{icon || children}
+		{!img && (icon || children)}
 	</button>
 ));
