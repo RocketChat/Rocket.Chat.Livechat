@@ -30,9 +30,12 @@ $message-text-font-size: 0.875rem;
 	}
 
 	&--system {
-		color: $color-text-grey-system;
-		font-size: 0.75rem;
 		width: 200px;
+
+		color: $color-text-grey-system;
+
+		font-size: 0.75rem;
+
 		em {
 			font-style: normal;
 		}
