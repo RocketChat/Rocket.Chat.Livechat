@@ -1,6 +1,7 @@
 import { Picker } from 'emoji-mart';
 import { h, Component } from 'preact';
 
+import { Button } from '../../components/Button';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
@@ -114,6 +115,8 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
+		registrationRequired,
+		onRegisterUser,
 		limitTextLength,
 		...props
 	}, {
@@ -185,36 +188,39 @@ export default class Chat extends Component {
 							textLength={text.length}
 						/> : null}
 				>
-					<Composer onUpload={onUpload}
-						onSubmit={this.handleSubmit}
-						onChange={this.handleChangeText}
-						placeholder={I18n.t('Type your message here')}
-						value={text}
-						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
-						handleEmojiClick={this.handleEmojiClick}
-						pre={(
-							<ComposerActions>
-								<ComposerAction onClick={this.toggleEmojiPickerState}>
-									<EmojiIcon width={20} height={20} />
-								</ComposerAction>
-							</ComposerActions>
-						)}
-						post={(
-							<ComposerActions>
-								{text.length === 0 && uploads && (
-									<ComposerAction onClick={this.handleUploadClick}>
-										<PlusIcon width={20} height={20} />
+					{ registrationRequired
+						? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
+						: <Composer onUpload={onUpload}
+							onSubmit={this.handleSubmit}
+							onChange={this.handleChangeText}
+							placeholder={I18n.t('Type your message here')}
+							value={text}
+							notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
+							handleEmojiClick={this.handleEmojiClick}
+							pre={(
+								<ComposerActions>
+									<ComposerAction onClick={this.toggleEmojiPickerState}>
+										<EmojiIcon width={20} height={20} />
 									</ComposerAction>
-								)}
-								{text.length > 0 && (
-									<ComposerAction onClick={this.handleSendClick}>
-										<SendIcon width={20} height={20} />
-									</ComposerAction>
-								)}
-							</ComposerActions>
-						)}
-						limitTextLength={limitTextLength}
-					/>
+								</ComposerActions>
+							)}
+							post={(
+								<ComposerActions>
+									{text.length === 0 && uploads && (
+										<ComposerAction onClick={this.handleUploadClick}>
+											<PlusIcon width={20} height={20} />
+										</ComposerAction>
+									)}
+									{text.length > 0 && (
+										<ComposerAction onClick={this.handleSendClick}>
+											<SendIcon width={20} height={20} />
+										</ComposerAction>
+									)}
+								</ComposerActions>
+							)}
+							limitTextLength={limitTextLength}
+						/>
+					}
 				</Screen.Footer>
 			</FilesDropTarget>
 		</Screen>

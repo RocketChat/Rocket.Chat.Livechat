@@ -28,11 +28,17 @@ const messages = [
 	{ _id: 7, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Sea no congue scripta persecuti, sed amet fabulas voluptaria ex' },
 	{ _id: 8, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Invidunt repudiandae has eu' },
 	{ _id: 9, u: { _id: 1, username: 'tasso.evangelista' }, msg: 'Veri soluta suscipit mel no' },
-].map((message, i) => ({
+];
+
+const triggers = [
+	{ _id: 1, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Putent appareat te sea, dico recusabo pri te' },
+	{ _id: 2, u: { _id: 2, username: 'guilherme.gazzo' }, msg: 'Iudico utinam volutpat eos eu, sadipscing repudiandae pro te' },
+];
+
+const normalizeMessages = (messages = []) => messages.map((message, i) => ({
 	...message,
 	ts: new Date(now.getTime() - (15 - i) * 60000 - (i < 5 ? 24 * 60 * 60 * 1000 : 0)).toISOString(),
 }));
-
 
 storiesOf('Routes/Chat', module)
 	.addDecorator(screenCentered)
@@ -64,7 +70,7 @@ storiesOf('Routes/Chat', module)
 			avatarResolver={avatarResolver}
 			uid={number('uid', 1)}
 			agent={object('agent', agent)}
-			messages={object('messages', messages)}
+			messages={object('messages', normalizeMessages(messages))}
 			typingUsernames={object('typingUsernames', [])}
 			emoji={boolean('emoji', false)}
 			uploads={boolean('uploads', false)}
@@ -85,7 +91,7 @@ storiesOf('Routes/Chat', module)
 			avatarResolver={avatarResolver}
 			uid={number('uid', 1)}
 			agent={object('agent', agent)}
-			messages={object('messages', messages)}
+			messages={object('messages', normalizeMessages(messages))}
 			typingUsernames={object('typingUsernames', ['guilherme.gazzo'])}
 			emoji={boolean('emoji', false)}
 			uploads={boolean('uploads', false)}
@@ -96,6 +102,27 @@ storiesOf('Routes/Chat', module)
 			onUpload={action('upload')}
 			onSubmit={action('submit')}
 			limitTextLength={number('limitTextLength', 0)}
+			{...screenProps()}
+		/>
+	))
+	.add('with trigger messages', () => (
+		<Chat
+			title={text('title', '')}
+			sound={{ src: soundSrc, play: false }}
+			avatarResolver={avatarResolver}
+			uid={number('uid', 1)}
+			agent={object('agent', agent)}
+			messages={object('messages', normalizeMessages(triggers))}
+			typingUsernames={object('typingUsernames', [])}
+			emoji={boolean('emoji', false)}
+			uploads={boolean('uploads', false)}
+			loading={boolean('loading', false)}
+			lastReadMessageId={number('lastReadMessageId', 8)}
+			onTop={action('top')}
+			onBottom={action('bottom')}
+			onUpload={action('upload')}
+			onSubmit={action('submit')}
+			registrationRequired={boolean('registrationRequired', true)}
 			{...screenProps()}
 		/>
 	));

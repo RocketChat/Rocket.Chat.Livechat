@@ -112,6 +112,17 @@ $button-icon-padding: 10px;
 		}
 	}
 
+	&--img {
+		border: 0;
+		background-position: center;
+		background-size: cover;
+		box-shadow: 0 0 5px rgba(#000000, 0.5) !important;
+
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
 	&--stack {
 		width: 100%;
 	}
