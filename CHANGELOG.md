@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.8.0 - 2021-02-20
+
+[IMPROVE] Flow of the widget registration form (#425)
+[IMPROVE] System messages style (#554)
+[FEATURE] New trigger messages style (#553)
+[NEW] Display transfer history messages (#328)
+[FIX] Registration form is no longer validating mandatory custom fields. (#550)
+
 ## 1.7.6 - 2020-11-07
 [FIX] Livechat window cannot be restored in popout mode (#529)
 [FIX] Visitor's messages are not aligned properly on Mozilla Firefox (#530)
