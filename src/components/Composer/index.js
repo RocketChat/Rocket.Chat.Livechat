@@ -56,13 +56,17 @@ const replaceCaret = (el) => {
 	}
 };
 
+let inputLock = false;
+
 export class Composer extends Component {
 	handleRef = (el) => {
 		this.el = el;
 	}
 
 	handleInput = (onChange) => () => {
-		onChange && onChange(this.el.innerText);
+		if (!inputLock) {
+			onChange && onChange(this.el.innerText);
+		}
 	}
 
 	handleKeypress = (onSubmit) => (event) => {
@@ -246,6 +250,16 @@ export class Composer extends Component {
 						onClick: this.handleClick,
 					}
 				)}
+
+				oncompositionstart={(e)=>{
+					inputLock = true;
+				}}
+
+				oncompositionend={(e)=>{
+					inputLock = false;
+					onChange && onChange(this.el.innerText);
+				}}
+
 				className={createClassName(styles, 'composer__input')}
 			/>
 			{post}
