@@ -36,11 +36,6 @@ widget-demo.html
 
 *OBS: For to a better performance, you can run this `widget-demo.html` on a [http server](https://github.com/http-party/http-server).*
 
-You'll something like this:
-
-![screenshot](src/assets/screenshot.png "Widget")
-
-
 ## Different host
 
 To select a different host on your local widget, check this configuration at `/src/api.js` file.
