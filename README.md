@@ -34,7 +34,7 @@ yarn start
 widget-demo.html
 ```
 
-*OBS: For to a better performance, you can run this `widget-demo.html` on a [http server](https://github.com/http-party/http-server).*
+*OBS: For a better performance, you can run this `widget-demo.html` on a [http server](https://github.com/http-party/http-server).*
 
 ## Different host
 
