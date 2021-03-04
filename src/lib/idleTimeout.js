@@ -21,6 +21,10 @@ export const handleIdleTimeout = async (idleTimeoutConfig) => {
 	let timeoutTimer;
 	const { idleTimeout } = store.state;
 
+	if (idleTimeoutAction === 'stop' && !idleTimeout.idleTimeoutRunning) {
+		return;
+	}
+
 	const clearTimers = (warning = true, timeout = true) => {
 		if (warning && idleTimeout && idleTimeout.idleWarningTimer) {
 			clearTimeout(idleTimeout.idleWarningTimer);
