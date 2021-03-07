@@ -5,6 +5,7 @@ import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
+import { handleIdleTimeout } from './idleTimeout';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
@@ -25,6 +26,9 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 const processMessage = async (message) => {
 	if (message.t === 'livechat-close') {
 		closeChat(message);
+		handleIdleTimeout({
+			idleTimeoutAction: 'stop',
+		});
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	}
@@ -137,6 +141,17 @@ Livechat.onMessage(async (message) => {
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
 	});
 
+	// Viasat : Timeout Warnings
+	if (message.customFields && message.customFields.idleTimeoutConfig) {
+		handleIdleTimeout(message.customFields.idleTimeoutConfig);
+	}
+
+	if (message.customFields) {
+		if (message.customFields.sneakPeekEnabled !== undefined || message.customFields.sneakPeekEnabled !== null) {
+			store.setState({ sneakPeekEnabled: message.customFields.sneakPeekEnabled });
+		}
+	}
+
 	await processMessage(message);
 
 	if (canRenderMessage(message) !== true) {
@@ -163,7 +178,13 @@ export const loadMessages = async () => {
 
 	await store.setState({ loading: true });
 	const rawMessages = (await Livechat.loadMessages(rid)).concat(previousMessages);
-	const messages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
+	const messages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage).map((message) => {
+		const oldMessage = storedMessages.find((x) => x._id === message._id);
+		if (oldMessage && oldMessage.actionsVisible !== undefined) {
+			message.actionsVisible = oldMessage.actionsVisible;
+		}
+		return message;
+	});
 
 	await initRoom();
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
@@ -171,6 +192,22 @@ export const loadMessages = async () => {
 	if (messages && messages.length) {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+	}
+
+	const { idleTimeout } = store.state;
+
+	if (idleTimeout && idleTimeout.idleTimeoutRunning) {
+		const {
+			idleTimeoutMessage,
+			idleTimeoutWarningTime,
+			idleTimeoutTimeoutTime,
+		} = idleTimeout;
+		handleIdleTimeout({
+			idleTimeoutAction: 'start',
+			idleTimeoutMessage,
+			idleTimeoutWarningTime,
+			idleTimeoutTimeoutTime,
+		});
 	}
 };
 
@@ -184,7 +221,14 @@ export const loadMoreMessages = async () => {
 	await store.setState({ loading: true });
 
 	const rawMessages = await Livechat.loadMessages(rid, { limit: messages.length + 10 });
-	const moreMessages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
+	const moreMessages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage).map((message) => {
+		const { _id } = message;
+		const oldMessage = messages.find((x) => x._id === _id);
+		if (oldMessage && oldMessage.actionsVisible !== undefined) {
+			message.actionsVisible = oldMessage.actionsVisible;
+		}
+		return message;
+	});
 
 	await store.setState({
 		messages: (moreMessages || []).reverse(),
@@ -202,6 +246,23 @@ export const defaultRoomParams = () => {
 	}
 
 	return params;
+};
+
+export const assignRoom = async () => {
+	const { defaultAgent: agent = {}, room } = store.state;
+	const params = {};
+
+	if (room) {
+		return;
+	}
+
+	if (agent && agent._id) {
+		Object.assign(params, { agentId: agent._id });
+	}
+
+	const newRoom = await Livechat.room(params);
+	await store.setState({ room: newRoom });
+	await initRoom();
 };
 
 store.on('change', ([state, prevState]) => {

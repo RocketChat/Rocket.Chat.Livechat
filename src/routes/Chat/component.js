@@ -13,9 +13,10 @@ import I18n from '../../i18n';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
 import PlusIcon from '../../icons/plus.svg';
+import PrintIcon from '../../icons/print.svg';
 import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
-import EmojiIcon from '../../icons/smile.svg';
+// import EmojiIcon from '../../icons/smile.svg';
 import styles from './styles.scss';
 
 export default class Chat extends Component {
@@ -23,6 +24,16 @@ export default class Chat extends Component {
 		atBottom: true,
 		text: '',
 		emojiPickerActive: false,
+		disable: false,
+		disableText: 'Please Wait',
+	}
+
+	handleDisableComposer = (disableText) => {
+		this.setState({ disable: true, disableText });
+	}
+
+	handleEnableComposer = () => {
+		this.setState({ disable: false, disableText: 'Please Wait' });
 	}
 
 	handleFilesDropTargetRef = (ref) => {
@@ -51,11 +62,19 @@ export default class Chat extends Component {
 
 	handleUploadClick = (event) => {
 		event.preventDefault();
+		const { disable } = this.state;
+		if (disable) {
+			return;
+		}
 		this.filesDropTarget.browse();
 	}
 
 	handleSendClick = (event) => {
 		event.preventDefault();
+		const { disable } = this.state;
+		if (disable) {
+			return;
+		}
 		this.handleSubmit(this.state.text);
 	}
 
@@ -113,15 +132,19 @@ export default class Chat extends Component {
 		onChangeDepartment,
 		onFinishChat,
 		onRemoveUserData,
+		onPrintTranscript,
 		lastReadMessageId,
 		queueInfo,
 		registrationRequired,
 		onRegisterUser,
 		limitTextLength,
+		resetLastAction,
 		...props
 	}, {
 		atBottom = true,
 		text,
+		disable = false,
+		disableText,
 	}) => (
 		<Screen
 			color={color}
@@ -130,6 +153,7 @@ export default class Chat extends Component {
 			agent={agent || null}
 			queueInfo={queueInfo}
 			nopadding
+			options={options}
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
 			onRemoveUserData={onRemoveUserData}
@@ -144,7 +168,7 @@ export default class Chat extends Component {
 				onUpload={onUpload}
 			>
 				<Screen.Content nopadding>
-					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
+					<div id={'chat__messages'} className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
 							avatarResolver={avatarResolver}
@@ -154,7 +178,10 @@ export default class Chat extends Component {
 							conversationFinishedMessage={conversationFinishedMessage}
 							lastReadMessageId={lastReadMessageId}
 							onScrollTo={this.handleScrollTo}
+							resetLastAction={resetLastAction}
 							handleEmojiClick={this.handleEmojiClick}
+							onDisableComposer={this.handleDisableComposer}
+							onEnableComposer={this.handleEnableComposer}
 						/>
 						{this.state.emojiPickerActive && <Picker
 							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
@@ -170,6 +197,9 @@ export default class Chat extends Component {
 					options={options ? (
 						<FooterOptions>
 							<Menu.Group>
+								{onPrintTranscript && (
+									<Menu.Item onClick={onPrintTranscript} icon={PrintIcon}>{I18n.t('Print Chat')}</Menu.Item>
+								)}
 								{onChangeDepartment && (
 									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
 								)}
@@ -189,7 +219,10 @@ export default class Chat extends Component {
 						/> : null}
 				>
 					{ registrationRequired
-						? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
+						&& <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
+					}
+					{ !registrationRequired && disable
+						? <Button style={{ width: '100%' }}> {disableText} </Button>
 						: <Composer onUpload={onUpload}
 							onSubmit={this.handleSubmit}
 							onChange={this.handleChangeText}
@@ -197,13 +230,15 @@ export default class Chat extends Component {
 							value={text}
 							notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
 							handleEmojiClick={this.handleEmojiClick}
-							pre={(
-								<ComposerActions>
-									<ComposerAction onClick={this.toggleEmojiPickerState}>
-										<EmojiIcon width={20} height={20} />
-									</ComposerAction>
-								</ComposerActions>
-							)}
+							// Viasat : Hide Emoticon pallet
+							//
+							// pre={(
+							// 	<ComposerActions>
+							// 		<ComposerAction onClick={this.toggleEmojiPickerState}>
+							// 			<EmojiIcon width={20} height={20} />
+							// 		</ComposerAction>
+							// 	</ComposerActions>
+							// )}
 							post={(
 								<ComposerActions>
 									{text.length === 0 && uploads && (
@@ -219,8 +254,7 @@ export default class Chat extends Component {
 								</ComposerActions>
 							)}
 							limitTextLength={limitTextLength}
-						/>
-					}
+						/>}
 				</Screen.Footer>
 			</FilesDropTarget>
 		</Screen>

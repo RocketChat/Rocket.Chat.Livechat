@@ -3,12 +3,11 @@ import { useEffect } from 'preact/hooks';
 
 import I18n from '../../i18n';
 import MinimizeIcon from '../../icons/arrowDown.svg';
-import RestoreIcon from '../../icons/arrowUp.svg';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
 import NotificationsDisabledIcon from '../../icons/bellOff.svg';
 import ChatIcon from '../../icons/chat.svg';
 import CloseIcon from '../../icons/close.svg';
-import OpenWindowIcon from '../../icons/newWindow.svg';
+// import OpenWindowIcon from '../../icons/newWindow.svg';
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
@@ -43,15 +42,14 @@ class ScreenHeader extends Component {
 		alerts,
 		agent,
 		notificationsEnabled,
-		minimized,
-		expanded,
-		windowed,
+		// expanded,
+		// windowed,
 		onDismissAlert,
 		onEnableNotifications,
 		onDisableNotifications,
-		onMinimize,
-		onRestore,
-		onOpenWindow,
+		// onOpenWindow,
+		options,
+		onFinishChat,
 	}) => (
 		<Header
 			ref={this.handleRef}
@@ -96,23 +94,21 @@ class ScreenHeader extends Component {
 							}
 						</Header.Action>
 					</Tooltip.Trigger>
-					{(expanded || !windowed) && (
-						<Tooltip.Trigger content={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}>
-							<Header.Action
-								aria-label={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}
-								onClick={minimized ? onRestore : onMinimize}
-							>
-								{minimized
-									? <RestoreIcon width={20} height={20} />
-									: <MinimizeIcon width={20} height={20} />
-								}
-							</Header.Action>
-						</Tooltip.Trigger>
-					)}
-					{(!expanded && !windowed) && (
+					{/* Visasat : Hide Expand Button */}
+					{/* {(!expanded && !windowed) && (
 						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
 								<OpenWindowIcon width={20} height={20} />
+							</Header.Action>
+						</Tooltip.Trigger>
+					)} */}
+					{options && onFinishChat && (
+						<Tooltip.Trigger content={I18n.t('End chat')}>
+							<Header.Action
+								aria-label={I18n.t('End chat')}
+								onClick={onFinishChat}
+							>
+								<CloseIcon width={20} />
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
@@ -154,7 +150,7 @@ const ChatButton = ({
 	agent,
 }) => (
 	<Button
-		icon={minimized || triggered ? <ChatIcon /> : <CloseIcon />}
+		icon={minimized || triggered ? <ChatIcon /> : <MinimizeIcon />}
 		badge={badge}
 		onClick={onClick}
 		className={createClassName(styles, 'screen__chat-button')}
@@ -209,7 +205,7 @@ export const Screen = ({
 	className,
 	alerts,
 	modal,
-	unread,
+	// unread,
 	sound,
 	onDismissAlert,
 	onEnableNotifications,
@@ -221,6 +217,8 @@ export const Screen = ({
 	queueInfo,
 	dismissNotification,
 	triggered = false,
+	options,
+	onFinishChat,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, triggered })}>
 		<CssVar theme={theme} />
@@ -242,6 +240,8 @@ export const Screen = ({
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
+					options={options}
+					onFinishChat={onFinishChat}
 				/>}
 
 				{modal}
@@ -253,7 +253,7 @@ export const Screen = ({
 			agent={agent}
 			triggered={triggered}
 			text={title}
-			badge={unread}
+			badge={false}
 			minimized={minimized}
 			onClick={minimized ? onRestore : onMinimize}
 		/>
