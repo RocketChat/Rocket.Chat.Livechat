@@ -7,7 +7,7 @@ import NotificationsEnabledIcon from '../../icons/bell.svg';
 import NotificationsDisabledIcon from '../../icons/bellOff.svg';
 import ChatIcon from '../../icons/chat.svg';
 import CloseIcon from '../../icons/close.svg';
-import OpenWindowIcon from '../../icons/newWindow.svg';
+// import OpenWindowIcon from '../../icons/newWindow.svg';
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
@@ -42,12 +42,12 @@ class ScreenHeader extends Component {
 		alerts,
 		agent,
 		notificationsEnabled,
-		expanded,
-		windowed,
+		// expanded,
+		// windowed,
 		onDismissAlert,
 		onEnableNotifications,
 		onDisableNotifications,
-		onOpenWindow,
+		// onOpenWindow,
 		options,
 		onFinishChat,
 	}) => (
@@ -119,8 +119,8 @@ class ScreenHeader extends Component {
 }
 
 
-export const ScreenContent = ({ children, nopadding }) => (
-	<main className={createClassName(styles, 'screen__main', { nopadding })}>
+export const ScreenContent = ({ children, nopadding, triggered = false }) => (
+	<main className={createClassName(styles, 'screen__main', { nopadding, triggered })}>
 		{children}
 	</main>
 );
@@ -146,12 +146,15 @@ const ChatButton = ({
 	minimized,
 	badge,
 	onClick,
+	triggered = false,
+	agent,
 }) => (
 	<Button
-		icon={minimized ? <ChatIcon /> : <MinimizeIcon />}
+		icon={minimized || triggered ? <ChatIcon /> : <MinimizeIcon />}
 		badge={badge}
 		onClick={onClick}
 		className={createClassName(styles, 'screen__chat-button')}
+		img={triggered && agent && agent.avatar.src}
 	>
 		{text}
 	</Button>
@@ -202,7 +205,7 @@ export const Screen = ({
 	className,
 	alerts,
 	modal,
-	unread,
+	// unread,
 	sound,
 	onDismissAlert,
 	onEnableNotifications,
@@ -213,14 +216,16 @@ export const Screen = ({
 	onSoundStop,
 	queueInfo,
 	dismissNotification,
+	triggered = false,
 	options,
 	onFinishChat,
 }) => (
-	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
+	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, triggered })}>
 		<CssVar theme={theme} />
-		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
+		{triggered && <Button onClick={onMinimize} className={createClassName(styles, 'screen__chat-close-button')} icon={<CloseIcon />}>Close</Button>}
+		<div className={createClassName(styles, 'screen__inner', { fitTextSize: triggered }, [className])}>
 			<PopoverContainer>
-				<ScreenHeader
+				{!triggered && <ScreenHeader
 					alerts={alerts}
 					agent={agent}
 					title={title}
@@ -237,7 +242,7 @@ export const Screen = ({
 					queueInfo={queueInfo}
 					options={options}
 					onFinishChat={onFinishChat}
-				/>
+				/>}
 
 				{modal}
 				{children}
@@ -245,6 +250,8 @@ export const Screen = ({
 		</div>
 
 		<ChatButton
+			agent={agent}
+			triggered={triggered}
 			text={title}
 			badge={false}
 			minimized={minimized}

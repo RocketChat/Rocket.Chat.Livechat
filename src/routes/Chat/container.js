@@ -282,6 +282,29 @@ export class ChatContainer extends Component {
 		return allowRemoveUserData;
 	}
 
+	registrationRequired = () => {
+		const {
+			registrationFormEnabled,
+			nameFieldRegistrationForm,
+			emailFieldRegistrationForm,
+			departments = [],
+			user,
+		} = this.props;
+
+		if (user && user.token) {
+			return false;
+		}
+
+		if (!registrationFormEnabled) {
+			return false;
+		}
+
+		const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
+		return nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment;
+	}
+
+	onRegisterUser = () => route('/register');
+
 	canPrintTranscript = () => {
 		const { transcript } = this.props;
 		return transcript;
@@ -373,6 +396,8 @@ export class ChatContainer extends Component {
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
 			onPrintTranscript={(this.canPrintTranscript() && this.onPrintTranscript) || null}
 			onSoundStop={this.handleSoundStop}
+			registrationRequired={this.registrationRequired()}
+			onRegisterUser={this.onRegisterUser}
 			resetLastAction={this.resetLastAction}
 		/>
 	)
@@ -390,6 +415,9 @@ export const ChatConnector = ({ ref, ...props }) => (
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
+					registrationForm,
+					nameFieldRegistrationForm,
+					emailFieldRegistrationForm,
 					transcript,
 					limitTextLength,
 				} = {},
@@ -481,6 +509,9 @@ export const ChatConnector = ({ ref, ...props }) => (
 					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
+				registrationFormEnabled={registrationForm}
+				nameFieldRegistrationForm={nameFieldRegistrationForm}
+				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
 			/>
 		)}

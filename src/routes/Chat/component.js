@@ -135,6 +135,8 @@ export default class Chat extends Component {
 		onPrintTranscript,
 		lastReadMessageId,
 		queueInfo,
+		registrationRequired,
+		onRegisterUser,
 		limitTextLength,
 		resetLastAction,
 		...props
@@ -216,41 +218,43 @@ export default class Chat extends Component {
 							textLength={text.length}
 						/> : null}
 				>
-					{disable && <Button style={{ width: '100%' }}>
-						{disableText}
-					</Button>}
-					{!disable && <Composer onUpload={onUpload}
-						onSubmit={this.handleSubmit}
-						onChange={this.handleChangeText}
-						placeholder={I18n.t('Type your message here')}
-						value={text}
-						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
-						handleEmojiClick={this.handleEmojiClick}
-						// Viasat : Hide Emoticon pallet
-						//
-						// pre={(
-						// 	<ComposerActions>
-						// 		<ComposerAction onClick={this.toggleEmojiPickerState}>
-						// 			<EmojiIcon width={20} height={20} />
-						// 		</ComposerAction>
-						// 	</ComposerActions>
-						// )}
-						post={(
-							<ComposerActions>
-								{text.length === 0 && uploads && (
-									<ComposerAction onClick={this.handleUploadClick}>
-										<PlusIcon width={20} height={20} />
-									</ComposerAction>
-								)}
-								{text.length > 0 && (
-									<ComposerAction onClick={this.handleSendClick}>
-										<SendIcon width={20} height={20} />
-									</ComposerAction>
-								)}
-							</ComposerActions>
-						)}
-						limitTextLength={limitTextLength}
-					/>}
+					{ registrationRequired
+						&& <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
+					}
+					{ !registrationRequired && disable
+						? <Button style={{ width: '100%' }}> {disableText} </Button>
+						: <Composer onUpload={onUpload}
+							onSubmit={this.handleSubmit}
+							onChange={this.handleChangeText}
+							placeholder={I18n.t('Type your message here')}
+							value={text}
+							notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
+							handleEmojiClick={this.handleEmojiClick}
+							// Viasat : Hide Emoticon pallet
+							//
+							// pre={(
+							// 	<ComposerActions>
+							// 		<ComposerAction onClick={this.toggleEmojiPickerState}>
+							// 			<EmojiIcon width={20} height={20} />
+							// 		</ComposerAction>
+							// 	</ComposerActions>
+							// )}
+							post={(
+								<ComposerActions>
+									{text.length === 0 && uploads && (
+										<ComposerAction onClick={this.handleUploadClick}>
+											<PlusIcon width={20} height={20} />
+										</ComposerAction>
+									)}
+									{text.length > 0 && (
+										<ComposerAction onClick={this.handleSendClick}>
+											<SendIcon width={20} height={20} />
+										</ComposerAction>
+									)}
+								</ComposerActions>
+							)}
+							limitTextLength={limitTextLength}
+						/>}
 				</Screen.Footer>
 			</FilesDropTarget>
 		</Screen>
