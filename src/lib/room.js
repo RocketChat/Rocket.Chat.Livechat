@@ -144,6 +144,10 @@ Livechat.onMessage(async (message) => {
 	// Viasat : Timeout Warnings
 	if (message.customFields && message.customFields.idleTimeoutConfig) {
 		handleIdleTimeout(message.customFields.idleTimeoutConfig);
+	} else {
+		handleIdleTimeout({
+			idleTimeoutAction: 'stop',
+		});
 	}
 
 	if (message.customFields) {
