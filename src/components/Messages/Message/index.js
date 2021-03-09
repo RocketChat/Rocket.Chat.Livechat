@@ -5,6 +5,7 @@ import { getAttachmentUrl, memo, normalizeTransferHistoryMessage } from '../../h
 import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
+import { MessageAction } from '../MessageAction';
 import { MessageAvatars } from '../MessageAvatars';
 import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
@@ -35,6 +36,8 @@ const renderContent = ({
 	attachmentResolver,
 	mid,
 	rid,
+	resetLastAction,
+	actionsVisible,
 }) => [
 	...(attachments || [])
 		.map((attachment) =>
@@ -64,7 +67,13 @@ const renderContent = ({
 				quoted: true,
 				attachments: attachment.attachments,
 				attachmentResolver,
-			})),
+			}))
+			|| (attachment.actions && actionsVisible
+				&& <MessageAction
+					quoted={false}
+					actions={attachment.actions}
+					resetLastAction={resetLastAction}
+				/>),
 		),
 	text && (
 		<MessageBubble inverse={me} quoted={quoted} system={system}>
@@ -91,6 +100,15 @@ const getSystemMessageText = ({ t, conversationFinishedMessage, transferData }) 
 	|| (t === MESSAGE_TYPE_LIVECHAT_STARTED && I18n.t('Chat started'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData));
 
+const getName = (message) => {
+	if (!message.u) {
+		return null;
+	}
+
+	const { alias, u: { name } } = message;
+	return alias && name;
+};
+
 const getMessageUsernames = (compact, message) => {
 	if (compact || !message.u) {
 		return [];
@@ -113,6 +131,7 @@ export const Message = memo(({
 	compact,
 	className,
 	style = {},
+	resetLastAction,
 	...message
 }) => (
 	<MessageContainer
@@ -127,6 +146,8 @@ export const Message = memo(({
 		{!message.t && <MessageAvatars
 			avatarResolver={avatarResolver}
 			usernames={getMessageUsernames(compact, message)}
+			isVisitor={me}
+			name={getName(message)}
 		/>}
 		<MessageContent reverse={me}>
 			{renderContent({
@@ -138,6 +159,8 @@ export const Message = memo(({
 				mid: message._id,
 				rid: message.rid,
 				attachmentResolver,
+				resetLastAction,
+				actionsVisible: message.actionsVisible ? message.actionsVisible : false,
 			})}
 		</MessageContent>
 		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={ts} />}
