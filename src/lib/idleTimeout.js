@@ -21,7 +21,7 @@ export const handleIdleTimeout = async (idleTimeoutConfig) => {
 	let timeoutTimer;
 	const { idleTimeout } = store.state;
 
-	if (idleTimeoutAction === 'stop' && !idleTimeout.idleTimeoutRunning) {
+	if (idleTimeoutAction === 'stop' && (idleTimeout && !idleTimeout.idleTimeoutRunning)) {
 		return;
 	}
 
