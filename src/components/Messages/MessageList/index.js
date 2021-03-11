@@ -2,58 +2,28 @@ import { parseISO } from 'date-fns/fp';
 import isSameDay from 'date-fns/isSameDay';
 import { h } from 'preact';
 
+import store from '../../../store';
 import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import styles from './styles.scss';
-import store from '../../../store';
 
-const disableComposer = (msg) => {
-	const defaultText = 'Please Wait';
-	const result = { disable: false, disableText: defaultText };
-
-	if(!msg) {
-		return result;
-	}
-
-	const { customFields = {}, attachments = [] } = msg;
-
-	if (customFields.disableInput) {
-		return { disable: true, disableText: customFields.disableInputMessage || defaultText };
-	}
-
-	for (var i = 0; i < attachments.length; i++) {
-		const { actions = [] } = attachments[i];
-
-		for (var j = 0; j < actions.length; j++) {
-			const { disableInput, disableInputMessage } = actions[j];
-			if (disableInput) {
-				return { disable: true, disableText: disableInputMessage || defaultText };
-			}
-		}
-	}
-
-	return result;
-}
-
-const isNotEmpty = (message) => {
-	return message && (message.t || message.msg || message.blocks || message.attachments);
-}
+const isNotEmpty = (message) => message && (message.t || message.msg || message.blocks || message.attachments);
 
 const shouldHideMessage = (message) => {
 	const { config: { settings: { hideSysMessages } } } = store.state;
-	if(!message.t) {
+	if (!message.t) {
 		return false;
 	}
-	if (hideSysMessages == [] || !hideSysMessages) {
+	if (hideSysMessages === [] || !hideSysMessages) {
 		return false;
 	}
-	if (hideSysMessages.indexOf(message.t) != -1) {
+	if (hideSysMessages.indexOf(message.t) !== -1) {
 		return true;
 	}
 	return false;
-}
+};
 
 export class MessageList extends MemoizedComponent {
 	static defaultProps = {
@@ -138,7 +108,6 @@ export class MessageList extends MemoizedComponent {
 			const { onScrollTo } = this.props;
 			onScrollTo && onScrollTo(MessageList.SCROLL_AT_BOTTOM);
 		}
-		
 	}
 
 	componentDidMount() {
@@ -159,8 +128,6 @@ export class MessageList extends MemoizedComponent {
 		conversationFinishedMessage,
 		typingUsernames,
 		resetLastAction,
-		onDisableComposer,
-		onEnableComposer,
 	}) => {
 		const items = [];
 
@@ -180,7 +147,7 @@ export class MessageList extends MemoizedComponent {
 				);
 			}
 
-			
+
 			isNotEmpty(message) && !shouldHideMessage(message) && items.push(
 				<Message
 					key={message._id}
@@ -205,15 +172,6 @@ export class MessageList extends MemoizedComponent {
 					/>,
 				);
 			}
-		}
-
-		const lastMessage = messages.length > 0 ? messages[messages.length - 1]: null;
-		const { disable, disableText } = disableComposer(lastMessage);
-
-		if (disable) {
-			onDisableComposer && onDisableComposer(disableText);
-		} else {
-			onEnableComposer && onEnableComposer();
 		}
 
 		if (typingUsernames && typingUsernames.length) {

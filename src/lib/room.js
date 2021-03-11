@@ -12,18 +12,56 @@ import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
 
 const commands = new Commands();
+const CLOSE_CHAT = 'Close Chat';
 
 export const closeChat = async ({ transcriptRequested } = {}) => {
 	if (!transcriptRequested) {
 		await handleTranscript();
 	}
-
-	await loadConfig();
 	parentCall('callback', 'chat-ended');
-	route('/chat-finished');
+	store.setState({ composerConfig: {
+		disable: true,
+		disableText: CLOSE_CHAT,
+		onDisabledComposerClick: async () => {
+			store.setState({ composerConfig: { disable: false, disableText: 'Please Wait', onDisabledComposerClick: () => {} } });
+			await loadConfig();
+			route('/chat-finished');
+		},
+	},
+	});
+};
+
+const disableComposer = (msg) => {
+	const defaultText = 'Please Wait';
+	const result = { disable: false, disableText: defaultText };
+
+	if (!msg) {
+		return result;
+	}
+
+	const { customFields = {}, attachments = [] } = msg;
+
+	if (customFields.disableInput) {
+		return { disable: true, disableText: customFields.disableInputMessage || defaultText };
+	}
+
+	for (let i = 0; i < attachments.length; i++) {
+		const { actions = [] } = attachments[i];
+
+		for (let j = 0; j < actions.length; j++) {
+			const { disableInput, disableInputMessage } = actions[j];
+			if (disableInput) {
+				return { disable: true, disableText: disableInputMessage || defaultText };
+			}
+		}
+	}
+
+	return result;
 };
 
 const processMessage = async (message) => {
+	const { disable, disableText } = disableComposer(message);
+	const { composerConfig } = store.state;
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 		handleIdleTimeout({
@@ -31,6 +69,10 @@ const processMessage = async (message) => {
 		});
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
+	} else if (disable) {
+		store.setState({ composerConfig: { disable: true, disableText, onDisabledComposerClick: () => {} } });
+	} else if (composerConfig && composerConfig.disableText !== CLOSE_CHAT) {
+		store.setState({ composerConfig: { disable: false, disableText: 'Please Wait', onDisabledComposerClick: () => {} } });
 	}
 };
 
@@ -196,6 +238,12 @@ export const loadMessages = async () => {
 	if (messages && messages.length) {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+
+		const { disable, disableText } = disableComposer(lastMessage);
+
+		if (disable) {
+			store.setState({ composerConfig: { disable: true, disableText, onDisabledComposerClick: () => {} } });
+		}
 	}
 
 	const { idleTimeout } = store.state;

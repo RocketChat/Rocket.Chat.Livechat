@@ -96,7 +96,7 @@ const getSystemMessageText = ({ t, conversationFinishedMessage, transferData }) 
 	|| (t === MESSAGE_TYPE_USER_JOINED && I18n.t('User joined'))
 	|| (t === MESSAGE_TYPE_USER_LEFT && I18n.t('User left'))
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
-	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
+	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Chat finished')))
 	|| (t === MESSAGE_TYPE_LIVECHAT_STARTED && I18n.t('Chat started'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData));
 
