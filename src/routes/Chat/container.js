@@ -399,6 +399,7 @@ export class ChatContainer extends Component {
 			registrationRequired={this.registrationRequired()}
 			onRegisterUser={this.onRegisterUser}
 			resetLastAction={this.resetLastAction}
+			composerConfig={props.composerConfig}
 		/>
 	)
 }
@@ -450,6 +451,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			loading,
 			dispatch,
 			alerts,
+			composerConfig,
 			visible,
 			unread,
 			lastReadMessageId,
@@ -495,7 +497,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				startSession={startSession}
 				defaultAvatar={defaultAvatar}
 				allowSwitchingDepartments={allowSwitchingDepartments}
-				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
+				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Chat finished')}
 				allowRemoveUserData={allowRemoveUserData}
 				transcript={transcript}
 				alerts={alerts}
@@ -513,6 +515,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				nameFieldRegistrationForm={nameFieldRegistrationForm}
 				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
+				composerConfig={composerConfig}
 			/>
 		)}
 	</Consumer>

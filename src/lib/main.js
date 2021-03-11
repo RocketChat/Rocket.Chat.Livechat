@@ -35,6 +35,7 @@ export const loadConfig = async () => {
 		noMoreMessages: false,
 		visible: true,
 		unread: null,
+		composerConfig: null,
 	});
 };
 

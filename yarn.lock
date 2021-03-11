@@ -1914,10 +1914,9 @@
   dependencies:
     eslint-plugin-import "^2.17.2"
 
-"@rocket.chat/sdk@^1.0.0-alpha.41":
-  version "1.0.0-alpha.41"
-  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.41.tgz#8fcae2885786bec56a56b6d9a8cccaa365b77364"
-  integrity sha512-jQ+/exEQMOv+bwH+yzPTC0oJGIKj/AlMc95IvWAn/vHDLjjS3aGzpIpZhBwsMOBVvb/5N8rnq6kEleCkEJk28g==
+"@rocket.chat/sdk@git+https://github.com/WideChat/Rocket.Chat.js.SDK.git#multiple-clients":
+  version "1.0.0-alpha.30"
+  resolved "git+https://github.com/WideChat/Rocket.Chat.js.SDK.git#7c3741eba94d809791d664dfedd934f6afcf12b4"
   dependencies:
     js-sha256 "^0.9.0"
     lru-cache "^4.1.1"

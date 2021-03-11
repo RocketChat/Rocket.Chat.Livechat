@@ -24,16 +24,6 @@ export default class Chat extends Component {
 		atBottom: true,
 		text: '',
 		emojiPickerActive: false,
-		disable: false,
-		disableText: 'Please Wait',
-	}
-
-	handleDisableComposer = (disableText) => {
-		this.setState({ disable: true, disableText });
-	}
-
-	handleEnableComposer = () => {
-		this.setState({ disable: false, disableText: 'Please Wait' });
 	}
 
 	handleFilesDropTargetRef = (ref) => {
@@ -139,12 +129,11 @@ export default class Chat extends Component {
 		onRegisterUser,
 		limitTextLength,
 		resetLastAction,
+		composerConfig,
 		...props
 	}, {
 		atBottom = true,
 		text,
-		disable = false,
-		disableText,
 	}) => (
 		<Screen
 			color={color}
@@ -180,8 +169,6 @@ export default class Chat extends Component {
 							onScrollTo={this.handleScrollTo}
 							resetLastAction={resetLastAction}
 							handleEmojiClick={this.handleEmojiClick}
-							onDisableComposer={this.handleDisableComposer}
-							onEnableComposer={this.handleEnableComposer}
 						/>
 						{this.state.emojiPickerActive && <Picker
 							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
@@ -221,8 +208,8 @@ export default class Chat extends Component {
 					{ registrationRequired
 						&& <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
 					}
-					{ !registrationRequired && disable
-						? <Button style={{ width: '100%' }}> {disableText} </Button>
+					{ !registrationRequired && composerConfig && composerConfig.disable
+						? <Button onClick={composerConfig.onDisabledComposerClick} style={{ width: '100%' }}> {composerConfig.disableText} </Button>
 						: <Composer onUpload={onUpload}
 							onSubmit={this.handleSubmit}
 							onChange={this.handleChangeText}
