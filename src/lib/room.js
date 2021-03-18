@@ -12,9 +12,17 @@ import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
 
 const commands = new Commands();
-const CLOSE_CHAT = 'Close Chat';
+export const CLOSE_CHAT = 'Close Chat';
+
+export const onChatClose = async () => {
+	store.setState({ composerConfig: { disable: false, disableText: 'Please Wait', onDisabledComposerClick: () => {} } });
+	await loadConfig();
+	route('/chat-finished');
+	store.setState({ alerts: [] });
+};
 
 export const closeChat = async ({ transcriptRequested } = {}) => {
+	store.setState({ alerts: [] });
 	if (!transcriptRequested) {
 		await handleTranscript();
 	}
@@ -22,11 +30,7 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 	store.setState({ composerConfig: {
 		disable: true,
 		disableText: CLOSE_CHAT,
-		onDisabledComposerClick: async () => {
-			store.setState({ composerConfig: { disable: false, disableText: 'Please Wait', onDisabledComposerClick: () => {} } });
-			await loadConfig();
-			route('/chat-finished');
-		},
+		onDisabledComposerClick: onChatClose,
 	},
 	});
 };

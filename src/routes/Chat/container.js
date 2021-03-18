@@ -9,7 +9,7 @@ import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
-import { initRoom, assignRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
+import { initRoom, assignRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages, onChatClose, CLOSE_CHAT } from '../../lib/room';
 import store, { Consumer } from '../../store';
 import Chat from './component';
 
@@ -207,6 +207,12 @@ export class ChatContainer extends Component {
 	}
 
 	onFinishChat = async () => {
+		const { composerConfig } = this.props;
+		if (composerConfig && composerConfig.disableText === CLOSE_CHAT) {
+			onChatClose();
+			return;
+		}
+
 		const { success } = await ModalManager.confirm({
 			text: I18n.t('Are you sure you want to finish this chat?'),
 		});
