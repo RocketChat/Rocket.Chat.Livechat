@@ -63,6 +63,9 @@ export class Composer extends Component {
 	}
 
 	handleInput = (onChange) => () => {
+		if (inputLock) {
+			return;
+		}
 		onChange && onChange(sanitize(this.el.innerText));
 	}
 
@@ -247,6 +250,17 @@ export class Composer extends Component {
 						onClick: this.handleClick,
 					}
 				)}
+		
+				onCompositionStart={(e)=>{
+					inputLock = true;
+				}}
+
+				onCompositionEnd={(e)=>{
+					inputLock = false;
+					onChange && onChange(this.el.innerText);
+				}}
+
+
 				className={createClassName(styles, 'composer__input')}
 			/>
 			{post}
