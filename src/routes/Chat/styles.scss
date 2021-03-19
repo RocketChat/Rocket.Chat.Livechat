@@ -56,6 +56,14 @@
 
 		opacity: 0.6;
 	}
+
+	.emoji{
+		color:#696969;
+		&:hover,
+		&:focus{
+			color: black;	
+		}
+	}
 }
 
 @keyframes loader-rotate {
