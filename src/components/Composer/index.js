@@ -58,12 +58,13 @@ const replaceCaret = (el) => {
 };
 
 export class Composer extends Component {
+	
 	handleRef = (el) => {
 		this.el = el;
 	}
 
 	handleInput = (onChange) => () => {
-		if (inputLock) {
+		if (this.state.inputLock) {
 			return;
 		}
 		onChange && onChange(sanitize(this.el.innerText));
@@ -150,6 +151,9 @@ export class Composer extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+				inputLock: false
+		}
 		this.value = this.props.value;
 		this.handleNotifyEmojiSelect = this.handleNotifyEmojiSelect.bind(this);
 
@@ -252,11 +256,11 @@ export class Composer extends Component {
 				)}
 		
 				onCompositionStart={(e)=>{
-					inputLock = true;
+					this.state.inputLock = true;
 				}}
 
 				onCompositionEnd={(e)=>{
-					inputLock = false;
+					this.state.inputLock = false;
 					onChange && onChange(this.el.innerText);
 				}}
 
