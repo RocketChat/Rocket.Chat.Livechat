@@ -401,6 +401,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
+			loadingMessage,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -434,6 +435,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				uploads={uploads}
 				typingUsernames={Array.isArray(typing) ? typing : []}
 				loading={loading}
+				loadingMessage={loadingMessage}
 				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
 				connecting={!!(room && !agent && (showConnecting || queueInfo))}
 				dispatch={dispatch}

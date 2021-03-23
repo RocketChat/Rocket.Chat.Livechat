@@ -34,6 +34,7 @@ const initialState = {
 	visible: true,
 	minimized: true,
 	unread: null,
+	loadingMessage: null,
 };
 
 const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages', 'modal'];
