@@ -64,8 +64,6 @@ const disableComposer = (msg) => {
 };
 
 const processMessage = async (message) => {
-	const { disable, disableText } = disableComposer(message);
-	const { composerConfig } = store.state;
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 		handleIdleTimeout({
@@ -73,10 +71,19 @@ const processMessage = async (message) => {
 		});
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
-	} else if (disable) {
-		store.setState({ composerConfig: { disable: true, disableText, onDisabledComposerClick: () => {} } });
-	} else if (composerConfig && composerConfig.disableText !== CLOSE_CHAT) {
-		store.setState({ composerConfig: { disable: false, disableText: 'Please Wait', onDisabledComposerClick: () => {} } });
+	}
+
+	const { messages, composerConfig } = store.state;
+	if (messages && messages.length) {
+		const lastMessage = messages[messages.length - 1];
+		if (message._id === lastMessage._id) {
+			const { disable, disableText } = disableComposer(message);
+			if (disable) {
+				store.setState({ composerConfig: { disable: true, disableText, onDisabledComposerClick: () => {} } });
+			} else if (composerConfig && composerConfig.disableText !== CLOSE_CHAT) {
+				store.setState({ composerConfig: { disable: false, disableText: 'Please Wait', onDisabledComposerClick: () => {} } });
+			}
+		}
 	}
 };
 
