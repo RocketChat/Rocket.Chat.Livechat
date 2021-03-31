@@ -1,3 +1,4 @@
+import { sanitize } from 'dompurify';
 import mem from 'mem';
 import { h, Component } from 'preact';
 
@@ -63,7 +64,7 @@ export class Composer extends Component {
 	}
 
 	handleInput = (onChange) => () => {
-		onChange && onChange(this.el.innerText);
+		onChange && onChange(sanitize(this.el.innerText));
 	}
 
 	handleKeypress = (onSubmit) => (event) => {

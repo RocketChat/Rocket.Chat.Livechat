@@ -1,3 +1,4 @@
+import { sanitize } from 'dompurify';
 import MarkdownIt from 'markdown-it';
 
 
@@ -7,6 +8,8 @@ const md = new MarkdownIt({
 	linkify: true,
 	typographer: true,
 });
+
+const sanitizeConfig = { ALLOWED_TAGS: ['a'], ALLOWED_ATTR: ['href', 'name', 'target'] };
 
 const defaultRender = md.renderer.rules.link_open || ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options));
 
@@ -80,4 +83,4 @@ md.use((md) => {
 	});
 });
 
-export const renderMarkdown = (...args) => md.render(...args);
+export const renderMarkdown = (...args) => sanitize(md.render(...args), sanitizeConfig);

@@ -221,7 +221,7 @@ export default class Chat extends Component {
 							//
 							// pre={(
 							// 	<ComposerActions>
-							// 		<ComposerAction onClick={this.toggleEmojiPickerState}>
+							// 		<ComposerAction className={createClassName(styles, 'emoji-picker-icon')} onClick={this.toggleEmojiPickerState}>
 							// 			<EmojiIcon width={20} height={20} />
 							// 		</ComposerAction>
 							// 	</ComposerActions>
