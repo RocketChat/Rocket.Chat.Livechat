@@ -206,6 +206,7 @@ export class App extends Component {
 		expanded,
 		alerts,
 		modal,
+		composerConfig,
 	}, { initialized, poppedOut }) => {
 		if (!initialized) {
 			return null;
@@ -218,6 +219,7 @@ export class App extends Component {
 			sound,
 			alerts,
 			modal,
+			composerConfig,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
@@ -258,6 +260,7 @@ const AppConnector = () => (
 					modal,
 					dispatch,
 					iframe,
+					composerConfig,
 				}) => (
 					<App
 						config={config}
@@ -272,6 +275,7 @@ const AppConnector = () => (
 						modal={modal}
 						dispatch={dispatch}
 						iframe={iframe}
+						composerConfig={composerConfig}
 					/>
 				)}
 			</StoreConsumer>

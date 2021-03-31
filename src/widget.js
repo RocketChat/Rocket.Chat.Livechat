@@ -124,6 +124,7 @@ const createWidget = (url) => {
 	iframe.id = 'rocketchat-iframe';
 	iframe.allowTransparency = 'true';
 	iframe.src = url;
+	iframe.name = window.RocketChat.parentURL;
 	iframe.style.width = '100%';
 	iframe.style.height = '100%';
 	iframe.style.border = 'none';

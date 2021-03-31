@@ -7,7 +7,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/RocketChat/Rocket.Chat.Livechat"
+		"url": "https://github.com/WideChat/Rocket.Chat.Livechat"
 	},
 	"scripts": {
 		"clean": "rimraf build",
@@ -85,7 +85,7 @@
 	},
 	"dependencies": {
 		"@kossnocorp/desvg": "^0.2.0",
-		"@rocket.chat/sdk": "^1.0.0-alpha.41",
+		"@rocket.chat/sdk": "git+https://github.com/WideChat/Rocket.Chat.js.SDK.git#multiple-clients",
 		"@rocket.chat/ui-kit": "^0.14.1",
 		"css-vars-ponyfill": "^2.3.2",
 		"date-fns": "^2.15.0",
@@ -101,6 +101,7 @@
 		"preact-i18nline": "^2.0.0",
 		"preact-router": "^3.2.1",
 		"query-string": "^6.13.1",
+		"sanitize-html": "^1.27.2",
 		"whatwg-fetch": "^3.4.0"
 	},
 	"browserslist": [
@@ -115,7 +116,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "run-s i18n && git add -A src/i18n"
+			"pre-commit": "run-s i18n && git add -A src/i18n && yarn build"
 		}
 	},
 	"houston": {

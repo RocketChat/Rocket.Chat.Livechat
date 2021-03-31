@@ -47,7 +47,6 @@ export const FooterOptions = ({ children }) => (
 	</PopoverMenu>
 );
 
-
 export const CharCounter = ({ className, style = {}, textLength, limitTextLength }) => (
 	<span
 		className={createClassName(styles, 'footer__remainder', { highlight: textLength === limitTextLength }, [className])}
