@@ -71,6 +71,15 @@ export const throttle = (func, limit) => {
 	};
 };
 
+export function getFilteredMsg(msg) {
+	const { config: { filters = [] } } = store.state;
+	filters.forEach(filter => {
+		const regExp = new RegExp(filter.regex, 'g');
+		msg = msg.replace(regExp, filter.slug);
+	});
+	return msg;
+}
+
 export function getInsertIndex(array, item, ranking) {
 	const order = ranking(item);
 	let min = 0;
@@ -113,9 +122,11 @@ export const createToken = () => Math.random().toString(36).substring(2, 15) + M
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
-export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul', 'livechat-close'];
+export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul'];
 
-export const canRenderMessage = ({ t }) => !msgTypesNotRendered.includes(t);
+export const msgTextNotRendered = ['customer_idle_timeout'];
+
+export const canRenderMessage = ({ t, msg }) => !msgTypesNotRendered.includes(t) && !msgTextNotRendered.includes(msg);
 
 export const getAttachmentUrl = (url) => `${ Livechat.client.host }${ url }`;
 
