@@ -61,7 +61,6 @@ const api = {
 
 	setDepartment(value) {
 		const { config: { departments = [] } } = store.state;
-
 		const dept = departments.find((dep) => dep._id === value || dep.name === value);
 		const department = (dept && dept._id) || '';
 

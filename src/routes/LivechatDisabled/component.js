@@ -19,7 +19,7 @@ import SendIcon from '../../icons/send.svg';
 // import EmojiIcon from '../../icons/smile.svg';
 import styles from './styles.scss';
 
-export default class Chat extends Component {
+export default class LivechatDisabled extends Component {
 	state = {
 		atBottom: true,
 		text: '',
@@ -130,7 +130,6 @@ export default class Chat extends Component {
 		limitTextLength,
 		resetLastAction,
 		composerConfig,
-		emergencyLivechatDisable,
 		...props
 	}, {
 		atBottom = true,
@@ -181,72 +180,69 @@ export default class Chat extends Component {
 						/>}
 					</div>
 				</Screen.Content>
-				{ !emergencyLivechatDisable
-					? <Screen.Footer
-						options={options ? (
-							<FooterOptions>
-								<Menu.Group>
-									{onPrintTranscript && (
-										<Menu.Item onClick={onPrintTranscript} icon={PrintIcon}>{I18n.t('Print Chat')}</Menu.Item>
-									)}
-									{onChangeDepartment && (
-										<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
-									)}
-									{onRemoveUserData && (
-										<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
-									)}
-									{onFinishChat && (
-										<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
-									)}
-								</Menu.Group>
-							</FooterOptions>
-						) : null}
-						limit={limitTextLength
-							? <CharCounter
-								limitTextLength={limitTextLength}
-								textLength={text.length}
-							/> : null}
-					>
-						{ registrationRequired
-							&& <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
-						}
-						{ !registrationRequired && composerConfig && composerConfig.disable
-							? <Button onClick={composerConfig.onDisabledComposerClick} style={{ width: '100%' }}> {composerConfig.disableText} </Button>
-							: <Composer onUpload={onUpload}
-								onSubmit={this.handleSubmit}
-								onChange={this.handleChangeText}
-								placeholder={I18n.t('Type your message here')}
-								value={text}
-								notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
-								handleEmojiClick={this.handleEmojiClick}
-								// Viasat : Hide Emoticon pallet
-								//
-								// pre={(
-								// 	<ComposerActions>
-								// 		<ComposerAction onClick={this.toggleEmojiPickerState}>
-								// 			<EmojiIcon width={20} height={20} />
-								// 		</ComposerAction>
-								// 	</ComposerActions>
-								// )}
-								post={(
-									<ComposerActions>
-										{text.length === 0 && uploads && (
-											<ComposerAction onClick={this.handleUploadClick}>
-												<PlusIcon width={20} height={20} />
-											</ComposerAction>
-										)}
-										{text.length > 0 && (
-											<ComposerAction onClick={this.handleSendClick}>
-												<SendIcon width={20} height={20} />
-											</ComposerAction>
-										)}
-									</ComposerActions>
+				<Screen.Footer
+					options={options ? (
+						<FooterOptions>
+							<Menu.Group>
+								{onPrintTranscript && (
+									<Menu.Item onClick={onPrintTranscript} icon={PrintIcon}>{I18n.t('Print Chat')}</Menu.Item>
 								)}
-								limitTextLength={limitTextLength}
-							/>}
-					</Screen.Footer>
-					: <Screen.Footer />
-				}
+								{onChangeDepartment && (
+									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
+								)}
+								{onRemoveUserData && (
+									<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
+								)}
+								{onFinishChat && (
+									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
+								)}
+							</Menu.Group>
+						</FooterOptions>
+					) : null}
+					limit={limitTextLength
+						? <CharCounter
+							limitTextLength={limitTextLength}
+							textLength={text.length}
+						/> : null}
+				>
+					{ registrationRequired
+						&& <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
+					}
+					{ !registrationRequired && composerConfig && composerConfig.disable
+						? <Button onClick={composerConfig.onDisabledComposerClick} style={{ width: '100%' }}> {composerConfig.disableText} </Button>
+						: <Composer onUpload={onUpload}
+							onSubmit={this.handleSubmit}
+							onChange={this.handleChangeText}
+							placeholder={I18n.t('Type your message here')}
+							value={text}
+							notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
+							handleEmojiClick={this.handleEmojiClick}
+							// Viasat : Hide Emoticon pallet
+							//
+							// pre={(
+							// 	<ComposerActions>
+							// 		<ComposerAction onClick={this.toggleEmojiPickerState}>
+							// 			<EmojiIcon width={20} height={20} />
+							// 		</ComposerAction>
+							// 	</ComposerActions>
+							// )}
+							post={(
+								<ComposerActions>
+									{text.length === 0 && uploads && (
+										<ComposerAction onClick={this.handleUploadClick}>
+											<PlusIcon width={20} height={20} />
+										</ComposerAction>
+									)}
+									{text.length > 0 && (
+										<ComposerAction onClick={this.handleSendClick}>
+											<SendIcon width={20} height={20} />
+										</ComposerAction>
+									)}
+								</ComposerActions>
+							)}
+							limitTextLength={limitTextLength}
+						/>}
+				</Screen.Footer>
 			</FilesDropTarget>
 		</Screen>
 	)

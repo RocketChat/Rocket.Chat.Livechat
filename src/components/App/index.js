@@ -15,6 +15,7 @@ import Chat from '../../routes/Chat';
 import ChatFinished from '../../routes/ChatFinished';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import LeaveMessage from '../../routes/LeaveMessage';
+import LivechatDisabled from '../../routes/LivechatDisabled';
 import Register from '../../routes/Register';
 import SwitchDepartment from '../../routes/SwitchDepartment';
 import TriggerMessage from '../../routes/TriggerMessage';
@@ -79,7 +80,6 @@ export class App extends Component {
 
 	handleTriggers() {
 		const { config: { online, enabled } } = this.props;
-
 		Triggers.enabled = online && enabled;
 
 		if (online && enabled) {
@@ -235,6 +235,7 @@ export class App extends Component {
 				<ChatFinished path='/chat-finished' {...screenProps} />
 				<GDPRAgreement path='/gdpr' {...screenProps} />
 				<LeaveMessage path='/leave-message' {...screenProps} />
+				<LivechatDisabled path='/livechat-disabled' {...screenProps} />
 				<Register path='/register' {...screenProps} />
 				<SwitchDepartment path='/switch-department' {...screenProps} />
 				<TriggerMessage path='/trigger-messages' {...screenProps} />

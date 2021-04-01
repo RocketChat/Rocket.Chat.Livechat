@@ -15,6 +15,7 @@ const commands = new Commands();
 export const CLOSE_CHAT = 'Close Chat';
 
 export const onChatClose = async () => {
+	console.log(store);
 	store.setState({ composerConfig: { disable: false, disableText: 'Please Wait', onDisabledComposerClick: () => {} } });
 	await loadConfig();
 	route('/chat-finished');

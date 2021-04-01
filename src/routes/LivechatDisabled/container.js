@@ -11,9 +11,9 @@ import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
 import { initRoom, assignRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages, onChatClose, CLOSE_CHAT } from '../../lib/room';
 import store, { Consumer } from '../../store';
-import Chat from './component';
+import LivechatDisabled from './component';
 
-export class ChatContainer extends Component {
+export class LivechatDisabledContainer extends Component {
 	state = {
 		room: null,
 		connectingAgent: false,
@@ -283,8 +283,6 @@ export class ChatContainer extends Component {
 		return (room !== undefined) || connecting;
 	}
 
-	livechatIsDisabled = () => this.props.emergencyLivechatDisable;
-
 	canRemoveUserData = () => {
 		const { allowRemoveUserData } = this.props;
 		return allowRemoveUserData;
@@ -390,7 +388,7 @@ export class ChatContainer extends Component {
 	}
 
 	render = ({ user, ...props }) => (
-		<Chat
+		<LivechatDisabled
 			{...props}
 			avatarResolver={this.getAvatar}
 			uid={user && user._id}
@@ -408,14 +406,13 @@ export class ChatContainer extends Component {
 			onRegisterUser={this.onRegisterUser}
 			resetLastAction={this.resetLastAction}
 			composerConfig={props.composerConfig}
-			emergencyLivechatDisable={this.livechatIsDisabled()}
-			emergencyLivechatDisableMessage={props.emergencyLivechatDisableMessage}
+			emergencylivechatDisableMessage={props.emergencylivechatDisableMessage}
 		/>
 	)
 }
 
 
-export const ChatConnector = ({ ref, ...props }) => (
+export const LivechatDisabledConnector = ({ ref, ...props }) => (
 	<Consumer>
 		{({
 			config: {
@@ -431,8 +428,6 @@ export const ChatConnector = ({ ref, ...props }) => (
 					emailFieldRegistrationForm,
 					transcript,
 					limitTextLength,
-					emergencyLivechatDisable,
-					emergencyLivechatDisableMessage,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -470,7 +465,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 			triggerAgent,
 			queueInfo,
 		}) => (
-			<ChatContainer
+			<LivechatDisabledContainer
 				ref={ref}
 				{...props}
 				theme={{
@@ -479,11 +474,11 @@ export const ChatConnector = ({ ref, ...props }) => (
 					iconColor: customIconColor,
 					title: customTitle,
 				}}
-				title={!emergencyLivechatDisable ? customTitle || title || I18n.t('Need help?') : emergencyLivechatDisableMessage}
+				title={customTitle || title || I18n.t('Need help?')}
 				sound={sound}
 				token={token}
 				user={user}
-				agent={!emergencyLivechatDisable && agent ? {
+				agent={agent ? {
 					_id: agent._id,
 					name: agent.name,
 					status: agent.status,
@@ -528,12 +523,10 @@ export const ChatConnector = ({ ref, ...props }) => (
 				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
 				composerConfig={composerConfig}
-				emergencyLivechatDisable={emergencyLivechatDisable}
-				emergencyLivechatDisableMessage={emergencyLivechatDisableMessage}
 			/>
 		)}
 	</Consumer>
 );
 
 
-export default ChatConnector;
+export default LivechatDisabledConnector;
