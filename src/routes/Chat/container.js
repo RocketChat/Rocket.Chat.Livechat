@@ -214,7 +214,7 @@ export class ChatContainer extends Component {
 		}
 
 		const { success } = await ModalManager.confirm({
-			text: I18n.t('Are you sure you want to finish this chat?'),
+			text: I18n.t('All of this conversation history will be lost if you close this chat. Continue?'),
 		});
 
 		if (!success) {
