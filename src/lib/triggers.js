@@ -62,7 +62,6 @@ const getAgent = (triggerAction) => {
 			} catch (error) {
 				return reject(error);
 			}
-			
 			store.setState({ defaultAgent: { ...agent, ts: Date.now() } });
 			resolve(agent);
 		} else if (params.sender === 'custom') {
