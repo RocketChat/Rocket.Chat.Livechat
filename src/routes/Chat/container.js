@@ -406,6 +406,8 @@ export class ChatContainer extends Component {
 			onRegisterUser={this.onRegisterUser}
 			resetLastAction={this.resetLastAction}
 			composerConfig={props.composerConfig}
+			livechat_kill_switch={props.livechat_kill_switch}
+			livechat_kill_switch_message={props.livechat_kill_switch_message}
 		/>
 	)
 }
@@ -427,6 +429,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 					emailFieldRegistrationForm,
 					transcript,
 					limitTextLength,
+					livechat_kill_switch,
+					livechat_kill_switch_message,
 				} = {},
 				messages: {
 					conversationFinishedMessage,
@@ -473,11 +477,11 @@ export const ChatConnector = ({ ref, ...props }) => (
 					iconColor: customIconColor,
 					title: customTitle,
 				}}
-				title={customTitle || title || I18n.t('Need help?')}
+				title={!livechat_kill_switch ? customTitle || title || I18n.t('Need help?') : livechat_kill_switch_message}
 				sound={sound}
 				token={token}
 				user={user}
-				agent={agent ? {
+				agent={agent && !livechat_kill_switch ? {
 					_id: agent._id,
 					name: agent.name,
 					status: agent.status,
@@ -522,6 +526,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
 				composerConfig={composerConfig}
+				livechat_kill_switch={livechat_kill_switch}
+				livechat_kill_switch_message={livechat_kill_switch_message}
 			/>
 		)}
 	</Consumer>
