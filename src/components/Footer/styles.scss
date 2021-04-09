@@ -40,10 +40,10 @@
 		line-height: 1;
 
 		&:hover,
-		&:focus{
-			color: black;	
+		&:focus {
+			color: black;
 		}
-		
+
 		@include pressable-button(2px);
 	}
 
