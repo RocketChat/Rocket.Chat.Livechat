@@ -18,6 +18,8 @@ import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
 import styles from './styles.scss';
 
+import Peer from "simple-peer";
+
 export default class Chat extends Component {
 	state = {
 		atBottom: true,
@@ -96,6 +98,68 @@ export default class Chat extends Component {
 		}
 	}
 
+	onCall = async () => {
+		const { agent } = this.props;
+		console.log(agent);
+		
+			navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+			  
+			  const peer = new Peer({
+				initiator: true,
+				trickle: false,
+				config: {
+		  
+				  iceServers: [
+					  
+					  {url:'stun:stun01.sipphone.com'},
+					  {url:'stun:stun.ekiga.net'},
+					  {url:'stun:stun.fwdnet.net'},
+					  {url:'stun:stun.ideasip.com'},
+					  {url:'stun:stun.iptel.org'},
+					  {url:'stun:stun.rixtelecom.se'},
+					  {url:'stun:stun.schlund.de'},
+					  {url:'stun:stun.l.google.com:19302'},
+					  {url:'stun:stun1.l.google.com:19302'},
+					  {url:'stun:stun2.l.google.com:19302'},
+					  {url:'stun:stun3.l.google.com:19302'},
+					  {url:'stun:stun4.l.google.com:19302'},
+					  {url:'stun:stunserver.org'},
+					  {url:'stun:stun.softjoys.com'},
+					  {url:'stun:stun.voiparound.com'},
+					  {url:'stun:stun.voipbuster.com'},
+					  {url:'stun:stun.voipstunt.com'},
+					  {url:'stun:stun.voxgratia.org'},
+					  {url:'stun:stun.xten.com'},
+					  
+				  ]
+			  },
+				stream: stream,
+			  });
+
+			  window.peerObj = peer;
+		  
+			  peer.on("signal", data => {
+				// send message via api...
+				console.log('signal data.....', data);
+				this.handleSubmit(JSON.stringify(data));
+			  })
+
+			  peer.on('stream', stream => {
+				console.log('jj stream');
+					const userVideoElement = document.getElementsByClassName("agentVideo")[0];
+					if(userVideoElement) {
+						userVideoElement.srcObject = stream;
+					}
+			  })
+		  
+			  
+			})
+			.catch(()=>{
+			  console.log('error in navigator')
+			})
+		  
+	}
+
 	render = ({
 		color,
 		title,
@@ -164,6 +228,7 @@ export default class Chat extends Component {
 							onSelect={this.handleEmojiSelect}
 							autoFocus={true}
 						/>}
+						<video class="agentVideo" playsInline autoPlay></video>
 					</div>
 				</Screen.Content>
 				<Screen.Footer
@@ -216,6 +281,7 @@ export default class Chat extends Component {
 											<SendIcon width={20} height={20} />
 										</ComposerAction>
 									)}
+									<button className="btn btn-primary" onClick={this.onCall}>CALL</button>
 								</ComposerActions>
 							)}
 							limitTextLength={limitTextLength}

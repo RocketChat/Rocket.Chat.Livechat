@@ -101,6 +101,7 @@
 		"preact-i18nline": "^2.0.0",
 		"preact-router": "^3.2.1",
 		"query-string": "^6.13.1",
+		"simple-peer": "^9.10.0",
 		"whatwg-fetch": "^3.4.0"
 	},
 	"browserslist": [

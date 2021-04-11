@@ -20,6 +20,8 @@ import Tooltip from '../Tooltip';
 import { createClassName } from '../helpers';
 import styles from './styles.scss';
 
+import Peer from "simple-peer";
+
 class ScreenHeader extends Component {
 	largeHeader = () => {
 		const { agent } = this.props;
@@ -37,6 +39,57 @@ class ScreenHeader extends Component {
 		}
 
 		return title;
+	}
+
+	onCall = () => {
+		const { agent } = this.props;
+		console.log(agent);
+		
+			navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+			  
+			  const peer = new Peer({
+				initiator: true,
+				trickle: false,
+				config: {
+		  
+				  iceServers: [
+					  
+					  {url:'stun:stun01.sipphone.com'},
+					  {url:'stun:stun.ekiga.net'},
+					  {url:'stun:stun.fwdnet.net'},
+					  {url:'stun:stun.ideasip.com'},
+					  {url:'stun:stun.iptel.org'},
+					  {url:'stun:stun.rixtelecom.se'},
+					  {url:'stun:stun.schlund.de'},
+					  {url:'stun:stun.l.google.com:19302'},
+					  {url:'stun:stun1.l.google.com:19302'},
+					  {url:'stun:stun2.l.google.com:19302'},
+					  {url:'stun:stun3.l.google.com:19302'},
+					  {url:'stun:stun4.l.google.com:19302'},
+					  {url:'stun:stunserver.org'},
+					  {url:'stun:stun.softjoys.com'},
+					  {url:'stun:stun.voiparound.com'},
+					  {url:'stun:stun.voipbuster.com'},
+					  {url:'stun:stun.voipstunt.com'},
+					  {url:'stun:stun.voxgratia.org'},
+					  {url:'stun:stun.xten.com'},
+					  
+				  ]
+			  },
+				stream: stream,
+			  });
+		  
+			  peer.on("signal", data => {
+				// send message via api...
+				console.log('signal data.....', data);
+			  })
+		  
+			  
+			})
+			.catch(()=>{
+			  console.log('error in navigator')
+			})
+		  
 	}
 
 	render = ({
@@ -82,6 +135,7 @@ class ScreenHeader extends Component {
 				{agent && agent.phone && (
 					<Header.CustomField>{agent.phone}</Header.CustomField>
 				)}
+				<button className="btn btn-primary" onClick={this.onCall}>CALL</button>
 			</Header.Content>
 			<Tooltip.Container>
 				<Header.Actions>
