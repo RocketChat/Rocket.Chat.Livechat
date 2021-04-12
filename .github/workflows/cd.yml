@@ -76,8 +76,6 @@ jobs:
       name: github-pages
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: gh-pages
       - uses: actions/download-artifact@v2
         with:
           name: storybooks
@@ -85,14 +83,11 @@ jobs:
             storybook-static
       - run: |
           rm -rf *
-          mv -v "storybook-static" "/"
-          rm -rf storybook-static
       - uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
-          build_dir: '/'
+          build_dir: 'storybook-static'
           commit_message: "Deploy to Github Pages [skip ci]"
           jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
