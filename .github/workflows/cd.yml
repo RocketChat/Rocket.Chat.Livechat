@@ -31,8 +31,6 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: storybooks
-          path: |
-            storybook-static
       - run: |
           ref='${{ github.ref }}'
           echo "::set-output name=branch-name::$(echo "${ref:11}")"
