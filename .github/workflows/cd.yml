@@ -85,6 +85,8 @@ jobs:
             storybook-static
       - run: |
           rm -rf *
+          mv -v "storybook-static" "/"
+          rm -rf storybook-static
       - uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
