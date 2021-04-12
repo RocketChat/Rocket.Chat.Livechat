@@ -83,6 +83,7 @@ jobs:
       - uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages
+          folder: .
           token: ${{ secrets.GH_TOKEN }}
           commit-message: "Deploy to Github Pages [skip ci]"
           clean: true
