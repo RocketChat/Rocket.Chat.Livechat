@@ -66,4 +66,28 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
       - run: yarn release -y
-      - run: yarn deploy-storybook
+
+  publish-to-gh-pages:
+    name: Publish to GitHub Pages
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-test
+    environment:
+      name: github-pages
+      url: "https://rocketchat.github.io/Rocket.Chat.Livechat/${{ needs.build-and-test.outputs.branch-name }}"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - uses: actions/download-artifact@v2
+        with:
+          name: storybooks
+          path: .
+      - uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: .
+          commit_message: "Deploy to Github Pages [skip ci]"
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
