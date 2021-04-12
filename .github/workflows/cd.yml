@@ -86,7 +86,7 @@ jobs:
       - uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
-          build_dir: 'storybook-static'
+          build_dir: .
           commit_message: "Deploy to Github Pages [skip ci]"
           jekyll: false
         env:
