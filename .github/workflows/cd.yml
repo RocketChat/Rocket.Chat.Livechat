@@ -82,7 +82,7 @@ jobs:
         with:
           name: storybooks
           path: | 
-          storybook-static
+            storybook-static
       - uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
