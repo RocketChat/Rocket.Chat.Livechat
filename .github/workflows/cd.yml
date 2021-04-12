@@ -79,12 +79,16 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: storybooks
-          path: .
-      - uses: JamesIves/github-pages-deploy-action@4.1.1
+          path: |
+            storybook-static
+      - run: |
+          rm -rf
+      - uses: crazy-max/ghaction-github-pages@v2
         with:
-          branch: gh-pages
-          folder: .
-          token: ${{ secrets.GH_TOKEN }}
-          commit-message: "Deploy to Github Pages [skip ci]"
-          clean: true
+          target_branch: gh-pages
+          build_dir: .
+          commit_message: "Deploy to Github Pages [skip ci]"
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
