@@ -76,6 +76,8 @@ jobs:
       name: github-pages
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
       - uses: actions/download-artifact@v2
         with:
           name: storybooks
