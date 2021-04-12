@@ -81,8 +81,6 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: storybooks
-          path: |
-            storybook-static
       - run: |
           rm -rf *
       - uses: crazy-max/ghaction-github-pages@v2
