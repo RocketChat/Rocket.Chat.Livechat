@@ -57,22 +57,22 @@ export class TooltipContainer extends Component {
 		tooltip: null,
 		activeChild: null,
 		event: null,
-		placement: null
+		placement: null,
 	}
 
 	showTooltip = (event, { content, placement = 'bottom', childIndex }) => {
 		const triggerBounds = event.target.getBoundingClientRect();
-		this.setState({ tooltip: <Tooltip floating placement={placement} triggerBounds={triggerBounds}>{content}</Tooltip>, activeChild: childIndex, event: event, placement: placement, content: content });
+		this.setState({ tooltip: <Tooltip floating placement={placement} triggerBounds={triggerBounds}>{content}</Tooltip>, activeChild: childIndex, event, placement, content });
 	}
 
 	hideTooltip = () => {
 		this.setState({ tooltip: null });
 	}
 
-	componentWillReceiveProps(props) {
-		if(this.state.tooltip) {
-			const activeChildren = props.children && props.children.props && props.children.props.children ? props.children.props.children[this.state.activeChild] : null;
-			if(activeChildren && activeChildren.props.content !== this.state.content) {
+	UNSAFE_componentWillReceiveProps(props) {
+		if (this.state.tooltip) {
+			const activeChildren = props?.children?.props?.children[this.state.activeChild];
+			if (activeChildren && activeChildren.props.content !== this.state.content) {
 				this.showTooltip(this.state.event, { content: activeChildren.props.content, placement: this.state.placement, childIndex: this.state.activeChild })
 			}
 		}
@@ -98,7 +98,7 @@ export const TooltipTrigger = ({ children, content, placement }) => (
 			onMouseLeave: (event) => hideTooltip(event),
 			onFocusCapture: (event) => showTooltip(event, { content, placement, childIndex: index }),
 			onBlurCapture: (event) => hideTooltip(event),
-			content: content
+			content,
 		}))}
 	</TooltipContext.Consumer>
 );
