@@ -73,7 +73,7 @@ export class TooltipContainer extends Component {
 		if (this.state.tooltip) {
 			const activeChildren = props?.children?.props?.children[this.state.activeChild];
 			if (activeChildren && activeChildren.props.content !== this.state.content) {
-				this.showTooltip(this.state.event, { content: activeChildren.props.content, placement: this.state.placement, childIndex: this.state.activeChild })
+				this.showTooltip(this.state.event, { content: activeChildren.props.content, placement: this.state.placement, childIndex: this.state.activeChild });
 			}
 		}
 	}
