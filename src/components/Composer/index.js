@@ -266,7 +266,7 @@ export class Composer extends Component {
 					this.handleInputLock(true);
 				}}
 
-				onCompositionEnd={(e)=>{
+				onCompositionEnd={() => {
 					this.handleInputLock(false);
 					onChange && onChange(this.el.innerText);
 				}}
