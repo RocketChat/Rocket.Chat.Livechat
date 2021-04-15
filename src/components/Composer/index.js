@@ -58,7 +58,6 @@ const replaceCaret = (el) => {
 };
 
 export class Composer extends Component {
-	
 	handleRef = (el) => {
 		this.el = el;
 	}
