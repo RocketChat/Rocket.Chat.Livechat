@@ -262,7 +262,7 @@ export class Composer extends Component {
 				)}
 		
 
-				onCompositionStart={(e)=>{
+				onCompositionStart={() => {
 					this.handleInputLock(true);
 				}}
 
