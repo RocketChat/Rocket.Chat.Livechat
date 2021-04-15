@@ -235,7 +235,7 @@ export class Composer extends Component {
 		return 0;
 	}
 
-	handleInputLock(isNot){
+	handleInputLock(isNot) {
 		this.setState({ inputLock: isNot });
 		return 0;
 	}
