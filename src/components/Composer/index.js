@@ -152,7 +152,7 @@ export class Composer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {  
-				inputLock: false
+		inputLock: false
 		};
 		this.value = this.props.value;
 		this.handleNotifyEmojiSelect = this.handleNotifyEmojiSelect.bind(this);
