@@ -57,7 +57,11 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: "storybooks-${{ github.event.number }}"
-          path: packages
+          path: |
+            storybook-static
       - run: |
           cat package.json | sed s/\.docker/.app/ > package.json-new
           mv package.json-new package.json
+      - uses: ./.github/actions/loki/test
+        with:
+          working_dir: .

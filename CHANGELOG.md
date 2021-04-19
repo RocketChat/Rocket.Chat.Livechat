@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.9.2 - 2021-04-13
+bump version
+
+## 1.9.1 - 2021-04-12
+[CHORE] Circle CI to github actions #577
+[CHORE] Remove circle CI #580
+
 ## 1.9.0 - 2021-03-22
 [FIX] Add sanitizer to prevent XSS attacks
 [FIX] Wrong Hebrew word הדועה to הודעה #556

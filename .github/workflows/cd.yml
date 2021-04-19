@@ -62,13 +62,32 @@ jobs:
       - run: yarn install
         if: steps.yarn-cache.outputs.cache-hit != 'true'
       - run: yarn run build
-      - run: yarn publish from-package --yes
-        if: github.ref == 'refs/heads/master'
+      - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-      - run: yarn publish --canary --preid dev --dist-tag next --yes
-        if: github.ref == 'refs/heads/develop'
+      - run: yarn release
+
+  publish-to-gh-pages:
+    name: Publish to GitHub Pages
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-test
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - uses: actions/download-artifact@v2
+        with:
+          name: storybooks
+          path: | 
+            storybook-static
+      - uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: "storybook-static"
+          commit_message: "Deploy to Github Pages [skip ci]"
+          jekyll: false
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-      - run: yarn release -y
-      - run: yarn deploy-storybook
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
