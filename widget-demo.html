@@ -48,13 +48,9 @@
 			var h = d.getElementsByTagName(s)[0],
 				j = d.createElement(s);
 			j.async = true;
-			j.src = '/livechat/1.0.0/rocketchat-livechat.min.js?_=' + Math.random();
+			j.src = 'build/rocketchat-livechat.min.js?_=' + Math.random();
 			h.parentNode.insertBefore(j, h);
-		})(window, document, 'script', '/livechat?version=1.0.0');
-
-		RocketChat(function() {
-			this.setCustomField('key-test', 'value test');
-		});
+		})(window, document, 'script', 'http://localhost:8080');
 	</script>
 </body>
 
