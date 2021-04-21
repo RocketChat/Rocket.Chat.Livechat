@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## 1.9.3 - 2021-04-21
+[FIX] sound notification on/off (#567)
+[FIX] Invalid font size for hiragana and katakana (#559)
+
 ## 1.9.2 - 2021-04-13
 bump version
 

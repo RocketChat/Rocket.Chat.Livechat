@@ -55,15 +55,27 @@ const TooltipContext = createContext();
 export class TooltipContainer extends Component {
 	state = {
 		tooltip: null,
+		activeChild: null,
+		event: null,
+		placement: null,
 	}
 
-	showTooltip = (event, { content, placement = 'bottom' }) => {
+	showTooltip = (event, { content, placement = 'bottom', childIndex }) => {
 		const triggerBounds = event.target.getBoundingClientRect();
-		this.setState({ tooltip: <Tooltip floating placement={placement} triggerBounds={triggerBounds}>{content}</Tooltip> });
+		this.setState({ tooltip: <Tooltip floating placement={placement} triggerBounds={triggerBounds}>{content}</Tooltip>, activeChild: childIndex, event, placement, content });
 	}
 
 	hideTooltip = () => {
 		this.setState({ tooltip: null });
+	}
+
+	UNSAFE_componentWillReceiveProps(props) {
+		if (this.state.tooltip) {
+			const activeChildren = props?.children?.props?.children[this.state.activeChild];
+			if (activeChildren && activeChildren.props.content !== this.state.content) {
+				this.showTooltip(this.state.event, { content: activeChildren.props.content, placement: this.state.placement, childIndex: this.state.activeChild });
+			}
+		}
 	}
 
 	render({ children }) {
@@ -81,11 +93,12 @@ export class TooltipContainer extends Component {
 
 export const TooltipTrigger = ({ children, content, placement }) => (
 	<TooltipContext.Consumer>
-		{({ showTooltip, hideTooltip }) => toChildArray(children).map((child) => cloneElement(child, {
-			onMouseEnter: (event) => showTooltip(event, { content, placement }),
+		{({ showTooltip, hideTooltip }) => toChildArray(children).map((child, index) => cloneElement(child, {
+			onMouseEnter: (event) => showTooltip(event, { content, placement, childIndex: index }),
 			onMouseLeave: (event) => hideTooltip(event),
-			onFocusCapture: (event) => showTooltip(event, { content, placement }),
+			onFocusCapture: (event) => showTooltip(event, { content, placement, childIndex: index }),
 			onBlurCapture: (event) => hideTooltip(event),
+			content,
 		}))}
 	</TooltipContext.Consumer>
 );
