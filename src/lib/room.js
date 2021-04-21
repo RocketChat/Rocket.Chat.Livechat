@@ -162,15 +162,38 @@ export const loadMessages = async () => {
 	}
 
 	await store.setState({ loading: true });
-	const rawMessages = (await Livechat.loadMessages(rid)).concat(previousMessages);
-	const messages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
+	try {
+		const rawMessages = (await Livechat.loadMessages(rid)).concat(previousMessages);
+		const messages = (await normalizeMessages(rawMessages)).map(transformAgentInformationOnMessage);
+		await initRoom();
+		await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
 
-	await initRoom();
-	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
-
-	if (messages && messages.length) {
-		const lastMessage = messages[messages.length - 1];
-		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+		if (messages && messages.length) {
+			const lastMessage = messages[messages.length - 1];
+			await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+		}
+	}
+	catch(e) {
+		const waitTime = parseInt(e.data.error.match(/^.*You must wait ([0-9]*) seconds.*$/)[1]);
+		const decrementCounter = async () => {
+			if(window.loadMessagesTimeout) {
+				clearInterval(window.loadMessagesTimeout);
+			}
+			window.loadMessagesTimeout = setInterval(() => {
+				let tmpWaitTime = store.state.loadWaitTime;
+				if(tmpWaitTime) {
+					store.setState({loadWaitTime: tmpWaitTime - 1, loadingMessage: `Error, too many requests. Please slow down. You must wait for ${tmpWaitTime} seconds.` });
+				}
+				else {
+					if(window.loadMessagesTimeout) {
+						clearInterval(window.loadMessagesTimeout);
+					}
+					window.location.reload();
+				}
+			}, 1000)
+		}
+		await store.setState({ loading: true, loadWaitTime: waitTime });
+		await decrementCounter();
 	}
 };
 

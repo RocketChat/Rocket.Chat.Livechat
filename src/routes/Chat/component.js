@@ -106,6 +106,7 @@ export default class Chat extends Component {
 		avatarResolver,
 		conversationFinishedMessage,
 		loading,
+		loadingMessage,
 		onUpload,
 		messages,
 		uploads = false,
@@ -149,6 +150,8 @@ export default class Chat extends Component {
 							ref={this.handleMessagesContainerRef}
 							avatarResolver={avatarResolver}
 							uid={uid}
+							loading={loading}
+							loadingMessage={loadingMessage}
 							messages={messages}
 							typingUsernames={typingUsernames}
 							conversationFinishedMessage={conversationFinishedMessage}

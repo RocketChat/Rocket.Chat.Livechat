@@ -1,6 +1,8 @@
 @import '../../../styles/colors';
 @import '../../../styles/variables';
 
+$alert-error-background-color: $color-red;
+
 .message-list {
 	display: flex;
 	overflow-y: scroll;
@@ -32,4 +34,14 @@
 
 		list-style: none;
 	}
+}
+
+.many-request-error{
+	background-color: $alert-error-background-color;
+	width:100%;
+	height:28px;
+	color: #FFFFFF;
+	font-family: Helvetica Neue,arial,sans-serif;
+	font-size: 12px;
+	padding:5px;
 }

@@ -164,17 +164,22 @@ export class MessageList extends MemoizedComponent {
 
 	render = ({
 		className,
-		style = {},
-	}) => (
-		<div
-			onScroll={this.handleScroll}
-			className={createClassName(styles, 'message-list', {}, [className])}
-			onClick={this.handleClick}
-			style={style}
-		>
-			<ol className={createClassName(styles, 'message-list__content')}>
-				{this.renderItems(this.props)}
-			</ol>
-		</div>
-	)
+		style = {}
+	}) => {
+		if (this.props.loading) {
+			return <span className={createClassName(styles, 'many-request-error')}>{this.props.loadingMessage}</span>
+		}
+		else {
+			return <div
+				onScroll={this.handleScroll}
+				className={createClassName(styles, 'message-list', {}, [className])}
+				onClick={this.handleClick}
+				style={style}
+			>
+				<ol className={createClassName(styles, 'message-list__content')}>
+					{this.renderItems(this.props)}
+				</ol>
+			</div>
+		}
+	}
 }
