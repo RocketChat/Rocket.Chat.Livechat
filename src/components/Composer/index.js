@@ -25,6 +25,7 @@ const parse = (plainText) =>
 	[{ plain: plainText }]
 		.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
 		.join('');
+
 const findLastTextNode = (node) => {
 	if (node.nodeType === Node.TEXT_NODE) {
 		return node;
@@ -97,7 +98,7 @@ export class Composer extends Component {
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
-		texts.forEach((text) => this.pasteText(text));
+		texts.forEach((text) => this.pasteText(parse(text)));
 	}
 
 	handleDrop = (onUpload) => async (event) => {
@@ -120,7 +121,7 @@ export class Composer extends Component {
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
-		texts.forEach((text) => this.pasteText(text));
+		texts.forEach((text) => this.pasteText(parse(text)));
 	}
 
 	handleClick = () => {
