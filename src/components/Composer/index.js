@@ -63,6 +63,9 @@ export class Composer extends Component {
 	}
 
 	handleInput = (onChange) => () => {
+		if (this.state.inputLock) {
+			return;
+		}
 		onChange && onChange(sanitize(this.el.innerText));
 	}
 
@@ -147,6 +150,9 @@ export class Composer extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			inputLock: false,
+		};
 		this.value = this.props.value;
 		this.handleNotifyEmojiSelect = this.handleNotifyEmojiSelect.bind(this);
 
@@ -228,7 +234,13 @@ export class Composer extends Component {
 		return 0;
 	}
 
+	handleInputLock(locked) {
+		this.setState({ inputLock: locked });
+		return 0;
+	}
+
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
+
 		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
 			{pre}
 			<div
@@ -247,6 +259,17 @@ export class Composer extends Component {
 						onClick: this.handleClick,
 					}
 				)}
+
+				onCompositionStart={() => {
+					this.handleInputLock(true);
+				}}
+
+				onCompositionEnd={() => {
+					this.handleInputLock(false);
+					onChange && onChange(this.el.innerText);
+				}}
+
+
 				className={createClassName(styles, 'composer__input')}
 			/>
 			{post}
