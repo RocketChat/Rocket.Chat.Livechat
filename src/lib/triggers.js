@@ -160,9 +160,9 @@ class Triggers {
 							const hrefRegExp = new RegExp(condition.value, 'g');
 							if (request.location.href.match(hrefRegExp)) {
 								self.fire(trigger);
+								this._requests = [];
 							}
 						});
-						this._requests = [];
 						break;
 					case 'time-on-site':
 						if (trigger.timeout) {
