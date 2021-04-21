@@ -54,6 +54,7 @@ class Triggers {
 	constructor() {
 		if (!Triggers.instance) {
 			this._started = false;
+			this._chatOpened = false;
 			this._requests = [];
 			this._triggers = [];
 			this._enabled = true;
@@ -90,8 +91,8 @@ class Triggers {
 	}
 
 	async fire(trigger) {
-		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || user) {
+		const { token, firedTriggers = [] } = store.state;
+		if (!this._enabled) {
 			return;
 		}
 		const { actions } = trigger;
@@ -146,6 +147,15 @@ class Triggers {
 		this.processTriggers();
 	}
 
+	processChatOpened() {
+		this._chatOpened = true;
+		if (!this._started) {
+			return;
+		}
+
+		this.processTriggers();
+	}
+
 	processTriggers() {
 		this._triggers.forEach((trigger) => {
 			if (trigger.skip) {
@@ -171,6 +181,13 @@ class Triggers {
 						trigger.timeout = setTimeout(() => {
 							this.fire(trigger);
 						}, parseInt(condition.value, 10) * 1000);
+						break;
+					case 'chat-opened-by-visitor':
+						if (!this._chatOpened) {
+							break;
+						}
+						this._chatOpened = false;
+						self.fire(trigger);
 						break;
 				}
 			});
