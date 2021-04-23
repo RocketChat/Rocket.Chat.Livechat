@@ -56,7 +56,9 @@ export const processUnread = async () => {
 				count: unreadMessages.length,
 				since: format(parseISO(lastReadMessage.ts), 'HH:mm MMM dd'),
 			});
+			// eslint-disable-next-line no-unused-vars
 			const alert = { id: constants.unreadMessagesAlertId, children: alertMessage, success: true, timeout: 0 };
+			// eslint-disable-next-line no-unused-vars
 			const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
 			// Viasat: do not show unread messages banner
 			// await store.setState({ alerts: (newAlerts.push(alert), newAlerts) });

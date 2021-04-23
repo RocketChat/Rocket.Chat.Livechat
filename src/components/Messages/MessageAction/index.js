@@ -1,10 +1,10 @@
 import { h } from 'preact';
 
+import { Livechat } from '../../../api';
+import store from '../../../store';
 import { createClassName, memo } from '../../helpers';
 import { MessageBubble } from '../MessageBubble';
 import styles from './styles.scss';
-import { Livechat } from '../../../api';
-import store from '../../../store';
 
 function generateRandomString(length) {
 	let result = '';
