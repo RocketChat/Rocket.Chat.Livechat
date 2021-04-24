@@ -6,22 +6,35 @@
 }
 
 .button {
-	background-color: white;
 	color: black;
+
+	background-color: white;
+
 	border: 1px solid orange;
-	font-family:verdana;
-	border-radius: 50px;
+
 	padding: 7px 20px;
+
+	border-radius: 50px;
+
+	font-family: verdana;
+
 	text-align: center;
-	text-decoration: none;
+
 	display: inline-block;
-	font-size: 12px;
+
+	text-decoration: none;
+
 	margin: 4px 2px;
-	transition-duration: 0.4s;
+
+	font-size: 12px;
+
 	cursor: pointer;
+
+	transition-duration: 0.4s;
 }
 
-.button:hover {
-	background-color:orange;
+.button :hover {
+	background-color: orange;
+
 	color: black;
 }
