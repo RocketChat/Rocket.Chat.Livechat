@@ -1,40 +1,40 @@
 .attachment-component {
-    &__inner {
-		height: 2rem;
+	&__inner {
 		max-width: 100%;
+		height: 2rem;
 	}
 }
 
 .button {
-	background-color: white;
-
-	border: 1px solid orange;
-
-	border-radius: 50px;
-
-	color: black;
-
-	cursor: pointer;
-
 	display: inline-block;
-
-	font-family: verdana;
-
-	font-size: 12px;
 
 	margin: 4px 2px;
 
 	padding: 7px 20px;
 
+	cursor: pointer;
+
+	transition-duration: 0.4s;
+
 	text-align: center;
 
 	text-decoration: none;
 
-	transition-duration: 0.4s;
+	color: black;
+
+	border: 1px solid orange;
+
+	border-radius: 50px;
+
+	background-color: white;
+
+	font-family: verdana;
+
+	font-size: 12px;
 }
 
 .button :hover {
-	background-color: orange;
-
 	color: black;
+
+	background-color: orange;
 }
