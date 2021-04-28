@@ -73,7 +73,7 @@ export const throttle = (func, limit) => {
 
 export function getFilteredMsg(msg) {
 	const { config: { filters = [] } } = store.state;
-	filters.forEach(filter => {
+	filters.forEach((filter) => {
 		const regExp = new RegExp(filter.regex, 'g');
 		msg = msg.replace(regExp, filter.slug);
 	});

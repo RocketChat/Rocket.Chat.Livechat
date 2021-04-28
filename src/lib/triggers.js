@@ -2,11 +2,11 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../api';
 import { upsert, createToken, asyncForEach } from '../components/helpers';
+import I18n from '../i18n';
 import store from '../store';
 import { normalizeAgent } from './api';
 import { processUnread } from './main';
 import { parentCall, runCallbackEventEmitter } from './parentCall';
-import I18n from '../i18n';
 import { assignRoom } from './room';
 
 const agentCacheExpiry = 3600000;
@@ -17,9 +17,9 @@ const registerGuestAndCreateSession = async (triggerAction) => {
 	if (room) {
 		return room;
 	}
-	
+
 	store.setState({ loading: true });
-	
+
 	try {
 		const { params } = triggerAction;
 		const guest = { token: token || createToken(), department: params && params.department };
@@ -39,7 +39,7 @@ const registerGuestAndCreateSession = async (triggerAction) => {
 	} finally {
 		store.setState({ loading: false });
 	}
-}
+};
 
 const getAgent = (triggerAction) => {
 	if (agentPromise) {
@@ -62,7 +62,7 @@ const getAgent = (triggerAction) => {
 			} catch (error) {
 				return reject(error);
 			}
-			
+
 			store.setState({ defaultAgent: { ...agent, ts: Date.now() } });
 			resolve(agent);
 		} else if (params.sender === 'custom') {
@@ -213,7 +213,7 @@ class Triggers {
 						store.on('change', ([state, prevState]) => {
 							if (prevState.minimized && !state.minimized && !self._inProgress[trigger._id]) {
 								self._inProgress[trigger._id] = true;
-								self.fire(trigger).then(()=> {
+								self.fire(trigger).then(() => {
 									self._inProgress[trigger._id] = false;
 								});
 							}

@@ -203,6 +203,9 @@ Livechat.onMessage(async (message) => {
 		if (message.customFields.sneakPeekEnabled !== undefined || message.customFields.sneakPeekEnabled !== null) {
 			store.setState({ sneakPeekEnabled: message.customFields.sneakPeekEnabled });
 		}
+		if (message.customFields.salesforceAgentName) {
+			store.state.agent.name = message.customFields.salesforceAgentName;
+		}
 	}
 
 	await processMessage(message);
