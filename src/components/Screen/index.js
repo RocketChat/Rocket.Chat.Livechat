@@ -5,13 +5,13 @@ import I18n from '../../i18n';
 import MinimizeIcon from '../../icons/arrowDown.svg';
 import NotificationsEnabledIcon from '../../icons/bell.svg';
 import NotificationsDisabledIcon from '../../icons/bellOff.svg';
-import ChatIcon from '../../icons/chat.svg';
 import CloseIcon from '../../icons/close.svg';
+import ViasatIcon from '../../icons/viasat.svg';
 // import OpenWindowIcon from '../../icons/newWindow.svg';
 import { Alert } from '../Alert';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import { Footer, FooterContent, PoweredBy } from '../Footer';
+import { Footer, FooterContent } from '../Footer';
 import Header from '../Header';
 import { PopoverContainer } from '../Popover';
 import { Sound } from '../Sound';
@@ -136,7 +136,6 @@ export const ScreenFooter = ({ children, options, limit }) => (
 		<FooterContent>
 			{options}
 			{limit}
-			<PoweredBy />
 		</FooterContent>
 	</Footer>
 );
@@ -150,7 +149,7 @@ const ChatButton = ({
 	agent,
 }) => (
 	<Button
-		icon={minimized || triggered ? <ChatIcon /> : <MinimizeIcon />}
+		icon={minimized || triggered ? <ViasatIcon /> : <MinimizeIcon />}
 		badge={badge}
 		onClick={onClick}
 		className={createClassName(styles, 'screen__chat-button')}
