@@ -22,13 +22,17 @@ export const onChatClose = async () => {
 };
 
 export const closeChat = async ({ transcriptRequested } = {}) => {
+	store.setState({ alerts: [] });
 	if (!transcriptRequested) {
 		await handleTranscript();
 	}
-	store.setState({ alerts: [], minimized: true });
 	parentCall('callback', 'chat-ended');
-	parentCall('closeWidget');
-	onChatClose();
+	store.setState({ composerConfig: {
+		disable: true,
+		disableText: CLOSE_CHAT,
+		onDisabledComposerClick: onChatClose,
+	},
+	});
 };
 
 const disableComposer = (msg) => {
