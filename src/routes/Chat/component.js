@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
-import { FilesDropTarget } from '../../components/FilesDropTarget';
+import { FilesDropTargetWrapper } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
 import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
@@ -151,7 +151,8 @@ export default class Chat extends Component {
 			handleEmojiClick={this.handleEmojiClick}
 			{...props}
 		>
-			<FilesDropTarget
+			<FilesDropTargetWrapper
+				isEnabled={uploads}
 				ref={this.handleFilesDropTargetRef}
 				overlayed
 				overlayText={I18n.t('Drop here to upload a file')}
@@ -246,7 +247,7 @@ export default class Chat extends Component {
 							/>}
 					</Screen.Footer>
 				) : null}
-			</FilesDropTarget>
+			</FilesDropTargetWrapper>
 		</Screen>
 	)
 }

@@ -115,3 +115,8 @@ export class FilesDropTarget extends Component {
 		</div>
 	)
 }
+
+export const FilesDropTargetWrapper = (props) => {
+	const { isEnabled, children } = props;
+	return isEnabled ? <FilesDropTarget {...props} /> : children;
+};
