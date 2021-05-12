@@ -38,7 +38,8 @@ export class ChatContainer extends Component {
 			await this.handleConnectingAgentAlert(newConnecting, normalizeQueueAlert(queueInfo));
 
 			if (startSession) {
-				assignRoom();
+				await this.grantUser();
+				await assignRoom();
 			}
 		}
 	}
