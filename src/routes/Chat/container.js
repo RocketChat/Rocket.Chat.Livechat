@@ -313,8 +313,8 @@ export class ChatContainer extends Component {
 	onRegisterUser = () => route('/register');
 
 	canPrintTranscript = () => {
-		const { transcript } = this.props;
-		return transcript;
+		const { printTranscript } = this.props;
+		return printTranscript;
 	}
 
 	showOptionsMenu = () =>
@@ -429,6 +429,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 					nameFieldRegistrationForm,
 					emailFieldRegistrationForm,
 					transcript,
+					printTranscript,
 					limitTextLength,
 					livechat_kill_switch,
 					livechat_kill_switch_message,
@@ -511,6 +512,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Chat finished')}
 				allowRemoveUserData={allowRemoveUserData}
 				transcript={transcript}
+				printTranscript={printTranscript}
 				alerts={alerts}
 				visible={visible}
 				unread={unread}
