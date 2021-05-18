@@ -171,6 +171,7 @@ export class App extends Component {
 		await Connection.init();
 		this.handleTriggers();
 		CustomFields.init();
+		document.title = this.props.config.theme.title;
 		Hooks.init();
 		userPresence.init();
 		this.initWidget();
