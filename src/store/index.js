@@ -22,6 +22,11 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
+	accessible:{
+		iconsAccompanyingText: false,
+		dynamicText: false,
+		darkMode: false,
+	},
 	iframe: {
 		guest: {},
 		theme: {},
@@ -35,6 +40,7 @@ const initialState = {
 	minimized: true,
 	unread: null,
 };
+
 
 const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages', 'modal'];
 export const store = new Store(initialState, { dontPersist });
