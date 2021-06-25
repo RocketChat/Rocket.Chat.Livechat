@@ -10,6 +10,7 @@ import Hooks from '../../lib/hooks';
 import { setWidgetLanguage } from '../../lib/locale';
 import { parentCall } from '../../lib/parentCall';
 import Triggers from '../../lib/triggers';
+import { setIconsAccompanyingTextState, setDarkModeState } from '../../lib/main';
 import userPresence from '../../lib/userPresence';
 import Chat from '../../routes/Chat';
 import ChatFinished from '../../routes/ChatFinished';
@@ -17,6 +18,7 @@ import GDPRAgreement from '../../routes/GDPRAgreement';
 import LeaveMessage from '../../routes/LeaveMessage';
 import Register from '../../routes/Register';
 import SwitchDepartment from '../../routes/SwitchDepartment';
+import AccessibleMode from '../../routes/AccessibleMode';
 import TriggerMessage from '../../routes/TriggerMessage';
 import { Provider as StoreProvider, Consumer as StoreConsumer, store } from '../../store';
 import { visibility, isActiveSession } from '../helpers';
@@ -218,6 +220,8 @@ export class App extends Component {
 			sound,
 			alerts,
 			modal,
+			setIconsAccompanyingTextState,
+			setDarkModeState,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
@@ -235,6 +239,7 @@ export class App extends Component {
 				<LeaveMessage path='/leave-message' {...screenProps} />
 				<Register path='/register' {...screenProps} />
 				<SwitchDepartment path='/switch-department' {...screenProps} />
+				<AccessibleMode path='/accessible-mode' {...screenProps} />
 				<TriggerMessage path='/trigger-messages' {...screenProps} />
 			</Router>
 		);
@@ -254,6 +259,7 @@ const AppConnector = () => (
 					undocked,
 					minimized = true,
 					expanded = false,
+					accessible,
 					alerts,
 					modal,
 					dispatch,
@@ -268,6 +274,7 @@ const AppConnector = () => (
 						undocked={undocked}
 						minimized={minimized}
 						expanded={expanded}
+						accessible={accessible}
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
