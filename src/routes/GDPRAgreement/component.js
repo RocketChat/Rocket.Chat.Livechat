@@ -37,12 +37,16 @@ export default class GDPR extends Component {
 		instructions,
 		// eslint-disable-next-line no-unused-vars
 		onAgree,
+		iconsAccompanyingTextState, 
+		dynamicTextState,
+		darkModeState,
 		...props
 	}) => (
 		<Screen
 			color={color}
 			title={title}
 			className={createClassName(styles, 'gdpr')}
+			iconsAccompanyingText={iconsAccompanyingTextState}
 			{...props}
 		>
 			<Screen.Content>

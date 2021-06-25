@@ -11,13 +11,14 @@ const defaultTitle = I18n.t('Messages');
 export default class TriggerMessage extends Component {
 	state = { }
 
-	render({ title, messages, loading, onStartChat = () => {}, departments, ...props }) {
+	render({ title, messages, loading, onStartChat = () => {}, departments, iconsAccompanyingTextState, dynamicTextState,darkModeState, ...props }) {
 		const { theme: { color } } = props;
 		return (
 			<Screen
 				title={title || defaultTitle}
 				{...props}
 				triggered={true}
+				iconsAccompanyingText={iconsAccompanyingTextState}
 			>
 				<Screen.Content triggered={true}>
 					{messages && messages.map((message) => message.msg && <p className={createClassName(styles, 'trigger-message__message')}>{message.msg}</p>)}

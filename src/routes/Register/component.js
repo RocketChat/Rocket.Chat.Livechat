@@ -202,7 +202,7 @@ export default class Register extends Component {
 		this.state = getDefaultState(props);
 	}
 
-	render({ title, color, message, loading, departments, customFields, ...props }, { name, email, department, ...state }) {
+	render({ title, color, message, loading, departments, customFields, iconsAccompanyingTextState, dynamicTextState,darkModeState, ...props }, { name, email, department, ...state }) {
 		const valid = getValidableFields(this.state).every(({ error } = {}) => !error);
 
 		return (
@@ -210,6 +210,7 @@ export default class Register extends Component {
 				color={color}
 				title={title || defaultTitle}
 				className={createClassName(styles, 'register')}
+				iconsAccompanyingText={iconsAccompanyingTextState}
 				{...props}
 			>
 				<Screen.Content>

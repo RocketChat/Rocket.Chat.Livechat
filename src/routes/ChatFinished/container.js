@@ -36,6 +36,11 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 					iconColor: customIconColor,
 				} = {},
 			} = {},
+			accessible:{
+				iconsAccompanyingText: iconsAccompanyingTextState,
+				dynamicText: dynamicTextState,
+				darkMode: darkModeState,
+			}={},
 		}) => (
 			<ChatFinishedContainer
 				ref={ref}
@@ -48,6 +53,9 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 				title={I18n.t('Chat Finished')}
 				greeting={greeting}
 				message={message}
+				iconsAccompanyingTextState={iconsAccompanyingTextState}
+				dyanmicTextState={dynamicTextState}
+				darkModeState={darkModeState}
 			/>
 		)}
 	</Consumer>
