@@ -1,0 +1,57 @@
+@import '../../styles/colors';
+
+.toggle-switch {
+    display: flex;
+    justify-content: space-between;
+
+	&__title {
+		margin: 0.5rem 0 1.5rem;
+
+		letter-spacing: 0;
+
+		color: $color-text-dark;
+
+		font-size: 1rem;
+		font-weight: 500;
+		line-height: 1.5rem;
+	}
+}
+
+.toggleswitch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    margin-top: 8px;
+  }
+  .toggleswitch input[type="checkbox"] {
+    display: none;
+  }
+  .toggleswitch .switch {
+    position: absolute;
+    cursor: pointer;
+    background-color: $color-text-light;
+    border-radius: 25px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: background-color 0.2s ease;
+  }
+  .toggleswitch .switch::before {
+    position: absolute;
+    content: "";
+    left: 2px;
+    top: 4px;
+    width: 17px;
+    height: 17px;
+    background-color: $bg-color-light;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+  .toggleswitch input[type="checkbox"]:checked + .switch::before {
+    transform: translateX(25px);
+  }
+  .toggleswitch input[type="checkbox"]:checked + .switch {
+    background-color: $color-dark-red;
+  }
