@@ -38,6 +38,18 @@ export const loadConfig = async () => {
 	});
 };
 
+export const setIconsAccompanyingTextState = async() => {
+	const { accessible } = store.state;
+	const { iconsAccompanyingText } = accessible;
+	await store.setState({ accessible: { ...accessible, iconsAccompanyingText: !iconsAccompanyingText }});
+}
+
+export const setDarkModeState = async() => {
+	const { accessible } = store.state;
+	const { darkMode } = accessible;
+	await store.setState({ accessible: { ...accessible, darkMode: !darkMode }});
+}
+
 export const processUnread = async () => {
 	const { minimized, visible, messages } = store.state;
 	if (minimized || !visible) {
