@@ -11,6 +11,7 @@ import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import I18n from '../../i18n';
 import ChangeIcon from '../../icons/change.svg';
+import AccessibiltyIcon from '../../icons/accessibility.svg';
 import FinishIcon from '../../icons/finish.svg';
 import PlusIcon from '../../icons/plus.svg';
 import RemoveIcon from '../../icons/remove.svg';
@@ -96,7 +97,7 @@ export default class Chat extends Component {
 		}
 	}
 
-	render = ({
+	render({
 		color,
 		title,
 		fontColor,
@@ -111,6 +112,7 @@ export default class Chat extends Component {
 		uploads = false,
 		options,
 		onChangeDepartment,
+		onAccessibleMode,
 		onFinishChat,
 		onRemoveUserData,
 		lastReadMessageId,
@@ -118,11 +120,17 @@ export default class Chat extends Component {
 		registrationRequired,
 		onRegisterUser,
 		limitTextLength,
+		iconsTextState,
+		darkModeState,
+		dynamicTextState,
 		...props
 	}, {
 		atBottom = true,
 		text,
-	}) => (
+	}) {
+	
+
+	return (
 		<Screen
 			color={color}
 			title={title || I18n.t('Need help?')}
@@ -132,9 +140,11 @@ export default class Chat extends Component {
 			nopadding
 			onChangeDepartment={onChangeDepartment}
 			onFinishChat={onFinishChat}
+			onAccessibleMode={onAccessibleMode}
 			onRemoveUserData={onRemoveUserData}
 			className={createClassName(styles, 'chat')}
 			handleEmojiClick={this.handleEmojiClick}
+			iconsAccompanyingText={iconsTextState}
 			{...props}
 		>
 			<FilesDropTarget
@@ -155,6 +165,7 @@ export default class Chat extends Component {
 							lastReadMessageId={lastReadMessageId}
 							onScrollTo={this.handleScrollTo}
 							handleEmojiClick={this.handleEmojiClick}
+							iconsAccompanyingText={iconsTextState}
 						/>
 						{this.state.emojiPickerActive && <Picker
 							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
@@ -172,6 +183,9 @@ export default class Chat extends Component {
 							<Menu.Group>
 								{onChangeDepartment && (
 									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
+								)}
+								{(
+									<Menu.Item onClick={onAccessibleMode} icon={AccessibiltyIcon}>{I18n.t('Accessible Mode')}</Menu.Item>
 								)}
 								{onRemoveUserData && (
 									<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
@@ -192,6 +206,7 @@ export default class Chat extends Component {
 						? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
 						: <Composer onUpload={onUpload}
 							onSubmit={this.handleSubmit}
+							className={createClassName(styles, 'text-area-chat')}
 							onChange={this.handleChangeText}
 							placeholder={I18n.t('Type your message here')}
 							value={text}
@@ -199,21 +214,24 @@ export default class Chat extends Component {
 							handleEmojiClick={this.handleEmojiClick}
 							pre={(
 								<ComposerActions>
-									<ComposerAction className={createClassName(styles, 'emoji-picker-icon')} onClick={this.toggleEmojiPickerState}>
+									<ComposerAction className={createClassName(styles, 'message-box-icons')} onClick={this.toggleEmojiPickerState}>
 										<EmojiIcon width={20} height={20} />
+										{iconsTextState?<p className={createClassName(styles, 'message-box-icons-text')}>{I18n.t('Emoji')}</p> : null}
 									</ComposerAction>
 								</ComposerActions>
 							)}
 							post={(
 								<ComposerActions>
 									{text.length === 0 && uploads && (
-										<ComposerAction onClick={this.handleUploadClick}>
+										<ComposerAction className={createClassName(styles, 'message-box-icons')} onClick={this.handleUploadClick}>
 											<PlusIcon width={20} height={20} />
+											{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>{I18n.t('Attach')}</p> : null}
 										</ComposerAction>
 									)}
 									{text.length > 0 && (
-										<ComposerAction onClick={this.handleSendClick}>
+										<ComposerAction className={createClassName(styles, 'message-box-icons')} onClick={this.handleSendClick}>
 											<SendIcon width={20} height={20} />
+											{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>{I18n.t('Send')}</p> : null}
 										</ComposerAction>
 									)}
 								</ComposerActions>
@@ -222,7 +240,8 @@ export default class Chat extends Component {
 						/>
 					}
 				</Screen.Footer>
+		
 			</FilesDropTarget>
 		</Screen>
 	)
-}
+} }

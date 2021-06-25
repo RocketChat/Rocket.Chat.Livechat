@@ -1,6 +1,9 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
+$message-box-icons-text-font-size: .675rem;
+$message-box-icons-text-height: 1rem;
+$message-box-icons-text-color-hover: $color-text-dark;
 .chat {
 	&__messages {
 		position: relative;
@@ -57,14 +60,21 @@
 		opacity: 0.6;
 	}
 
-	.emoji-picker-icon {
-		color: #696969;
+}
 
-		&:hover,
-		&:focus {
-			color: black;
-		}
+.message-box-icons {
+	color: #696969;
+	margin: 0 auto;
+	&:hover,
+	&:focus {
+		color: black;
 	}
+}
+.message-box-icons-text{
+	font-size: $message-box-icons-text-font-size;
+	font-weight: 500;
+	line-height: $message-box-icons-text-height;
+	margin: -2px 0 -2px 0;
 }
 
 @keyframes loader-rotate {

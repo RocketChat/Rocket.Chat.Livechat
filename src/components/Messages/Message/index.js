@@ -35,6 +35,7 @@ const renderContent = ({
 	attachmentResolver,
 	mid,
 	rid,
+	iconsAccompanyingText,
 }) => [
 	...(attachments || [])
 		.map((attachment) =>
@@ -58,6 +59,8 @@ const renderContent = ({
 					quoted={quoted}
 					url={attachmentResolver(attachment.title_link)}
 					title={attachment.title}
+					iconsAccompanyingText={iconsAccompanyingText}
+
 				/>)
 			|| ((attachment.message_link || attachment.tmid) && renderContent({
 				text: attachment.text,
@@ -112,6 +115,7 @@ export const Message = memo(({
 	me,
 	compact,
 	className,
+	iconsAccompanyingText,
 	style = {},
 	...message
 }) => (
@@ -138,6 +142,7 @@ export const Message = memo(({
 				mid: message._id,
 				rid: message.rid,
 				attachmentResolver,
+				iconsAccompanyingText: iconsAccompanyingText,
 			})}
 		</MessageContent>
 		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={ts} />}

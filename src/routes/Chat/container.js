@@ -172,6 +172,10 @@ export class ChatContainer extends Component {
 		route('/switch-department');
 	}
 
+	onAccessibleMode = () => {
+		route('/accessible-mode');
+	}
+
 	onFinishChat = async () => {
 		const { success } = await ModalManager.confirm({
 			text: I18n.t('Are you sure you want to finish this chat?'),
@@ -225,7 +229,7 @@ export class ChatContainer extends Component {
 
 	canSwitchDepartment = () => {
 		const { allowSwitchingDepartments, departments = {} } = this.props;
-		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
+		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length >= 0;
 	}
 
 	canFinishChat = () => {
@@ -345,6 +349,7 @@ export class ChatContainer extends Component {
 			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
+			onAccessibleMode={(this.onAccessibleMode || null)}
 			onSoundStop={this.handleSoundStop}
 			registrationRequired={this.registrationRequired()}
 			onRegisterUser={this.onRegisterUser}
@@ -401,6 +406,12 @@ export const ChatConnector = ({ ref, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
+			accessible:{
+				iconsAccompanyingText: iconsTextState,
+				dynamicText: dynamicTextState,
+				darkMode: darkModeState
+			} = {},
+			setDarkModeState,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -456,6 +467,10 @@ export const ChatConnector = ({ ref, ...props }) => (
 				nameFieldRegistrationForm={nameFieldRegistrationForm}
 				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
+				iconsTextState={iconsTextState}
+				dynamicTextState={dynamicTextState}
+				darkModeState={darkModeState}
+				setDarkModeState={setDarkModeState}
 			/>
 		)}
 	</Consumer>

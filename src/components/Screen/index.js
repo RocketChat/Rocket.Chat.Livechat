@@ -52,6 +52,7 @@ class ScreenHeader extends Component {
 		onMinimize,
 		onRestore,
 		onOpenWindow,
+		iconsAccompanyingText,
 	}) => (
 		<Header
 			ref={this.handleRef}
@@ -90,10 +91,13 @@ class ScreenHeader extends Component {
 							aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
 							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
 						>
-							{notificationsEnabled
-								? <NotificationsEnabledIcon width={20} height={20} />
-								: <NotificationsDisabledIcon width={20} height={20} />
-							}
+							<span className={createClassName(styles, 'notification-icon')}>
+								{notificationsEnabled
+									? <NotificationsEnabledIcon width={20} height={20} />
+									: <NotificationsDisabledIcon width={20} height={20} />
+								}
+								{iconsAccompanyingText ? <p className={createClassName(styles, 'notification-icon__title')}>{I18n.t('Notifications')}</p> : null}
+							</span>
 						</Header.Action>
 					</Tooltip.Trigger>
 					{(expanded || !windowed) && (
@@ -102,17 +106,24 @@ class ScreenHeader extends Component {
 								aria-label={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}
 								onClick={minimized ? onRestore : onMinimize}
 							>
+							<span className={createClassName(styles, 'notification-icon')}>
 								{minimized
 									? <RestoreIcon width={20} height={20} />
 									: <MinimizeIcon width={20} height={20} />
 								}
+							{iconsAccompanyingText ? <p className={createClassName(styles, 'notification-icon__title')}>{I18n.t('Minimize')}</p> : null}
+							</span>
+								
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
 					{(!expanded && !windowed) && (
 						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-								<OpenWindowIcon width={20} height={20} />
+								<span className={createClassName(styles, 'notification-icon')}>
+									<OpenWindowIcon width={20} height={20} />
+									{iconsAccompanyingText ? <p className={createClassName(styles, 'notification-icon__title')}>{I18n.t('Expand')}</p> : null}
+								</span>
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
@@ -221,6 +232,7 @@ export const Screen = ({
 	queueInfo,
 	dismissNotification,
 	triggered = false,
+	iconsAccompanyingText,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, triggered })}>
 		<CssVar theme={theme} />
@@ -242,6 +254,7 @@ export const Screen = ({
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
+					iconsAccompanyingText={iconsAccompanyingText}
 				/>}
 
 				{modal}
