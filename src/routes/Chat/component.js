@@ -17,6 +17,7 @@ import RemoveIcon from '../../icons/remove.svg';
 import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
 import styles from './styles.scss';
+import {CallNotification} from '../../components/Messages/MessageList/livechatCall';
 
 export default class Chat extends Component {
 	state = {
@@ -164,6 +165,9 @@ export default class Chat extends Component {
 							onSelect={this.handleEmojiSelect}
 							autoFocus={true}
 						/>}
+					</div>
+					<div>
+                        {((messages[messages.length-1]) ? (messages[messages.length-1].session) : (messages[messages.length-1])) ? <CallNotification session={((messages[messages.length-1]) ? (messages[messages.length-1].session) : (messages[messages.length-1]))}/> : null})
 					</div>
 				</Screen.Content>
 				<Screen.Footer
