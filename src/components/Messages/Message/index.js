@@ -10,7 +10,7 @@ import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
-import { ShowCallTime } from '../MessageList/livechatcall';
+import { ShowCallTime } from '../MessageList/livechatCall';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
 import { VideoAttachment } from '../VideoAttachment';
