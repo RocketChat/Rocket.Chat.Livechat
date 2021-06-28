@@ -13,7 +13,7 @@ import styles from './styles.scss';
 const GetSessionId = () => (
 	<Screen.Content nopadding>
 		<div className={createClassName(styles, 'call')}>
-			<iframe style='height:80%' src='https://rocky-earth-01483.herokuapp.com/' />
+			<iframe style='height:80%' src='' />
 		</div>
 	</Screen.Content>
 );

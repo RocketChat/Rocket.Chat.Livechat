@@ -35,24 +35,37 @@
 }
 
 .call {
-	position:absolute; margin-bottom:5px; top:0px; width:100%;height:60%;background: #1F2329;
+	position: absolute;
+	top: 1px;
+
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+
+	width: 100%;
+	height: 60%;
+	margin-bottom: 5px;
+
+	text-align: center;
+
+	color: #ffffff;
+
+	background: #1f2329;
+
 	font-family: Inter;
-	font-style: normal;
-	font-weight: 600;
 	font-size: 12px;
+	font-weight: 600;
+	font-style: normal;
 	line-height: 16px;
-    text-align: center;
-	color: #FFFFFF
-  }
-  .btn{
+	justify-content: space-around;
+}
+
+.btn {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
-	padding: 20px;
-	margin:20px;
-	color: blue;
-  }
 
+	margin: 20px;
+	padding: 20px;
+
+	color: blue;
+	justify-content: space-around;
+}
