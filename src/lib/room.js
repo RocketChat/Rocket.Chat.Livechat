@@ -125,9 +125,9 @@ Livechat.onMessage(async (message) => {
 	if (message.ts instanceof Date) {
 		message.ts = message.ts.toISOString();
 	}
-     // add session and typeCall(accept, decline, end) in message schema. Will work on make new event lister with sdk for audio/video call.
-	 message.session="123";
-	 message.type="accept";
+	// add session and typeCall(accept, decline, end) in message schema. Will work on make new event lister with sdk for audio/video call.
+	message.session = '123';
+	message.type = 'accept';
 	message = await normalizeMessage(message);
 	if (!message) {
 		return;

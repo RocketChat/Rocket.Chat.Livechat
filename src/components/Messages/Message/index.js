@@ -10,6 +10,7 @@ import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
+import { ShowCallTime } from '../MessageList/livechatcall';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
 import { VideoAttachment } from '../VideoAttachment';
@@ -24,7 +25,6 @@ import {
 	MESSAGE_TYPE_LIVECHAT_STARTED,
 	MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
 } from '../constants';
-import {ShowCallTime} from '../../Messages/MessageList/livechatcall';
 
 const renderContent = ({
 	text,
@@ -142,6 +142,6 @@ export const Message = memo(({
 			})}
 		</MessageContent>
 		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={ts} />}
-		{(message.session && message.type=="accept") ? <ShowCallTime stime={ts}/> : null}
+		{message.session && message.type === 'accept' ? <ShowCallTime stime={ts} /> : null}
 	</MessageContainer>
 ));
