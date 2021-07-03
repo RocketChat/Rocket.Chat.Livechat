@@ -1,33 +1,32 @@
 import { h } from 'preact';
 import { useState } from 'preact/compat';
 
+import { Avatar } from '../../Avatar';
 import { Button } from '../../Button';
 import { Screen } from '../../Screen';
-import { createClassName } from '../../helpers';
-import { MessageContainer } from '../MessageContainer';
+import { createClassName, getAvatarUrl } from '../../helpers';
 import { parseDate } from '../MessageTime/index';
 import styles from './styles.scss';
 
-// get sessionid(GetSessionId(session)) and put session id in iframe link
-// <iframe style="height:80%" src="localhost:3000/livechat/sessionId"></iframe>
-const GetSessionId = () => (
+// get roomid(GetRoomId(rid)) and put rid id in iframe link
+// <iframe style="height:80%" src="localhost:3000/livechat/roomId"></iframe>
+// For example, for now I have add link of jitsi and its working fine, similarly we can add link of our video/audio call implemented with webrtc.
+const GetRoomId = (rid) => (
 	<Screen.Content nopadding>
 		<div className={createClassName(styles, 'call')}>
-			<iframe style='height:80%' src='' />
+			<iframe style='height:80%' src='https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX'{...rid} />
 		</div>
 	</Screen.Content>
 );
 
 // show call start time function.
 export const ShowCallTime = (props) => (
-	<hr><MessageContainer>
-		<div style='align-items:center;text-align:center;color:grey;'>
-			<time
-				dateTime={new Date(props.stime).toISOString()}>
-				<div>Call started at {parseDate(props.stime)}</div>
-			</time>
-		</div>
-	</MessageContainer></hr>
+	<div className={createClassName(styles, 'callTime')}>
+		<time
+			dateTime={new Date(props.stime).toISOString()}>
+			<div>Call started at {parseDate(props.stime)}</div>
+		</time>
+	</div>
 );
 
 // call notification with accept and reject option.
@@ -48,10 +47,14 @@ export const CallNotification = (props) => {
 		<div>
 			{ show ? (<Screen.Content nopadding>
 				<div className={createClassName(styles, 'call')}>
+					<div className={createClassName(styles, 'avatar')}>
+						<Avatar
+							src={getAvatarUrl(props.rid.u.username)}
+						/></div>
 					<h3 >Incoming video Call</h3>
 					<div className={createClassName(styles, 'btn')}>
-						<Button onClick={declineClick} danger>Decline</Button>
-						<Button onClick={acceptClick} success >Accept</Button></div></div></Screen.Content>) : null}
-			{isframe ? (<GetSessionId session={props.session} />) : null }
+						<Button onClick={declineClick} className={createClassName(styles, 'btn1')}>Decline</Button>
+						<Button onClick={acceptClick} className={createClassName(styles, 'btn2')} >Accept</Button></div></div></Screen.Content>) : null}
+			{isframe ? (<GetRoomId session={props.rid} />) : null }
 		</div>);
 };

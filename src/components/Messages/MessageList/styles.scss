@@ -69,3 +69,31 @@
 	color: blue;
 	justify-content: space-around;
 }
+
+.btn1 {
+	background-color: #f5455c;
+}
+
+.btn2 {
+	border-color: green;
+	background-color: #2de0a5;
+}
+
+.callTime {
+	margin: 50px;
+
+	text-align: center;
+
+	color: #6c727a;
+
+	font: inter;
+	font-weight: 60px;
+	align-items: center;
+	size: 12px;
+}
+
+.avatar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}

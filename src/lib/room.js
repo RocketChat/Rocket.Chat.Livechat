@@ -125,9 +125,12 @@ Livechat.onMessage(async (message) => {
 	if (message.ts instanceof Date) {
 		message.ts = message.ts.toISOString();
 	}
-	// add session and typeCall(accept, decline, end) in message schema. Will work on make new event lister with sdk for audio/video call.
-	message.session = '123';
-	message.type = 'accept';
+	/* add typeCall(accept, decline, end) in message schema for webrtc. Once the webrtc implementation
+	is done, we can check for message.t==='webrtc' instead of message.t === 'jitsi_call_started'.*/
+	if (message.t === 'jitsi_call_started') {
+		message.callStatus = 'accept';
+	}
+
 	message = await normalizeMessage(message);
 	if (!message) {
 		return;
