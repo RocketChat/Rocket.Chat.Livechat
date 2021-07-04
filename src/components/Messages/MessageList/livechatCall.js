@@ -29,6 +29,15 @@ export const ShowCallTime = (props) => (
 	</div>
 );
 
+// join call button function.
+export const ShowJoinCallButton = (props) => (
+	<div className={createClassName(styles, 'joinBtn')} >
+		<h4>Join my room to start the video call</h4>
+		{console.log('qwerty', props.roomId.rid)}
+		<a className={createClassName(styles, 'joinLink')} rel='noreferrer' target='_blank' href={`https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX${ props.roomId.rid }`} > Join Call </a>
+	</div>
+);
+
 // call notification with accept and reject option.
 export const CallNotification = (props) => {
 	const [isframe, setIframe] = useState(false);
