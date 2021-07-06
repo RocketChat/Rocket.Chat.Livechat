@@ -1,6 +1,8 @@
 import { h } from 'preact';
 import { useState } from 'preact/compat';
 
+import PhoneAccept from '../../../icons/phone.svg';
+import PhoneDecline from '../../../icons/phoneOff.svg';
 import { Avatar } from '../../Avatar';
 import { Button } from '../../Button';
 import { Screen } from '../../Screen';
@@ -13,8 +15,8 @@ import styles from './styles.scss';
 // For example, for now I have add link of jitsi and its working fine, similarly we can add link of our video/audio call implemented with webrtc.
 const GetRoomId = (rid) => (
 	<Screen.Content nopadding>
-		<div className={createClassName(styles, 'call')}>
-			<iframe style='height:80%' src='https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX'{...rid} />
+		<div className={createClassName(styles, 'iframe')}>
+			<iframe style='height:100%' src='https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX'{...rid} />
 		</div>
 	</Screen.Content>
 );
@@ -51,10 +53,10 @@ export const CallNotification = (props) => {
 						<Avatar
 							src={getAvatarUrl(props.rid.u.username)}
 						/></div>
-					<h3 >Incoming video Call</h3>
+					Incoming video Call
 					<div className={createClassName(styles, 'btn')}>
-						<Button onClick={declineClick} className={createClassName(styles, 'btn1')}>Decline</Button>
-						<Button onClick={acceptClick} className={createClassName(styles, 'btn2')} >Accept</Button></div></div></Screen.Content>) : null}
+						<Button onClick={declineClick} className={createClassName(styles, 'btn1')}> <PhoneDecline width={20} height={20} /> Decline</Button>
+						<Button onClick={acceptClick} className={createClassName(styles, 'btn2')} > <PhoneAccept width={20} height={20} />Accept</Button></div></div></Screen.Content>) : null}
 			{isframe ? (<GetRoomId session={props.rid} />) : null }
 		</div>);
 };
