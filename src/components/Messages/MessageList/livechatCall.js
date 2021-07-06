@@ -13,7 +13,7 @@ import styles from './styles.scss';
 // get roomid(GetRoomId(rid)) and put rid id in iframe link
 // <iframe style="height:80%" src="localhost:3000/livechat/roomId"></iframe>
 // For example, for now I have add link of jitsi and its working fine, similarly we can add link of our video/audio call implemented with webrtc.
-const GetRoomId = (rid) => (
+const DisplayIframe = (rid) => (
 	<Screen.Content nopadding>
 		<div className={createClassName(styles, 'iframe')}>
 			<iframe style='height:100%' src='https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX'{...rid} />
@@ -57,6 +57,6 @@ export const CallNotification = (props) => {
 					<div className={createClassName(styles, 'btn')}>
 						<Button onClick={declineClick} className={createClassName(styles, 'btn1')}> <PhoneDecline width={20} height={20} /> Decline</Button>
 						<Button onClick={acceptClick} className={createClassName(styles, 'btn2')} > <PhoneAccept width={20} height={20} />Accept</Button></div></div></Screen.Content>) : null}
-			{isframe ? (<GetRoomId session={props.rid} />) : null }
+			{isframe ? (<DisplayIframe session={props.rid} />) : null }
 		</div>);
 };
