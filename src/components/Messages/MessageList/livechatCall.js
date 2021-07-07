@@ -1,6 +1,8 @@
 import { h } from 'preact';
 import { useState } from 'preact/compat';
 
+import PhoneAccept from '../../../icons/phone.svg';
+import PhoneDecline from '../../../icons/phoneOff.svg';
 import { Avatar } from '../../Avatar';
 import { Button } from '../../Button';
 import { Screen } from '../../Screen';
@@ -53,8 +55,8 @@ export const CallNotification = (props) => {
 						/></div>
 					Incoming video Call
 					<div className={createClassName(styles, 'btn')}>
-						<Button onClick={declineClick} className={createClassName(styles, 'btn1')}>  Decline</Button>
-						<Button onClick={acceptClick} className={createClassName(styles, 'btn2')} > Accept</Button></div></div></Screen.Content>) : null}
+						<Button onClick={declineClick} className={createClassName(styles, 'btn1')}> <PhoneDecline width={20} height={20} /> Decline</Button>
+						<Button onClick={acceptClick} className={createClassName(styles, 'btn2')} > <PhoneAccept width={20} height={20} /> Accept</Button></div></div></Screen.Content>) : null}
 			{isframe ? (<DisplayIframe session={props.rid} />) : null }
 		</div>);
 };
