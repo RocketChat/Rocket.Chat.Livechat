@@ -46,7 +46,7 @@ export class Alert extends Component {
 					className={createClassName(styles, 'alert__close')}
 					aria-label={I18n.t('Dismiss this alert')}
 				>
-					<CloseIcon width={20} />
+					<CloseIcon width={20} height={20} />
 				</button>
 			)}
 		</div>

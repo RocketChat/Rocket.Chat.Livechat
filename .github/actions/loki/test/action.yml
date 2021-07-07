@@ -1,0 +1,14 @@
+name: Loki
+branding:
+  icon: "check"
+  color: "green"
+inputs:
+  working_dir:
+    required: true
+    default: .
+  react_uri:
+    required: true
+    default: ./storybook-static
+runs:
+  using: "docker"
+  image: "Dockerfile"

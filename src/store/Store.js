@@ -1,5 +1,6 @@
 import mitt from 'mitt';
 
+import { parentCall } from '../lib/parentCall';
 
 const { localStorage, sessionStorage } = window;
 
@@ -35,6 +36,7 @@ export default class Store {
 
 			const storedState = JSON.parse(e.newValue);
 			this.setStoredState(storedState);
+			this.emit('storageSynced');
 		});
 
 		window.addEventListener('load', () => {
@@ -42,6 +44,11 @@ export default class Store {
 			sessionStorage.setItem('sessionId', sessionId);
 			const { openSessionIds = [] } = this._state;
 			this.setState({ openSessionIds: [sessionId, ...openSessionIds] });
+		});
+
+		window.addEventListener('visibilitychange', () => {
+			!this._state.minimized && parentCall('openWidget');
+			this._state.iframe.visible ? parentCall('showWidget') : parentCall('hideWidget');
 		});
 
 		window.addEventListener('beforeunload', () => {

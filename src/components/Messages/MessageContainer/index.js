@@ -12,10 +12,11 @@ export const MessageContainer = memo(({
 	className,
 	style = {},
 	children,
+	system = false,
 }) => (
 	<Element
 		id={id}
-		className={createClassName(styles, 'message-container', { compact, reverse }, [className])}
+		className={createClassName(styles, 'message-container', { compact, reverse, system }, [className])}
 		style={style}
 	>
 		{children}

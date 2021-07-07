@@ -1,0 +1,67 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  build-and-test:
+    name: Build and Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+      - run: yarn install
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+      - run: yarn run build
+      - run: yarn run lint
+      - run: yarn run build-storybook
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "storybooks-${{ github.event.number }}"
+          path: |
+            storybook-static
+
+  test-with-loki:
+    name: Test with Loki
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-test
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+      - run: yarn install
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+      - run: yarn run build
+      - uses: actions/download-artifact@v2
+        with:
+          name: "storybooks-${{ github.event.number }}"
+          path: |
+            storybook-static
+      - run: |
+          cat package.json | sed s/\.docker/.app/ > package.json-new
+          mv package.json-new package.json
+      - uses: ./.github/actions/loki/test
+        with:
+          working_dir: .

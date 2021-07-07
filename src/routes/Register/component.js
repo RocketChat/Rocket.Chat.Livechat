@@ -67,17 +67,19 @@ const validations = {
 const getCustomValidations = ({ customFields = [] }) =>
 	customFields
 		.map(({ _id, required, regexp }) => {
-			const validations = [];
+			const customFieldValidation = [];
 
 			if (required) {
-				validations.push(Validations.nonEmpty);
+				customFieldValidation.push(Validations.nonEmpty);
 			}
 
 			if (regexp) {
-				validations.push(Validations.custom);
+				customFieldValidation.push(Validations.custom);
 			}
 
-			return { [_id]: validations };
+			validations[_id] = customFieldValidation;
+
+			return { [_id]: customFieldValidation };
 		})
 		.reduce((values, entry) => ({ ...values, ...entry }), {});
 
@@ -86,8 +88,8 @@ const getValidableFields = (state) =>
 		.map((fieldName) => (state[fieldName] ? { fieldName, ...state[fieldName] } : null))
 		.filter(Boolean);
 
-const validate = (props, { name, value, regexp: pattern }) => {
-	const validation = validations[name] || getCustomValidations(props)[name];
+const validate = (props, { _id, name, value, regexp: pattern }) => {
+	const validation = validations[name] || getCustomValidations(props)[_id];
 	return validation.reduce((error, validation) => error || validation({ value, pattern }), undefined);
 };
 
@@ -105,10 +107,13 @@ const getDefaultState = (props) => {
 		if ((defaultValue && !options) || (Array.isArray(options) && options.includes(defaultValue))) {
 			value = defaultValue;
 		}
+		const error = validate(props, { _id, value, regexp });
 
 		state[_id] = {
 			value,
 			...regexp && { regexp },
+			error,
+			showError: false,
 		};
 	});
 

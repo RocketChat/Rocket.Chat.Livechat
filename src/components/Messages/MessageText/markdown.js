@@ -1,7 +1,9 @@
+import { sanitize } from 'dompurify';
 import MarkdownIt from 'markdown-it';
 
 
 const md = new MarkdownIt({
+	html: true,
 	breaks: true,
 	linkify: true,
 	typographer: true,
@@ -79,4 +81,4 @@ md.use((md) => {
 	});
 });
 
-export const renderMarkdown = (...args) => md.render(...args);
+export const renderMarkdown = (...args) => sanitize(md.render(...args));
