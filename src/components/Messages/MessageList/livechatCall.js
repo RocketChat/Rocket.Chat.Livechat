@@ -42,7 +42,7 @@ export const ShowJoinCallButton = (props) => (
 			</div>
 			{I18n.t('Join my room to start the video call')}
 		</div>
-	    <a className={createClassName(styles, 'joinLink')} rel='noreferrer' target='_blank' href={`https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX${ props.roomId.rid }`} > <VideoIcon width={20} height={20} /> Join Call </a>
+	    <a className={createClassName(styles, 'joinLink')} rel='noreferrer' target='_blank' href={`https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX${ props.roomId.rid }`} > <VideoIcon width={20} height={20} /> {I18n.t('Join Call')} </a>
 	</div>
 );
 
