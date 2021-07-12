@@ -34,7 +34,7 @@
 	}
 }
 
-.call {
+.notifyCall {
 	position: absolute;
 	top: 0;
 
@@ -64,7 +64,19 @@
 	justify-content: space-between;
 }
 
-.btn {
+.callTime {
+	margin: 50px;
+
+	margin-left: 14%;
+
+	text-align: center;
+
+	color: #6c727a;
+
+	font-weight: 500;
+}
+
+.button {
 	display: flex;
 	flex-direction: row;
 
@@ -84,7 +96,7 @@
 	justify-content: center;
 }
 
-.btn1 {
+.declineButton {
 	margin-right: 10px;
 	margin-bottom: 0;
 
@@ -92,7 +104,7 @@
 	background-color: #f5455c;
 }
 
-.btn2 {
+.acceptButton {
 	margin-bottom: 0;
 	margin-left: 10px;
 
