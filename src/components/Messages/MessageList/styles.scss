@@ -111,22 +111,55 @@
 	height: 50%;
 }
 
-@media screen and (min-width: 410px) {
-	.avatar {
-		margin-bottom: -7%;
-	}
-}
-
-.joinBtn {
-	padding: 10px;
+.joinCallBox {
+	padding: 5px;
 
 	border: 1px solid #e4e7ea;
 }
 
+.joinMessage {
+	display: flex;
+	flex-direction: row;
+
+	padding: 15px;
+
+	font-family: Inter;
+	font-size: 15px;
+	font-weight: 600;
+	font-style: normal;
+	line-height: 16px;
+	justify-content: space-around;
+}
+
+.videoIcon {
+	display: flex;
+
+	height: 7%;
+	margin-right: 15px;
+	padding: 10px;
+
+	border: 1px solid white;
+	background-color: #d1ebfe;
+}
+
 .joinLink {
+	display: block;
+
+	width: 40%;
+
+	margin-top: 0;
+	margin-bottom: 3%;
+	margin-left: 25%;
+
 	padding: 5px;
 
 	color: white;
 	border: 1px solid  blue;
 	background-color: #1d74f5;
+}
+
+@media screen and (min-width: 410px) {
+	.avatar {
+		margin-bottom: -7%;
+	}
 }

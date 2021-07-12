@@ -1,8 +1,10 @@
 import { h } from 'preact';
 import { useState } from 'preact/compat';
 
+import I18n from '../../../i18n';
 import PhoneAccept from '../../../icons/phone.svg';
 import PhoneDecline from '../../../icons/phoneOff.svg';
+import VideoIcon from '../../../icons/video.svg';
 import { Avatar } from '../../Avatar';
 import { Button } from '../../Button';
 import { Screen } from '../../Screen';
@@ -33,12 +35,17 @@ export const ShowCallTime = (props) => (
 
 // join call button function.
 export const ShowJoinCallButton = (props) => (
-	<div className={createClassName(styles, 'joinBtn')} >
-		<h4>Join my room to start the video call</h4>
-		{console.log('qwerty', props.roomId.rid)}
-		<a className={createClassName(styles, 'joinLink')} rel='noreferrer' target='_blank' href={`https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX${ props.roomId.rid }`} > Join Call </a>
+	<div className={createClassName(styles, 'joinCallBox')}>
+		<div className={createClassName(styles, 'joinMessage')} >
+			<div className={createClassName(styles, 'videoIcon')} >
+				<VideoIcon width={20} height={20} />
+			</div>
+			{I18n.t('Join my room to start the video call')}
+		</div>
+	    <a className={createClassName(styles, 'joinLink')} rel='noreferrer' target='_blank' href={`https://meet.jit.si/RocketChatXLKhe6QE6dyRLtTkX${ props.roomId.rid }`} > <VideoIcon width={20} height={20} /> Join Call </a>
 	</div>
 );
+
 
 // call notification with accept and reject option.
 export const CallNotification = (props) => {
@@ -54,6 +61,10 @@ export const CallNotification = (props) => {
 		setShow(false);
 	};
 
+	const timeout = () => {
+		setTimeout(function() { setShow(false); }, 20000);
+	};
+
 	return (
 		<div>
 			{ show ? (<Screen.Content nopadding>
@@ -66,6 +77,7 @@ export const CallNotification = (props) => {
 					<div className={createClassName(styles, 'btn')}>
 						<Button onClick={declineClick} className={createClassName(styles, 'btn1')}> <PhoneDecline width={20} height={20} /> Decline</Button>
 						<Button onClick={acceptClick} className={createClassName(styles, 'btn2')} > <PhoneAccept width={20} height={20} /> Accept</Button></div></div></Screen.Content>) : null}
+			{timeout()}
 			{isframe ? (<DisplayIframe session={props.rid} />) : null }
 		</div>);
 };
