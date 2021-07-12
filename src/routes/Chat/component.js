@@ -7,6 +7,7 @@ import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
 import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
+import { CallNotification } from '../../components/Messages/MessageList/livechatCall';
 import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import I18n from '../../i18n';
@@ -164,6 +165,9 @@ export default class Chat extends Component {
 							onSelect={this.handleEmojiSelect}
 							autoFocus={true}
 						/>}
+					</div>
+					<div>
+						{(messages[messages.length - 1] ? messages[messages.length - 1].t === 'jitsi_call_started' : messages[messages.length - 1]) ? <CallNotification rid={(messages[messages.length - 1])} /> : null}
 					</div>
 				</Screen.Content>
 				<Screen.Footer
