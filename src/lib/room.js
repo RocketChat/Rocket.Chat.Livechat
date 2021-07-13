@@ -126,10 +126,6 @@ Livechat.onMessage(async (message) => {
 		message.ts = message.ts.toISOString();
 	}
 
-	if (message.t === 'jitsi_call_started') {
-		message.callStatus = 'accept';
-	}
-
 	message = await normalizeMessage(message);
 	if (!message) {
 		return;
