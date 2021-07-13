@@ -10,6 +10,7 @@ import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
+import { ShowCallTime } from '../MessageList/livechatCall';
 import { MessageText } from '../MessageText';
 import { MessageTime } from '../MessageTime';
 import { VideoAttachment } from '../VideoAttachment';
@@ -141,5 +142,6 @@ export const Message = memo(({
 			})}
 		</MessageContent>
 		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={ts} />}
+		{message.t === 'webRTC_call_started' && message.callStatus === 'accept' ? <ShowCallTime stime={ts} /> : null}
 	</MessageContainer>
 ));
