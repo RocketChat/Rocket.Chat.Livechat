@@ -143,8 +143,8 @@ export const Message = memo(({
 		</MessageContent>
 		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={ts} />}
 		<MessageContent>
-			{message.t === 'jitsi_call_started' && message.callStatus === 'accept' ? <ShowCallTime stime={ts} /> : null}
-			{message.t === 'jitsi_call_started' && message.callStatus === 'accept' ? <ShowJoinCallButton roomId={message} /> : null}
+			{message.t === 'webRTC_call_started' && message.callStatus === 'accept' ? <ShowCallTime stime={ts} /> : null}
+			{message.t === 'webRTC_call_started' && message.callStatus === 'accept' ? <ShowJoinCallButton roomId={message} /> : null}
 		</MessageContent>
 	</MessageContainer>
 ));
