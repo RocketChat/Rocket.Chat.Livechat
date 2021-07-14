@@ -167,7 +167,7 @@ export default class Chat extends Component {
 						/>}
 					</div>
 					<div>
-						{(messages[messages.length - 1] ? messages[messages.length - 1].t === 'webRTC_call_started' : messages[messages.length - 1]) ? <CallNotification rid={(messages[messages.length - 1])} /> : null}
+						{(messages[messages.length - 1] ? messages[messages.length - 1].t === 'webRTC_call_started' || messages[messages.length - 1].t === 'jitsi_call_started' : messages[messages.length - 1]) ? <CallNotification rid={(messages[messages.length - 1])} /> : null}
 					</div>
 				</Screen.Content>
 				<Screen.Footer

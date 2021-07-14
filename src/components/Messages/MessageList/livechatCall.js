@@ -38,6 +38,10 @@ export const CallNotification = (props) => {
 
 	const acceptClick = () => {
 		setShow(!{ show });
+		if (props.rid.t === 'jitsi_call_started') {
+			window.open(`https://meet.jit.si/xlkhe6qe6dyrlttkx${ props.rid.rid }`);
+			return;
+		}
 		setIframe(true);
 	};
 
