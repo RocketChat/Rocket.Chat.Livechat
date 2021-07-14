@@ -71,10 +71,16 @@ function callHook(action, params) {
 }
 
 const updateWidgetStyle = (isOpened) => {
+	bodyStyle = document.body.style.cssText;
+
 	if (smallScreen && isOpened) {
 		scrollPosition = document.documentElement.scrollTop;
+<<<<<<< HEAD
 		bodyStyle = document.body.style.cssText;
 		document.body.style.cssText += FULLSCREEN_DOCUMENT_CONFIG;
+=======
+		document.body.style.cssText += `overflow: hidden; height: 100%; width: 100%; position: fixed; top: ${ scrollPosition }px;`;
+>>>>>>> 158fd9e... Fix document body and theme conflict
 	} else {
 		document.body.style.cssText = bodyStyle;
 		if (smallScreen) {
