@@ -36,10 +36,17 @@ export const CallNotification = (props) => {
 	const [isframe, setIframe] = useState(false);
 	const [show, setShow] = useState(true);
 
-	const acceptClick = () => {
+	const acceptClick = async () => {
 		setShow(!{ show });
 		if (props.rid.t === 'jitsi_call_started') {
-			window.open(`https://meet.jit.si/xlkhe6qe6dyrlttkx${ props.rid.rid }`);
+			const result = await Livechat.videoCall(props.rid);
+			/* result:videoCall:
+                    domain: "meet.jit.si"
+                    provider: "jitsi"
+                    rid: "uJiZ3P5nbG4XMdqJp"
+                    room: "XLKhe6QE6dyRLtTkXuJiZ3P5nbG4XMdqJpRocketChat"
+                    timeout: "2021-07-15T09:10:02.736Z"*/
+			window.open(`https://${ result.videoCall.domain }/${ result.videoCall.room }`);
 			return;
 		}
 		setIframe(true);
