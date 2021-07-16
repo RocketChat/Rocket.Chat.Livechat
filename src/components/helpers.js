@@ -129,7 +129,7 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	return 1;
 });
 
-export const callTimeMessage = (callStatus) => {
+export const normalizeCallTimeMessage = (callStatus) => {
 	const timestamp = new Date().toISOString();
 	const time = format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
 	if (!callStatus) {

@@ -5,10 +5,11 @@ import { Livechat } from '../../../api';
 import I18n from '../../../i18n';
 import PhoneAccept from '../../../icons/phone.svg';
 import PhoneDecline from '../../../icons/phoneOff.svg';
+import { store } from '../../../store';
 import { Avatar } from '../../Avatar';
 import { Button } from '../../Button';
 import { Screen } from '../../Screen';
-import { createClassName, getAvatarUrl } from '../../helpers';
+import { createClassName, getAvatarUrl, createToken } from '../../helpers';
 import styles from './styles.scss';
 
 
@@ -28,12 +29,16 @@ export const CallNotification = (props) => {
 	const acceptClick = async () => {
 		setShow(!{ show });
 		if (props.rid.t === 'jitsi_call_started') {
+			const { state } = store;
+			const { alerts } = state;
 			try {
 				const result = await Livechat.videoCall(props.rid);
 				window.open(`https://${ result.videoCall.domain }/${ result.videoCall.room }`);
 				return;
 			} catch (error) {
 				console.error(error);
+				const alert = { id: createToken(), children: I18n.t('Error in connecting call'), error: true, timeout: 5000 };
+				await store.setState({ alerts: (alerts.push(alert), alerts) });
 				return;
 			}
 		}

@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
 import I18n from '../../../i18n';
-import { getAttachmentUrl, memo, normalizeTransferHistoryMessage, callTimeMessage } from '../../helpers';
+import { getAttachmentUrl, memo, normalizeTransferHistoryMessage, normalizeCallTimeMessage } from '../../helpers';
 import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
@@ -91,8 +91,8 @@ const getSystemMessageText = ({ t, conversationFinishedMessage, transferData, ca
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
 	|| (t === MESSAGE_TYPE_LIVECHAT_STARTED && I18n.t('Chat started'))
-	|| (t === MESSAGE_WEBRTC_CALL && callTimeMessage(callStatus))
-	|| (t === MESSAGE_JITSI_CALL && callTimeMessage(callStatus))
+	|| (t === MESSAGE_WEBRTC_CALL && normalizeCallTimeMessage(callStatus))
+	|| (t === MESSAGE_JITSI_CALL && normalizeCallTimeMessage(callStatus))
 	|| (t === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData));
 
 const getMessageUsernames = (compact, message) => {
