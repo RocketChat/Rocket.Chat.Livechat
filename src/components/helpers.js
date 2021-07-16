@@ -1,3 +1,6 @@
+import format from 'date-fns/format';
+import { parseISO } from 'date-fns/fp';
+import isToday from 'date-fns/isToday';
 import { Component } from 'preact';
 
 import { Livechat } from '../api';
@@ -125,6 +128,20 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	}
 	return 1;
 });
+
+export const callTimeMessage = (callStatus) => {
+	const timestamp = new Date().toISOString();
+	const time = format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
+	if (!callStatus) {
+		return;
+	}
+	if (callStatus === 'accept') {
+		return I18n.t('Call Started at %{time}', { time });
+	}
+	if (callStatus === 'endCall') {
+		return I18n.t('Call Ended at %{time}', { time });
+	}
+};
 
 export const normalizeTransferHistoryMessage = (transferData) => {
 	if (!transferData) {

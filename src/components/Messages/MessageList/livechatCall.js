@@ -9,7 +9,6 @@ import { Avatar } from '../../Avatar';
 import { Button } from '../../Button';
 import { Screen } from '../../Screen';
 import { createClassName, getAvatarUrl } from '../../helpers';
-import { parseDate } from '../MessageTime/index';
 import styles from './styles.scss';
 
 
@@ -22,16 +21,6 @@ const DisplayCallIframe = (rid) => (
 );
 
 
-export const ShowCallTime = (props) => (
-	<div className={createClassName(styles, 'callTime')}>
-		<time
-			dateTime={new Date(props.stime).toISOString()}>
-			<div>{I18n.t('Call started at ')}{parseDate(props.stime)}</div>
-		</time>
-	</div>
-);
-
-
 export const CallNotification = (props) => {
 	const [isframe, setIframe] = useState(false);
 	const [show, setShow] = useState(true);
@@ -39,15 +28,14 @@ export const CallNotification = (props) => {
 	const acceptClick = async () => {
 		setShow(!{ show });
 		if (props.rid.t === 'jitsi_call_started') {
-			const result = await Livechat.videoCall(props.rid);
-			/* result:videoCall:
-                    domain: "meet.jit.si"
-                    provider: "jitsi"
-                    rid: "uJiZ3P5nbG4XMdqJp"
-                    room: "XLKhe6QE6dyRLtTkXuJiZ3P5nbG4XMdqJpRocketChat"
-                    timeout: "2021-07-15T09:10:02.736Z"*/
-			window.open(`https://${ result.videoCall.domain }/${ result.videoCall.room }`);
-			return;
+			try {
+				const result = await Livechat.videoCall(props.rid);
+				window.open(`https://${ result.videoCall.domain }/${ result.videoCall.room }`);
+				return;
+			} catch (error) {
+				console.error(error);
+				return;
+			}
 		}
 		setIframe(true);
 	};
