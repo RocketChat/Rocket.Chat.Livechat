@@ -5,6 +5,7 @@ import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
+import constants from './constants';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
@@ -22,11 +23,29 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 	route('/chat-finished');
 };
 
+export const processCallMessage = async (message) => {
+	// TODO: use a separate event to listen to call start event. Listening on the message type isn't a good solution
+	await store.setState({ incomingCallAlert: {
+		show: true,
+		callProvider: message.t,
+		callerUsername: message.u.username,
+		roomId: message.rid,
+	} });
+};
+
 const processMessage = async (message) => {
+	const { incomingCallAlert } = store.state;
+	if (incomingCallAlert) {
+		// TODO: create a new event to handle the call dismiss event, currently we're just dismissing the call alert if a new message is sent which is not a good solution
+		await store.setState({ incomingCallAlert: null });
+	}
+
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
+	} else if (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) {
+		await processCallMessage(message);
 	}
 };
 
@@ -171,6 +190,11 @@ export const loadMessages = async () => {
 	if (messages && messages.length) {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+
+		// TODO: create a separate event for starting the call and checking if the call is ongoing
+		if (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType) {
+			await processCallMessage(lastMessage);
+		}
 	}
 };
 
