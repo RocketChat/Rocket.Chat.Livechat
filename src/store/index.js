@@ -38,7 +38,7 @@ const initialState = {
 	ongoingCall: null,	// TODO: store call info like url, startTime, timeout, etc here
 };
 
-const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages', 'modal', 'incomingCallAlert', 'ongoingCall']; // TODO: once the event handlers for calls are in-place, we might need to add the incomingCallAlert and ongoingCall into this array
+const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages', 'modal', 'incomingCallAlert', 'ongoingCall'];
 export const store = new Store(initialState, { dontPersist });
 
 if (process.env.NODE_ENV === 'development') {
