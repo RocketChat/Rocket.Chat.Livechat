@@ -43,10 +43,12 @@ export const CallNotification = (props) => {
 			}
 		}
 		setIframe(true);
+		await Livechat.updateCallStatus('accept');
 	};
 
-	const declineClick = () => {
+	const declineClick = async () => {
 		setShow(false);
+		await Livechat.updateCallStatus('decline');
 	};
 
 	return (
