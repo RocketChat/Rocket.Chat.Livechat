@@ -1,7 +1,8 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
+import I18n from '../i18n';
 import { store } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
@@ -10,6 +11,7 @@ import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
+
 
 const commands = new Commands();
 
@@ -23,14 +25,21 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 	route('/chat-finished');
 };
 
+// TODO: use a separate event to listen to call start event. Listening on the message type isn't a good solution
 export const processCallMessage = async (message) => {
-	// TODO: use a separate event to listen to call start event. Listening on the message type isn't a good solution
-	await store.setState({ incomingCallAlert: {
-		show: true,
-		callProvider: message.t,
-		callerUsername: message.u.username,
-		roomId: message.rid,
-	} });
+	const { alerts } = store.state;
+	try {
+		await store.setState({ incomingCallAlert: {
+			show: true,
+			callProvider: message.t,
+			callerUsername: message.u.username,
+			...message.customFields.jitsiCallUrl && { url: message.customFields.jitsiCallUrl },
+		} });
+	} catch (err) {
+		console.error(err);
+		const alert = { id: createToken(), children: I18n.t('error_getting_call_alert'), error: true, timeout: 5000 };
+		await store.setState({ alerts: (alerts.push(alert), alerts) });
+	}
 };
 
 const processMessage = async (message) => {

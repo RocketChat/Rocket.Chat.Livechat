@@ -1,36 +1,25 @@
 import { h } from 'preact';
 import { useState } from 'preact/compat';
 
-import { Livechat } from '../../api';
 import I18n from '../../i18n';
 import PhoneAccept from '../../icons/phone.svg';
 import PhoneDecline from '../../icons/phoneOff.svg';
 import constants from '../../lib/constants';
-import { store } from '../../store';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import { createClassName, getAvatarUrl, createToken } from '../helpers';
+import { createClassName, getAvatarUrl } from '../helpers';
 import styles from './styles.scss';
 
 
-export const CallNotification = ({ callProvider, callerUsername, roomId, dispatch } = { callProvider: undefined, callerUsername: undefined, roomId: undefined, dispatch: undefined }) => {
-	const [show, setShow] = useState(!!callProvider && !!callerUsername && !!roomId && !!dispatch);
+export const CallNotification = ({ callProvider, callerUsername, url, dispatch } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined }) => {
+	const [show, setShow] = useState(!!callProvider && !!callerUsername && !!dispatch && !!url);
 
 	const acceptClick = async () => {
 		setShow(!{ show });
 
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
-				const { state } = store;
-				const { alerts } = state;
-				try {
-					const result = await Livechat.videoCall(roomId);
-					window.open(`https://${ result.videoCall.domain }/${ result.videoCall.room }`); // TODO: get this url from the message payload instead and infuture get it from the video call event
-				} catch (error) {
-					console.error(error);
-					const alert = { id: createToken(), children: I18n.t('error_accepting_jitsi_call'), error: true, timeout: 5000 };
-					await dispatch({ alerts: (alerts.push(alert), alerts) });
-				}
+				window.open(url);
 				await dispatch({ incomingCallAlert: null });
 				break;
 			}
