@@ -136,10 +136,10 @@ export const normalizeCallTimeMessage = (callStatus) => {
 		return;
 	}
 	if (callStatus === 'accept') {
-		return I18n.t('Call Started at %{time}', { time });
+		return I18n.t('call_start_time', { time });
 	}
 	if (callStatus === 'endCall') {
-		return I18n.t('Call Ended at %{time}', { time });
+		return I18n.t('call_end_time', { time });
 	}
 };
 
