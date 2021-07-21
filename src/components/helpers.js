@@ -1,6 +1,3 @@
-import format from 'date-fns/format';
-import { parseISO } from 'date-fns/fp';
-import isToday from 'date-fns/isToday';
 import { Component } from 'preact';
 
 import { Livechat } from '../api';

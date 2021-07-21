@@ -80,7 +80,7 @@ const renderContent = ({
 	),
 ].filter(Boolean);
 
-const getSystemMessageText = ({ t, conversationFinishedMessage, transferData, callStatus }) =>
+const getSystemMessageText = ({ t, conversationFinishedMessage, transferData }) =>
 	(t === MESSAGE_TYPE_ROOM_NAME_CHANGED && I18n.t('Room name changed'))
 	|| (t === MESSAGE_TYPE_USER_ADDED && I18n.t('User added by'))
 	|| (t === MESSAGE_TYPE_USER_REMOVED && I18n.t('User removed by'))
