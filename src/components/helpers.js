@@ -129,19 +129,6 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	return 1;
 });
 
-export const normalizeCallTimeMessage = (callStatus) => {
-	const timestamp = new Date().toISOString();
-	const time = format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
-	if (!callStatus) {
-		return;
-	}
-	if (callStatus === 'accept') {
-		return I18n.t('call_start_time', { time });
-	}
-	if (callStatus === 'endCall') {
-		return I18n.t('call_end_time', { time });
-	}
-};
 
 export const normalizeTransferHistoryMessage = (transferData) => {
 	if (!transferData) {

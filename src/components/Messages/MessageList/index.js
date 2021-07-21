@@ -2,12 +2,14 @@ import { parseISO } from 'date-fns/fp';
 import isSameDay from 'date-fns/isSameDay';
 import { h } from 'preact';
 
+import store from '../../../store';
+import { ShowCallTime } from '../../Calls/ShowCallTime';
+import { ShowJoinCallButton } from '../../Calls/ShowJoinCallButton';
 import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import styles from './styles.scss';
-
 
 export class MessageList extends MemoizedComponent {
 	static defaultProps = {
@@ -111,6 +113,18 @@ export class MessageList extends MemoizedComponent {
 			const previousMessage = messages[i - 1];
 			const message = messages[i];
 			const nextMessage = messages[i + 1];
+			const { incomingCallAlert } = store.state;
+
+			if ((message.msg === 'JOIN_CALL_MSG') || (message.callStatus === 'ended')) {
+				const { url, callProvider, rid } = incomingCallAlert || '';
+				items.push(
+					<div>
+					    <ShowCallTime callStatus={message.callStatus} />
+						<ShowJoinCallButton url={url} callProvider={callProvider} rid={rid} />
+					</div>,
+				);
+				continue;
+			}
 
 			const showDateSeparator = !previousMessage || !isSameDay(parseISO(message.ts), parseISO(previousMessage.ts));
 			if (showDateSeparator) {
