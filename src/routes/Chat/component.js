@@ -2,12 +2,12 @@ import { Picker } from 'emoji-mart';
 import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
+import { CallNotification } from '../../components/Calls/CallNotification';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
 import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
-import { CallNotification } from '../../components/Messages/MessageList/livechatCall';
 import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
 import I18n from '../../i18n';
@@ -119,6 +119,8 @@ export default class Chat extends Component {
 		registrationRequired,
 		onRegisterUser,
 		limitTextLength,
+		incomingCallAlert,
+		dispatch,
 		...props
 	}, {
 		atBottom = true,
@@ -145,6 +147,7 @@ export default class Chat extends Component {
 				onUpload={onUpload}
 			>
 				<Screen.Content nopadding>
+					{ incomingCallAlert && !!incomingCallAlert.show && <CallNotification { ...incomingCallAlert } dispatch={dispatch} />}
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
@@ -165,9 +168,6 @@ export default class Chat extends Component {
 							onSelect={this.handleEmojiSelect}
 							autoFocus={true}
 						/>}
-					</div>
-					<div>
-						{(messages[messages.length - 1] ? messages[messages.length - 1].t === 'webRTC_call_started' : messages[messages.length - 1]) ? <CallNotification rid={(messages[messages.length - 1])} /> : null}
 					</div>
 				</Screen.Content>
 				<Screen.Footer

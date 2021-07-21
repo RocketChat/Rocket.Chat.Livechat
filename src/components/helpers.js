@@ -1,3 +1,6 @@
+import format from 'date-fns/format';
+import { parseISO } from 'date-fns/fp';
+import isToday from 'date-fns/isToday';
 import { Component } from 'preact';
 
 import { Livechat } from '../api';
@@ -113,7 +116,7 @@ export const createToken = () => Math.random().toString(36).substring(2, 15) + M
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
-export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul', 'livechat-close'];
+export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul', 'livechat-close', 'webRTC_call_started', 'jitsi_call_started'];
 
 export const canRenderMessage = ({ t }) => !msgTypesNotRendered.includes(t);
 
@@ -125,6 +128,20 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	}
 	return 1;
 });
+
+export const normalizeCallTimeMessage = (callStatus) => {
+	const timestamp = new Date().toISOString();
+	const time = format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
+	if (!callStatus) {
+		return;
+	}
+	if (callStatus === 'accept') {
+		return I18n.t('call_start_time', { time });
+	}
+	if (callStatus === 'endCall') {
+		return I18n.t('call_end_time', { time });
+	}
+};
 
 export const normalizeTransferHistoryMessage = (transferData) => {
 	if (!transferData) {
