@@ -7,3 +7,5 @@ export const MESSAGE_TYPE_WELCOME = 'wm';
 export const MESSAGE_TYPE_LIVECHAT_CLOSED = 'livechat-close';
 export const MESSAGE_TYPE_LIVECHAT_STARTED = 'livechat-started';
 export const MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY = 'livechat_transfer_history';
+export const MESSAGE_JITSI_CALL = 'webrtc_call_started';
+export const MESSAGE_WEBRTC_CALL = 'jitsi_call_started';
