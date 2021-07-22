@@ -28,7 +28,7 @@ export const ShowJoinCallButton = (props) => {
 				await store.setState({ alerts: (alerts.push(alert), alerts) });
 			}
 		}
-		if (props.callProvider === '') { window.open(`${ props.url }`); }
+		
 	};
 	return (
 		<div className={createClassName(styles, 'joinCall')}>
