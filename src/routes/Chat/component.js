@@ -2,6 +2,7 @@ import { Picker } from 'emoji-mart';
 import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
+import { CallNotification } from '../../components/Calls/CallNotification';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
@@ -118,6 +119,8 @@ export default class Chat extends Component {
 		registrationRequired,
 		onRegisterUser,
 		limitTextLength,
+		incomingCallAlert,
+		dispatch,
 		...props
 	}, {
 		atBottom = true,
@@ -144,6 +147,7 @@ export default class Chat extends Component {
 				onUpload={onUpload}
 			>
 				<Screen.Content nopadding>
+					{ incomingCallAlert && !!incomingCallAlert.show && <CallNotification { ...incomingCallAlert } dispatch={dispatch} />}
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
