@@ -9,13 +9,11 @@ import constants from '../../lib/constants';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
 import { createClassName, getAvatarUrl } from '../helpers';
-import { CallIframe } from './CallIFrame';
 import styles from './styles.scss';
 
 
 export const CallNotification = ({ callProvider, callerUsername, url, dispatch, rid } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, rid: undefined }) => {
 	const [show, setShow] = useState(!!callProvider && !!callerUsername && !!dispatch && !!url);
-	const [isIframe, setIframe] = useState(false);
 	const { token } = Livechat.credentials;
 	const msg = 'JOIN_CALL_MSG';
 
@@ -30,7 +28,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 			}
 			case constants.webrtcCallStartedMessageType: {
 				// TODO: add webrtc code here
-				setIframe(true);
+				await dispatch({ incomingCallAlert: { callstatus: 'accept', callProvider, url } });
 				break;
 			}
 		}
@@ -73,6 +71,5 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 				: null
 			}
 		    {timeout()}
-			{ isIframe ? <CallIframe rid={rid} /> : null}
 		</div>);
 };

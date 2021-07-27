@@ -34,7 +34,7 @@ export const processCallMessage = async (message) => {
 			callProvider: message.t,
 			callerUsername: message.u.username,
 			...message.customFields.jitsiCallUrl && { url: message.customFields.jitsiCallUrl },
-			callStatus: message.callStatus,
+			callstatus: message.callstatus,
 			rid: message.rid,
 		} });
 	} catch (err) {

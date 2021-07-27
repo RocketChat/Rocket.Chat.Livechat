@@ -6,8 +6,8 @@ import { createClassName } from '../helpers';
 import styles from './styles.scss';
 
 
-export const CallIframe = (rid) => {
-	const url = `${ Livechat.client.host }/meet/${ rid.rid }`;
+export const CallIframe = (props) => {
+	const url = `${ Livechat.client.host }/meet/${ props.rid }`;
 	return (
 		<Screen.Content nopadding>
 			<div className={createClassName(styles, 'call-iframe')}>
