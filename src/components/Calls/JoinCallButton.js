@@ -10,7 +10,7 @@ import { createClassName, createToken } from '../helpers';
 import styles from './styles.scss';
 
 
-export const ShowJoinCallButton = (props) => {
+export const JoinCallButton = (props) => {
 	const clickJoinCall = async () => {
 		const { alerts } = store.state;
 		switch (props.callProvider) {
@@ -29,15 +29,16 @@ export const ShowJoinCallButton = (props) => {
 			}
 		}
 	};
-	return (
-		<div className={createClassName(styles, 'joinCall')}>
-			<div className={createClassName(styles, 'joinCall__content')} >
-				<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
-					<VideoIcon width={20} height={20} />
+	return (<div>
+		{ props.callStatus === 'accept'
+			? <div className={createClassName(styles, 'joinCall')}>
+				<div className={createClassName(styles, 'joinCall__content')} >
+					<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
+						<VideoIcon width={20} height={20} />
+					</div>
+					{I18n.t('Join my room to start the video call')}
 				</div>
-				{I18n.t('Join my room to start the video call')}
-			</div>
-			<Button onClick={clickJoinCall} className={createClassName(styles, 'joinCall__content-action')}> <VideoIcon width={20} height={20} /> {I18n.t('Join Call')} </Button>
-	    </div>
+				<Button onClick={clickJoinCall} className={createClassName(styles, 'joinCall__content-action')}> <VideoIcon width={20} height={20} /> {I18n.t('Join Call')} </Button>
+	    </div> : null } </div>
 	);
 };

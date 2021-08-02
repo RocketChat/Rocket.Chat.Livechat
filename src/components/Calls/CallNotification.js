@@ -1,7 +1,6 @@
 import { h } from 'preact';
 import { useState } from 'preact/compat';
 
-import { Livechat } from '../../api';
 import I18n from '../../i18n';
 import PhoneAccept from '../../icons/phone.svg';
 import PhoneDecline from '../../icons/phoneOff.svg';
@@ -12,15 +11,12 @@ import { createClassName, getAvatarUrl } from '../helpers';
 import styles from './styles.scss';
 
 
-export const CallNotification = ({ callProvider, callerUsername, url, dispatch, rid } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, rid: undefined }) => {
-	const [show, setShow] = useState(!!callProvider && !!callerUsername && !!dispatch && !!url);
-	const { token } = Livechat.credentials;
-	const msg = 'JOIN_CALL_MSG';
-
+export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
+	const [show, setShow] = useState(true);
+	console.log('asd', show);
 
 	const acceptClick = async () => {
 		setShow(!{ show });
-		await Livechat.sendMessage({ token, rid, msg });
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
 				window.open(url);
@@ -28,7 +24,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 			}
 			case constants.webrtcCallStartedMessageType: {
 				// TODO: add webrtc code here
-				await dispatch({ incomingCallAlert: { callstatus: 'accept', callProvider, url } });
+				await dispatch({ ongoingCall: { callStatus: 'accept', time: { time } } });
 				break;
 			}
 		}
@@ -36,10 +32,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 
 	const declineClick = async () => {
 		await dispatch({ incomingCallAlert: null });
-	};
-
-	const timeout = () => {
-		setTimeout(async function() { setShow(!{ show }); }, 20000);
+		await dispatch({ ongoingCall: { callStatus: 'decline', time: { time } } });
 	};
 
 	return (
@@ -70,6 +63,5 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 				)
 				: null
 			}
-		    {timeout()}
 		</div>);
 };

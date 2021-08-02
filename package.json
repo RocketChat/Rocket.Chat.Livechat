@@ -97,6 +97,7 @@
 		"markdown-it": "^11.0.0",
 		"mem": "^6.1.0",
 		"mitt": "^2.1.0",
+		"moment": "^2.29.1",
 		"preact": "^10.4.6",
 		"preact-i18nline": "^2.0.0",
 		"preact-router": "^3.2.1",

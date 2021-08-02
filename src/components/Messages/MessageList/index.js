@@ -3,8 +3,8 @@ import isSameDay from 'date-fns/isSameDay';
 import { h } from 'preact';
 
 import store from '../../../store';
-import { ShowCallTime } from '../../Calls/ShowCallTime';
-import { ShowJoinCallButton } from '../../Calls/ShowJoinCallButton';
+import { CallTime } from '../../Calls/CallTime';
+import { JoinCallButton } from '../../Calls/JoinCallButton';
 import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
@@ -114,16 +114,19 @@ export class MessageList extends MemoizedComponent {
 			const message = messages[i];
 			const nextMessage = messages[i + 1];
 			const { incomingCallAlert } = store.state;
+			const { ongoingCall } = store.state;
 
-			if ((message.msg === 'JOIN_CALL_MSG') || (message.callStatus === 'ended')) {
+			if (message.msg === 'Join my room to start the video call' && ongoingCall) {
 				const { url, callProvider, rid } = incomingCallAlert || '';
 				items.push(
-					<div>
-					    <ShowCallTime callStatus={message.callStatus} />
-						<ShowJoinCallButton url={url} callProvider={callProvider} rid={rid} />
-					</div>,
+					<JoinCallButton callStatus={ongoingCall.callStatus} url={url} callProvider={callProvider} rid={rid} />,
 				);
-				continue;
+			}
+
+			if (message.endTs) {
+				items.push(
+					<CallTime time={parseISO(message.ts)} endTime={parseISO(message.endTs)} />,
+				);
 			}
 
 			const showDateSeparator = !previousMessage || !isSameDay(parseISO(message.ts), parseISO(previousMessage.ts));

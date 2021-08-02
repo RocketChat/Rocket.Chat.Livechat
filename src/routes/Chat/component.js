@@ -121,6 +121,7 @@ export default class Chat extends Component {
 		onRegisterUser,
 		limitTextLength,
 		incomingCallAlert,
+		ongoingCall,
 		dispatch,
 		...props
 	}, {
@@ -149,7 +150,7 @@ export default class Chat extends Component {
 			>
 				<Screen.Content nopadding>
 					{ incomingCallAlert && !!incomingCallAlert.show && <CallNotification { ...incomingCallAlert } dispatch={dispatch} />}
-					{ incomingCallAlert && incomingCallAlert.callstatus === 'accept' ? <div> <CallIframe { ...incomingCallAlert } /> </div> : null }
+					{ ongoingCall && ongoingCall.callStatus === 'accept' ? <CallIframe { ...incomingCallAlert } /> : null }
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
