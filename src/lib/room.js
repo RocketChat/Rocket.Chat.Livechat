@@ -33,7 +33,12 @@ export const processCallMessage = async (message) => {
 			show: true,
 			callProvider: message.t,
 			callerUsername: message.u.username,
-			...message.customFields.jitsiCallUrl && { url: message.customFields.jitsiCallUrl },
+			rid: message.rid,
+			time: message.ts,
+		} });
+		await store.setState({ ongoingCall: {
+			callStatus: 'ring',
+			time: message.ts,
 		} });
 	} catch (err) {
 		console.error(err);
@@ -44,8 +49,9 @@ export const processCallMessage = async (message) => {
 
 const processMessage = async (message) => {
 	const { incomingCallAlert } = store.state;
-	if (incomingCallAlert) {
-		// TODO: create a new event to handle the call dismiss event, currently we're just dismissing the call alert if a new message is sent which is not a good solution
+	if (incomingCallAlert && message.endTs) {
+		console.log('hhh', incomingCallAlert);
+		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts } });
 		await store.setState({ incomingCallAlert: null });
 	}
 
@@ -53,7 +59,7 @@ const processMessage = async (message) => {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
-	} else if (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) {
+	} else if (!incomingCallAlert && (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)) {
 		await processCallMessage(message);
 	}
 };

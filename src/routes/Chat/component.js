@@ -2,6 +2,7 @@ import { Picker } from 'emoji-mart';
 import { h, Component } from 'preact';
 
 import { Button } from '../../components/Button';
+import { CallIframe } from '../../components/Calls/CallIFrame';
 import { CallNotification } from '../../components/Calls/CallNotification';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
@@ -120,6 +121,7 @@ export default class Chat extends Component {
 		onRegisterUser,
 		limitTextLength,
 		incomingCallAlert,
+		ongoingCall,
 		dispatch,
 		...props
 	}, {
@@ -148,6 +150,7 @@ export default class Chat extends Component {
 			>
 				<Screen.Content nopadding>
 					{ incomingCallAlert && !!incomingCallAlert.show && <CallNotification { ...incomingCallAlert } dispatch={dispatch} />}
+					{ ongoingCall && ongoingCall.callStatus === 'accept' ? <CallIframe { ...incomingCallAlert } /> : null }
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
