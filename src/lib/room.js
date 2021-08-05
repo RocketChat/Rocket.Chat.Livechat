@@ -35,11 +35,12 @@ export const processCallMessage = async (message) => {
 			callerUsername: message.u.username,
 			rid: message.rid,
 			time: message.ts,
-		} });
-		await store.setState({ ongoingCall: {
+		} },
+		{ ongoingCall: {
 			callStatus: 'ring',
 			time: message.ts,
-		} });
+		} },
+		);
 	} catch (err) {
 		console.error(err);
 		const alert = { id: createToken(), children: I18n.t('error_getting_call_alert'), error: true, timeout: 5000 };

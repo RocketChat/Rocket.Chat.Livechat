@@ -4,12 +4,17 @@
 .call-notification {
 	position: relative;
 
+	display: flex;
+
+	width: 100%;
+	height: 50%;
+
 	&__content {
 		display: flex;
 		flex-direction: column;
 
 		width: 100%;
-		height: 200px;
+		height: 100%;
 
 		background: #1f2329;
 
@@ -59,17 +64,15 @@
 }
 
 .call-iframe {
-	position: relative;
+	position: absolute;
 	top: 0;
 
-	display: flex;
-
 	width: 100%;
-	height: 50%;
+	height: 41%;
 
 	&__content {
 		width: 100%;
-		height: 200%;
+		height: 100%;
 	}
 }
 

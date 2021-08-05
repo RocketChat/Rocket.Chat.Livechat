@@ -30,33 +30,31 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 	};
 
 	const declineClick = async () => {
-		await dispatch({ incomingCallAlert: null });
-		await dispatch({ ongoingCall: { callStatus: 'decline', time: { time } } });
+		await dispatch({ incomingCallAlert: null },
+			{ ongoingCall: { callStatus: 'decline', time: { time } } });
 	};
 
 	return (
-		<div>
+		<div className={createClassName(styles, 'call-notification')}>
 			{ show
 				? (
-					<div className={createClassName(styles, 'call-notification')}>
-						<div className={createClassName(styles, 'call-notification__content')}>
-							<div className={createClassName(styles, 'call-notification__content-avatar')}>
-								<Avatar
-									src={getAvatarUrl(callerUsername)}
-									large
-								/>
-							</div>
-							<div className={createClassName(styles, 'call-notification__content-message')}>
-								{ I18n.t('Incoming video Call') }
-							</div>
-							<div className={createClassName(styles, 'call-notification__content-actions')}>
-								<Button onClick={declineClick} className={createClassName(styles, 'call-notification__content-actions-decline')}>
-									<PhoneDecline width={20} height={20} /> <span style='margin-left:5px'> {I18n.t('Decline')} </span>
-								</Button>
-								<Button onClick={acceptClick} className={createClassName(styles, 'call-notification__content-actions-accept')} >
-									<PhoneAccept width={20} height={20} /><span style='margin-left:5px'> {I18n.t('Accept')} </span>
-								</Button>
-							</div>
+					<div className={createClassName(styles, 'call-notification__content')}>
+						<div className={createClassName(styles, 'call-notification__content-avatar')}>
+							<Avatar
+								src={getAvatarUrl(callerUsername)}
+								large
+							/>
+						</div>
+						<div className={createClassName(styles, 'call-notification__content-message')}>
+							{ I18n.t('Incoming video Call') }
+						</div>
+						<div className={createClassName(styles, 'call-notification__content-actions')}>
+							<Button onClick={declineClick} className={createClassName(styles, 'call-notification__content-actions-decline')}>
+								<PhoneDecline width={20} height={20} /> <span style='margin-left:5px'> {I18n.t('Decline')} </span>
+							</Button>
+							<Button onClick={acceptClick} className={createClassName(styles, 'call-notification__content-actions-accept')} >
+								<PhoneAccept width={20} height={20} /><span style='margin-left:5px'> {I18n.t('Accept')} </span>
+							</Button>
 						</div>
 					</div>
 				)
