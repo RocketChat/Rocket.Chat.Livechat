@@ -2,6 +2,7 @@ import { parseISO } from 'date-fns/fp';
 import isSameDay from 'date-fns/isSameDay';
 import { h } from 'preact';
 
+import constants from '../../../lib/constants';
 import store from '../../../store';
 import { CallTime } from '../../Calls/CallTime';
 import { JoinCallButton } from '../../Calls/JoinCallButton';
@@ -116,8 +117,8 @@ export class MessageList extends MemoizedComponent {
 			const { incomingCallAlert } = store.state;
 			const { ongoingCall } = store.state;
 
-			if (message.msg === 'Join my room to start the video call' && ongoingCall) {
-				const { url, callProvider, rid } = incomingCallAlert || '';
+			if (message.msg === constants.callStartedMessageType && ongoingCall) {
+				const { url, callProvider, rid } = incomingCallAlert || {};
 				items.push(
 					<JoinCallButton callStatus={ongoingCall.callStatus} url={url} callProvider={callProvider} rid={rid} />,
 				);

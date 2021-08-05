@@ -1,4 +1,6 @@
-import moment from 'moment';
+import format from 'date-fns/format';
+import { parseISO } from 'date-fns/fp';
+import isToday from 'date-fns/isToday';
 import { h } from 'preact';
 
 import I18n from '../../i18n';
@@ -18,9 +20,8 @@ export const CallTime = (props) => {
 	} else {
 		callDuration += `${ ss } seconds.`;
 	}
-	console.log('zer', callDuration);
-	const time = moment(props.endTime).format('h:mm A');
-	console.log('bdf', time);
+	const timestamp = new Date(props.time).toISOString();
+	const time = format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
 	return (
 		<div className={createClassName(styles, 'callTime')}>
 			{I18n.t('Call ended at %{time}', { time })}

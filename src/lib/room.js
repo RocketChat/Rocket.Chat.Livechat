@@ -50,7 +50,6 @@ export const processCallMessage = async (message) => {
 const processMessage = async (message) => {
 	const { incomingCallAlert } = store.state;
 	if (incomingCallAlert && message.endTs) {
-		console.log('hhh', incomingCallAlert);
 		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts } });
 		await store.setState({ incomingCallAlert: null });
 	}

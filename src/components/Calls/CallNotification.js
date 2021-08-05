@@ -13,7 +13,6 @@ import styles from './styles.scss';
 
 export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
 	const [show, setShow] = useState(true);
-	console.log('asd', show);
 
 	const acceptClick = async () => {
 		setShow(!{ show });

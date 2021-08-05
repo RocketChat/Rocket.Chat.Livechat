@@ -4,6 +4,7 @@ export default {
 	livechatConnectedAlertId: 'LIVECHAT_CONNECTED',
 	livechatDisconnectedAlertId: 'LIVECHAT_DISCONNECTED',
 	livechatQueueMessageId: 'LIVECHAT_QUEUE_MESSAGE',
+	callStartedMessageType: 'Join my room to start the video call',
 	webrtcCallStartedMessageType: 'livechat_webrtc_video_call',
 	jitsiCallStartedMessageType: 'jitsi_call_started',
 };
