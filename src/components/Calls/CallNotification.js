@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useState } from 'preact/compat';
 
+import { Livechat } from '../../api';
 import I18n from '../../i18n';
 import PhoneAccept from '../../icons/phone.svg';
 import PhoneDecline from '../../icons/phoneOff.svg';
@@ -11,11 +12,12 @@ import { createClassName, getAvatarUrl } from '../helpers';
 import styles from './styles.scss';
 
 
-export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
+export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
 	const [show, setShow] = useState(true);
 
 	const acceptClick = async () => {
 		setShow(!{ show });
+		await Livechat.updateCallStatus('inProgress', rid);
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
 				window.open(url);
@@ -30,6 +32,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 	};
 
 	const declineClick = async () => {
+		await Livechat.updateCallStatus('declined', rid);
 		await dispatch({ incomingCallAlert: null },
 			{ ongoingCall: { callStatus: 'decline', time: { time } } });
 	};
