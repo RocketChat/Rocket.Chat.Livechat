@@ -20,7 +20,7 @@ export const CallTime = (props) => {
 	} else {
 		callDuration += `${ ss } seconds.`;
 	}
-	const timestamp = new Date(props.time).toISOString();
+	const timestamp = new Date(props.endTime).toISOString();
 	const time = format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
 	return (
 		<div className={createClassName(styles, 'callTime')}>

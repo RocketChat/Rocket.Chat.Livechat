@@ -9,6 +9,8 @@ import { Button } from '../Button';
 import { createClassName, createToken } from '../helpers';
 import styles from './styles.scss';
 
+const { localStorage } = window;
+const storedState = JSON.parse(localStorage.getItem('store'));
 
 export const JoinCallButton = (props) => {
 	const clickJoinCall = async () => {
@@ -20,7 +22,7 @@ export const JoinCallButton = (props) => {
 			}
 			case constants.webrtcCallStartedMessageType: {
 				// TODO: add webrtc code here
-				window.open(`${ Livechat.client.host }/meet/${ props.rid }`);
+				window.open(`${ Livechat.client.host }/meet/${ storedState.room._id }?token=${ storedState.token }&id=${ storedState.user._id }`);
 				break;
 			}
 			default: {

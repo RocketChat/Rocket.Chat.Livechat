@@ -124,8 +124,12 @@ export class MessageList extends MemoizedComponent {
 			}
 
 			if (message.endTs) {
+				let timestamp;
+				if (message.endTs.$date) {
+					timestamp = new Date(message.endTs.$date).toISOString();
+				}
 				items.push(
-					<CallTime time={parseISO(message.ts)} endTime={parseISO(message.endTs)} />,
+					<CallTime time={parseISO(message.ts)} endTime={timestamp ? parseISO(timestamp) : parseISO(message.endTs)} />,
 				);
 			}
 
