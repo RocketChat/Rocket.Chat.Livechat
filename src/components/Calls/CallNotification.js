@@ -24,7 +24,6 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
-				// TODO: add webrtc code here
 				await dispatch({ ongoingCall: { callStatus: 'accept', time: { time } } });
 				break;
 			}
