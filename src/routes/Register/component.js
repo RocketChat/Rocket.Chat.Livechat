@@ -163,6 +163,7 @@ export default class Register extends Component {
 			const error = validate(nextProps, { name, value, regexp });
 			state = { ...state, [name]: { ...state[name], value, error, showError: false } };
 		}
+		return state;
 	}
 
 	state = {
