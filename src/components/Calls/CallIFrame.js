@@ -11,7 +11,7 @@ export const CallIframe = () => {
 	const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }`;
 	return (
 		<div className={createClassName(styles, 'call-iframe')}>
-			<iframe className={createClassName(styles, 'call-iframe__content')} src={url} />
+			<iframe className={createClassName(styles, 'call-iframe__content')} allow='camera;microphone' src={url} />
 		</div>
 	);
 };
