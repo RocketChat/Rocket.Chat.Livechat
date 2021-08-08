@@ -32,8 +32,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 
 	const declineClick = async () => {
 		await Livechat.updateCallStatus('declined', rid);
-		await dispatch({ incomingCallAlert: null },
-			{ ongoingCall: { callStatus: 'decline', time: { time } } });
+		await dispatch({ incomingCallAlert: null, ongoingCall: { callStatus: 'declined', time: { time } } });
 	};
 
 	return (

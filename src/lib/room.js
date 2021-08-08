@@ -35,8 +35,8 @@ export const processCallMessage = async (message) => {
 			callerUsername: message.u.username,
 			rid: message.rid,
 			time: message.ts,
-		} },
-		{ ongoingCall: {
+		},
+		ongoingCall: {
 			callStatus: 'ring',
 			time: message.ts,
 		} },
@@ -49,16 +49,14 @@ export const processCallMessage = async (message) => {
 };
 
 const processMessage = async (message) => {
-	const { incomingCallAlert } = store.state;
-	if (incomingCallAlert && message.endTs) {
-		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts } });
-		await store.setState({ incomingCallAlert: null });
-	}
+	const { incomingCallAlert, ongoingCall } = store.state;
 
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
+	} else if (message.endTs && ((ongoingCall && ongoingCall.callStatus === 'declined') || incomingCallAlert)) {
+		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts }, incomingCallAlert: null });
 	} else if (!incomingCallAlert && (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)) {
 		await processCallMessage(message);
 	}
@@ -206,8 +204,9 @@ export const loadMessages = async () => {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
 
-		// TODO: create a separate event for starting the call and checking if the call is ongoing
-		if (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType) {
+		if (lastMessage.endTs && (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType)) {
+			await store.setState({ ongoingCall: { callStatus: 'ended', time: lastMessage.ts }, incomingCallAlert: null });
+		} else if (!lastMessage.endTs && (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType)) {
 			await processCallMessage(lastMessage);
 		}
 	}
