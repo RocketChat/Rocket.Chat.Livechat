@@ -33,8 +33,14 @@ export const processCallMessage = async (message) => {
 			show: true,
 			callProvider: message.t,
 			callerUsername: message.u.username,
-			...message.customFields.jitsiCallUrl && { url: message.customFields.jitsiCallUrl },
-		} });
+			rid: message.rid,
+			time: message.ts,
+		},
+		ongoingCall: {
+			callStatus: 'ring',
+			time: message.ts,
+		} },
+		);
 	} catch (err) {
 		console.error(err);
 		const alert = { id: createToken(), children: I18n.t('error_getting_call_alert'), error: true, timeout: 5000 };
@@ -43,17 +49,15 @@ export const processCallMessage = async (message) => {
 };
 
 const processMessage = async (message) => {
-	const { incomingCallAlert } = store.state;
-	if (incomingCallAlert) {
-		// TODO: create a new event to handle the call dismiss event, currently we're just dismissing the call alert if a new message is sent which is not a good solution
-		await store.setState({ incomingCallAlert: null });
-	}
+	const { incomingCallAlert, ongoingCall } = store.state;
 
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
-	} else if (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) {
+	} else if (message.endTs && ((ongoingCall && ongoingCall.callStatus === 'declined') || incomingCallAlert)) {
+		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts }, incomingCallAlert: null });
+	} else if (!incomingCallAlert && (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)) {
 		await processCallMessage(message);
 	}
 };
@@ -200,8 +204,11 @@ export const loadMessages = async () => {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
 
-		// TODO: create a separate event for starting the call and checking if the call is ongoing
 		if (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType) {
+			if (lastMessage.endTs) {
+				await store.setState({ ongoingCall: { callStatus: 'ended', time: lastMessage.ts }, incomingCallAlert: null });
+				return;
+			}
 			await processCallMessage(lastMessage);
 		}
 	}
