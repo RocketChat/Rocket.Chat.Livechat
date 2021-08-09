@@ -30,7 +30,7 @@ export const JoinCallButton = (props) => {
 		}
 	};
 	return (<div>
-		{ props.callStatus === 'accept'
+		{ props.callStatus === 'accept' || props.callStatus === 'ongoingCallInNewTab'
 			? <div className={createClassName(styles, 'joinCall')}>
 				<div className={createClassName(styles, 'joinCall__content')} >
 					<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
