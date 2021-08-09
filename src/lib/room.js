@@ -204,11 +204,9 @@ export const loadMessages = async () => {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
 
-		if (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType) {
-			if (lastMessage.endTs) {
-				await store.setState({ ongoingCall: { callStatus: 'ended', time: lastMessage.ts }, incomingCallAlert: null });
-				return;
-			}
+		if (lastMessage.endTs && (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType)) {
+			await store.setState({ ongoingCall: { callStatus: 'ended', time: lastMessage.ts }, incomingCallAlert: null });
+		} else if (!lastMessage.endTs && (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType)) {
 			await processCallMessage(lastMessage);
 		}
 	}
