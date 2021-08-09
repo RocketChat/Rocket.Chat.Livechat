@@ -1,6 +1,7 @@
+import { route } from 'preact-router';
 import mitt from 'mitt';
-
 import { parentCall } from '../lib/parentCall';
+import { loadConfig } from '../lib/main';
 
 const { localStorage, sessionStorage } = window;
 
@@ -21,7 +22,8 @@ export default class Store {
 			storedState = typeof storedState === 'object' ? storedState : {};
 		}
 
-		this._state = { ...initialState, ...storedState };
+		this._initialState = initialState;
+ 		this._state = { ...initialState, ...storedState };
 
 		window.addEventListener('storage', (e) => {
 			// Cross-tab communication
@@ -86,5 +88,11 @@ export default class Store {
 		}
 		this._state = { ...storedState, ...nonPeristable };
 		this.emit('change', [this._state, prevState]);
+	}
+
+	resetState() {
+		this._state = this._initialState;
+		loadConfig();
+		route('');
 	}
 }

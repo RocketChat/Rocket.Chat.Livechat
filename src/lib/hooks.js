@@ -151,6 +151,10 @@ const api = {
 		store.setState({ minimized: false });
 		parentCall('openWidget');
 	},
+
+	reset() {
+		store.resetState();
+	}
 };
 
 const onNewMessage = (event) => {

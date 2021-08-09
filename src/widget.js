@@ -310,6 +310,10 @@ function minimizeWidget() {
 	callHook('minimizeWidget');
 }
 
+function reset() {
+	callHook('reset');
+}
+
 function initialize(params) {
 	for (const method in params) {
 		if (!params.hasOwnProperty(method)) {
@@ -439,6 +443,7 @@ window.RocketChat.livechat = {
 	hideWidget,
 	maximizeWidget,
 	minimizeWidget,
+	reset,
 
 	// callbacks
 	onChatMaximized(fn) { registerCallback('chat-maximized', fn); },
