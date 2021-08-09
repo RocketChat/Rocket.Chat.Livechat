@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
 import I18n from '../../../i18n';
-import { getAttachmentUrl, memo, normalizeTransferHistoryMessage, normalizeCallTimeMessage } from '../../helpers';
+import { getAttachmentUrl, memo, normalizeTransferHistoryMessage } from '../../helpers';
 import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
@@ -22,8 +22,6 @@ import {
 	MESSAGE_TYPE_WELCOME,
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
 	MESSAGE_TYPE_LIVECHAT_STARTED,
-	MESSAGE_WEBRTC_CALL,
-	MESSAGE_JITSI_CALL,
 	MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
 } from '../constants';
 
@@ -82,7 +80,7 @@ const renderContent = ({
 	),
 ].filter(Boolean);
 
-const getSystemMessageText = ({ t, conversationFinishedMessage, transferData, callStatus }) =>
+const getSystemMessageText = ({ t, conversationFinishedMessage, transferData }) =>
 	(t === MESSAGE_TYPE_ROOM_NAME_CHANGED && I18n.t('Room name changed'))
 	|| (t === MESSAGE_TYPE_USER_ADDED && I18n.t('User added by'))
 	|| (t === MESSAGE_TYPE_USER_REMOVED && I18n.t('User removed by'))
@@ -91,8 +89,6 @@ const getSystemMessageText = ({ t, conversationFinishedMessage, transferData, ca
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
 	|| (t === MESSAGE_TYPE_LIVECHAT_STARTED && I18n.t('Chat started'))
-	|| (t === MESSAGE_WEBRTC_CALL && normalizeCallTimeMessage(callStatus))
-	|| (t === MESSAGE_JITSI_CALL && normalizeCallTimeMessage(callStatus))
 	|| (t === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData));
 
 const getMessageUsernames = (compact, message) => {
