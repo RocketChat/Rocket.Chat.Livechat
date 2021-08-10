@@ -210,7 +210,7 @@ export const loadMessages = async () => {
 				return;
 			}
 			if (window.innerWidth <= 800 && window.innerHeight >= 630) {
-				await store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: lastMessage.ts }, incomingCallAlert: null });
+				await store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: lastMessage.ts }, incomingCallAlert: { show: false, callProvider: lastMessage.t } });
 				return;
 			}
 			await processCallMessage(lastMessage);
