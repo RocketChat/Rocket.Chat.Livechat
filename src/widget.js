@@ -70,7 +70,7 @@ function callHook(action, params) {
 	iframe.contentWindow.postMessage(data, '*');
 }
 
-const updateWidgetStyle = (isOpened) => {
+const updateWidgetStyle = (isOpened, height) => {
 	if (smallScreen && isOpened) {
 		scrollPosition = document.documentElement.scrollTop;
 		bodyStyle = document.body.style.cssText;
@@ -92,10 +92,15 @@ const updateWidgetStyle = (isOpened) => {
 		 * so fixed it to 100% avoiding problem for some browsers. Similar resolution
 		 * for widget.style.width
 		 */
+		if (height) {
+			widget.style.height = smallScreen ? '100%'
+				: `${ WIDGET_MARGIN + height + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT }px`;
+		} else {
+			widget.style.height = smallScreen ? '100%'
+				: `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
+		}
 
 		widget.style.width = smallScreen ? '100%' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
-		widget.style.height = smallScreen ? '100%'
-			: `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
 	} else {
 		widget.style.left = 'auto';
 		widget.style.width = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_WIDTH + WIDGET_MARGIN }px`;
@@ -159,6 +164,10 @@ const openWidget = () => {
 	emitCallback('chat-maximized');
 };
 
+const resizeWidget = (height) => {
+	updateWidgetStyle(true, height);
+};
+
 function closeWidget() {
 	if (widget.dataset.state === 'closed') {
 		return;
@@ -203,6 +212,10 @@ const api = {
 
 	openWidget() {
 		openWidget();
+	},
+
+	resizeWidget(height) {
+		resizeWidget(height);
 	},
 
 	removeWidget() {
