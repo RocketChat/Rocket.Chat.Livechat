@@ -166,6 +166,7 @@ const openWidget = () => {
 
 const resizeWidget = (height) => {
 	updateWidgetStyle(true, height);
+	widget.dataset.state = 'triggered';
 };
 
 function closeWidget() {
