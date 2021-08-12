@@ -1,7 +1,7 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
+import { setCookies, upsert, canRenderMessage, createToken, isMobileDevice } from '../components/helpers';
 import I18n from '../i18n';
 import { store } from '../store';
 import { normalizeAgent } from './api';
@@ -209,7 +209,7 @@ export const loadMessages = async () => {
 				await store.setState({ ongoingCall: { callStatus: 'ended', time: lastMessage.ts }, incomingCallAlert: null });
 				return;
 			}
-			if (window.innerWidth <= 800 && window.innerHeight >= 630) {
+			if (isMobileDevice()) {
 				await store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: lastMessage.ts }, incomingCallAlert: { show: false, callProvider: lastMessage.t } });
 				return;
 			}

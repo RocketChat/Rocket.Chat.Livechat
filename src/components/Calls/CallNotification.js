@@ -9,7 +9,7 @@ import constants from '../../lib/constants';
 import store from '../../store';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import { createClassName, getAvatarUrl } from '../helpers';
+import { createClassName, getAvatarUrl, isMobileDevice } from '../helpers';
 import styles from './styles.scss';
 
 
@@ -33,7 +33,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
-				if (window.innerWidth <= 800 && window.innerHeight >= 630) {
+				if (isMobileDevice()) {
 					callInNewTab();
 					break;
 				}
