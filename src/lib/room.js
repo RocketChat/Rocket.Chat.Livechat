@@ -55,7 +55,7 @@ const processMessage = async (message) => {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
-	} else if (message.endTs && ((ongoingCall && (ongoingCall.callStatus === 'declined' || ongoingCall.callStatus === 'ongoingCallInNewTab')) || incomingCallAlert)) {
+	} else if (message.endTs || (ongoingCall && ongoingCall.callStatus === 'declined')) {
 		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts }, incomingCallAlert: null });
 	} else if (!incomingCallAlert && (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)) {
 		await processCallMessage(message);
@@ -201,20 +201,18 @@ export const loadMessages = async () => {
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
 
 	if (messages && messages.length) {
+		for (let i = 0; i < messages.length; ++i) {
+			const message = messages[i];
+			if (message.actionLinks && message.actionLinks.length === 2) {
+				if (isMobileDevice()) {
+					store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: message.ts }, incomingCallAlert: { show: false, callProvider: message.t } });
+					return;
+				}
+				processCallMessage(message);
+			}
+		}
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
-
-		if (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType) {
-			if (lastMessage.endTs) {
-				await store.setState({ ongoingCall: { callStatus: 'ended', time: lastMessage.ts }, incomingCallAlert: null });
-				return;
-			}
-			if (isMobileDevice()) {
-				await store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: lastMessage.ts }, incomingCallAlert: { show: false, callProvider: lastMessage.t } });
-				return;
-			}
-			await processCallMessage(lastMessage);
-		}
 	}
 };
 
