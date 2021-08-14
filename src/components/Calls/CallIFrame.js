@@ -7,15 +7,27 @@ import styles from './styles.scss';
 
 
 export const CallIframe = () => {
-	const { token, room } = store.state;
-	const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }&layout=embedded`;
-	window.handleIframeClose = () => store.setState({ incomingCallAlert: null });
+	const { token, room, incomingCallAlert } = store.state;
+	const url = `${ Livechat.client.host }meet/${ room._id }?token=${ token }&layout=embedded`;
+	window.handleIframeClose = async () => store.setState({ incomingCallAlert: {
+		show: false,
+		callProvider: incomingCallAlert.callProvider,
+		callerUsername: incomingCallAlert.callerUsername,
+		rid: incomingCallAlert.rid,
+		time: incomingCallAlert.time,
+	} });
 	window.expandCall = async () => {
 		window.open(
-			`${ Livechat.client.host }/meet/${ room._id }?token=${ token }`,
+			`${ Livechat.client.host }meet/${ room._id }?token=${ token }`,
 			room._id,
 		);
-		return store.setState({ incomingCallAlert: null });
+		return store.setState({ incomingCallAlert: {
+			show: false,
+			callProvider: incomingCallAlert.callProvider,
+			callerUsername: incomingCallAlert.callerUsername,
+			rid: incomingCallAlert.rid,
+			time: incomingCallAlert.time,
+		} });
 	};
 	return (
 		<div className={createClassName(styles, 'call-iframe')}>
