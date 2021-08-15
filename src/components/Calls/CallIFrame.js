@@ -9,14 +9,14 @@ import styles from './styles.scss';
 export const CallIframe = () => {
 	const { token, room, incomingCallAlert } = store.state;
 	const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }&layout=embedded`;
-	window.handleIframeClose = async () => store.setState({ incomingCallAlert: {
+	window.handleIframeClose = () => store.setState({ incomingCallAlert: {
 		show: false,
 		callProvider: incomingCallAlert.callProvider,
 		callerUsername: incomingCallAlert.callerUsername,
 		rid: incomingCallAlert.rid,
 		time: incomingCallAlert.time,
 	} });
-	window.expandCall = async () => {
+	window.expandCall = () => {
 		window.open(
 			`${ Livechat.client.host }/meet/${ room._id }?token=${ token }`,
 			room._id,
