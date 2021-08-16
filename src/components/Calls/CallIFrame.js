@@ -7,7 +7,7 @@ import styles from './styles.scss';
 
 
 export const CallIframe = () => {
-	const { token, room, incomingCallAlert } = store.state;
+	const { token, room, incomingCallAlert, ongoingCall } = store.state;
 	const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }&layout=embedded`;
 	window.handleIframeClose = () => store.setState({ incomingCallAlert: { ...incomingCallAlert, show: false } });
 	window.expandCall = () => {
