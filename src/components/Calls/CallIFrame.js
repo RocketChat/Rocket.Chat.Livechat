@@ -17,7 +17,7 @@ export const CallIframe = () => {
 		);
 		return store.setState({
 			incomingCallAlert: { ...incomingCallAlert, show: false },
-			ongoingCall: { ...ongoingCall, callStatus: "ongoingCallInNewTab" },
+			ongoingCall: { ...ongoingCall, callStatus: 'ongoingCallInNewTab' },
 		});
 	};
 	return (
