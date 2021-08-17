@@ -13,7 +13,7 @@ import { createClassName, getAvatarUrl, isMobileDevice } from '../helpers';
 import styles from './styles.scss';
 
 
-export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
+export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid, callId } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
 	const [show, setShow] = useState(true);
 
 	const callInNewTab = async () => {
@@ -25,8 +25,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 
 	const acceptClick = async () => {
 		setShow(!{ show });
-		await Livechat.updateCallStatus('inProgress', rid);
-
+		await Livechat.updateCallStatus('inProgress', rid, callId);
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
 				window.open(url);
@@ -44,7 +43,8 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 	};
 
 	const declineClick = async () => {
-		await Livechat.updateCallStatus('declined', rid);
+		await Livechat.updateCallStatus('declined', rid, callId);
+		await Livechat.notifyCallDeclined(rid);
 		await dispatch({ incomingCallAlert: null, ongoingCall: { callStatus: 'declined', time: { time } } });
 	};
 
