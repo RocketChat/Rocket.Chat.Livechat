@@ -1,7 +1,7 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { setCookies, upsert, canRenderMessage, createToken, isMobileDevice } from '../components/helpers';
+import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
 import I18n from '../i18n';
 import { store } from '../store';
 import { normalizeAgent } from './api';
@@ -29,19 +29,20 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 export const processCallMessage = async (message) => {
 	const { alerts } = store.state;
 	try {
-		await store.setState({ incomingCallAlert: {
-			show: true,
-			callProvider: message.t,
-			callerUsername: message.u.username,
-			rid: message.rid,
-			time: message.ts,
-			callId: message._id,
-		},
-		ongoingCall: {
-			callStatus: 'ring',
-			time: message.ts,
-		} },
-		);
+		await store.setState({
+			incomingCallAlert: {
+				show: true,
+				callProvider: message.t,
+				callerUsername: message.u.username,
+				rid: message.rid,
+				time: message.ts,
+				callId: message._id,
+			},
+			ongoingCall: {
+				callStatus: 'ring',
+				time: message.ts,
+			},
+		});
 	} catch (err) {
 		console.error(err);
 		const alert = { id: createToken(), children: I18n.t('error_getting_call_alert'), error: true, timeout: 5000 };
@@ -185,9 +186,10 @@ Livechat.onMessage(async (message) => {
 });
 
 export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
+export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => (msg.t === 'livechat_webrtc_video_call' || msg.t === 'livechat_video_call') || !msg.endTs).pop();
 
 export const loadMessages = async () => {
-	const { messages: storedMessages, room: { _id: rid } = {} } = store.state;
+	const { messages: storedMessages, room: { _id: rid, callStatus } = {}, ongoingCall: { callStatus: ongoingCallStatus } = {} } = store.state;
 	const previousMessages = getGreetingMessages(storedMessages);
 
 	if (!rid) {
@@ -201,19 +203,18 @@ export const loadMessages = async () => {
 	await initRoom();
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
 
-	if (messages && messages.length) {
-		for (let i = 0; i < messages.length; ++i) {
-			const message = messages[i];
-			if (message.actionLinks && message.actionLinks.length === 2) {
-				if (isMobileDevice()) {
-					store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: message.ts }, incomingCallAlert: { show: false, callProvider: message.t } });
-					return;
-				}
-				processCallMessage(message);
-			}
+	if (ongoingCallStatus === 'accept' || ongoingCallStatus === 'ongoingCallInNewTab') {
+		return;
+	}
+
+	const latestCallMessage = getLatestCallMessage(messages);
+	if (callStatus === 'inProgress') {
+		if (!latestCallMessage) {
+			return;
 		}
-		const lastMessage = messages[messages.length - 1];
-		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t } });
+	} else if (callStatus === 'ringing') {
+		processCallMessage(latestCallMessage);
 	}
 };
 
