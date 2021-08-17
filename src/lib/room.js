@@ -35,6 +35,7 @@ export const processCallMessage = async (message) => {
 			callerUsername: message.u.username,
 			rid: message.rid,
 			time: message.ts,
+			callId: message._id,
 		},
 		ongoingCall: {
 			callStatus: 'ring',
