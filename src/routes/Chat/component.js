@@ -150,7 +150,7 @@ export default class Chat extends Component {
 			>
 				<Screen.Content nopadding>
 					{ incomingCallAlert && !!incomingCallAlert.show && <CallNotification { ...incomingCallAlert } dispatch={dispatch} />}
-					{ ongoingCall && ongoingCall.callStatus === 'accept' ? <CallIframe { ...incomingCallAlert } /> : null }
+					{ incomingCallAlert?.show && ongoingCall && ongoingCall.callStatus === 'accept' ? <CallIframe { ...incomingCallAlert } /> : null }
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
