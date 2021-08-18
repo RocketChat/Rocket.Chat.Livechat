@@ -1,12 +1,16 @@
 @import '../../styles/colors';
 
-switch-department {
-	&__message {
-		margin: 0.5rem 0 1.5rem;
+.toggle-switch {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	&__title {
+		margin: 1rem 0;
 
 		letter-spacing: 0;
 
-		color: $color-text-dark;
+		color: var(--text-color, #444444);
 
 		font-size: 1rem;
 		font-weight: 500;
@@ -14,3 +18,70 @@ switch-department {
 	}
 }
 
+.toggleswitch {
+	position: relative;
+
+	display: inline-block;
+
+	width: 50px;
+	height: 25px;
+	margin-top: 8px;
+}
+
+.toggleswitch input[type="checkbox"] {
+	display: none;
+}
+
+.toggleswitch .switch {
+	position: absolute;
+
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	cursor: pointer;
+
+	transition: background-color 0.2s ease;
+
+	border-radius: 25px;
+
+	background-color: $color-text-light-dark;
+}
+
+.toggleswitch .switch::before {
+	position: absolute;
+
+	top: 4px;
+	left: 2px;
+
+	width: 17px;
+	height: 17px;
+
+	content: "";
+
+	transition: transform 0.3s ease;
+
+	border-radius: 50%;
+	background-color: $bg-color-light;
+}
+
+.toggleswitch input[type="checkbox"]:checked + .switch::before {
+	transform: translateX(25px);
+}
+
+.toggleswitch input[type="checkbox"]:checked + .switch {
+	background-color: $color-dark-red;
+}
+
+.toggle-switch-title-small {
+	font-size: 0.8rem;
+}
+
+.toggle-switch-title-normal {
+	font-size: 1rem;
+}
+
+.toggle-switch-title-large {
+	font-size: 1.2rem;
+}

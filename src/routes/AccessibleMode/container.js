@@ -1,23 +1,12 @@
+/* eslint-disable no-use-before-define */
 import { h, Component } from 'preact';
 
-import { ModalManager } from '../../components/Modal';
 import history from '../../history';
-import I18n from '../../i18n';
-import { setDarkModeState } from '../../lib/main';
 import { Consumer } from '../../store';
 import AccessibleMode from './component';
 
 export class AccessibleModeContainer extends Component {
-
-	confirmChange = async () => {
-		const result = await ModalManager.confirm({
-			text: I18n.t('Are you sure you want to save the changes?'),
-		});
-
-		return typeof result.success === 'boolean' && result.success;
-	}
-
-	handleBack = (props) => {
+	handleBack = () => {
 		history.go(-1);
 	}
 
@@ -51,8 +40,11 @@ export const AccessibleModeConnector = ({ ref, ...props }) => (
 			dispatch,
 			alerts,
 			token,
-			setIconsAccompanyingTextState={setIconsAccompanyingTextState},
-			setDarkModeState={setDarkModeState},
+			setIconsAccompanyingTextState = { setIconsAccompanyingTextState },
+			setDarkModeState = { setDarkModeState },
+			setSmallDynamicTextState = { setSmallDynamicTextState },
+			setNormalDynamicTextState = { setNormalDynamicTextState },
+			setLargeDynamicTextState = { setLargeDynamicTextState },
 		}) => (
 			<AccessibleModeContainer
 				ref={ref}
