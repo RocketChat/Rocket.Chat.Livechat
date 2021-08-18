@@ -8,17 +8,19 @@ import Connection from '../../lib/connection';
 import CustomFields from '../../lib/customFields';
 import Hooks from '../../lib/hooks';
 import { setWidgetLanguage } from '../../lib/locale';
+import { setIconsAccompanyingTextState, setDarkModeState,
+	setSmallDynamicTextState, setNormalDynamicTextState,
+	setLargeDynamicTextState, accessibleModeFalse, accessibleModeTrue } from '../../lib/main';
 import { parentCall } from '../../lib/parentCall';
 import Triggers from '../../lib/triggers';
-import { setIconsAccompanyingTextState, setDarkModeState } from '../../lib/main';
 import userPresence from '../../lib/userPresence';
+import AccessibleMode from '../../routes/AccessibleMode';
 import Chat from '../../routes/Chat';
 import ChatFinished from '../../routes/ChatFinished';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import LeaveMessage from '../../routes/LeaveMessage';
 import Register from '../../routes/Register';
 import SwitchDepartment from '../../routes/SwitchDepartment';
-import AccessibleMode from '../../routes/AccessibleMode';
 import TriggerMessage from '../../routes/TriggerMessage';
 import { Provider as StoreProvider, Consumer as StoreConsumer, store } from '../../store';
 import { visibility, isActiveSession } from '../helpers';
@@ -145,6 +147,7 @@ export class App extends Component {
 	initWidget() {
 		setWidgetLanguage();
 		const { minimized, iframe: { visible }, dispatch } = this.props;
+		console.log('This.Props:', this.props);
 		parentCall(minimized ? 'minimizeWindow' : 'restoreWindow');
 		parentCall(visible ? 'showWidget' : 'hideWidget');
 
@@ -157,6 +160,32 @@ export class App extends Component {
 
 		I18n.on('change', this.handleLanguageChange);
 	}
+
+	setDarkMode = async () => {
+		const { accessible: { darkMode } } = this.props;
+		const { body } = document;
+
+		if (darkMode) {
+			body.classList.add('dark');
+		} else {
+			body.classList.add('light');
+		}
+		if (darkMode) {
+			body.classList.replace('light', 'dark');
+		} else {
+			body.classList.replace('dark', 'light');
+		}
+	};
+
+	getConfigurations = async () => {
+		const { config: { settings: { allowAccessibleMode } } } = this.props;
+		if (!allowAccessibleMode) {
+			accessibleModeFalse();
+		} else {
+			accessibleModeTrue();
+		}
+	}
+
 
 	checkPoppedOutWindow() {
 		// Checking if the window is poppedOut and setting parent minimized if yes for the restore purpose
@@ -177,7 +206,8 @@ export class App extends Component {
 		userPresence.init();
 		this.initWidget();
 		this.checkPoppedOutWindow();
-
+		await this.setDarkMode();
+		await this.getConfigurations();
 		this.setState({ initialized: true });
 		parentCall('ready');
 	}
@@ -189,6 +219,7 @@ export class App extends Component {
 		I18n.off('change', this.handleLanguageChange);
 	}
 
+
 	componentDidMount() {
 		this.initialize();
 	}
@@ -199,6 +230,7 @@ export class App extends Component {
 
 	componentDidUpdate() {
 		document.dir = isRTL(I18n.t('Yes')) ? 'rtl' : 'ltr';
+		this.setDarkMode();
 	}
 
 	render = ({
@@ -222,6 +254,9 @@ export class App extends Component {
 			modal,
 			setIconsAccompanyingTextState,
 			setDarkModeState,
+			setSmallDynamicTextState,
+			setNormalDynamicTextState,
+			setLargeDynamicTextState,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
