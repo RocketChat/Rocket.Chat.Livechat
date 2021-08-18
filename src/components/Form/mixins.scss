@@ -10,7 +10,7 @@ $form-input-placeholder-color: $color-text-light;
 $form-input-background-color: $bg-color-white;
 $form-input-border-color: $bg-color-grey;
 $form-input-focus-border-color: $color-text-dark;
-$form-input-hover-border-color: $color-text-light;
+$form-input-hover-border-color: none;
 $form-input-disabled-background-color: $bg-color-grey;
 $form-input-disabled-color: $color-text-light;
 $form-input-error-color: $color-red;
@@ -32,12 +32,12 @@ $form-input-disabled-opacity: $disabled-opacity;
 		background-color $default-time-animation,
 		trasform $default-time-animation;
 
-	color: $form-input-color;
+	color: var(--text-field-text-color, $form-input-color);
 
-	border: $form-input-border-width solid $form-input-border-color;
+	border: $form-input-border-width solid var(--input-field-border, $form-input-border-color);
 	border-radius: $form-input-border-radius;
 	outline: none;
-	background-color: $form-input-background-color;
+	background-color: var(--text-field-bg-color, $form-input-background-color);
 
 	font-family: $form-input-font-family;
 	font-size: $form-input-font-size;
@@ -45,11 +45,15 @@ $form-input-disabled-opacity: $disabled-opacity;
 	line-height: $form-input-line-height;
 
 	&:focus {
-		border-color: $form-input-focus-border-color;
+		border-color: var(--input-field-border-focus, $form-input-focus-border-color);
 	}
 
 	&:hover {
-		border-color: $form-input-hover-border-color;
+		border-color: var(--input-field-border-hover, none);
+	}
+
+	&:visited {
+		border-color: var(--input-field-border, $form-input-border-color);
 	}
 
 	&--small {

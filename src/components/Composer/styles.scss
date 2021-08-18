@@ -26,9 +26,9 @@ $composer-input-placeholder-color: $color-text-light;
 
 	transition: all $default-time-animation;
 
-	border: $composer-border-width solid $composer-border-color;
+	border: $composer-border-width solid var(--input-field-border, $composer-border-color);
 	border-radius: $composer-border-radius;
-	background-color: $composer-background-color;
+	background-color: var(--composer-bg-color, $composer-background-color);
 	align-items: flex-end;
 
 	&:focus-within {
@@ -48,7 +48,7 @@ $composer-input-placeholder-color: $color-text-light;
 		cursor: text;
 		word-wrap: break-word;
 
-		color: $composer-input-color;
+		color: var(--composer-input-color, $composer-input-color);
 
 		border: none;
 		outline: none;

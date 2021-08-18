@@ -53,12 +53,13 @@ class ScreenHeader extends Component {
 		onRestore,
 		onOpenWindow,
 		iconsAccompanyingText,
+		dynamicTextState,
 	}) => (
 		<Header
 			ref={this.handleRef}
 			post={
 				<Header.Post>
-					{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert}>{alert.children}</Alert>)}
+					{alerts && alerts.map((alert) => <Alert {...alert} onDismiss={onDismissAlert} dynamicTextState={dynamicTextState} >{alert.children}</Alert>)}
 				</Header.Post>
 			}
 			large={this.largeHeader()}
@@ -76,7 +77,7 @@ class ScreenHeader extends Component {
 			)}
 
 			<Header.Content>
-				<Header.Title>{this.headerTitle()}</Header.Title>
+				<Header.Title dynamicTextState={dynamicTextState}>{this.headerTitle()}</Header.Title>
 				{agent && agent.email && (
 					<Header.SubTitle>{agent.email}</Header.SubTitle>
 				)}
@@ -106,14 +107,14 @@ class ScreenHeader extends Component {
 								aria-label={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}
 								onClick={minimized ? onRestore : onMinimize}
 							>
-							<span className={createClassName(styles, 'notification-icon')}>
-								{minimized
-									? <RestoreIcon width={20} height={20} />
-									: <MinimizeIcon width={20} height={20} />
-								}
-							{iconsAccompanyingText ? <p className={createClassName(styles, 'notification-icon__title')}>{I18n.t('Minimize')}</p> : null}
-							</span>
-								
+								<span className={createClassName(styles, 'notification-icon')}>
+									{minimized
+										? <RestoreIcon width={20} height={20} />
+										: <MinimizeIcon width={20} height={20} />
+									}
+									{iconsAccompanyingText ? <p className={createClassName(styles, 'notification-icon__title')}>{I18n.t('Minimize')}</p> : null}
+								</span>
+
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
@@ -148,7 +149,7 @@ export const ScreenFooter = ({ children, options, limit }) => (
 				{children}
 			</FooterContent>
 		)}
-		<FooterContent>
+		<FooterContent >
 			{options}
 			{limit}
 			<PoweredBy />
@@ -233,6 +234,7 @@ export const Screen = ({
 	dismissNotification,
 	triggered = false,
 	iconsAccompanyingText,
+	dynamicTextState,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, triggered })}>
 		<CssVar theme={theme} />
@@ -255,6 +257,7 @@ export const Screen = ({
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
 					iconsAccompanyingText={iconsAccompanyingText}
+					dynamicTextState={dynamicTextState}
 				/>}
 
 				{modal}

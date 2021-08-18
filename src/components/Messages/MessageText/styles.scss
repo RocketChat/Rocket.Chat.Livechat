@@ -1,13 +1,25 @@
 @import '../../../styles/colors';
 @import '../../../styles/variables';
 
-$message-text-font-size: 0.875rem;
+$message-text-small-font-size: 0.7rem;
+$message-text-normal-font-size: 0.875rem;
+$message-text-large-font-size: 1rem;
 
 .message-text {
 	word-wrap: break-word;
 	word-break: break-word;
 
-	font-size: $message-text-font-size;
+	&__font-small {
+		font-size: $message-text-small-font-size;
+	}
+
+	&__font-normal {
+		font-size: $message-text-normal-font-size;
+	}
+
+	&__font-large {
+		font-size: $message-text-large-font-size;
+	}
 
 	a {
 		text-decoration: underline dotted;
@@ -32,7 +44,7 @@ $message-text-font-size: 0.875rem;
 	&--system {
 		width: 200px;
 
-		color: $color-text-grey-system;
+		//color: var(--system-color, $color-text-grey-system);
 
 		font-size: 0.75rem;
 

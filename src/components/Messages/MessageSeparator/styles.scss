@@ -49,7 +49,7 @@ $separator-unread-line-color: $color-red;
 	}
 
 	&--date {
-		@include state($separator-date-text-color, $separator-date-line-color);
+		@include state(var(--message-bubble-text-color, black), $separator-date-line-color);
 	}
 
 	&--unread {

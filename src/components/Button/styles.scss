@@ -71,7 +71,7 @@ $button-icon-padding: 10px;
 	text-decoration: none;
 
 	color: var(--font-color, $button-color);
-	border: $button-border-width solid;
+	border: var(--default-border-width, 2px) solid;
 	border-radius: $button-border-radius;
 
 	font-family: $button-font-family;
@@ -96,16 +96,16 @@ $button-icon-padding: 10px;
 	&--secondary {
 		color: $button-color;
 
-		@include state($button-secondary-background-color);
+		@include state(var(--btn-secondary-bg-color, none));
 	}
 
 	&--outline {
-		background: none;
+		background: var(--btn-outline-bg-color, none);
 	}
 
 	&--nude {
 		border-color: transparent;
-		background: none;
+		background: var(--nude-button, none);
 
 		&:focus {
 			box-shadow: none;
@@ -125,6 +125,8 @@ $button-icon-padding: 10px;
 
 	&--stack {
 		width: 100%;
+
+		color: var(--color-text-lighter, #ffffff);
 	}
 
 	&--small {

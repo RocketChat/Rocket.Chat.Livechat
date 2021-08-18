@@ -103,14 +103,17 @@ export class FilesDropTarget extends Component {
 			className={createClassName(styles, 'drop', { overlayed, dragover: dragLevel > 0 }, [className])}
 			style={style}
 		>
-			<input
-				ref={this.handleInputRef}
-				type='file'
-				accept={accept}
-				multiple={multiple}
-				onChange={this.handleInputChange}
-				className={createClassName(styles, 'drop__input')}
-			/>
+			<label>
+				<input
+					ref={this.handleInputRef}
+					type='file'
+					area-label='This input is for file drop'
+					accept={accept}
+					multiple={multiple}
+					onChange={this.handleInputChange}
+					className={createClassName(styles, 'drop__input')}
+				/>
+			</label>
 			{children}
 		</div>
 	)

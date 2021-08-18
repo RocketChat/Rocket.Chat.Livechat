@@ -20,13 +20,14 @@ $file-attachment-download-highlight-color: $color-blue;
 		text-decoration: none;
 		letter-spacing: 0;
 
-		color: $file-attachment-color;
+		color: var(--file-attachment-color, $file-attachment-color);
 
 		font-size: $file-attachment-font-size;
 		font-weight: 500;
 		line-height: $file-attachment-line-height;
 		align-items: center;
 		flex-flow: row nowrap;
+
 		:focus,
 		&:hover {
 			.file-attachment__download-button {
@@ -51,20 +52,24 @@ $file-attachment-download-highlight-color: $color-blue;
 	}
 }
 
-
 .file-attachment-icon {
 	display: flex;
-	align-items: center;
-	flex-flow: column nowrap;
+
 	margin: 0 auto;
+
 	color: $file-attachment-download-color;
 
 	font-size: $file-attachment-font-size;
 	font-weight: 500;
 	line-height: $file-attachment-line-height;
-	& &__download-icon-title{
-		margin: 0px 0px 0px 0px;
+
+	align-items: center;
+	flex-flow: column nowrap;
+
+	& &__download-icon-title {
+		margin: 0;
 	}
+
 	:focus,
 	&:hover {
 		color: var(--color, $file-attachment-download-highlight-color);

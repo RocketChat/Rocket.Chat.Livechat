@@ -24,7 +24,10 @@ $notification-icon-title-line-height: 1rem;
 	}
 
 	.screen__chat-button {
+		color: white;
+
 		background-size: cover !important;
+
 		box-shadow: $screen-box-shadow;
 	}
 
@@ -35,6 +38,7 @@ $notification-icon-title-line-height: 1rem;
 		padding: 2px;
 
 		border: 0;
+
 		border-radius: 2em;
 		background: rgba(31, 35, 41, 0.4);
 	}
@@ -89,6 +93,7 @@ $notification-icon-title-line-height: 1rem;
 	width: 100%;
 
 	border-radius: 4px;
+
 	background-color: $bg-color-white;
 	align-items: stretch;
 
@@ -112,6 +117,8 @@ $notification-icon-title-line-height: 1rem;
 	padding: 1rem 1rem 0;
 
 	word-wrap: break-word;
+
+	background-color: var(--background-color, #ffffff);
 	overflow-wrap: break-word;
 
 	&--nopadding {
@@ -123,6 +130,9 @@ $notification-icon-title-line-height: 1rem;
 		overflow: hidden;
 
 		text-overflow: ellipsis;
+
+		background: none;
+
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: $max-lines;
 	}
@@ -132,16 +142,18 @@ $notification-icon-title-line-height: 1rem;
 	margin: 5px;
 }
 
-//For icons accompanying Text
 .notification-icon {
 	display: flex;
-	align-items: center;
-	flex-flow: column nowrap;
 
 	font-size: $notification-icon-title-font-size;
 	font-weight: 500;
 	line-height: $notification-icon-title-line-height;
-	& &__title{
-		margin: 3px 0px 0px 0px;
+
+	align-items: center;
+
+	flex-flow: column nowrap;
+
+	& &__title {
+		margin: 3px 0 0;
 	}
 }

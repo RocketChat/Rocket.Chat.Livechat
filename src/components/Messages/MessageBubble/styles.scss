@@ -25,10 +25,10 @@ $message-bubble-quoted-indicator-color: $color-green;
 
 	padding: $message-bubble-padding;
 
-	color: $message-bubble-color;
+	color: var(--message-bubble-text-color, $message-bubble-color);
 	border-radius: $message-bubble-border-radius;
 
-	background-color: $message-bubble-background-color;
+	background-color: var(--message-bubble-bg-color, $message-bubble-background-color);
 	align-items: stretch;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
@@ -38,7 +38,7 @@ $message-bubble-quoted-indicator-color: $color-green;
 	}
 
 	&--inverse {
-		color: var(--font-color, $message-bubble-me-color);
+		color: #ffffff;
 		background-color: var(--color, $message-bubble-me-background-color);
 
 		a {
@@ -71,6 +71,7 @@ $message-bubble-quoted-indicator-color: $color-green;
 	&--system {
 		text-align: center;
 
+		color: var(--system-color, #6c727a);
 		background-color: transparent;
 
 		.message-container {

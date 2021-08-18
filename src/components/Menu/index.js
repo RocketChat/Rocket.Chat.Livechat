@@ -20,7 +20,7 @@ export const Group = ({ children, title, ...props }) => (
 );
 
 
-export const Item = ({ children, primary, danger, disabled, icon, ...props }) => (
+export const Item = ({ children, primary, danger, disabled, icon, dynamicTextState, ...props }) => (
 	<button
 		className={createClassName(styles, 'menu__item', { primary, danger, disabled })}
 		disabled={disabled}
@@ -31,7 +31,9 @@ export const Item = ({ children, primary, danger, disabled, icon, ...props }) =>
 				{h(icon)}
 			</div>
 		)}
-		{children}
+		<span className={createClassName(styles, 'font-small')}>
+			{children}
+		</span>
 	</button>
 );
 

@@ -36,6 +36,7 @@ const renderContent = ({
 	mid,
 	rid,
 	iconsAccompanyingText,
+	dynamicTextState,
 }) => [
 	...(attachments || [])
 		.map((attachment) =>
@@ -71,7 +72,7 @@ const renderContent = ({
 		),
 	text && (
 		<MessageBubble inverse={me} quoted={quoted} system={system}>
-			<MessageText text={text} system={system} />
+			<MessageText text={text} system={system} dynamicTextState={dynamicTextState} />
 		</MessageBubble>
 	),
 	blocks && (
@@ -116,6 +117,7 @@ export const Message = memo(({
 	compact,
 	className,
 	iconsAccompanyingText,
+	dynamicTextState,
 	style = {},
 	...message
 }) => (
@@ -142,7 +144,8 @@ export const Message = memo(({
 				mid: message._id,
 				rid: message.rid,
 				attachmentResolver,
-				iconsAccompanyingText: iconsAccompanyingText,
+				iconsAccompanyingText,
+				dynamicTextState,
 			})}
 		</MessageContent>
 		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={ts} />}

@@ -1,9 +1,10 @@
 @import '../../../styles/colors';
 @import '../../../styles/variables';
 
-$form-field-label-color: $color-text-dark;
 $form-field-label-error-color: $color-red;
-$form-field-label-font-size: 0.75rem;
+$form-field-label-font-size-small: 0.6rem;
+$form-field-label-font-size-normal: 0.75rem;
+$form-field-label-font-size-large: 0.9rem;
 $form-field-label-font-weight: 600;
 $form-field-label-line-height: 1rem;
 
@@ -38,16 +39,31 @@ $form-field-error-border-color: $color-red;
 		flex: 0 0 auto;
 
 		transition: color $default-time-animation;
+
 		text-align: left;
 		white-space: nowrap;
 		letter-spacing: 0;
 		text-overflow: ellipsis;
 
-		color: $form-field-label-color;
+		color: var(--form-field-label-color, $color-text-dark);
 
-		font-size: $form-field-label-font-size;
+		font-size: $form-field-label-font-size-small;
+
 		font-weight: $form-field-label-font-weight;
+
 		line-height: $form-field-label-line-height;
+	}
+
+	.form-field__label__font-small {
+		font-size: $form-field-label-font-size-small;
+	}
+
+	.form-field__label__font-normal {
+		font-size: $form-field-label-font-size-normal;
+	}
+
+	.form-field__label__font-large {
+		font-size: $form-field-label-font-size-large;
 	}
 
 	&__input {

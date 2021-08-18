@@ -105,6 +105,7 @@ export class MessageList extends MemoizedComponent {
 		conversationFinishedMessage,
 		typingUsernames,
 		iconsAccompanyingText,
+		dynamicTextState,
 	}) => {
 		const items = [];
 
@@ -134,6 +135,7 @@ export class MessageList extends MemoizedComponent {
 					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id && !nextMessage.t}
 					conversationFinishedMessage={conversationFinishedMessage}
 					iconsAccompanyingText={iconsAccompanyingText}
+					dynamicTextState={dynamicTextState}
 					{...message}
 				/>,
 			);

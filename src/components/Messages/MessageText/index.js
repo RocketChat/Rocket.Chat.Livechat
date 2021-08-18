@@ -8,13 +8,17 @@ import styles from './styles.scss';
 export const MessageText = memo(({
 	text,
 	system,
+	dynamicTextState,
 	className,
 	style = {},
 }) => (
 	<div
+		className={createClassName(styles, 'message-text', { system }, [className])}>
+		<div
 		// eslint-disable-next-line react/no-danger
-		dangerouslySetInnerHTML={{ __html: renderMarkdown(renderEmojis(text)) }}
-		className={createClassName(styles, 'message-text', { system }, [className])}
-		style={style}
-	/>
+			dangerouslySetInnerHTML={{ __html: renderMarkdown(renderEmojis(text)) }}
+			className={createClassName(styles, `message-text__font-${ dynamicTextState }`)}
+			style={style}
+		/>
+	</div>
 ));
