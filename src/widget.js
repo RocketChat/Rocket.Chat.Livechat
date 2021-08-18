@@ -23,6 +23,7 @@ let ready = false;
 let smallScreen = false;
 let bodyStyle;
 let scrollPosition;
+let widget_height;
 
 export const validCallbacks = [
 	'chat-maximized',
@@ -70,7 +71,7 @@ function callHook(action, params) {
 	iframe.contentWindow.postMessage(data, '*');
 }
 
-const updateWidgetStyle = (isOpened, height) => {
+const updateWidgetStyle = (isOpened) => {
 	if (smallScreen && isOpened) {
 		scrollPosition = document.documentElement.scrollTop;
 		bodyStyle = document.body.style.cssText;
@@ -92,14 +93,8 @@ const updateWidgetStyle = (isOpened, height) => {
 		 * so fixed it to 100% avoiding problem for some browsers. Similar resolution
 		 * for widget.style.width
 		 */
-		if (height) {
-			widget.style.height = smallScreen ? '100%'
-				: `${ WIDGET_MARGIN + height + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT }px`;
-		} else {
-			widget.style.height = smallScreen ? '100%'
-				: `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
-		}
 
+		widget.style.height = smallScreen ? '100%' : `${ WIDGET_MARGIN + widget_height + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT }px`;
 		widget.style.width = smallScreen ? '100%' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
 	} else {
 		widget.style.left = 'auto';
@@ -158,6 +153,7 @@ const openWidget = () => {
 		return;
 	}
 
+	widget_height = WIDGET_OPEN_HEIGHT;
 	updateWidgetStyle(true);
 	widget.dataset.state = 'opened';
 	iframe.focus();
@@ -165,7 +161,8 @@ const openWidget = () => {
 };
 
 const resizeWidget = (height) => {
-	updateWidgetStyle(true, height);
+	widget_height = height;
+	updateWidgetStyle(true);
 	widget.dataset.state = 'triggered';
 };
 
@@ -207,7 +204,7 @@ const api = {
 	openPopout() {
 		closeWidget();
 		api.popup = window.open(`${ config.url }${ config.url.lastIndexOf('?') > -1 ? '&' : '?' }mode=popout`,
-			'livechat-popout', `width=${ WIDGET_OPEN_WIDTH }, height=${ WIDGET_OPEN_HEIGHT }, toolbars=no`);
+			'livechat-popout', `width=${ WIDGET_OPEN_WIDTH }, height=${ widget_height }, toolbars=no`);
 		api.popup.focus();
 	},
 
