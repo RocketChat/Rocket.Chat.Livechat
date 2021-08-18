@@ -23,6 +23,7 @@ export const loadConfig = async () => {
 		...config
 	} = await Livechat.config({ token });
 
+
 	await store.setState({
 		config,
 		agent: agent && agent.hiddenInfo ? { hiddenInfo: true } : agent, // TODO: revert it when the API is updated
@@ -38,17 +39,71 @@ export const loadConfig = async () => {
 	});
 };
 
-export const setIconsAccompanyingTextState = async() => {
+export const setIconsAccompanyingTextState = async () => {
 	const { accessible } = store.state;
 	const { iconsAccompanyingText } = accessible;
-	await store.setState({ accessible: { ...accessible, iconsAccompanyingText: !iconsAccompanyingText }});
-}
+	const accessibleConfig = {
+		...accessible,
+		iconsAccompanyingText: !iconsAccompanyingText,
+	};
+	localStorage.setItem('accessible', JSON.stringify(accessibleConfig));
+	await store.setState({ accessible: { ...accessible, iconsAccompanyingText: !iconsAccompanyingText } });
+};
 
-export const setDarkModeState = async() => {
+export const setDarkModeState = async () => {
 	const { accessible } = store.state;
 	const { darkMode } = accessible;
-	await store.setState({ accessible: { ...accessible, darkMode: !darkMode }});
-}
+	const accessibleConfig = {
+		...accessible,
+		darkMode: !darkMode,
+	};
+	localStorage.setItem('accessible', JSON.stringify(accessibleConfig));
+	await store.setState({ accessible: { ...accessible, darkMode: !darkMode } });
+};
+
+export const setSmallDynamicTextState = async () => {
+	const { accessible } = store.state;
+	const accessibleConfig = {
+		...accessible,
+		dynamicText: 'small',
+	};
+	localStorage.setItem('accessible', JSON.stringify(accessibleConfig));
+	await store.setState({ accessible: { ...accessible, dynamicText: 'small' } });
+};
+
+export const setNormalDynamicTextState = async () => {
+	const { accessible } = store.state;
+	const accessibleConfig = {
+		...accessible,
+		dynamicText: 'normal',
+	};
+	localStorage.setItem('accessible', JSON.stringify(accessibleConfig));
+	await store.setState({ accessible: { ...accessible, dynamicText: 'normal' } });
+};
+
+export const setLargeDynamicTextState = async () => {
+	const { accessible } = store.state;
+	const accessibleConfig = {
+		...accessible,
+		dynamicText: 'large',
+	};
+	localStorage.setItem('accessible', JSON.stringify(accessibleConfig));
+	await store.setState({ accessible: { ...accessible, dynamicText: 'large' } });
+};
+
+export const accessibleModeFalse = async () => {
+	const { accessible } = store.state;
+	await store.setState({ accessible: { ...accessible, dynamicText: 'normal', darkMode: false, iconsAccompanyingText: false } });
+};
+
+export const accessibleModeTrue = async () => {
+	const { accessible } = store.state;
+	const accessibleConfig = {
+		...accessible,
+	};
+	localStorage.setItem('accessible', JSON.stringify(accessibleConfig));
+};
+
 
 export const processUnread = async () => {
 	const { minimized, visible, messages } = store.state;
