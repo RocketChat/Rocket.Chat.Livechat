@@ -106,11 +106,11 @@ export const RegisterConnector = ({ ref, ...props }) => (
 			token,
 			dispatch,
 			user,
-			accessible:{
+			accessible: {
 				iconsAccompanyingText: iconsAccompanyingTextState,
 				dynamicText: dynamicTextState,
 				darkMode: darkModeState,
-			}={},
+			} = {},
 		}) => (
 			<RegisterContainer
 				ref={ref}
@@ -136,7 +136,7 @@ export const RegisterConnector = ({ ref, ...props }) => (
 				user={user}
 				customFields={customFields}
 				iconsAccompanyingTextState={iconsAccompanyingTextState}
-				dyanmicTextState={dynamicTextState}
+				dynamicTextState={dynamicTextState}
 				darkModeState={darkModeState}
 			/>
 		)}

@@ -89,11 +89,11 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 			dispatch,
 			alerts,
 			token,
-			accessible:{
+			accessible: {
 				iconsAccompanyingText: iconsAccompanyingTextState,
 				dynamicText: dynamicTextState,
 				darkMode: darkModeState,
-			}={},
+			} = {},
 		}) => (
 			<SwitchDepartmentContainer
 				ref={ref}
@@ -110,7 +110,7 @@ export const SwitchDepartmentConnector = ({ ref, ...props }) => (
 				alerts={alerts}
 				token={token}
 				iconsAccompanyingTextState={iconsAccompanyingTextState}
-				dyanmicTextState={dynamicTextState}
+				dynamicTextState={dynamicTextState}
 				darkModeState={darkModeState}
 			/>
 		)}
