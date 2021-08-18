@@ -22,9 +22,9 @@ const initialState = {
 		enabled: true,
 		play: false,
 	},
-	accessible:{
+	accessible: {
 		iconsAccompanyingText: false,
-		dynamicText: false,
+		dynamicText: 'normal',
 		darkMode: false,
 	},
 	iframe: {
