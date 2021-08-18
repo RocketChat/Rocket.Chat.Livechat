@@ -365,6 +365,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				settings: {
 					fileUpload: uploads,
 					allowSwitchingDepartments,
+					allowAccessibleMode,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
 					registrationForm,
@@ -406,10 +407,10 @@ export const ChatConnector = ({ ref, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
-			accessible:{
+			accessible: {
 				iconsAccompanyingText: iconsTextState,
 				dynamicText: dynamicTextState,
-				darkMode: darkModeState
+				darkMode: darkModeState,
 			} = {},
 			setDarkModeState,
 		}) => (
@@ -450,6 +451,7 @@ export const ChatConnector = ({ ref, ...props }) => (
 				dispatch={dispatch}
 				departments={departments}
 				allowSwitchingDepartments={allowSwitchingDepartments}
+				allowAccessibleMode={allowAccessibleMode}
 				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
 				allowRemoveUserData={allowRemoveUserData}
 				alerts={alerts}
