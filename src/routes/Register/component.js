@@ -202,7 +202,7 @@ export default class Register extends Component {
 		this.state = getDefaultState(props);
 	}
 
-	render({ title, color, message, loading, departments, customFields, iconsAccompanyingTextState, dynamicTextState,darkModeState, ...props }, { name, email, department, ...state }) {
+	render({ title, color, message, loading, departments, customFields, iconsAccompanyingTextState, dynamicTextState, ...props }, { name, email, department, ...state }) {
 		const valid = getValidableFields(this.state).every(({ error } = {}) => !error);
 
 		return (
@@ -211,10 +211,12 @@ export default class Register extends Component {
 				title={title || defaultTitle}
 				className={createClassName(styles, 'register')}
 				iconsAccompanyingText={iconsAccompanyingTextState}
+				dynamicTextState={dynamicTextState}
 				{...props}
 			>
 				<Screen.Content>
-					<p className={createClassName(styles, 'register__message')}>{message || defaultMessage}</p>
+					<p className={createClassName(styles, 'register__message')}>
+						<span className={createClassName(styles, `register__message--${ dynamicTextState }`)}>{message || defaultMessage}</span></p>
 
 					<Form onSubmit={this.handleSubmit}>
 						{name
@@ -223,6 +225,7 @@ export default class Register extends Component {
 									required
 									label={I18n.t('Name')}
 									error={name.showError && name.error}
+									dynamicTextState={dynamicTextState}
 								>
 									<TextInput
 										name='name'
@@ -241,6 +244,7 @@ export default class Register extends Component {
 									required
 									label={I18n.t('Email')}
 									error={email.showError && email.error}
+									dynamicTextState={dynamicTextState}
 								>
 									<TextInput
 										name='email'
@@ -258,6 +262,7 @@ export default class Register extends Component {
 								<FormField
 									label={I18n.t('I need help with...')}
 									error={department.showError && department.error}
+									dynamicTextState={dynamicTextState}
 								>
 									<SelectInput
 										name='department'

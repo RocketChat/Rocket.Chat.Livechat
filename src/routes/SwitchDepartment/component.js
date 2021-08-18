@@ -85,7 +85,7 @@ export default class SwitchDepartment extends Component {
 		this.validateAll();
 	}
 
-	render({ title, color, message, loading, departments, iconsAccompanyingTextState, dynamicTextState,darkModeState, ...props }, { department }) {
+	render({ title, color, message, loading, departments, iconsAccompanyingTextState, dynamicTextState, darkModeState, ...props }, { department }) {
 		const valid = this.isValid();
 		return (
 			<Screen
@@ -93,15 +93,17 @@ export default class SwitchDepartment extends Component {
 				title={title || defaultTitle}
 				className={createClassName(styles, 'switch-department')}
 				iconsAccompanyingText={iconsAccompanyingTextState}
+				dynamicTextState={dynamicTextState}
 				{...props}
 			>
 				<Screen.Content>
-					<p className={createClassName(styles, 'switch-department__message')}>{message || defaultMessage}</p>
+					<p className={createClassName(styles, `switch-department__message--${ dynamicTextState }`)}>{message || defaultMessage}</p>
 
 					<Form onSubmit={this.handleSubmit}>
 						<FormField
 							label={I18n.t('Departments')}
 							error={department && department.showError && department.error}
+							dynamicTextState={dynamicTextState}
 						>
 							<SelectInput
 								name='department'

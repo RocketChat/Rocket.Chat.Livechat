@@ -23,9 +23,9 @@ export default class ChatFinished extends Component {
 		message,
 		// eslint-disable-next-line no-unused-vars
 		onRedirectChat,
-		iconsAccompanyingTextState, 
+		iconsAccompanyingTextState,
 		dynamicTextState,
-		darkModeState, 
+		darkModeState,
 		...props
 	}) => (
 		<Screen
@@ -33,11 +33,16 @@ export default class ChatFinished extends Component {
 			title={title}
 			className={createClassName(styles, 'chat-finished')}
 			iconsAccompanyingText={iconsAccompanyingTextState}
+			dynamicTextState={dynamicTextState}
 			{...props}
 		>
 			<Screen.Content>
-				<p className={createClassName(styles, 'chat-finished__greeting')}>{greeting || defaultGreeting}</p>
-				<p className={createClassName(styles, 'chat-finished__message')}>{message || defaultMessage}</p>
+				<p className={createClassName(styles, 'chat-finished__greeting')}>
+					<span className={createClassName(styles, `chat-finished__greeting__text-size-${ dynamicTextState }`)}>{greeting || defaultGreeting}</span>
+				</p>
+				<p className={createClassName(styles, 'chat-finished__message')}>
+					<span className={createClassName(styles, `chat-finished__message__text-size-${ dynamicTextState }`)}>{message || defaultMessage}</span>
+				</p>
 
 				<ButtonGroup>
 					<Button onClick={this.handleClick} stack>{ I18n.t('New Chat') }</Button>

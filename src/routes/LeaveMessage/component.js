@@ -91,7 +91,7 @@ export default class LeaveMessage extends Component {
 		this.validateAll();
 	}
 
-	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }) => (
+	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }, dynamicTextState) => (
 		<Form onSubmit={this.handleSubmit}>
 			{name
 				? (
@@ -99,6 +99,7 @@ export default class LeaveMessage extends Component {
 						required
 						label={I18n.t('Name')}
 						error={name.showError && name.error}
+						dynamicTextState={dynamicTextState}
 					>
 						<TextInput
 							name='name'
@@ -117,6 +118,7 @@ export default class LeaveMessage extends Component {
 						required
 						label={I18n.t('Email')}
 						error={email.showError && email.error}
+						dynamicTextState={dynamicTextState}
 					>
 						<TextInput
 							name='email'
@@ -134,6 +136,7 @@ export default class LeaveMessage extends Component {
 					<FormField
 						label={I18n.t('I need help with...')}
 						error={department.showError && department.error}
+						dynamicTextState={dynamicTextState}
 					>
 						<SelectInput
 							name='department'
@@ -154,6 +157,7 @@ export default class LeaveMessage extends Component {
 						required
 						label={I18n.t('Message')}
 						error={message.showError && message.error}
+						dynamicTextState={dynamicTextState}
 					>
 						<TextInput
 							name='message'
@@ -175,7 +179,7 @@ export default class LeaveMessage extends Component {
 		</Form>
 	)
 
-	render = ({ color, title, message, unavailableMessage, hasForm, iconsAccompanyingTextState, dynamicTextState,darkModeState, ...props }) => (
+	render = ({ color, title, message, unavailableMessage, hasForm, iconsAccompanyingTextState, dynamicTextState, ...props }) => (
 		<Screen
 			color={color}
 			title={title || defaultTitle}
@@ -185,10 +189,10 @@ export default class LeaveMessage extends Component {
 		>
 			<Screen.Content>
 				<p className={createClassName(styles, 'leave-message__main-message')}>
-					{hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage}
+					<span className={createClassName(styles, `font-${ dynamicTextState }`)}>{hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage}</span>
 				</p>
 
-				{hasForm && this.renderForm(this.props, this.state)}
+				{hasForm && this.renderForm(this.props, this.state, dynamicTextState)}
 			</Screen.Content>
 			<Screen.Footer />
 		</Screen>

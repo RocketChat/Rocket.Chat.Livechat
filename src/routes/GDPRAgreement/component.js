@@ -37,7 +37,7 @@ export default class GDPR extends Component {
 		instructions,
 		// eslint-disable-next-line no-unused-vars
 		onAgree,
-		iconsAccompanyingTextState, 
+		iconsAccompanyingTextState,
 		dynamicTextState,
 		darkModeState,
 		...props
@@ -50,16 +50,20 @@ export default class GDPR extends Component {
 			{...props}
 		>
 			<Screen.Content>
-				<p
-					className={createClassName(styles, 'gdpr__consent-text')}
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: md.renderInline(consentText || defaultConsentText) }}
-				/>
-				<p
-					className={createClassName(styles, 'gdpr__instructions')}
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: md.renderInline(instructions || defaultInstructions) }}
-				/>
+				<p className={createClassName(styles, 'gdpr__consent-text')}>
+					<p
+						className={createClassName(styles, `gdpr__consent-text__font-${ dynamicTextState }`)}
+						// eslint-disable-next-line react/no-danger
+						dangerouslySetInnerHTML={{ __html: md.renderInline(consentText || defaultConsentText) }}
+					/>
+				</p>
+				<p className={createClassName(styles, 'gdpr__instructions')}>
+					<p
+						className={createClassName(styles, `gdpr__instructions__text-font-${ dynamicTextState }`)}
+						// eslint-disable-next-line react/no-danger
+						dangerouslySetInnerHTML={{ __html: md.renderInline(instructions || defaultInstructions) }}
+					/>
+				</p>
 
 				<ButtonGroup>
 					<Button onClick={this.handleClick} stack>{ I18n.t('I Agree') }</Button>

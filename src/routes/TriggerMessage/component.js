@@ -11,7 +11,7 @@ const defaultTitle = I18n.t('Messages');
 export default class TriggerMessage extends Component {
 	state = { }
 
-	render({ title, messages, loading, onStartChat = () => {}, departments, iconsAccompanyingTextState, dynamicTextState,darkModeState, ...props }) {
+	render({ title, messages, loading, onStartChat = () => {}, departments, iconsAccompanyingTextState, dynamicTextState, ...props }) {
 		const { theme: { color } } = props;
 		return (
 			<Screen
