@@ -185,11 +185,13 @@ Livechat.onMessage(async (message) => {
 });
 
 export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
+export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => msg.actionLinks && msg.actionLinks.length === 2);
 
 export const loadMessages = async () => {
-	const { messages: storedMessages, room: { _id: rid } = {} } = store.state;
-	const previousMessages = getGreetingMessages(storedMessages);
+	const { ongoingCall } = store.state;
 
+	const { messages: storedMessages, room: { _id: rid, callStatus } = {} } = store.state;
+	const previousMessages = getGreetingMessages(storedMessages);
 	if (!rid) {
 		return;
 	}
@@ -202,18 +204,22 @@ export const loadMessages = async () => {
 	await store.setState({ messages: (messages || []).reverse(), noMoreMessages: false, loading: false });
 
 	if (messages && messages.length) {
-		for (let i = 0; i < messages.length; ++i) {
-			const message = messages[i];
-			if (message.actionLinks && message.actionLinks.length === 2) {
-				if (isMobileDevice()) {
-					store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: message.ts }, incomingCallAlert: { show: false, callProvider: message.t } });
-					return;
-				}
-				processCallMessage(message);
-			}
-		}
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+	}
+
+	if (ongoingCall && (ongoingCall.callStatus === 'accept' || ongoingCall.callStatus === 'ongoingCallInNewTab')) {
+		return;
+	}
+
+	const latestCallMessage = getLatestCallMessage(messages);
+	if (callStatus === 'inProgress') {
+		if (!latestCallMessage) {
+			return;
+		}
+		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage[0].t } });
+	} else if (callStatus === 'ringing') {
+		processCallMessage(latestCallMessage);
 	}
 };
 
