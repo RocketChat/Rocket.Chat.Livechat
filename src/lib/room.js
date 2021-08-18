@@ -1,7 +1,7 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { setCookies, upsert, canRenderMessage, createToken, isMobileDevice } from '../components/helpers';
+import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
 import I18n from '../i18n';
 import { store } from '../store';
 import { normalizeAgent } from './api';
