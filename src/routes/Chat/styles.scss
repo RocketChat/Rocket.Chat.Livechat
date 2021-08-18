@@ -1,9 +1,10 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
-$message-box-icons-text-font-size: .675rem;
+$message-box-icons-text-font-size: 0.675rem;
 $message-box-icons-text-height: 1rem;
 $message-box-icons-text-color-hover: $color-text-dark;
+
 .chat {
 	&__messages {
 		position: relative;
@@ -59,22 +60,25 @@ $message-box-icons-text-color-hover: $color-text-dark;
 
 		opacity: 0.6;
 	}
-
 }
 
 .message-box-icons {
-	color: #696969;
 	margin: 0 auto;
+
+	color: var(--color-message-box-icons, #696969);
+
 	&:hover,
 	&:focus {
-		color: black;
+		color: var(--color-message-box-icons-hover, black);
 	}
 }
-.message-box-icons-text{
+
+.message-box-icons-text {
+	margin: -2px 0;
+
 	font-size: $message-box-icons-text-font-size;
 	font-weight: 500;
 	line-height: $message-box-icons-text-height;
-	margin: -2px 0 -2px 0;
 }
 
 @keyframes loader-rotate {

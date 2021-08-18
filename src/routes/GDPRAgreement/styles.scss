@@ -8,9 +8,20 @@
 
 		color: $color-text-grey;
 
-		font-size: 1rem;
 		font-weight: normal;
 		line-height: 1.5rem;
+
+		&__font-small {
+			font-size: 0.75rem;
+		}
+
+		&__font-normal {
+			font-size: 1rem;
+		}
+
+		&__font-large {
+			font-size: 1.25rem;
+		}
 	}
 
 	&__instructions {
@@ -20,8 +31,20 @@
 
 		color: $color-text-grey;
 
-		font-size: 0.75rem;
+		//font-size: 0.75rem;
 		font-weight: normal;
 		line-height: 1.1875rem;
+	}
+
+	&__instructions-text-font-small {
+		font-size: 0.65rem;
+	}
+
+	&__instructions-text-font-normal {
+		font-size: 0.75rem;
+	}
+
+	&__instructions-text-font-large {
+		font-size: 0.85rem;
 	}
 }

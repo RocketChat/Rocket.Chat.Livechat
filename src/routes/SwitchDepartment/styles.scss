@@ -6,10 +6,27 @@
 
 		letter-spacing: 0;
 
-		color: $color-text-dark;
-
-		font-size: 1rem;
 		font-weight: 500;
-		line-height: 1.5rem;
+
+		&--small {
+			color: var(--switch-depart-label-color, $color-text-dark);
+
+			font-size: 0.75rem;
+			line-height: 1.5rem;
+		}
+
+		&--normal {
+			color: var(--switch-depart-label-color, $color-text-dark);
+
+			font-size: 1rem;
+			line-height: 1.5rem;
+		}
+
+		&--large {
+			color: var(--switch-depart-label-color, $color-text-dark);
+
+			font-size: 1.25rem;
+			line-height: 1.5rem;
+		}
 	}
 }
