@@ -6,31 +6,27 @@ import VideoIcon from '../../icons/video.svg';
 import constants from '../../lib/constants';
 import store from '../../store';
 import { Button } from '../Button';
-import { createClassName, createToken } from '../helpers';
+import { createClassName } from '../helpers';
 import styles from './styles.scss';
 
 
 export const JoinCallButton = (props) => {
 	const { token, room } = store.state;
-	const clickJoinCall = async () => {
-		const { alerts } = store.state;
+
+	const clickJoinCall = () => {
 		switch (props.callProvider) {
 			case constants.jitsiCallStartedMessageType: {
 				window.open(props.url);
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
-				window.open(`${ Livechat.client.host }/meet/${ room._id }?token=${ token }`);
+				window.open(`${ Livechat.client.host }/meet/${ room._id }?token=${ token }`, room._id);
 				break;
-			}
-			default: {
-				const alert = { id: createToken(), children: I18n.t('Call already ended'), timeout: 5000 };
-				await store.setState({ alerts: (alerts.push(alert), alerts) });
 			}
 		}
 	};
 	return (<div>
-		{ props.callStatus === 'accept'
+		{ props.callStatus === 'accept' || props.callStatus === 'ongoingCallInNewTab'
 			? <div className={createClassName(styles, 'joinCall')}>
 				<div className={createClassName(styles, 'joinCall__content')} >
 					<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
