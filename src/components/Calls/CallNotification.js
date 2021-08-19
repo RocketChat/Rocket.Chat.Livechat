@@ -6,14 +6,22 @@ import I18n from '../../i18n';
 import PhoneAccept from '../../icons/phone.svg';
 import PhoneDecline from '../../icons/phoneOff.svg';
 import constants from '../../lib/constants';
+import store from '../../store';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import { createClassName, getAvatarUrl } from '../helpers';
+import { createClassName, getAvatarUrl, isMobileDevice } from '../helpers';
 import styles from './styles.scss';
 
 
 export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid, callId } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
 	const [show, setShow] = useState(true);
+
+	const callInNewTab = async () => {
+		const { token, room } = store.state;
+		const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }`;
+		await dispatch({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: { time } }, incomingCallAlert: { show: false, callProvider } });
+		window.open(url, room._id);
+	};
 
 	const acceptClick = async () => {
 		setShow(!{ show });
@@ -24,6 +32,10 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
+				if (isMobileDevice()) {
+					callInNewTab();
+					break;
+				}
 				await dispatch({ ongoingCall: { callStatus: 'accept', time: { time } } });
 				break;
 			}
