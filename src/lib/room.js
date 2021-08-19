@@ -50,13 +50,13 @@ export const processCallMessage = async (message) => {
 };
 
 const processMessage = async (message) => {
-	const { incomingCallAlert, ongoingCall } = store.state;
+	const { incomingCallAlert } = store.state;
 
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
-	} else if (message.endTs && ((ongoingCall && ongoingCall.callStatus === 'declined') || incomingCallAlert)) {
+	} else if (message.endTs) {
 		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts }, incomingCallAlert: null });
 	} else if (!incomingCallAlert && (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)) {
 		await processCallMessage(message);
@@ -185,11 +185,13 @@ Livechat.onMessage(async (message) => {
 });
 
 export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
+export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => msg.t === 'livechat_webrtc_video_call' || msg.t === 'livechat_video_call').pop();
 
 export const loadMessages = async () => {
-	const { messages: storedMessages, room: { _id: rid } = {} } = store.state;
-	const previousMessages = getGreetingMessages(storedMessages);
+	const { ongoingCall } = store.state;
 
+	const { messages: storedMessages, room: { _id: rid, callStatus } = {} } = store.state;
+	const previousMessages = getGreetingMessages(storedMessages);
 	if (!rid) {
 		return;
 	}
@@ -204,14 +206,20 @@ export const loadMessages = async () => {
 	if (messages && messages.length) {
 		const lastMessage = messages[messages.length - 1];
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
+	}
 
-		if (lastMessage.t === constants.webrtcCallStartedMessageType || lastMessage.t === constants.jitsiCallStartedMessageType) {
-			if (lastMessage.endTs) {
-				await store.setState({ ongoingCall: { callStatus: 'ended', time: lastMessage.ts }, incomingCallAlert: null });
-				return;
-			}
-			await processCallMessage(lastMessage);
+	if (ongoingCall && (ongoingCall.callStatus === 'accept' || ongoingCall.callStatus === 'ongoingCallInNewTab')) {
+		return;
+	}
+
+	const latestCallMessage = getLatestCallMessage(messages);
+	if (callStatus === 'inProgress') {
+		if (!latestCallMessage) {
+			return;
 		}
+		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t } });
+	} else if (callStatus === 'ringing') {
+		processCallMessage(latestCallMessage);
 	}
 };
 
