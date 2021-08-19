@@ -185,7 +185,7 @@ Livechat.onMessage(async (message) => {
 });
 
 export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
-export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => msg.actionLinks && msg.actionLinks.length === 2);
+export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => msg.t === 'livechat_webrtc_video_call' || msg.t === 'livechat_video_call').pop();
 
 export const loadMessages = async () => {
 	const { ongoingCall } = store.state;
@@ -217,9 +217,9 @@ export const loadMessages = async () => {
 		if (!latestCallMessage) {
 			return;
 		}
-		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage[0].ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage[0].t } });
+		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t } });
 	} else if (callStatus === 'ringing') {
-		processCallMessage(latestCallMessage[0]);
+		processCallMessage(latestCallMessage);
 	}
 };
 
