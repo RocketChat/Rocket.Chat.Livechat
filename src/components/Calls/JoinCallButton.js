@@ -20,7 +20,7 @@ export const JoinCallButton = (props) => {
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
-				window.open(`${ Livechat.client.host }/meet/${ room._id }?token=${ token }`);
+				window.open(`${ Livechat.client.host }/meet/${ room._id }?token=${ token }`, room._id);
 				break;
 			}
 		}

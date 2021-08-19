@@ -20,7 +20,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 		const { token, room } = store.state;
 		const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }`;
 		await dispatch({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: { time } }, incomingCallAlert: { show: false, callProvider } });
-		window.open(url);
+		window.open(url, room._id);
 	};
 
 	const acceptClick = async () => {

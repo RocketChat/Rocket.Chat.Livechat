@@ -50,13 +50,13 @@ export const processCallMessage = async (message) => {
 };
 
 const processMessage = async (message) => {
-	const { incomingCallAlert, ongoingCall } = store.state;
+	const { incomingCallAlert } = store.state;
 
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
-	} else if (message.endTs || (ongoingCall && ongoingCall.callStatus === 'declined')) {
+	} else if (message.endTs) {
 		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts }, incomingCallAlert: null });
 	} else if (!incomingCallAlert && (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)) {
 		await processCallMessage(message);
@@ -217,9 +217,9 @@ export const loadMessages = async () => {
 		if (!latestCallMessage) {
 			return;
 		}
-		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage[0].t } });
+		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage[0].ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage[0].t } });
 	} else if (callStatus === 'ringing') {
-		processCallMessage(latestCallMessage);
+		processCallMessage(latestCallMessage[0]);
 	}
 };
 
