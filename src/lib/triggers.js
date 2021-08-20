@@ -124,7 +124,6 @@ class Triggers {
 					}
 
 					route('/trigger-messages');
-					parentCall('openWidget');
 					store.setState({ minimized: false });
 				});
 			}
