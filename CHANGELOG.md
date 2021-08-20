@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.9.4 - 2021-08-19
+[FIX] Iframe overlay (#631)
+[IMPROVE] German informal translation (#622) 
+[FIX] Translation error on department (#632)
+[IMPROVE] Open links in another tab on Livechat widget (#610) 
+[IMPROVE] Dutch Translations (#601) 
 
 ## 1.9.3 - 2021-04-21
 [FIX] sound notification on/off (#567)
