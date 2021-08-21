@@ -187,16 +187,16 @@ export default class Chat extends Component {
 							<FooterOptions>
 								<Menu.Group>
 									{onChangeDepartment && (
-										<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
+										<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon} dynamicTextState={dynamicTextState}>{I18n.t('Change department')}</Menu.Item>
 									)}
 									{allowAccessibleMode && (
-										<Menu.Item onClick={onAccessibleMode} icon={!darkModeState ? AccessibiltyIcon : AccessibilityIconDark}>{I18n.t('Accessible Mode')}</Menu.Item>
+										<Menu.Item onClick={onAccessibleMode} icon={!darkModeState ? AccessibiltyIcon : AccessibilityIconDark} dynamicTextState={dynamicTextState}>{I18n.t('Accessible Mode') }</Menu.Item>
 									)}
 									{onRemoveUserData && (
-										<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
+										<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon} dynamicTextState={dynamicTextState}>{I18n.t('Forget/Remove my data')}</Menu.Item>
 									)}
 									{onFinishChat && (
-										<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
+										<Menu.Item danger onClick={onFinishChat} icon={FinishIcon} dynamicTextState={dynamicTextState}>{I18n.t('Finish this chat')}</Menu.Item>
 									)}
 								</Menu.Group>
 							</FooterOptions>
@@ -221,7 +221,8 @@ export default class Chat extends Component {
 									<ComposerActions>
 										<ComposerAction className={createClassName(styles, 'message-box-icons')} onClick={this.toggleEmojiPickerState}>
 											<EmojiIcon width={20} height={20} />
-											{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>{I18n.t('Emoji')}</p> : null}
+											{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>
+												{I18n.t('Emoji')}</p> : null}
 										</ComposerAction>
 									</ComposerActions>
 								)}

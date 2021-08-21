@@ -31,7 +31,7 @@ export const Item = ({ children, primary, danger, disabled, icon, dynamicTextSta
 				{h(icon)}
 			</div>
 		)}
-		<span className={createClassName(styles, 'font-small')}>
+		<span className={createClassName(styles, `menu__font-${ dynamicTextState }`)}>
 			{children}
 		</span>
 	</button>
