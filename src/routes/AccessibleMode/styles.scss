@@ -1,8 +1,14 @@
 @import '../../styles/colors';
 
-.toggle-switch {
+$button-danger-background-color: $color-dark-red;
+
+.dynamic-content-row {
 	display: flex;
+
+	margin-bottom: 60px;
+
 	align-items: center;
+
 	justify-content: space-between;
 
 	&__title {
@@ -18,70 +24,87 @@
 	}
 }
 
-.toggleswitch {
-	position: relative;
-
-	display: inline-block;
-
-	width: 50px;
-	height: 25px;
-	margin-top: 8px;
-}
-
-.toggleswitch input[type="checkbox"] {
-	display: none;
-}
-
-.toggleswitch .switch {
-	position: absolute;
-
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-
-	cursor: pointer;
-
-	transition: background-color 0.2s ease;
-
-	border-radius: 25px;
-
-	background-color: $color-text-light-dark;
-}
-
-.toggleswitch .switch::before {
-	position: absolute;
-
-	top: 4px;
-	left: 2px;
-
-	width: 17px;
-	height: 17px;
-
-	content: "";
-
-	transition: transform 0.3s ease;
-
-	border-radius: 50%;
-	background-color: $bg-color-light;
-}
-
-.toggleswitch input[type="checkbox"]:checked + .switch::before {
-	transform: translateX(25px);
-}
-
-.toggleswitch input[type="checkbox"]:checked + .switch {
-	background-color: $color-dark-red;
-}
-
-.toggle-switch-title-small {
+.dynamic-text-title-small {
 	font-size: 0.8rem;
 }
 
-.toggle-switch-title-normal {
+.dynamic-text-title-normal {
 	font-size: 1rem;
 }
 
-.toggle-switch-title-large {
+.dynamic-text-title-large {
 	font-size: 1.2rem;
+}
+
+.dynamic-font {
+	color: var(--text-color, #444444);
+	border-color: transparent;
+
+	background: none;
+
+	&__small-button {
+		display: flex;
+
+		width: 40px;
+		height: 40px;
+
+		margin: 0;
+
+		text-align: center;
+
+		font-size: 16px;
+		font-weight: bold;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__medium-button {
+		display: flex;
+
+		width: 40px;
+		height: 40px;
+
+		margin: 0;
+
+		text-align: center;
+
+		font-size: 20px;
+		font-weight: bold;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__large-button {
+		display: flex;
+
+		width: 40px;
+		height: 40px;
+
+		margin: 0;
+
+		text-align: center;
+
+		font-size: 24px;
+		font-weight: bold;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+.font-16px-small {
+	color: white;
+	border-radius: 5px;
+	background: $button-danger-background-color;
+}
+
+.font-20px-normal {
+	color: white;
+	border-radius: 5px;
+	background: $button-danger-background-color;
+}
+
+.font-24px-large {
+	color: white;
+	border-radius: 5px;
+	background: $button-danger-background-color;
 }

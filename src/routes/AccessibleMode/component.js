@@ -48,30 +48,41 @@ export default class AccessibleMode extends Component {
 					<Form>
 						<Toggle title={darkModeText} handleToggleSwitch={setDarkModeState} modeToggled={darkModeState} dynamicText={dynamicTextState} />
 						<Toggle title={iconAccompanyingText} handleToggleSwitch={setIconsAccompanyingTextState} modeToggled={iconsAccompanyingTextState} dynamicText={dynamicTextState} />
+
 						<div className={createClassName(styles, 'dynamic-content-row')}>
-							<p className={createClassName(styles, 'toggle-switch__title')}>
-								<span className={createClassName(styles, `dynamic-text-title-${ dynamicTextState }`)}>{dynamicText}</span>
+							<p className={createClassName(styles, 'dynamic-content-row__title')}>
+								<span className={createClassName(styles, `dynamic-text-title-${ dynamicTextState }`)}>
+									{dynamicText}
+								</span>
 							</p>
 							<div className={createClassName(styles, 'buttons-group')}>
 								<button className={createClassName(styles, 'dynamic-font')} onClick={setSmallDynamicTextState}>
-									<div className={createClassName(styles, `fourteen-${ dynamicTextState }`)}>
-										<p className={createClassName(styles, 'dynamic-font__small-button')}>{I18n.t('Aa')}</p>
+									<div className={createClassName(styles, `font-16px-${ dynamicTextState }`)}>
+										<p className={createClassName(styles, 'dynamic-font__small-button')}>
+											{I18n.t('Aa')}
+										</p>
 									</div>
 								</button>
 								<button className={createClassName(styles, 'dynamic-font')} onClick={setNormalDynamicTextState}>
-									<div className={createClassName(styles, `twenty-${ dynamicTextState }`)}>
-										<p className={createClassName(styles, 'dynamic-font__medium-button')}>{I18n.t('Aa')}</p>
+									<div className={createClassName(styles, `font-20px-${ dynamicTextState }`)}>
+										<p className={createClassName(styles, 'dynamic-font__medium-button')}>
+											{I18n.t('Aa')}
+										</p>
 									</div>
 								</button>
 								<button className={createClassName(styles, 'dynamic-font')} onClick={setLargeDynamicTextState}>
-									<div className={createClassName(styles, `twentyfour-${ dynamicTextState }`)}>
-										<p className={createClassName(styles, 'dynamic-font__large-button')}>{I18n.t('Aa')}</p>
+									<div className={createClassName(styles, `font-24px-${ dynamicTextState }`)}>
+										<p className={createClassName(styles, 'dynamic-font__large-button')}>
+											{I18n.t('Aa')}
+										</p>
 									</div>
 								</button>
 							</div>
 						</div>
 						<ButtonGroup>
-							<Button submit loading={loading} disabled={loading} stack onClick={this.handleBackClick}>{I18n.t('Back')}</Button>
+							<Button submit loading={loading} disabled={loading} stack onClick={this.handleBackClick}>
+								{I18n.t('Back')}
+							</Button>
 						</ButtonGroup>
 					</Form>
 				</Screen.Content>
