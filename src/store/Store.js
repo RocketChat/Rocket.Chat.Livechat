@@ -2,6 +2,7 @@ import { route } from 'preact-router';
 import mitt from 'mitt';
 import { parentCall } from '../lib/parentCall';
 import { loadConfig } from '../lib/main';
+import queryString from 'query-string';
 
 const { localStorage, sessionStorage } = window;
 
@@ -15,7 +16,10 @@ export default class Store {
 		let storedState;
 
 		try {
-			storedState = JSON.parse(localStorage.getItem(this.localStorageKey));
+			const reset = queryString.parse(window.location.search).reset === 'true';
+			if (!reset) {
+				storedState = JSON.parse(localStorage.getItem(this.localStorageKey));
+			}
 		} catch (e) {
 			storedState = {};
 		} finally {
@@ -49,7 +53,7 @@ export default class Store {
 		});
 
 		window.addEventListener('visibilitychange', () => {
-			!this._state.minimized && !this._state.triggered && parentCall('openWidget');
+			!this._state.minimized && parentCall('openWidget');
 			this._state.iframe.visible ? parentCall('showWidget') : parentCall('hideWidget');
 		});
 
@@ -91,8 +95,9 @@ export default class Store {
 	}
 
 	resetState() {
-		this._state = this._initialState;
-		loadConfig();
-		route('');
+		window.addEventListener('beforeunload', () => {
+			localStorage.removeItem(this.localStorageKey);
+		});
+		document.location.href = document.location.href;
 	}
 }
