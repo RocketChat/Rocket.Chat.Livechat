@@ -25,7 +25,6 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 
 	const acceptClick = async () => {
 		setShow(!{ show });
-		await Livechat.updateCallStatus('inProgress', rid, callId);
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
 				window.open(url);
@@ -34,6 +33,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
+				await Livechat.updateCallStatus('inProgress', rid, callId);
 				if (isMobileDevice()) {
 					callInNewTab();
 					break;

@@ -212,11 +212,13 @@ export const loadMessages = async () => {
 	}
 
 	const latestCallMessage = getLatestCallMessage(messages);
-	if (callStatus === 'inProgress') {
+	if (latestCallMessage && latestCallMessage.t === constants.jitsiCallStartedMessageType) {
+		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t, url: latestCallMessage.customFields.jitsiCallUrl } });
+	} else if (callStatus === 'inProgress') {
 		if (!latestCallMessage) {
 			return;
 		}
-		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t, url: latestCallMessage.t === constants.jitsiCallStartedMessageType ? latestCallMessage.customFields.jitsiCallUrl : '' } });
+		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t } });
 	} else if (callStatus === 'ringing') {
 		processCallMessage(latestCallMessage);
 	}
