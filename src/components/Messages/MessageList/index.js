@@ -116,7 +116,7 @@ export class MessageList extends MemoizedComponent {
 			const { incomingCallAlert } = store.state;
 			const { ongoingCall } = store.state;
 
-			if (message.actionLinks && message.actionLinks.length === 2 && ongoingCall) {
+			if (message.actionLinks && message.actionLinks.length > 0 && ongoingCall) {
 				const { url, callProvider, rid } = incomingCallAlert || {};
 				items.push(
 					<JoinCallButton callStatus={ongoingCall.callStatus} url={url} callProvider={callProvider} rid={rid} />,

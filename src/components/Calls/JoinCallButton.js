@@ -16,7 +16,7 @@ export const JoinCallButton = (props) => {
 	const clickJoinCall = () => {
 		switch (props.callProvider) {
 			case constants.jitsiCallStartedMessageType: {
-				window.open(props.url);
+				window.open(props.url, room._id);
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {

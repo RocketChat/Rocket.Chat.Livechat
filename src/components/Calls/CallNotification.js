@@ -13,7 +13,7 @@ import { createClassName, getAvatarUrl, isMobileDevice } from '../helpers';
 import styles from './styles.scss';
 
 
-export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid, callId } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
+export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid, callId } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined, url: undefined }) => {
 	const [show, setShow] = useState(true);
 
 	const callInNewTab = async () => {
@@ -29,6 +29,8 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
 				window.open(url);
+				await dispatch({ incomingCallAlert: { show: false, url, callProvider } });
+				await dispatch({ ongoingCall: { callStatus: 'accept', time: { time } } });
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {

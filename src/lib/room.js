@@ -36,6 +36,7 @@ export const processCallMessage = async (message) => {
 			rid: message.rid,
 			time: message.ts,
 			callId: message._id,
+			url: message.t === constants.jitsiCallStartedMessageType ? message.customFields.jitsiCallUrl : '',
 		},
 		ongoingCall: {
 			callStatus: 'ring',
@@ -50,15 +51,13 @@ export const processCallMessage = async (message) => {
 };
 
 const processMessage = async (message) => {
-	const { incomingCallAlert } = store.state;
-
 	if (message.t === 'livechat-close') {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	} else if (message.endTs) {
 		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts }, incomingCallAlert: null });
-	} else if (!incomingCallAlert && (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)) {
+	} else if (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) {
 		await processCallMessage(message);
 	}
 };
@@ -185,7 +184,7 @@ Livechat.onMessage(async (message) => {
 });
 
 export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
-export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => msg.t === 'livechat_webrtc_video_call' || msg.t === 'livechat_video_call').pop();
+export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => msg.t === constants.webrtcCallStartedMessageType || msg.t === constants.jitsiCallStartedMessageType).pop();
 
 export const loadMessages = async () => {
 	const { ongoingCall } = store.state;
@@ -217,7 +216,7 @@ export const loadMessages = async () => {
 		if (!latestCallMessage) {
 			return;
 		}
-		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t } });
+		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t, url: latestCallMessage.t === constants.jitsiCallStartedMessageType ? latestCallMessage.customFields.jitsiCallUrl : '' } });
 	} else if (callStatus === 'ringing') {
 		processCallMessage(latestCallMessage);
 	}
