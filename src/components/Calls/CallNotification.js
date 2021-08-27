@@ -20,16 +20,15 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 		const { token, room } = store.state;
 		const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }`;
 		await dispatch({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: { time } }, incomingCallAlert: { show: false, callProvider } });
-		window.open(url, room._id);
+		window.open(url, rid);
 	};
 
 	const acceptClick = async () => {
 		setShow(!{ show });
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
-				window.open(url);
-				await dispatch({ incomingCallAlert: { show: false, url, callProvider } });
-				await dispatch({ ongoingCall: { callStatus: 'accept', time: { time } } });
+				window.open(url, rid);
+				await dispatch({ incomingCallAlert: { show: false, url, callProvider }, ongoingCall: { callStatus: 'accept', time: { time } } });
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
