@@ -195,7 +195,7 @@ export const loadMoreMessages = async () => {
 
 export const defaultRoomParams = () => {
 	const params = {
-	 type: 'widget'
+		type: 'widget',
 	};
 
 	const { defaultAgent: agent = {} } = store.state;
