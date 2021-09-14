@@ -39,6 +39,11 @@
 		font-weight: bold;
 		line-height: 1;
 
+		&:hover,
+		&:focus {
+			color: black;
+		}
+
 		@include pressable-button(2px);
 	}
 

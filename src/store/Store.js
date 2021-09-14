@@ -47,7 +47,7 @@ export default class Store {
 		});
 
 		window.addEventListener('visibilitychange', () => {
-			!this._state.minimized && parentCall('openWidget');
+			!this._state.minimized && !this._state.triggered && parentCall('openWidget');
 			this._state.iframe.visible ? parentCall('showWidget') : parentCall('hideWidget');
 		});
 
