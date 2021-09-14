@@ -12,6 +12,8 @@ $drop-overlay-text-font-size: 1.375rem;
 	position: relative;
 
 	display: flex;
+	overflow: hidden;
+
 	flex-direction: column;
 	flex: 1 1 auto;
 

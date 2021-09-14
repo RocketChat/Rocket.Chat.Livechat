@@ -2,15 +2,80 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.6.9 - 2020-06-29
-[FIX] Improve the transcript request process. (#419)
-[FIX] Start chat disable with handler validate error (#432)
-[FIX] Loading should be flase when department switched is confirmed (#… …
-[FIX] Widget playing multiple sound notifications(Multiple tabs) (#435)
-[NEW] Translate to japanese
-[NEW] Translate i18n to Czech
-[NEW] Update fr.json
-[NEW] Translate to japanese
+## 1.9.4 - 2021-08-19
+[FIX] Iframe overlay (#631)
+[IMPROVE] German informal translation (#622) 
+[FIX] Translation error on department (#632)
+[IMPROVE] Open links in another tab on Livechat widget (#610) 
+[IMPROVE] Dutch Translations (#601) 
+
+## 1.9.3 - 2021-04-21
+[FIX] sound notification on/off (#567)
+[FIX] Invalid font size for hiragana and katakana (#559)
+
+## 1.9.2 - 2021-04-13
+bump version
+
+## 1.9.1 - 2021-04-12
+[CHORE] Circle CI to github actions #577
+[CHORE] Remove circle CI #580
+
+## 1.9.0 - 2021-03-22
+[FIX] Add sanitizer to prevent XSS attacks
+[FIX] Wrong Hebrew word הדועה to הודעה #556
+[IMPROVE] add hover effect #566
+
+## 1.8.0 - 2021-02-20
+
+[IMPROVE] Flow of the widget registration form (#425)
+[IMPROVE] System messages style (#554)
+[FEATURE] New trigger messages style (#553)
+[NEW] Display transfer history messages (#328)
+[FIX] Registration form is no longer validating mandatory custom fields. (#550)
+
+## 1.7.6 - 2020-11-07
+[FIX] Livechat window cannot be restored in popout mode (#529)
+[FIX] Visitor's messages are not aligned properly on Mozilla Firefox (#530)
+
+## 1.7.5 - 2020-10-25
+[FIX] Add zh.json missing translations (#478)
+[FIX] Rendering emojis before transform markdown into HTML. (#522)
+[FIX] UIKit ActionsBlock layout for smaller screen devices (#479)
+[FIX] Emoji picker not rendering (#519)
+[FIX] Scroll issues on Safari (#503)
+[FIX] Support Webpack relative output path (#521)
+
+## 1.7.4 - 2020-09-18
+* [FIX] Select input field not working issue (#481)
+* [FIX] Invisible div on top of page (#496)
+
+## 1.7.3 - 2020-09-09
+bump version
+
+## 1.7.2 - 2020-09-09
+* [FIX] IE11 Support (#492)
+
+## 1.7.1 - 2020-08-28
+* [FIX] UiKit interation using header as autorization (#483)
+* [FIX] Transpile widget.js with Babel
+
+## 1.7.0 - 2020-08-21
+* [NEW] UiKit support (#474)
+* [CHORE] Loki visual tests (#459)
+* [IMPROVE] Translate to spanish (#413) 
+* [NEW] Message character limit feature (#443) 
+* [IMPROVE] Preact X (#457)
+* [NEW] Add Emoji rendering support (#412) 
+
+## 1.6.0 - 2020-06-29
+* [FIX] Improve the transcript request process. (#419)
+* [FIX] Start chat disable with handler validate error (#432)
+* [FIX] Loading should be flase when department switched is confirmed (#… …
+* [FIX] Widget playing multiple sound notifications(Multiple tabs) (#435)
+* [NEW] Translate to japanese
+* [NEW] Translate i18n to Czech
+* [NEW] Update fr.json
+* [NEW] Translate to japanese
 
 ## 1.5.0 - 2020-05-20
 * [NEW] Support Registration Form custom fields (#407) …

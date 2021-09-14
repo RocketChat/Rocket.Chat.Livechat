@@ -1,5 +1,4 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
@@ -9,6 +8,7 @@ import {
 	SelectInput,
 	TextInput,
 } from '.';
+import { centered } from '../../helpers.stories';
 import { Button } from '../Button';
 import { ButtonGroup } from '../ButtonGroup';
 import { FormField } from './FormField';

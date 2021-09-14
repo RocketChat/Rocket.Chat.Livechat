@@ -1,12 +1,14 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
 import { Button } from '.';
+import { avatarResolver, centered } from '../../helpers.stories';
 import ChatIcon from '../../icons/chat.svg';
 
+
+const defaultSrc = avatarResolver('guilherme.gazzo');
 
 const defaultText = 'Powered by Rocket.Chat';
 const defaultBadge = 'badged';
@@ -187,6 +189,24 @@ storiesOf('Components/Button', module)
 			badge={text('badge', '')}
 			icon={<ChatIcon />}
 			onClick={action('clicked')}
+		>
+			{text('text', defaultText)}
+		</Button>
+	))
+	.add('transparent with background image', () => (
+		<Button
+			img={defaultSrc}
+			disabled={boolean('disabled', false)}
+			outline={boolean('outline', false)}
+			danger={boolean('danger', false)}
+			secondary={boolean('secondary', false)}
+			stack={boolean('stack', false)}
+			small={boolean('small', false)}
+			loading={boolean('loading', false)}
+			badge={text('badge', 1)}
+			icon={<ChatIcon />}
+			onClick={action('clicked')}
+			transparent={boolean('transparent', true)}
 		>
 			{text('text', defaultText)}
 		</Button>

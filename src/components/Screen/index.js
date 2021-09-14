@@ -1,4 +1,5 @@
 import { Component, h } from 'preact';
+import { useEffect } from 'preact/hooks';
 
 import I18n from '../../i18n';
 import MinimizeIcon from '../../icons/arrowDown.svg';
@@ -90,8 +91,8 @@ class ScreenHeader extends Component {
 							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
 						>
 							{notificationsEnabled
-								? <NotificationsEnabledIcon width={20} />
-								: <NotificationsDisabledIcon width={20} />
+								? <NotificationsEnabledIcon width={20} height={20} />
+								: <NotificationsDisabledIcon width={20} height={20} />
 							}
 						</Header.Action>
 					</Tooltip.Trigger>
@@ -102,8 +103,8 @@ class ScreenHeader extends Component {
 								onClick={minimized ? onRestore : onMinimize}
 							>
 								{minimized
-									? <RestoreIcon width={20} />
-									: <MinimizeIcon width={20} />
+									? <RestoreIcon width={20} height={20} />
+									: <MinimizeIcon width={20} height={20} />
 								}
 							</Header.Action>
 						</Tooltip.Trigger>
@@ -111,7 +112,7 @@ class ScreenHeader extends Component {
 					{(!expanded && !windowed) && (
 						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
 							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-								<OpenWindowIcon width={20} />
+								<OpenWindowIcon width={20} height={20} />
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
@@ -122,8 +123,8 @@ class ScreenHeader extends Component {
 }
 
 
-export const ScreenContent = ({ children, nopadding }) => (
-	<main className={createClassName(styles, 'screen__main', { nopadding })}>
+export const ScreenContent = ({ children, nopadding, triggered = false }) => (
+	<main className={createClassName(styles, 'screen__main', { nopadding, triggered })}>
 		{children}
 	</main>
 );
@@ -149,16 +150,52 @@ const ChatButton = ({
 	minimized,
 	badge,
 	onClick,
+	triggered = false,
+	agent,
 }) => (
 	<Button
-		icon={minimized ? <ChatIcon /> : <CloseIcon />}
+		icon={minimized || triggered ? <ChatIcon /> : <CloseIcon />}
 		badge={badge}
 		onClick={onClick}
 		className={createClassName(styles, 'screen__chat-button')}
+		img={triggered && agent && agent.avatar.src}
 	>
 		{text}
 	</Button>
 );
+
+const CssVar = ({ theme }) => {
+	useEffect(() => {
+		if (window.CSS && CSS.supports('color', 'var(--color)')) {
+			return;
+		}
+		let mounted = true;
+		(async () => {
+			const { default: cssVars } = await import('css-vars-ponyfill');
+			if (!mounted) {
+				return;
+			}
+			cssVars({
+				variables: {
+					'--color': theme.color,
+					'--font-color': theme.fontColor,
+					'--icon-color': theme.iconColor,
+				},
+			});
+		})();
+		return () => {
+			mounted = false;
+		};
+	}, [theme]);
+
+	return <style>{`
+		.${ styles.screen } {
+			${ theme.color ? `--color: ${ theme.color };` : '' }
+			${ theme.fontColor ? `--font-color: ${ theme.fontColor };` : '' }
+			${ theme.iconColor ? `--icon-color: ${ theme.iconColor };` : '' }
+		}
+	`}</style>;
+};
 
 export const Screen = ({
 	theme = {},
@@ -183,19 +220,14 @@ export const Screen = ({
 	onSoundStop,
 	queueInfo,
 	dismissNotification,
+	triggered = false,
 }) => (
-	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed })}>
-		<style>{`
-			.${ styles.screen } {
-				${ theme.color ? `--color: ${ theme.color };` : '' }
-				${ theme.fontColor ? `--font-color: ${ theme.fontColor };` : '' }
-				${ theme.iconColor ? `--icon-color: ${ theme.iconColor };` : '' }
-			}
-		`}</style>
-
-		<div className={createClassName(styles, 'screen__inner', {}, [className])}>
+	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, triggered })}>
+		<CssVar theme={theme} />
+		{triggered && <Button onClick={onMinimize} className={createClassName(styles, 'screen__chat-close-button')} icon={<CloseIcon />}>Close</Button>}
+		<div className={createClassName(styles, 'screen__inner', { fitTextSize: triggered }, [className])}>
 			<PopoverContainer>
-				<ScreenHeader
+				{!triggered && <ScreenHeader
 					alerts={alerts}
 					agent={agent}
 					title={title}
@@ -210,7 +242,7 @@ export const Screen = ({
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
-				/>
+				/>}
 
 				{modal}
 				{children}
@@ -218,6 +250,8 @@ export const Screen = ({
 		</div>
 
 		<ChatButton
+			agent={agent}
+			triggered={triggered}
 			text={title}
 			badge={unread}
 			minimized={minimized}

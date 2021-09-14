@@ -52,8 +52,18 @@
 	}
 
 	.none__action {
-		opacity: 0.6;
 		margin: 0 6px;
+
+		opacity: 0.6;
+	}
+
+	.emoji-picker-icon {
+		color: #696969;
+
+		&:hover,
+		&:focus {
+			color: black;
+		}
 	}
 }
 

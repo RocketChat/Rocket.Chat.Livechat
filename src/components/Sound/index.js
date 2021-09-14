@@ -17,7 +17,7 @@ export class Sound extends Component {
 				return;
 			}
 			this.audio.play();
-		} else if (!this.audio.ended) {
+		} else if (!this.audio.ended && !this.audio.paused) {
 			this.audio.pause();
 			this.audio.currentTime = 0;
 		}

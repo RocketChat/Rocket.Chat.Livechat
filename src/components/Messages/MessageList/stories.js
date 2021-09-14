@@ -1,19 +1,21 @@
 import { action } from '@storybook/addon-actions';
-import centered from '@storybook/addon-centered/react';
 import { withKnobs, number, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { loremIpsum } from 'lorem-ipsum';
 import { h } from 'preact';
 
 import { MessageList } from '.';
-import { avatarResolver } from '../../../helpers.stories';
-
+import { avatarResolver, loremIpsum, centered } from '../../../helpers.stories';
+import {
+	MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
+} from '../constants';
 
 const fittingScreen = (storyFn, ...args) => centered(() => (
 	<div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
 		{storyFn()}
 	</div>
 ), ...args);
+
+const now = new Date(Date.parse('2021-01-01T00:00:00.000Z'));
 
 const users = [
 	{
@@ -34,9 +36,9 @@ const messages = new Array(10);
 for (let i = 0; i < messages.length; ++i) {
 	messages[i] = {
 		_id: i + 1,
-		u: users[Math.floor(Math.random() * users.length)],
+		u: users[i % users.length],
 		msg: loremIpsum({ count: 1, units: 'sentences' }),
-		ts: new Date(Date.now() - (15 - i) * 60000).toISOString(),
+		ts: new Date(now.getTime() - (15 - i) * 60000).toISOString(),
 	};
 }
 
@@ -46,6 +48,25 @@ storiesOf('Messages/MessageList', module)
 	.add('normal', () => (
 		<MessageList
 			messages={object('messages', messages)}
+			uid={number('uid', 1)}
+			avatarResolver={avatarResolver}
+			lastReadMessageId={number('lastReadMessageId', 7)}
+			typingUsernames={object('typingUsernames', [])}
+			onScrollTo={action('scrollTo')}
+		/>
+	))
+	.add('with system message', () => (
+		<MessageList
+			messages={object('messages', [...messages, {
+				msg: '',
+				t: MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
+				transferData: {
+					transferredBy: users[0],
+					scope: 'queue',
+				},
+				u: users[0],
+				_id: 'AGiTzCjYyaypDxpDm',
+			}])}
 			uid={number('uid', 1)}
 			avatarResolver={avatarResolver}
 			lastReadMessageId={number('lastReadMessageId', 7)}
