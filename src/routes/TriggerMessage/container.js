@@ -10,6 +10,7 @@ import TriggerMessage from './component';
 export class TriggerMessageContainer extends Component {
 	handleStart() {
 		parentCall('setFullScreenDocumentMobile');
+		parentCall('openWidget');
 		route('/');
 	}
 

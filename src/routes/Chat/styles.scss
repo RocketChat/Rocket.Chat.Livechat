@@ -57,11 +57,12 @@
 		opacity: 0.6;
 	}
 
-	.emoji-picker-icon{
-		color:#696969;
+	.emoji-picker-icon {
+		color: #696969;
+
 		&:hover,
-		&:focus{
-			color: black;	
+		&:focus {
+			color: black;
 		}
 	}
 }
