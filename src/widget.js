@@ -23,6 +23,7 @@ let ready = false;
 let smallScreen = false;
 let bodyStyle;
 let scrollPosition;
+let widget_height;
 
 export const validCallbacks = [
 	'chat-maximized',
@@ -93,9 +94,8 @@ const updateWidgetStyle = (isOpened) => {
 		 * for widget.style.width
 		 */
 
+		widget.style.height = smallScreen ? '100%' : `${ WIDGET_MARGIN + widget_height + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT }px`;
 		widget.style.width = smallScreen ? '100%' : `${ WIDGET_MARGIN + WIDGET_OPEN_WIDTH + WIDGET_MARGIN }px`;
-		widget.style.height = smallScreen ? '100%'
-			: `${ WIDGET_MARGIN + WIDGET_OPEN_HEIGHT + WIDGET_MARGIN + WIDGET_MINIMIZED_HEIGHT + WIDGET_MARGIN }px`;
 	} else {
 		widget.style.left = 'auto';
 		widget.style.width = `${ WIDGET_MARGIN + WIDGET_MINIMIZED_WIDTH + WIDGET_MARGIN }px`;
@@ -153,10 +153,17 @@ const openWidget = () => {
 		return;
 	}
 
+	widget_height = WIDGET_OPEN_HEIGHT;
 	updateWidgetStyle(true);
 	widget.dataset.state = 'opened';
 	iframe.focus();
 	emitCallback('chat-maximized');
+};
+
+const resizeWidget = (height) => {
+	widget_height = height;
+	updateWidgetStyle(true);
+	widget.dataset.state = 'triggered';
 };
 
 function closeWidget() {
@@ -197,12 +204,16 @@ const api = {
 	openPopout() {
 		closeWidget();
 		api.popup = window.open(`${ config.url }${ config.url.lastIndexOf('?') > -1 ? '&' : '?' }mode=popout`,
-			'livechat-popout', `width=${ WIDGET_OPEN_WIDTH }, height=${ WIDGET_OPEN_HEIGHT }, toolbars=no`);
+			'livechat-popout', `width=${ WIDGET_OPEN_WIDTH }, height=${ widget_height }, toolbars=no`);
 		api.popup.focus();
 	},
 
 	openWidget() {
 		openWidget();
+	},
+
+	resizeWidget(height) {
+		resizeWidget(height);
 	},
 
 	removeWidget() {

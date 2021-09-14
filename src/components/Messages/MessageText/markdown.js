@@ -81,4 +81,4 @@ md.use((md) => {
 	});
 });
 
-export const renderMarkdown = (...args) => sanitize(md.render(...args));
+export const renderMarkdown = (...args) => sanitize(md.render(...args), { ADD_ATTR: ['target', 'rel'] });
