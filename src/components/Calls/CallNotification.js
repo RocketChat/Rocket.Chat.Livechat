@@ -13,25 +13,26 @@ import { createClassName, getAvatarUrl, isMobileDevice } from '../helpers';
 import styles from './styles.scss';
 
 
-export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid, callId } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined }) => {
+export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid, callId } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined, url: undefined }) => {
 	const [show, setShow] = useState(true);
 
 	const callInNewTab = async () => {
 		const { token, room } = store.state;
 		const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }`;
 		await dispatch({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: { time } }, incomingCallAlert: { show: false, callProvider } });
-		window.open(url, room._id);
+		window.open(url, rid);
 	};
 
 	const acceptClick = async () => {
 		setShow(!{ show });
-		await Livechat.updateCallStatus('inProgress', rid, callId);
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
-				window.open(url);
+				window.open(url, rid);
+				await dispatch({ incomingCallAlert: { show: false, url, callProvider }, ongoingCall: { callStatus: 'accept', time: { time } } });
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
+				await Livechat.updateCallStatus('inProgress', rid, callId);
 				if (isMobileDevice()) {
 					callInNewTab();
 					break;
