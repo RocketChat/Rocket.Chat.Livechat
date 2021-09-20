@@ -19,7 +19,7 @@ import Register from '../../routes/Register';
 import SwitchDepartment from '../../routes/SwitchDepartment';
 import TriggerMessage from '../../routes/TriggerMessage';
 import { Provider as StoreProvider, Consumer as StoreConsumer, store } from '../../store';
-import { visibility, isActiveSession } from '../helpers';
+import { visibility, isActiveSession, setInitCookies } from '../helpers';
 
 function isRTL(s) {
 	const rtlChars = '\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC';
@@ -53,6 +53,8 @@ export class App extends Component {
 				triggered,
 				user,
 			} = this.props;
+
+			setInitCookies();
 
 			if (gdprRequired && !gdprAccepted) {
 				return route('/gdpr');

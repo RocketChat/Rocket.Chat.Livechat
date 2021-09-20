@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 
-import { Livechat } from '../api';
+import { Livechat, useSsl } from '../api';
 import I18n from '../i18n';
 import store from '../store';
 
@@ -103,10 +103,20 @@ export function upsert(array = [], item, predicate, ranking) {
 	return array;
 }
 
+// This will allow widgets that are on different domains to send cookies to the server
+// The default config for same-site (lax) dissalows to send a cookie to a "3rd party" unless the user performs an action
+// like a click. Secure flag is required when SameSite is set to None
+const getSecureCookieSettings = () => (useSsl ? 'SameSite=None; Secure;' : '');
+
+export const setInitCookies = () => {
+	document.cookie = `rc_is_widget=t; path=/; ${ getSecureCookieSettings() }`;
+	document.cookie = `rc_room_type=l; path=/; ${ getSecureCookieSettings() }`;
+};
+
 export const setCookies = (rid, token) => {
-	document.cookie = `rc_rid=${ rid }; path=/`;
-	document.cookie = `rc_token=${ token }; path=/`;
-	document.cookie = 'rc_room_type=l; path=/';
+	document.cookie = `rc_rid=${ rid }; path=/; ${ getSecureCookieSettings() }`;
+	document.cookie = `rc_token=${ token }; path=/; ${ getSecureCookieSettings() }`;
+	document.cookie = `rc_room_type=l; path=/; ${ getSecureCookieSettings() }`;
 };
 
 export const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
