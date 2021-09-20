@@ -117,7 +117,7 @@ export class MessageList extends MemoizedComponent {
 			const { incomingCallAlert } = store.state;
 			const { ongoingCall } = store.state;
 
-			if ((message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) && message.actionLinks && message.actionLinks.length > 0 && ongoingCall) {
+			if ((message.t === constants.webRTCCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) && message.actionLinks && message.actionLinks.length && ongoingCall) {
 				const { url, callProvider, rid } = incomingCallAlert || {};
 				items.push(
 					<JoinCallButton callStatus={ongoingCall.callStatus} url={url} callProvider={callProvider} rid={rid} />,

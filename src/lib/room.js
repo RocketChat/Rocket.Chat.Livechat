@@ -1,6 +1,7 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
+import { CallStatus } from '../components/Calls/constants';
 import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
 import I18n from '../i18n';
 import { store } from '../store';
@@ -26,23 +27,24 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 };
 
 // TODO: use a separate event to listen to call start event. Listening on the message type isn't a good solution
-export const processCallMessage = async (message) => {
+export const processIncomingCallMessage = async (message) => {
 	const { alerts } = store.state;
 	try {
-		await store.setState({ incomingCallAlert: {
-			show: true,
-			callProvider: message.t,
-			callerUsername: message.u.username,
-			rid: message.rid,
-			time: message.ts,
-			callId: message._id,
-			url: message.t === constants.jitsiCallStartedMessageType ? message.customFields.jitsiCallUrl : '',
-		},
-		ongoingCall: {
-			callStatus: 'ring',
-			time: message.ts,
-		} },
-		);
+		await store.setState({
+			incomingCallAlert: {
+				show: true,
+				callProvider: message.t,
+				callerUsername: message.u.username,
+				rid: message.rid,
+				time: message.ts,
+				callId: message._id,
+				url: message.t === constants.jitsiCallStartedMessageType ? message.customFields.jitsiCallUrl : '',
+			},
+			ongoingCall: {
+				callStatus: CallStatus.RINGING,
+				time: message.ts,
+			},
+		});
 	} catch (err) {
 		console.error(err);
 		const alert = { id: createToken(), children: I18n.t('error_getting_call_alert'), error: true, timeout: 5000 };
@@ -56,9 +58,9 @@ const processMessage = async (message) => {
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
 	} else if (message.endTs) {
-		await store.setState({ ongoingCall: { callStatus: 'ended', time: message.ts }, incomingCallAlert: null });
-	} else if (message.t === constants.webrtcCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) {
-		await processCallMessage(message);
+		await store.setState({ ongoingCall: { callStatus: CallStatus.ENDED, time: message.ts }, incomingCallAlert: null });
+	} else if (message.t === constants.webRTCCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) {
+		await processIncomingCallMessage(message);
 	}
 };
 
@@ -184,7 +186,7 @@ Livechat.onMessage(async (message) => {
 });
 
 export const getGreetingMessages = (messages) => messages && messages.filter((msg) => msg.trigger);
-export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => msg.t === constants.webrtcCallStartedMessageType || msg.t === constants.jitsiCallStartedMessageType).pop();
+export const getLatestCallMessage = (messages) => messages && messages.filter((msg) => msg.t === constants.webRTCCallStartedMessageType || msg.t === constants.jitsiCallStartedMessageType).pop();
 
 export const loadMessages = async () => {
 	const { ongoingCall } = store.state;
@@ -207,20 +209,26 @@ export const loadMessages = async () => {
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
 	}
 
-	if (ongoingCall && (ongoingCall.callStatus === 'accept' || ongoingCall.callStatus === 'ongoingCallInNewTab')) {
+	if (ongoingCall && (ongoingCall.callStatus === CallStatus.ACCEPT || ongoingCall.callStatus === CallStatus.ON_GOING_CALL_IN_NEW_TAB)) {
 		return;
 	}
 
 	const latestCallMessage = getLatestCallMessage(messages);
-	if (latestCallMessage && latestCallMessage.t === constants.jitsiCallStartedMessageType) {
-		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t, url: latestCallMessage.customFields.jitsiCallUrl } });
-	} else if (callStatus === 'inProgress') {
-		if (!latestCallMessage) {
-			return;
+	if (!latestCallMessage) {
+		return;
+	}
+	if (latestCallMessage.t === constants.jitsiCallStartedMessageType) {
+		await store.setState({ ongoingCall: { callStatus: CallStatus.ON_GOING_CALL_IN_NEW_TAB, time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t, url: latestCallMessage.customFields.jitsiCallUrl } });
+		return;
+	}
+	switch (callStatus) {
+		case CallStatus.INPROGRESS: {
+			await store.setState({ ongoingCall: { callStatus: CallStatus.ON_GOING_CALL_IN_NEW_TAB, time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t } });
+			break;
 		}
-		store.setState({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t } });
-	} else if (callStatus === 'ringing') {
-		processCallMessage(latestCallMessage);
+		case CallStatus.RINGING: {
+			processIncomingCallMessage(latestCallMessage);
+		}
 	}
 };
 

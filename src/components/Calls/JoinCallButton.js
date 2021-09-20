@@ -7,6 +7,7 @@ import constants from '../../lib/constants';
 import store from '../../store';
 import { Button } from '../Button';
 import { createClassName } from '../helpers';
+import { CallStatus } from './constants';
 import styles from './styles.scss';
 
 
@@ -19,22 +20,29 @@ export const JoinCallButton = (props) => {
 				window.open(props.url, room._id);
 				break;
 			}
-			case constants.webrtcCallStartedMessageType: {
+			case constants.webRTCCallStartedMessageType: {
 				window.open(`${ Livechat.client.host }/meet/${ room._id }?token=${ token }`, room._id);
 				break;
 			}
 		}
 	};
-	return (<div>
-		{ props.callStatus === 'accept' || props.callStatus === 'ongoingCallInNewTab'
-			? <div className={createClassName(styles, 'joinCall')}>
-				<div className={createClassName(styles, 'joinCall__content')} >
-					<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
-						<VideoIcon width={20} height={20} />
+	return (
+		<div className={createClassName(styles, 'joinCall')}>
+			{
+				(props.callStatus === CallStatus.ACCEPT || props.callStatus === CallStatus.ON_GOING_CALL_IN_NEW_TAB)
+				&& (
+					<div className={createClassName(styles, 'joinCall__content')} >
+						<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
+							<VideoIcon width={20} height={20} />
+						</div>
+						{ I18n.t('Join my room to start the video call') }
+						<Button onClick={clickJoinCall} className={createClassName(styles, 'joinCall__content-action')}>
+							<VideoIcon width={20} height={20} />
+							{I18n.t('Join Call')}
+						</Button>
 					</div>
-					{I18n.t('Join my room to start the video call')}
-				</div>
-				<Button onClick={clickJoinCall} className={createClassName(styles, 'joinCall__content-action')}> <VideoIcon width={20} height={20} /> {I18n.t('Join Call')} </Button>
-	    </div> : null } </div>
+				)
+			}
+		</div>
 	);
 };

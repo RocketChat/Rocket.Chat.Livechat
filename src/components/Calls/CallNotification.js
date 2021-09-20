@@ -10,6 +10,7 @@ import store from '../../store';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
 import { createClassName, getAvatarUrl, isMobileDevice } from '../helpers';
+import { CallStatus } from './constants';
 import styles from './styles.scss';
 
 
@@ -17,9 +18,9 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 	const [show, setShow] = useState(true);
 
 	const callInNewTab = async () => {
-		const { token, room } = store.state;
-		const url = `${ Livechat.client.host }/meet/${ room._id }?token=${ token }`;
-		await dispatch({ ongoingCall: { callStatus: 'ongoingCallInNewTab', time: { time } }, incomingCallAlert: { show: false, callProvider } });
+		const { token } = store.state;
+		const url = `${ Livechat.client.host }/meet/${ rid }?token=${ token }`;
+		await dispatch({ ongoingCall: { callStatus: CallStatus.ON_GOING_CALL_IN_NEW_TAB, time: { time } }, incomingCallAlert: { show: false, callProvider } });
 		window.open(url, rid);
 	};
 
@@ -28,16 +29,16 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
 				window.open(url, rid);
-				await dispatch({ incomingCallAlert: { show: false, url, callProvider }, ongoingCall: { callStatus: 'accept', time: { time } } });
+				await dispatch({ incomingCallAlert: { show: false, url, callProvider }, ongoingCall: { callStatus: CallStatus.ACCEPT, time: { time } } });
 				break;
 			}
 			case constants.webrtcCallStartedMessageType: {
-				await Livechat.updateCallStatus('inProgress', rid, callId);
+				await Livechat.updateCallStatus(CallStatus.INPROGRESS, rid, callId);
 				if (isMobileDevice()) {
 					callInNewTab();
 					break;
 				}
-				await dispatch({ ongoingCall: { callStatus: 'accept', time: { time } } });
+				await dispatch({ ongoingCall: { callStatus: CallStatus.ACCEPT, time: { time } } });
 				break;
 			}
 		}
@@ -46,34 +47,36 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 	const declineClick = async () => {
 		await Livechat.updateCallStatus('declined', rid, callId);
 		await Livechat.notifyCallDeclined(rid);
-		await dispatch({ incomingCallAlert: null, ongoingCall: { callStatus: 'declined', time: { time } } });
+		await dispatch({ incomingCallAlert: null, ongoingCall: { callStatus: CallStatus.DECLINED, time: { time } } });
 	};
 
 	return (
 		<div className={createClassName(styles, 'call-notification')}>
-			{ show
-				? (
-					<div className={createClassName(styles, 'call-notification__content')}>
-						<div className={createClassName(styles, 'call-notification__content-avatar')}>
-							<Avatar
-								src={getAvatarUrl(callerUsername)}
-								large
-							/>
+			{
+				show && (
+					<div className = { createClassName(styles, 'call-notification__content') }>
+						<div className = { createClassName(styles, 'call-notification__content-avatar') }>
+							<Avatar src = { getAvatarUrl(callerUsername) } large />
 						</div>
-						<div className={createClassName(styles, 'call-notification__content-message')}>
+						<div className = { createClassName(styles, 'call-notification__content-message') }>
 							{ I18n.t('Incoming video Call') }
 						</div>
-						<div className={createClassName(styles, 'call-notification__content-actions')}>
-							<Button onClick={declineClick} className={createClassName(styles, 'call-notification__content-actions-decline')}>
-								<PhoneDecline width={20} height={20} /> <span style='margin-left:5px'> {I18n.t('Decline')} </span>
+						<div className = { createClassName(styles, 'call-notification__content-actions') }>
+							<Button
+								onClick = { declineClick }
+								className = { createClassName(styles, 'call-notification__content-actions-decline') }>
+								<PhoneDecline width = {	20 } height = { 20 } />
+								<span style='margin-left:5px'> {I18n.t('Decline')} </span >
 							</Button>
-							<Button onClick={acceptClick} className={createClassName(styles, 'call-notification__content-actions-accept')} >
-								<PhoneAccept width={20} height={20} /><span style='margin-left:5px'> {I18n.t('Accept')} </span>
+							<Button onClick = { acceptClick }
+								className = {createClassName(styles, 'call-notification__content-actions-accept') }>
+								<PhoneAccept width = { 20 } height = { 20} />
+								<span style='margin-left:5px'> {I18n.t('Accept')} </span >
 							</Button>
 						</div>
 					</div>
 				)
-				: null
 			}
-		</div>);
+		</div>
+	);
 };
