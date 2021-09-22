@@ -183,10 +183,10 @@ export default class LeaveMessage extends Component {
 			{...props}
 		>
 			<Screen.Content>
-				<p className={createClassName(styles, 'leave-message__main-message')}>
-					{hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage}
-				</p>
-
+				<p className={createClassName(styles, 'leave-message__main-message')}
+					// eslint-disable-next-line react/no-danger
+					dangerouslySetInnerHTML={{ __html: hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage }}
+				/>
 				{hasForm && this.renderForm(this.props, this.state)}
 			</Screen.Content>
 			<Screen.Footer />
