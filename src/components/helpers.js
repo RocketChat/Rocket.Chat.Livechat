@@ -160,7 +160,7 @@ export const normalizeTransferHistoryMessage = (transferData, sender) => {
 			if (!sender.username) {
 				return I18n.t('The chat was moved back to queue');
 			}
-			I18n.t('%{from} returned the chat to the queue', { from });
+			return I18n.t('%{from} returned the chat to the queue', { from });
 		},
 	};
 
