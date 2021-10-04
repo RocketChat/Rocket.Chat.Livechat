@@ -156,7 +156,12 @@ export const normalizeTransferHistoryMessage = (transferData, sender) => {
 			const to = nextDepartment && nextDepartment.name;
 			return I18n.t('%{from} transferred the chat to the department %{to}', { from, to });
 		},
-		queue: () => I18n.t('%{from} returned the chat to the queue', { from }),
+		queue: () => {
+			if (!sender.username) {
+				return I18n.t('The chat was moved back to queue');
+			}
+			I18n.t('%{from} returned the chat to the queue', { from });
+		},
 	};
 
 	return transferTypes[scope]();
