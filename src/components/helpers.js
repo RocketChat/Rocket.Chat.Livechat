@@ -136,7 +136,7 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	return 1;
 });
 
-export const normalizeTransferHistoryMessage = (transferData) => {
+export const normalizeTransferHistoryMessage = (transferData, sender) => {
 	if (!transferData) {
 		return;
 	}
@@ -146,6 +146,9 @@ export const normalizeTransferHistoryMessage = (transferData) => {
 
 	const transferTypes = {
 		agent: () => {
+			if (!sender.username) {
+				return I18n.t('The chat was transferred to another agent');
+			}
 			const to = transferredTo && (transferredTo.name || transferredTo.username);
 			return I18n.t('%{from} transferred the chat to %{to}', { from, to });
 		},

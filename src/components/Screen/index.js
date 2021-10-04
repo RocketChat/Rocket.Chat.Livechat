@@ -1,3 +1,4 @@
+import * as cssVarsImport from 'css-vars-ponyfill';
 import { Component, h } from 'preact';
 import { useEffect } from 'preact/hooks';
 
@@ -171,7 +172,7 @@ const CssVar = ({ theme }) => {
 		}
 		let mounted = true;
 		(async () => {
-			const { default: cssVars } = await import('css-vars-ponyfill');
+			const { default: cssVars } = cssVarsImport;
 			if (!mounted) {
 				return;
 			}

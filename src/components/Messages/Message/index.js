@@ -80,7 +80,7 @@ const renderContent = ({
 	),
 ].filter(Boolean);
 
-const getSystemMessageText = ({ t, conversationFinishedMessage, transferData }) =>
+const getSystemMessageText = ({ t, conversationFinishedMessage, transferData, u }) =>
 	(t === MESSAGE_TYPE_ROOM_NAME_CHANGED && I18n.t('Room name changed'))
 	|| (t === MESSAGE_TYPE_USER_ADDED && I18n.t('User added by'))
 	|| (t === MESSAGE_TYPE_USER_REMOVED && I18n.t('User removed by'))
@@ -89,7 +89,7 @@ const getSystemMessageText = ({ t, conversationFinishedMessage, transferData }) 
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
 	|| (t === MESSAGE_TYPE_LIVECHAT_STARTED && I18n.t('Chat started'))
-	|| (t === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData));
+	|| (t === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData, u));
 
 const getMessageUsernames = (compact, message) => {
 	if (compact || !message.u) {
