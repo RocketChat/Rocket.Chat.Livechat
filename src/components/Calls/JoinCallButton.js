@@ -31,11 +31,13 @@ export const JoinCallButton = (props) => {
 			{
 				(props.callStatus === CallStatus.ACCEPT || props.callStatus === CallStatus.ON_GOING_CALL_IN_NEW_TAB)
 				&& (
-					<div className={createClassName(styles, 'joinCall__content')} >
-						<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
-							<VideoIcon width={20} height={20} />
+					<div>
+						<div className={createClassName(styles, 'joinCall__content')} >
+							<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
+								<VideoIcon width={20} height={20} />
+							</div>
+							{ I18n.t('Join my room to start the video call') }
 						</div>
-						{ I18n.t('Join my room to start the video call') }
 						<Button onClick={clickJoinCall} className={createClassName(styles, 'joinCall__content-action')}>
 							<VideoIcon width={20} height={20} />
 							{I18n.t('Join Call')}
