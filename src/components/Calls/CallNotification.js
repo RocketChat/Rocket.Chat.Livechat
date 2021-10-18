@@ -32,7 +32,7 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 				await dispatch({ incomingCallAlert: { show: false, url, callProvider }, ongoingCall: { callStatus: CallStatus.ACCEPT, time: { time } } });
 				break;
 			}
-			case constants.webrtcCallStartedMessageType: {
+			case constants.webRTCCallStartedMessageType: {
 				await Livechat.updateCallStatus(CallStatus.INPROGRESS, rid, callId);
 				if (isMobileDevice()) {
 					callInNewTab();
