@@ -136,7 +136,7 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	return 1;
 });
 
-export const normalizeTransferHistoryMessage = (transferData) => {
+export const normalizeTransferHistoryMessage = (transferData, sender) => {
 	if (!transferData) {
 		return;
 	}
@@ -146,6 +146,9 @@ export const normalizeTransferHistoryMessage = (transferData) => {
 
 	const transferTypes = {
 		agent: () => {
+			if (!sender.username) {
+				return I18n.t('The chat was transferred to another agent');
+			}
 			const to = transferredTo && (transferredTo.name || transferredTo.username);
 			return I18n.t('%{from} transferred the chat to %{to}', { from, to });
 		},
@@ -153,7 +156,12 @@ export const normalizeTransferHistoryMessage = (transferData) => {
 			const to = nextDepartment && nextDepartment.name;
 			return I18n.t('%{from} transferred the chat to the department %{to}', { from, to });
 		},
-		queue: () => I18n.t('%{from} returned the chat to the queue', { from }),
+		queue: () => {
+			if (!sender.username) {
+				return I18n.t('The chat was moved back to queue');
+			}
+			return I18n.t('%{from} returned the chat to the queue', { from });
+		},
 	};
 
 	return transferTypes[scope]();

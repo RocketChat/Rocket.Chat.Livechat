@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.9.6 - 2021-10-20
+[FIX] 'Hide agent info' not working on system message (#651)
+[FIX] Issues on Custom Livechat messages (#648)
+
 ## 1.9.5 - 2021-09-14
 [IMPROVE] Readme enhancements (#557)
 [IMPROVE] Swedish Translations (#573)
