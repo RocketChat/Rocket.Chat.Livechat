@@ -71,7 +71,7 @@ export class TooltipContainer extends Component {
 
 	UNSAFE_componentWillReceiveProps(props) {
 		if (this.state.tooltip) {
-			const activeChildren = props && props.children && props.children.props && props.children.props.children && props.children.props.children[this.state.activeChild];
+			const activeChildren = props?.children?.props?.children[this.state.activeChild];
 			if (activeChildren && activeChildren.props.content !== this.state.content) {
 				this.showTooltip(this.state.event, { content: activeChildren.props.content, placement: this.state.placement, childIndex: this.state.activeChild });
 			}
