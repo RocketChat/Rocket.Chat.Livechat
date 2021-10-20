@@ -3,6 +3,7 @@ import { h, Component } from 'preact';
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import { Form, FormField, SelectInput, TextInput, Validations } from '../../components/Form';
+import { renderMarkdown } from '../../components/Messages/MessageText/markdown';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
 import I18n from '../../i18n';
@@ -183,10 +184,10 @@ export default class LeaveMessage extends Component {
 			{...props}
 		>
 			<Screen.Content>
-				<p className={createClassName(styles, 'leave-message__main-message')}>
-					{hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage}
-				</p>
-
+				<div className={createClassName(styles, 'leave-message__main-message')}
+					// eslint-disable-next-line react/no-danger
+					dangerouslySetInnerHTML={{ __html: renderMarkdown(hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage) }}
+				/>
 				{hasForm && this.renderForm(this.props, this.state)}
 			</Screen.Content>
 			<Screen.Footer />
