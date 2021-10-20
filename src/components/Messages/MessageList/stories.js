@@ -74,6 +74,25 @@ storiesOf('Messages/MessageList', module)
 			onScrollTo={action('scrollTo')}
 		/>
 	))
+	.add('with hidden agent info system message', () => (
+		<MessageList
+			messages={object('messages', [...messages, {
+				msg: '',
+				t: MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
+				transferData: {
+					transferredBy: { ...users[0], username: undefined },
+					scope: 'queue',
+				},
+				u: { ...users[0], username: undefined },
+				_id: 'AGiTzCjYyaypDxpDm',
+			}])}
+			uid={number('uid', 1)}
+			avatarResolver={avatarResolver}
+			lastReadMessageId={number('lastReadMessageId', 7)}
+			typingUsernames={object('typingUsernames', [])}
+			onScrollTo={action('scrollTo')}
+		/>
+	))
 	.add('with typing users', () => (
 		<MessageList
 			messages={object('messages', messages)}
