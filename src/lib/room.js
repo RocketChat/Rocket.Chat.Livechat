@@ -131,6 +131,19 @@ Livechat.onMessage(async (message) => {
 		return;
 	}
 
+	let sdpMsg = null;
+	try {
+		console.log('receive msg...', message)
+		sdpMsg = JSON.parse(message.msg);
+		if(sdpMsg && sdpMsg.type === "answer") {
+			window.peerObj.signal(sdpMsg);
+		}
+	}
+	catch(e) {
+
+	}
+
+
 	message = transformAgentInformationOnMessage(message);
 
 	await store.setState({
