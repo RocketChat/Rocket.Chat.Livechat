@@ -5,7 +5,7 @@ import store from '../store';
  * To normalize Language String and return language code
  * @param {String} languageString
  */
-const normalizeLanguageString = (languageString) => {
+export const normalizeLanguageString = (languageString) => {
 	let [languageCode, countryCode] = languageString.split ? languageString.split(/[-_]/) : [];
 	if (!languageCode || languageCode.length !== 2) {
 		return 'en';
