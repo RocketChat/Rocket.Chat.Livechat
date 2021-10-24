@@ -21,6 +21,8 @@ import TriggerMessage from '../../routes/TriggerMessage';
 import { Provider as StoreProvider, Consumer as StoreConsumer, store } from '../../store';
 import { visibility, isActiveSession, setInitCookies } from '../helpers';
 
+import '../../i18next';
+
 function isRTL(s) {
 	const rtlChars = '\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC';
 	const rtlDirCheck = new RegExp(`^[^${ rtlChars }]*?[${ rtlChars }]`);
