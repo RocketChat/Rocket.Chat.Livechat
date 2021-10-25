@@ -13,10 +13,8 @@
         "choose_a_department_1": "Choisir un département",
         "choose_an_option": "Choisir une option...",
         "conversation_finished": "Conversation terminée",
-        "count_new_messages_since_since": {
-            "one": "Un nouveau message depuis %{since}",
-            "other": "%{count} nouveaux messages depuis %{since}"
-        },
+        "count_new_messages_since_since_one": "Un nouveau message depuis %{since}",
+        "count_new_messages_since_since_other": "%{count} nouveaux messages depuis %{since}",
         "department_switched": "Changement de département effectué",
         "departments": "Départements",
         "disable_notifications": "Désactiver les notifications",
@@ -55,8 +53,8 @@
         "name": "Nom",
         "need_help": "Besoin d'aide ?",
         "new_chat": "Nouvelle Conversation",
-        "no_available_agents_to_transfer": "Aucun agent disponible pour un transfert",
         "no": "Non",
+        "no_available_agents_to_transfer": "Aucun agent disponible pour un transfert",
         "ok": "OK",
         "options": "Options",
         "please_tell_us_some_information_to_start_the_chat": "Veuillez nous donner quelques informations pour démarrer la conversation",

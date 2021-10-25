@@ -13,10 +13,8 @@
         "choose_a_department_1": "担当部署を選択してください",
         "choose_an_option": "選択してください",
         "conversation_finished": "会話が終了しました",
-        "count_new_messages_since_since": {
-            "one": "%{since}以降の1件の新着メッセージ",
-            "other": "%{since}以降の%{count}件の新着メッセージ"
-        },
+        "count_new_messages_since_since_one": "%{since}以降の1件の新着メッセージ",
+        "count_new_messages_since_since_other": "%{since}以降の%{count}件の新着メッセージ",
         "department_switched": "部署切り替え",
         "departments": "担当部署",
         "disable_notifications": "通知を無効にする",
@@ -55,8 +53,8 @@
         "name": "お名前",
         "need_help": "助けが必要ですか？",
         "new_chat": "新しいチャット",
-        "no_available_agents_to_transfer": "対応できる担当者がいません",
         "no": "いいえ",
+        "no_available_agents_to_transfer": "対応できる担当者がいません",
         "ok": "はい",
         "options": "オプション",
         "please_tell_us_some_information_to_start_the_chat": "チャットを開始するため次の情報を教えてください",

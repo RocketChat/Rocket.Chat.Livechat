@@ -13,10 +13,8 @@
         "choose_a_department_1": "בחר מחלקה",
         "choose_an_option": "בחר אפשרות...",
         "conversation_finished": "נגמרה השיחה",
-        "count_new_messages_since_since": {
-            "one": "הודעה אחת חדשה מאז %{since}",
-            "other": "%{count} הודעות חדשות מאז %{since}"
-        },
+        "count_new_messages_since_since_one": "הודעה אחת חדשה מאז %{since}",
+        "count_new_messages_since_since_other": "%{count} הודעות חדשות מאז %{since}",
         "department_switched": "החלף מחלקה",
         "departments": "מחלקות",
         "disable_notifications": "בטל התראות",
@@ -55,8 +53,8 @@
         "name": "שם",
         "need_help": "צריך עזרה?",
         "new_chat": "צ'אט חדש",
-        "no_available_agents_to_transfer": "אין סוכנים פנויים בכדי להעביר",
         "no": "לא",
+        "no_available_agents_to_transfer": "אין סוכנים פנויים בכדי להעביר",
         "ok": "אוקיי",
         "options": "אפשרויות",
         "please_tell_us_some_information_to_start_the_chat": "אנא שלחו לנו מידע בכדי להתחיל בצ'אט.",

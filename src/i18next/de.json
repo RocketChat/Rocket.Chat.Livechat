@@ -13,10 +13,8 @@
         "choose_a_department_1": "Wählen Sie eine Abteilung",
         "choose_an_option": "Wählen Sie eine Option",
         "conversation_finished": "Gespräch beendet",
-        "count_new_messages_since_since": {
-            "one": "Eine neue Nachricht seit %{since}",
-            "other": "%{count} neue Nachrichten seit %{since}"
-        },
+        "count_new_messages_since_since_one": "Eine neue Nachricht seit %{since}",
+        "count_new_messages_since_since_other": "%{count} neue Nachrichten seit %{since}",
         "department_switched": "Abteilung wurde gewechselt",
         "departments": "Abteilungen",
         "disable_notifications": "Benachrichtigungen deaktivieren",
@@ -55,8 +53,8 @@
         "name": "Name",
         "need_help": "Benötigen Sie Hilfe?",
         "new_chat": "Neuer Chat",
-        "no_available_agents_to_transfer": "Keine verfügbaren Mitarbeiter/innen zum Übertragen",
         "no": "Nein",
+        "no_available_agents_to_transfer": "Keine verfügbaren Mitarbeiter/innen zum Übertragen",
         "ok": "OK",
         "options": "Optionen",
         "please_tell_us_some_information_to_start_the_chat": "Bitte nennen Sie uns ein paar Informationen, um den Chat zu beginnen",

@@ -13,10 +13,8 @@
         "choose_a_department_1": "Choose a department",
         "choose_an_option": "Choose an option...",
         "conversation_finished": "percakapan selesai",
-        "count_new_messages_since_since": {
-            "one": "One new message since %{since}",
-            "other": "%{count} new messages since %{since}"
-        },
+        "count_new_messages_since_since_one": "One new message since %{since}",
+        "count_new_messages_since_since_other": "%{count} new messages since %{since}",
         "department_switched": "Departemen beralih",
         "departments": "Departments",
         "disable_notifications": "Disable notifications",
@@ -55,8 +53,8 @@
         "name": "Name",
         "need_help": "Need help?",
         "new_chat": "New Chat",
-        "no_available_agents_to_transfer": "No available agents to transfer",
         "no": "Tidak",
+        "no_available_agents_to_transfer": "No available agents to transfer",
         "ok": "OK",
         "options": "Pilihan",
         "please_tell_us_some_information_to_start_the_chat": "Please, tell us some information to start the chat",

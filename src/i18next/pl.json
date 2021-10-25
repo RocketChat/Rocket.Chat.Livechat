@@ -13,10 +13,8 @@
         "choose_a_department_1": "Wybierz dział",
         "choose_an_option": "Wybierz opcję...",
         "conversation_finished": "Rozmowa zakończona",
-        "count_new_messages_since_since": {
-            "one": "Jedna nowa wiadomość od %{since}",
-            "other": "%{count} nowych wiadomości od %{since}"
-        },
+        "count_new_messages_since_since_one": "Jedna nowa wiadomość od %{since}",
+        "count_new_messages_since_since_other": "%{count} nowych wiadomości od %{since}",
         "department_switched": "Zmieniono dział",
         "departments": "Działy",
         "disable_notifications": "Wyłącz powiadomienia",
@@ -55,8 +53,8 @@
         "name": "Imię",
         "need_help": "Potrzebujesz pomocy?",
         "new_chat": "Nowa rozmowa",
-        "no_available_agents_to_transfer": "Żaden konsultant nie jest dostępny",
         "no": "Nie",
+        "no_available_agents_to_transfer": "Żaden konsultant nie jest dostępny",
         "ok": "OK",
         "options": "Opcje",
         "please_tell_us_some_information_to_start_the_chat": "Wyślij wiadomość, aby rozpocząć rozmowę",

@@ -13,10 +13,8 @@
         "choose_a_department_1": "选择部门",
         "choose_an_option": "请选择...",
         "conversation_finished": "会话已结束",
-        "count_new_messages_since_since": {
-            "one": "有一个来自 %{since} 的新信息 ",
-            "other": "%{count} 个来自 %{since} 的新信息"
-        },
+        "count_new_messages_since_since_one": "有一个来自 %{since} 的新信息 ",
+        "count_new_messages_since_since_other": "%{count} 个来自 %{since} 的新信息",
         "department_switched": "部门切换",
         "departments": "部门",
         "disable_notifications": "关闭通知",
@@ -55,8 +53,8 @@
         "name": "名字",
         "need_help": "需要帮忙吗?",
         "new_chat": "开启新聊天",
-        "no_available_agents_to_transfer": "目前没有其他客服在线上，请稍等",
         "no": "否",
+        "no_available_agents_to_transfer": "目前没有其他客服在线上，请稍等",
         "ok": "好",
         "options": "选项",
         "please_tell_us_some_information_to_start_the_chat": "请输入信息来开启聊天",

@@ -13,10 +13,8 @@
         "choose_a_department_1": "Выберите отдел",
         "choose_an_option": "Выберите опцию...",
         "conversation_finished": "Разговор окончен",
-        "count_new_messages_since_since": {
-            "one": "Одно новое сообщение с %{since}",
-            "other": "%{count} новых сообщений с %{since}"
-        },
+        "count_new_messages_since_since_one": "Одно новое сообщение с %{since}",
+        "count_new_messages_since_since_other": "%{count} новых сообщений с %{since}",
         "department_switched": "Отдел сменeн",
         "departments": "Отделы",
         "disable_notifications": "Выключить оповещение",
@@ -55,8 +53,8 @@
         "name": "Имя",
         "need_help": "Требуется помощь?",
         "new_chat": "Новый чат",
-        "no_available_agents_to_transfer": "Нет доступных операторов для передачи",
         "no": "Нет",
+        "no_available_agents_to_transfer": "Нет доступных операторов для передачи",
         "ok": "OK",
         "options": "Параметры",
         "please_tell_us_some_information_to_start_the_chat": "Пожалуйста, расскажите о себе прежде чем, начать чат",

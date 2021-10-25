@@ -13,10 +13,8 @@
         "choose_a_department_1": "Vybrat oddělení",
         "choose_an_option": "Vybrat možnost...",
         "conversation_finished": "Konverzace ukončena",
-        "count_new_messages_since_since": {
-            "one": "Jedna nová zpráva od %{since}",
-            "other": "%{count} nových zpráv od %{since}"
-        },
+        "count_new_messages_since_since_one": "Jedna nová zpráva od %{since}",
+        "count_new_messages_since_since_other": "%{count} nových zpráv od %{since}",
         "department_switched": "Oddělení změněno",
         "departments": "Oddělení",
         "disable_notifications": "Zakázat oznámení",
@@ -55,8 +53,8 @@
         "name": "Jméno",
         "need_help": "Potřebujete pomoc?",
         "new_chat": "Nová konverzace",
-        "no_available_agents_to_transfer": "Nejsou k dispozici žádní dostupní operátoři pro přenos",
         "no": "Ne",
+        "no_available_agents_to_transfer": "Nejsou k dispozici žádní dostupní operátoři pro přenos",
         "ok": "OK",
         "options": "Volby",
         "please_tell_us_some_information_to_start_the_chat": "Řekněte nám prosím nějaké informace pro zahájení chatu",

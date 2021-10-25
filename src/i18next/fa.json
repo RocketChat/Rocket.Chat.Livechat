@@ -13,10 +13,8 @@
         "choose_a_department_1": "یک بخش را انتخاب کنید",
         "choose_an_option": "یک گزینه را انتخاب کنید",
         "conversation_finished": "مکالمه به پایان رسید",
-        "count_new_messages_since_since": {
-            "one": "یک پیام جدید از %{since} قبل",
-            "other": "%{count} پیام جدید از %{since} قبل"
-        },
+        "count_new_messages_since_since_one": "یک پیام جدید از %{since} قبل",
+        "count_new_messages_since_since_other": "%{count} پیام جدید از %{since} قبل",
         "department_switched": "گروه عوض شد",
         "departments": "بخش ها",
         "disable_notifications": "غیرفعال کردن ناتیفیکیشن ها",
@@ -55,8 +53,8 @@
         "name": "نام",
         "need_help": "نیاز به کمک دارید?",
         "new_chat": "گفتگوی جدید",
-        "no_available_agents_to_transfer": "هیچ پشتیبانی برای انتقال در دسترس نیست",
         "no": "خیر",
+        "no_available_agents_to_transfer": "هیچ پشتیبانی برای انتقال در دسترس نیست",
         "ok": "باشد",
         "options": "گزینه ها",
         "please_tell_us_some_information_to_start_the_chat": "لطفاً برای شروع گپ اطلاعاتی را به ما بدهید",

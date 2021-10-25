@@ -13,10 +13,8 @@
         "choose_a_department_1": "Изабери одељење",
         "choose_an_option": "Изабери опцију...",
         "conversation_finished": "Разговор завршен",
-        "count_new_messages_since_since": {
-            "one": "Једна нова порука од %{since}",
-            "other": "%{count} порукe/a од %{since}"
-        },
+        "count_new_messages_since_since_one": "Једна нова порука од %{since}",
+        "count_new_messages_since_since_other": "%{count} порукe/a од %{since}",
         "department_switched": "Одељење је промењено",
         "departments": "Одељења",
         "disable_notifications": "Искључи обавештења",
@@ -55,8 +53,8 @@
         "name": "Име",
         "need_help": "Потребна Вам је помоћ?",
         "new_chat": "Нови разговор",
-        "no_available_agents_to_transfer": "Тренутно нема доступних оператера",
         "no": "Ne",
+        "no_available_agents_to_transfer": "Тренутно нема доступних оператера",
         "ok": "У реду",
         "options": "Опције",
         "please_tell_us_some_information_to_start_the_chat": "Молим Вас, унесите следеће информације за почетак разговора",

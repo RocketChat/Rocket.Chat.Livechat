@@ -13,10 +13,8 @@
         "choose_a_department_1": "Kies een afdeling",
         "choose_an_option": "Kies een optie...",
         "conversation_finished": "Gesprek beëindigd",
-        "count_new_messages_since_since": {
-            "one": "Eén nieuw bericht sinds %{since}",
-            "other": "%{count} nieuwe berichten sinds %{since}"
-        },
+        "count_new_messages_since_since_one": "Eén nieuw bericht sinds %{since}",
+        "count_new_messages_since_since_other": "%{count} nieuwe berichten sinds %{since}",
         "department_switched": "Afdeling gewisseld",
         "departments": "Afdelingen",
         "disable_notifications": "Meldingen uitschakelen",
@@ -55,8 +53,8 @@
         "name": "Naam",
         "need_help": "Hulp nodig?",
         "new_chat": "Nieuwe chat",
-        "no_available_agents_to_transfer": "Er zijn geen beschikbare medewerkers om naar over te dragen",
         "no": "Nee",
+        "no_available_agents_to_transfer": "Er zijn geen beschikbare medewerkers om naar over te dragen",
         "ok": "OK",
         "options": "Opties",
         "please_tell_us_some_information_to_start_the_chat": "Vertel ons wat informatie om de chat te starten",
