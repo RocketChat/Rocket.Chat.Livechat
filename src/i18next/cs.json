@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "GDPR",
-        "go_to_menu_options_forget_remove_my_personal_data_": "Přejít do <1>možnosti nabídky → Zapomenout/Odebrat mé osobní údaje</1> vyžádat okamžité odstranění Vašich osobních údajů.",
+        "go_to_menu_options_forget_remove_my_personal_data": "Přejít do <1>možnosti nabídky → Zapomenout/Odebrat mé osobní údaje</1> vyžádat okamžité odstranění Vašich osobních údajů.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} more",
         "i_agree": "Souhlasím",
         "i_need_help_with": "Potřebuji pomoct s...",

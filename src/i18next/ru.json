@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "Перенаправлен от {{from}} на {{to}}",
         "gdpr": "GDPR",
-        "go_to_menu_options_forget_remove_my_personal_data_": "Перейти <1>меню опции →  Забыть/удалить мои персональные данные</1>, чтобы запросить немедленное удаление ваших данных.",
+        "go_to_menu_options_forget_remove_my_personal_data": "Перейти <1>меню опции →  Забыть/удалить мои персональные данные</1>, чтобы запросить немедленное удаление ваших данных.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} more",
         "i_agree": "Я согласен",
         "i_need_help_with": "Мне требуется помощь с...",

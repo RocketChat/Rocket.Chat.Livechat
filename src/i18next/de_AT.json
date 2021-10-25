@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "DSGVO",
-        "go_to_menu_options_forget_remove_my_personal_data_": "Gehen Sie zu <1>Menü Optionen → Vergiss/Lösche meine Daten</1>, um die sofortige Löschung Ihrer Daten zu beantragen.",
+        "go_to_menu_options_forget_remove_my_personal_data": "Gehen Sie zu <1>Menü Optionen → Vergiss/Lösche meine Daten</1>, um die sofortige Löschung Ihrer Daten zu beantragen.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} more",
         "i_agree": "Ich stimme zu",
         "i_need_help_with": "Ich benötige Hilfe mit ...",

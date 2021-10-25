@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "RGPD",
-        "go_to_menu_options_forget_remove_my_personal_data_": "Ouvrir <1>menu options → Oublier/Supprimer mes données personnelles</1> pour demander la suppression immédiate de vos données personnelles.",
+        "go_to_menu_options_forget_remove_my_personal_data": "Ouvrir <1>menu options → Oublier/Supprimer mes données personnelles</1> pour demander la suppression immédiate de vos données personnelles.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} more",
         "i_agree": "J'accepte",
         "i_need_help_with": "J'ai besoin d'aide pour...",

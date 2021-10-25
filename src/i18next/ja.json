@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "GDPR",
-        "go_to_menu_options_forget_remove_my_personal_data_": "<1>オプション → 個人データを削除</1> に移動してデータの即時削除をリクエストします。",
+        "go_to_menu_options_forget_remove_my_personal_data": "<1>オプション → 個人データを削除</1> に移動してデータの即時削除をリクエストします。",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} more",
         "i_agree": "同意する",
         "i_need_help_with": "担当部署",
