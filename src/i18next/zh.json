@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "GDPR",
-        "go_to_menu_options_forget_remove_my_personal_data_": "前往 **选项 → 移除我的资料** 请求立即删除您的数据.",
+        "go_to_menu_options_forget_remove_my_personal_data_": "前往 <1>选项 → 移除我的资料</1> 请求立即删除您的数据.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} 更多",
         "i_agree": "我同意",
         "i_need_help_with": "我需要帮助...",

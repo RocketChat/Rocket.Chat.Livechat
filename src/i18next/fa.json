@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "مقررات عمومی حفاظت از داده اتحادیه اروپا (GDPR)",
-        "go_to_menu_options_forget_remove_my_personal_data_": "به **menu options → Forget/Remove my personal data** بروید تا درخواست حذف بلافاصله ی اطلاعات خود را بدهید",
+        "go_to_menu_options_forget_remove_my_personal_data_": "به <1>menu options → Forget/Remove my personal data</1> بروید تا درخواست حذف بلافاصله ی اطلاعات خود را بدهید",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} more",
         "i_agree": "موافقم",
         "i_need_help_with": "نیاز به کمک در بخش زیر را دارم",

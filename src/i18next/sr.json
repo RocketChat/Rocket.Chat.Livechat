@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "GDPR",
-        "go_to_menu_options_forget_remove_my_personal_data_": "Идите на **menu options → Forget/Remove my personal data** да захтевате уклањање Ваших података.",
+        "go_to_menu_options_forget_remove_my_personal_data_": "Идите на <1>menu options → Forget/Remove my personal data</1> да захтевате уклањање Ваших података.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} more",
         "i_agree": "Слажем се",
         "i_need_help_with": "Потребна ми је помоћ са...",

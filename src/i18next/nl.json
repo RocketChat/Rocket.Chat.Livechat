@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} heeft de chat overgedragen aan afdeling {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} heeft de chat overgedragen aan {{to}}",
         "gdpr": "AVG",
-        "go_to_menu_options_forget_remove_my_personal_data_": "Ga naar **optie menu → Vergeet/verwijder mijn gegevens** om een aanvraag te doen om je gegevens te verwijderen.",
+        "go_to_menu_options_forget_remove_my_personal_data_": "Ga naar <1>optie menu → Vergeet/verwijder mijn gegevens</1> om een aanvraag te doen om je gegevens te verwijderen.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} meer",
         "i_agree": "Ik ga akkoord",
         "i_need_help_with": "Ik heb hulp nodig met...",

@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "RODO",
-        "go_to_menu_options_forget_remove_my_personal_data_": "Idź do **Opcje → Zapomnij/Usuń moje dane**, aby usunąć dane dotyczące rozmowy.",
+        "go_to_menu_options_forget_remove_my_personal_data_": "Idź do <1>Opcje → Zapomnij/Usuń moje dane</1>, aby usunąć dane dotyczące rozmowy.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} more",
         "i_agree": "Zgadzam się",
         "i_need_help_with": "Potrzebuję pomocy...",

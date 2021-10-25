@@ -35,7 +35,7 @@
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferiu a conversa para o departamento {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferiu a conversa para {{to}}",
         "gdpr": "GDPR",
-        "go_to_menu_options_forget_remove_my_personal_data_": "Vá para o menu **opções → Esquecer/remover meus dados pessoais** para solicitar a remoção imediata dos seus dados.",
+        "go_to_menu_options_forget_remove_my_personal_data_": "Vá para o menu <1>opções → Esquecer/remover meus dados pessoais</1> para solicitar a remoção imediata dos seus dados.",
         "hiddenelementscount_more": "+ {{hiddenElementsCount}} mais",
         "i_agree": "Concordo",
         "i_need_help_with": "Preciso de ajuda com...",
