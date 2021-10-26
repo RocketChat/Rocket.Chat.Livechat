@@ -4,7 +4,7 @@ import { h } from 'preact';
 
 import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import { Message } from '../Message';
-import { MessageSeparator } from '../MessageSeparator';
+import MessageSeparator from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import styles from './styles.scss';
 

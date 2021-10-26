@@ -11,9 +11,5 @@ insert_final_newline = true
 [*.{js,coffee,html,less,css,scss,json}]
 indent_style = tab
 
-[*.i18n.json]
-indent_style = space
-indent_size = 2
-
 [*.md]
 trim_trailing_whitespace = false

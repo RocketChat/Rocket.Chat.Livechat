@@ -1,7 +1,7 @@
+import i18next from 'i18next';
 import { Component } from 'preact';
 
 import { Livechat, useSsl } from '../api';
-import I18n from '../i18n';
 import store from '../store';
 
 export function flatMap(arr, mapFunc) {
@@ -147,20 +147,20 @@ export const normalizeTransferHistoryMessage = (transferData, sender) => {
 	const transferTypes = {
 		agent: () => {
 			if (!sender.username) {
-				return I18n.t('The chat was transferred to another agent');
+				return i18next.t('the_chat_was_transferred_to_another_agent');
 			}
 			const to = transferredTo && (transferredTo.name || transferredTo.username);
-			return I18n.t('%{from} transferred the chat to %{to}', { from, to });
+			return i18next.t('from_transferred_the_chat_to_to', { from, to });
 		},
 		department: () => {
 			const to = nextDepartment && nextDepartment.name;
-			return I18n.t('%{from} transferred the chat to the department %{to}', { from, to });
+			return i18next.t('from_transferred_the_chat_to_the_department_to', { from, to });
 		},
 		queue: () => {
 			if (!sender.username) {
-				return I18n.t('The chat was moved back to queue');
+				return i18next.t('the_chat_was_moved_back_to_queue');
 			}
-			return I18n.t('%{from} returned the chat to the queue', { from });
+			return i18next.t('from_returned_the_chat_to_the_queue', { from });
 		},
 	};
 

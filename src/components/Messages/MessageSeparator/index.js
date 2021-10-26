@@ -1,18 +1,19 @@
 import format from 'date-fns/format';
 import { parseISO } from 'date-fns/fp';
 import { h } from 'preact';
+import { withTranslation } from 'react-i18next';
 
-import I18n from '../../../i18n';
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
 
 
-export const MessageSeparator = memo(({
+const MessageSeparator = memo(({
 	date,
 	unread,
 	use: Element = 'div',
 	className,
 	style = {},
+	t,
 }) => (
 	<Element
 		className={createClassName(styles, 'separator', {
@@ -26,10 +27,12 @@ export const MessageSeparator = memo(({
 			<span className={createClassName(styles, 'separator__text')}>
 				{
 					(!!date && format(parseISO(date), 'MMM dd, yyyy').toUpperCase())
-					|| (unread && I18n.t('unread messages'))
+					|| (unread && t('unread_messages'))
 				}
 			</span>
 		)}
 		<hr className={createClassName(styles, 'separator__line')} />
 	</Element>
 ));
+
+export default withTranslation()(MessageSeparator);

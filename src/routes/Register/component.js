@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { withTranslation } from 'react-i18next';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
@@ -11,15 +12,11 @@ import {
 } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
-import I18n from '../../i18n';
 import styles from './styles.scss';
-
-const defaultTitle = I18n.t('Need help?');
-const defaultMessage = I18n.t('Please, tell us some information to start the chat');
 
 const getDefaultDepartment = (departments = []) => (departments.length === 1 && departments[0]._id) || '';
 
-const renderCustomFields = (customFields, { loading, handleFieldChange = () => {} }, state) => customFields.map(({ _id, required, label, type, options }) => {
+const renderCustomFields = (customFields, { loading, handleFieldChange = () => {} }, state, t) => customFields.map(({ _id, required, label, type, options }) => {
 	switch (type) {
 		case 'input':
 			return <FormField
@@ -30,7 +27,7 @@ const renderCustomFields = (customFields, { loading, handleFieldChange = () => {
 			>
 				<TextInput
 					name={_id}
-					placeholder={I18n.t('Insert your %{field} here...', { field: label })}
+					placeholder={t('insert_your_field_here', { field: label })}
 					value={state[_id].value}
 					disabled={loading}
 					onInput={handleFieldChange}
@@ -47,7 +44,7 @@ const renderCustomFields = (customFields, { loading, handleFieldChange = () => {
 				<SelectInput
 					name={_id}
 					value={state[_id].value}
-					placeholder={I18n.t('Choose an option...')}
+					placeholder={t('choose_an_option')}
 					options={options && options.map((option) => ({ value: option, label: option }))}
 					disabled={loading}
 					onInput={handleFieldChange}
@@ -133,7 +130,12 @@ const getDefaultState = (props) => {
 	return state;
 };
 
-export default class Register extends Component {
+class Register extends Component {
+	constructor(props) {
+		super(props);
+		this.state = getDefaultState(props);
+	}
+
 	static getDerivedStateFromProps(nextProps, state) {
 		const { hasNameField, hasEmailField, hasDepartmentField, departmentDefault, departments, nameDefault, emailDefault } = nextProps;
 
@@ -197,12 +199,10 @@ export default class Register extends Component {
 		}
 	}
 
-	constructor(props) {
-		super(props);
-		this.state = getDefaultState(props);
-	}
+	render({ title, color, message, loading, departments, customFields, t, ...props }, { name, email, department, ...state }) {
+		const defaultTitle = t('need_help');
+		const defaultMessage = t('please_tell_us_some_information_to_start_the_chat');
 
-	render({ title, color, message, loading, departments, customFields, ...props }, { name, email, department, ...state }) {
 		const valid = getValidableFields(this.state).every(({ error } = {}) => !error);
 
 		return (
@@ -220,13 +220,13 @@ export default class Register extends Component {
 							? (
 								<FormField
 									required
-									label={I18n.t('Name')}
+									label={t('name')}
 									error={name.showError && name.error}
 								>
 									<TextInput
 										name='name'
 										value={name.value}
-										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
+										placeholder={t('insert_your_field_here', { field: t('name') })}
 										disabled={loading}
 										onInput={this.handleFieldChange}
 									/>
@@ -238,13 +238,13 @@ export default class Register extends Component {
 							? (
 								<FormField
 									required
-									label={I18n.t('Email')}
+									label={t('email')}
 									error={email.showError && email.error}
 								>
 									<TextInput
 										name='email'
 										value={email.value}
-										placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
+										placeholder={t('insert_your_field_here', { field: t('email') })}
 										disabled={loading}
 										onInput={this.handleFieldChange}
 									/>
@@ -255,14 +255,14 @@ export default class Register extends Component {
 						{department
 							? (
 								<FormField
-									label={I18n.t('I need help with...')}
+									label={t('i_need_help_with')}
 									error={department.showError && department.error}
 								>
 									<SelectInput
 										name='department'
 										value={department.value}
 										options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
-										placeholder={I18n.t('Choose an option...')}
+										placeholder={t('choose_an_option')}
 										disabled={loading}
 										onInput={this.handleFieldChange}
 									/>
@@ -270,10 +270,10 @@ export default class Register extends Component {
 							)
 							: null}
 
-						{customFields && renderCustomFields(customFields, { loading, handleFieldChange: this.handleFieldChange }, state)}
+						{customFields && renderCustomFields(customFields, { loading, handleFieldChange: this.handleFieldChange }, state, t)}
 
 						<ButtonGroup>
-							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
+							<Button submit loading={loading} disabled={!valid || loading} stack>{t('start_chat')}</Button>
 						</ButtonGroup>
 					</Form>
 				</Screen.Content>
@@ -282,3 +282,5 @@ export default class Register extends Component {
 		);
 	}
 }
+
+export default withTranslation()(Register);

@@ -1,19 +1,18 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+import { withTranslation } from 'react-i18next';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
-import I18n from '../../i18n';
+import { createToken, debounce, getAvatarUrl, throttle, upsert } from '../../components/helpers';
 import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
-import { Consumer } from '../../store';
 import Chat from './component';
 
-export class ChatContainer extends Component {
+class ChatContainer extends Component {
 	state = {
 		room: null,
 		connectingAgent: false,
@@ -79,7 +78,7 @@ export class ChatContainer extends Component {
 			return newRoom;
 		} catch (error) {
 			const { data: { error: reason } } = error;
-			const alert = { id: createToken(), children: I18n.t('Error starting a new conversation: %{reason}', { reason }), error: true, timeout: 10000 };
+			const alert = { id: createToken(), children: this.props.t('error_starting_a_new_conversation_reason', { reason }), error: true, timeout: 10000 };
 			await dispatch({ loading: false, alerts: (alerts.push(alert), alerts) });
 
 			runCallbackEventEmitter(reason);
@@ -142,13 +141,13 @@ export class ChatContainer extends Component {
 		} catch (error) {
 			const { data: { reason, sizeAllowed } } = error;
 
-			let message = I18n.t('FileUpload Error');
+			let message = this.props.t('fileupload_error');
 			switch (reason) {
 				case 'error-type-not-allowed':
-					message = I18n.t('Media Types Not Accepted.');
+					message = this.props.t('media_types_not_accepted');
 					break;
 				case 'error-size-not-allowed':
-					message = I18n.t('File exceeds allowed size of %{size}.', { size: sizeAllowed });
+					message = this.props.t('file_exceeds_allowed_size_of_size', { size: sizeAllowed });
 			}
 
 			const alert = { id: createToken(), children: message, error: true, timeout: 5000 };
@@ -174,7 +173,7 @@ export class ChatContainer extends Component {
 
 	onFinishChat = async () => {
 		const { success } = await ModalManager.confirm({
-			text: I18n.t('Are you sure you want to finish this chat?'),
+			text: this.props.t('are_you_sure_you_want_to_finish_this_chat'),
 		});
 
 		if (!success) {
@@ -190,7 +189,7 @@ export class ChatContainer extends Component {
 			}
 		} catch (error) {
 			console.error(error);
-			const alert = { id: createToken(), children: I18n.t('Error closing chat.'), error: true, timeout: 0 };
+			const alert = { id: createToken(), children: this.props.t('error_closing_chat'), error: true, timeout: 0 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await dispatch({ loading: false });
@@ -200,7 +199,7 @@ export class ChatContainer extends Component {
 
 	onRemoveUserData = async () => {
 		const { success } = await ModalManager.confirm({
-			text: I18n.t('Are you sure you want to remove all of your personal data?'),
+			text: this.props.t('are_you_sure_you_want_to_remove_all_of_your_person'),
 		});
 
 		if (!success) {
@@ -214,7 +213,7 @@ export class ChatContainer extends Component {
 			await Livechat.deleteVisitor();
 		} catch (error) {
 			console.error(error);
-			const alert = { id: createToken(), children: I18n.t('Error removing user data.'), error: true, timeout: 0 };
+			const alert = { id: createToken(), children: this.props.t('error_removing_user_data'), error: true, timeout: 0 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await loadConfig();
@@ -272,7 +271,7 @@ export class ChatContainer extends Component {
 		if (connecting) {
 			alerts.push({
 				id: connectingAgentAlertId,
-				children: message || I18n.t('Please, wait for the next available agent..'),
+				children: message || this.props.t('please_wait_for_the_next_available_agent'),
 				warning: true,
 				hideCloseButton: true,
 				timeout: 0,
@@ -352,114 +351,4 @@ export class ChatContainer extends Component {
 	)
 }
 
-
-export const ChatConnector = ({ ref, ...props }) => (
-	<Consumer>
-		{({
-			config: {
-				settings: {
-					fileUpload: uploads,
-					allowSwitchingDepartments,
-					forceAcceptDataProcessingConsent: allowRemoveUserData,
-					showConnecting,
-					registrationForm,
-					nameFieldRegistrationForm,
-					emailFieldRegistrationForm,
-					limitTextLength,
-				} = {},
-				messages: {
-					conversationFinishedMessage,
-				} = {},
-				theme: {
-					color,
-					title,
-				} = {},
-				departments = {},
-			},
-			iframe: {
-				theme: {
-					color: customColor,
-					fontColor: customFontColor,
-					iconColor: customIconColor,
-					title: customTitle,
-				} = {},
-				guest,
-			} = {},
-			token,
-			agent,
-			sound,
-			user,
-			room,
-			messages,
-			noMoreMessages,
-			typing,
-			loading,
-			dispatch,
-			alerts,
-			visible,
-			unread,
-			lastReadMessageId,
-			triggerAgent,
-			queueInfo,
-		}) => (
-			<ChatContainer
-				ref={ref}
-				{...props}
-				theme={{
-					color: customColor || color,
-					fontColor: customFontColor,
-					iconColor: customIconColor,
-					title: customTitle,
-				}}
-				title={customTitle || title || I18n.t('Need help?')}
-				sound={sound}
-				token={token}
-				user={user}
-				agent={agent ? {
-					_id: agent._id,
-					name: agent.name,
-					status: agent.status,
-					email: agent.emails && agent.emails[0] && agent.emails[0].address,
-					username: agent.username,
-					phone: (agent.phone && agent.phone[0] && agent.phone[0].phoneNumber) || (agent.customFields && agent.customFields.phone),
-					avatar: agent.username ? {
-						description: agent.username,
-						src: getAvatarUrl(agent.username),
-					} : undefined,
-				} : undefined}
-				room={room}
-				messages={messages && messages.filter((message) => canRenderMessage(message))}
-				noMoreMessages={noMoreMessages}
-				emoji={true}
-				uploads={uploads}
-				typingUsernames={Array.isArray(typing) ? typing : []}
-				loading={loading}
-				showConnecting={showConnecting} // setting from server that tells if app needs to show "connecting" sometimes
-				connecting={!!(room && !agent && (showConnecting || queueInfo))}
-				dispatch={dispatch}
-				departments={departments}
-				allowSwitchingDepartments={allowSwitchingDepartments}
-				conversationFinishedMessage={conversationFinishedMessage || I18n.t('Conversation finished')}
-				allowRemoveUserData={allowRemoveUserData}
-				alerts={alerts}
-				visible={visible}
-				unread={unread}
-				lastReadMessageId={lastReadMessageId}
-				guest={guest}
-				triggerAgent={triggerAgent}
-				queueInfo={queueInfo ? {
-					spot: queueInfo.spot,
-					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
-					message: queueInfo.message,
-				} : undefined}
-				registrationFormEnabled={registrationForm}
-				nameFieldRegistrationForm={nameFieldRegistrationForm}
-				emailFieldRegistrationForm={emailFieldRegistrationForm}
-				limitTextLength={limitTextLength}
-			/>
-		)}
-	</Consumer>
-);
-
-
-export default ChatConnector;
+export default withTranslation()(ChatContainer);

@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import { browserLanguage, configLanguage, normalizeLanguageString } from './lib/locale';
 
 export const loadResource = async (lng) => {
-	const { default: { translation } } = await import(`./i18next/${lng}.json`);
+	const { default: { translation } } = await import(`./i18n/${lng}.json`);
 
 	return translation;
 };
@@ -24,7 +24,6 @@ export default i18next
 		.init({
 			lng: normalizeLanguageString(configLanguage() || browserLanguage()),
 			fallbackLng: 'en',
-			debug: true,
 			react: {
 				useSuspense: false,
 			}

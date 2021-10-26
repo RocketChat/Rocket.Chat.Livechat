@@ -1,5 +1,6 @@
 import { Picker } from 'emoji-mart';
 import { h, Component } from 'preact';
+import { withTranslation } from 'react-i18next';
 
 import { Button } from '../../components/Button';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
@@ -9,7 +10,6 @@ import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import I18n from '../../i18n';
 import ChangeIcon from '../../icons/change.svg';
 import FinishIcon from '../../icons/finish.svg';
 import PlusIcon from '../../icons/plus.svg';
@@ -18,7 +18,7 @@ import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
 import styles from './styles.scss';
 
-export default class Chat extends Component {
+class Chat extends Component {
 	state = {
 		atBottom: true,
 		text: '',
@@ -118,6 +118,7 @@ export default class Chat extends Component {
 		registrationRequired,
 		onRegisterUser,
 		limitTextLength,
+		t,
 		...props
 	}, {
 		atBottom = true,
@@ -125,7 +126,7 @@ export default class Chat extends Component {
 	}) => (
 		<Screen
 			color={color}
-			title={title || I18n.t('Need help?')}
+			title={title || t('need_help')}
 			fontColor={fontColor}
 			agent={agent || null}
 			queueInfo={queueInfo}
@@ -140,7 +141,7 @@ export default class Chat extends Component {
 			<FilesDropTarget
 				ref={this.handleFilesDropTargetRef}
 				overlayed
-				overlayText={I18n.t('Drop here to upload a file')}
+				overlayText={t('drop_here_to_upload_a_file')}
 				onUpload={onUpload}
 			>
 				<Screen.Content nopadding>
@@ -171,13 +172,13 @@ export default class Chat extends Component {
 						<FooterOptions>
 							<Menu.Group>
 								{onChangeDepartment && (
-									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
+									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{t('change_department')}</Menu.Item>
 								)}
 								{onRemoveUserData && (
-									<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
+									<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{t('forget_remove_my_data')}</Menu.Item>
 								)}
 								{onFinishChat && (
-									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
+									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{t('finish_this_chat')}</Menu.Item>
 								)}
 							</Menu.Group>
 						</FooterOptions>
@@ -189,11 +190,11 @@ export default class Chat extends Component {
 						/> : null}
 				>
 					{ registrationRequired
-						? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
+						? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{t('chat_now')}</Button>
 						: <Composer onUpload={onUpload}
 							onSubmit={this.handleSubmit}
 							onChange={this.handleChangeText}
-							placeholder={I18n.t('Type your message here')}
+							placeholder={t('type_your_message_here')}
 							value={text}
 							notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
 							handleEmojiClick={this.handleEmojiClick}
@@ -226,3 +227,5 @@ export default class Chat extends Component {
 		</Screen>
 	)
 }
+
+export default withTranslation()(Chat);

@@ -1,4 +1,3 @@
-import I18n from '../i18n';
 import store from '../store';
 
 /**
@@ -33,11 +32,6 @@ export const configLanguage = () => {
 	const { config: { settings: { language } = {} } = {}, iframe: { language: iframeLanguage } = {} } = store.state;
 	return iframeLanguage || language;
 };
-
-/**
- * This will update langauge of widget
- */
-export const setWidgetLanguage = () => I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 
 export const getDateFnsLocale = () => {
 	const supportedLocales = [

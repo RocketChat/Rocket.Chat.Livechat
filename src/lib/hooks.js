@@ -2,7 +2,6 @@ import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
 import { store } from '../store';
 import CustomFields from './customFields';
-import { setWidgetLanguage } from './locale';
 import { loadConfig } from './main';
 import { parentCall } from './parentCall';
 import Triggers from './triggers';
@@ -127,7 +126,6 @@ const api = {
 	async setLanguage(language) {
 		const { iframe } = store.state;
 		await store.setState({ iframe: { ...iframe, language } });
-		setWidgetLanguage();
 	},
 
 	showWidget() {
