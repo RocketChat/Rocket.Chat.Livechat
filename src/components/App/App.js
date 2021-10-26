@@ -10,7 +10,7 @@ import Hooks from '../../lib/hooks';
 import { parentCall } from '../../lib/parentCall';
 import Triggers from '../../lib/triggers';
 import userPresence from '../../lib/userPresence';
-import Chat from '../../routes/Chat';
+import { ChatConnector } from '../../routes/Chat';
 import ChatFinished from '../../routes/ChatFinished';
 import GDPRAgreement from '../../routes/GDPRAgreement';
 import LeaveMessage from '../../routes/LeaveMessage';
@@ -227,7 +227,7 @@ export class App extends Component {
 
 		return (
 			<Router history={history} onChange={this.handleRoute}>
-				<Chat default path='/' {...screenProps} />
+				<ChatConnector default path='/' {...screenProps} />
 				<ChatFinished path='/chat-finished' {...screenProps} />
 				<GDPRAgreement path='/gdpr' {...screenProps} />
 				<LeaveMessage path='/leave-message' {...screenProps} />
