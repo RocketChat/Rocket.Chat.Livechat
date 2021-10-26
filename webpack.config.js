@@ -14,9 +14,9 @@ module.exports = (env, argv) => [
 				'.jsx',
 			],
 			alias: {
-				'react': 'preact/compat',
+				react: 'preact/compat',
 				'react-dom': 'preact/compat',
-			}
+			},
 		},
 		node: {
 			console: false,
@@ -50,7 +50,6 @@ module.exports = (env, argv) => [
 					type: 'javascript/auto',
 					use: [
 						'babel-loader',
-						'preact-i18nline/webpack-loader',
 					],
 				},
 				{
@@ -220,9 +219,9 @@ module.exports = (env, argv) => [
 				'.jsx',
 			],
 			alias: {
-				'react': 'preact/compat',
+				react: 'preact/compat',
 				'react-dom': 'preact/compat',
-			}
+			},
 		},
 		node: {
 			console: false,

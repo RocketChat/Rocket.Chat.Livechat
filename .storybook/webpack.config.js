@@ -6,9 +6,6 @@ module.exports = ({ config }) => {
 		[require.resolve('../src/lib/uiKit')]: require.resolve('./mocks/uiKit'),
 	};
 
-	const babelRule = config.module.rules.find((rule) => Array.isArray(rule.use) && rule.use.find(({ loader }) => loader === 'babel-loader'));
-	babelRule.use.push({ loader: 'preact-i18nline/webpack-loader' });
-
 	config.module.rules = config.module.rules.filter(({ loader }) => !/json-loader/.test(loader));
 
 	const fileLoader = config.module.rules.find(({ loader }) => /file-loader/.test(loader));
