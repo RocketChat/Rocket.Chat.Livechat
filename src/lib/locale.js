@@ -17,7 +17,7 @@ export const normalizeLanguageString = (languageString) => {
 		countryCode = countryCode.toUpperCase();
 	}
 
-	return countryCode ? `${ languageCode }_${ countryCode }` : languageCode;
+	return countryCode ? `${ languageCode }-${ countryCode }` : languageCode;
 };
 
 /**

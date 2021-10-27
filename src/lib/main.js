@@ -40,6 +40,7 @@ export const loadConfig = async () => {
 
 export const processUnread = async () => {
 	const { minimized, visible, messages } = store.state;
+
 	if (minimized || !visible) {
 		const { alerts, lastReadMessageId } = store.state;
 		const renderedMessages = messages.filter((message) => canRenderMessage(message));
@@ -48,7 +49,7 @@ export const processUnread = async () => {
 
 		if (lastReadMessageIndex !== -1) {
 			const lastReadMessage = renderedMessages[lastReadMessageIndex];
-			const alertMessage = i18next.t('count_new_messages_since_since', { count: unreadMessages, since: format(parseISO(lastReadMessage.ts), 'HH:mm MMM dd') });
+			const alertMessage = i18next.t('count_new_messages_since_since', { count: unreadMessages.length, since: format(parseISO(lastReadMessage.ts), 'HH:mm MMM dd') });
 			const alert = { id: constants.unreadMessagesAlertId, children: alertMessage, success: true, timeout: 0 };
 			const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
 			await store.setState({ alerts: (newAlerts.push(alert), newAlerts) });
