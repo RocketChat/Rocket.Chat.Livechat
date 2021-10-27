@@ -82,6 +82,7 @@
         "waiting_queue": "Waiting queue...",
         "we_are_not_online_right_now_please_leave_a_message": "We are not online right now. Please, leave a message.",
         "welcome": "Welcome",
+		"would_you_like_a_copy_of_this_chat_emailed":"Would you like a copy of this chat emailed?",
         "write_your_message": "Write your message...",
         "yes": "Yes",
         "you_browser_doesn_t_support_audio_element": "You browser doesn't support audio element",

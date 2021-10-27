@@ -6,14 +6,14 @@ import store from '../store';
 
 
 const promptTranscript = async () => {
+	console.log(store.state);
 	const { config: { messages: { transcriptMessage } }, user: { token, visitorEmails }, room: { _id } } = store.state;
 	const email = visitorEmails && visitorEmails.length > 0 ? visitorEmails[0].address : '';
 	if (!email) {
 		return;
 	}
 
-	// eslint-disable-next-line no-unused-vars
-	const message = transcriptMessage || 'Would you like a copy if this chat emailed'; // (TAPi18n.__('Would_you_like_a_copy_if_this_chat_emailed'));
+	const message = transcriptMessage || i18next.t('would_you_like_a_copy_of_this_chat_emailed');
 
 	return ModalManager.confirm({
 		text: message,
@@ -38,6 +38,7 @@ export const handleTranscript = async () => {
 	}
 
 	const result = await promptTranscript();
+
 	if (result && result.success) {
 		transcriptSentAlert(i18next.t('transcript_success'));
 	}
