@@ -1,3 +1,5 @@
+import { i18next } from 'i18next';
+
 import { Livechat } from '../api';
 import { ModalManager } from '../components/Modal';
 import store from '../store';
@@ -37,6 +39,6 @@ export const handleTranscript = async () => {
 
 	const result = await promptTranscript();
 	if (result && result.success) {
-		transcriptSentAlert(result.message);
+		transcriptSentAlert(i18next.t('transcript_success'));
 	}
 };

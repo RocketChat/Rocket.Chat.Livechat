@@ -72,6 +72,7 @@
         "the_chat_was_moved_back_to_queue": "The chat was moved back to queue",
         "the_chat_was_transferred_to_another_agent": "The chat was transferred to another agent",
         "the_controller_of_your_personal_data_is_company_na": "The controller of your personal data is [Company Name], with registered office at [Company Address]. To start the chat you agree that your personal data shall be processed and trasmitted in accordance with the General Data Protection Regulation (GDPR).",
+		"transcript_success": "Transcript sent",
         "type_your_message_here": "Type your message here",
         "unread_messages": "unread messages",
         "user_added_by": "User added by",
