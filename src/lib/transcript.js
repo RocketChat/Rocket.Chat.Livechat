@@ -1,4 +1,4 @@
-import { i18next } from 'i18next';
+import i18next from 'i18next';
 
 import { Livechat } from '../api';
 import { ModalManager } from '../components/Modal';
