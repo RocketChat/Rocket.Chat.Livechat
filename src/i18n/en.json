@@ -49,6 +49,8 @@
         "media_types_not_accepted": "Media Types Not Accepted.",
         "message": "Message",
         "messages": "Messages",
+		"message_separator_date": "{{val, datetime}}",
+		"message_time": "{{val, datetime}}",
         "minimize_chat": "Minimize chat",
         "name": "Name",
         "need_help": "Need help?",

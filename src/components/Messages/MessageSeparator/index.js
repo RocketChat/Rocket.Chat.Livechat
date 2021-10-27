@@ -1,5 +1,3 @@
-import format from 'date-fns/format';
-import { parseISO } from 'date-fns/fp';
 import { h } from 'preact';
 import { withTranslation } from 'react-i18next';
 
@@ -26,7 +24,12 @@ const MessageSeparator = memo(({
 		{(date || unread) && (
 			<span className={createClassName(styles, 'separator__text')}>
 				{
-					(!!date && format(parseISO(date), 'MMM dd, yyyy').toUpperCase())
+					(!!date && t('message_separator_date', {
+						val: new Date(date),
+						formatParams: {
+							val: { month: 'short', day: 'numeric' },
+						},
+					}).toUpperCase())
 					|| (unread && t('unread_messages'))
 				}
 			</span>

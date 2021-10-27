@@ -1,6 +1,6 @@
-import format from 'date-fns/format';
 import { parseISO } from 'date-fns/fp';
 import isToday from 'date-fns/isToday';
+import i18next from 'i18next';
 import { h } from 'preact';
 
 import { createClassName, memo } from '../../helpers';
@@ -9,7 +9,12 @@ import styles from './styles.scss';
 
 export const parseDate = (ts) => {
 	const timestamp = new Date(ts).toISOString();
-	return format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
+	return i18next.t('message_time', {
+		val: new Date(timestamp),
+		formatParams: {
+			val: isToday(parseISO(timestamp)) ? { hour: 'numeric', minute: 'numeric' } : { day: 'numeric', hour: 'numeric', minute: 'numeric' },
+		},
+	});
 };
 
 export const MessageTime = memo(({ ts, normal, inverted, className, style = {} }) => (
