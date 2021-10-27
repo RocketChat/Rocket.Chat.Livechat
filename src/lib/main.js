@@ -1,5 +1,3 @@
-import format from 'date-fns/format';
-import { parseISO } from 'date-fns/fp';
 import i18next from 'i18next';
 
 import { Livechat } from '../api';
@@ -49,7 +47,13 @@ export const processUnread = async () => {
 
 		if (lastReadMessageIndex !== -1) {
 			const lastReadMessage = renderedMessages[lastReadMessageIndex];
-			const alertMessage = i18next.t('count_new_messages_since_since', { count: unreadMessages.length, since: format(parseISO(lastReadMessage.ts), 'HH:mm MMM dd') });
+			const alertMessage = i18next.t('count_new_messages_since_since', {
+				count: unreadMessages.length,
+				val: new Date(lastReadMessage.ts),
+				formatParams: {
+					val: { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' },
+				},
+			});
 			const alert = { id: constants.unreadMessagesAlertId, children: alertMessage, success: true, timeout: 0 };
 			const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
 			await store.setState({ alerts: (newAlerts.push(alert), newAlerts) });
