@@ -2,12 +2,16 @@
 
 .trigger-message {
 	&__message {
+		max-height: 192px;
+
 		margin: 0.4rem 0;
 
 		letter-spacing: 0;
 
 		font-size: 0.75rem;
+
 		line-height: 1rem;
+		overflow-wrap: normal;
 	}
 
 	&__footer {

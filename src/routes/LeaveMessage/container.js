@@ -10,14 +10,14 @@ import LeaveMessage from './component';
 
 export class LeaveMessageContainer extends Component {
 	handleSubmit = async (fields) => {
-		const { alerts, dispatch } = this.props;
+		const { alerts, dispatch, successMessage } = this.props;
 
 		await dispatch({ loading: true });
 		try {
 			const payload = parseOfflineMessage(fields);
 			const text = await Livechat.sendOfflineMessage(payload);
 			await ModalManager.alert({
-				text,
+				text: successMessage || text,
 			});
 			parentCall('callback', ['offline-form-submit', fields]);
 			return true;
