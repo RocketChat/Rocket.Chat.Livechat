@@ -43,7 +43,9 @@ class GDPR extends Component {
 							// eslint-disable-next-line react/no-danger
 							dangerouslySetInnerHTML={{ __html: md.renderInline(consentText) }}
 						/>
-						: <Trans i18nKey='the_controller_of_your_personal_data_is_company_na' className={createClassName(styles, 'gdpr__consent-text')} />
+						: <p className={createClassName(styles, 'gdpr__consent-text')}>
+							<Trans i18nKey='the_controller_of_your_personal_data_is_company_na' />
+						</p>
 				}
 				{
 					instructions
@@ -52,7 +54,9 @@ class GDPR extends Component {
 							// eslint-disable-next-line react/no-danger
 							dangerouslySetInnerHTML={{ __html: md.renderInline(instructions) }}
 						/>
-						: <Trans i18nKey='go_to_menu_options_forget_remove_my_personal_data' className={createClassName(styles, 'gdpr__instructions')} />
+						: <p className={createClassName(styles, 'gdpr__instructions')}>
+							<Trans i18nKey='go_to_menu_options_forget_remove_my_personal_data' />
+						</p>
 				}
 				<ButtonGroup>
 					<Button onClick={this.handleClick} stack>{ t('i_agree') }</Button>

@@ -27,7 +27,7 @@ const MessageSeparator = memo(({
 					(!!date && t('message_separator_date', {
 						val: new Date(date),
 						formatParams: {
-							val: { month: 'short', day: 'numeric' },
+							val: { month: 'short', day: '2-digit', year: 'numeric' },
 						},
 					}).toUpperCase())
 					|| (unread && t('unread_messages'))
