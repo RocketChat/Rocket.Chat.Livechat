@@ -55,7 +55,9 @@ class GDPR extends Component {
 							dangerouslySetInnerHTML={{ __html: md.renderInline(instructions) }}
 						/>
 						: <p className={createClassName(styles, 'gdpr__instructions')}>
-							<Trans i18nKey='go_to_menu_options_forget_remove_my_personal_data' />
+							<Trans i18nKey='go_to_menu_options_forget_remove_my_personal_data'>
+								Go to <strong>menu options → Forget/Remove my personal data</strong> to request the immediate removal of your data.
+							</Trans>
 						</p>
 				}
 				<ButtonGroup>
