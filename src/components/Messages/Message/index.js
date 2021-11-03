@@ -11,7 +11,7 @@ import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
-import { MessageTime } from '../MessageTime';
+import MessageTime from '../MessageTime';
 import VideoAttachment from '../VideoAttachment';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,

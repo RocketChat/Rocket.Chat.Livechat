@@ -9,7 +9,7 @@ export { MessageContainer } from './MessageContainer';
 export { MessageContent } from './MessageContent';
 export { MessageList } from './MessageList';
 export { MessageText } from './MessageText';
-export { MessageTime } from './MessageTime';
+export { default as MessageTime } from './MessageTime';
 export { default as MessageSeparator } from './MessageSeparator';
 export { TypingDots } from './TypingDots';
 export { TypingIndicator } from './TypingIndicator';
