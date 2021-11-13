@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { h, Component } from 'preact';
 import { Router, route } from 'preact-router';
 import queryString from 'query-string';
@@ -152,6 +153,8 @@ export class App extends Component {
 			visibility.removeListener(this.handleVisibilityChange);
 			dispatch({ minimized: true, undocked: false });
 		});
+
+		i18next.on('languageChanged', this.handleLanguageChange);
 	}
 
 	checkPoppedOutWindow() {

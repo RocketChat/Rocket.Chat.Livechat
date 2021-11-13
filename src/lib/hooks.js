@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 import { Livechat } from '../api';
 import { createToken } from '../components/helpers';
 import { store } from '../store';
@@ -126,6 +128,7 @@ const api = {
 	async setLanguage(language) {
 		const { iframe } = store.state;
 		await store.setState({ iframe: { ...iframe, language } });
+		i18next.changeLanguage(language);
 	},
 
 	showWidget() {
