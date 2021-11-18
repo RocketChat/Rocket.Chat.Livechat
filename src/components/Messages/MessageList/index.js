@@ -4,8 +4,8 @@ import { h } from 'preact';
 
 import constants from '../../../lib/constants';
 import store from '../../../store';
-import { CallTime } from '../../Calls/CallTime';
 import { JoinCallButton } from '../../Calls/JoinCallButton';
+import { isCallOngoing } from '../../Calls/constants';
 import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
@@ -109,29 +109,23 @@ export class MessageList extends MemoizedComponent {
 		typingUsernames,
 	}) => {
 		const items = [];
+		const { incomingCallAlert } = store.state;
+		const { ongoingCall } = store.state;
 
 		for (let i = 0; i < messages.length; ++i) {
 			const previousMessage = messages[i - 1];
 			const message = messages[i];
 			const nextMessage = messages[i + 1];
-			const { incomingCallAlert } = store.state;
-			const { ongoingCall } = store.state;
 
-			if ((message.t === constants.webRTCCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) && message.actionLinks && message.actionLinks.length && ongoingCall) {
+			if ((message.t === constants.webRTCCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)
+				&& message.actionLinks && message.actionLinks.length
+				&& ongoingCall && isCallOngoing(ongoingCall.callStatus)
+				&& !message.endTs) {
 				const { url, callProvider, rid } = incomingCallAlert || {};
 				items.push(
 					<JoinCallButton callStatus={ongoingCall.callStatus} url={url} callProvider={callProvider} rid={rid} />,
 				);
-			}
-
-			if (message.endTs) {
-				let timestamp;
-				if (message.endTs.$date) {
-					timestamp = new Date(message.endTs.$date).toISOString();
-				}
-				items.push(
-					<CallTime time={parseISO(message.ts)} endTime={timestamp ? parseISO(timestamp) : parseISO(message.endTs)} />,
-				);
+				continue;
 			}
 
 			const showDateSeparator = !previousMessage || !isSameDay(parseISO(message.ts), parseISO(previousMessage.ts));
