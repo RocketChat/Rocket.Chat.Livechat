@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { Livechat } from '../../api';
 import store from '../../store';
 import { createClassName } from '../helpers';
-import { CallStatus } from './constants';
+import { CallStatus } from './CallStatus';
 import styles from './styles.scss';
 
 
@@ -18,7 +18,10 @@ export const CallIframe = () => {
 		);
 		return store.setState({
 			incomingCallAlert: { ...incomingCallAlert, show: false },
-			ongoingCall: { ...ongoingCall, callStatus: CallStatus.ON_GOING_CALL_IN_NEW_TAB },
+			ongoingCall: {
+				...ongoingCall,
+				callStatus: CallStatus.IN_PROGRESS_DIFFERENT_TAB,
+			},
 		});
 	};
 	return (

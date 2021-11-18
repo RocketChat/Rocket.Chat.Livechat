@@ -7,7 +7,7 @@ import constants from '../../lib/constants';
 import store from '../../store';
 import { Button } from '../Button';
 import { createClassName } from '../helpers';
-import { CallStatus } from './constants';
+import { isCallOngoing } from './CallStatus';
 import styles from './styles.scss';
 
 
@@ -29,7 +29,7 @@ export const JoinCallButton = (props) => {
 	return (
 		<div className={createClassName(styles, 'joinCall')}>
 			{
-				(props.callStatus === CallStatus.ACCEPT || props.callStatus === CallStatus.ON_GOING_CALL_IN_NEW_TAB)
+				isCallOngoing(props.callStatus)
 				&& (
 					<div>
 						<div className={createClassName(styles, 'joinCall__content')} >

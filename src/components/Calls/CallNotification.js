@@ -10,17 +10,34 @@ import store from '../../store';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
 import { createClassName, getAvatarUrl, isMobileDevice } from '../helpers';
-import { CallStatus } from './constants';
+import { CallStatus } from './CallStatus';
 import styles from './styles.scss';
 
 
-export const CallNotification = ({ callProvider, callerUsername, url, dispatch, time, rid, callId } = { callProvider: undefined, callerUsername: undefined, dispatch: undefined, time: undefined, url: undefined }) => {
+export const CallNotification = ({
+	callProvider,
+	callerUsername,
+	url,
+	dispatch,
+	time,
+	rid,
+	callId,
+}) => {
 	const [show, setShow] = useState(true);
 
 	const callInNewTab = async () => {
 		const { token } = store.state;
 		const url = `${ Livechat.client.host }/meet/${ rid }?token=${ token }`;
-		await dispatch({ ongoingCall: { callStatus: CallStatus.ON_GOING_CALL_IN_NEW_TAB, time: { time } }, incomingCallAlert: { show: false, callProvider } });
+		await dispatch({
+			ongoingCall: {
+				callStatus: CallStatus.IN_PROGRESS_DIFFERENT_TAB,
+				time: { time },
+			},
+			incomingCallAlert: {
+				show: false,
+				callProvider,
+			},
+		});
 		window.open(url, rid);
 	};
 
@@ -29,25 +46,37 @@ export const CallNotification = ({ callProvider, callerUsername, url, dispatch, 
 		switch (callProvider) {
 			case constants.jitsiCallStartedMessageType: {
 				window.open(url, rid);
-				await dispatch({ incomingCallAlert: { show: false, url, callProvider }, ongoingCall: { callStatus: CallStatus.ACCEPT, time: { time } } });
+				await dispatch({
+					incomingCallAlert: { show: false, url, callProvider },
+					ongoingCall: {
+						callStatus: CallStatus.IN_PROGRESS_DIFFERENT_TAB,
+						time: { time },
+					},
+				});
 				break;
 			}
 			case constants.webRTCCallStartedMessageType: {
-				await Livechat.updateCallStatus(CallStatus.INPROGRESS, rid, callId);
+				await Livechat.updateCallStatus(CallStatus.IN_PROGRESS, rid, callId);
 				if (isMobileDevice()) {
 					callInNewTab();
 					break;
 				}
-				await dispatch({ ongoingCall: { callStatus: CallStatus.ACCEPT, time: { time } } });
+				await dispatch({ ongoingCall: { callStatus: CallStatus.IN_PROGRESS_SAME_TAB, time: { time } } });
 				break;
 			}
 		}
 	};
 
 	const declineClick = async () => {
-		await Livechat.updateCallStatus('declined', rid, callId);
+		await Livechat.updateCallStatus(CallStatus.DECLINED, rid, callId);
 		await Livechat.notifyCallDeclined(rid);
-		await dispatch({ incomingCallAlert: null, ongoingCall: { callStatus: CallStatus.DECLINED, time: { time } } });
+		await dispatch({
+			incomingCallAlert: null,
+			ongoingCall: {
+				callStatus: CallStatus.DECLINED,
+				time: { time },
+			},
+		});
 	};
 
 	return (

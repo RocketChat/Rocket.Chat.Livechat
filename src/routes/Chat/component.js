@@ -4,7 +4,7 @@ import { h, Component } from 'preact';
 import { Button } from '../../components/Button';
 import { CallIframe } from '../../components/Calls/CallIFrame';
 import { CallNotification } from '../../components/Calls/CallNotification';
-import { CallStatus } from '../../components/Calls/constants';
+import { CallStatus } from '../../components/Calls/CallStatus';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
@@ -151,7 +151,7 @@ export default class Chat extends Component {
 			>
 				<Screen.Content nopadding>
 					{ incomingCallAlert && !!incomingCallAlert.show && <CallNotification { ...incomingCallAlert } dispatch={dispatch} />}
-					{ incomingCallAlert?.show && ongoingCall && ongoingCall.callStatus === CallStatus.ACCEPT ? <CallIframe { ...incomingCallAlert } /> : null }
+					{ incomingCallAlert?.show && ongoingCall && ongoingCall.callStatus === CallStatus.IN_PROGRESS_SAME_TAB ? <CallIframe { ...incomingCallAlert } /> : null }
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}

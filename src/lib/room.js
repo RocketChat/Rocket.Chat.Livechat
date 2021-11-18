@@ -1,7 +1,7 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { CallStatus } from '../components/Calls/constants';
+import { CallStatus, isCallOngoing } from '../components/Calls/CallStatus';
 import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
 import I18n from '../i18n';
 import { store } from '../store';
@@ -209,7 +209,7 @@ export const loadMessages = async () => {
 		await store.setState({ lastReadMessageId: lastMessage && lastMessage._id });
 	}
 
-	if (ongoingCall && (ongoingCall.callStatus === CallStatus.ACCEPT || ongoingCall.callStatus === CallStatus.ON_GOING_CALL_IN_NEW_TAB)) {
+	if (ongoingCall && isCallOngoing(ongoingCall.callStatus)) {
 		return;
 	}
 
@@ -218,12 +218,32 @@ export const loadMessages = async () => {
 		return;
 	}
 	if (latestCallMessage.t === constants.jitsiCallStartedMessageType) {
-		await store.setState({ ongoingCall: { callStatus: CallStatus.ON_GOING_CALL_IN_NEW_TAB, time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t, url: latestCallMessage.customFields.jitsiCallUrl } });
+		await store.setState({
+			ongoingCall: {
+				callStatus: CallStatus.IN_PROGRESS_DIFFERENT_TAB,
+				time: latestCallMessage.ts,
+			},
+			incomingCallAlert: {
+				show: false,
+				callProvider:
+				latestCallMessage.t,
+				url: latestCallMessage.customFields.jitsiCallUrl,
+			},
+		});
 		return;
 	}
 	switch (callStatus) {
-		case CallStatus.INPROGRESS: {
-			await store.setState({ ongoingCall: { callStatus: CallStatus.ON_GOING_CALL_IN_NEW_TAB, time: latestCallMessage.ts }, incomingCallAlert: { show: false, callProvider: latestCallMessage.t } });
+		case CallStatus.IN_PROGRESS: {
+			await store.setState({
+				ongoingCall: {
+					callStatus: CallStatus.IN_PROGRESS_DIFFERENT_TAB,
+					time: latestCallMessage.ts,
+				},
+				incomingCallAlert: {
+					show: false,
+					callProvider: latestCallMessage.t,
+				},
+			});
 			break;
 		}
 		case CallStatus.RINGING: {
