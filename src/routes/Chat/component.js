@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 
 import { Button } from '../../components/Button';
 import { CallIframe } from '../../components/Calls/CallIFrame';
-import { CallNotification } from '../../components/Calls/CallNotification';
+import { default as CallNotification } from '../../components/Calls/CallNotification';
 import { CallStatus } from '../../components/Calls/CallStatus';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';

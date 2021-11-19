@@ -5,7 +5,7 @@ import { h } from 'preact';
 import { withTranslation } from 'react-i18next';
 
 import { getAttachmentUrl, memo, normalizeTransferHistoryMessage, resolveDate } from '../../helpers';
-import { AudioAttachment } from '../AudioAttachment';
+import { default as AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
 import { MessageAvatars } from '../MessageAvatars';
