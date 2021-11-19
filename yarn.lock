@@ -1598,10 +1598,10 @@
   dependencies:
     eslint-plugin-import "^2.17.2"
 
-"@rocket.chat/sdk@^1.0.0-alpha.41":
-  version "1.0.0-alpha.41"
-  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.41.tgz#8fcae2885786bec56a56b6d9a8cccaa365b77364"
-  integrity sha512-jQ+/exEQMOv+bwH+yzPTC0oJGIKj/AlMc95IvWAn/vHDLjjS3aGzpIpZhBwsMOBVvb/5N8rnq6kEleCkEJk28g==
+"@rocket.chat/sdk@^1.0.0-alpha.42":
+  version "1.0.0-alpha.42"
+  resolved "https://registry.yarnpkg.com/@rocket.chat/sdk/-/sdk-1.0.0-alpha.42.tgz#e3adc7ee245c6947fe368c0d3b8494c5a97c0673"
+  integrity sha512-e3roTprM3UhlXOym2kN8o2doN1vBBS23obZgupPitecZWpK8eQghLk78a4L4uDAqBwFZ65Xphs3L1gaPSZJARQ==
   dependencies:
     js-sha256 "^0.9.0"
     lru-cache "^4.1.1"

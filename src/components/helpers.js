@@ -1,3 +1,4 @@
+import parseISO from 'date-fns/parseISO';
 import { Component } from 'preact';
 
 import { Livechat, useSsl } from '../api';
@@ -136,6 +137,7 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	return 1;
 });
 
+
 export const normalizeTransferHistoryMessage = (transferData, sender) => {
 	if (!transferData) {
 		return;
@@ -172,7 +174,6 @@ export const parseOfflineMessage = (fields = {}) => {
 	return Object.assign(fields, { host });
 };
 export const normalizeDOMRect = ({ left, top, right, bottom }) => ({ left, top, right, bottom });
-
 
 export const visibility = (() => {
 	if (typeof document.hidden !== 'undefined') {
@@ -243,4 +244,23 @@ export const isActiveSession = () => {
 	const { openSessionIds: [firstSessionId] = [] } = store.state;
 
 	return sessionId === firstSessionId;
+};
+
+export const isMobileDevice = () => window.innerWidth <= 800 && window.innerHeight >= 630;
+
+export const resolveDate = (dateInput) => {
+	switch (typeof dateInput) {
+		case Date: {
+			return dateInput;
+		}
+		case 'object': {
+			return new Date(dateInput.$date);
+		}
+		case 'string': {
+			return parseISO(dateInput);
+		}
+		default: {
+			return new Date(dateInput);
+		}
+	}
 };

@@ -401,6 +401,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
+			incomingCallAlert,
+			ongoingCall,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -456,6 +458,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 				nameFieldRegistrationForm={nameFieldRegistrationForm}
 				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
+				incomingCallAlert={incomingCallAlert}
+				ongoingCall={ongoingCall}
 			/>
 		)}
 	</Consumer>
