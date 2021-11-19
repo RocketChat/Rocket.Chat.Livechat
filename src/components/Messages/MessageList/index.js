@@ -120,7 +120,7 @@ export class MessageList extends MemoizedComponent {
 			if ((message.t === constants.webRTCCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)
 				&& message.actionLinks && message.actionLinks.length
 				&& ongoingCall && isCallOngoing(ongoingCall.callStatus)
-				&& !message.endTs) {
+				&& !message.webRtcCallEndTs) {
 				const { url, callProvider, rid } = incomingCallAlert || {};
 				items.push(
 					<JoinCallButton callStatus={ongoingCall.callStatus} url={url} callProvider={callProvider} rid={rid} />,

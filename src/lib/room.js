@@ -57,7 +57,7 @@ const processMessage = async (message) => {
 		closeChat(message);
 	} else if (message.t === 'command') {
 		commands[message.msg] && commands[message.msg]();
-	} else if (message.endTs) {
+	} else if (message.webRtcCallEndTs) {
 		await store.setState({ ongoingCall: { callStatus: CallStatus.ENDED, time: message.ts }, incomingCallAlert: null });
 	} else if (message.t === constants.webRTCCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType) {
 		await processIncomingCallMessage(message);

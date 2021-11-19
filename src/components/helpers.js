@@ -1,3 +1,4 @@
+import parseISO from 'date-fns/parseISO';
 import { Component } from 'preact';
 
 import { Livechat, useSsl } from '../api';
@@ -246,3 +247,20 @@ export const isActiveSession = () => {
 };
 
 export const isMobileDevice = () => window.innerWidth <= 800 && window.innerHeight >= 630;
+
+export const resolveDate = (dateInput) => {
+	switch (typeof dateInput) {
+		case Date: {
+			return dateInput;
+		}
+		case 'object': {
+			return new Date(dateInput.$date);
+		}
+		case 'string': {
+			return parseISO(dateInput);
+		}
+		default: {
+			return new Date(dateInput);
+		}
+	}
+};

@@ -1,11 +1,10 @@
 import { formatDistance } from 'date-fns';
 import format from 'date-fns/format';
-import { parseISO } from 'date-fns/fp';
 import isToday from 'date-fns/isToday';
 import { h } from 'preact';
 
 import I18n from '../../../i18n';
-import { getAttachmentUrl, memo, normalizeTransferHistoryMessage } from '../../helpers';
+import { getAttachmentUrl, memo, normalizeTransferHistoryMessage, resolveDate } from '../../helpers';
 import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
@@ -85,14 +84,16 @@ const renderContent = ({
 	),
 ].filter(Boolean);
 
-const resolveWebRTCEndCallMessage = ({ endTs: callEndTime, ts: callStartTime }) => {
-	const callDuration = formatDistance(new Date(callEndTime), new Date(callStartTime));
-	const timestamp = new Date(callEndTime).toISOString();
-	const time = format(parseISO(timestamp), isToday(parseISO(timestamp)) ? 'HH:mm' : 'dddd HH:mm');
+
+const resolveWebRTCEndCallMessage = ({ webRtcCallEndTs, ts }) => {
+	const callEndTime = resolveDate(webRtcCallEndTs);
+	const callStartTime = resolveDate(ts);
+	const callDuration = formatDistance(callEndTime, callStartTime);
+	const time = format(callEndTime, isToday(callEndTime) ? 'HH:mm' : 'dddd HH:mm');
 	return `${ I18n.t('Call ended at %{time}', { time }) } ${ I18n.t(' - Lasted %{callDuration}', { callDuration }) }`;
 };
 
-const getSystemMessageText = ({ t, conversationFinishedMessage, transferData, u, endTs, ts }) =>
+const getSystemMessageText = ({ t, conversationFinishedMessage, transferData, u, webRtcCallEndTs, ts }) =>
 	(t === MESSAGE_TYPE_ROOM_NAME_CHANGED && I18n.t('Room name changed'))
 	|| (t === MESSAGE_TYPE_USER_ADDED && I18n.t('User added by'))
 	|| (t === MESSAGE_TYPE_USER_REMOVED && I18n.t('User removed by'))
@@ -102,7 +103,7 @@ const getSystemMessageText = ({ t, conversationFinishedMessage, transferData, u,
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')))
 	|| (t === MESSAGE_TYPE_LIVECHAT_STARTED && I18n.t('Chat started'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData, u))
-	|| (t === MESSAGE_WEBRTC_CALL && endTs && ts && resolveWebRTCEndCallMessage({ endTs, ts }));
+	|| (t === MESSAGE_WEBRTC_CALL && webRtcCallEndTs && ts && resolveWebRTCEndCallMessage({ webRtcCallEndTs, ts }));
 
 const getMessageUsernames = (compact, message) => {
 	if (compact || !message.u) {
