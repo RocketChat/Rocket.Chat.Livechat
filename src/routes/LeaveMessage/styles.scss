@@ -1,10 +1,16 @@
-.leave-message__main {
-	padding: 1rem 1.5rem 0;
-}
+.leave-message {
+	p {
+		margin-top: 0;
+	}
 
-.leave-message__message {
-	margin: 0 0 1rem;
+	&__main {
+		padding: 0rem 1.5rem 0;
+	}
 
-	font-weight: 500;
-	line-height: 1.5;
+	&__message {
+		margin: 0 0 1rem;
+
+		font-weight: 500;
+		line-height: 1.5;
+	}
 }
