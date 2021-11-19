@@ -1,8 +1,11 @@
+import { formatDistance } from 'date-fns';
+import format from 'date-fns/format';
+import isToday from 'date-fns/isToday';
 import { h } from 'preact';
 import { withTranslation } from 'react-i18next';
 
-import { getAttachmentUrl, memo, normalizeTransferHistoryMessage } from '../../helpers';
-import AudioAttachment from '../AudioAttachment';
+import { getAttachmentUrl, memo, normalizeTransferHistoryMessage, resolveDate } from '../../helpers';
+import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
 import { MessageAvatars } from '../MessageAvatars';
@@ -23,6 +26,7 @@ import {
 	MESSAGE_TYPE_LIVECHAT_CLOSED,
 	MESSAGE_TYPE_LIVECHAT_STARTED,
 	MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
+	MESSAGE_WEBRTC_CALL,
 } from '../constants';
 
 const renderContent = ({
@@ -80,7 +84,15 @@ const renderContent = ({
 	),
 ].filter(Boolean);
 
-const getSystemMessageText = ({ type, conversationFinishedMessage, transferData, u }, t) =>
+const resolveWebRTCEndCallMessage = ({ webRtcCallEndTs, ts, t }) => {
+	const callEndTime = resolveDate(webRtcCallEndTs);
+	const callStartTime = resolveDate(ts);
+	const callDuration = formatDistance(callEndTime, callStartTime);
+	const time = format(callEndTime, isToday(callEndTime) ? 'HH:mm' : 'dddd HH:mm');
+	return t('call_end_time', { time, callDuration });
+};
+
+const getSystemMessageText = ({ type, conversationFinishedMessage, transferData, u, webRtcCallEndTs, ts }, t) =>
 	(type === MESSAGE_TYPE_ROOM_NAME_CHANGED && t('room_name_changed'))
 	|| (type === MESSAGE_TYPE_USER_ADDED && t('user_added_by'))
 	|| (type === MESSAGE_TYPE_USER_REMOVED && t('user_removed_by'))
@@ -89,7 +101,8 @@ const getSystemMessageText = ({ type, conversationFinishedMessage, transferData,
 	|| (type === MESSAGE_TYPE_WELCOME && t('welcome'))
 	|| (type === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || t('conversation_finished')))
 	|| (type === MESSAGE_TYPE_LIVECHAT_STARTED && t('chat_started'))
-	|| (type === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData, u));
+	|| (type === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData, u))
+	|| (type === MESSAGE_WEBRTC_CALL && webRtcCallEndTs && ts && resolveWebRTCEndCallMessage({ webRtcCallEndTs, ts, t }));
 
 const getMessageUsernames = (compact, message) => {
 	if (compact || !message.u) {
@@ -108,7 +121,6 @@ const Message = memo(({
 	avatarResolver,
 	attachmentResolver = getAttachmentUrl,
 	use,
-	ts,
 	me,
 	compact,
 	className,
@@ -141,7 +153,9 @@ const Message = memo(({
 				attachmentResolver,
 			})}
 		</MessageContent>
-		{!compact && !message.type && <MessageTime normal={!me} inverse={me} ts={ts} />}
+
+		{!compact && !message.type && <MessageTime normal={!me} inverse={me} ts={message.ts} />}
+
 	</MessageContainer>
 ));
 
