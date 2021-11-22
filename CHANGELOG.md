@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.10.0 - 2021-11-22
+[NEW] Audio and Video calling in Livechat using WebRTC (#646)
+[FIX] LoadConfig after registering guest (#640)
+[FIX] Body styles getting overridden (#660)
+
 ## 1.9.6 - 2021-10-20
 [FIX] 'Hide agent info' not working on system message (#651)
 [FIX] Issues on Custom Livechat messages (#648)

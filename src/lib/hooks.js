@@ -10,6 +10,7 @@ import Triggers from './triggers';
 const createOrUpdateGuest = async (guest) => {
 	const { token } = guest;
 	token && await store.setState({ token });
+	token && await loadConfig();
 	const user = await Livechat.grantVisitor({ visitor: { ...guest } });
 	store.setState({ user });
 };
