@@ -21,6 +21,13 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 		await handleTranscript();
 	}
 
+	const { config: { settings: { clearLivechatUserSession } = {} } = {} } = store.state;
+
+	if (clearLivechatUserSession) {
+		await Livechat.deleteVisitor();
+		store.setState({ user: '' });
+	}
+
 	await loadConfig();
 	parentCall('callback', 'chat-ended');
 	route('/chat-finished');
