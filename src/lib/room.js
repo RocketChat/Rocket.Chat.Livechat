@@ -21,11 +21,10 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 		await handleTranscript();
 	}
 
-	const { config: { settings: { removeGuestInfoWhenChatEnded } = {} } = {} } = store.state;
+	const { config: { settings: { clearLocalStorageWhenChatEnded } = {} } = {} } = store.state;
 
-	if (removeGuestInfoWhenChatEnded) {
-		await Livechat.deleteVisitor();
-		store.setState({ user: '' });
+	if (clearLocalStorageWhenChatEnded) {
+		store.cleanState();
 	}
 
 	await loadConfig();
