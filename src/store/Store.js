@@ -77,10 +77,6 @@ export default class Store {
 		this.emit('change', [this._state, prevState, partialState]);
 	}
 
-	cleanState() {
-		this._state = {};
-	}
-
 	setStoredState(storedState) {
 		const prevState = this._state;
 
