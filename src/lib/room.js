@@ -4,7 +4,7 @@ import { Livechat } from '../api';
 import { CallStatus, isCallOngoing } from '../components/Calls/CallStatus';
 import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
 import I18n from '../i18n';
-import { store } from '../store';
+import { store, initialState } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
 import constants from './constants';
@@ -24,7 +24,7 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 	const { config: { settings: { clearLocalStorageWhenChatEnded } = {} } = {} } = store.state;
 
 	if (clearLocalStorageWhenChatEnded) {
-		store.cleanState();
+		await store.setState(initialState());
 	}
 
 	await loadConfig();
@@ -133,7 +133,7 @@ const isAgentHidden = () => {
 
 const transformAgentInformationOnMessage = (message) => {
 	const { user } = store.state;
-	if (message.u && message.u._id !== user._id && isAgentHidden()) {
+	if (message && user && message.u && message.u._id !== user._id && isAgentHidden()) {
 		return { ...message, u: { _id: message.u._id } };
 	}
 
