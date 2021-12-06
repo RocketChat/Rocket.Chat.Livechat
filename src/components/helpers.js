@@ -4,6 +4,7 @@ import { Component } from 'preact';
 import { Livechat, useSsl } from '../api';
 import I18n from '../i18n';
 import store from '../store';
+import crypto from 'crypto-js';
 
 export function flatMap(arr, mapFunc) {
 	const result = [];
@@ -120,7 +121,7 @@ export const setCookies = (rid, token) => {
 	document.cookie = `rc_room_type=l; path=/; ${ getSecureCookieSettings() }`;
 };
 
-export const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+export const createToken = () => crypto.randomBytes(128).toString('hex');
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
