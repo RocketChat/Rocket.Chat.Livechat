@@ -1,10 +1,10 @@
+import crypto from 'crypto-js';
 import parseISO from 'date-fns/parseISO';
 import { Component } from 'preact';
 
 import { Livechat, useSsl } from '../api';
 import I18n from '../i18n';
 import store from '../store';
-import crypto from 'crypto-js';
 
 export function flatMap(arr, mapFunc) {
 	const result = [];
