@@ -1,6 +1,8 @@
+import { route } from 'preact-router';
 import mitt from 'mitt';
-
 import { parentCall } from '../lib/parentCall';
+import { loadConfig } from '../lib/main';
+import queryString from 'query-string';
 
 const { localStorage, sessionStorage } = window;
 
@@ -14,14 +16,18 @@ export default class Store {
 		let storedState;
 
 		try {
-			storedState = JSON.parse(localStorage.getItem(this.localStorageKey));
+			const reset = queryString.parse(window.location.search).reset === 'true';
+			if (!reset) {
+				storedState = JSON.parse(localStorage.getItem(this.localStorageKey));
+			}
 		} catch (e) {
 			storedState = {};
 		} finally {
 			storedState = typeof storedState === 'object' ? storedState : {};
 		}
 
-		this._state = { ...initialState, ...storedState };
+		this._initialState = initialState;
+ 		this._state = { ...initialState, ...storedState };
 
 		window.addEventListener('storage', (e) => {
 			// Cross-tab communication
@@ -47,7 +53,7 @@ export default class Store {
 		});
 
 		window.addEventListener('visibilitychange', () => {
-			!this._state.minimized && !this._state.triggered && parentCall('openWidget');
+			!this._state.minimized && parentCall('openWidget');
 			this._state.iframe.visible ? parentCall('showWidget') : parentCall('hideWidget');
 		});
 
@@ -86,5 +92,12 @@ export default class Store {
 		}
 		this._state = { ...storedState, ...nonPeristable };
 		this.emit('change', [this._state, prevState]);
+	}
+
+	resetState() {
+		window.addEventListener('beforeunload', () => {
+			localStorage.removeItem(this.localStorageKey);
+		});
+		document.location.href = document.location.href;
 	}
 }
