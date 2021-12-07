@@ -121,7 +121,7 @@ export const setCookies = (rid, token) => {
 	document.cookie = `rc_room_type=l; path=/; ${ getSecureCookieSettings() }`;
 };
 
-export const createToken = () => crypto.randomBytes(128).toString('hex');
+export const createToken = () => crypto.lib.WordArray.random(128).toString(crypto.enc.Base64);
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
