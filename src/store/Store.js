@@ -1,10 +1,11 @@
+import crypto from 'crypto-js';
 import mitt from 'mitt';
 
-import { createToken } from '../components/helpers';
 import { parentCall } from '../lib/parentCall';
 
 const { localStorage, sessionStorage } = window;
 
+const createToken = () => crypto.lib.WordArray.random(128).toString(crypto.enc.Hex);
 export default class Store {
 	constructor(initialState = {}, { localStorageKey = 'store', dontPersist = [] } = {}) {
 		Object.assign(this, mitt());
