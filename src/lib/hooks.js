@@ -1,10 +1,10 @@
 import { Livechat } from '../api';
-import { createToken } from '../components/helpers';
 import { store } from '../store';
 import CustomFields from './customFields';
 import { setWidgetLanguage } from './locale';
 import { loadConfig } from './main';
 import { parentCall } from './parentCall';
+import { createToken } from './random';
 import Triggers from './triggers';
 
 const createOrUpdateGuest = async (guest) => {

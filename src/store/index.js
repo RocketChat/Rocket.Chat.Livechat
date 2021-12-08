@@ -1,8 +1,7 @@
 import { h, Component, createContext } from 'preact';
 
+import { createToken } from '../lib/random';
 import Store from './Store';
-
-const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 export const initialState = () => ({
 	token: createToken(),

@@ -120,8 +120,6 @@ export const setCookies = (rid, token) => {
 	document.cookie = `rc_room_type=l; path=/; ${ getSecureCookieSettings() }`;
 };
 
-export const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
 export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul', 'livechat-close'];
