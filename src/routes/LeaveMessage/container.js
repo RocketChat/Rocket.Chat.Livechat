@@ -2,8 +2,9 @@ import { h, Component } from 'preact';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken, parseOfflineMessage } from '../../components/helpers';
+import { parseOfflineMessage } from '../../components/helpers';
 import { parentCall } from '../../lib/parentCall';
+import { createToken } from '../../lib/random';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
 
