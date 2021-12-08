@@ -1,4 +1,3 @@
-import crypto from 'crypto-js';
 import parseISO from 'date-fns/parseISO';
 import { Component } from 'preact';
 
@@ -120,8 +119,6 @@ export const setCookies = (rid, token) => {
 	document.cookie = `rc_token=${ token }; path=/; ${ getSecureCookieSettings() }`;
 	document.cookie = `rc_room_type=l; path=/; ${ getSecureCookieSettings() }`;
 };
-
-export const createToken = () => crypto.lib.WordArray.random(128).toString(crypto.enc.Hex);
 
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 

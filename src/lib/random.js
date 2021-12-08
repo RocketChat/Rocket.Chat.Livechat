@@ -1,3 +1,6 @@
+
+import * as crypto from 'crypto-js';
+
 const UNMISTAKABLE_CHARS = '23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz';
 
 const fraction = () => {
@@ -21,3 +24,5 @@ export const createRandomString = (charsCount, alphabet) =>
 
 export const createRandomId = (charsCount = 17) =>
 	createRandomString(charsCount, UNMISTAKABLE_CHARS);
+
+export const createToken = () => crypto.lib.WordArray.random(32).toString(crypto.enc.Hex);

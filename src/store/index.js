@@ -1,9 +1,7 @@
-import crypto from 'crypto-js';
 import { h, Component, createContext } from 'preact';
 
+import { createToken } from '../lib/random';
 import Store from './Store';
-
-const createToken = () => crypto.lib.WordArray.random(128).toString(crypto.enc.Hex);
 
 export const initialState = () => ({
 	token: createToken(),
