@@ -9,6 +9,7 @@ import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
+import { createToken } from '../../lib/random';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
 import { Consumer } from '../../store';
 import Chat from './component';

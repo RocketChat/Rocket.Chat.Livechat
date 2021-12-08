@@ -1,6 +1,7 @@
 import mitt from 'mitt';
 
 import { parentCall } from '../lib/parentCall';
+import { createToken } from '../lib/random';
 
 const { localStorage, sessionStorage } = window;
 
@@ -40,7 +41,7 @@ export default class Store {
 		});
 
 		window.addEventListener('load', () => {
-			const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+			const sessionId = createToken();
 			sessionStorage.setItem('sessionId', sessionId);
 			const { openSessionIds = [] } = this._state;
 			this.setState({ openSessionIds: [sessionId, ...openSessionIds] });

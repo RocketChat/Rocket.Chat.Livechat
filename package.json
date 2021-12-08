@@ -86,6 +86,7 @@
 		"@kossnocorp/desvg": "^0.2.0",
 		"@rocket.chat/sdk": "^1.0.0-alpha.42",
 		"@rocket.chat/ui-kit": "^0.14.1",
+		"crypto-js": "^4.1.1",
 		"css-vars-ponyfill": "^2.3.2",
 		"date-fns": "^2.15.0",
 		"desvg": "^1.0.2",

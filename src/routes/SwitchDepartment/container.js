@@ -3,9 +3,10 @@ import { withTranslation } from 'react-i18next';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken } from '../../components/helpers';
 import history from '../../history';
 import { loadConfig } from '../../lib/main';
+import { createToken } from '../../lib/random';
+import { Consumer } from '../../store';
 import SwitchDepartment from './component';
 
 class SwitchDepartmentContainer extends Component {

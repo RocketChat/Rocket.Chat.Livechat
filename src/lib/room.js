@@ -10,6 +10,7 @@ import Commands from './commands';
 import constants from './constants';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
+import { createToken } from './random';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
 
