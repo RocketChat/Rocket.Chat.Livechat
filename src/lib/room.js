@@ -3,7 +3,7 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../api';
 import { CallStatus, isCallOngoing } from '../components/Calls/CallStatus';
-import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
+import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import { store, initialState } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
