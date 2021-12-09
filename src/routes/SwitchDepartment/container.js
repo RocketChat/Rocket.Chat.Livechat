@@ -6,7 +6,6 @@ import { ModalManager } from '../../components/Modal';
 import history from '../../history';
 import { loadConfig } from '../../lib/main';
 import { createToken } from '../../lib/random';
-import { Consumer } from '../../store';
 import SwitchDepartment from './component';
 
 class SwitchDepartmentContainer extends Component {

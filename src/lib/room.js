@@ -14,7 +14,6 @@ import { createToken } from './random';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
 
-
 const commands = new Commands();
 
 export const closeChat = async ({ transcriptRequested } = {}) => {
