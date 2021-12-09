@@ -2,10 +2,10 @@ import { h, Component } from 'preact';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken } from '../../components/helpers';
 import history from '../../history';
 import I18n from '../../i18n';
 import { loadConfig } from '../../lib/main';
+import { createToken } from '../../lib/random';
 import { Consumer } from '../../store';
 import SwitchDepartment from './component';
 

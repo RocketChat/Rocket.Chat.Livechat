@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.0 - 2021-12-09
+[NEW] Introduce clearLocalStorageWhenChatEnded setting logic (#666)
+[IMPROVE] Change logic to generate token on Live Chat (#667)
+
 ## 1.10.0 - 2021-11-22
 [NEW] Audio and Video calling in Livechat using WebRTC (#646)
 [FIX] LoadConfig after registering guest (#640)

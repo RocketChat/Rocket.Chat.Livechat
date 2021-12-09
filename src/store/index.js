@@ -1,10 +1,9 @@
 import { h, Component, createContext } from 'preact';
 
+import { createToken } from '../lib/random';
 import Store from './Store';
 
-const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
-const initialState = {
+export const initialState = () => ({
 	token: createToken(),
 	typing: [],
 	config: {
@@ -36,10 +35,10 @@ const initialState = {
 	unread: null,
 	incomingCallAlert: null,
 	ongoingCall: null,	// TODO: store call info like url, startTime, timeout, etc here
-};
+});
 
 const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages', 'modal', 'incomingCallAlert', 'ongoingCall'];
-export const store = new Store(initialState, { dontPersist });
+export const store = new Store(initialState(), { dontPersist });
 
 if (process.env.NODE_ENV === 'development') {
 	store.on('change', ([, , partialState]) => {
