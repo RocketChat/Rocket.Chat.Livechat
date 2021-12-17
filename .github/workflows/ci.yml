@@ -62,6 +62,4 @@ jobs:
       - run: |
           cat package.json | sed s/\.docker/.app/ > package.json-new
           mv package.json-new package.json
-      - uses: ./.github/actions/loki/test
-        with:
-          working_dir: .
+      - run: yarn run loki:test
