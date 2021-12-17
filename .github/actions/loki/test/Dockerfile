@@ -1,4 +1,4 @@
-FROM chinello/alpine-chrome:with-node
+FROM chinello/alpine-chrome:latest
 
 COPY entrypoint.sh /entrypoint.sh
 

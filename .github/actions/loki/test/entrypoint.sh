@@ -1,7 +1,7 @@
 #!/bin/sh -ex
 
 cd "$INPUT_WORKING_DIR"
-yarn loki \
+loki \
   test \
   --chromeFlags='--headless --no-sandbox --disable-gpu --disable-features=VizDisplayCompositor' \
   --verboseRenderer \
