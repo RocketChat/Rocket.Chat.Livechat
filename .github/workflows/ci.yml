@@ -16,15 +16,8 @@ jobs:
         with:
           node-version: "12"
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: |
-            **/node_modules
-            .yarn/cache
-          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+      - run: npm install --global yarn
       - run: yarn install
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
       - run: yarn run build
       - run: yarn run lint
       - run: yarn run build-storybook
