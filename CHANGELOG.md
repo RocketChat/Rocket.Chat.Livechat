@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.1 - 2021-12-30
+[FIX] Hide Livechat if Omnichannel is disabled #671
+
 ## 1.11.0 - 2021-12-09
 [NEW] Introduce clearLocalStorageWhenChatEnded setting logic (#666)
 [IMPROVE] Change logic to generate token on Live Chat (#667)
