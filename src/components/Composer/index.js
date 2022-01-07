@@ -217,7 +217,7 @@ export class Composer extends Component {
 		return 0;
 	}
 
-	render = ({ pre, post, placeholder, onChange, onSubmit, onUpload, className, style }) => (
+	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
 		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
 			{pre}
 			<div
@@ -245,10 +245,10 @@ export class Composer extends Component {
 
 
 				className={createClassName(styles, 'composer__input')}
-			/>
+			>{value}</div>
 			{post}
 		</div>
-	)
+	);
 }
 
 export { ComposerAction } from './ComposerAction';
