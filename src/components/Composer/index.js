@@ -1,30 +1,7 @@
-import { sanitize } from 'dompurify';
-import mem from 'mem';
 import { h, Component } from 'preact';
 
 import { createClassName } from '../helpers';
 import styles from './styles.scss';
-
-
-const escapeMap = {
-	'&': '&amp;',
-	'<': '&lt;',
-	'>': '&gt;',
-	'"': '&quot;',
-	'\'': '&#x27;',
-	'`': '&#x60;',
-};
-
-const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
-
-const escapeHtml = mem(
-	(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
-);
-
-const parse = (plainText) =>
-	[{ plain: plainText }]
-		.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
-		.join('');
 
 const findLastTextNode = (node) => {
 	if (node.nodeType === Node.TEXT_NODE) {
@@ -67,7 +44,7 @@ export class Composer extends Component {
 		if (this.state.inputLock) {
 			return;
 		}
-		onChange && onChange(sanitize(this.el.innerText));
+		onChange && onChange(this.el.innerText);
 	}
 
 	handleKeypress = (onSubmit) => (event) => {
@@ -98,7 +75,7 @@ export class Composer extends Component {
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
-		texts.forEach((text) => this.pasteText(parse(text)));
+		texts.forEach((text) => this.pasteText(text));
 	}
 
 	handleDrop = (onUpload) => async (event) => {
@@ -121,7 +98,7 @@ export class Composer extends Component {
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
-		texts.forEach((text) => this.pasteText(parse(text)));
+		texts.forEach((text) => this.pasteText(text));
 	}
 
 	handleClick = () => {
@@ -241,16 +218,12 @@ export class Composer extends Component {
 	}
 
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
-
 		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
 			{pre}
 			<div
 				ref={this.handleRef}
 				{...(
 					{
-						dangerouslySetInnerHTML: {
-							__html: parse(value),
-						},
 						contentEditable: true,
 						'data-placeholder': placeholder,
 						onInput: this.handleInput(onChange),
@@ -272,10 +245,10 @@ export class Composer extends Component {
 
 
 				className={createClassName(styles, 'composer__input')}
-			/>
+			>{value}</div>
 			{post}
 		</div>
-	)
+	);
 }
 
 export { ComposerAction } from './ComposerAction';
