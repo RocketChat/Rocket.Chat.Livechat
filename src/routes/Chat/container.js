@@ -1,3 +1,5 @@
+import { sanitize } from 'dompurify';
+import mem from 'mem';
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
@@ -113,9 +115,31 @@ export class ChatContainer extends Component {
 	}
 
 	handleSubmit = async (msg) => {
+		const escapeMap = {
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			'\'': '&#x27;',
+			'`': '&#x60;',
+		};
+
+		const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
+
+		const escapeHtml = mem(
+			(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
+		);
+
+		const parse = (plainText) =>
+			[{ plain: plainText }]
+				.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
+				.join('');
+
 		if (msg.trim() === '') {
 			return;
 		}
+		msg = sanitize(msg);
+		msg = parse(msg);
 
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
