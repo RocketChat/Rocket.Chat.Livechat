@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.2 - 2022-01-10
+[FIX] IME not working properly #674
+
 ## 1.11.1 - 2021-12-30
 [FIX] Hide Livechat if Omnichannel is disabled #671
 
