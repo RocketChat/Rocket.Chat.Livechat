@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import { createClassName } from '../helpers';
+import { createClassName, parse } from '../helpers';
 import styles from './styles.scss';
 
 const findLastTextNode = (node) => {
@@ -75,7 +75,8 @@ export class Composer extends Component {
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
-		texts.forEach((text) => this.pasteText(text));
+
+		texts.forEach((text) => this.pasteText(parse(text)));
 	}
 
 	handleDrop = (onUpload) => async (event) => {
@@ -98,7 +99,7 @@ export class Composer extends Component {
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
-		texts.forEach((text) => this.pasteText(text));
+		texts.forEach((text) => this.pasteText(parse(text)));
 	}
 
 	handleClick = () => {
