@@ -1,4 +1,3 @@
-import { sanitize } from 'dompurify';
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
@@ -117,7 +116,6 @@ export class ChatContainer extends Component {
 		if (msg.trim() === '') {
 			return;
 		}
-		msg = sanitize(msg);
 		msg = parse(msg);
 
 		await this.grantUser();
