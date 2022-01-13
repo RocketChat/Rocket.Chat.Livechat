@@ -13,6 +13,7 @@ export const initialState = () => ({
 		triggers: [],
 		departments: [],
 		resources: {},
+		businessUnitIds: [],
 	},
 	messages: [],
 	user: null,

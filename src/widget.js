@@ -263,6 +263,10 @@ function setDepartment(department) {
 	callHook('setDepartment', department);
 }
 
+function setBusinessUnitIds(businessUnits) {
+	callHook('setBusinessUnitIds', businessUnits);
+}
+
 function setGuestToken(token) {
 	callHook('setGuestToken', token);
 }
@@ -334,6 +338,10 @@ function initialize(params) {
 			case 'department':
 				setDepartment(params[method]);
 				continue;
+			case 'businessUnitIds': {
+				setBusinessUnitIds(params[method]);
+				continue;
+			}
 			case 'guestToken':
 				setGuestToken(params[method]);
 				continue;
@@ -436,6 +444,7 @@ window.RocketChat.livechat = {
 	hideWidget,
 	maximizeWidget,
 	minimizeWidget,
+	setBusinessUnitIds,
 
 	// callbacks
 	onChatMaximized(fn) { registerCallback('chat-maximized', fn); },
