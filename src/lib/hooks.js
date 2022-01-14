@@ -27,15 +27,6 @@ const updateIframeGuestData = (data) => {
 	createOrUpdateGuest(guestData);
 };
 
-const isBothArraysContentSame = (arr1, arr2) => {
-	if (arr1.length !== arr2.length) {
-		return false;
-	}
-	const intersection = arr1.filter((x) => arr2.includes(x));
-
-	return intersection.length === arr1.length;
-};
-
 const api = {
 	pageVisited(info) {
 		if (info.change === 'url') {
@@ -78,16 +69,16 @@ const api = {
 		updateIframeGuestData({ department });
 	},
 
-	async setBusinessUnitIds(value) {
-		if (!value || !value.businessUnits || !Array.isArray(value.businessUnits)) {
+	async setBusinessUnit(newBusinessUnit) {
+		if (!newBusinessUnit || !newBusinessUnit.trim().length) {
 			throw new Error('Error! Invalid business ids');
 		}
 
-		const { config: { businessUnitIds: existingBusinessUnitIds }, config } = store.state;
-		if (existingBusinessUnitIds && isBothArraysContentSame(existingBusinessUnitIds, value.businessUnits)) {
+		const { businessUnit: existingBusinessUnit } = store.state;
+		if (existingBusinessUnit === newBusinessUnit) {
 			return;
 		}
-		store.setState({ config: { ...config, businessUnitIds: value.businessUnits } });
+		store.setState({ businessUnit: newBusinessUnit });
 		await loadConfig();
 	},
 

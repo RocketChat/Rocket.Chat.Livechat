@@ -10,9 +10,7 @@ import constants from './constants';
 export const loadConfig = async () => {
 	const {
 		token,
-		config: {
-			businessUnitIds,
-		} = { businessUnitIds: [] },
+		businessUnit = null,
 	} = store.state;
 
 	Livechat.credentials.token = token;
@@ -26,7 +24,7 @@ export const loadConfig = async () => {
 		...config
 	} = await Livechat.config({
 		token,
-		...businessUnitIds?.length && { businessUnitIds: businessUnitIds.join('-') },
+		...businessUnit && { businessUnit },
 	});
 
 	await store.setState({
