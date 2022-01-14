@@ -1,11 +1,9 @@
-import { sanitize } from 'dompurify';
-import mem from 'mem';
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import { debounce, getAvatarUrl, canRenderMessage, throttle, upsert, parse } from '../../components/helpers';
 import I18n from '../../i18n';
 import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
@@ -115,30 +113,10 @@ export class ChatContainer extends Component {
 	}
 
 	handleSubmit = async (msg) => {
-		const escapeMap = {
-			'&': '&amp;',
-			'<': '&lt;',
-			'>': '&gt;',
-			'"': '&quot;',
-			'\'': '&#x27;',
-			'`': '&#x60;',
-		};
-
-		const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
-
-		const escapeHtml = mem(
-			(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
-		);
-
-		const parse = (plainText) =>
-			[{ plain: plainText }]
-				.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
-				.join('');
-
 		if (msg.trim() === '') {
 			return;
 		}
-		msg = sanitize(msg);
+
 		msg = parse(msg);
 
 		await this.grantUser();

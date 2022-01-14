@@ -2,6 +2,33 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.11.2 - 2022-01-10
+[FIX] IME not working properly #674
+
+## 1.11.1 - 2021-12-30
+[FIX] Hide Livechat if Omnichannel is disabled #671
+
+## 1.11.0 - 2021-12-09
+[NEW] Introduce clearLocalStorageWhenChatEnded setting logic (#666)
+[IMPROVE] Change logic to generate token on Live Chat (#667)
+
+## 1.10.0 - 2021-11-22
+[NEW] Audio and Video calling in Livechat using WebRTC (#646)
+[FIX] LoadConfig after registering guest (#640)
+[FIX] Body styles getting overridden (#660)
+
+## 1.9.6 - 2021-10-20
+[FIX] 'Hide agent info' not working on system message (#651)
+[FIX] Issues on Custom Livechat messages (#648)
+
+## 1.9.5 - 2021-09-14
+[IMPROVE] Readme enhancements (#557)
+[IMPROVE] Swedish Translations (#573)
+[FIX] Escaping HTML on paste/drop Text (#471)
+[IMPROVE] Spanish translations (#370)
+[IMPROVE] Russian translations (#644)
+[IMPROVE] Add cookie to identify widget calls (#645)
+
 ## 1.9.4 - 2021-08-19
 [FIX] Iframe overlay (#631)
 [IMPROVE] German informal translation (#622) 
