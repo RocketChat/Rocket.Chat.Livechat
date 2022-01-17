@@ -2,7 +2,7 @@ import { Livechat } from '../api';
 import { store } from '../store';
 import CustomFields from './customFields';
 import { setWidgetLanguage } from './locale';
-import { loadConfig } from './main';
+import { loadConfig, clearBusinessUnit, setBusinessUnit } from './main';
 import { parentCall } from './parentCall';
 import { createToken } from './random';
 import Triggers from './triggers';
@@ -78,8 +78,15 @@ const api = {
 		if (existingBusinessUnit === newBusinessUnit) {
 			return;
 		}
-		store.setState({ businessUnit: newBusinessUnit });
-		await loadConfig();
+		await setBusinessUnit(newBusinessUnit);
+	},
+
+	async clearBusinessUnit() {
+		const { businessUnit } = store.state;
+		if (!businessUnit) {
+			return;
+		}
+		await clearBusinessUnit();
 	},
 
 	clearDepartment() {

@@ -7,6 +7,40 @@ import I18n from '../i18n';
 import store from '../store';
 import constants from './constants';
 
+export const clearBusinessUnit = async () => {
+	const {
+		token,
+		config: existingConfig,
+	} = store.state;
+
+	Livechat.credentials.token = token;
+
+	const { departments } = await Livechat.config({
+		token,
+	});
+
+	await store.setState({ config: { ...existingConfig, departments }, businessUnit: undefined });
+};
+
+export const setBusinessUnit = async (newBusinessUnit) => {
+	const {
+		token,
+		config: existingConfig,
+	} = store.state;
+	if (!token) {
+		throw new Error('Error! no livechat token found. please make sure you initialize widget first before setting business unit');
+	}
+
+	Livechat.credentials.token = token;
+
+	const { departments } = await Livechat.config({
+		token,
+		businessUnit: newBusinessUnit,
+	});
+
+	await store.setState({ config: { ...existingConfig, departments }, businessUnit: newBusinessUnit });
+};
+
 export const loadConfig = async () => {
 	const {
 		token,

@@ -267,6 +267,10 @@ function setBusinessUnit(businessUnits) {
 	callHook('setBusinessUnit', businessUnits);
 }
 
+function clearBusinessUnit() {
+	callHook('clearBusinessUnit');
+}
+
 function setGuestToken(token) {
 	callHook('setGuestToken', token);
 }
@@ -445,6 +449,7 @@ window.RocketChat.livechat = {
 	maximizeWidget,
 	minimizeWidget,
 	setBusinessUnit,
+	clearBusinessUnit,
 
 	// callbacks
 	onChatMaximized(fn) { registerCallback('chat-maximized', fn); },
