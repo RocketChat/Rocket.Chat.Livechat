@@ -78,6 +78,14 @@ export default class Store {
 		this.emit('change', [this._state, prevState, partialState]);
 	}
 
+	unsetSinglePropInStateByName(propName) {
+		const prevState = this._state;
+		delete prevState[propName];
+		this._state = { ...prevState };
+		this.persist();
+		this.emit('change', [this._state, prevState]);
+	}
+
 	setStoredState(storedState) {
 		const prevState = this._state;
 

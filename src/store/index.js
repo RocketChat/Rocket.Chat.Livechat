@@ -35,6 +35,7 @@ export const initialState = () => ({
 	unread: null,
 	incomingCallAlert: null,
 	ongoingCall: null,	// TODO: store call info like url, startTime, timeout, etc here
+	businessUnit: null,
 });
 
 const dontPersist = ['messages', 'typing', 'loading', 'alerts', 'unread', 'noMoreMessages', 'modal', 'incomingCallAlert', 'ongoingCall'];
