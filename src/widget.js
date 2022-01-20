@@ -263,8 +263,8 @@ function setDepartment(department) {
 	callHook('setDepartment', department);
 }
 
-function setBusinessUnit(businessUnits) {
-	callHook('setBusinessUnit', businessUnits);
+function setBusinessUnit(businessUnit) {
+	callHook('setBusinessUnit', businessUnit);
 }
 
 function clearBusinessUnit() {

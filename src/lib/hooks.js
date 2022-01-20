@@ -75,18 +75,13 @@ const api = {
 		}
 
 		const { businessUnit: existingBusinessUnit } = store.state;
-		if (existingBusinessUnit === newBusinessUnit) {
-			return;
-		}
-		await updateBusinessUnit(newBusinessUnit);
+
+		return existingBusinessUnit !== newBusinessUnit && await updateBusinessUnit(newBusinessUnit);
 	},
 
 	async clearBusinessUnit() {
 		const { businessUnit } = store.state;
-		if (!businessUnit) {
-			return;
-		}
-		await updateBusinessUnit();
+		return businessUnit && updateBusinessUnit();
 	},
 
 	clearDepartment() {
