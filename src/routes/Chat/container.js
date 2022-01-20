@@ -1,14 +1,17 @@
+import { sanitize } from 'dompurify';
+import mem from 'mem';
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import { debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
 import I18n from '../../i18n';
 import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
+import { createToken } from '../../lib/random';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
 import { Consumer } from '../../store';
 import Chat from './component';
@@ -112,9 +115,31 @@ export class ChatContainer extends Component {
 	}
 
 	handleSubmit = async (msg) => {
+		const escapeMap = {
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			'\'': '&#x27;',
+			'`': '&#x60;',
+		};
+
+		const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
+
+		const escapeHtml = mem(
+			(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
+		);
+
+		const parse = (plainText) =>
+			[{ plain: plainText }]
+				.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
+				.join('');
+
 		if (msg.trim() === '') {
 			return;
 		}
+		msg = sanitize(msg);
+		msg = parse(msg);
 
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
@@ -401,6 +426,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
+			incomingCallAlert,
+			ongoingCall,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -456,6 +483,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 				nameFieldRegistrationForm={nameFieldRegistrationForm}
 				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
+				incomingCallAlert={incomingCallAlert}
+				ongoingCall={ongoingCall}
 			/>
 		)}
 	</Consumer>

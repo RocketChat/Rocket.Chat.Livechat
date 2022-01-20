@@ -1,3 +1,4 @@
+import parseISO from 'date-fns/parseISO';
 import { Component } from 'preact';
 
 import { Livechat, useSsl } from '../api';
@@ -119,8 +120,6 @@ export const setCookies = (rid, token) => {
 	document.cookie = `rc_room_type=l; path=/; ${ getSecureCookieSettings() }`;
 };
 
-export const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
 export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul', 'livechat-close'];
@@ -135,6 +134,7 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	}
 	return 1;
 });
+
 
 export const normalizeTransferHistoryMessage = (transferData, sender) => {
 	if (!transferData) {
@@ -172,7 +172,6 @@ export const parseOfflineMessage = (fields = {}) => {
 	return Object.assign(fields, { host });
 };
 export const normalizeDOMRect = ({ left, top, right, bottom }) => ({ left, top, right, bottom });
-
 
 export const visibility = (() => {
 	if (typeof document.hidden !== 'undefined') {
@@ -243,4 +242,23 @@ export const isActiveSession = () => {
 	const { openSessionIds: [firstSessionId] = [] } = store.state;
 
 	return sessionId === firstSessionId;
+};
+
+export const isMobileDevice = () => window.innerWidth <= 800 && window.innerHeight >= 630;
+
+export const resolveDate = (dateInput) => {
+	switch (typeof dateInput) {
+		case Date: {
+			return dateInput;
+		}
+		case 'object': {
+			return new Date(dateInput.$date);
+		}
+		case 'string': {
+			return parseISO(dateInput);
+		}
+		default: {
+			return new Date(dateInput);
+		}
+	}
 };
