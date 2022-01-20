@@ -76,7 +76,7 @@ const api = {
 
 		const { businessUnit: existingBusinessUnit } = store.state;
 
-		return existingBusinessUnit !== newBusinessUnit && await updateBusinessUnit(newBusinessUnit);
+		return existingBusinessUnit !== newBusinessUnit && updateBusinessUnit(newBusinessUnit);
 	},
 
 	async clearBusinessUnit() {
