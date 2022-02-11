@@ -1,11 +1,12 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { upsert, createToken, asyncForEach } from '../components/helpers';
+import { upsert, asyncForEach } from '../components/helpers';
 import store from '../store';
 import { normalizeAgent } from './api';
 import { processUnread } from './main';
 import { parentCall } from './parentCall';
+import { createToken } from './random';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;

@@ -1,10 +1,10 @@
 import { Livechat } from '../api';
-import { createToken } from '../components/helpers';
 import { store } from '../store';
 import CustomFields from './customFields';
 import { setWidgetLanguage } from './locale';
-import { loadConfig } from './main';
+import { loadConfig, updateBusinessUnit } from './main';
 import { parentCall } from './parentCall';
+import { createToken } from './random';
 import Triggers from './triggers';
 
 const createOrUpdateGuest = async (guest) => {
@@ -67,6 +67,21 @@ const api = {
 		const department = (dept && dept._id) || '';
 
 		updateIframeGuestData({ department });
+	},
+
+	async setBusinessUnit(newBusinessUnit) {
+		if (!newBusinessUnit || !newBusinessUnit.trim().length) {
+			throw new Error('Error! Invalid business ids');
+		}
+
+		const { businessUnit: existingBusinessUnit } = store.state;
+
+		return existingBusinessUnit !== newBusinessUnit && updateBusinessUnit(newBusinessUnit);
+	},
+
+	async clearBusinessUnit() {
+		const { businessUnit } = store.state;
+		return businessUnit && updateBusinessUnit();
 	},
 
 	clearDepartment() {

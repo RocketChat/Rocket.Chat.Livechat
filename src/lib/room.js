@@ -2,7 +2,7 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../api';
 import { CallStatus, isCallOngoing } from '../components/Calls/CallStatus';
-import { setCookies, upsert, canRenderMessage, createToken } from '../components/helpers';
+import { setCookies, upsert, canRenderMessage } from '../components/helpers';
 import I18n from '../i18n';
 import { store, initialState } from '../store';
 import { normalizeAgent } from './api';
@@ -10,6 +10,7 @@ import Commands from './commands';
 import constants from './constants';
 import { loadConfig, processUnread } from './main';
 import { parentCall } from './parentCall';
+import { createToken } from './random';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
 
@@ -25,7 +26,7 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 
 	if (clearLocalStorageWhenChatEnded) {
 		// exclude UI-affecting flags
-		const { minimized, visible, undocked, expanded, ...initial } = initialState();
+		const { minimized, visible, undocked, expanded, businessUnit, ...initial } = initialState();
 		await store.setState(initial);
 	}
 
