@@ -55,7 +55,7 @@ export const processIncomingCallMessage = async (message) => {
 		});
 	} catch (err) {
 		console.error(err);
-		const alert = { id: createToken(), children: I18n.t('error_getting_call_alert'), error: true, timeout: 5000 };
+		const alert = { id: createToken(), children: I18n.t('Error occurred while receiving a call notification'), error: true, timeout: 5000 };
 		await store.setState({ alerts: (alerts.push(alert), alerts) });
 	}
 };

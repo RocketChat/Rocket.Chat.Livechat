@@ -3,9 +3,11 @@ import { parseISO } from 'date-fns/fp';
 import { h } from 'preact';
 
 import I18n from '../../../i18n';
+import { getDateFnsLocale } from '../../../lib/locale';
 import { createClassName, memo } from '../../helpers';
 import styles from './styles.scss';
 
+const locale = getDateFnsLocale();
 
 export const MessageSeparator = memo(({
 	date,
@@ -25,7 +27,7 @@ export const MessageSeparator = memo(({
 		{(date || unread) && (
 			<span className={createClassName(styles, 'separator__text')}>
 				{
-					(!!date && format(parseISO(date), 'MMM dd, yyyy').toUpperCase())
+					(!!date && format(parseISO(date), I18n.t('MMM dd, yyyy'), { locale }).toUpperCase())
 					|| (unread && I18n.t('unread messages'))
 				}
 			</span>

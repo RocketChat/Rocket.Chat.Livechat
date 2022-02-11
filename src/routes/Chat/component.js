@@ -32,6 +32,14 @@ export default class Chat extends Component {
 		this.filesDropTarget = ref;
 	}
 
+	handleMenuOptionsRef = (ref) => {
+		this.menuOptionsRef = ref;
+	}
+
+	handleInputRef = (ref) => {
+		this.inputRef = ref;
+	}
+
 	handleMessagesContainerRef = (messagesContainer) => {
 		this.messagesContainer = messagesContainer ? messagesContainer.base : null;
 	}
@@ -59,6 +67,7 @@ export default class Chat extends Component {
 
 	handleSendClick = (event) => {
 		event.preventDefault();
+		this.inputRef.el.focus();
 		this.handleSubmit(this.state.text);
 	}
 
@@ -171,12 +180,30 @@ export default class Chat extends Component {
 							sheetSize={64}
 							onSelect={this.handleEmojiSelect}
 							autoFocus={true}
+							i18n={{
+								search: I18n.t('Search'),
+								clear: I18n.t('Clear'),
+								notfound: I18n.t('No Emoji Found'),
+								categories: {
+									search: I18n.t('Search Results'),
+									recent: I18n.t('Frequently Used'),
+									people: I18n.t('People & Body'),
+									nature: I18n.t('Animals & Nature'),
+									foods: I18n.t('Food & Drink'),
+									activity: I18n.t('Activity'),
+									places: I18n.t('Travel & Places'),
+									objects: I18n.t('Objects'),
+									symbols: I18n.t('Symbols'),
+									flags: I18n.t('Flags'),
+								},
+								categorieslabel: I18n.t('Emoji categories'),
+							}}
 						/>}
 					</div>
 				</Screen.Content>
 				<Screen.Footer
 					options={options ? (
-						<FooterOptions>
+						<FooterOptions ref={this.handleMenuOptionsRef}>
 							<Menu.Group>
 								{onChangeDepartment && (
 									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
@@ -185,7 +212,7 @@ export default class Chat extends Component {
 									<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
 								)}
 								{onFinishChat && (
-									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
+									<Menu.Item danger onClick={() => onFinishChat(this.menuOptionsRef.base)} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
 								)}
 							</Menu.Group>
 						</FooterOptions>
@@ -205,9 +232,10 @@ export default class Chat extends Component {
 							value={text}
 							notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
 							handleEmojiClick={this.handleEmojiClick}
+							ref={this.handleInputRef}
 							pre={(
 								<ComposerActions>
-									<ComposerAction className={createClassName(styles, 'emoji-picker-icon')} onClick={this.toggleEmojiPickerState}>
+									<ComposerAction className={createClassName(styles, 'emoji-picker-icon')} onClick={this.toggleEmojiPickerState} text={I18n.t('Choose an emoji')}>
 										<EmojiIcon width={20} height={20} />
 									</ComposerAction>
 								</ComposerActions>
@@ -215,12 +243,12 @@ export default class Chat extends Component {
 							post={(
 								<ComposerActions>
 									{text.length === 0 && uploads && (
-										<ComposerAction onClick={this.handleUploadClick}>
+										<ComposerAction onClick={this.handleUploadClick} text={I18n.t('Upload file')}>
 											<PlusIcon width={20} height={20} />
 										</ComposerAction>
 									)}
 									{text.length > 0 && (
-										<ComposerAction onClick={this.handleSendClick}>
+										<ComposerAction onClick={this.handleSendClick} text={I18n.t('Send message')}>
 											<SendIcon width={20} height={20} />
 										</ComposerAction>
 									)}

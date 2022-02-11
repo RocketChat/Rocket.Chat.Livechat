@@ -172,9 +172,10 @@ export class ChatContainer extends Component {
 		route('/switch-department');
 	}
 
-	onFinishChat = async () => {
+	onFinishChat = async (focusRef) => {
 		const { success } = await ModalManager.confirm({
 			text: I18n.t('Are you sure you want to finish this chat?'),
+			focusRef,
 		});
 
 		if (!success) {

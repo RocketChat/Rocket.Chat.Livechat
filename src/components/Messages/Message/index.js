@@ -4,7 +4,8 @@ import isToday from 'date-fns/isToday';
 import { h } from 'preact';
 
 import I18n from '../../../i18n';
-import { getAttachmentUrl, memo, normalizeTransferHistoryMessage, resolveDate } from '../../helpers';
+import { getDateFnsLocale } from '../../../lib/locale';
+import { getAttachmentUrl, memo, normalizeTransferHistoryMessage, resolveDate, createClassName } from '../../helpers';
 import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
@@ -14,7 +15,7 @@ import { MessageBubble } from '../MessageBubble';
 import { MessageContainer } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
 import { MessageText } from '../MessageText';
-import { MessageTime } from '../MessageTime';
+import { MessageTime, parseDate } from '../MessageTime';
 import { VideoAttachment } from '../VideoAttachment';
 import {
 	MESSAGE_TYPE_ROOM_NAME_CHANGED,
@@ -28,6 +29,7 @@ import {
 	MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
 	MESSAGE_WEBRTC_CALL,
 } from '../constants';
+import styles from './styles.scss';
 
 const renderContent = ({
 	text,
@@ -39,6 +41,8 @@ const renderContent = ({
 	attachmentResolver,
 	mid,
 	rid,
+	username,
+	time,
 }) => [
 	...(attachments || [])
 		.map((attachment) =>
@@ -72,6 +76,12 @@ const renderContent = ({
 		),
 	text && (
 		<MessageBubble inverse={me} quoted={quoted} system={system}>
+			{!system && (
+				<span className={createClassName(styles, 'message--sr-only')}>
+					{me ? `${ I18n.t('I say') } ` : `${ username } ${ I18n.t('says') } `}
+					{`${ parseDate(time) }:`}
+				</span>
+			)}
 			<MessageText text={text} system={system} />
 		</MessageBubble>
 	),
@@ -86,10 +96,11 @@ const renderContent = ({
 
 
 const resolveWebRTCEndCallMessage = ({ webRtcCallEndTs, ts }) => {
+	const locale = getDateFnsLocale();
 	const callEndTime = resolveDate(webRtcCallEndTs);
 	const callStartTime = resolveDate(ts);
-	const callDuration = formatDistance(callEndTime, callStartTime);
-	const time = format(callEndTime, isToday(callEndTime) ? 'HH:mm' : 'dddd HH:mm');
+	const callDuration = formatDistance(callEndTime, callStartTime, { locale });
+	const time = format(callEndTime, isToday(callEndTime) ? 'HH:mm' : 'eeee HH:mm', { locale });
 	return `${ I18n.t('Call ended at %{time}', { time }) } ${ I18n.t(' - Lasted %{callDuration}', { callDuration }) }`;
 };
 
@@ -151,6 +162,8 @@ export const Message = memo(({
 				mid: message._id,
 				rid: message.rid,
 				attachmentResolver,
+				username: message.u.name || message.u.username,
+				time: message.ts,
 			})}
 		</MessageContent>
 		{!compact && !message.t && <MessageTime normal={!me} inverse={me} ts={message.ts} />}

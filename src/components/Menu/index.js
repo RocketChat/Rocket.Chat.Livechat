@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 
+import { addFocusFirstElement, handleTabKey } from '../../lib/keyNavigation';
 import { PopoverTrigger } from '../Popover';
 import { createClassName, normalizeDOMRect } from '../helpers';
 import styles from './styles.scss';
@@ -13,7 +14,7 @@ export const Menu = ({ children, hidden, placement, ...props }) => (
 
 
 export const Group = ({ children, title, ...props }) => (
-	<div className={createClassName(styles, 'menu__group')} {...props}>
+	<div className={createClassName(styles, 'menu__group')} role='menu' {...props}>
 		{title && <div className={createClassName(styles, 'menu__group-title')}>{title}</div>}
 		{children}
 	</div>
@@ -24,6 +25,7 @@ export const Item = ({ children, primary, danger, disabled, icon, ...props }) =>
 	<button
 		className={createClassName(styles, 'menu__item', { primary, danger, disabled })}
 		disabled={disabled}
+		role='menuitem'
 		{...props}
 	>
 		{icon && (
@@ -52,6 +54,17 @@ class PopoverMenuWrapper extends Component {
 		dismiss();
 	}
 
+	handleKeyDown = (event) => {
+		const { key } = event;
+
+		if (key !== 'Tab') {
+			return;
+		}
+
+		handleTabKey(event, this.menuRef.base);
+		event.stopPropagation();
+	}
+
 	componentDidMount() {
 		const { triggerBounds, overlayBounds } = this.props;
 		const menuBounds = normalizeDOMRect(this.menuRef.base.getBoundingClientRect());
@@ -70,6 +83,8 @@ class PopoverMenuWrapper extends Component {
 
 		const placement = `${ menuWidth < rightSpace ? 'right' : 'left' }-${ menuHeight < bottomSpace ? 'bottom' : 'top' }`;
 
+		addFocusFirstElement(this.menuRef.base);
+
 		// eslint-disable-next-line react/no-did-mount-set-state
 		this.setState({
 			position: { left, right, top, bottom },
@@ -77,12 +92,14 @@ class PopoverMenuWrapper extends Component {
 		});
 	}
 
+
 	render = ({ children }) => (
 		<Menu
 			ref={this.handleRef}
 			style={{ position: 'absolute', ...this.state.position }}
 			placement={this.state.placement}
 			onClickCapture={this.handleClick}
+			onkeydown={this.handleKeyDown}
 		>
 			{children}
 		</Menu>
