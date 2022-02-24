@@ -155,6 +155,10 @@ export const normalizeTransferHistoryMessage = (transferData, sender) => {
 		},
 		department: () => {
 			const to = nextDepartment && nextDepartment.name;
+			if (!sender.username) {
+				const from = 'the agent';
+				return I18n.t('%{from} transferred the chat to the department %{to}', { from, to });
+			}
 			return I18n.t('%{from} transferred the chat to the department %{to}', { from, to });
 		},
 		queue: () => {
