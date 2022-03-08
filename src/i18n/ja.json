@@ -77,7 +77,7 @@
     "sound_is_on_98a9ec58": "音量をオンにする",
     "start_chat_8606d464": "チャットを開始",
     "thanks_for_talking_with_us_719cce22": "お問い合わせいただきありがとうございます",
-    "the_agent_transferred_the_chat_to_the_department_t_3cbe495c": "the agent transferred the chat to the department %{to}",
+    "the_agent_transferred_the_chat_to_the_department_t_3cbe495c": "The agent transferred the chat to the department %{to}",
     "the_chat_was_moved_back_to_queue_cefbade6": "The chat was moved back to queue",
     "the_chat_was_transferred_to_another_agent_b375bdac": "The chat was transferred to another agent",
     "the_controller_of_your_personal_data_is_company_na_c82f5567": "あなたの個人データの管理者は[会社名]であり、[会社の住所]に登録事務所があります。チャットを開始するには、個人データが一般データ保護規則（GDPR）に従って処理および送信されることに同意するものとします。",
