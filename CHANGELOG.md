@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.12.1 - 2022-03-08
+[FIX] Making sure the 'hide agent info' hides the agent info even with department change. (#688)
+
 ## 1.12.0 - 2022-01-20
 [NEW] Introduce Widget API method to manage Business Units (#677)
 [IMPROVE] Update FA translations (#653)
