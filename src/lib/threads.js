@@ -1,6 +1,7 @@
 import { Livechat } from '../api';
-import { upsert, createToken } from '../components/helpers';
+import { upsert } from '../components/helpers';
 import { store } from '../store';
+import { createToken } from './random';
 
 const addParentMessage = async (parentMessage) => {
 	const { state } = store;

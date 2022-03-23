@@ -2,8 +2,73 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.7.5 - 2020-10-25
+## 1.12.0 - 2022-01-20
+[NEW] Introduce Widget API method to manage Business Units (#677)
+[IMPROVE] Update FA translations (#653)
 
+## 1.11.2 - 2022-01-10
+[FIX] IME not working properly #674
+
+## 1.11.1 - 2021-12-30
+[FIX] Hide Livechat if Omnichannel is disabled #671
+
+## 1.11.0 - 2021-12-09
+[NEW] Introduce clearLocalStorageWhenChatEnded setting logic (#666)
+[IMPROVE] Change logic to generate token on Live Chat (#667)
+
+## 1.10.0 - 2021-11-22
+[NEW] Audio and Video calling in Livechat using WebRTC (#646)
+[FIX] LoadConfig after registering guest (#640)
+[FIX] Body styles getting overridden (#660)
+
+## 1.9.6 - 2021-10-20
+[FIX] 'Hide agent info' not working on system message (#651)
+[FIX] Issues on Custom Livechat messages (#648)
+
+## 1.9.5 - 2021-09-14
+[IMPROVE] Readme enhancements (#557)
+[IMPROVE] Swedish Translations (#573)
+[FIX] Escaping HTML on paste/drop Text (#471)
+[IMPROVE] Spanish translations (#370)
+[IMPROVE] Russian translations (#644)
+[IMPROVE] Add cookie to identify widget calls (#645)
+
+## 1.9.4 - 2021-08-19
+[FIX] Iframe overlay (#631)
+[IMPROVE] German informal translation (#622) 
+[FIX] Translation error on department (#632)
+[IMPROVE] Open links in another tab on Livechat widget (#610) 
+[IMPROVE] Dutch Translations (#601) 
+
+## 1.9.3 - 2021-04-21
+[FIX] sound notification on/off (#567)
+[FIX] Invalid font size for hiragana and katakana (#559)
+
+## 1.9.2 - 2021-04-13
+bump version
+
+## 1.9.1 - 2021-04-12
+[CHORE] Circle CI to github actions #577
+[CHORE] Remove circle CI #580
+
+## 1.9.0 - 2021-03-22
+[FIX] Add sanitizer to prevent XSS attacks
+[FIX] Wrong Hebrew word הדועה to הודעה #556
+[IMPROVE] add hover effect #566
+
+## 1.8.0 - 2021-02-20
+
+[IMPROVE] Flow of the widget registration form (#425)
+[IMPROVE] System messages style (#554)
+[FEATURE] New trigger messages style (#553)
+[NEW] Display transfer history messages (#328)
+[FIX] Registration form is no longer validating mandatory custom fields. (#550)
+
+## 1.7.6 - 2020-11-07
+[FIX] Livechat window cannot be restored in popout mode (#529)
+[FIX] Visitor's messages are not aligned properly on Mozilla Firefox (#530)
+
+## 1.7.5 - 2020-10-25
 [FIX] Add zh.json missing translations (#478)
 [FIX] Rendering emojis before transform markdown into HTML. (#522)
 [FIX] UIKit ActionsBlock layout for smaller screen devices (#479)

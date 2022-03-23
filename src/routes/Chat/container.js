@@ -3,12 +3,13 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken, debounce, getAvatarUrl, canRenderMessage, throttle, upsert } from '../../components/helpers';
+import { debounce, getAvatarUrl, canRenderMessage, throttle, upsert, parse } from '../../components/helpers';
 import I18n from '../../i18n';
 import { normalizeQueueAlert } from '../../lib/api';
 import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
+import { createToken } from '../../lib/random';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
 import { Consumer } from '../../store';
 import Chat from './component';
@@ -115,6 +116,8 @@ export class ChatContainer extends Component {
 		if (msg.trim() === '') {
 			return;
 		}
+
+		msg = parse(msg);
 
 		await this.grantUser();
 		const { _id: rid } = await this.getRoom();
@@ -238,6 +241,29 @@ export class ChatContainer extends Component {
 		return allowRemoveUserData;
 	}
 
+	registrationRequired = () => {
+		const {
+			registrationFormEnabled,
+			nameFieldRegistrationForm,
+			emailFieldRegistrationForm,
+			departments = [],
+			user,
+		} = this.props;
+
+		if (user && user.token) {
+			return false;
+		}
+
+		if (!registrationFormEnabled) {
+			return false;
+		}
+
+		const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
+		return nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment;
+	}
+
+	onRegisterUser = () => route('/register');
+
 	showOptionsMenu = () =>
 		this.canSwitchDepartment() || this.canFinishChat() || this.canRemoveUserData()
 
@@ -323,6 +349,8 @@ export class ChatContainer extends Component {
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
 			onSoundStop={this.handleSoundStop}
+			registrationRequired={this.registrationRequired()}
+			onRegisterUser={this.onRegisterUser}
 		/>
 	)
 }
@@ -337,6 +365,9 @@ export const ChatConnector = ({ ref, ...props }) => (
 					allowSwitchingDepartments,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
+					registrationForm,
+					nameFieldRegistrationForm,
+					emailFieldRegistrationForm,
 					limitTextLength,
 				} = {},
 				messages: {
@@ -373,6 +404,8 @@ export const ChatConnector = ({ ref, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
+			incomingCallAlert,
+			ongoingCall,
 		}) => (
 			<ChatContainer
 				ref={ref}
@@ -424,7 +457,12 @@ export const ChatConnector = ({ ref, ...props }) => (
 					estimatedWaitTimeSeconds: queueInfo.estimatedWaitTimeSeconds,
 					message: queueInfo.message,
 				} : undefined}
+				registrationFormEnabled={registrationForm}
+				nameFieldRegistrationForm={nameFieldRegistrationForm}
+				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
+				incomingCallAlert={incomingCallAlert}
+				ongoingCall={ongoingCall}
 			/>
 		)}
 	</Consumer>

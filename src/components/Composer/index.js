@@ -1,29 +1,8 @@
-import mem from 'mem';
 import { h, Component } from 'preact';
 
-import { createClassName } from '../helpers';
+import { createClassName, parse } from '../helpers';
 import styles from './styles.scss';
 
-
-const escapeMap = {
-	'&': '&amp;',
-	'<': '&lt;',
-	'>': '&gt;',
-	'"': '&quot;',
-	'\'': '&#x27;',
-	'`': '&#x60;',
-};
-
-const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
-
-const escapeHtml = mem(
-	(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
-);
-
-const parse = (plainText) =>
-	[{ plain: plainText }]
-		.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
-		.join('');
 const findLastTextNode = (node) => {
 	if (node.nodeType === Node.TEXT_NODE) {
 		return node;
@@ -62,6 +41,9 @@ export class Composer extends Component {
 	}
 
 	handleInput = (onChange) => () => {
+		if (this.state.inputLock) {
+			return;
+		}
 		onChange && onChange(this.el.innerText);
 	}
 
@@ -93,7 +75,8 @@ export class Composer extends Component {
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
-		texts.forEach((text) => this.pasteText(text));
+
+		texts.forEach((text) => this.pasteText(parse(text)));
 	}
 
 	handleDrop = (onUpload) => async (event) => {
@@ -116,7 +99,7 @@ export class Composer extends Component {
 			items.filter((item) => item.kind === 'string' && /^text\/plain/.test(item.type))
 				.map((item) => new Promise((resolve) => item.getAsString(resolve))),
 		);
-		texts.forEach((text) => this.pasteText(text));
+		texts.forEach((text) => this.pasteText(parse(text)));
 	}
 
 	handleClick = () => {
@@ -146,6 +129,9 @@ export class Composer extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			inputLock: false,
+		};
 		this.value = this.props.value;
 		this.handleNotifyEmojiSelect = this.handleNotifyEmojiSelect.bind(this);
 
@@ -227,6 +213,11 @@ export class Composer extends Component {
 		return 0;
 	}
 
+	handleInputLock(locked) {
+		this.setState({ inputLock: locked });
+		return 0;
+	}
+
 	render = ({ pre, post, value, placeholder, onChange, onSubmit, onUpload, className, style }) => (
 		<div className={createClassName(styles, 'composer', { }, [className])} style={style}>
 			{pre}
@@ -234,9 +225,6 @@ export class Composer extends Component {
 				ref={this.handleRef}
 				{...(
 					{
-						dangerouslySetInnerHTML: {
-							__html: parse(value),
-						},
 						contentEditable: true,
 						'data-placeholder': placeholder,
 						onInput: this.handleInput(onChange),
@@ -246,11 +234,22 @@ export class Composer extends Component {
 						onClick: this.handleClick,
 					}
 				)}
+
+				onCompositionStart={() => {
+					this.handleInputLock(true);
+				}}
+
+				onCompositionEnd={() => {
+					this.handleInputLock(false);
+					onChange && onChange(this.el.innerText);
+				}}
+
+
 				className={createClassName(styles, 'composer__input')}
-			/>
+			>{value}</div>
 			{post}
 		</div>
-	)
+	);
 }
 
 export { ComposerAction } from './ComposerAction';

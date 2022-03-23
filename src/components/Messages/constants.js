@@ -5,3 +5,7 @@ export const MESSAGE_TYPE_USER_JOINED = 'uj';
 export const MESSAGE_TYPE_USER_LEFT = 'ul';
 export const MESSAGE_TYPE_WELCOME = 'wm';
 export const MESSAGE_TYPE_LIVECHAT_CLOSED = 'livechat-close';
+export const MESSAGE_TYPE_LIVECHAT_STARTED = 'livechat-started';
+export const MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY = 'livechat_transfer_history';
+export const MESSAGE_JITSI_CALL = 'jitsi_call_started';
+export const MESSAGE_WEBRTC_CALL = 'livechat_webrtc_video_call';

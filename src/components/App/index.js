@@ -17,8 +17,9 @@ import GDPRAgreement from '../../routes/GDPRAgreement';
 import LeaveMessage from '../../routes/LeaveMessage';
 import Register from '../../routes/Register';
 import SwitchDepartment from '../../routes/SwitchDepartment';
+import TriggerMessage from '../../routes/TriggerMessage';
 import { Provider as StoreProvider, Consumer as StoreConsumer, store } from '../../store';
-import { visibility, isActiveSession } from '../helpers';
+import { visibility, isActiveSession, setInitCookies } from '../helpers';
 
 function isRTL(s) {
 	const rtlChars = '\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC';
@@ -52,6 +53,8 @@ export class App extends Component {
 				triggered,
 				user,
 			} = this.props;
+
+			setInitCookies();
 
 			if (gdprRequired && !gdprAccepted) {
 				return route('/gdpr');
@@ -109,7 +112,7 @@ export class App extends Component {
 		const dispatchEvent = () => {
 			dispatchRestore();
 			store.off('storageSynced', dispatchEvent);
-		}
+		};
 		if (undocked) {
 			store.on('storageSynced', dispatchEvent);
 		} else {
@@ -205,8 +208,12 @@ export class App extends Component {
 		expanded,
 		alerts,
 		modal,
+		config,
 	}, { initialized, poppedOut }) => {
 		if (!initialized) {
+			return null;
+		}
+		if (!config.enabled) {
 			return null;
 		}
 		const screenProps = {
@@ -234,6 +241,7 @@ export class App extends Component {
 				<LeaveMessage path='/leave-message' {...screenProps} />
 				<Register path='/register' {...screenProps} />
 				<SwitchDepartment path='/switch-department' {...screenProps} />
+				<TriggerMessage path='/trigger-messages' {...screenProps} />
 			</Router>
 		);
 	}

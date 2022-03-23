@@ -1,6 +1,10 @@
 import { Picker } from 'emoji-mart';
 import { h, Component } from 'preact';
 
+import { Button } from '../../components/Button';
+import { CallIframe } from '../../components/Calls/CallIFrame';
+import { CallNotification } from '../../components/Calls/CallNotification';
+import { CallStatus } from '../../components/Calls/CallStatus';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
@@ -114,7 +118,12 @@ export default class Chat extends Component {
 		onRemoveUserData,
 		lastReadMessageId,
 		queueInfo,
+		registrationRequired,
+		onRegisterUser,
 		limitTextLength,
+		incomingCallAlert,
+		ongoingCall,
+		dispatch,
 		...props
 	}, {
 		atBottom = true,
@@ -141,6 +150,8 @@ export default class Chat extends Component {
 				onUpload={onUpload}
 			>
 				<Screen.Content nopadding>
+					{ incomingCallAlert && !!incomingCallAlert.show && <CallNotification { ...incomingCallAlert } dispatch={dispatch} />}
+					{ incomingCallAlert?.show && ongoingCall && ongoingCall.callStatus === CallStatus.IN_PROGRESS_SAME_TAB ? <CallIframe { ...incomingCallAlert } /> : null }
 					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
 						<MessageList
 							ref={this.handleMessagesContainerRef}
@@ -185,36 +196,39 @@ export default class Chat extends Component {
 							textLength={text.length}
 						/> : null}
 				>
-					<Composer onUpload={onUpload}
-						onSubmit={this.handleSubmit}
-						onChange={this.handleChangeText}
-						placeholder={I18n.t('Type your message here')}
-						value={text}
-						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
-						handleEmojiClick={this.handleEmojiClick}
-						pre={(
-							<ComposerActions>
-								<ComposerAction onClick={this.toggleEmojiPickerState}>
-									<EmojiIcon width={20} height={20} />
-								</ComposerAction>
-							</ComposerActions>
-						)}
-						post={(
-							<ComposerActions>
-								{text.length === 0 && uploads && (
-									<ComposerAction onClick={this.handleUploadClick}>
-										<PlusIcon width={20} height={20} />
+					{ registrationRequired
+						? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
+						: <Composer onUpload={onUpload}
+							onSubmit={this.handleSubmit}
+							onChange={this.handleChangeText}
+							placeholder={I18n.t('Type your message here')}
+							value={text}
+							notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
+							handleEmojiClick={this.handleEmojiClick}
+							pre={(
+								<ComposerActions>
+									<ComposerAction className={createClassName(styles, 'emoji-picker-icon')} onClick={this.toggleEmojiPickerState}>
+										<EmojiIcon width={20} height={20} />
 									</ComposerAction>
-								)}
-								{text.length > 0 && (
-									<ComposerAction onClick={this.handleSendClick}>
-										<SendIcon width={20} height={20} />
-									</ComposerAction>
-								)}
-							</ComposerActions>
-						)}
-						limitTextLength={limitTextLength}
-					/>
+								</ComposerActions>
+							)}
+							post={(
+								<ComposerActions>
+									{text.length === 0 && uploads && (
+										<ComposerAction onClick={this.handleUploadClick}>
+											<PlusIcon width={20} height={20} />
+										</ComposerAction>
+									)}
+									{text.length > 0 && (
+										<ComposerAction onClick={this.handleSendClick}>
+											<SendIcon width={20} height={20} />
+										</ComposerAction>
+									)}
+								</ComposerActions>
+							)}
+							limitTextLength={limitTextLength}
+						/>
+					}
 				</Screen.Footer>
 			</FilesDropTarget>
 		</Screen>

@@ -1,0 +1,93 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    name: Build and Lint
+    runs-on: ubuntu-latest
+    outputs:
+      branch-name: ${{ steps.set-branch-name.outputs.branch-name }}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+      - run: yarn install
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+      - run: yarn run build
+      - run: yarn run lint
+      - run: yarn run build-storybook
+      - uses: actions/upload-artifact@v2
+        with:
+          name: storybooks
+          path: |
+            storybook-static
+      - run: |
+          ref='${{ github.ref }}'
+          echo "::set-output name=branch-name::$(echo "${ref:11}")"
+        id: set-branch-name
+
+  publish-to-npm:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-test
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+          registry-url: "https://registry.npmjs.org"
+          scope: "@rocket.chat"
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+      - run: yarn install
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+      - run: yarn run build
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+      - run: yarn release
+
+  publish-to-gh-pages:
+    name: Publish to GitHub Pages
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-test
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - uses: actions/download-artifact@v2
+        with:
+          name: storybooks
+          path: | 
+            storybook-static
+      - uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: "storybook-static"
+          commit_message: "Deploy to Github Pages [skip ci]"
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

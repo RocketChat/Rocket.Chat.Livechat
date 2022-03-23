@@ -5,7 +5,9 @@ import { h } from 'preact';
 
 import { MessageList } from '.';
 import { avatarResolver, loremIpsum, centered } from '../../../helpers.stories';
-
+import {
+	MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
+} from '../constants';
 
 const fittingScreen = (storyFn, ...args) => centered(() => (
 	<div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
@@ -46,6 +48,44 @@ storiesOf('Messages/MessageList', module)
 	.add('normal', () => (
 		<MessageList
 			messages={object('messages', messages)}
+			uid={number('uid', 1)}
+			avatarResolver={avatarResolver}
+			lastReadMessageId={number('lastReadMessageId', 7)}
+			typingUsernames={object('typingUsernames', [])}
+			onScrollTo={action('scrollTo')}
+		/>
+	))
+	.add('with system message', () => (
+		<MessageList
+			messages={object('messages', [...messages, {
+				msg: '',
+				t: MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
+				transferData: {
+					transferredBy: users[0],
+					scope: 'queue',
+				},
+				u: users[0],
+				_id: 'AGiTzCjYyaypDxpDm',
+			}])}
+			uid={number('uid', 1)}
+			avatarResolver={avatarResolver}
+			lastReadMessageId={number('lastReadMessageId', 7)}
+			typingUsernames={object('typingUsernames', [])}
+			onScrollTo={action('scrollTo')}
+		/>
+	))
+	.add('with hidden agent info system message', () => (
+		<MessageList
+			messages={object('messages', [...messages, {
+				msg: '',
+				t: MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
+				transferData: {
+					transferredBy: { ...users[0], username: undefined },
+					scope: 'queue',
+				},
+				u: { ...users[0], username: undefined },
+				_id: 'AGiTzCjYyaypDxpDm',
+			}])}
 			uid={number('uid', 1)}
 			avatarResolver={avatarResolver}
 			lastReadMessageId={number('lastReadMessageId', 7)}

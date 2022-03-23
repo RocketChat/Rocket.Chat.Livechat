@@ -2,12 +2,15 @@ import { parseISO } from 'date-fns/fp';
 import isSameDay from 'date-fns/isSameDay';
 import { h } from 'preact';
 
+import constants from '../../../lib/constants';
+import store from '../../../store';
+import { isCallOngoing } from '../../Calls/CallStatus';
+import { JoinCallButton } from '../../Calls/JoinCallButton';
 import { createClassName, getAttachmentUrl, MemoizedComponent } from '../../helpers';
 import { Message } from '../Message';
 import { MessageSeparator } from '../MessageSeparator';
 import { TypingIndicator } from '../TypingIndicator';
 import styles from './styles.scss';
-
 
 export class MessageList extends MemoizedComponent {
 	static defaultProps = {
@@ -106,11 +109,24 @@ export class MessageList extends MemoizedComponent {
 		typingUsernames,
 	}) => {
 		const items = [];
+		const { incomingCallAlert } = store.state;
+		const { ongoingCall } = store.state;
 
 		for (let i = 0; i < messages.length; ++i) {
 			const previousMessage = messages[i - 1];
 			const message = messages[i];
 			const nextMessage = messages[i + 1];
+
+			if ((message.t === constants.webRTCCallStartedMessageType || message.t === constants.jitsiCallStartedMessageType)
+				&& message.actionLinks && message.actionLinks.length
+				&& ongoingCall && isCallOngoing(ongoingCall.callStatus)
+				&& !message.webRtcCallEndTs) {
+				const { url, callProvider, rid } = incomingCallAlert || {};
+				items.push(
+					<JoinCallButton callStatus={ongoingCall.callStatus} url={url} callProvider={callProvider} rid={rid} />,
+				);
+				continue;
+			}
 
 			const showDateSeparator = !previousMessage || !isSameDay(parseISO(message.ts), parseISO(previousMessage.ts));
 			if (showDateSeparator) {
@@ -130,7 +146,7 @@ export class MessageList extends MemoizedComponent {
 					avatarResolver={avatarResolver}
 					use='li'
 					me={uid && message.u && uid === message.u._id}
-					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id}
+					compact={nextMessage && message.u && nextMessage.u && message.u._id === nextMessage.u._id && !nextMessage.t}
 					conversationFinishedMessage={conversationFinishedMessage}
 					{...message}
 				/>,
