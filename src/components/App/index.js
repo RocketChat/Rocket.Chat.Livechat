@@ -65,6 +65,7 @@ export class App extends Component {
 				return route('/leave-message');
 			}
 
+
 			const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
 
 			const showRegistrationForm = (
@@ -79,14 +80,16 @@ export class App extends Component {
 		}, 100);
 	}
 
-	handleTriggers() {
+	handleTriggers = () => {
 		const { config: { online, enabled } } = this.props;
+		console.log('handleTriggers');
 
 		Triggers.enabled = online && enabled;
 
 		if (online && enabled) {
 			Triggers.init();
 		}
+		Triggers.processTriggers();
 	}
 
 	handleEnableNotifications = () => {
@@ -121,7 +124,6 @@ export class App extends Component {
 	}
 
 	handleOpenWindow = () => {
-		parentCall('openPopout');
 		const { dispatch } = this.props;
 		dispatch({ undocked: true, minimized: false });
 	}

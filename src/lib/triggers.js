@@ -1,6 +1,7 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
+import { App } from '../components/App';
 import { upsert, asyncForEach } from '../components/helpers';
 import store from '../store';
 import { normalizeAgent } from './api';
@@ -10,6 +11,9 @@ import { createToken } from './random';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
+
+const log = console.warn;
+
 const getAgent = (triggerAction) => {
 	if (agentPromise) {
 		return agentPromise;
@@ -86,8 +90,6 @@ class Triggers {
 				}
 			});
 		});
-
-		this.processTriggers();
 	}
 
 	async fire(trigger) {
@@ -98,6 +100,7 @@ class Triggers {
 		const { actions } = trigger;
 
 		await asyncForEach(actions, (action) => {
+			console.log("fire_asyncForeach", action);
 			if (action.name === 'send-message') {
 				trigger.skip = true;
 
@@ -138,6 +141,7 @@ class Triggers {
 	}
 
 	processRequest(request) {
+		console.log('processRequest', request);
 		this._requests.push(request);
 		if (!this._started) {
 			return;
@@ -154,15 +158,16 @@ class Triggers {
 
 			const self = this;
 			trigger.conditions.forEach((condition) => {
+				console.log(condition);
 				switch (condition.name) {
 					case 'page-url':
-						this._requests.forEach((request) => {
-							const hrefRegExp = new RegExp(condition.value, 'g');
-							if (request.location.href.match(hrefRegExp)) {
-								self.fire(trigger);
-							}
-						});
-						this._requests = [];
+						const hrefRegExp = new RegExp(condition.value, 'g');
+						if (hrefRegExp.test(window.location.href)) {
+							console.log(trigger, condition, self._requests);
+							setTimeout(() => {
+								this.fire(trigger);
+							}, 100);
+						}
 						break;
 					case 'time-on-site':
 						if (trigger.timeout) {
@@ -172,9 +177,24 @@ class Triggers {
 							this.fire(trigger);
 						}, parseInt(condition.value, 10) * 1000);
 						break;
+					case 'chat-opened-by-visitor':
+						const openFunc = () => {
+							console.log("checkin'");
+							const { user } = store.state;
+							if (user) {
+								store.off('change', openFunc);
+								setTimeout(async () => {
+									console.log("go!", trigger);
+									await this.fire(trigger);
+								}, 100);
+							}
+						};
+						store.on('change', openFunc);
+						break;
 				}
 			});
 		});
+		this._requests = [];
 	}
 
 	set triggers(newTriggers) {
