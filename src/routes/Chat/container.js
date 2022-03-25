@@ -11,6 +11,7 @@ import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
 import { createToken } from '../../lib/random';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
+import triggers from '../../lib/triggers';
 import { Consumer } from '../../store';
 import Chat from './component';
 
@@ -315,7 +316,7 @@ export class ChatContainer extends Component {
 	}
 
 	async componentDidUpdate(prevProps) {
-		const { messages, visible, minimized, dispatch } = this.props;
+		const { messages, visible, minimized, dispatch, room } = this.props;
 		const { messages: prevMessages, alerts: prevAlerts } = prevProps;
 
 		if (messages && prevMessages && messages.length !== prevMessages.length && visible && !minimized) {
@@ -325,6 +326,8 @@ export class ChatContainer extends Component {
 				const newAlerts = prevAlerts.filter((item) => item.id !== constants.unreadMessagesAlertId);
 				dispatch({ alerts: newAlerts, unread: null, lastReadMessageId: nextLastMessage._id });
 			}
+		} else if (!room && visible && !minimized) {
+			triggers.processChatOpened();
 		}
 
 		await this.checkConnectingAgent();
