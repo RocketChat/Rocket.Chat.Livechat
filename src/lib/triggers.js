@@ -1,7 +1,6 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { App } from '../components/App';
 import { upsert, asyncForEach } from '../components/helpers';
 import store from '../store';
 import { normalizeAgent } from './api';
