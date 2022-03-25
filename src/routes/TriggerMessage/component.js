@@ -20,7 +20,7 @@ export default class TriggerMessage extends Component {
 	componentDidUpdate() {
 		let height = 0;
 
-		[...this.ref.current.base.children].forEach((el) => {
+		this.ref.current.base.children.forEach((el) => {
 			height += el.scrollHeight;
 		});
 
