@@ -12,11 +12,13 @@ module.exports = (env, argv) => [
 			extensions: [
 				'.js',
 				'.jsx',
+				'.ts',
+				'.tsx',
 			],
 			alias: {
-				'react': 'preact/compat',
+				react: 'preact/compat',
 				'react-dom': 'preact/compat',
-			}
+			},
 		},
 		node: {
 			console: false,
@@ -51,6 +53,13 @@ module.exports = (env, argv) => [
 					use: [
 						'babel-loader',
 						'preact-i18nline/webpack-loader',
+					],
+				},
+				{
+					test: /\.tsx?$/,
+					use: 'ts-loader',
+					exclude: [
+						'/node_modules/',
 					],
 				},
 				{
@@ -218,11 +227,13 @@ module.exports = (env, argv) => [
 			extensions: [
 				'.js',
 				'.jsx',
+				'.ts',
+				'.tsx',
 			],
 			alias: {
-				'react': 'preact/compat',
+				react: 'preact/compat',
 				'react-dom': 'preact/compat',
-			}
+			},
 		},
 		node: {
 			console: false,
@@ -258,6 +269,13 @@ module.exports = (env, argv) => [
 								],
 							},
 						},
+					],
+				},
+				{
+					test: /\.tsx?$/,
+					use: 'ts-loader',
+					exclude: [
+						'/node_modules/',
 					],
 				},
 			],

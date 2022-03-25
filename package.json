@@ -78,6 +78,8 @@
 		"stylelint": "^13.6.1",
 		"stylelint-order": "^4.1.0",
 		"svg-loader": "^0.0.2",
+		"ts-loader": "^8.3.0",
+		"typescript": "^4.6.3",
 		"url-loader": "^4.1.0",
 		"webpack": "^4.44.1",
 		"webpack-cli": "^3.3.12",
