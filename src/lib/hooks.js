@@ -30,7 +30,6 @@ const updateIframeGuestData = (data) => {
 const api = {
 	pageVisited(info) {
 		if (info.change === 'url') {
-			console.log("pageVisited", info);
 			Triggers.processRequest(info);
 		}
 

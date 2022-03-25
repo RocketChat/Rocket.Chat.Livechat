@@ -82,7 +82,6 @@ export class App extends Component {
 
 	handleTriggers = () => {
 		const { config: { online, enabled } } = this.props;
-		console.log('handleTriggers');
 
 		Triggers.enabled = online && enabled;
 

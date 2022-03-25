@@ -12,8 +12,6 @@ import { createToken } from './random';
 const agentCacheExpiry = 3600000;
 let agentPromise;
 
-const log = console.warn;
-
 const getAgent = (triggerAction) => {
 	if (agentPromise) {
 		return agentPromise;
@@ -94,13 +92,11 @@ class Triggers {
 
 	async fire(trigger) {
 		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || user) {
+		if (!this._enabled || !user) {
 			return;
 		}
 		const { actions } = trigger;
-
 		await asyncForEach(actions, (action) => {
-			console.log("fire_asyncForeach", action);
 			if (action.name === 'send-message') {
 				trigger.skip = true;
 
@@ -141,7 +137,6 @@ class Triggers {
 	}
 
 	processRequest(request) {
-		console.log('processRequest', request);
 		this._requests.push(request);
 		if (!this._started) {
 			return;
@@ -156,14 +151,11 @@ class Triggers {
 				return;
 			}
 
-			const self = this;
 			trigger.conditions.forEach((condition) => {
-				console.log(condition);
 				switch (condition.name) {
 					case 'page-url':
 						const hrefRegExp = new RegExp(condition.value, 'g');
 						if (hrefRegExp.test(window.location.href)) {
-							console.log(trigger, condition, self._requests);
 							setTimeout(() => {
 								this.fire(trigger);
 							}, 100);
@@ -179,13 +171,11 @@ class Triggers {
 						break;
 					case 'chat-opened-by-visitor':
 						const openFunc = () => {
-							console.log("checkin'");
 							const { user } = store.state;
 							if (user) {
-								store.off('change', openFunc);
-								setTimeout(async () => {
-									console.log("go!", trigger);
-									await this.fire(trigger);
+								if (trigger.runOnce) { store.off('change', openFunc); }
+								setTimeout(() => {
+									this.fire(trigger).then(console.log).catch(console.error).finally(console.debug);
 								}, 100);
 							}
 						};
