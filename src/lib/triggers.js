@@ -10,7 +10,6 @@ import { createToken } from './random';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
-
 const getAgent = (triggerAction) => {
 	if (agentPromise) {
 		return agentPromise;
@@ -155,9 +154,7 @@ class Triggers {
 					case 'page-url':
 						const hrefRegExp = new RegExp(condition.value, 'g');
 						if (hrefRegExp.test(window.location.href)) {
-							setTimeout(() => {
-								this.fire(trigger);
-							}, 100);
+							this.fire(trigger);
 						}
 						break;
 					case 'time-on-site':
@@ -173,9 +170,7 @@ class Triggers {
 							const { user } = store.state;
 							if (user) {
 								if (trigger.runOnce) { store.off('change', openFunc); }
-								setTimeout(() => {
-									this.fire(trigger).then(console.log).catch(console.error).finally(console.debug);
-								}, 100);
+								this.fire(trigger);
 							}
 						};
 						store.on('change', openFunc);
