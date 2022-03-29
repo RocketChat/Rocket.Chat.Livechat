@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.12.2 - 2022-03-29
+[FIX] Revert: LoadConfig after registering guest #696
+
 ## 1.12.1 - 2022-03-08
 [FIX] Making sure the 'hide agent info' hides the agent info even with department change. (#688)
 
