@@ -1,6 +1,6 @@
 {
 	"name": "@rocket.chat/livechat",
-	"version": "1.9.4",
+	"version": "1.12.0",
 	"files": [
 		"/build"
 	],
@@ -90,7 +90,6 @@
 		"css-vars-ponyfill": "^2.3.2",
 		"date-fns": "^2.15.0",
 		"desvg": "^1.0.2",
-		"dompurify": "^2.2.6",
 		"emoji-mart": "^3.0.0",
 		"history": "^5.0.0",
 		"i18next": "^21.3.3",

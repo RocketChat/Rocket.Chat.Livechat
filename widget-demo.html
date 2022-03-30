@@ -51,6 +51,15 @@
 			j.src = 'build/rocketchat-livechat.min.js?_=' + Math.random();
 			h.parentNode.insertBefore(j, h);
 		})(window, document, 'script', 'http://localhost:8080');
+		RocketChat(function() {
+			this.setTheme({
+				color: '#04436A', // widget title background color
+				fontColor: '#FFFFFF', // widget title font color
+				iconColor: '#1d74f5', // widget icon color
+				title: "Welcome to Rocket.Chat", // default widget title when the status of service is online
+				offlineTitle: "Service is offline", // default widget title when the status of service is online
+			});
+		});
 	</script>
 </body>
 

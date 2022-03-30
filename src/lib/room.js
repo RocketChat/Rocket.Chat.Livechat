@@ -25,7 +25,7 @@ export const closeChat = async ({ transcriptRequested } = {}) => {
 
 	if (clearLocalStorageWhenChatEnded) {
 		// exclude UI-affecting flags
-		const { minimized, visible, undocked, expanded, ...initial } = initialState();
+		const { minimized, visible, undocked, expanded, businessUnit, ...initial } = initialState();
 		await store.setState(initial);
 	}
 

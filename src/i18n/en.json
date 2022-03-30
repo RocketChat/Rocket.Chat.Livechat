@@ -36,6 +36,7 @@
         "finish_this_chat": "Finish this chat",
         "forget_remove_my_data": "Forget/Remove my data",
         "from_returned_the_chat_to_the_queue": "{{from}} returned the chat to the queue",
+				"the_agent_transferred_the_chat_to_the_department_to": "The agent transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_the_department_to": "{{from}} transferred the chat to the department {{to}}",
         "from_transferred_the_chat_to_to": "{{from}} transferred the chat to {{to}}",
         "gdpr": "GDPR",

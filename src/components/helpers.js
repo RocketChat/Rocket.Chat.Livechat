@@ -1,5 +1,6 @@
 import parseISO from 'date-fns/parseISO';
 import i18next from 'i18next';
+import mem from 'mem';
 import { Component } from 'preact';
 
 import { Livechat, useSsl } from '../api';
@@ -154,6 +155,11 @@ export const normalizeTransferHistoryMessage = (transferData, sender) => {
 		},
 		department: () => {
 			const to = nextDepartment && nextDepartment.name;
+
+			if (!sender.username) {
+				return i18next.t('the_agent_transferred_the_chat_to_the_department_to', { to });
+			}
+
 			return i18next.t('from_transferred_the_chat_to_the_department_to', { from, to });
 		},
 		queue: () => {
@@ -262,3 +268,23 @@ export const resolveDate = (dateInput) => {
 		}
 	}
 };
+
+const escapeMap = {
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+	'"': '&quot;',
+	'\'': '&#x27;',
+	'`': '&#x60;',
+};
+
+const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
+
+const escapeHtml = mem(
+	(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
+);
+
+export const parse = (plainText) =>
+	[{ plain: plainText }]
+		.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
+		.join('');
