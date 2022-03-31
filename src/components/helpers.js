@@ -1,5 +1,4 @@
 import parseISO from 'date-fns/parseISO';
-import i18next from 'i18next';
 import mem from 'mem';
 import { Component } from 'preact';
 
@@ -137,7 +136,7 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 });
 
 
-export const normalizeTransferHistoryMessage = (transferData, sender) => {
+export const normalizeTransferHistoryMessage = (transferData, sender, t) => {
 	if (!transferData) {
 		return;
 	}
@@ -148,25 +147,25 @@ export const normalizeTransferHistoryMessage = (transferData, sender) => {
 	const transferTypes = {
 		agent: () => {
 			if (!sender.username) {
-				return i18next.t('the_chat_was_transferred_to_another_agent');
+				return t('the_chat_was_transferred_to_another_agent');
 			}
 			const to = transferredTo && (transferredTo.name || transferredTo.username);
-			return i18next.t('from_transferred_the_chat_to_to', { from, to });
+			return t('from_transferred_the_chat_to_to', { from, to });
 		},
 		department: () => {
 			const to = nextDepartment && nextDepartment.name;
 
 			if (!sender.username) {
-				return i18next.t('the_agent_transferred_the_chat_to_the_department_to', { to });
+				return t('the_agent_transferred_the_chat_to_the_department_to', { to });
 			}
 
-			return i18next.t('from_transferred_the_chat_to_the_department_to', { from, to });
+			return t('from_transferred_the_chat_to_the_department_to', { from, to });
 		},
 		queue: () => {
 			if (!sender.username) {
-				return i18next.t('the_chat_was_moved_back_to_queue');
+				return t('the_chat_was_moved_back_to_queue');
 			}
-			return i18next.t('from_returned_the_chat_to_the_queue', { from });
+			return t('from_returned_the_chat_to_the_queue', { from });
 		},
 	};
 

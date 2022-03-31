@@ -196,8 +196,8 @@ export class App extends Component {
 	}
 
 	componentDidUpdate() {
-		const { t } = this.props;
-		document.dir = isRTL(t('yes')) ? 'rtl' : 'ltr';
+		const { i18n } = this.props;
+		document.dir = isRTL(i18n.t('yes')) ? 'rtl' : 'ltr';
 	}
 
 	render = ({

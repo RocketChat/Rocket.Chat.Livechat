@@ -92,8 +92,7 @@ const resolveWebRTCEndCallMessage = ({ webRtcCallEndTs, ts, t }) => {
 	return t('call_end_time', { time, callDuration });
 };
 
-const getSystemMessageText = ({ type, conversationFinishedMessage, transferData, u, webRtcCallEndTs, ts }, t) =>
-	(type === MESSAGE_TYPE_ROOM_NAME_CHANGED && t('room_name_changed'))
+const getSystemMessageText = ({ type, conversationFinishedMessage, transferData, u, webRtcCallEndTs, ts }, t) => (type === MESSAGE_TYPE_ROOM_NAME_CHANGED && t('room_name_changed'))
 	|| (type === MESSAGE_TYPE_USER_ADDED && t('user_added_by'))
 	|| (type === MESSAGE_TYPE_USER_REMOVED && t('user_removed_by'))
 	|| (type === MESSAGE_TYPE_USER_JOINED && t('user_joined'))
@@ -101,7 +100,7 @@ const getSystemMessageText = ({ type, conversationFinishedMessage, transferData,
 	|| (type === MESSAGE_TYPE_WELCOME && t('welcome'))
 	|| (type === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || t('conversation_finished')))
 	|| (type === MESSAGE_TYPE_LIVECHAT_STARTED && t('chat_started'))
-	|| (type === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData, u))
+	|| (type === MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY && normalizeTransferHistoryMessage(transferData, u, t))
 	|| (type === MESSAGE_WEBRTC_CALL && webRtcCallEndTs && ts && resolveWebRTCEndCallMessage({ webRtcCallEndTs, ts, t }));
 
 const getMessageUsernames = (compact, message) => {

@@ -62,7 +62,7 @@ class ChatContainer extends Component {
 	}
 
 	getRoom = async () => {
-		const { alerts, dispatch, room, messages } = this.props;
+		const { alerts, dispatch, room, messages, i18n } = this.props;
 		const previousMessages = getGreetingMessages(messages);
 
 		if (room) {
@@ -80,7 +80,7 @@ class ChatContainer extends Component {
 			return newRoom;
 		} catch (error) {
 			const { data: { error: reason } } = error;
-			const alert = { id: createToken(), children: this.props.t('error_starting_a_new_conversation_reason', { reason }), error: true, timeout: 10000 };
+			const alert = { id: createToken(), children: i18n.t('error_starting_a_new_conversation_reason', { reason }), error: true, timeout: 10000 };
 			await dispatch({ loading: false, alerts: (alerts.push(alert), alerts) });
 
 			runCallbackEventEmitter(reason);
@@ -138,20 +138,20 @@ class ChatContainer extends Component {
 	}
 
 	doFileUpload = async (rid, file) => {
-		const { alerts, dispatch } = this.props;
+		const { alerts, dispatch, i18n } = this.props;
 
 		try {
 			await Livechat.uploadFile({ rid, file });
 		} catch (error) {
 			const { data: { reason, sizeAllowed } } = error;
 
-			let message = this.props.t('fileupload_error');
+			let message = i18n.t('fileupload_error');
 			switch (reason) {
 				case 'error-type-not-allowed':
-					message = this.props.t('media_types_not_accepted');
+					message = i18n.t('media_types_not_accepted');
 					break;
 				case 'error-size-not-allowed':
-					message = this.props.t('file_exceeds_allowed_size_of_size', { size: sizeAllowed });
+					message = i18n.t('file_exceeds_allowed_size_of_size', { size: sizeAllowed });
 			}
 
 			const alert = { id: createToken(), children: message, error: true, timeout: 5000 };
@@ -176,8 +176,10 @@ class ChatContainer extends Component {
 	}
 
 	onFinishChat = async () => {
+		const { i18n } = this.props;
+
 		const { success } = await ModalManager.confirm({
-			text: this.props.t('are_you_sure_you_want_to_finish_this_chat'),
+			text: i18n.t('are_you_sure_you_want_to_finish_this_chat'),
 		});
 
 		if (!success) {
@@ -193,7 +195,7 @@ class ChatContainer extends Component {
 			}
 		} catch (error) {
 			console.error(error);
-			const alert = { id: createToken(), children: this.props.t('error_closing_chat'), error: true, timeout: 0 };
+			const alert = { id: createToken(), children: i18n.t('error_closing_chat'), error: true, timeout: 0 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await dispatch({ loading: false });
@@ -202,8 +204,9 @@ class ChatContainer extends Component {
 	}
 
 	onRemoveUserData = async () => {
+		const { i18n } = this.props;
 		const { success } = await ModalManager.confirm({
-			text: this.props.t('are_you_sure_you_want_to_remove_all_of_your_person'),
+			text: i18n.t('are_you_sure_you_want_to_remove_all_of_your_person'),
 		});
 
 		if (!success) {
@@ -217,7 +220,7 @@ class ChatContainer extends Component {
 			await Livechat.deleteVisitor();
 		} catch (error) {
 			console.error(error);
-			const alert = { id: createToken(), children: this.props.t('error_removing_user_data'), error: true, timeout: 0 };
+			const alert = { id: createToken(), children: i18n.t('error_removing_user_data'), error: true, timeout: 0 };
 			await dispatch({ alerts: (alerts.push(alert), alerts) });
 		} finally {
 			await loadConfig();
@@ -269,13 +272,13 @@ class ChatContainer extends Component {
 
 
 	async handleConnectingAgentAlert(connecting, message) {
-		const { alerts: oldAlerts, dispatch } = this.props;
+		const { alerts: oldAlerts, dispatch, i18n } = this.props;
 		const { connectingAgentAlertId } = constants;
 		const alerts = oldAlerts.filter((item) => item.id !== connectingAgentAlertId);
 		if (connecting) {
 			alerts.push({
 				id: connectingAgentAlertId,
-				children: message || this.props.t('please_wait_for_the_next_available_agent'),
+				children: message || i18n.t('please_wait_for_the_next_available_agent'),
 				warning: true,
 				hideCloseButton: true,
 				timeout: 0,
