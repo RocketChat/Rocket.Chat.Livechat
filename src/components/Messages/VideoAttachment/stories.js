@@ -2,7 +2,7 @@ import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { VideoAttachment } from '.';
+import VideoAttachment from '.';
 import sampleVideo from '../../../../.storybook/assets/sample-video.mp4';
 import { centered } from '../../../helpers.stories';
 

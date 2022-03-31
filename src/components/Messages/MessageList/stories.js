@@ -59,6 +59,7 @@ storiesOf('Messages/MessageList', module)
 		<MessageList
 			messages={object('messages', [...messages, {
 				msg: '',
+				ts: now.toISOString(),
 				t: MESSAGE_TYPE_LIVECHAT_TRANSFER_HISTORY,
 				transferData: {
 					transferredBy: users[0],
@@ -83,6 +84,7 @@ storiesOf('Messages/MessageList', module)
 					transferredBy: { ...users[0], username: undefined },
 					scope: 'queue',
 				},
+				ts: now.toISOString(),
 				u: { ...users[0], username: undefined },
 				_id: 'AGiTzCjYyaypDxpDm',
 			}])}

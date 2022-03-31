@@ -2,7 +2,7 @@ import { withKnobs, date } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { MessageTime } from '.';
+import MessageTime from '.';
 import { centered } from '../../../helpers.stories';
 
 
