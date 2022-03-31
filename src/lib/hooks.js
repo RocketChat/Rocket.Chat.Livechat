@@ -3,7 +3,6 @@ import i18next from 'i18next';
 import { Livechat } from '../api';
 import { store } from '../store';
 import CustomFields from './customFields';
-import { setWidgetLanguage } from './locale';
 import { loadConfig, updateBusinessUnit } from './main';
 import { parentCall } from './parentCall';
 import { createToken } from './random';
