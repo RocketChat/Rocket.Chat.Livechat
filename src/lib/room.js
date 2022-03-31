@@ -163,6 +163,11 @@ Livechat.onTyping((username, isTyping) => {
 	}
 });
 
+const scrubMessage = (message) => {
+	message.msg = message.msg.replace(/(<([^>]+)>)/ig, '');
+	return message;
+};
+
 Livechat.onMessage(async (message) => {
 	if (message.ts instanceof Date) {
 		message.ts = message.ts.toISOString();
@@ -174,6 +179,8 @@ Livechat.onMessage(async (message) => {
 	}
 
 	message = transformAgentInformationOnMessage(message);
+
+	message = scrubMessage(message);
 
 	await store.setState({
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
