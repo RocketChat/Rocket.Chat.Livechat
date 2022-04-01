@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../styles/colors';
 @import '../../styles/helpers';
 @import '../../styles/variables';
@@ -18,7 +19,7 @@ $header-action-active-displacement: 2px;
 
 	width: 100%;
 	height: $header-height;
-	padding: 0 $header-padding / 2;
+	padding: 0 math.div($header-padding, 2);
 
 	color: var(--font-color, $header-color);
 	background-color: var(--color, $header-background-color);
@@ -31,7 +32,7 @@ $header-action-active-displacement: 2px;
 	&__item {
 		flex: 0 0 auto;
 
-		margin: 0 $header-padding / 2;
+		margin: 0 math.div($header-padding, 2);
 	}
 
 	&__picture {

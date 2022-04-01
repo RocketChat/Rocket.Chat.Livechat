@@ -1,10 +1,11 @@
+@use 'sass:math';
 @import '../../styles/variables';
 @import '../../styles/colors';
 
 $form-input-border-width: $default-border;
 $form-input-border-radius: $default-border-radius;
 $form-input-padding: (0.75 * $default-gap - $default-border);
-$form-input-small-padding: (0.25 * $default-gap - $default-border / 2) (0.75 * $default-gap - $default-border);
+$form-input-small-padding: (0.25 * $default-gap - math.div($default-border, 2)) (0.75 * $default-gap - $default-border);
 $form-input-color: $color-text-dark;
 $form-input-placeholder-color: $color-text-light;
 $form-input-background-color: $bg-color-white;

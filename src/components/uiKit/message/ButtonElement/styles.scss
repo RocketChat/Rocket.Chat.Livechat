@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../../../styles/colors';
 @import '../../../../styles/helpers';
 @import '../../../../styles/variables';
@@ -17,7 +18,7 @@
 		color $default-time-animation,
 		background-color $default-time-animation,
 		border-color $default-time-animation,
-		transform $default-time-animation / 2;
+		transform math.div($default-time-animation, 2);
 	white-space: nowrap;
 	text-decoration: none;
 
@@ -58,11 +59,11 @@
 		content: "";
 
 		transition:
-			opacity $default-time-animation / 2,
-			border-width $default-time-animation / 2,
-			width $default-time-animation / 2,
-			height $default-time-animation / 2,
-			visibility $default-time-animation / 2;
+			opacity math.div($default-time-animation, 2),
+			border-width math.div($default-time-animation, 2),
+			width math.div($default-time-animation, 2),
+			height math.div($default-time-animation, 2),
+			visibility math.div($default-time-animation, 2);
 		animation: button-loading-rotation 1s linear infinite;
 
 		opacity: 0;

@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../styles/colors';
 @import '../../styles/variables';
 
@@ -11,7 +12,7 @@
 	transition:
 		opacity $default-time-animation,
 		visibility $default-time-animation,
-		transform $default-time-animation / 2;
+		transform math.div($default-time-animation, 2);
 
 	border-radius: 4px;
 	background: $bg-color-white;

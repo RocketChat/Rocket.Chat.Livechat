@@ -1,7 +1,8 @@
+@use 'sass:math';
 @import '../../../styles/variables';
 
 $message-container-margin: 0 0 $default-padding 0;
-$message-container-compact-margin: 0 0 ($default-padding / 4) 0;
+$message-container-compact-margin: 0 0 math.div($default-padding, 4) 0;
 
 .message-container {
 	display: flex;
