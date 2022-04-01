@@ -1,4 +1,5 @@
 @use 'sass:math';
+
 @import '../../../styles/variables';
 
 $message-content-gap: math.div($default-gap, 2);

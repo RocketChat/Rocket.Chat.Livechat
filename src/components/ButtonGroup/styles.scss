@@ -1,4 +1,5 @@
 @use 'sass:math';
+
 @import '../../styles/variables';
 
 $button-group-margin: math.div($default-gap, 4);
