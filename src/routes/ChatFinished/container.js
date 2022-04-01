@@ -1,12 +1,12 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+import { withTranslation } from 'react-i18next';
 
-import I18n from '../../i18n';
 import { Consumer } from '../../store';
 import ChatFinished from './component';
 
 
-export class ChatFinishedContainer extends Component {
+class ChatFinishedContainer extends Component {
 	handleRedirect = () => {
 		route('/');
 	}
@@ -17,7 +17,7 @@ export class ChatFinishedContainer extends Component {
 }
 
 
-export const ChatFinishedConnector = ({ ref, ...props }) => (
+const ChatFinishedConnector = ({ ref, t, ...props }) => (
 	<Consumer>
 		{({
 			config: {
@@ -45,7 +45,7 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 					fontColor: customFontColor,
 					iconColor: customIconColor,
 				}}
-				title={I18n.t('Chat Finished')}
+				title={t('chat_finished')}
 				greeting={greeting}
 				message={message}
 			/>
@@ -54,4 +54,4 @@ export const ChatFinishedConnector = ({ ref, ...props }) => (
 );
 
 
-export default ChatFinishedConnector;
+export default withTranslation()(ChatFinishedConnector);

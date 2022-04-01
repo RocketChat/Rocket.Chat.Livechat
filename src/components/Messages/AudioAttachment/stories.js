@@ -2,7 +2,7 @@ import { withKnobs, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
 
-import { AudioAttachment } from '.';
+import AudioAttachment from '.';
 import sampleAudio from '../../../../.storybook/assets/sample-audio.mp3';
 import { centered } from '../../../helpers.stories';
 

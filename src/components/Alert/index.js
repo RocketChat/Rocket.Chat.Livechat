@@ -1,12 +1,12 @@
 import { h, Component } from 'preact';
+import { withTranslation } from 'react-i18next';
 
-import I18n from '../../i18n';
 import CloseIcon from '../../icons/close.svg';
 import { createClassName } from '../helpers';
 import styles from './styles.scss';
 
 
-export class Alert extends Component {
+class Alert extends Component {
 	static defaultProps = {
 		timeout: 3000,
 		hideCloseButton: false,
@@ -28,7 +28,7 @@ export class Alert extends Component {
 		clearTimeout(this.dismissTimeout);
 	}
 
-	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children }) => (
+	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children, t }) => (
 		<div
 			role='alert'
 			className={createClassName(styles, 'alert', { success, warning, error }, [className])}
@@ -44,7 +44,7 @@ export class Alert extends Component {
 				<button
 					onClick={this.handleDismiss}
 					className={createClassName(styles, 'alert__close')}
-					aria-label={I18n.t('Dismiss this alert')}
+					aria-label={t('dismiss_this_alert')}
 				>
 					<CloseIcon width={20} height={20} />
 				</button>
@@ -52,3 +52,5 @@ export class Alert extends Component {
 		</div>
 	)
 }
+
+export default withTranslation()(Alert);

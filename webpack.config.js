@@ -52,7 +52,6 @@ module.exports = (env, argv) => [
 					type: 'javascript/auto',
 					use: [
 						'babel-loader',
-						'preact-i18nline/webpack-loader',
 					],
 				},
 				{

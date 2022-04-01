@@ -8,7 +8,7 @@ import { avatarResolver } from '../../helpers.stories';
 import Arrow from '../../icons/arrowDown.svg';
 import Bell from '../../icons/bell.svg';
 import NewWindow from '../../icons/newWindow.svg';
-import { Alert } from '../Alert';
+import Alert from '../Alert';
 import { Avatar } from '../Avatar';
 
 

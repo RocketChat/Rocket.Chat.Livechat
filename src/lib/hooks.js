@@ -1,7 +1,8 @@
+import i18next from 'i18next';
+
 import { Livechat } from '../api';
 import { store } from '../store';
 import CustomFields from './customFields';
-import { setWidgetLanguage } from './locale';
 import { loadConfig, updateBusinessUnit } from './main';
 import { parentCall } from './parentCall';
 import { createToken } from './random';
@@ -10,7 +11,6 @@ import Triggers from './triggers';
 const createOrUpdateGuest = async (guest) => {
 	const { token } = guest;
 	token && await store.setState({ token });
-	token && await loadConfig();
 	const user = await Livechat.grantVisitor({ visitor: { ...guest } });
 	store.setState({ user });
 };
@@ -143,7 +143,7 @@ const api = {
 	async setLanguage(language) {
 		const { iframe } = store.state;
 		await store.setState({ iframe: { ...iframe, language } });
-		setWidgetLanguage();
+		i18next.changeLanguage(language);
 	},
 
 	showWidget() {
