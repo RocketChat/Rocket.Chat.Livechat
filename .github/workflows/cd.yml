@@ -66,6 +66,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
       - run: yarn release
+        env:
+          GH_RELEASE_GITHUB_API_TOKEN: ${{ secrets.GH_TOKEN }}
 
   publish-to-gh-pages:
     name: Publish to GitHub Pages
