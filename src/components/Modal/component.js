@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
+import { withTranslation } from 'react-i18next';
 
-import I18n from '../../i18n';
 import { Button } from '../Button';
 import { ButtonGroup } from '../ButtonGroup';
 import { createClassName } from '../helpers';
@@ -68,32 +68,30 @@ export const ModalMessage = ({ children }) => (
 );
 
 
-export const ConfirmationModal = ({
+export const ConfirmationModal = withTranslation()(({
 	text,
-	confirmButtonText = I18n.t('Yes'),
-	cancelButtonText = I18n.t('No'),
+	confirmButtonText,
+	cancelButtonText,
 	onConfirm,
 	onCancel,
+	t,
 	...props
-}) => (
+}) => <Modal open animated dismissByOverlay={false} {...props}>
+	<Modal.Message>{text}</Modal.Message>
+	<ButtonGroup>
+		<Button outline secondary onClick={onCancel}>{cancelButtonText || t('no')}</Button>
+		<Button danger onClick={onConfirm}>{confirmButtonText || t('yes')}</Button>
+	</ButtonGroup>
+</Modal>);
+
+export const AlertModal = withTranslation()(({ text, buttonText, onConfirm, t, ...props }) => (
 	<Modal open animated dismissByOverlay={false} {...props}>
 		<Modal.Message>{text}</Modal.Message>
 		<ButtonGroup>
-			<Button outline secondary onClick={onCancel}>{cancelButtonText}</Button>
-			<Button danger onClick={onConfirm}>{confirmButtonText}</Button>
+			<Button secondary onClick={onConfirm}>{buttonText || t('ok')}</Button>
 		</ButtonGroup>
 	</Modal>
-);
-
-
-export const AlertModal = ({ text, buttonText = I18n.t('OK'), onConfirm, ...props }) => (
-	<Modal open animated dismissByOverlay={false} {...props}>
-		<Modal.Message>{text}</Modal.Message>
-		<ButtonGroup>
-			<Button secondary onClick={onConfirm}>{buttonText}</Button>
-		</ButtonGroup>
-	</Modal>
-);
+));
 
 
 Modal.Message = ModalMessage;

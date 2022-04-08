@@ -1,7 +1,7 @@
 import { h } from 'preact';
+import { withTranslation } from 'react-i18next';
 
 import { Livechat } from '../../api';
-import I18n from '../../i18n';
 import VideoIcon from '../../icons/video.svg';
 import constants from '../../lib/constants';
 import store from '../../store';
@@ -11,7 +11,7 @@ import { isCallOngoing } from './CallStatus';
 import styles from './styles.scss';
 
 
-export const JoinCallButton = (props) => {
+export const JoinCallButton = ({ t, ...props }) => {
 	const { token, room } = store.state;
 
 	const clickJoinCall = () => {
@@ -36,11 +36,11 @@ export const JoinCallButton = (props) => {
 							<div className={createClassName(styles, 'joinCall__content-videoIcon')} >
 								<VideoIcon width={20} height={20} />
 							</div>
-							{ I18n.t('Join my room to start the video call') }
+							{ t('join_my_room_to_start_the_video_call') }
 						</div>
 						<Button onClick={clickJoinCall} className={createClassName(styles, 'joinCall__content-action')}>
 							<VideoIcon width={20} height={20} />
-							{I18n.t('Join Call')}
+							{t('join_call')}
 						</Button>
 					</div>
 				)
@@ -48,3 +48,5 @@ export const JoinCallButton = (props) => {
 		</div>
 	);
 };
+
+export default withTranslation()(JoinCallButton);

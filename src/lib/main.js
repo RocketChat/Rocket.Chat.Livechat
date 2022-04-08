@@ -1,9 +1,7 @@
-import format from 'date-fns/format';
-import { parseISO } from 'date-fns/fp';
+import i18next from 'i18next';
 
 import { Livechat } from '../api';
 import { canRenderMessage } from '../components/helpers';
-import I18n from '../i18n';
 import store from '../store';
 import constants from './constants';
 
@@ -77,6 +75,7 @@ export const loadConfig = async () => {
 
 export const processUnread = async () => {
 	const { minimized, visible, messages } = store.state;
+
 	if (minimized || !visible) {
 		const { alerts, lastReadMessageId } = store.state;
 		const renderedMessages = messages.filter((message) => canRenderMessage(message));
@@ -85,12 +84,12 @@ export const processUnread = async () => {
 
 		if (lastReadMessageIndex !== -1) {
 			const lastReadMessage = renderedMessages[lastReadMessageIndex];
-			const alertMessage = I18n.t({
-				one: 'One new message since %{since}',
-				other: '%{count} new messages since %{since}',
-			}, {
+			const alertMessage = i18next.t('count_new_messages_since_since', {
 				count: unreadMessages.length,
-				since: format(parseISO(lastReadMessage.ts), 'HH:mm MMM dd'),
+				val: new Date(lastReadMessage.ts),
+				formatParams: {
+					val: { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' },
+				},
 			});
 			const alert = { id: constants.unreadMessagesAlertId, children: alertMessage, success: true, timeout: 0 };
 			const newAlerts = alerts.filter((item) => item.id !== constants.unreadMessagesAlertId);

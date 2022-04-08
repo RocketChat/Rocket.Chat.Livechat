@@ -16,7 +16,7 @@ module.exports = function (props) {
 		var dest = ref.current;
 
 		while (source.firstChild) {
-			dest.appendChild(source.firstChild);
+			dest && dest.appendChild(source.firstChild);
 		}
 	}, []);
 
