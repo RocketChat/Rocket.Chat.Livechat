@@ -95,7 +95,7 @@
 		"emoji-mart": "^3.0.0",
 		"history": "^5.0.0",
 		"i18next": "^21.3.3",
-		"markdown-it": "^11.0.0",
+		"markdown-it": "^12.3.2",
 		"mem": "^6.1.0",
 		"mitt": "^2.1.0",
 		"preact": "^10.4.6",
