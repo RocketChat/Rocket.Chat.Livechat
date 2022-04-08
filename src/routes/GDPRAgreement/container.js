@@ -1,12 +1,12 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+import { withTranslation } from 'react-i18next';
 
-import I18n from '../../i18n';
 import { Consumer } from '../../store';
 import GDPRAgreement from './component';
 
 
-export class GDPRContainer extends Component {
+class GDPRContainer extends Component {
 	handleAgree = async () => {
 		const { dispatch } = this.props;
 		await dispatch({ gdpr: { accepted: true } });
@@ -18,7 +18,7 @@ export class GDPRContainer extends Component {
 	)
 }
 
-export const GDPRConnector = ({ ref, ...props }) => (
+const GDPRConnector = ({ ref, t, ...props }) => (
 	<Consumer>
 		{({
 			config: {
@@ -46,7 +46,7 @@ export const GDPRConnector = ({ ref, ...props }) => (
 					fontColor: customFontColor,
 					iconColor: customIconColor,
 				}}
-				title={I18n.t('GDPR')}
+				title={t('gdpr')}
 				dispatch={dispatch}
 				consentText={consentText}
 			/>
@@ -55,4 +55,4 @@ export const GDPRConnector = ({ ref, ...props }) => (
 );
 
 
-export default GDPRConnector;
+export default withTranslation()(GDPRConnector);

@@ -1,3 +1,4 @@
 /build/*
-/src/i18n/index.js
 !/.storybook
+
+src/i18next.js

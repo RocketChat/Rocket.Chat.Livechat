@@ -1,11 +1,10 @@
-import I18n from '../i18n';
 import store from '../store';
 
 /**
  * To normalize Language String and return language code
  * @param {String} languageString
  */
-const normalizeLanguageString = (languageString) => {
+export const normalizeLanguageString = (languageString) => {
 	let [languageCode, countryCode] = languageString.split ? languageString.split(/[-_]/) : [];
 	if (!languageCode || languageCode.length !== 2) {
 		return 'en';
@@ -18,7 +17,7 @@ const normalizeLanguageString = (languageString) => {
 		countryCode = countryCode.toUpperCase();
 	}
 
-	return countryCode ? `${ languageCode }_${ countryCode }` : languageCode;
+	return countryCode ? `${ languageCode }-${ countryCode }` : languageCode;
 };
 
 /**
@@ -33,11 +32,6 @@ export const configLanguage = () => {
 	const { config: { settings: { language } = {} } = {}, iframe: { language: iframeLanguage } = {} } = store.state;
 	return iframeLanguage || language;
 };
-
-/**
- * This will update langauge of widget
- */
-export const setWidgetLanguage = () => I18n.changeLocale(normalizeLanguageString(configLanguage() || browserLanguage()));
 
 export const getDateFnsLocale = () => {
 	const supportedLocales = [

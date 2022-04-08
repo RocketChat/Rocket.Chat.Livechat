@@ -1,9 +1,9 @@
+import i18next from 'i18next';
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
 import { CallStatus, isCallOngoing } from '../components/Calls/CallStatus';
 import { setCookies, upsert, canRenderMessage } from '../components/helpers';
-import I18n from '../i18n';
 import { store, initialState } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
@@ -13,7 +13,6 @@ import { parentCall } from './parentCall';
 import { createToken } from './random';
 import { normalizeMessage, normalizeMessages } from './threads';
 import { handleTranscript } from './transcript';
-
 
 const commands = new Commands();
 
@@ -56,7 +55,7 @@ export const processIncomingCallMessage = async (message) => {
 		});
 	} catch (err) {
 		console.error(err);
-		const alert = { id: createToken(), children: I18n.t('error_getting_call_alert'), error: true, timeout: 5000 };
+		const alert = { id: createToken(), children: i18next.t('error_getting_call_alert'), error: true, timeout: 5000 };
 		await store.setState({ alerts: (alerts.push(alert), alerts) });
 	}
 };

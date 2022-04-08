@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import { h } from 'preact';
+import '../../i18next';
 
 import { Footer, FooterContent, FooterOptions, PoweredBy } from '.';
 import ChangeIcon from '../../icons/change.svg';
