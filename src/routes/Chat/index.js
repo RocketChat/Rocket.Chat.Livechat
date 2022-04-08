@@ -1,3 +1,3 @@
 export { default as Chat } from './component';
-export { ChatContainer, ChatConnector } from './container';
-export { default } from './container';
+export { default as ChatContainer } from './container';
+export { default as ChatConnector } from './connector';

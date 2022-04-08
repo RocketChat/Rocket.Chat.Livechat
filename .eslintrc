@@ -47,13 +47,23 @@
 		"react/require-render-return": "error",
 		"react/self-closing-comp": "error",
 		"react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    	"react-hooks/exhaustive-deps": "warn",
+		"no-sequences": "off"
 	},
 	"settings": {
-    "react": {
-			"pragma": "h",
-			"pragmaFrag": "Fragment",
-			"version": "detect"
-    }
+		"import/resolver": {
+			"node": {
+			  "extensions": [
+				".js",
+				".ts",
+				".tsx"
+			  ]
+			}
+		  },
+		"react": {
+				"pragma": "h",
+				"pragmaFrag": "Fragment",
+				"version": "detect"
+		}
 	}
 }

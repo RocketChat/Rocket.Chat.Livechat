@@ -1,6 +1,6 @@
 import { formatDistance } from 'date-fns';
+import i18next from 'i18next';
 
-import I18n from '../i18n';
 import { getDateFnsLocale } from './locale';
 
 export const normalizeAgent = (agentData) => agentData && { name: agentData.name, username: agentData.username, status: agentData.status };
@@ -16,7 +16,7 @@ export const normalizeQueueAlert = (queueInfo) => {
 	return spot > 0
 	&& (
 		estimatedWaitTime
-			? I18n.t('Your spot is #%{spot} (Estimated wait time: %{estimatedWaitTime})', { spot, estimatedWaitTime })
-			: I18n.t('Your spot is #%{spot}', { spot })
+			? i18next.t('your_spot_is_spot_estimated_wait_time_estimatedwai', { spot, estimatedWaitTime })
+			: i18next.t('your_spot_is_spot', { spot })
 	);
 };

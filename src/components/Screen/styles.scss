@@ -1,7 +1,9 @@
+@use 'sass:math';
+
 @import '../../styles/colors';
 
 $screen-padding: 16px;
-$screen-box-shadow: 0 ($screen-padding / 2 - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
+$screen-box-shadow: 0 (math.div($screen-padding, 2) - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
 $max-lines: 12;
 
 .screen {

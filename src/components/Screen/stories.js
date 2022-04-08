@@ -1,11 +1,11 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, color, object, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+import i18next from 'i18next';
 import { h } from 'preact';
 
 import { Screen } from '.';
 import { screenCentered, gazzoAvatar } from '../../helpers.stories';
-import I18n from '../../i18n';
 import { FooterOptions } from '../Footer';
 import Menu from '../Menu';
 
@@ -330,9 +330,9 @@ storiesOf('Components/Screen/Footer', module)
 				options={
 					<FooterOptions>
 						<Menu.Group>
-							<Menu.Item onClick={action('changeDepartment')}>{I18n.t('Change department')}</Menu.Item>
-							<Menu.Item onClick={action('removeUserData')}>{I18n.t('Forget/Remove my data')}</Menu.Item>
-							<Menu.Item danger onClick={action('finishChat')}>{I18n.t('Finish this chat')}</Menu.Item>
+							<Menu.Item onClick={action('changeDepartment')}>{i18next.t('change_department')}</Menu.Item>
+							<Menu.Item onClick={action('removeUserData')}>{i18next.t('forget_remove_my_data')}</Menu.Item>
+							<Menu.Item danger onClick={action('finishChat')}>{i18next.t('finish_this_chat')}</Menu.Item>
 						</Menu.Group>
 					</FooterOptions>
 				}

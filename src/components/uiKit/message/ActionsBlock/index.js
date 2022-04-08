@@ -1,14 +1,14 @@
 import { BLOCK_CONTEXT } from '@rocket.chat/ui-kit';
 import { h } from 'preact';
-import { memo, useState, useMemo, useCallback } from 'preact/compat';
+import { useState, useMemo, useCallback } from 'preact/compat';
+import { withTranslation } from 'react-i18next';
 
-import I18n from '../../../../i18n';
 import { Button } from '../../../Button';
 import { createClassName } from '../../../helpers';
 import Block from '../Block';
 import styles from './styles.scss';
 
-const ActionsBlock = ({ appId, blockId, elements, parser }) => {
+const ActionsBlock = ({ appId, blockId, elements, parser, t }) => {
 	const [collapsed, setCollapsed] = useState(true);
 	const renderableElements = useMemo(() => (collapsed ? elements.slice(0, 5) : elements), [collapsed, elements]);
 	const hiddenElementsCount = elements.length - renderableElements.length;
@@ -31,10 +31,10 @@ const ActionsBlock = ({ appId, blockId, elements, parser }) => {
 				</div>;
 			})}
 			{isMoreButtonVisible && <Button outline secondary small onClick={handleMoreButtonClick}>
-				{I18n.t('+ %{hiddenElementsCount} more', { hiddenElementsCount })}
+				{t('hiddenelementscount_more', { hiddenElementsCount })}
 			</Button>}
 		</div>
 	</Block>;
 };
 
-export default memo(ActionsBlock);
+export default withTranslation()(ActionsBlock);
