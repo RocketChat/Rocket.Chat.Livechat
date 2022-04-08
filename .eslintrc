@@ -51,10 +51,19 @@
 		"no-sequences": "off"
 	},
 	"settings": {
-    "react": {
-			"pragma": "h",
-			"pragmaFrag": "Fragment",
-			"version": "detect"
-    }
+		"import/resolver": {
+			"node": {
+			  "extensions": [
+				".js",
+				".ts",
+				".tsx"
+			  ]
+			}
+		  },
+		"react": {
+				"pragma": "h",
+				"pragmaFrag": "Fragment",
+				"version": "detect"
+		}
 	}
 }

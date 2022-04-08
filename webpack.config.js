@@ -12,6 +12,8 @@ module.exports = (env, argv) => [
 			extensions: [
 				'.js',
 				'.jsx',
+				'.ts',
+				'.tsx',
 			],
 			alias: {
 				react: 'preact/compat',
@@ -50,6 +52,13 @@ module.exports = (env, argv) => [
 					type: 'javascript/auto',
 					use: [
 						'babel-loader',
+					],
+				},
+				{
+					test: /\.tsx?$/,
+					use: 'ts-loader',
+					exclude: [
+						'/node_modules/',
 					],
 				},
 				{
@@ -217,6 +226,8 @@ module.exports = (env, argv) => [
 			extensions: [
 				'.js',
 				'.jsx',
+				'.ts',
+				'.tsx',
 			],
 			alias: {
 				react: 'preact/compat',
@@ -257,6 +268,13 @@ module.exports = (env, argv) => [
 								],
 							},
 						},
+					],
+				},
+				{
+					test: /\.tsx?$/,
+					use: 'ts-loader',
+					exclude: [
+						'/node_modules/',
 					],
 				},
 			],
