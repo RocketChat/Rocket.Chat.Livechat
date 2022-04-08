@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.13.0 - 2022-04-08
+Chore: Update cd.yml (#704)
+Chore: Replace a / b with math.div(a, b) on SCSS files (#702)
+[IMPROVE] Centralized e-mail validation under a library function #693
+[FIX] Fixes broken triggers. #695
+[IMPROVE] Add TypeScript (#694)
+[IMPROVE] Replace i18n package (#657)
+[FIX] Prevent html rendering on messages (#701)
+
 ## 1.12.2 - 2022-03-29
 [FIX] Revert: LoadConfig after registering guest #696
 
