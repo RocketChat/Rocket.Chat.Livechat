@@ -3,7 +3,7 @@ import { route } from 'preact-router';
 
 import { Livechat } from '../api';
 import { CallStatus, isCallOngoing } from '../components/Calls/CallStatus';
-import { setCookies, upsert, canRenderMessage } from '../components/helpers';
+import { setCookies, upsert, canRenderMessage, parse } from '../components/helpers';
 import { store, initialState } from '../store';
 import { normalizeAgent } from './api';
 import Commands from './commands';
@@ -163,11 +163,6 @@ Livechat.onTyping((username, isTyping) => {
 	}
 });
 
-const scrubMessage = (message) => {
-	message.msg = message.msg.replace(/(<([^>]+)>)/ig, '');
-	return message;
-};
-
 Livechat.onMessage(async (message) => {
 	if (message.ts instanceof Date) {
 		message.ts = message.ts.toISOString();
@@ -180,7 +175,7 @@ Livechat.onMessage(async (message) => {
 
 	message = transformAgentInformationOnMessage(message);
 
-	message = scrubMessage(message);
+	message.msg = parse(message.msg);
 
 	await store.setState({
 		messages: upsert(store.state.messages, message, ({ _id }) => _id === message._id, ({ ts }) => ts),
