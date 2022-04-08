@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.13.1 - 2022-04-08
+bump version
+
 ## 1.13.0 - 2022-04-08
 Chore: Update cd.yml (#704)
 Chore: Replace a / b with math.div(a, b) on SCSS files (#702)
