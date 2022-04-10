@@ -1,7 +1,8 @@
+import parseISO from 'date-fns/parseISO';
+import mem from 'mem';
 import { Component } from 'preact';
 
 import { Livechat, useSsl } from '../api';
-import I18n from '../i18n';
 import store from '../store';
 
 export function flatMap(arr, mapFunc) {
@@ -119,8 +120,6 @@ export const setCookies = (rid, token) => {
 	document.cookie = `rc_room_type=l; path=/; ${ getSecureCookieSettings() }`;
 };
 
-export const createToken = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
 export const getAvatarUrl = (username) => (username ? `${ Livechat.client.host }/avatar/${ username }` : null);
 
 export const msgTypesNotRendered = ['livechat_video_call', 'livechat_navigation_history', 'au', 'command', 'uj', 'ul', 'livechat-close'];
@@ -136,7 +135,8 @@ export const sortArrayByColumn = (array, column, inverted) => array.sort((a, b) 
 	return 1;
 });
 
-export const normalizeTransferHistoryMessage = (transferData) => {
+
+export const normalizeTransferHistoryMessage = (transferData, sender, t) => {
 	if (!transferData) {
 		return;
 	}
@@ -146,14 +146,27 @@ export const normalizeTransferHistoryMessage = (transferData) => {
 
 	const transferTypes = {
 		agent: () => {
+			if (!sender.username) {
+				return t('the_chat_was_transferred_to_another_agent');
+			}
 			const to = transferredTo && (transferredTo.name || transferredTo.username);
-			return I18n.t('%{from} transferred the chat to %{to}', { from, to });
+			return t('from_transferred_the_chat_to_to', { from, to });
 		},
 		department: () => {
 			const to = nextDepartment && nextDepartment.name;
-			return I18n.t('%{from} transferred the chat to the department %{to}', { from, to });
+
+			if (!sender.username) {
+				return t('the_agent_transferred_the_chat_to_the_department_to', { to });
+			}
+
+			return t('from_transferred_the_chat_to_the_department_to', { from, to });
 		},
-		queue: () => I18n.t('%{from} returned the chat to the queue', { from }),
+		queue: () => {
+			if (!sender.username) {
+				return t('the_chat_was_moved_back_to_queue');
+			}
+			return t('from_returned_the_chat_to_the_queue', { from });
+		},
 	};
 
 	return transferTypes[scope]();
@@ -164,7 +177,6 @@ export const parseOfflineMessage = (fields = {}) => {
 	return Object.assign(fields, { host });
 };
 export const normalizeDOMRect = ({ left, top, right, bottom }) => ({ left, top, right, bottom });
-
 
 export const visibility = (() => {
 	if (typeof document.hidden !== 'undefined') {
@@ -236,3 +248,42 @@ export const isActiveSession = () => {
 
 	return sessionId === firstSessionId;
 };
+
+export const isMobileDevice = () => window.innerWidth <= 800 && window.innerHeight >= 630;
+
+export const resolveDate = (dateInput) => {
+	switch (typeof dateInput) {
+		case Date: {
+			return dateInput;
+		}
+		case 'object': {
+			return new Date(dateInput.$date);
+		}
+		case 'string': {
+			return parseISO(dateInput);
+		}
+		default: {
+			return new Date(dateInput);
+		}
+	}
+};
+
+const escapeMap = {
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+	'"': '&quot;',
+	'\'': '&#x27;',
+	'`': '&#x60;',
+};
+
+const escapeRegex = new RegExp(`(?:${ Object.keys(escapeMap).join('|') })`, 'g');
+
+const escapeHtml = mem(
+	(string) => string.replace(escapeRegex, (match) => escapeMap[match]),
+);
+
+export const parse = (plainText) =>
+	[{ plain: plainText }]
+		.map(({ plain, html }) => (plain ? escapeHtml(plain) : html || ''))
+		.join('');

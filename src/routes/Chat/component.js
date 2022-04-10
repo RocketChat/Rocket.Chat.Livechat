@@ -1,7 +1,11 @@
 import { Picker } from 'emoji-mart';
 import { h, Component } from 'preact';
+import { withTranslation } from 'react-i18next';
 
 import { Button } from '../../components/Button';
+import { CallIframe } from '../../components/Calls/CallIFrame';
+import { default as CallNotification } from '../../components/Calls/CallNotification';
+import { CallStatus } from '../../components/Calls/CallStatus';
 import { Composer, ComposerAction, ComposerActions } from '../../components/Composer';
 import { FilesDropTarget } from '../../components/FilesDropTarget';
 import { FooterOptions, CharCounter } from '../../components/Footer';
@@ -9,7 +13,6 @@ import { Menu } from '../../components/Menu';
 import { MessageList } from '../../components/Messages';
 import { Screen } from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import I18n from '../../i18n';
 import AccessibiltyIcon from '../../icons/accessibility.svg';
 import AccessibilityIconDark from '../../icons/accessibilty-dark.svg';
 import ChangeIcon from '../../icons/change.svg';
@@ -20,7 +23,7 @@ import SendIcon from '../../icons/send.svg';
 import EmojiIcon from '../../icons/smile.svg';
 import styles from './styles.scss';
 
-export default class Chat extends Component {
+class Chat extends Component {
 	state = {
 		atBottom: true,
 		text: '',
@@ -125,130 +128,134 @@ export default class Chat extends Component {
 		iconsTextState,
 		darkModeState,
 		dynamicTextState,
+		t,
+		incomingCallAlert,
+		ongoingCall,
+		dispatch,
 		...props
 	}, {
 		atBottom = true,
 		text,
 	}) {
-		return (
-			<Screen
-				color={color}
-				title={title || I18n.t('Need help?')}
-				fontColor={fontColor}
-				agent={agent || null}
-				queueInfo={queueInfo}
-				nopadding
-				onChangeDepartment={onChangeDepartment}
-				onFinishChat={onFinishChat}
-				onAccessibleMode={onAccessibleMode}
-				onRemoveUserData={onRemoveUserData}
-				allowAccessibleMode={allowAccessibleMode}
-				className={createClassName(styles, 'chat')}
-				handleEmojiClick={this.handleEmojiClick}
-				iconsAccompanyingText={iconsTextState}
-				dynamicTextState={dynamicTextState}
-				darkModeState={darkModeState}
-				{...props}
+		return <Screen
+			color={color}
+			title={title || t('need_help')}
+			fontColor={fontColor}
+			agent={agent || null}
+			queueInfo={queueInfo}
+			nopadding
+			onChangeDepartment={onChangeDepartment}
+			onFinishChat={onFinishChat}
+			onAccessibleMode={onAccessibleMode}
+			onRemoveUserData={onRemoveUserData}
+			allowAccessibleMode={allowAccessibleMode}
+			className={createClassName(styles, 'chat')}
+			handleEmojiClick={this.handleEmojiClick}
+			iconsAccompanyingText={iconsTextState}
+			dynamicTextState={dynamicTextState}
+			darkModeState={darkModeState}
+			{...props}
+		>
+			<FilesDropTarget
+				ref={this.handleFilesDropTargetRef}
+				overlayed
+				overlayText={t('drop_here_to_upload_a_file')}
+				onUpload={onUpload}
 			>
-				<FilesDropTarget
-					ref={this.handleFilesDropTargetRef}
-					overlayed
-					overlayText={I18n.t('Drop here to upload a file')}
-					onUpload={onUpload}
+				<Screen.Content nopadding>
+					{ incomingCallAlert && !!incomingCallAlert.show && <CallNotification { ...incomingCallAlert } dispatch={dispatch} />}
+					{ incomingCallAlert?.show && ongoingCall && ongoingCall.callStatus === CallStatus.IN_PROGRESS_SAME_TAB ? <CallIframe { ...incomingCallAlert } /> : null }
+					<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
+						<MessageList
+							ref={this.handleMessagesContainerRef}
+							avatarResolver={avatarResolver}
+							uid={uid}
+							messages={messages}
+							typingUsernames={typingUsernames}
+							conversationFinishedMessage={conversationFinishedMessage}
+							lastReadMessageId={lastReadMessageId}
+							onScrollTo={this.handleScrollTo}
+							handleEmojiClick={this.handleEmojiClick}
+							iconsAccompanyingText={iconsTextState}
+							dynamicTextState={dynamicTextState}
+						/>
+						{this.state.emojiPickerActive && <Picker
+							style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
+							showPreview={false}
+							showSkinTones={false}
+							theme= {darkModeState ? 'dark' : 'light'}
+							sheetSize={64}
+							onSelect={this.handleEmojiSelect}
+							autoFocus={true}
+						/>}
+					</div>
+				</Screen.Content>
+				<Screen.Footer
+					options={options ? (
+						<FooterOptions>
+							<Menu.Group>
+								{onChangeDepartment && (
+									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{t('change_department')}</Menu.Item>
+								)}
+								{allowAccessibleMode && (
+									<Menu.Item onClick={onAccessibleMode} icon={!darkModeState ? AccessibiltyIcon : AccessibilityIconDark} dynamicTextState={dynamicTextState}>{t('accessible_mode') }</Menu.Item>
+								)}
+								{onRemoveUserData && (
+									<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{t('forget_remove_my_data')}</Menu.Item>
+								)}
+								{onFinishChat && (
+									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{t('finish_this_chat')}</Menu.Item>
+								)}
+							</Menu.Group>
+						</FooterOptions>
+					) : null}
+					limit={limitTextLength
+						? <CharCounter
+							limitTextLength={limitTextLength}
+							textLength={text.length}
+						/> : null}
 				>
-					<Screen.Content nopadding>
-						<div className={createClassName(styles, 'chat__messages', { atBottom, loading })}>
-							<MessageList
-								ref={this.handleMessagesContainerRef}
-								avatarResolver={avatarResolver}
-								uid={uid}
-								messages={messages}
-								typingUsernames={typingUsernames}
-								conversationFinishedMessage={conversationFinishedMessage}
-								lastReadMessageId={lastReadMessageId}
-								onScrollTo={this.handleScrollTo}
-								handleEmojiClick={this.handleEmojiClick}
-								iconsAccompanyingText={iconsTextState}
-								dynamicTextState={dynamicTextState}
-							/>
-							{this.state.emojiPickerActive && <Picker
-								style={{ position: 'absolute', zIndex: 10, bottom: 0, maxWidth: '90%', left: 20, maxHeight: '90%' }}
-								showPreview={false}
-								showSkinTones={false}
-								theme= {darkModeState ? 'dark' : 'light'}
-								sheetSize={64}
-								onSelect={this.handleEmojiSelect}
-								autoFocus={true}
-							/>}
-						</div>
-					</Screen.Content>
-					<Screen.Footer
-						options={options ? (
-							<FooterOptions>
-								<Menu.Group>
-									{onChangeDepartment && (
-										<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon} dynamicTextState={dynamicTextState}>{I18n.t('Change department')}</Menu.Item>
-									)}
-									{allowAccessibleMode && (
-										<Menu.Item onClick={onAccessibleMode} icon={!darkModeState ? AccessibiltyIcon : AccessibilityIconDark} dynamicTextState={dynamicTextState}>{I18n.t('Accessible Mode') }</Menu.Item>
-									)}
-									{onRemoveUserData && (
-										<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon} dynamicTextState={dynamicTextState}>{I18n.t('Forget/Remove my data')}</Menu.Item>
-									)}
-									{onFinishChat && (
-										<Menu.Item danger onClick={onFinishChat} icon={FinishIcon} dynamicTextState={dynamicTextState}>{I18n.t('Finish this chat')}</Menu.Item>
-									)}
-								</Menu.Group>
-							</FooterOptions>
-						) : null}
-						limit={limitTextLength
-							? <CharCounter
-								limitTextLength={limitTextLength}
-								textLength={text.length}
-							/> : null}
-					>
-						{ registrationRequired
-							? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{I18n.t('Chat now')}</Button>
-							: <Composer onUpload={onUpload}
-								onSubmit={this.handleSubmit}
-								className={createClassName(styles, 'text-area-chat')}
-								onChange={this.handleChangeText}
-								placeholder={I18n.t('Type your message here')}
-								value={text}
-								notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
-								handleEmojiClick={this.handleEmojiClick}
-								pre={(
-									<ComposerActions>
-										<ComposerAction className={createClassName(styles, 'message-box-icons')} onClick={this.toggleEmojiPickerState}>
-											<EmojiIcon width={20} height={20} />
-											{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>
-												{I18n.t('Emoji')}</p> : null}
+					{ registrationRequired
+						? <Button loading={loading} disabled={loading} onClick={onRegisterUser} stack>{t('chat_now')}</Button>
+						: <Composer onUpload={onUpload}
+							onSubmit={this.handleSubmit}
+							onChange={this.handleChangeText}
+							placeholder={t('type_your_message_here')}
+							value={text}
+							notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
+							handleEmojiClick={this.handleEmojiClick}
+							pre={(
+								<ComposerActions>
+									<ComposerAction className={createClassName(styles, 'emoji-picker-icon')} onClick={this.toggleEmojiPickerState}>
+										<EmojiIcon width={20} height={20} />
+										{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>
+											{t('emoji')}</p> : null}
+									</ComposerAction>
+								</ComposerActions>
+							)}
+							post={(
+								<ComposerActions>
+									{text.length === 0 && uploads && (
+										<ComposerAction onClick={this.handleUploadClick}>
+											<PlusIcon width={20} height={20} />
+											{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>{t('attach')}</p> : null}
 										</ComposerAction>
-									</ComposerActions>
-								)}
-								post={(
-									<ComposerActions>
-										{text.length === 0 && uploads && (
-											<ComposerAction className={createClassName(styles, 'message-box-icons')} onClick={this.handleUploadClick}>
-												<PlusIcon width={20} height={20} />
-												{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>{I18n.t('Attach')}</p> : null}
-											</ComposerAction>
-										)}
-										{text.length > 0 && (
-											<ComposerAction className={createClassName(styles, 'message-box-icons')} onClick={this.handleSendClick}>
-												<SendIcon width={20} height={20} />
-												{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>{I18n.t('Send')}</p> : null}
-											</ComposerAction>
-										)}
-									</ComposerActions>
-								)}
-								limitTextLength={limitTextLength}
-							/>
-						}
-					</Screen.Footer>
-
-				</FilesDropTarget>
-			</Screen>
-		);
+									)}
+									{text.length > 0 && (
+										<ComposerAction onClick={this.handleSendClick}>
+											<SendIcon width={20} height={20} />
+											{iconsTextState ? <p className={createClassName(styles, 'message-box-icons-text')}>{t('send')}</p> : null}
+										</ComposerAction>
+									)}
+								</ComposerActions>
+							)}
+							limitTextLength={limitTextLength}
+						/>
+					}
+				</Screen.Footer>
+			</FilesDropTarget>
+		</Screen>;
 	}
 }
+
+export default withTranslation()(Chat);

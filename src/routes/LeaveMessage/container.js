@@ -2,22 +2,23 @@ import { h, Component } from 'preact';
 
 import { Livechat } from '../../api';
 import { ModalManager } from '../../components/Modal';
-import { createToken, parseOfflineMessage } from '../../components/helpers';
+import { parseOfflineMessage } from '../../components/helpers';
 import { parentCall } from '../../lib/parentCall';
+import { createToken } from '../../lib/random';
 import { Consumer } from '../../store';
 import LeaveMessage from './component';
 
 
 export class LeaveMessageContainer extends Component {
 	handleSubmit = async (fields) => {
-		const { alerts, dispatch } = this.props;
+		const { alerts, dispatch, successMessage } = this.props;
 
 		await dispatch({ loading: true });
 		try {
 			const payload = parseOfflineMessage(fields);
 			const text = await Livechat.sendOfflineMessage(payload);
 			await ModalManager.alert({
-				text,
+				text: successMessage || text,
 			});
 			parentCall('callback', ['offline-form-submit', fields]);
 			return true;

@@ -1,10 +1,11 @@
+import i18next from 'i18next';
+
 import { Livechat } from '../api';
-import { createToken } from '../components/helpers';
 import { store } from '../store';
 import CustomFields from './customFields';
-import { setWidgetLanguage } from './locale';
-import { loadConfig } from './main';
+import { loadConfig, updateBusinessUnit } from './main';
 import { parentCall } from './parentCall';
+import { createToken } from './random';
 import Triggers from './triggers';
 
 const createOrUpdateGuest = async (guest) => {
@@ -68,6 +69,21 @@ const api = {
 		updateIframeGuestData({ department });
 	},
 
+	async setBusinessUnit(newBusinessUnit) {
+		if (!newBusinessUnit || !newBusinessUnit.trim().length) {
+			throw new Error('Error! Invalid business ids');
+		}
+
+		const { businessUnit: existingBusinessUnit } = store.state;
+
+		return existingBusinessUnit !== newBusinessUnit && updateBusinessUnit(newBusinessUnit);
+	},
+
+	async clearBusinessUnit() {
+		const { businessUnit } = store.state;
+		return businessUnit && updateBusinessUnit();
+	},
+
 	clearDepartment() {
 		updateIframeGuestData({ department: '' });
 	},
@@ -127,7 +143,7 @@ const api = {
 	async setLanguage(language) {
 		const { iframe } = store.state;
 		await store.setState({ iframe: { ...iframe, language } });
-		setWidgetLanguage();
+		i18next.changeLanguage(language);
 	},
 
 	showWidget() {

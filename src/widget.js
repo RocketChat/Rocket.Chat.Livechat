@@ -11,7 +11,6 @@ const WIDGET_OPEN_HEIGHT = 525;
 const WIDGET_MINIMIZED_WIDTH = 54;
 const WIDGET_MINIMIZED_HEIGHT = 54;
 const WIDGET_MARGIN = 16;
-const FULLSCREEN_DOCUMENT_CONFIG = 'overflow: hidden; height: 100%; width: 100%;';
 
 
 window.RocketChat = window.RocketChat || { _: [] };
@@ -21,7 +20,6 @@ let iframe;
 let hookQueue = [];
 let ready = false;
 let smallScreen = false;
-let bodyStyle;
 let scrollPosition;
 let widget_height;
 
@@ -74,10 +72,9 @@ function callHook(action, params) {
 const updateWidgetStyle = (isOpened) => {
 	if (smallScreen && isOpened) {
 		scrollPosition = document.documentElement.scrollTop;
-		bodyStyle = document.body.style.cssText;
-		document.body.style.cssText += FULLSCREEN_DOCUMENT_CONFIG;
+		document.body.classList.add('rc-livechat-mobile-full-screen');
 	} else {
-		document.body.style.cssText = bodyStyle;
+		document.body.classList.remove('rc-livechat-mobile-full-screen');
 		if (smallScreen) {
 			document.documentElement.scrollTop = scrollPosition;
 		}
@@ -235,11 +232,11 @@ const api = {
 	},
 
 	resetDocumentStyle() {
-		document.body.style.cssText = bodyStyle;
+		document.body.classList.remove('rc-livechat-mobile-full-screen');
 	},
 
 	setFullScreenDocumentMobile() {
-		document.body.style.cssText += smallScreen && FULLSCREEN_DOCUMENT_CONFIG;
+		smallScreen && document.body.classList.add('rc-livechat-mobile-full-screen');
 	},
 };
 
@@ -264,6 +261,14 @@ function setTheme(theme) {
 
 function setDepartment(department) {
 	callHook('setDepartment', department);
+}
+
+function setBusinessUnit(businessUnit) {
+	callHook('setBusinessUnit', businessUnit);
+}
+
+function clearBusinessUnit() {
+	callHook('clearBusinessUnit');
 }
 
 function setGuestToken(token) {
@@ -337,6 +342,10 @@ function initialize(params) {
 			case 'department':
 				setDepartment(params[method]);
 				continue;
+			case 'businessUnit': {
+				setBusinessUnit(params[method]);
+				continue;
+			}
 			case 'guestToken':
 				setGuestToken(params[method]);
 				continue;
@@ -439,6 +448,8 @@ window.RocketChat.livechat = {
 	hideWidget,
 	maximizeWidget,
 	minimizeWidget,
+	setBusinessUnit,
+	clearBusinessUnit,
 
 	// callbacks
 	onChatMaximized(fn) { registerCallback('chat-maximized', fn); },

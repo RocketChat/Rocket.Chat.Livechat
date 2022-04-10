@@ -1,18 +1,14 @@
 import { h, Component } from 'preact';
+import { withTranslation } from 'react-i18next';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import { Form, FormField, SelectInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import I18n from '../../i18n';
 import styles from './styles.scss';
 
-
-const defaultTitle = I18n.t('Change Department');
-const defaultMessage = I18n.t('Choose a department');
-
-export default class SwitchDepartment extends Component {
+class SwitchDepartment extends Component {
 	static getDerivedStateFromProps(props, state) {
 		if (props.departments && props.departments.length > 0 && !state.department) {
 			return { department: { value: '' } };
@@ -85,8 +81,11 @@ export default class SwitchDepartment extends Component {
 		this.validateAll();
 	}
 
-	render({ title, color, message, loading, departments, iconsAccompanyingTextState, dynamicTextState, darkModeState, ...props }, { department }) {
+	render({ title, color, message, loading, departments, t, iconsAccompanyingTextState, dynamicTextState, darkModeState, ...props }, { department }) {
+		const defaultTitle = t('change_department_1');
+		const defaultMessage = t('choose_a_department_1');
 		const valid = this.isValid();
+
 		return (
 			<Screen
 				color={color}
@@ -101,7 +100,7 @@ export default class SwitchDepartment extends Component {
 
 					<Form onSubmit={this.handleSubmit}>
 						<FormField
-							label={I18n.t('Departments')}
+							label={t('departments')}
 							error={department && department.showError && department.error}
 							dynamicTextState={dynamicTextState}
 						>
@@ -109,7 +108,7 @@ export default class SwitchDepartment extends Component {
 								name='department'
 								value={department && department.value}
 								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
-								placeholder={I18n.t('Choose a department...')}
+								placeholder={t('choose_a_department')}
 								disabled={loading}
 								error={department && department.showError}
 								onInput={this.handleDepartmentChange}
@@ -117,8 +116,8 @@ export default class SwitchDepartment extends Component {
 						</FormField>
 
 						<ButtonGroup>
-							<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Start chat')}</Button>
-							<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{I18n.t('Cancel')}</Button>
+							<Button submit loading={loading} disabled={!valid || loading} stack>{t('start_chat')}</Button>
+							<Button disabled={loading} stack secondary nude onClick={this.handleCancelClick}>{t('cancel')}</Button>
 						</ButtonGroup>
 					</Form>
 				</Screen.Content>
@@ -127,3 +126,5 @@ export default class SwitchDepartment extends Component {
 		);
 	}
 }
+
+export default withTranslation()(SwitchDepartment);

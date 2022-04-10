@@ -1,19 +1,20 @@
 import { h, Component } from 'preact';
+import { withTranslation } from 'react-i18next';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
 import { Form, FormField, SelectInput, TextInput, Validations } from '../../components/Form';
+import { renderMarkdown } from '../../components/Messages/MessageText/markdown';
 import Screen from '../../components/Screen';
 import { createClassName, sortArrayByColumn } from '../../components/helpers';
-import I18n from '../../i18n';
 import styles from './styles.scss';
 
+class LeaveMessage extends Component {
+	constructor(props) {
+		super(props);
+		this.state = this.getDefaultState();
+	}
 
-const defaultTitle = I18n.t('Leave a message');
-const defaultMessage = I18n.t('We are not online right now. Please, leave a message.');
-const defaultUnavailableMessage = ''; // TODO
-
-export default class LeaveMessage extends Component {
 	validations = {
 		name: [Validations.nonEmpty],
 		email: [Validations.nonEmpty, Validations.email],
@@ -82,29 +83,25 @@ export default class LeaveMessage extends Component {
 		}
 	}
 
-	constructor(props) {
-		super(props);
-		this.state = this.getDefaultState();
-	}
-
 	componentDidMount() {
 		this.validateAll();
 	}
 
-	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }, dynamicTextState) => (
+
+	renderForm = ({ loading, departments, valid = this.isValid(), t }, { name, email, department, message }, dynamicTextState) => (
 		<Form onSubmit={this.handleSubmit}>
 			{name
 				? (
 					<FormField
 						required
-						label={I18n.t('Name')}
+						label={t('name')}
 						error={name.showError && name.error}
 						dynamicTextState={dynamicTextState}
 					>
 						<TextInput
 							name='name'
 							value={name.value}
-							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
+							placeholder={t('insert_your_field_here', { field: t('name') })}
 							disabled={loading}
 							onInput={this.handleNameChange}
 						/>
@@ -116,14 +113,14 @@ export default class LeaveMessage extends Component {
 				? (
 					<FormField
 						required
-						label={I18n.t('Email')}
+						label={t('Email')}
 						error={email.showError && email.error}
 						dynamicTextState={dynamicTextState}
 					>
 						<TextInput
 							name='email'
 							value={email.value}
-							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
+							placeholder={t('insert_your_field_here', { field: t('email') })}
 							disabled={loading}
 							onInput={this.handleEmailChange}
 						/>
@@ -134,7 +131,7 @@ export default class LeaveMessage extends Component {
 			{department
 				? (
 					<FormField
-						label={I18n.t('I need help with...')}
+						label={t('i_need_help_with')}
 						error={department.showError && department.error}
 						dynamicTextState={dynamicTextState}
 					>
@@ -142,7 +139,7 @@ export default class LeaveMessage extends Component {
 							name='department'
 							value={department.value}
 							options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
-							placeholder={I18n.t('Choose an option...')}
+							placeholder={t('choose_an_option')}
 							disabled={loading}
 							error={department.showError}
 							onInput={this.handleDepartmentChange}
@@ -155,7 +152,7 @@ export default class LeaveMessage extends Component {
 				? (
 					<FormField
 						required
-						label={I18n.t('Message')}
+						label={t('message')}
 						error={message.showError && message.error}
 						dynamicTextState={dynamicTextState}
 					>
@@ -164,7 +161,7 @@ export default class LeaveMessage extends Component {
 							value={message.value}
 							multiline
 							rows={4}
-							placeholder={I18n.t('Write your message...')}
+							placeholder={t('write_your_message')}
 							disabled={loading}
 							error={message.showError}
 							onInput={this.handleMessageChange}
@@ -174,13 +171,17 @@ export default class LeaveMessage extends Component {
 				: null}
 
 			<ButtonGroup>
-				<Button submit loading={loading} disabled={!valid || loading} stack>{I18n.t('Send')}</Button>
+				<Button submit loading={loading} disabled={!valid || loading} stack>{t('send')}</Button>
 			</ButtonGroup>
 		</Form>
 	)
 
-	render = ({ color, title, message, unavailableMessage, hasForm, iconsAccompanyingTextState, dynamicTextState, ...props }) => (
-		<Screen
+	render = ({ color, title, message, unavailableMessage, hasForm, t, iconsAccompanyingTextState, dynamicTextState, ...props }) => {
+		const defaultTitle = t('leave_a_message');
+		const defaultMessage = t('we_are_not_online_right_now_please_leave_a_message');
+		const defaultUnavailableMessage = ''; // TODO
+
+		return <Screen
 			color={color}
 			title={title || defaultTitle}
 			className={createClassName(styles, 'leave-message')}
@@ -189,12 +190,14 @@ export default class LeaveMessage extends Component {
 		>
 			<Screen.Content>
 				<p className={createClassName(styles, 'leave-message__main-message')}>
-					<span className={createClassName(styles, `font-${ dynamicTextState }`)}>{hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage}</span>
+					<span className={createClassName(styles, `font-${ dynamicTextState }`)}>{renderMarkdown(hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage)}</span>
 				</p>
 
 				{hasForm && this.renderForm(this.props, this.state, dynamicTextState)}
 			</Screen.Content>
 			<Screen.Footer />
-		</Screen>
-	)
+		</Screen>;
+	}
 }
+
+export default withTranslation()(LeaveMessage);

@@ -1,4 +1,6 @@
 //----- Grid System
+@use 'sass:math';
+
 @import "helpers";
 
 //----- Extends
@@ -37,7 +39,7 @@ $cols: 12;
 @for $i from 1 through $cols {
 	.col-#{$i},
 	%col-#{$i} {
-		width: (100% / ($cols / $i)) - ($grid-spacing * ($cols - $i) / $cols);
+		width: math.div(100%, math.div($cols, $i)) - ($grid-spacing * math.div(($cols - $i), $cols));
 	}
 }
 
@@ -46,7 +48,7 @@ $cols: 12;
 		@for $i from 1 through $cols {
 			.col-#{$breakpoint}-#{$i},
 			%col-#{$breakpoint}-#{$i} {
-				width: (100% / ($cols / $i)) - ($grid-spacing * ($cols - $i) / $cols);
+				width: math.div(100%, math.div($cols, $i)) - ($grid-spacing * math.div(($cols - $i), $cols));
 			}
 		}
 	}

@@ -1,11 +1,12 @@
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
-import { upsert, createToken, asyncForEach } from '../components/helpers';
+import { upsert, asyncForEach } from '../components/helpers';
 import store from '../store';
 import { normalizeAgent } from './api';
 import { processUnread } from './main';
 import { parentCall } from './parentCall';
+import { createToken } from './random';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -85,17 +86,14 @@ class Triggers {
 				}
 			});
 		});
-
-		this.processTriggers();
 	}
 
 	async fire(trigger) {
 		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || user) {
+		if (!this._enabled || !user) {
 			return;
 		}
 		const { actions } = trigger;
-
 		await asyncForEach(actions, (action) => {
 			if (action.name === 'send-message') {
 				trigger.skip = true;
@@ -151,17 +149,13 @@ class Triggers {
 				return;
 			}
 
-			const self = this;
 			trigger.conditions.forEach((condition) => {
 				switch (condition.name) {
 					case 'page-url':
-						this._requests.forEach((request) => {
-							const hrefRegExp = new RegExp(condition.value, 'g');
-							if (request.location.href.match(hrefRegExp)) {
-								self.fire(trigger);
-							}
-						});
-						this._requests = [];
+						const hrefRegExp = new RegExp(condition.value, 'g');
+						if (hrefRegExp.test(window.location.href)) {
+							this.fire(trigger);
+						}
 						break;
 					case 'time-on-site':
 						if (trigger.timeout) {
@@ -171,9 +165,20 @@ class Triggers {
 							this.fire(trigger);
 						}, parseInt(condition.value, 10) * 1000);
 						break;
+					case 'chat-opened-by-visitor':
+						const openFunc = () => {
+							const { user } = store.state;
+							if (user) {
+								if (trigger.runOnce) { store.off('change', openFunc); }
+								this.fire(trigger);
+							}
+						};
+						store.on('change', openFunc);
+						break;
 				}
 			});
 		});
+		this._requests = [];
 	}
 
 	set triggers(newTriggers) {

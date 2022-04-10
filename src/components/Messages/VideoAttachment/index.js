@@ -1,14 +1,15 @@
 import { h } from 'preact';
+import { withTranslation } from 'react-i18next';
 
-import I18n from '../../../i18n';
 import { createClassName, memo } from '../../helpers';
 import { MessageBubble } from '../MessageBubble';
 import styles from './styles.scss';
 
 
-export const VideoAttachment = memo(({
+const VideoAttachment = memo(({
 	url,
 	className,
+	t,
 	...messageBubbleProps
 }) => (
 	<MessageBubble
@@ -21,7 +22,9 @@ export const VideoAttachment = memo(({
 			controls
 			className={createClassName(styles, 'video-attachment__inner')}
 		>
-			{I18n.t('You browser doesn\'t support video element')}
+			{t('you_browser_doesn_t_support_video_element')}
 		</video>
 	</MessageBubble>
 ));
+
+export default withTranslation()(VideoAttachment);

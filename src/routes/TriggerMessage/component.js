@@ -1,15 +1,13 @@
 import { h, Component, createRef } from 'preact';
+import { withTranslation } from 'react-i18next';
 
 import Screen from '../../components/Screen';
 import { createClassName } from '../../components/helpers';
-import I18n from '../../i18n';
 import { parentCall } from '../../lib/parentCall';
 import styles from './styles.scss';
 
 
-const defaultTitle = I18n.t('Messages');
-
-export default class TriggerMessage extends Component {
+class TriggerMessage extends Component {
 	state = { }
 
 	constructor(props) {
@@ -27,7 +25,8 @@ export default class TriggerMessage extends Component {
 		parentCall('resizeWidget', height);
 	}
 
-	render({ title, messages, loading, onStartChat = () => {}, departments, iconsAccompanyingTextState, dynamicTextState, ...props }) {
+	render({ title, messages, loading, onStartChat = () => {}, departments, t, iconsAccompanyingTextState, dynamicTextState, ...props }) {
+		const defaultTitle = t('messages');
 		const { theme: { color } } = props;
 		return (
 			<Screen
@@ -42,9 +41,11 @@ export default class TriggerMessage extends Component {
 				</Screen.Content>
 				<footer className={createClassName(styles, 'trigger-message__footer')}>
 					<hr className={createClassName(styles, 'trigger-message__separator')} />
-					<button style={color && { color }} onClick={onStartChat} className={createClassName(styles, 'trigger-message__link-reply')}>{I18n.t('Start chat')}</button>
+					<button style={color && { color }} onClick={onStartChat} className={createClassName(styles, 'trigger-message__link-reply')}>{t('start_chat')}</button>
 				</footer>
 			</Screen>
 		);
 	}
 }
+
+export default withTranslation()(TriggerMessage);

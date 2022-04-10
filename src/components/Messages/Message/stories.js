@@ -1,6 +1,6 @@
 import { h } from 'preact';
 
-import { Message } from '.';
+import Message from '.';
 import sampleAudio from '../../../../.storybook/assets/sample-audio.mp3';
 import sampleImage from '../../../../.storybook/assets/sample-image.jpg';
 import sampleVideo from '../../../../.storybook/assets/sample-video.mp4';
@@ -102,7 +102,7 @@ export const Default = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -118,7 +118,7 @@ export const System = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -138,7 +138,7 @@ export const Me = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -157,7 +157,7 @@ export const Markdown = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -177,7 +177,7 @@ export const Grouping = (args) => (
 			me={args.me}
 			compact={args.compact}
 			msg={args.msg}
-			t={args.t}
+			type={args.t}
 			u={args.u}
 			ts={args.ts}
 			attachments={args.attachments}
@@ -206,7 +206,7 @@ export const WithQuotation = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -228,7 +228,7 @@ export const WithAudioAttachment = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -252,7 +252,7 @@ export const WithVideoAttachment = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -276,7 +276,7 @@ export const WithImageAttachment = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -297,7 +297,7 @@ export const WithFilesAttachments = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -320,7 +320,7 @@ export const WithMultipleAttachments = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}
@@ -356,7 +356,7 @@ export const WithUiKitBlocks = (args) => (
 		me={args.me}
 		compact={args.compact}
 		msg={args.msg}
-		t={args.t}
+		type={args.t}
 		u={args.u}
 		ts={args.ts}
 		attachments={args.attachments}

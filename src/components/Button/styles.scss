@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @import '../../styles/colors';
 @import '../../styles/helpers';
 @import '../../styles/variables';
@@ -5,7 +7,7 @@
 $button-border-width: $default-border;
 $button-border-radius: $default-border-radius;
 $button-padding: (0.75 * $default-gap - $default-border) (1.5 * $default-gap - $default-border);
-$button-small-padding: (0.25 * $default-gap - $default-border / 2) (1.5 * $default-gap - $default-border);
+$button-small-padding: (0.25 * $default-gap - math.div($default-border, 2)) (1.5 * $default-gap - $default-border);
 
 $button-active-displacement: 2px;
 
@@ -22,7 +24,7 @@ $button-line-height: 1.25rem;
 $button-disabled-opacity: $disabled-opacity;
 
 $button-loading-border-width: (2 * $default-border);
-$button-loading-gap: ($default-gap / 2);
+$button-loading-gap: math.div($default-gap, 2);
 $button-loading-size: $button-line-height;
 $button-loading-color: #ffffff;
 
@@ -66,7 +68,7 @@ $button-icon-padding: 10px;
 		color $default-time-animation,
 		background-color $default-time-animation,
 		border-color $default-time-animation,
-		transform $default-time-animation / 2;
+		transform math.div($default-time-animation, 2);
 	white-space: nowrap;
 	text-decoration: none;
 
@@ -179,18 +181,18 @@ $button-icon-padding: 10px;
 
 	&__badge {
 		position: absolute;
-		top: (-$button-badge-size / 3);
-		right: (-$button-badge-size / 3);
+		top: math.div(-$button-badge-size, 3);
+		right: math.div(-$button-badge-size, 3);
 
 		min-width: $button-badge-size;
 		height: $button-badge-size;
-		padding: 0 ($button-badge-font-size / 2);
+		padding: 0 math.div($button-badge-font-size, 2);
 
 		text-align: center;
 		letter-spacing: 0;
 
 		color: $button-badge-color;
-		border-radius: ($button-badge-size / 2);
+		border-radius: math.div($button-badge-size, 2);
 
 		background-color: $button-badge-background-color;
 		box-shadow: $button-badge-shadow;

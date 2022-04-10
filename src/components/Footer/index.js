@@ -1,6 +1,6 @@
 import { h } from 'preact';
+import { withTranslation } from 'react-i18next';
 
-import I18n from '../../i18n';
 import { PopoverMenu } from '../Menu';
 import { createClassName } from '../helpers';
 import Logo from './logo.svg';
@@ -21,24 +21,24 @@ export const FooterContent = ({ children, className, ...props }) => (
 );
 
 
-export const PoweredBy = ({ className, ...props }) => (
+export const PoweredBy = withTranslation()(({ className, t, ...props }) => (
 	<h3 className={createClassName(styles, 'powered-by', {}, [className])} {...props}>
-		{I18n.t('Powered by Rocket.Chat').split('Rocket.Chat')[0]}
+		{t('powered_by_rocket_chat').split('Rocket.Chat')[0]}
 		<a href='https://rocket.chat' target='_blank' rel='noopener noreferrer'>
 			<Logo className={createClassName(styles, 'powered-by__logo')} width={60} height={60 * 272 / 1500} role='img' aria-label='Rocket.Chat' />
 		</a>
-		{I18n.t('Powered by Rocket.Chat').split('Rocket.Chat')[1]}
+		{t('powered_by_rocket_chat').split('Rocket.Chat')[1]}
 	</h3>
-);
+));
 
 
 const handleMouseUp = ({ target }) => target.blur();
 
-const OptionsTrigger = ({ pop }) => (
+const OptionsTrigger = withTranslation()(({ pop, t }) => (
 	<button className={createClassName(styles, 'footer__options')} onClick={pop} onMouseUp={handleMouseUp}>
-		{I18n.t('Options')}
+		{t('options')}
 	</button>
-);
+));
 
 
 export const FooterOptions = ({ children }) => (
