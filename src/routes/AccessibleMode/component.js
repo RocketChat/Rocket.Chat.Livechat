@@ -33,7 +33,7 @@ class AccessibleMode extends Component {
 		return (
 			<Screen
 				color={color}
-				title={title || t('acessible_mode')}
+				title={title || t('accessible_mode')}
 				className={createClassName(styles, 'accessible-mode')}
 				iconsAccompanyingText={iconsAccompanyingTextState}
 				dynamicTextState={dynamicTextState}
