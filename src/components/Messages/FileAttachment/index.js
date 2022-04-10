@@ -1,6 +1,6 @@
 import { h } from 'preact';
+import { useTranslation } from 'react-i18next';
 
-import I18n from '../../../i18n';
 import DownloadIcon from '../../../icons/download.svg';
 import { createClassName, memo } from '../../helpers';
 import { FileAttachmentIcon } from '../FileAttachmentIcon';
@@ -14,8 +14,10 @@ export const FileAttachment = memo(({
 	className,
 	iconsAccompanyingText,
 	...messageBubbleProps
-}) => (
-	<MessageBubble
+}) => {
+	const t = useTranslation();
+
+	return <MessageBubble
 		className={createClassName(styles, 'file-attachment', {}, [className])}
 		{...messageBubbleProps}
 	>
@@ -30,8 +32,8 @@ export const FileAttachment = memo(({
 			<span className={createClassName(styles, 'file-attachment__title')}> {title} </span>
 			<span className={createClassName(styles, 'file-attachment-icon')}>
 				<DownloadIcon width={20} height={20} />
-				{iconsAccompanyingText ? <p className={createClassName(styles, 'file-attachment-icon__download-icon-title')}> {I18n.t('Download')} </p> : null}
+				{iconsAccompanyingText ? <p className={createClassName(styles, 'file-attachment-icon__download-icon-title')}> {t('download')} </p> : null}
 			</span>
 		</a>
-	</MessageBubble>
-));
+	</MessageBubble>;
+});
