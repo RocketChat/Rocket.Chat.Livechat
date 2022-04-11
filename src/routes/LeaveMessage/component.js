@@ -190,7 +190,13 @@ class LeaveMessage extends Component {
 		>
 			<Screen.Content>
 				<p className={createClassName(styles, 'leave-message__main-message')}>
-					<span className={createClassName(styles, `font-${ dynamicTextState }`)}>{renderMarkdown(hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage)}</span>
+					<span
+						className={createClassName(styles, `font-${ dynamicTextState }`)}
+						// eslint-disable-next-line react/no-danger
+						dangerouslySetInnerHTML={{
+							__html: renderMarkdown(hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage),
+						}}
+					/>
 				</p>
 
 				{hasForm && this.renderForm(this.props, this.state, dynamicTextState)}

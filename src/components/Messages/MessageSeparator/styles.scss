@@ -36,6 +36,7 @@ $separator-unread-line-color: $color-red;
 
 		border-width: 0;
 		border-top: $separator-line-width solid;
+		color: $separator-date-line-color
 	}
 
 	@mixin state($text-color, $line-color) {
@@ -49,7 +50,7 @@ $separator-unread-line-color: $color-red;
 	}
 
 	&--date {
-		@include state(var(--message-bubble-text-color, black), $separator-date-line-color);
+		@include state(var(--message-bubble-text-color, #9ea2a8), $separator-date-line-color);
 	}
 
 	&--unread {

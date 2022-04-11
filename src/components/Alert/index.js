@@ -28,32 +28,29 @@ class Alert extends Component {
 		clearTimeout(this.dismissTimeout);
 	}
 
-	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children, t, dynamicTextState }) => {
-		console.log('dds', dynamicTextState);
-		return (
-			<div
-				role='alert'
-				className={createClassName(styles, 'alert', { success, warning, error }, [className])}
-				style={{
-					...style,
-					...color && { backgroundColor: color },
-				}}
-			>
-				<div className={createClassName(styles, 'alert__content')}>
-					{children}
-				</div>
-				{!hideCloseButton && (
-					<button
-						onClick={this.handleDismiss}
-						className={createClassName(styles, 'alert__close')}
-						aria-label={t('dismiss_this_alert')}
-					>
-						<CloseIcon width={20} height={20} />
-					</button>
-				)}
+	render = ({ success, warning, error, color, hideCloseButton, className, style = {}, children, t }) => (
+		<div
+			role='alert'
+			className={createClassName(styles, 'alert', { success, warning, error }, [className])}
+			style={{
+				...style,
+				...color && { backgroundColor: color },
+			}}
+		>
+			<div className={createClassName(styles, 'alert__content')}>
+				{children}
 			</div>
-		);
-	}
+			{!hideCloseButton && (
+				<button
+					onClick={this.handleDismiss}
+					className={createClassName(styles, 'alert__close')}
+					aria-label={t('dismiss_this_alert')}
+				>
+					<CloseIcon width={20} height={20} />
+				</button>
+			)}
+		</div>
+	)
 }
 
 export default withTranslation()(Alert);

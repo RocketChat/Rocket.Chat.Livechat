@@ -197,7 +197,7 @@ class Chat extends Component {
 								{onChangeDepartment && (
 									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{t('change_department')}</Menu.Item>
 								)}
-								{allowAccessibleMode && (
+								{true && (
 									<Menu.Item onClick={onAccessibleMode} icon={!darkModeState ? AccessibiltyIcon : AccessibilityIconDark} dynamicTextState={dynamicTextState}>{t('accessible_mode') }</Menu.Item>
 								)}
 								{onRemoveUserData && (

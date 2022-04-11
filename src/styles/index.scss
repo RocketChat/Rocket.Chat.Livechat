@@ -3,7 +3,6 @@
 @import 'variables';
 
 :root {
-	--font-color: #444444;
 	--white: rgb(255, 255, 255);
 	--black: #1f2329;
 	--color-text-lighter-white: #ffffff;
@@ -14,8 +13,9 @@
 	--border-disabled-dark: #6a7078;
 	--footer-options-color: #000000;
 	--bg-color-white: #f7f8fa;
-	--btn-secondary-dark-color: #4a4f57;
+	--btn-secondary-bg-color: #9ea2a8;
 	--color-text-gray: #9ea2a8;
+	--color-text-dark-gray: #444444;
 	--color-text-gray-system: #6c727a;
 	--color-message-icons: #696969;
 	--color-black: #000000;
@@ -59,7 +59,7 @@ body {
 
 body.light {
 	--background-color: var(--white);
-	--text-color: var(--font-color);
+	--text-color: var(--color-text-dark-gray);
 	--color-text-lighter: var(--color-text-lighter-white);
 	--form-field-label-color: var(--dark);
 	--form-select-input-field-background: var(--white);

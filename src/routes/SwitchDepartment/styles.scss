@@ -1,6 +1,8 @@
 @import '../../styles/colors';
 
 .switch-department {
+	color: var(--switch-depart-label-color, #444444);
+
 	&__message {
 		margin: 0.5rem 0 1.5rem;
 
@@ -9,22 +11,16 @@
 		font-weight: 500;
 
 		&--small {
-			color: var(--switch-depart-label-color, $color-text-dark);
-
 			font-size: 0.75rem;
 			line-height: 1.5rem;
 		}
 
 		&--normal {
-			color: var(--switch-depart-label-color, $color-text-dark);
-
 			font-size: 1rem;
 			line-height: 1.5rem;
 		}
 
 		&--large {
-			color: var(--switch-depart-label-color, $color-text-dark);
-
 			font-size: 1.25rem;
 			line-height: 1.5rem;
 		}
