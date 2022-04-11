@@ -34,9 +34,10 @@ $separator-unread-line-color: $color-red;
 
 		min-width: 1rem;
 
+		color: $separator-date-line-color;
+
 		border-width: 0;
 		border-top: $separator-line-width solid;
-		color: $separator-date-line-color
 	}
 
 	@mixin state($text-color, $line-color) {

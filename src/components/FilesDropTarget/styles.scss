@@ -14,10 +14,10 @@ $drop-overlay-text-font-size: 1.375rem;
 	display: flex;
 	overflow: hidden;
 
-	color: var(--color-text-dark-gray);
-
 	flex-direction: column;
 	flex: 1 1 auto;
+
+	color: var(--color-text-dark-gray);
 
 	&.drop--overlayed.drop--dragover {
 		&::before {
