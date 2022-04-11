@@ -16,7 +16,7 @@
 		transform math.div($default-time-animation, 2);
 
 	border-radius: 4px;
-	background: $bg-color-white;
+	background: var(--menu-bg-color, $bg-color-white);
 	box-shadow:
 		0 0 2px 0 rgba($bg-color-dark, 0.08),
 		0 0 12px 0 rgba($bg-color-dark, 0.12);
@@ -54,6 +54,18 @@
 		}
 	}
 
+	&__font-small {
+		font-size: 14px;
+	}
+
+	&__font-normal {
+		font-size: 16px;
+	}
+
+	&__font-large {
+		font-size: 20px;
+	}
+
 	&__item {
 		display: flex;
 
@@ -64,6 +76,8 @@
 		white-space: nowrap;
 		letter-spacing: 0;
 
+		color: var(--menu-item-color, #2f343d);
+
 		border: none;
 		outline: none;
 		background: none;
@@ -73,26 +87,37 @@
 		font-weight: 500;
 		line-height: 24px;
 
-		@mixin itemcolor($color) {
-			color: $color;
+		&:hover {
+			background-color: var(--menu-item-hover, none);
+		}
+
+		&:active {
+			//background-color: mix($color, $bg-color-white, 10%);
+			background-color: var(--menu-item-active, $bg-color-white);
+		}
+
+		&--primary {
+			color: $color-blue;
 
 			&:hover {
-				background-color: mix($color, $bg-color-white, 5%);
+				background-color: var(--menu-item-primary-hover, #f5f5f5);
 			}
 
 			&:active {
-				background-color: mix($color, $bg-color-white, 10%);
+				background-color: var(--menu-item-primary-active, #eaebec);
 			}
 		}
 
-		@include itemcolor($color-text-dark);
-
-		&--primary {
-			@include itemcolor($color-blue);
-		}
-
 		&--danger {
-			@include itemcolor($color-red);
+			color: $color-red;
+
+			&:hover {
+				background-color: var(--menu-item-danger-hover, #fff6f7);
+			}
+
+			&:active {
+				background-color: var(--menu-item-danger-active, #feecef);
+			}
 		}
 
 		&--disabled {

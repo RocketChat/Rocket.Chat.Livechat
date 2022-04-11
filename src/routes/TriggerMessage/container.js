@@ -38,6 +38,10 @@ export const TriggerMessageConnector = ({ ref, ...props }) => (
 			messages,
 			agent,
 			unread,
+			accessible: {
+				iconsAccompanyingText: iconsAccompanyingTextState,
+				dynamicText: dynamicTextState,
+			} = {},
 		}) => (
 			<TriggerMessageContainer
 				ref={ref}
@@ -61,6 +65,8 @@ export const TriggerMessageConnector = ({ ref, ...props }) => (
 					} : undefined,
 				} : undefined}
 				messages={messages && messages.filter((message) => canRenderMessage(message))}
+				iconsAccompanyingTextState={iconsAccompanyingTextState}
+				dynamicTextState={dynamicTextState}
 			/>
 		)}
 	</Consumer>

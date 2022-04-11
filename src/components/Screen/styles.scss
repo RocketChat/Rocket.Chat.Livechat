@@ -5,6 +5,8 @@
 $screen-padding: 16px;
 $screen-box-shadow: 0 (math.div($screen-padding, 2) - 1) $screen-padding 0 rgba(0, 0, 0, 0.1);
 $max-lines: 12;
+$notification-icon-title-font-size: 0.75rem;
+$notification-icon-title-line-height: 1rem;
 
 .screen {
 	display: flex;
@@ -24,7 +26,10 @@ $max-lines: 12;
 	}
 
 	.screen__chat-button {
+		color: white;
+
 		background-size: cover !important;
+
 		box-shadow: $screen-box-shadow;
 	}
 
@@ -35,6 +40,7 @@ $max-lines: 12;
 		padding: 2px;
 
 		border: 0;
+
 		border-radius: 2em;
 		background: rgba(31, 35, 41, 0.4);
 	}
@@ -89,6 +95,7 @@ $max-lines: 12;
 	width: 100%;
 
 	border-radius: 4px;
+
 	background-color: $bg-color-white;
 	align-items: stretch;
 
@@ -112,6 +119,8 @@ $max-lines: 12;
 	padding: 1rem 1rem 0;
 
 	word-wrap: break-word;
+
+	background-color: var(--background-color, #ffffff);
 	overflow-wrap: break-word;
 
 	&--nopadding {
@@ -123,6 +132,9 @@ $max-lines: 12;
 		overflow: hidden;
 
 		text-overflow: ellipsis;
+
+		background: none;
+
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: $max-lines;
 	}
@@ -130,4 +142,20 @@ $max-lines: 12;
 
 .screen__agent-email {
 	margin: 5px;
+}
+
+.notification-icon {
+	display: flex;
+
+	font-size: $notification-icon-title-font-size;
+	font-weight: 500;
+	line-height: $notification-icon-title-line-height;
+
+	align-items: center;
+
+	flex-flow: column nowrap;
+
+	& &__title {
+		margin: 3px 0 0;
+	}
 }

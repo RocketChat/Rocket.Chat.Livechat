@@ -10,6 +10,9 @@ import Alert from '../Alert';
 import { Avatar } from '../Avatar';
 import Header from '../Header';
 import Tooltip from '../Tooltip';
+import { createClassName } from '../helpers';
+import styles from './styles.scss';
+
 
 class ScreenHeader extends Component {
 	largeHeader = () => {
@@ -43,6 +46,8 @@ class ScreenHeader extends Component {
 		onMinimize,
 		onRestore,
 		onOpenWindow,
+		iconsAccompanyingText,
+		dynamicTextState,
 		t,
 	}) => (
 		<Header
@@ -67,7 +72,7 @@ class ScreenHeader extends Component {
 			)}
 
 			<Header.Content>
-				<Header.Title>{this.headerTitle(t)}</Header.Title>
+				<Header.Title dynamicTextState={dynamicTextState}>{this.headerTitle(t)}</Header.Title>
 				{agent && agent.email && (
 					<Header.SubTitle>{agent.email}</Header.SubTitle>
 				)}
@@ -82,10 +87,13 @@ class ScreenHeader extends Component {
 							aria-label={notificationsEnabled ? t('disable_notifications') : t('enable_notifications')}
 							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
 						>
-							{notificationsEnabled
-								? <NotificationsEnabledIcon width={20} height={20} />
-								: <NotificationsDisabledIcon width={20} height={20} />
-							}
+							<span className={createClassName(styles, 'notification-icon')}>
+								{notificationsEnabled
+									? <NotificationsEnabledIcon width={20} height={20} />
+									: <NotificationsDisabledIcon width={20} height={20} />
+								}
+								{iconsAccompanyingText ? <p className={createClassName(styles, 'notification-icon__title')}>{t('notifications')}</p> : null}
+							</span>
 						</Header.Action>
 					</Tooltip.Trigger>
 					{(expanded || !windowed) && (
@@ -94,17 +102,24 @@ class ScreenHeader extends Component {
 								aria-label={minimized ? t('restore_chat') : t('minimize_chat')}
 								onClick={minimized ? onRestore : onMinimize}
 							>
-								{minimized
-									? <RestoreIcon width={20} height={20} />
-									: <MinimizeIcon width={20} height={20} />
-								}
+								<span className={createClassName(styles, 'notification-icon')}>
+									{minimized
+										? <RestoreIcon width={20} height={20} />
+										: <MinimizeIcon width={20} height={20} />
+									}
+									{iconsAccompanyingText ? <p className={createClassName(styles, 'notification-icon__title')}>{t('minimize')}</p> : null}
+								</span>
+
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
 					{(!expanded && !windowed) && (
 						<Tooltip.Trigger content={t('expand_chat')} placement='bottom-left'>
 							<Header.Action aria-label={t('expand_chat')} onClick={onOpenWindow}>
-								<OpenWindowIcon width={20} height={20} />
+								<span className={createClassName(styles, 'notification-icon')}>
+									<OpenWindowIcon width={20} height={20} />
+									{iconsAccompanyingText ? <p className={createClassName(styles, 'notification-icon__title')}>{t('expand')}</p> : null}
+								</span>
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}

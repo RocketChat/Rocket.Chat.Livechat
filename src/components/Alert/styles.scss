@@ -19,15 +19,26 @@ $alert-error-background-color: $color-red;
 
 	letter-spacing: 0;
 
-	color: $alert-color;
+	color: var(--alert-color, $alert-color);
 	background-color: $alert-background-color;
 
 	font-family: $alert-font-family;
-	font-size: 12px;
 	font-weight: 600;
 	line-height: 16px;
 	align-items: center;
 	justify-content: space-between;
+
+	&__text-font-small {
+		font-size: 10px;
+	}
+
+	&__text-font-normal {
+		font-size: 12px;
+	}
+
+	&__text-font-large {
+		font-size: 16px;
+	}
 
 	&__content {
 		overflow: hidden;
@@ -52,14 +63,14 @@ $alert-error-background-color: $color-red;
 	}
 
 	&--success {
-		background-color: $alert-success-background-color;
+		background-color: var(--alert-success-bg-color, $alert-success-background-color);
 	}
 
 	&--warning {
-		background-color: $alert-warning-background-color;
+		background-color: var(--alert-warning-bg-color, $color-yellow);
 	}
 
 	&--error {
-		background-color: $alert-error-background-color;
+		background-color: var(--alert-error-bg-color, $alert-error-background-color);
 	}
 }

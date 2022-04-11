@@ -12,6 +12,7 @@ export const FormField = ({
 	className,
 	style = {},
 	children,
+	dynamicTextState,
 }) => (
 	<div
 		className={createClassName(styles, 'form-field', { required, error: !!error }, [className])}
@@ -19,7 +20,11 @@ export const FormField = ({
 	>
 		<label className={createClassName(styles, 'form-field__label-wrapper')}>
 			{label
-				? <span className={createClassName(styles, 'form-field__label')}>{label}</span>
+				? <span className={createClassName(styles, 'form-field__label')}>
+					<span className={createClassName(styles, `form-field__label__font-${ dynamicTextState }`)}>
+						{label}
+					</span>
+				</span>
 				: null}
 			<span className={createClassName(styles, 'form-field__input')}>
 				{error

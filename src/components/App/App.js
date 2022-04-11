@@ -8,9 +8,13 @@ import history from '../../history';
 import Connection from '../../lib/connection';
 import CustomFields from '../../lib/customFields';
 import Hooks from '../../lib/hooks';
+import { setIconsAccompanyingTextState, setDarkModeState,
+	setSmallDynamicTextState, setNormalDynamicTextState,
+	setLargeDynamicTextState, accessibleModeFalse, accessibleModeTrue } from '../../lib/main';
 import { parentCall } from '../../lib/parentCall';
 import Triggers from '../../lib/triggers';
 import userPresence from '../../lib/userPresence';
+import AccessibleMode from '../../routes/AccessibleMode';
 import { ChatConnector } from '../../routes/Chat';
 import ChatFinished from '../../routes/ChatFinished';
 import GDPRAgreement from '../../routes/GDPRAgreement';
@@ -157,6 +161,31 @@ export class App extends Component {
 		i18next.on('languageChanged', this.handleLanguageChange);
 	}
 
+	setDarkMode = async () => {
+		const { accessible: { darkMode } } = this.props;
+		const { body } = document;
+
+		if (darkMode) {
+			body.classList.add('dark');
+		} else {
+			body.classList.add('light');
+		}
+		if (darkMode) {
+			body.classList.replace('light', 'dark');
+		} else {
+			body.classList.replace('dark', 'light');
+		}
+	};
+
+	getConfigurations = async () => {
+		const { config: { settings: { allowAccessibleMode } } } = this.props;
+		if (!allowAccessibleMode) {
+			accessibleModeFalse();
+		} else {
+			accessibleModeTrue();
+		}
+	}
+
 	checkPoppedOutWindow() {
 		// Checking if the window is poppedOut and setting parent minimized if yes for the restore purpose
 		const { dispatch } = this.props;
@@ -176,7 +205,8 @@ export class App extends Component {
 		userPresence.init();
 		this.initWidget();
 		this.checkPoppedOutWindow();
-
+		await this.setDarkMode();
+		await this.getConfigurations();
 		this.setState({ initialized: true });
 		parentCall('ready');
 	}
@@ -198,6 +228,7 @@ export class App extends Component {
 	componentDidUpdate() {
 		const { i18n } = this.props;
 		document.dir = isRTL(i18n.t('yes')) ? 'rtl' : 'ltr';
+		this.setDarkMode();
 	}
 
 	render = ({
@@ -219,6 +250,11 @@ export class App extends Component {
 			sound,
 			alerts,
 			modal,
+			setIconsAccompanyingTextState,
+			setDarkModeState,
+			setSmallDynamicTextState,
+			setNormalDynamicTextState,
+			setLargeDynamicTextState,
 			onEnableNotifications: this.handleEnableNotifications,
 			onDisableNotifications: this.handleDisableNotifications,
 			onMinimize: this.handleMinimize,
@@ -236,6 +272,7 @@ export class App extends Component {
 				<LeaveMessage path='/leave-message' {...screenProps} />
 				<Register path='/register' {...screenProps} />
 				<SwitchDepartment path='/switch-department' {...screenProps} />
+				<AccessibleMode path='/accessible-mode' {...screenProps} />
 				<TriggerMessage path='/trigger-messages' {...screenProps} />
 			</Router>
 		);

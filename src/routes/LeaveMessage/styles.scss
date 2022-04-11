@@ -1,17 +1,24 @@
-
 .leave-message {
-	p {
-		margin-top: 0;
-	}
+	padding: 1rem 1.5rem 0;
 
-	&__main {
-		padding: 0 1.5rem;
-	}
+	color: var(--register-message-color, #444444);
 
-	&__message {
+	&__main-message {
 		margin: 0 0 1rem;
 
 		font-weight: 500;
 		line-height: 1.5;
 	}
+}
+
+.font-normal {
+	font-size: 1rem;
+}
+
+.font-small {
+	font-size: 0.75rem;
+}
+
+.font-large {
+	font-size: 1.25rem;
 }

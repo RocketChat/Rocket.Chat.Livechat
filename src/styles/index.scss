@@ -2,6 +2,48 @@
 @import 'grid';
 @import 'variables';
 
+:root {
+	--white: rgb(255, 255, 255);
+	--black: #1f2329;
+	--color-text-lighter-white: #ffffff;
+	--dark: #2f343d;
+	--light: #cbced1;
+	--border-hover-dark: #4f555d;
+	--border-disabled: #e4e7ea;
+	--border-disabled-dark: #6a7078;
+	--footer-options-color: #000000;
+	--bg-color-white: #f7f8fa;
+	--btn-secondary-bg-color: #9ea2a8;
+	--color-text-gray: #9ea2a8;
+	--color-text-dark-gray: #444444;
+	--color-text-gray-system: #6c727a;
+	--color-message-icons: #696969;
+	--color-black: #000000;
+	--color-dark-red: #b03e4d;
+	--color-dark-light-red: #c1272d;
+	--color-grey-light: #33373d;
+	--color-blue: #1d74f5;
+	--color-menu-items: #cdcfd4;
+	--menu-item-hover-color: #f5f5f5;
+	--menu-item-hover-color-dark-mode: #181c22;
+	--menu-item-primary-hover-color-light: #f4f8ff;
+	--menu-item-danger-hover-color-light: #fff6f7;
+	--menu-item-active-color: #eaebec;
+	--menu-item-active-color-dark-mode: #0f1116;
+	--menu-item-primary-active-color-light: #e8f1fe;
+	--menu-item-danger-active-color-light: #feecef;
+	--alert-warning-color-dark-mode: #dfac00;
+	--alert-success-color-dark-mode: #19ac7c;
+	--alert-error-color-dark-mode: #b30a20;
+	--color-red: #f5455c;
+	--color-yellow: #ffd21f;
+	--color-green: #2de0a5;
+	--alert-color-dark: #1e2024;
+	--input-field-border-dark-default: #454a52;
+	--input-field-border-dark-focus: #172a40;
+	--default-border: 2px;
+}
+
 html,
 body {
 	width: 100%;
@@ -9,12 +51,108 @@ body {
 	margin: 0;
 	padding: 0;
 
-	color: #444444;
-
 	font-family: $font-family;
 	font-weight: 400;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+body.light {
+	--background-color: var(--white);
+	--text-color: var(--color-text-dark-gray);
+	--color-text-lighter: var(--color-text-lighter-white);
+	--form-field-label-color: var(--dark);
+	--form-select-input-field-background: var(--white);
+	--nude-button: none;
+	--switch-depart-label-color: var(--dark);
+	--input-field-border-hover: var(--light);
+	--input-field-border-focus: var(--dark);
+	--input-field-border: var(--border-disabled);
+	--footer-options-text-color: var(--footer-options-color);
+	--footer-logo-text-color: var(--dark);
+	--modal-bg-color: var(--bg-color-white);
+	--modal-text-color: var(--dark);
+	--btn-secondary-bg-color: var(--color-text-gray);
+	--btn-outline-bg-color: none;
+	--btn-secondary-text-color: var(--color-text-gray);
+	--message-time-color: var(--black);
+	--system-color: var(--color-text-gray-system);
+	--composer-bg-color: var(--white);
+	--composer-input-color: var(--dark);
+	--color-message-box-icons: var(--color-message-icons);
+	--color-message-box-icons-hover: var(--color-black);
+	--chat-finished-message-text-color: var(--color-text-gray);
+	--chat-finished-greeting-text-color: none;
+	--register-message-color: var(--color-black);
+	--text-field-text-color: var(--dark);
+	--text-field-bg-color: var(--white);
+	--header-bg-color: var(--color-dark-light-red);
+	--menu-bg-color: var(--white);
+	--menu-item-color: var(--dark);
+	--menu-item-primary-color: var(--color-blue);
+	--menu-item-hover: var(--menu-item-hover-color);
+	--menu-item-primary-hover: var(--menu-item-primary-hover-color-light);
+	--menu-item-danger-hover: var(--menu-item-danger-hover-color-light);
+	--menu-item-active: var(--menu-item-active-color);
+	--menu-item-primary-active: var(--menu-item-primary-active-color-light);
+	--menu-item-danger-active: var(--menu-item-danger-active-color-light);
+	--alert-warning-bg-color: var(--color-yellow);
+	--alert-error-bg-color: var(--color-red);
+	--alert-success-bg-color: var(--color-green);
+	--alert-color: var(--white);
+	--default-border-width: var(--default-border);
+	--message-bubble-bg-color: var(--bg-color-white);
+	--message-bubble-text-color: var(--dark);
+	--file-attachment-color: var(--dark);
+}
+
+body.dark {
+	--background-color: var(--black);
+	--text-color: var(--white);
+	--color-text-lighter: var(--color-text-lighter-white);
+	--form-field-label-color: var(--white);
+	--form-select-input-field-background: var(--dark);
+	--nude-button: var(--input-field-border-dark-default);
+	--switch-depart-label-color: var(--white);
+	--input-field-border-hover: var(--dark);
+	--input-field-border-focus: var(--input-field-border-dark-focus);
+	--input-field-border: var(--input-field-border-dark-default);
+	--footer-options-text-color: var(--white);
+	--footer-logo-text-color: var(--white);
+	--modal-bg-color: var(--dark);
+	--modal-text-color: var(--white);
+	--btn-secondary-bg-color: var(--white);
+	--btn-outline-bg-color: var(--input-field-border-dark-default);
+	--btn-secondary-text-color: var(--white);
+	--message-time-color: var(--white);
+	--system-color: var(--white);
+	--composer-bg-color: var(--dark);
+	--composer-input-color: var(--white);
+	--color-message-box-icons: var(--light);
+	--color-message-box-icons-hover: var(--white);
+	--chat-finished-message-text-color: var(--white);
+	--chat-finished-greeting-text-color: var(--white);
+	--register-message-color: var(--white);
+	--text-field-text-color: var(--white);
+	--text-field-bg-color: var(--dark);
+	--header-bg-color: var(--color-dark-light-red);
+	--menu-bg-color: var(--color-grey-light);
+	--menu-item-color: var(--color-menu-items);
+	--menu-item-hover: var(--menu-item-hover-color-dark-mode);
+	--menu-item-primary-hover: var(--menu-item-hover-color-dark-mode);
+	--menu-item-danger-hover: var(--menu-item-hover-color-dark-mode);
+	--menu-item-active: var(--menu-item-active-color-dark-mode);
+	--menu-item-primary-active: var(--menu-item-active-color-dark-mode);
+	--menu-item-danger-active: var(--menu-item-active-color-dark-mode);
+	--alert-warning-bg-color: var(--alert-warning-color-dark-mode);
+	--alert-success-bg-color: var(--alert-success-color-dark-mode);
+	--alert-error-bg-color: var(--alert-error-color-dark-mode);
+	--alert-color: var(--alert-color-dark);
+	--default-border-width: 0;
+	--footer-bg-color: var(--dark);
+	--message-bubble-bg-color: var(--dark);
+	--message-bubble-text-color: var(--white);
+	--file-attachment-color: var(--light);
 }
 
 * {

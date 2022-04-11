@@ -175,6 +175,10 @@ class ChatContainer extends Component {
 		route('/switch-department');
 	}
 
+	onAccessibleMode = () => {
+		route('/accessible-mode');
+	}
+
 	onFinishChat = async () => {
 		const { i18n } = this.props;
 
@@ -231,7 +235,7 @@ class ChatContainer extends Component {
 
 	canSwitchDepartment = () => {
 		const { allowSwitchingDepartments, departments = {} } = this.props;
-		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length > 1;
+		return allowSwitchingDepartments && departments.filter((dept) => dept.showOnRegistration).length >= 0;
 	}
 
 	canFinishChat = () => {
@@ -351,6 +355,7 @@ class ChatContainer extends Component {
 			onChangeDepartment={(this.canSwitchDepartment() && this.onChangeDepartment) || null}
 			onFinishChat={(this.canFinishChat() && this.onFinishChat) || null}
 			onRemoveUserData={(this.canRemoveUserData() && this.onRemoveUserData) || null}
+			onAccessibleMode={(this.onAccessibleMode || null)}
 			onSoundStop={this.handleSoundStop}
 			registrationRequired={this.registrationRequired()}
 			onRegisterUser={this.onRegisterUser}
@@ -365,6 +370,7 @@ export const ChatConnector = ({ ref, t, ...props }) => (
 				settings: {
 					fileUpload: uploads,
 					allowSwitchingDepartments,
+					allowAccessibleMode,
 					forceAcceptDataProcessingConsent: allowRemoveUserData,
 					showConnecting,
 					registrationForm,
@@ -406,6 +412,12 @@ export const ChatConnector = ({ ref, t, ...props }) => (
 			lastReadMessageId,
 			triggerAgent,
 			queueInfo,
+			accessible: {
+				iconsAccompanyingText: iconsTextState,
+				dynamicText: dynamicTextState,
+				darkMode: darkModeState,
+			} = {},
+			setDarkModeState,
 			incomingCallAlert,
 			ongoingCall,
 		}) => (
@@ -446,6 +458,7 @@ export const ChatConnector = ({ ref, t, ...props }) => (
 				dispatch={dispatch}
 				departments={departments}
 				allowSwitchingDepartments={allowSwitchingDepartments}
+				allowAccessibleMode={allowAccessibleMode}
 				conversationFinishedMessage={conversationFinishedMessage || t('conversation_finished')}
 				allowRemoveUserData={allowRemoveUserData}
 				alerts={alerts}
@@ -463,6 +476,10 @@ export const ChatConnector = ({ ref, t, ...props }) => (
 				nameFieldRegistrationForm={nameFieldRegistrationForm}
 				emailFieldRegistrationForm={emailFieldRegistrationForm}
 				limitTextLength={limitTextLength}
+				iconsTextState={iconsTextState}
+				dynamicTextState={dynamicTextState}
+				darkModeState={darkModeState}
+				setDarkModeState={setDarkModeState}
 				incomingCallAlert={incomingCallAlert}
 				ongoingCall={ongoingCall}
 			/>

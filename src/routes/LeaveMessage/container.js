@@ -66,6 +66,10 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 			token,
 			dispatch,
 			alerts,
+			accessible: {
+				iconsAccompanyingText: iconsAccompanyingTextState,
+				dynamicText: dynamicTextState,
+			} = {},
 		}) => (
 			<LeaveMessageContainer
 				ref={ref}
@@ -85,6 +89,8 @@ export const LeaveMessageConnector = ({ ref, ...props }) => (
 				hasForm={displayOfflineForm}
 				hasDepartmentField={departments && departments.some((dept) => dept.showOnOfflineForm)}
 				departments={departments.filter((dept) => dept.showOnOfflineForm)}
+				iconsAccompanyingTextState={iconsAccompanyingTextState}
+				dynamicTextState={dynamicTextState}
 			/>
 		)}
 	</Consumer>

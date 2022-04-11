@@ -199,10 +199,9 @@ class Register extends Component {
 		}
 	}
 
-	render({ title, color, message, loading, departments, customFields, t, ...props }, { name, email, department, ...state }) {
+	render({ title, color, message, loading, departments, customFields, t, iconsAccompanyingTextState, dynamicTextState, ...props }, { name, email, department, ...state }) {
 		const defaultTitle = t('need_help');
 		const defaultMessage = t('please_tell_us_some_information_to_start_the_chat');
-
 		const valid = getValidableFields(this.state).every(({ error } = {}) => !error);
 
 		return (
@@ -210,10 +209,13 @@ class Register extends Component {
 				color={color}
 				title={title || defaultTitle}
 				className={createClassName(styles, 'register')}
+				iconsAccompanyingText={iconsAccompanyingTextState}
+				dynamicTextState={dynamicTextState}
 				{...props}
 			>
 				<Screen.Content>
-					<p className={createClassName(styles, 'register__message')}>{message || defaultMessage}</p>
+					<p className={createClassName(styles, 'register__message')}>
+						<span className={createClassName(styles, `register__message--${ dynamicTextState }`)}>{message || defaultMessage}</span></p>
 
 					<Form onSubmit={this.handleSubmit}>
 						{name
@@ -222,6 +224,7 @@ class Register extends Component {
 									required
 									label={t('name')}
 									error={name.showError && name.error}
+									dynamicTextState={dynamicTextState}
 								>
 									<TextInput
 										name='name'
@@ -240,6 +243,7 @@ class Register extends Component {
 									required
 									label={t('email')}
 									error={email.showError && email.error}
+									dynamicTextState={dynamicTextState}
 								>
 									<TextInput
 										name='email'
@@ -257,6 +261,7 @@ class Register extends Component {
 								<FormField
 									label={t('i_need_help_with')}
 									error={department.showError && department.error}
+									dynamicTextState={dynamicTextState}
 								>
 									<SelectInput
 										name='department'

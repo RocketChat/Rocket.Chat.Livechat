@@ -1,6 +1,20 @@
 .register__message {
 	margin: 0 0 1rem;
 
+	color: var(--register-message-color, #444444);
+
 	font-weight: 500;
 	line-height: 1.5;
+
+	&--small {
+		font-size: 0.75rem;
+	}
+
+	&--normal {
+		font-size: 1rem;
+	}
+
+	&--large {
+		font-size: 1.25rem;
+	}
 }

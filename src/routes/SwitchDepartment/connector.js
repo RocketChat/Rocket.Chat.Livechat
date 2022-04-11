@@ -25,6 +25,11 @@ const SwitchDepartmentConnector = ({ ref, ...props }) => (
 			dispatch,
 			alerts,
 			token,
+			accessible: {
+				iconsAccompanyingText: iconsAccompanyingTextState,
+				dynamicText: dynamicTextState,
+				darkMode: darkModeState,
+			} = {},
 		}) => (
 			<SwitchDepartmentContainer
 				ref={ref}
@@ -40,6 +45,9 @@ const SwitchDepartmentConnector = ({ ref, ...props }) => (
 				room={room}
 				alerts={alerts}
 				token={token}
+				iconsAccompanyingTextState={iconsAccompanyingTextState}
+				dynamicTextState={dynamicTextState}
+				darkModeState={darkModeState}
 			/>
 		)}
 	</Consumer>

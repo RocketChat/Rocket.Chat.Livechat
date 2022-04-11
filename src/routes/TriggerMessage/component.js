@@ -25,7 +25,7 @@ class TriggerMessage extends Component {
 		parentCall('resizeWidget', height);
 	}
 
-	render({ title, messages, loading, onStartChat = () => {}, departments, t, ...props }) {
+	render({ title, messages, loading, onStartChat = () => {}, departments, t, iconsAccompanyingTextState, dynamicTextState, ...props }) {
 		const defaultTitle = t('messages');
 		const { theme: { color } } = props;
 		return (
@@ -33,6 +33,7 @@ class TriggerMessage extends Component {
 				title={title || defaultTitle}
 				{...props}
 				triggered={true}
+				iconsAccompanyingText={iconsAccompanyingTextState}
 				ref={this.ref}
 			>
 				<Screen.Content triggered={true}>

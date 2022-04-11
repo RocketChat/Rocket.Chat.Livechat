@@ -35,9 +35,9 @@ export const Content = ({ children, className, ...props }) => (
 	</div>
 );
 
-export const Title = ({ children, className, ...props }) => (
+export const Title = ({ children, className, dynamicTextState, ...props }) => (
 	<div className={createClassName(styles, 'header__title', {}, [className])} {...props}>
-		{children}
+		<span className={createClassName(styles, `header__title--${ dynamicTextState }`)}>{children}</span>
 	</div>
 );
 

@@ -1,6 +1,10 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
+$message-box-icons-text-font-size: 0.675rem;
+$message-box-icons-text-height: 1rem;
+$message-box-icons-text-color-hover: $color-text-dark;
+
 .chat {
 	&__messages {
 		position: relative;
@@ -56,15 +60,25 @@
 
 		opacity: 0.6;
 	}
+}
 
-	.emoji-picker-icon {
-		color: #696969;
+.message-box-icons {
+	margin: 0 auto;
 
-		&:hover,
-		&:focus {
-			color: black;
-		}
+	color: var(--color-message-box-icons, #696969);
+
+	&:hover,
+	&:focus {
+		color: var(--color-message-box-icons-hover, black);
 	}
+}
+
+.message-box-icons-text {
+	margin: -2px 0;
+
+	font-size: $message-box-icons-text-font-size;
+	font-weight: 500;
+	line-height: $message-box-icons-text-height;
 }
 
 @keyframes loader-rotate {

@@ -87,7 +87,8 @@ class LeaveMessage extends Component {
 		this.validateAll();
 	}
 
-	renderForm = ({ loading, departments, valid = this.isValid(), t }, { name, email, department, message }) => (
+
+	renderForm = ({ loading, departments, valid = this.isValid(), t }, { name, email, department, message }, dynamicTextState) => (
 		<Form onSubmit={this.handleSubmit}>
 			{name
 				? (
@@ -95,6 +96,7 @@ class LeaveMessage extends Component {
 						required
 						label={t('name')}
 						error={name.showError && name.error}
+						dynamicTextState={dynamicTextState}
 					>
 						<TextInput
 							name='name'
@@ -113,6 +115,7 @@ class LeaveMessage extends Component {
 						required
 						label={t('Email')}
 						error={email.showError && email.error}
+						dynamicTextState={dynamicTextState}
 					>
 						<TextInput
 							name='email'
@@ -130,6 +133,7 @@ class LeaveMessage extends Component {
 					<FormField
 						label={t('i_need_help_with')}
 						error={department.showError && department.error}
+						dynamicTextState={dynamicTextState}
 					>
 						<SelectInput
 							name='department'
@@ -150,6 +154,7 @@ class LeaveMessage extends Component {
 						required
 						label={t('message')}
 						error={message.showError && message.error}
+						dynamicTextState={dynamicTextState}
 					>
 						<TextInput
 							name='message'
@@ -171,7 +176,7 @@ class LeaveMessage extends Component {
 		</Form>
 	)
 
-	render = ({ color, title, message, unavailableMessage, hasForm, t, ...props }) => {
+	render = ({ color, title, message, unavailableMessage, hasForm, t, iconsAccompanyingTextState, dynamicTextState, ...props }) => {
 		const defaultTitle = t('leave_a_message');
 		const defaultMessage = t('we_are_not_online_right_now_please_leave_a_message');
 		const defaultUnavailableMessage = ''; // TODO
@@ -180,14 +185,21 @@ class LeaveMessage extends Component {
 			color={color}
 			title={title || defaultTitle}
 			className={createClassName(styles, 'leave-message')}
+			iconsAccompanyingText={iconsAccompanyingTextState}
 			{...props}
 		>
 			<Screen.Content>
-				<div className={createClassName(styles, 'leave-message__main-message')}
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: renderMarkdown(hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage) }}
-				/>
-				{hasForm && this.renderForm(this.props, this.state)}
+				<p className={createClassName(styles, 'leave-message__main-message')}>
+					<span
+						className={createClassName(styles, `font-${ dynamicTextState }`)}
+						// eslint-disable-next-line react/no-danger
+						dangerouslySetInnerHTML={{
+							__html: renderMarkdown(hasForm ? message || defaultMessage : unavailableMessage || defaultUnavailableMessage),
+						}}
+					/>
+				</p>
+
+				{hasForm && this.renderForm(this.props, this.state, dynamicTextState)}
 			</Screen.Content>
 			<Screen.Footer />
 		</Screen>;

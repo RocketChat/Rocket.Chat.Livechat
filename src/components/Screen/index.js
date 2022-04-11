@@ -25,7 +25,7 @@ export const ScreenFooter = ({ children, options, limit }) => (
 				{children}
 			</FooterContent>
 		)}
-		<FooterContent>
+		<FooterContent >
 			{options}
 			{limit}
 			<PoweredBy />
@@ -109,6 +109,8 @@ export const Screen = ({
 	queueInfo,
 	dismissNotification,
 	triggered = false,
+	iconsAccompanyingText,
+	dynamicTextState,
 }) => (
 	<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, triggered })}>
 		<CssVar theme={theme} />
@@ -130,6 +132,8 @@ export const Screen = ({
 					onRestore={onRestore}
 					onOpenWindow={onOpenWindow}
 					queueInfo={queueInfo}
+					iconsAccompanyingText={iconsAccompanyingText}
+					dynamicTextState={dynamicTextState}
 				/>}
 
 				{modal}

@@ -22,9 +22,8 @@ $header-action-active-displacement: 2px;
 	height: $header-height;
 	padding: 0 math.div($header-padding, 2);
 
-	color: var(--font-color, $header-color);
+	color: var(--color-text-lighter, $header-color);
 	background-color: var(--color, $header-background-color);
-	box-shadow: 0 0 16px $bg-color-grey;
 
 	font-size: 16px;
 	align-items: center;
@@ -55,8 +54,20 @@ $header-action-active-displacement: 2px;
 			text-overflow: ellipsis;
 
 			font-size: 16px;
-			font-weight: 500;
+			font-weight: 600;
 			line-height: 1.5;
+
+			&--small {
+				font-size: 12px;
+			}
+
+			&--normal {
+				font-size: 16px;
+			}
+
+			&--large {
+				font-size: 20px;
+			}
 		}
 
 		.header__subtitle {

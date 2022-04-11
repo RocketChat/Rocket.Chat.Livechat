@@ -21,6 +21,11 @@ export const initialState = () => ({
 		enabled: true,
 		play: false,
 	},
+	accessible: {
+		iconsAccompanyingText: false,
+		dynamicText: 'normal',
+		darkMode: false,
+	},
 	iframe: {
 		guest: {},
 		theme: {},

@@ -37,6 +37,11 @@ const GDPRConnector = ({ ref, t, ...props }) => (
 				} = {},
 			} = {},
 			dispatch,
+			accessible: {
+				iconsAccompanyingText: iconsAccompanyingTextState,
+				dynamicText: dynamicTextState,
+				darkMode: darkModeState,
+			} = {},
 		}) => (
 			<GDPRContainer
 				ref={ref}
@@ -49,6 +54,9 @@ const GDPRConnector = ({ ref, t, ...props }) => (
 				title={t('gdpr')}
 				dispatch={dispatch}
 				consentText={consentText}
+				iconsAccompanyingTextState={iconsAccompanyingTextState}
+				dynamicTextState={dynamicTextState}
+				darkModeState={darkModeState}
 			/>
 		)}
 	</Consumer>

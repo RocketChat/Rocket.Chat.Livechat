@@ -16,7 +16,7 @@ $message-time-color: $color-text-grey;
 	user-select: none;
 	white-space: nowrap;
 
-	color: $message-time-color;
+	color: var(--message-time-color, $message-time-color);
 
 	font-size: $message-time-font-size;
 	line-height: $message-time-line-height;
@@ -26,7 +26,7 @@ $message-time-color: $color-text-grey;
 		position: relative;
 
 		& > .message-time {
-			bottom: -16px;
+			bottom: -20px;
 
 			&--normal {
 				right: 0;

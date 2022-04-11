@@ -38,7 +38,7 @@ $modal-background-color: $bg-color-white;
 	transform: translate(-50%, -50%);
 
 	border-radius: $modal-border-radius;
-	background-color: $modal-background-color;
+	background-color: var(--modal-bg-color, $bg-color-light);
 	box-shadow: $modal-shadow;
 
 	&--animated {
@@ -52,7 +52,7 @@ $modal-background-color: $bg-color-white;
 
 	text-align: center;
 
-	color: $color-text-dark;
+	color: var(--modal-text-color, #2f343d);
 
 	font-size: 1rem;
 	font-weight: 500;

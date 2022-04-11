@@ -17,6 +17,7 @@ const AppConnector = () => (
 					undocked,
 					minimized = true,
 					expanded = false,
+					accessible,
 					alerts,
 					modal,
 					dispatch,
@@ -31,6 +32,7 @@ const AppConnector = () => (
 						undocked={undocked}
 						minimized={minimized}
 						expanded={expanded}
+						accessible={accessible}
 						alerts={alerts}
 						modal={modal}
 						dispatch={dispatch}
