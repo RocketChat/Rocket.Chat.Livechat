@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.13.2 - 2022-04-18
+[FIX] Sync import for i18next load (#710)
+
 ## 1.13.1 - 2022-04-08
 bump version
 
