@@ -1,11 +1,18 @@
 import { h } from 'preact';
 
-import '../../i18next';
 import { Provider as StoreProvider, Consumer as StoreConsumer } from '../../store';
 import App from './App';
 
-const AppConnector = () => (
-	<div id='app'>
+const loadI18nextLib = async () => {
+	await import('../../i18next');
+
+	return 'ready';
+};
+
+const AppConnector = () => {
+	loadI18nextLib();
+
+	return <div id='app'>
 		<StoreProvider>
 			<StoreConsumer>
 				{({
@@ -39,7 +46,6 @@ const AppConnector = () => (
 				)}
 			</StoreConsumer>
 		</StoreProvider>
-	</div>
-);
-
+	</div>;
+};
 export default AppConnector;
