@@ -5,8 +5,6 @@ import App from './App';
 
 const loadI18nextLib = async () => {
 	await import('../../i18next');
-
-	return 'ready';
 };
 
 const AppConnector = () => {
