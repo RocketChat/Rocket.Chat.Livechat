@@ -33,7 +33,7 @@ const Connection = {
 		try {
 			this.clearListeners();
 			await loadConfig();
-			await loadI18nextLib();
+			await import('../i18next');
 			await Livechat.connect();
 			this.addListeners();
 			this.clearAlerts();
