@@ -14,10 +14,6 @@ let initiated = false;
 const { livechatDisconnectedAlertId, livechatConnectedAlertId } = constants;
 const removeListener = (l) => l.stop();
 
-const loadI18nextLib = async () => {
-	await import('../i18next');
-};
-
 const Connection = {
 	async init() {
 		if (initiated) {
