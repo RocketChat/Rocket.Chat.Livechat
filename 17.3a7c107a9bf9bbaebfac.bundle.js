@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[17],{1420:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Ακύρωση","conversation_finished":"Η συνομιλία τελείωσε","department_switched":"Το τμήμα άλλαξε","no":"Όχι","options":"Επιλογές","send":"Αποστολή","user_joined":"Ο χρήστης συνδέθηκε","user_left":"Ο χρήστης έφυγε","we_are_not_online_right_now_please_leave_a_message":"Δεν είμαστε συνδεδεμένοι αυτήν τη στιγμή. Παρακαλώ αφήστε μήνυμα.","yes":"Ναι"}}')}}]);
+//# sourceMappingURL=17.3a7c107a9bf9bbaebfac.bundle.js.map

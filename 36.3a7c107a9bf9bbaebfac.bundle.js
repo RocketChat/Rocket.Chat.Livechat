@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[36],{1439:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Atšaukti","conversation_finished":"Pokalbis baigtas","department_switched":"Skyrius perjungtas","no":"Nėra","options":"Galimybės","send":"Siųsti","user_joined":"Vartotojas prisijungė","user_left":"Vartotojas paliko","we_are_not_online_right_now_please_leave_a_message":"Šiuo metu mes nesame prisijungę. Prašome palikti pranešimą.","yes":"Ne"}}')}}]);
+//# sourceMappingURL=36.3a7c107a9bf9bbaebfac.bundle.js.map

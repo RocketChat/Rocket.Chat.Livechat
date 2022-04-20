@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[35],{1438:function(module){module.exports=JSON.parse('{"translation":{"cancel":"ຍົກເລີກ","conversation_finished":"ການສົນທະນາໄດ້ສໍາເລັດ","department_switched":"ກົມປ່ຽນແປງ","options":"ຕົວເລືອກ","send":"ສົ່ງ","user_joined":"ຜູ້ໃຊ້ເຂົ້າຮ່ວມ","user_left":"ຊ້າຍ User","we_are_not_online_right_now_please_leave_a_message":"ພວກເຮົາບໍ່ໄດ້ອອນໄລນ໌ໃນປັດຈຸບັນ. ກະລຸນາອອກຈາກຂໍ້ຄວາມ.","yes":"ແມ່ນແລ້ວ"}}')}}]);
+//# sourceMappingURL=35.3a7c107a9bf9bbaebfac.bundle.js.map

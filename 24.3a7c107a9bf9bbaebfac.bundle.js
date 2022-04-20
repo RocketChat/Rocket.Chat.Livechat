@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[24],{1427:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Peruuta","conversation_finished":"Keskustelu päättynyt","department_switched":"Osasto vaihdettu","no":"Ei","options":"Valinnat","send":"Lähetä","user_joined":"Käyttäjä liittyi","user_left":"Käyttäjä poistui","we_are_not_online_right_now_please_leave_a_message":"Emme ole verkossa juuri nyt. Jätä viesti.","yes":"Kyllä"}}')}}]);
+//# sourceMappingURL=24.3a7c107a9bf9bbaebfac.bundle.js.map

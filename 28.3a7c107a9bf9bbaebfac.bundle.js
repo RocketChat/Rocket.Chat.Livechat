@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[28],{1431:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Mégse","conversation_finished":"Beszélgetés befejeződött","department_switched":"Részleg lecserélve","no":"Nem","options":"Beállítások","send":"Elküld","user_joined":"Felhasználó belépett","user_left":"Felhasználó kilépett","we_are_not_online_right_now_please_leave_a_message":"Jelenleg nem vagyunk online. Kérlek hagyj üzenetet.","yes":"Igen"}}')}}]);
+//# sourceMappingURL=28.3a7c107a9bf9bbaebfac.bundle.js.map

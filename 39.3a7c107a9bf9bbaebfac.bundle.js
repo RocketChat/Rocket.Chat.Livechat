@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[39],{1442:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Batal","conversation_finished":"perbualan selesai","department_switched":"Jabatan dihidupkan","no":"Tidak","options":"Pilihan","send":"menghantar","user_joined":"pengguna menyertai","user_left":"kiri pengguna","we_are_not_online_right_now_please_leave_a_message":"Kami tidak berada dalam talian sekarang. Tolong, tinggalkan mesej.","yes":"Ya"}}')}}]);
+//# sourceMappingURL=39.3a7c107a9bf9bbaebfac.bundle.js.map

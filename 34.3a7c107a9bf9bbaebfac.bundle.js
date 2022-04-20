@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[34],{1437:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Bişûndekirin","conversation_finished":"conversation qedand","department_switched":"Wezaretê veguherîn","no":"Na","options":"Vebijêrkên","send":"Şandin","user_joined":"Bikarhêner bûn","user_left":"çepê Bikarhêner","we_are_not_online_right_now_please_leave_a_message":"Em niha ne tenê ne. Ji kerema xwe, peyamek bistînin.","yes":"Erê"}}')}}]);
+//# sourceMappingURL=34.3a7c107a9bf9bbaebfac.bundle.js.map

@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[9],{1412:function(module){module.exports=JSON.parse('{"translation":{"are_you_sure_you_want_to_switch_the_department":"Jeste li sigurni da želite prebaciti odjel?"}}')}}]);
+//# sourceMappingURL=9.3a7c107a9bf9bbaebfac.bundle.js.map

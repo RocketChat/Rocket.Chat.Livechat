@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[8],{1411:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Отказ","conversation_finished":"Разговорът завърши","department_switched":"Отделът е включен","no":"Не","options":"Настроики","send":"Изпрати","user_joined":"Потребителят се присъедини","user_left":"Потребителят остана","we_are_not_online_right_now_please_leave_a_message":"В момента не сме онлайн. Моля, оставете съобщение.","yes":"Да"}}')}}]);
+//# sourceMappingURL=8.3a7c107a9bf9bbaebfac.bundle.js.map

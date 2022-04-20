@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{1413:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Cancel·la","conversation_finished":"Conversa acabada","department_switched":"Departament canviat","options":"Opcions","send":"Envia","user_joined":"usuari unit","user_left":"L\'usuari ha abandonat la sala","we_are_not_online_right_now_please_leave_a_message":"No estem en línia ara mateix. Sisplau, deixa un missatge.","yes":"Sí"}}')}}]);
+//# sourceMappingURL=10.3a7c107a9bf9bbaebfac.bundle.js.map

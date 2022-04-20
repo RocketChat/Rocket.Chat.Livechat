@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[48],{1451:function(module){module.exports=JSON.parse('{"translation":{"cancel":"Prekliči","conversation_finished":"Pogovor končan","department_switched":"Oddelek zamenjan","no":"Ne","options":"Možnosti","send":"Pošlji","user_joined":"Uporabnik se je pridružil","user_left":"Uporabnik je odšel","we_are_not_online_right_now_please_leave_a_message":"Trenutno nismo na spletu. Prosim pustite sporočilo.","yes":"Da"}}')}}]);
+//# sourceMappingURL=48.3a7c107a9bf9bbaebfac.bundle.js.map
