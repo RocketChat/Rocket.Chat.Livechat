@@ -81,12 +81,11 @@ export class App extends Component {
 
 	handleTriggers() {
 		const { config: { online, enabled } } = this.props;
-
-		Triggers.enabled = online && enabled;
-
 		if (online && enabled) {
 			Triggers.init();
 		}
+
+		Triggers.processTriggers();
 	}
 
 	handleEnableNotifications = () => {
@@ -170,13 +169,12 @@ export class App extends Component {
 	async initialize() {
 		// TODO: split these behaviors into composable components
 		await Connection.init();
-		this.handleTriggers();
 		CustomFields.init();
-		Hooks.init();
 		userPresence.init();
+		Hooks.init();
+		this.handleTriggers();
 		this.initWidget();
 		this.checkPoppedOutWindow();
-
 		this.setState({ initialized: true });
 		parentCall('ready');
 	}
