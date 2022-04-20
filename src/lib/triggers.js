@@ -89,8 +89,8 @@ class Triggers {
 	}
 
 	async fire(trigger) {
-		const { token, user, firedTriggers = [] } = store.state;
-		if (!this._enabled || !user) {
+		const { token, firedTriggers = [] } = store.state;
+		if (!this._enabled) {
 			return;
 		}
 		const { actions } = trigger;
@@ -148,7 +148,6 @@ class Triggers {
 			if (trigger.skip) {
 				return;
 			}
-
 			trigger.conditions.forEach((condition) => {
 				switch (condition.name) {
 					case 'page-url':
@@ -158,9 +157,6 @@ class Triggers {
 						}
 						break;
 					case 'time-on-site':
-						if (trigger.timeout) {
-							clearTimeout(trigger.timeout);
-						}
 						trigger.timeout = setTimeout(() => {
 							this.fire(trigger);
 						}, parseInt(condition.value, 10) * 1000);
@@ -169,7 +165,7 @@ class Triggers {
 						const openFunc = () => {
 							const { user } = store.state;
 							if (user) {
-								if (trigger.runOnce) { store.off('change', openFunc); }
+								store.off('change', openFunc);
 								this.fire(trigger);
 							}
 						};
