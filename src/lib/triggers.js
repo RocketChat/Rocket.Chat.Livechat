@@ -1,3 +1,4 @@
+import mitt from 'mitt';
 import { route } from 'preact-router';
 
 import { Livechat } from '../api';
@@ -7,7 +8,6 @@ import { normalizeAgent } from './api';
 import { processUnread } from './main';
 import { parentCall } from './parentCall';
 import { createToken } from './random';
-import mitt from 'mitt';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
