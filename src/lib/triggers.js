@@ -91,8 +91,8 @@ class Triggers {
 	}
 
 	async fire(trigger) {
-		const { token, firedTriggers = [] } = store.state;
-		if (!this._enabled) {
+		const { token, firedTriggers = [], user } = store.state;
+		if (!this._enabled || user) {
 			return;
 		}
 		const { actions } = trigger;
