@@ -7,6 +7,7 @@ import { normalizeAgent } from './api';
 import { processUnread } from './main';
 import { parentCall } from './parentCall';
 import { createToken } from './random';
+import mitt from 'mitt';
 
 const agentCacheExpiry = 3600000;
 let agentPromise;
@@ -59,6 +60,7 @@ class Triggers {
 			this._triggers = [];
 			this._enabled = true;
 			Triggers.instance = this;
+			this.callbacks = mitt();
 		}
 
 		return Triggers.instance;
@@ -120,8 +122,10 @@ class Triggers {
 						await store.setState({ agent });
 						parentCall('callback', ['assign-agent', normalizeAgent(agent)]);
 					}
-
-					route('/trigger-messages');
+					const foundCondition = trigger.conditions.find((c) => c.name === 'chat-opened-by-visitor');
+					if (!foundCondition) {
+						route('/trigger-messages');
+					}
 					store.setState({ minimized: false });
 				});
 			}
@@ -136,11 +140,6 @@ class Triggers {
 
 	processRequest(request) {
 		this._requests.push(request);
-		if (!this._started) {
-			return;
-		}
-
-		this.processTriggers();
 	}
 
 	processTriggers() {
@@ -163,13 +162,10 @@ class Triggers {
 						break;
 					case 'chat-opened-by-visitor':
 						const openFunc = () => {
-							const { user } = store.state;
-							if (user) {
-								store.off('change', openFunc);
-								this.fire(trigger);
-							}
+							this.fire(trigger);
+							this.callbacks.off('chat-opened-by-visitor', openFunc);
 						};
-						store.on('change', openFunc);
+						this.callbacks.on('chat-opened-by-visitor', openFunc);
 						break;
 				}
 			});

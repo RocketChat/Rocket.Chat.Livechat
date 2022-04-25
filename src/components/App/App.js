@@ -107,6 +107,7 @@ export class App extends Component {
 	handleRestore = () => {
 		parentCall('restoreWindow');
 		const { dispatch, undocked } = this.props;
+
 		const dispatchRestore = () => dispatch({ minimized: false, undocked: false });
 		const dispatchEvent = () => {
 			dispatchRestore();
@@ -117,6 +118,7 @@ export class App extends Component {
 		} else {
 			dispatchRestore();
 		}
+		Triggers.callbacks.emit('chat-opened-by-visitor');
 	}
 
 	handleOpenWindow = () => {
