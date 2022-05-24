@@ -1,10 +1,10 @@
 {
     "translation": {
-        "accept": "Aceito",
+        "accept": "Aceitar",
         "are_you_sure_you_want_to_finish_this_chat": "Tem certeza de que deseja encerrar este chat?",
         "are_you_sure_you_want_to_remove_all_of_your_person": "Tem certeza de que deseja remover todos os seus dados pessoais?",
         "are_you_sure_you_want_to_switch_the_department": "Tem certeza de que deseja trocar de departamento?",
-        "call_end_time": "Chamada encerrada {{time, datetime}} - Duração de {{callDuration, datetime}}",
+        "call_end_time": "Chamada encerrada às {{time, datetime}} - Duração de {{callDuration, datetime}}",
         "cancel": "Cancelar",
         "change_department": "Trocar departamento",
         "change_department_1": "Trocar Departamento",
@@ -73,6 +73,8 @@
         "sound_is_on": "O som está ligado",
         "start_chat": "Iniciar chat",
         "thanks_for_talking_with_us": "Obrigado por falar conosco",
+        "the_chat_was_moved_back_to_queue": "O chat foi movido de volta para a fila",
+        "the_chat_was_transferred_to_another_agent": "O chat foi transferido para outro agente",
         "the_controller_of_your_personal_data_is_company_na": "O controlador dos seus dados pessoais é [Nome da Empresa], com sede em [Company Address]. Para iniciar o chat, você concorda que seus dados pessoais serão processados e transmitidos de acordo com o Regulamento Geral de Proteção de Dados(GDPR).",
         "transcript_success": "Transcrição enviada",
         "type_your_message_here": "Digite sua mensagem aqui",
