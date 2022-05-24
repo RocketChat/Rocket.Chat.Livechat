@@ -13,6 +13,7 @@
         "chat_started": "Chat started",
         "choose_a_department": "Choose a department...",
         "choose_a_department_1": "Choose a department",
+        "choose_an_emoji": "Choose an emoji...",
         "choose_an_option": "Choose an option...",
         "conversation_finished": "Conversation finished",
         "count_new_messages_since_since_one": "One new message since {{val, datetime}}",

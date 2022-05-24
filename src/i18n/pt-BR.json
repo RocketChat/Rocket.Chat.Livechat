@@ -13,6 +13,7 @@
         "chat_started": "Bate-papo iniciado",
         "choose_a_department": "Escolha um departamento...",
         "choose_a_department_1": "Escolha um departamento",
+        "choose_an_emoji": "Escolha um emoji...",
         "choose_an_option": "Escolha uma opção...",
         "conversation_finished": "Conversa Encerrada",
         "count_new_messages_since_since_one": "Uma nova mensagem desde {{val, datetime}}",
