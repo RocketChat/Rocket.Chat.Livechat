@@ -166,62 +166,6 @@ export class App extends Component {
 		}
 	}
 
-	handleAppRef = (ref) => {
-		this.appRef = ref;
-	}
-
-	getFocusableElements = () => this.appRef.base.querySelectorAll(
-		'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select, div[contenteditable="true"]',
-	)
-
-	addFocusFirstElement = () => {
-		const focusableElements = this.getFocusableElements();
-		if (focusableElements.length > 0) {
-			focusableElements[0].focus();
-		}
-	}
-
-	handleTabKey = (e) => {
-		const focusableElements = this.getFocusableElements();
-
-		if (focusableElements.length > 0) {
-			const firstElement = focusableElements[0];
-			const lastElement = focusableElements[focusableElements.length - 1];
-
-			if (!e.shiftKey && document.activeElement === lastElement) {
-				firstElement.focus();
-				return e.preventDefault();
-			}
-
-			if (e.shiftKey && document.activeElement === firstElement) {
-				lastElement.focus();
-				return e.preventDefault();
-			}
-		}
-	};
-
-	handleKeyDown = (e) => {
-		const { key } = e;
-		const { minimized } = this.props;
-
-		switch (key) {
-			case 'Tab':
-				if (!minimized) {
-					this.handleTabKey(e);
-				}
-				break;
-			case 'Escape':
-				if (!minimized && !this.state.poppedOut) {
-					this.handleMinimize();
-				}
-				break;				
-			default:
-				break;
-		}
-
-		e.stopPropagation();
-	}
-
 	async initialize() {
 		// TODO: split these behaviors into composable components
 		await Connection.init();
@@ -255,9 +199,6 @@ export class App extends Component {
 		if (i18n.t) {
 			document.dir = isRTL(i18n.t('yes')) ? 'rtl' : 'ltr';
 		}
-		if (!this.props.minimized) {
-			this.addFocusFirstElement();
-		}
 	}
 
 	render = ({
@@ -286,7 +227,6 @@ export class App extends Component {
 			onOpenWindow: this.handleOpenWindow,
 			onDismissAlert: this.handleDismissAlert,
 			dismissNotification: this.dismissNotification,
-			handleKeyDown: this.handleKeyDown,
 		};
 
 		return (
