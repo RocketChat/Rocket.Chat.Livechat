@@ -176,7 +176,7 @@ export class Screen extends Component {
 		<div className={createClassName(styles, 'screen', { minimized, expanded, windowed, triggered })} ref={this.handleScreenRef} onKeyDown={this.handleKeyDown}>	
 			<CssVar theme={theme} />
 			{triggered && <Button onClick={onMinimize} className={createClassName(styles, 'screen__chat-close-button')} icon={<CloseIcon />} label={i18next.t('close_the_chat')}>Close</Button>}
-			<div className={createClassName(styles, 'screen__inner', { fitTextSize: triggered }, [className])} role='dialog' aria-modal='true' aria-labelledby='header__title-id'>
+			<div className={createClassName(styles, 'screen__inner', { fitTextSize: triggered }, [className])} role='dialog' aria-modal='true' aria-labelledby='rocket-chat:header__content__id'>
 				<PopoverContainer>
 					{!triggered && <ScreenHeader
 						alerts={alerts}
