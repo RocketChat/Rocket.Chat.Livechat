@@ -54,14 +54,32 @@ class PopoverMenuWrapper extends Component {
 		dismiss();
 	}
 
+
+	handleCancel = () => {
+		const { dismiss } = this.props;
+		const { focusRef } = this.state;
+
+		if (focusRef) {
+			focusRef.focus();
+		}
+		
+		dismiss();
+	}
+
 	handleKeyDown = (event) => {
 		const { key } = event;
 
-		if (key !== 'Tab') {
-			return;
+		switch (key) {
+			case 'Tab':
+				handleTabKey(event, this.menuRef.base);
+				break;
+			case 'Escape':
+				this.handleCancel();
+				break;
+			default:
+				break;
 		}
 
-		handleTabKey(event, this.menuRef.base);
 		event.stopPropagation();
 
 	}
@@ -84,12 +102,15 @@ class PopoverMenuWrapper extends Component {
 
 		const placement = `${ menuWidth < rightSpace ? 'right' : 'left' }-${ menuHeight < bottomSpace ? 'bottom' : 'top' }`;
 
+		const focusRef = document.activeElement;
+
 		addFocusFirstElement(this.menuRef.base);
 
 		// eslint-disable-next-line react/no-did-mount-set-state
 		this.setState({
 			position: { left, right, top, bottom },
 			placement,
+			focusRef,
 		});
 	}
 
