@@ -1,3 +1,4 @@
+# This project is now part of [the Rocket.Chat monorepo](https://github.com/RocketChat/Rocket.Chat/tree/develop/packages/livechat). Please open any new issues and pull requests there.
 # Rocket.Chat.Livechat
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/RocketChat/Rocket.Chat.Livechat.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/RocketChat/Rocket.Chat.Livechat/context:javascript)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/RocketChat/Rocket.Chat.Livechat.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/RocketChat/Rocket.Chat.Livechat/alerts/)
