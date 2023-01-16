@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { withTranslation } from 'react-i18next';
-
+import i18next from 'i18next';
+import { addFocusFirstElement, handleTabKey } from '../../lib/keyNavigation';
 import { Button } from '../Button';
 import { ButtonGroup } from '../ButtonGroup';
 import { createClassName } from '../helpers';
@@ -62,27 +63,64 @@ export class Modal extends Component {
 
 
 export const ModalMessage = ({ children }) => (
-	<div className={createClassName(styles, 'modal__message')}>
+	<div className={createClassName(styles, 'modal__message')} id='rocket-chat:modal__message__id'>
 		{children}
 	</div>
 );
 
 
-export const ConfirmationModal = withTranslation()(({
-	text,
-	confirmButtonText,
-	cancelButtonText,
-	onConfirm,
-	onCancel,
-	t,
-	...props
-}) => <Modal open animated dismissByOverlay={false} {...props}>
-	<Modal.Message>{text}</Modal.Message>
-	<ButtonGroup>
-		<Button outline secondary onClick={onCancel}>{cancelButtonText || t('no')}</Button>
-		<Button danger onClick={onConfirm}>{confirmButtonText || t('yes')}</Button>
-	</ButtonGroup>
-</Modal>);
+export class ConfirmationModal extends Component {
+	handleRef = (ref) => {
+		this.confirmationModalRef = ref;
+	}
+
+	handleCancel = () => {
+		const { focusRef, onCancel } = this.props;
+		if (focusRef) {
+			focusRef.focus();
+		}
+		onCancel();
+	}
+
+	handleKeyDown = (event) => {
+		const { key } = event;
+
+		switch (key) {
+			case 'Tab':
+				handleTabKey(event, this.confirmationModalRef.base);
+				break;
+			case 'Escape':
+				this.handleCancel();
+				break;
+			default:
+				break;
+		}
+
+		event.stopPropagation();
+	}
+
+	componentDidMount() {
+		addFocusFirstElement(this.confirmationModalRef.base);
+	}
+
+	render = ({
+		text,
+		confirmButtonText,
+		cancelButtonText,
+		onConfirm,
+		onCancel,
+		t,
+		...props
+	}) => (
+		<Modal open animated dismissByOverlay={false} onkeydown={this.handleKeyDown} ref={this.handleRef} role='dialog' aria-describedby='rocket-chat:modal__message__id' {...props}>
+			<Modal.Message>{text}</Modal.Message>
+			<ButtonGroup>
+				<Button outline secondary onClick={this.handleCancel}>{cancelButtonText || i18next.t('no')}</Button>
+				<Button danger onClick={onConfirm}>{confirmButtonText || i18next.t('yes')}</Button>
+			</ButtonGroup>
+		</Modal>
+	)
+}
 
 export const AlertModal = withTranslation()(({ text, buttonText, onConfirm, t, ...props }) => (
 	<Modal open animated dismissByOverlay={false} {...props}>

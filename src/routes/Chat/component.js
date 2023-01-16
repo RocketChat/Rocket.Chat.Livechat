@@ -32,6 +32,14 @@ class Chat extends Component {
 		this.filesDropTarget = ref;
 	}
 
+	handleMenuOptionsRef = (ref) => {
+		this.menuOptionsRef = ref;
+	}
+
+	handleInputRef = (ref) => {
+		this.inputRef = ref;
+	}
+
 	handleMessagesContainerRef = (messagesContainer) => {
 		this.messagesContainer = messagesContainer ? messagesContainer.base : null;
 	}
@@ -59,6 +67,7 @@ class Chat extends Component {
 
 	handleSendClick = (event) => {
 		event.preventDefault();
+		this.inputRef.el.focus();
 		this.handleSubmit(this.state.text);
 	}
 
@@ -171,12 +180,30 @@ class Chat extends Component {
 						sheetSize={64}
 						onSelect={this.handleEmojiSelect}
 						autoFocus={true}
+						i18n={{
+							search: t('search'),
+							clear: t('clear'),
+							notfound: t('no_emoji_found'),
+							categories: {
+								search: t('search_results'),
+								recent: t('frequently_used'),
+								people: t('people_and_body'),
+								nature: t('animals_and_nature'),
+								foods: t('food_and_drink'),
+								activity: t('activity'),
+								places: t('travel_and_places'),
+								objects: t('objects'),
+								symbols: t('symbols'),
+								flags: t('flags'),
+							},
+							categorieslabel: t('emoji_categories'),
+						}}
 					/>}
 				</div>
 			</Screen.Content>
 			<Screen.Footer
 				options={options ? (
-					<FooterOptions>
+					<FooterOptions ref={this.handleMenuOptionsRef}>
 						<Menu.Group>
 							{onChangeDepartment && (
 								<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{t('change_department')}</Menu.Item>
@@ -185,7 +212,7 @@ class Chat extends Component {
 								<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{t('forget_remove_my_data')}</Menu.Item>
 							)}
 							{onFinishChat && (
-								<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{t('finish_this_chat')}</Menu.Item>
+								<Menu.Item danger onClick={() => onFinishChat(this.menuOptionsRef.base)} icon={FinishIcon}>{t('finish_this_chat')}</Menu.Item>
 							)}
 						</Menu.Group>
 					</FooterOptions>
@@ -205,9 +232,10 @@ class Chat extends Component {
 						value={text}
 						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
 						handleEmojiClick={this.handleEmojiClick}
+						ref={this.handleInputRef}
 						pre={(
 							<ComposerActions>
-								<ComposerAction className={createClassName(styles, 'emoji-picker-icon')} onClick={this.toggleEmojiPickerState}>
+								<ComposerAction className={createClassName(styles, 'emoji-picker-icon')} onClick={this.toggleEmojiPickerState} text={t('choose_an_emoji')}>
 									<EmojiIcon width={20} height={20} />
 								</ComposerAction>
 							</ComposerActions>
@@ -215,12 +243,12 @@ class Chat extends Component {
 						post={(
 							<ComposerActions>
 								{text.length === 0 && uploads && (
-									<ComposerAction onClick={this.handleUploadClick}>
+									<ComposerAction onClick={this.handleUploadClick} text={t('upload_file')}>
 										<PlusIcon width={20} height={20} />
 									</ComposerAction>
 								)}
 								{text.length > 0 && (
-									<ComposerAction onClick={this.handleSendClick}>
+									<ComposerAction onClick={this.handleSendClick} text={t('send_message')}>
 										<SendIcon width={20} height={20} />
 									</ComposerAction>
 								)}
